@@ -21,6 +21,11 @@ export class Route extends AbstractRoute<RouteStop>
 
         super(data, stops);
 
+        for (const stop of stops)
+        {
+            stop.route = this;
+        }
+
         this.supportNote = data.supportNote;
         this.overallRating = data.overallRating;
         this.driverInstructions = data.driverInstructions;

@@ -1,17 +1,13 @@
 import React from "react";
 import "./styles.scss";
-import {
-  RoutePlanMeta,
-  RoutePlanRoute
-} from "shared/src/model/logistics/routePlanning";
 import Stop from "./stop";
 import Line from "./line";
 import { observer } from "mobx-react";
-import { RoutePlanningStore, DragType } from "../store";
+import { RoutePlanningStore } from "../store";
+import { RouteBase, RouteStop } from "app/model/route";
 
 interface Props {
-  meta: RoutePlanMeta;
-  route: RoutePlanRoute;
+  route: RouteBase;
   store: RoutePlanningStore;
 }
 
@@ -34,8 +30,11 @@ export default class RoutePlanningRouteComponent extends React.Component<
     const route = this.props.route;
     const stops = route.stops;
 
-    const durationFromEarliestMinutes = route.meta.timeFrame
-      .from!.diff(this.props.meta.timeFrame.from!)
+    const firstStop = route.stops[0] as RouteStop;
+    const firstStopTimeFrame = firstStop.estimates!.timeFrame;
+
+    const durationFromEarliestMinutes = firstStopTimeFrame
+      .from!.diff(this.props.store.timeFrame.from!)
       .as("minutes");
 
     // Draw empty div with correct width if later than earliest
@@ -59,11 +58,11 @@ export default class RoutePlanningRouteComponent extends React.Component<
      * 3. Task time (loading time)
      */
 
-    var currentDate = route.meta.timeFrame.from!;
+    var currentDate = firstStopTimeFrame.from!;
     for (let i = 0; i < stops.length; i++) {
-      const stop = stops[i];
+      const stop = stops[i] as RouteStop;
 
-      const difference = stop.estimates.timeFrame
+      const difference = stop.estimates!.timeFrame
         .from!.diff(currentDate, "seconds")
         .as("minutes");
 
@@ -79,22 +78,31 @@ export default class RoutePlanningRouteComponent extends React.Component<
         );
       }
 
-      currentDate = currentDate.plus(
-        stop.estimates.waitingTime
-          .plus(stop.estimates.drivingTime)
-          .plus(stop.estimates.taskTime)
-      );
+      if (stop.estimates!.waitingTime != null)
+      {
+        currentDate = currentDate.plus(stop.estimates!.waitingTime);
+      }
+
+      if (stop.estimates!.drivingTime != null)
+      {
+        currentDate = currentDate.plus(stop.estimates!.drivingTime);
+      }
+
+      if (stop.estimates!.taskTime != null)
+      {
+        currentDate = currentDate.plus(stop.estimates!.taskTime);
+      }
 
       // Draw driving if it exists
-      const drivingTimeInMinutes = stop.estimates.drivingTime.as("minutes");
+      const drivingTimeInMinutes = stop.estimates!.drivingTime!.as("minutes");
       if (drivingTimeInMinutes > 0) {
         components.push(
           <Line
             store={this.props.store}
-            color={this.props.route.color}
+            color={(this.props.route as any).color}
             data={[
               {
-                duration: stop.estimates.drivingTime,
+                duration: stop.estimates!.drivingTime!,
                 dotted: false
               }
             ]}
@@ -104,15 +112,15 @@ export default class RoutePlanningRouteComponent extends React.Component<
       }
 
       // Show how long the driver is waiting
-      const waitingTimeInMinutes = stop.estimates.waitingTime.as("minutes");
-      if (waitingTimeInMinutes > 0) {
+      if (stop.estimates!.waitingTime != null && stop.estimates!.waitingTime.as("minutes") > 0) {
+
         components.push(
           <Line
             store={this.props.store}
-            color={this.props.route.color}
+            color={(this.props.route as any).color}
             data={[
               {
-                duration: stop.estimates.waitingTime,
+                duration: stop.estimates!.waitingTime,
                 dotted: true
               }
             ]}
@@ -127,84 +135,7 @@ export default class RoutePlanningRouteComponent extends React.Component<
       );
     }
 
-    // Draw empty div with correct width if not the last
-    const durationFromLatestMinutes = route.meta.timeFrame
-      .to!.diff(route.meta.timeFrame.to!)
-      .as("minutes");
-
-    // Draw empty div with correct width if later than earliest
-    if (durationFromLatestMinutes > 0) {
-      components.push(
-        <div
-          style={{
-            width:
-              this.props.store.minutesToPixels(durationFromLatestMinutes) + "px"
-          }}
-          key={"route_empty_last" + this.props.route.id}
-        />
-      );
-    }
-
     return components;
-  }
-
-  onDrop(e: React.DragEvent<HTMLDivElement>) {
-    this.setState({ draggedOver: false });
-
-    const route = this.props.route;
-    const stops = route.stops;
-
-    // This only works with current css - if we add mobile support this should be optimized
-    const distanceFromSide = 390;
-    let droppedDistance = e.clientX - distanceFromSide;
-
-    // console.log("Distance from side: ", droppedDistance);
-
-    // Calculate where to place it
-    const durationFromEarliestMinutes = route.meta.timeFrame
-      .from!.diff(route.meta.timeFrame.from!)
-      .as("minutes");
-    let currentDistance = this.props.store.minutesToPixels(
-      durationFromEarliestMinutes
-    );
-
-    let stopIndex = 0;
-    for (let i = 0; i < stops.length; i++) {
-      const stop = stops[i];
-      currentDistance += this.props.store.minutesToPixels(
-        stop.estimates.waitingTime.as("minutes")
-      );
-      currentDistance += this.props.store.minutesToPixels(
-        stop.estimates.drivingTime.as("minutes")
-      );
-
-      stopIndex = i;
-
-      if (currentDistance >= droppedDistance) {
-        break;
-      }
-
-      currentDistance += this.props.store.minutesToPixels(
-        stop.estimates.taskTime.as("minutes")
-      );
-    }
-
-    const type = e.dataTransfer.getData("type") as DragType;
-
-    const index = Number(e.dataTransfer.getData("index"));
-    // console.log("DRAG TYPE: ", type);
-    // console.log("INDEX: ", index);
-
-    if (type === "UnscheduledTask") {
-      this.props.store.plan.unscheduledTasks.splice(index, 1);
-      // console.log("Completed unscheduled");
-    } else {
-      // const routeIndex = Number(e.dataTransfer.getData("routeIndex"));
-      // console.log("Completed stop drag with route index: ", routeIndex);
-    }
-
-    // console.log("Dropped at stop index: ", i);
-    this.props.store.updateRoutes(this.props.route, stopIndex);
   }
 
   render() {
@@ -223,17 +154,6 @@ export default class RoutePlanningRouteComponent extends React.Component<
     return (
       <div className="c-routePlanning-routes-route">
         <div
-          onDragOver={e => {
-            if (!this.state.draggedOver) {
-              this.setState({ draggedOver: true });
-            }
-            e.preventDefault();
-          }}
-          onDragLeave={e => {
-            this.setState({ draggedOver: false });
-            e.preventDefault();
-          }}
-          onDrop={e => this.onDrop(e)}
           className={classNames}
         >
           {this.renderComponents()}

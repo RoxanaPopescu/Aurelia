@@ -606,19 +606,19 @@ export class ApiClient
         // If the value is a `Date` instance, convert it to ISO 8601 format.
         if (value instanceof Date)
         {
-            return value.toISOString();
+            return this.encodeQueryValue(value.toISOString());
         }
 
         // If the value is a `DateTime` instance, convert it to ISO 8601 format.
         if (value instanceof DateTime)
         {
-            return value.toISO();
+            return this.encodeQueryValue(value.toISO());
         }
 
         // If the value is a `Duration`instance, convert it to ISO 8601 format.
         if (value instanceof Duration)
         {
-            return value.toISO();
+            return this.encodeQueryValue(value.toISO());
         }
 
         // If the value is an `Array` instance, convert it to a comma-separated list of values.

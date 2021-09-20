@@ -2,7 +2,8 @@ import { Collo } from "app/model/collo";
 import { DateTimeRange } from "shared/types";
 import { Location } from "app/model/shared";
 
-export class ShipmentStop {
+export class ShipmentStop
+{
     /**
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
@@ -15,7 +16,7 @@ export class ShipmentStop {
 
         if (data.colli != null)
         {
-            this.colli = data.colli.map(c => new Collo(c))
+            this.colli = data.colli.map(c => new Collo(c));
         }
         else
         {

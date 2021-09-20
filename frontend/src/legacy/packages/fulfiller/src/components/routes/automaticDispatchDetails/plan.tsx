@@ -8,7 +8,6 @@ import RouteScaleComponent from "./header/scale";
 import { RoutePlanningMap } from "./map";
 import Mousetrap from "mousetrap";
 import { GoogleMap } from "react-google-maps";
-import { RoutePlanRoute } from "shared/src/model/logistics/routePlanning";
 import TimeHeaderComponent from "./header/time";
 import MetaHeaderComponent from "./header/meta";
 import { RoutePlanningStore } from "./store";
@@ -16,9 +15,9 @@ import RoutePlanningTimeDividerComponent from "./route/timeDivider";
 import Localization from "../../../../../shared/src/localization/index";
 import RoutePlanningUnscheduledStopsComponent from "./unscheduledStops";
 import H from "history";
-import RoutePlanningOrderIdsComponent from "./header/orderIds";
 import { Log } from "shared/infrastructure";
 import { Profile } from "shared/src/model/profile";
+import { RouteBase } from "app/model/route";
 
 interface Props {
   history: H.History;
@@ -183,7 +182,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
   }
 
   render() {
-    if (this.props.store.plan.meta.timeFrame.duration.as("days") >= 7) {
+    if (this.props.store.timeFrame.duration.as("days") >= 7) {
       Log.error("Incorrect data of route plan. The duration is over 7 days");
       return <div />;
     }
@@ -234,12 +233,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
               </div>
             </div>
           </div>
-          {this.props.store.focusedStop && this.props.store.focusedStop.orderIds.length > 0 && (
-            <RoutePlanningOrderIdsComponent
-              stop={this.props.store.focusedStop}
-            />
-          )}
-          {this.props.store.plan.unscheduledTasks.length > 0 && !(this.props.store.focusedStop && this.props.store.focusedStop.orderIds.length > 0) && (
+          {this.props.store.plan.unscheduledShipments.length > 0 && !(this.props.store.focusedStop && this.props.store.focusedStop.orderIds.length > 0) && (
             <RoutePlanningUnscheduledStopsComponent store={this.props.store} />
           )}
           <div className="c-routePlanning-routes-list-main">
@@ -272,7 +266,6 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
                     store={this.props.store}
                     key={route.id}
                     route={route}
-                    meta={this.props.store.plan.meta}
                   />
                 ))}
               </div>
@@ -280,12 +273,12 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
           </div>
           {Profile.claims.has("create-routeplan-simulation") &&
           <div className="c-routePlanning-routes-list-bottomBar">
-            {this.props.store.plan.waitingForApproval &&
+            {(this.props.store.job.status.slug as any) == "FIXME: Approval flow" &&
               <Button
                 loading={this.props.store.approving}
                 type={ButtonType.Action}
                 onClick={() => {
-                  if (confirm("Sikker på du vil godkende denne ruteplan?")) {
+                  if (confirm("Sikker på du vil godkende denne plan?")) {
                     this.props.store.approvePlan();
                   }
                 }}
@@ -312,7 +305,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
     );
   }
 
-  renderTopInfoView(route: RoutePlanRoute) {
+  renderTopInfoView(route: RouteBase) {
     return (
       <div className="c-routePlanning-mapInfoTop">
         <Button

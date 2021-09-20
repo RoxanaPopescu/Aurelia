@@ -1,6 +1,7 @@
 import { ShipmentStop } from "./shipment-stop";
 
-export class Shipment {
+export class Shipment
+{
     /**
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.

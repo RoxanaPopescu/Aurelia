@@ -1,12 +1,12 @@
 import React from "react";
 import "./styles.scss";
 import { observer } from "mobx-react";
-import { RoutePlanRouteStop } from "shared/src/model/logistics/routePlanning";
 import Localization from "shared/src/localization";
 import { RoutePlanningStore } from "../../store";
+import { RouteStop } from "app/model/route";
 
 interface Props {
-  stop: RoutePlanRouteStop;
+  stop: RouteStop;
   store: RoutePlanningStore;
 }
 
@@ -14,19 +14,10 @@ interface Props {
 export default class RoutePlanningRoutesStopComponent extends React.Component<
   Props
 > {
-  onDragStart(e: React.DragEvent<HTMLDivElement>) {
-    e.dataTransfer.setData("type", "Stop");
-    e.dataTransfer.setData("index", String(this.props.stop.stopNumber - 1));
-    e.dataTransfer.setData(
-      "routeIndex",
-      String(this.props.stop.route.routeNumber - 1)
-    );
-  }
-
   render() {
     const stop = this.props.stop;
     let width = this.props.store.minutesToPixels(
-      stop.estimates.taskTime.as("minutes")
+      stop.estimates!.taskTime!.as("minutes")
     );
 
     let classNames = "c-routePlanning-routes-route-stop";
@@ -39,15 +30,15 @@ export default class RoutePlanningRoutesStopComponent extends React.Component<
         className={classNames}
         onClick={() => this.props.store.focusStop(stop)}
         style={{
-          backgroundColor: stop.route.color,
-          borderColor: stop.route.color,
+          backgroundColor: (stop.route as any).color,
+          borderColor: (stop.route as any).color,
           width: width + "px"
         }}
         title={Localization.operationsValue(
           "RoutePlanning_RoutePlan_Route_Stop_TaskTime"
         ).replace(
           "{time}",
-          Localization.formatDuration(stop.estimates.taskTime)
+          Localization.formatDuration(stop.estimates?.taskTime)
         )}
       >
         <div className="font-small c-routePlanning-routes-route-stop-number">

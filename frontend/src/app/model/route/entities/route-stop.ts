@@ -8,6 +8,7 @@ import clone from "clone";
 import { Duration } from "luxon";
 import { RouteStopIdentity } from "./route-stop-identity";
 import { ColloScanMethod, ColloStatus } from "app/model/collo";
+import { IRouteReference } from "..";
 
 /**
  * Represents a single location, where a driver must either pick up or deliver colli.
@@ -18,11 +19,11 @@ export class RouteStop extends RouteStopBase
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data?: any, stopNumber?: number)
+    public constructor(data?: any, stopNumber?: number, route?: IRouteReference)
     {
         if (data != null)
         {
-            super(data, stopNumber);
+            super(data, stopNumber, route);
 
             this.pickups = data.pickups.map(p => new Pickup(p));
             this.deliveries = data.deliveries.map(d => new Delivery(d));
@@ -58,7 +59,7 @@ export class RouteStop extends RouteStopBase
         }
         else
         {
-            super(undefined, stopNumber);
+            super(undefined, stopNumber, route);
 
             this.pickups = [];
             this.deliveries = [];

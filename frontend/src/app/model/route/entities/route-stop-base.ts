@@ -5,7 +5,7 @@ import { Outfit } from "app/model/outfit";
 import { RouteStopStatus } from "./route-stop-status";
 import { RouteStopInfo } from "./route-stop-info";
 import { RouteEstimates } from "./route-estimates";
-import { RouteStopAuthorityToLeave } from "..";
+import { IRouteReference, RouteStopAuthorityToLeave } from "..";
 
 /**
  * Represents a single location, where a driver must either pick up or deliver colli.
@@ -16,9 +16,9 @@ export abstract class RouteStopBase extends RouteStopInfo
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data?: any, stopNumber?: number)
+    public constructor(data?: any, stopNumber?: number, route?: IRouteReference)
     {
-        super(data, stopNumber);
+        super(data, stopNumber, route);
 
         if (data != null)
         {

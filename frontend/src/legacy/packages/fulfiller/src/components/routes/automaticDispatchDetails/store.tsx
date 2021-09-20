@@ -1,20 +1,24 @@
 import React from "react";
 import { observable, action } from "mobx";
-import {
-  RoutePlan,
-  RoutePlanRoute,
-  RoutePlanStopBase,
-  RoutePlanRouteStop
-} from "shared/src/model/logistics/routePlanning";
 import { Marker, Polyline, GoogleMap } from "react-google-maps";
 import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithLabel";
 import { MoverMarker } from "shared/src/webKit";
 import Base from "shared/src/services/base";
 import Localization from "shared/src/localization";
-
-export type DragType = "Stop" | "UnscheduledTask";
+import { AutomaticDispatchJob, AutomaticDispatchJobResult, AutomaticDispatchService } from "app/model/automatic-dispatch";
+import { Route, RouteBase, RouteStop, RouteStopInfo } from "app/model/route";
+import { ShipmentStop } from "app/model/shipment";
+import { DateTime, Duration } from "luxon";
+import { DateTimeRange } from "shared/types";
+import { ApiError } from "shared/infrastructure";
 
 export class RoutePlanningStore {
+  private service: AutomaticDispatchService;
+
+  constructor(service: AutomaticDispatchService) {
+    this.service = service;
+  }
+
   listMaximumItems = 4;
   listCurrentItems = 0;
 
@@ -44,13 +48,16 @@ export class RoutePlanningStore {
   toastMessage?: string;
 
   @observable
-  plan: RoutePlan;
+  job: AutomaticDispatchJob;
 
   @observable
-  focusedRoute?: RoutePlanRoute;
+  plan: AutomaticDispatchJobResult;
 
   @observable
-  focusedStop?: RoutePlanRouteStop;
+  focusedRoute?: RouteBase;
+
+  @observable
+  focusedStop?: RouteStop;
 
   @observable
   markers: JSX.Element[] = [];
@@ -76,45 +83,85 @@ export class RoutePlanningStore {
   @observable
   listHeight = 0;
   listHeightCurrent = 0;
+  timeFrame: DateTimeRange = new DateTimeRange({ from: DateTime.local(), to: DateTime.local().plus(Duration.fromObject({hours: 3})) })
 
   async fetch(id: string) {
     this.loading = true;
     this.initialError = undefined;
 
-    let items: { [Key: string]: string } = {
-      id: id
-    };
+    try {
+      const job = await this.service.get(id);
+      this.job = job;
 
-    let response = await fetch(
-      Base.url("RoutePlanning/plans/Details"),
-      Base.defaultConfig(items)
-    );
+      if (job.result != null)
+      {
+        let minimumDate = DateTime.local().plus(Duration.fromObject({ years: 1}));
+        let maximumDate = DateTime.local().minus(Duration.fromObject({ years: 1}));
 
-    if (response.ok) {
-      let responseJson = await response.json();
+        let index = 0;
+        for (const route of job.result.routes) {
+          // Calculate timeframe
+          let timeFrame = route.estimates!.timeFrame;
 
-      var plan = new RoutePlan(responseJson, id);
-      this.minuteToPixel = 6;
-      this.plan = plan;
+          if (timeFrame.from! < minimumDate)
+          {
+            minimumDate = timeFrame.from!;
+          }
 
-      this.listCurrentItems = Math.min(4, this.plan.routes.length);
-      this.listHeight =
-        this.listCurrentItems * this.listItemHeight + this.listInfoHeight;
+          if (timeFrame.to! > maximumDate)
+          {
+            maximumDate = timeFrame.to!;
+          }
 
-      if (this.plan.unscheduledTasks.length > 0) {
-        this.listHeight += this.listUnschedulTasksHeight;
+          // Add colors for different routes
+          const colors = [
+            "#268bbc",
+            "#1acce2",
+            "#26bcae",
+            "#c1e21a",
+            "#db9726",
+            "#ff5555",
+            "#e21aa7",
+            "#bd10e0"
+          ];
+
+          (route as any).color = colors[index];
+
+          if (index == 7) {
+            index = 0;
+          } else {
+            index++;
+          }
+        }
+
+        this.timeFrame = new DateTimeRange({from: minimumDate, maximumDate});
+
+        this.plan = job.result;
+        this.minuteToPixel = 6;
+
+        this.listCurrentItems = Math.min(4, this.plan.routes.length);
+        this.listHeight =
+          this.listCurrentItems * this.listItemHeight + this.listInfoHeight;
+
+        if (this.plan.unscheduledShipments.length > 0) {
+          this.listHeight += this.listUnschedulTasksHeight;
+        }
+
+        this.listHeightCurrent = this.listHeight;
+      }
+    } catch (error) {
+      if (error instanceof ApiError && error.response?.status === 404) {
+        this.initialError = Localization.sharedValue("Error_ResourceNotFound");
+      } else {
+        this.initialError = Localization.sharedValue("Error_General");
       }
 
-      this.listHeightCurrent = this.listHeight;
-    } else {
-      this.initialError = Localization.sharedValue("Error_General");
+    } finally {
+      this.loading = false;
     }
-
-    this.loading = false;
   }
 
-  // FIXME: should take from & to
-  async updateRoutes(droppedInRoute: RoutePlanRoute, stopIndex: number) {
+  async updateRoutes(droppedInRoute: Route, stopIndex: number) {
     this.updatingRoute = true;
 
     setTimeout(() => {
@@ -137,7 +184,7 @@ export class RoutePlanningStore {
   }
 
   @action
-  focusRoute(route?: RoutePlanRoute, zoom: Boolean = true) {
+  focusRoute(route?: RouteBase, zoom: Boolean = true) {
     this.focusedRoute = route;
     this.checkBounds();
 
@@ -153,26 +200,27 @@ export class RoutePlanningStore {
   }
 
   @action
-  focusStop(stop: RoutePlanStopBase) {
+  focusStop(stop: RouteStop | ShipmentStop) {
     if (this.map === undefined) {
       return;
     }
 
-    if (stop instanceof RoutePlanRouteStop) {
-      this.focusRoute(stop.route, false);
+    if (stop instanceof RouteStop) {
+      this.focusRoute(stop.route as RouteBase, false);
 
       let bounds = new google.maps.LatLngBounds();
       bounds.extend(stop.location.position!.toGoogleLatLng());
+
       if (stop.stopNumber > 1) {
         bounds.extend(
-          stop.route.stops[
+          (stop.route as RouteBase).stops[
             stop.stopNumber - 2
           ].location.position!.toGoogleLatLng()
         );
       }
-      if (stop.stopNumber !== stop.route.stops.length) {
+      if (stop.stopNumber !== (stop.route as RouteBase).stops.length) {
         bounds.extend(
-          stop.route.stops[stop.stopNumber].location.position!.toGoogleLatLng()
+          (stop.route as RouteBase).stops[stop.stopNumber].location.position!.toGoogleLatLng()
         );
       }
       // tslint:disable-next-line:no-any
@@ -205,13 +253,13 @@ export class RoutePlanningStore {
 
   get listWidth(): number {
     return this.minutesToPixels(
-      this.plan.meta.timeFrame.duration.as("minutes")
+      this.timeFrame.duration.as("minutes")
     );
   }
 
-  positionInList(stop: RoutePlanRouteStop): number {
-    let startInMinutes = this.plan.meta.timeFrame.from!.diff(
-      stop.estimates.timeFrame.from!
+  positionInList(stop: RouteStop): number {
+    let startInMinutes = this.timeFrame.from!.diff(
+      stop.estimates!.timeFrame.from!
     );
 
     return this.minutesToPixels(startInMinutes.as("minutes"));
@@ -223,7 +271,7 @@ export class RoutePlanningStore {
 
     if (this.focusedStop && this.focusedStop.orderIds.length > 0) {
       height += this.listStopOrderIdsHeight;
-    } else if (this.plan.unscheduledTasks.length > 0) {
+    } else if (this.plan.unscheduledShipments.length > 0) {
       height += this.listUnschedulTasksHeight;
     }
 
@@ -247,7 +295,7 @@ export class RoutePlanningStore {
 
     if (this.focusedStop) {
       minimumHeight += this.listStopOrderIdsHeight;
-    } else if (this.plan.unscheduledTasks.length > 0) {
+    } else if (this.plan.unscheduledShipments.length > 0) {
       minimumHeight += this.listUnschedulTasksHeight;
     }
 
@@ -264,7 +312,13 @@ export class RoutePlanningStore {
     }
 
     if (this.focusedRoute) {
-      this.map.fitBounds(this.focusedRoute.mapBounds);
+      let bounds = new google.maps.LatLngBounds();
+
+      this.focusedRoute.stops.map(stop =>
+        bounds.extend(stop.location.position!.toGoogleLatLng())
+      );
+
+      this.map.fitBounds(bounds);
     } else {
       this.zoom();
     }
@@ -283,8 +337,8 @@ export class RoutePlanningStore {
       }
     }
 
-    for (let task of this.plan.unscheduledTasks) {
-      bounds.extend(task.delivery.location.position!.toGoogleLatLng());
+    for (let shipment of this.plan.unscheduledShipments) {
+      bounds.extend(shipment['shipment'].delivery.location.position!.toGoogleLatLng());
     }
 
     // tslint:disable-next-line:no-any
@@ -292,7 +346,7 @@ export class RoutePlanningStore {
     map.fitBounds(bounds, 5);
   }
 
-  zoomToRoute(route: RoutePlanRoute) {
+  zoomToRoute(route: RouteBase) {
     let bounds = new google.maps.LatLngBounds();
 
     for (let stop of route.stops) {
@@ -314,13 +368,17 @@ export class RoutePlanningStore {
     let components: JSX.Element[] = [];
 
     for (let route of this.plan.routes) {
+      const positions = route.stops.map(stop =>
+        stop.location.position!
+      ).map(s => new google.maps.LatLng(s.latitude, s.longitude));
+
       components.push(
         <Polyline
           key={"polyline_" + route.id}
-          path={route.directions.pathToGoogleLatLng()}
+          path={positions}
           options={{
             geodesic: false,
-            strokeColor: route.color,
+            strokeColor: (route as any).color,
             strokeOpacity: 0.0,
             strokeWeight: 1,
             icons: [
@@ -352,8 +410,9 @@ export class RoutePlanningStore {
       return;
     }
 
-    this.plan.unscheduledTasks.forEach(task => {
-      const stop = task.delivery;
+    this.plan.unscheduledShipments.forEach(task => {
+      const shipment = task['shipment'];
+      const stop = shipment.delivery;
 
       markers.push(
         <Marker
@@ -370,7 +429,7 @@ export class RoutePlanningStore {
                 "RoutePlanning_RoutePlan_UnscheduledTaskHover_Title"
               ),
               rows: [
-                ...this.getStopRows(task.pickup, Localization.sharedValue("Trip_Pickup")),
+                ...this.getStopRows(shipment.pickup, Localization.sharedValue("Trip_Pickup")),
                 ...this.getStopRows(stop, Localization.sharedValue("Trip_Delivery")),
                 { headline: Localization.sharedValue("General_Problems"), value: task.reasons.join(", ") }
               ],
@@ -379,7 +438,6 @@ export class RoutePlanningStore {
               infoWindowOffset: -35
             };
           }}
-          onClick={ () => window.open(`/orders/details/${task.orderId}`) }
           zIndex={9999}
           onMouseOut={() => {
             this.hoveredItem = undefined;
@@ -388,7 +446,7 @@ export class RoutePlanningStore {
       );
     });
 
-    let stops: RoutePlanRouteStop[] = [];
+    let stops: (RouteStop | RouteStopInfo)[] = [];
     this.plan.routes.map(route => {
       // Check if any stops are within
       let polyWithinBounds = false;
@@ -403,15 +461,19 @@ export class RoutePlanningStore {
       });
 
       if (polyWithinBounds) {
+        const positions = route.stops.map(stop =>
+          stop.location.position!
+        ).map(s => new google.maps.LatLng(s.latitude, s.longitude));
+
         polylines.push(
           <Polyline
             onClick={() => {
               this.focusRoute(route);
             }}
             key={"polyline_" + route.id}
-            path={route.directions.pathToGoogleLatLng()}
+            path={positions}
             options={{
-              strokeColor: route.color,
+              strokeColor: (route as any).color,
               geodesic: true,
               strokeWeight: 2,
               strokeOpacity: 0.7
@@ -422,7 +484,7 @@ export class RoutePlanningStore {
                   "RoutePlanning_RoutePlan_RouteHover_Title"
                 ).replace("{number}", route.slug),
                 rows: this.getRouteRows(route),
-                color: route.color,
+                color: (route as any).color,
                 point: event.latLng,
                 infoWindowOffset: 0
               };
@@ -438,7 +500,7 @@ export class RoutePlanningStore {
     // Limit amount of stop markers - too many will overload the Client's computer
     if (stops.length <= 200) {
       stops.forEach((stop, index) => {
-        markers.push(this.stopMarker(stop, index));
+        markers.push(this.stopMarker((stop as RouteStop), index));
       });
     }
 
@@ -446,10 +508,10 @@ export class RoutePlanningStore {
     this.polylines = polylines;
   }
 
-  stopMarker(stop: RoutePlanRouteStop, index: number): JSX.Element {
+  stopMarker(stop: RouteStop, index: number): JSX.Element {
     let marker: JSX.Element = (
       <MarkerWithLabel
-        icon={MoverMarker.markerIconWithLabel(stop.route.color)}
+        icon={MoverMarker.markerIconWithLabel((stop.route as any).color)}
         key={stop.id}
         onClick={() => {
           this.hoveredItem = undefined;
@@ -465,7 +527,7 @@ export class RoutePlanningStore {
           this.hoveredItem = {
             title: title,
             rows: this.getStopRows(stop),
-            color: stop.route.color,
+            color: (stop.route as any).color,
             point: stop.location.position!.toGoogleLatLng(),
             infoWindowOffset: -20
           };
@@ -484,24 +546,28 @@ export class RoutePlanningStore {
     return marker;
   }
 
-  markersForRoute(route: RoutePlanRoute): JSX.Element[] {
+  markersForRoute(route: RouteBase): JSX.Element[] {
     let markers: JSX.Element[] = [];
     route.stops.forEach((stop, index) => {
-      markers.push(this.stopMarker(stop, index));
+      markers.push(this.stopMarker((stop as RouteStop), index));
     });
 
     return markers;
   }
 
-  polylinesForRoute(route: RoutePlanRoute): JSX.Element[] {
+  polylinesForRoute(route: RouteBase): JSX.Element[] {
     let polylines: JSX.Element[] = [];
+
+    const positions = route.stops.map(stop =>
+      stop.location.position!
+    ).map(s => new google.maps.LatLng(s.latitude, s.longitude));
 
     polylines.push(
       <Polyline
         key={"polyline_" + route.id}
-        path={route.directions.pathToGoogleLatLng()}
+        path={positions}
         options={{
-          strokeColor: route.color,
+          strokeColor: (route as any).color,
           geodesic: true,
           strokeWeight: 3
         }}
@@ -511,7 +577,7 @@ export class RoutePlanningStore {
     return polylines;
   }
 
-  getStopRows(stop: RoutePlanStopBase, addressName: string | undefined = undefined) {
+  getStopRows(stop: RouteStop | ShipmentStop, addressName: string | undefined = undefined) {
     let timeframe: string = Localization.formatDateTimeRange(
       stop.arrivalTimeFrame
     );
@@ -519,20 +585,24 @@ export class RoutePlanningStore {
     let rows = [
       {
         headline: addressName ?? "",
-        value: stop.location.address.formattedString()
+        value: stop.location.address.toString()
       },
       { headline: Localization.sharedValue("TimePeriod"), value: timeframe }
     ];
 
-    if (stop instanceof RoutePlanRouteStop && stop.route) {
+    if (stop instanceof RouteStop && stop.estimates != null) {
       rows.push({
         headline: Localization.sharedValue("Expected_Arrival"),
-        value: Localization.formatTime(stop.estimates.arrival)
+        value: Localization.formatTime(stop.estimates.arrivalTime)
       });
-      rows.push({
-        headline: Localization.sharedValue("Expected_TaskTimeStart"),
-        value: Localization.formatTime(stop.estimates.arrival.plus(stop.estimates.waitingTime))
-      });
+
+      if (stop.estimates.waitingTime != null) {
+        rows.push({
+          headline: Localization.sharedValue("Expected_TaskTimeStart"),
+          value: Localization.formatTime(stop.estimates.arrivalTime.plus(stop.estimates.waitingTime))
+        });
+      }
+
       rows.push({
         headline: Localization.sharedValue("Expected_DrivingTime"),
         value: Localization.formatDuration(stop.estimates.drivingTime)
@@ -546,30 +616,10 @@ export class RoutePlanningStore {
         value: Localization.formatDuration(stop.estimates.waitingTime)
       });
 
-      rows.push({
-        headline: Localization.sharedValue("Colli_Count"),
-        value: stop.colliCount.toString()
-      });
-      rows.push({
-        headline: Localization.sharedValue("Order_Count"),
-        value: stop.orderIds.length.toString()
-      });
-      rows.push({
-        headline: Localization.sharedValue("Distance"),
-        value: Localization.formatDistance(stop.estimates.distance)
-      });
-
-      if (stop.weight) {
+      if (stop.estimates.distance != null) {
         rows.push({
-          headline: Localization.sharedValue("Weight"),
-          value: Localization.formatWeight(stop.weight)
-        });
-      }
-
-      if (stop.volume) {
-        rows.push({
-          headline: Localization.sharedValue("Volume"),
-          value: Localization.formatVolume(stop.volume)
+          headline: Localization.sharedValue("Distance"),
+          value: Localization.formatDistance(stop.estimates.distance)
         });
       }
     }
@@ -577,43 +627,35 @@ export class RoutePlanningStore {
     return rows;
   }
 
-  getRouteRows(route: RoutePlanRoute) {
+  getRouteRows(route: RouteBase) {
+    var drivingTime = 0;
+    let taskTime = 0;
+    let waitingTime = 0;
+    let distance = 0;
+
+    for (const stop of route.stops as RouteStop[]) {
+      drivingTime += stop.estimates!.drivingTime?.as("seconds") ?? 0;
+      taskTime += stop.estimates!.taskTime?.as("seconds") ?? 0;
+      waitingTime += stop.estimates!.waitingTime?.as("seconds") ?? 0;
+      distance += stop.estimates!.distance ?? 0;
+    }
+
     return [
       {
-        headline: Localization.sharedValue("Expected_TimePeriod"),
-        value: Localization.formatTimeRange(route.meta.timeFrame)
-      },
-      {
         headline: Localization.sharedValue("Expected_DrivingTime"),
-        value: Localization.formatDuration(route.meta.drivingTime)
+        value: Localization.formatDuration(Duration.fromObject({ seconds: drivingTime }))
       },
       {
         headline: Localization.sharedValue("Expected_TaskTime"),
-        value: Localization.formatDuration(route.meta.taskTime)
+        value: Localization.formatDuration(Duration.fromObject({ seconds: taskTime }))
       },
       {
         headline: Localization.sharedValue("Expected_WaitingTime"),
-        value: Localization.formatDuration(route.meta.waitingTime)
-      },
-      {
-        headline: Localization.sharedValue("Colli_Count"),
-        value: route.meta.colliCount.toString()
-      },
-      {
-        headline: Localization.sharedValue("Order_Count"),
-        value: route.meta.orderCount.toString()
+        value: Localization.formatDuration(Duration.fromObject({ seconds: waitingTime }))
       },
       {
         headline: Localization.sharedValue("Total_Distance"),
-        value: Localization.formatDistance(route.meta.distance)
-      },
-      {
-        headline: Localization.sharedValue("Total_Weight"),
-        value: Localization.formatWeight(route.meta.weight)
-      },
-      {
-        headline: Localization.sharedValue("Total_Volume"),
-        value: Localization.formatVolume(route.meta.volume)
+        value: Localization.formatDistance(distance)
       }
     ];
   }
@@ -623,15 +665,13 @@ export class RoutePlanningStore {
     this.approving = true;
     this.error = undefined;
 
-    let items: { [Key: string]: string } = {
-      id: this.plan.id
-    };
-
-    let response = await fetch(
+    await fetch(
       Base.url("RoutePlanning/plans/approve"),
-      Base.defaultConfig(items)
+      Base.defaultConfig([])
     );
 
+    // FIXME: Approval flow
+    /*
     if (!response.ok) {
       this.error = Localization.sharedValue("Error_General");
     } else {
@@ -640,5 +680,6 @@ export class RoutePlanningStore {
     }
 
     this.approving = false;
+    */
   }
 }

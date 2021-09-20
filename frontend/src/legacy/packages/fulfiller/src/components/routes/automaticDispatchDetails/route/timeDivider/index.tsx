@@ -13,7 +13,7 @@ export default class RoutePlanningTimeDividerComponent extends React.Component<
 > {
   render() {
     let lines: JSX.Element[] = [];
-    let totalMinutes = this.props.store.plan.meta.timeFrame.duration.as(
+    let totalMinutes = this.props.store.timeFrame.duration.as(
       "minutes"
     );
     let divisions = Math.min(Math.ceil(totalMinutes / 30), 200);

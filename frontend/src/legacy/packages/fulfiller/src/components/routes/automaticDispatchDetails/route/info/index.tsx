@@ -1,12 +1,12 @@
 import React from "react";
 import "./styles.scss";
-import { RoutePlanRoute } from "shared/src/model/logistics/routePlanning";
 import { observer } from "mobx-react";
 import { RoutePlanningStore } from "../../store";
+import { RouteBase } from "app/model/route";
 
 interface Props {
   store: RoutePlanningStore;
-  route: RoutePlanRoute;
+  route: RouteBase;
 }
 
 @observer

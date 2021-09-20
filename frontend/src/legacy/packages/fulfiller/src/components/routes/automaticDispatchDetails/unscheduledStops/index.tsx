@@ -15,14 +15,16 @@ export default class RoutePlanningUnscheduledStopsComponent extends React.Compon
 > {
   renderStops() {
     let components: JSX.Element[] = [];
-    let unscheduledTasks = this.props.store.plan.unscheduledTasks;
+    let unscheduledShipments = this.props.store.plan.unscheduledShipments;
 
-    for (let i = 0; i < unscheduledTasks.length; i++) {
-      const task = unscheduledTasks[i];
+    for (let i = 0; i < unscheduledShipments.length; i++) {
+      const task = unscheduledShipments[i]["shipment"];
+
       components.push(
         <Stop
           store={this.props.store}
-          task={unscheduledTasks[i]}
+          task={unscheduledShipments[i]}
+          taskNumber={i + 1}
           key={"unscheduledStop_" + task.delivery.id}
         />
       );

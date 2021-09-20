@@ -1,13 +1,14 @@
 import React from "react";
 import "./styles.scss";
 import { observer } from "mobx-react";
-import { RoutePlanUnscheduledTask } from "shared/src/model/logistics/routePlanning";
 import Localization from "shared/src/localization";
 import { RoutePlanningStore } from "../../store";
+import { Shipment } from "app/model/shipment";
 
 interface Props {
-  task: RoutePlanUnscheduledTask;
+  task: { shipment: Shipment; reasons: string[] };
   store: RoutePlanningStore;
+  taskNumber: number;
 }
 @observer
 export default class RoutePlanningRoutesStopComponent extends React.Component<
@@ -15,11 +16,11 @@ export default class RoutePlanningRoutesStopComponent extends React.Component<
 > {
   onDragStart(e: React.DragEvent<HTMLDivElement>) {
     e.dataTransfer.setData("type", "UnscheduledTask");
-    e.dataTransfer.setData("index", String(this.props.task.taskNumber - 1));
+    e.dataTransfer.setData("index", String(this.props.taskNumber - 1));
   }
 
   render() {
-    const stop = this.props.task.delivery;
+    const stop = this.props.task["shipment"].delivery;
 
     return (
       <div

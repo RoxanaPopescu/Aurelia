@@ -12,6 +12,12 @@ export class RouteInfo extends RouteBase
     {
         const stops = data.stops?.map((s, i: number) => new RouteStop(s, i + 1)) ?? [];
         super(data, stops);
+
+        for (const stop of stops)
+        {
+            stop.route = this;
+        }
+
         this.stopCount = data.stopCount;
         if (data.startLocation)
         {

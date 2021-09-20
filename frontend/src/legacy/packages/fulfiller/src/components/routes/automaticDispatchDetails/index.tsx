@@ -9,8 +9,7 @@ import {
   ButtonType
 } from "shared/src/webKit";
 import H from "history";
-import { AutomaticDispatchService } from "app/model/automatic-dispatch";
-import { observable } from "mobx";
+import { RoutePlanningStore } from "./store";
 
 interface Props {
   history: H.History;
@@ -23,22 +22,16 @@ export default class RoutePlanningDetailsComponent extends React.Component<
   Props
 > {
   private id: string;
-  private service: AutomaticDispatchService;
-  @observable
-  private loading = true;
-  private error: string | undefined;
+
+  store: RoutePlanningStore;
 
   constructor(props: Props) {
     super(props);
 
     this.id = props.match.params.id;
-    this.service = props.match.params.automaticDispatchService;
+    this.store = new RoutePlanningStore(props.match.params.automaticDispatchService);
 
-    console.log("YOLO!!!", props.match.params);
-
-    document.title = Localization.operationsValue(
-      "RoutePlanning_RoutePlan_Details_Title"
-    );
+    document.title = "Automatic dispatch job";
   }
 
   componentDidMount() {
@@ -46,29 +39,21 @@ export default class RoutePlanningDetailsComponent extends React.Component<
   }
 
   async fetchResult() {
-    try {
-      await this.service.get(this.id);
-    } catch {
-      this.error = Localization.sharedValue(
-        "Error_General"
-      );
-    } finally {
-      this.loading = false;
-    }
+    this.store.fetch(this.id);
   }
 
   render() {
-    if (this.loading) {
+    if (this.store.loading) {
       return (
         <LoadingInline/>
       );
     }
 
-    if (this.error != null) {
+    if (this.store.initialError) {
       return (
-        <ErrorInline description={this.error}>
+        <ErrorInline title={this.store.initialError}>
           <Button
-            onClick={() => this.fetchResult()}
+            onClick={() => this.store.fetch(this.props.match.params.id)}
             type={ButtonType.Action}
           >
             {Localization.sharedValue("Retry")}
@@ -77,11 +62,22 @@ export default class RoutePlanningDetailsComponent extends React.Component<
       );
     }
 
-    let store: any = "";
+    if (this.store.job.status.slug != "succeeded") {
+      return (
+        <ErrorInline title={`This job is not ready (${this.store.job.status.slug})`} description={this.store.job.name}>
+          <Button
+            onClick={() => this.store.fetch(this.props.match.params.id)}
+            type={ButtonType.Action}
+          >
+            {Localization.sharedValue("Retry")}
+          </Button>
+        </ErrorInline>
+      );
+    }
 
     return (
       <React.Fragment>
-        <RoutePlanningPlanComponent history={this.props.history} store={store} />
+        <RoutePlanningPlanComponent history={this.props.history} store={this.store} />
       </React.Fragment>
     );
   }

@@ -16,8 +16,8 @@ export default class TimeHeaderComponent extends React.Component<Props> {
       return;
     }
 
-    const meta = this.props.store.plan.meta;
-    const fromMinute = meta.timeFrame.from!.minute;
+    const timeFrame = this.props.store.timeFrame;
+    const fromMinute = timeFrame.from!.minute;
     const maxMinutes = 20;
     const minMinutes = 10;
 
@@ -32,7 +32,7 @@ export default class TimeHeaderComponent extends React.Component<Props> {
       times.push(Duration.fromObject({ minutes: minutes }));
     }
 
-    let remainingDuration = meta.timeFrame.duration.minus(times[0]);
+    let remainingDuration = timeFrame.duration.minus(times[0]);
     let remainingHours = Math.floor(remainingDuration.as("hours"));
     const remainingMinutes = remainingDuration
       .minus(Duration.fromObject({ hours: remainingHours }))
@@ -55,7 +55,7 @@ export default class TimeHeaderComponent extends React.Component<Props> {
     // Add last one with no width. This will render the last time
     times.push(Duration.fromObject({ minutes: 0 }));
 
-    let current = meta.timeFrame.from!;
+    let current = timeFrame.from!;
     for (let time of times) {
       let formattedDate = Localization.formatTime(current);
       components.push(

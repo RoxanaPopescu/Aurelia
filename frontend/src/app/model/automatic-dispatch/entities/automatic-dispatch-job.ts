@@ -1,6 +1,7 @@
 import { AutomaticDispatchJobResult, AutomaticDispatchJobStatus } from "..";
 
-export class AutomaticDispatchJob {
+export class AutomaticDispatchJob
+{
     /**
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
@@ -9,6 +10,8 @@ export class AutomaticDispatchJob {
     {
         this.id = data.id;
         this.status = new AutomaticDispatchJobStatus(data.status);
+        this.name = data.name;
+
         if (data.result != null)
         {
             this.result = new AutomaticDispatchJobResult(data.result);
@@ -19,6 +22,11 @@ export class AutomaticDispatchJob {
      * The GUID id
      */
     public id: string;
+
+    /**
+     * The name identifying the job.
+     */
+    public readonly name: string;
 
     /**
      * The status of the route plan.
