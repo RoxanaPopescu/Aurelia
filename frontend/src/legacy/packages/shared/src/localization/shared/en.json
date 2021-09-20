@@ -65,6 +65,7 @@
   "Error_LoginIncorrect": "Incorrect login",
   "Error_LoginIncorrectType": "Your login type is of \"{login_type}\" and does not work on the \"{type}\" page.",
   "Error_NoResults": "No results",
+  "Error_ResourceNotFound": "Resource not found",
   "Error_RouteNotFound": "Route not found.",
   "Error_WrongCurrentPassword": "Your current provided password is wrong",
   "EstimatedTime_Arrival": "Estimated arrival",

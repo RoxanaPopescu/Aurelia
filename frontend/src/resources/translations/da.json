@@ -960,6 +960,7 @@
   "./app/model/automatic-dispatch/resources/strings/route-plan-status-names:succeeded": "Lykkedes",
   "./app/model/automatic-dispatch/resources/strings/route-plan-status-names:failed": "Fejlede",
   "./app/model/automatic-dispatch/resources/strings/route-plan-status-names:cancelled": "Annulleret",
+  "./app/model/automatic-dispatch/resources/strings/route-plan-status-names:waitingForApproval": "Venter på godkendelse",
   "./app/model/collection-point/resources/strings/order-status-names:readyForCollection": "Klar til afhentning",
   "./app/model/collection-point/resources/strings/order-status-names:collected": "Afhentet",
   "./app/model/collection-point/resources/strings/order-status-names:missing": "Mangler",

@@ -960,6 +960,7 @@
   "./app/model/automatic-dispatch/resources/strings/route-plan-status-names:succeeded": "Succeeded",
   "./app/model/automatic-dispatch/resources/strings/route-plan-status-names:failed": "Failed",
   "./app/model/automatic-dispatch/resources/strings/route-plan-status-names:cancelled": "Cancelled",
+  "./app/model/automatic-dispatch/resources/strings/route-plan-status-names:waitingForApproval": "Waiting for approval",
   "./app/model/collection-point/resources/strings/order-status-names:readyForCollection": "Ready for collection",
   "./app/model/collection-point/resources/strings/order-status-names:collected": "Collected",
   "./app/model/collection-point/resources/strings/order-status-names:missing": "Missing",

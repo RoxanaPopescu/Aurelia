@@ -2,5 +2,6 @@
     "processing": "Processing",
     "succeeded": "Succeeded",
     "failed": "Failed",
-    "cancelled": "Cancelled"
+    "cancelled": "Cancelled",
+    "waitingForApproval": "Waiting for approval"
 }

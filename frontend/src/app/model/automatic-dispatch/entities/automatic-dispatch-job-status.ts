@@ -59,6 +59,11 @@ export class AutomaticDispatchJobStatus
         {
             name: statusNames.cancelled,
             accent: "neutral"
+        },
+        "waiting-for-approval":
+        {
+            name: statusNames.waitingForApproval,
+            accent: "neutral"
         }
     };
 }

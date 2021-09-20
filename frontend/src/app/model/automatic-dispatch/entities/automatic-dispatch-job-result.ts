@@ -10,7 +10,8 @@ export class AutomaticDispatchJobResult
     public constructor(data: any)
     {
         this.routes = data.routes.map(r => new Route(r));
-        this.unscheduledShipments = data.unscheduledShipments.map((s: any) => {
+        this.unscheduledShipments = data.unscheduledShipments.map((s: any) =>
+        {
             return { shipment: new Shipment(s), reasons: s.reasons };
         });
     }
