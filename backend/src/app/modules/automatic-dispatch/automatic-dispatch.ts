@@ -14,7 +14,7 @@ export class AutomaticDispatchModule extends AppModule
          */
         this.router.get("/v2/automatic-dispatch/jobs", async context =>
         {
-            context.authorize("view-routes");
+            await context.authorize("view-routes");
 
             const result = await this.apiClient.get("automatic-dispatch/jobs",
             {
@@ -33,7 +33,7 @@ export class AutomaticDispatchModule extends AppModule
          */
         this.router.get("/v2/automatic-dispatch/jobs/:id", async context =>
         {
-            context.authorize("view-routes");
+            await context.authorize("view-routes");
 
             const result = await this.apiClient.get(`automatic-dispatch/jobs/${context.params.id}`,
             {
@@ -50,7 +50,7 @@ export class AutomaticDispatchModule extends AppModule
          */
         this.router.post("/v2/automatic-dispatch/jobs/start-manual", async context =>
         {
-            context.authorize("edit-routes");
+            await context.authorize("edit-routes");
 
             const activeRouteIds: string[] = context.request.body.activeRouteIds;
             const addRouteIds: string[] = context.request.body.addRouteIds;
