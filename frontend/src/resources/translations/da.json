@@ -1259,7 +1259,7 @@
   "./app/modules/routes/resources/strings/route-titles:newTemplate": "Ny skabelon",
   "./app/modules/routes/resources/strings/route-titles:templateDetails": "Details — Templates",
   "./app/modules/routes/resources/strings/route-titles:autoDispatch": "Automatisk tildeling",
-  "./app/modules/routes/resources/strings/route-titles:autoContractorAssignment": "Auto transportør tildeling",
+  "./app/modules/routes/resources/strings/route-titles:autoContractorAssignment": "Auto leverandør tildeling",
   "./app/modules/routes/resources/strings/route-titles:automaticDispatch": "Automatisk disponering",
   "./app/modules/routes/resources/strings/route-titles:automaticDispatchJob": "Automatisk dispatch job",
   "./app/modules/routes/resources/strings/route-titles:dispatch": "Express-disponering",
