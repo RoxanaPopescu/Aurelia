@@ -31,7 +31,7 @@ export class AutomaticDispatchJob
     /**
      * The status of the route plan.
      */
-    public readonly status: AutomaticDispatchJobStatus;
+    public status: AutomaticDispatchJobStatus;
 
     /**
      * The result - only exist if status is succeded

@@ -273,12 +273,12 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
           </div>
           {Profile.claims.has("create-routeplan-simulation") &&
           <div className="c-routePlanning-routes-list-bottomBar">
-            {(this.props.store.job.status.slug as any) == "FIXME: Approval flow" &&
+            {this.props.store.job.status.slug == "waiting-for-approval" &&
               <Button
                 loading={this.props.store.approving}
                 type={ButtonType.Action}
                 onClick={() => {
-                  if (confirm("Sikker på du vil godkende denne plan?")) {
+                  if (confirm(Localization.operationsValue("RoutePlanning_ApprovalValidation"))) {
                     this.props.store.approvePlan();
                   }
                 }}

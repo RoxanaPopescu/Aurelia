@@ -1,5 +1,6 @@
 {
   "Agremeents_List_Title": "Aftaler",
+  "AutomaticDispatch_JobNotReady": "Dette job er ikke klar",
   "Communication_Consignor_ChooseConsignor_Headline": "Vælg afsender",
   "Communication_Consignor_ChooseConsignor_Placeholder": "Vælg afsender",
   "Communication_Consignor_Event_Delay_DelayThreshold": "Hvor længe skal levering være forsinket, inden beskeden sendes?",
@@ -292,7 +293,9 @@
   "Profile_GeneralInformation_Name": "Navn:",
   "Profile_GeneralInformation_Username": "Brugernavn:",
   "Profile_Title": "Profil",
+  "RoutePlanning_ApprovalValidation": "Vil du godkende denne plan?",
   "RoutePlanning_ApproveButton": "Godkend ruteplan",
+  "RoutePlanning_Approved": "Planen er godkendt",
   "RoutePlanning_Approving": "Godkender...",
   "RoutePlanning_Depots_List_TotalCount": "{count} distributionscentre",
   "RoutePlanning_RoutePlan_Details_Title": "Route plan",
