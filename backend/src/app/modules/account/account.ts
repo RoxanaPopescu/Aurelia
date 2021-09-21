@@ -27,7 +27,8 @@ export class AccountModule extends AppModule
                 fullName: context.request.body.fullName,
                 preferredName: context.request.body.preferredName,
                 email: context.request.body.email,
-                password: context.request.body.password
+                password: context.request.body.password,
+                confirmEmailUrl: context.request.body.confirmEmailUrl
             }
         });
 

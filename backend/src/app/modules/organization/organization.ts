@@ -24,8 +24,7 @@ export class OrganizationModule extends AppModule
             {
                 organizationType: context.request.body.type,
                 name: context.request.body.name,
-                initialOwnerUserId: context.user!.id,
-                confirmEmailUrl: context.request.body.confirmEmailUrl
+                initialOwnerUserId: context.user!.id
             }
         });
 
