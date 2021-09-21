@@ -55,7 +55,13 @@ export class AccountService
     {
         await this._apiClient.post("account/forgot-password",
         {
-            body: { email }
+            body:
+            {
+                email,
+
+                // TODO: This should take into account the baseUrl.
+                changePasswordUrl: `${location.protocol}//${location.host}/account/change-password?token={token}`
+            }
         });
     }
 
@@ -69,7 +75,7 @@ export class AccountService
     {
         const result = await this._apiClient.post("account/change-password",
         {
-            body: { newPassword, token }
+            body: { token, newPassword }
         });
 
         return result.data;

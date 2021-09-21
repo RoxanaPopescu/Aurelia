@@ -24,7 +24,8 @@ export class OrganizationModule extends AppModule
             {
                 organizationType: context.request.body.type,
                 name: context.request.body.name,
-                initialOwnerUserId: context.user!.id
+                initialOwnerUserId: context.user!.id,
+                confirmEmailUrl: context.request.body.confirmEmailUrl
             }
         });
 
@@ -125,7 +126,8 @@ export class OrganizationModule extends AppModule
             body:
             {
                 organizationId: context.params.organizationId,
-                name: context.request.body.name
+                name: context.request.body.name,
+                confirmEmailUrl: context.request.body.confirmEmailUrl
             }
         });
 

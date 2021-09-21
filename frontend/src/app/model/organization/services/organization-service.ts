@@ -40,7 +40,13 @@ export class OrganizationService
     {
         const result = await this._apiClient.post("organizations/create",
         {
-            body: organizationInit
+            body:
+            {
+                ...organizationInit,
+
+                // TODO: This should take into account the baseUrl.
+                confirmEmailUrl: `${location.protocol}//${location.host}/account/confirm-email?token={token}`
+            }
         });
 
         return new OrganizationInfo(result.data);
@@ -101,7 +107,13 @@ export class OrganizationService
 
         await this._apiClient.post(`organizations/${organizationId}/profile/save`,
         {
-            body: profile
+            body:
+            {
+                ...profile,
+
+                // TODO: This should take into account the baseUrl.
+                confirmEmailUrl: `${location.protocol}//${location.host}/account/confirm-email?token={token}`
+            }
         });
     }
 
