@@ -8,10 +8,11 @@ export class AccountModule extends AppModule
 {
     /**
      * Creates a new user with the specified name, email and password.
-     * @param context.body.fullName The full name of the user.
-     * @param context.body.preferredName The preferred name of the user.
-     * @param context.body.email The email identifying the user.
-     * @param context.body.password The password specified by the user.
+     * @param context.request.body.fullName The full name of the user.
+     * @param context.request.body.preferredName The preferred name of the user.
+     * @param context.request.body.email The email identifying the user.
+     * @param context.request.body.password The password specified by the user.
+     * @param context.request.body.confirmEmailUrl The URL for the "Confirm email" page.
      * @returns
      * - 204: No content
      *   The client may now authenticate using the email and password.
@@ -37,7 +38,7 @@ export class AccountModule extends AppModule
 
     /**
      * Confirms the email address of a user, by verifying the specified token.
-     * @param context.body.token The token specified in the confirmation link sent to the user.
+     * @param context.request.body.token The token specified in the confirmation link sent to the user.
      * @returns
      * - 204: No content
      *   The client may now show a sign-in view, if not already authenticated.
@@ -57,7 +58,8 @@ export class AccountModule extends AppModule
 
     /**
      * Requests password recovery for the user with the specified email.
-     * @param context.body.email The email address identifying the user.
+     * @param context.request.body.email The email address identifying the user.
+     * @param context.request.body.changePasswordUrl The URL for the "Change password" page.
      * @returns
      * - 204: No content
      *   An email will be sent to the user, with a link they can use to change their password.
@@ -79,8 +81,8 @@ export class AccountModule extends AppModule
 
     /**
      * Changes the password for the user identified by the specified token.
-     * @param context.body.password The new password chosen by the user.
-     * @param context.body.token The token specified in the recovery link sent to the user.
+     * @param context.request.body.password The new password chosen by the user.
+     * @param context.request.body.token The token specified in the recovery link sent to the user.
      * @returns
      * - 200: The email address of the user for which the password was changed.
      *   The client may now authenticate using the email and password.
@@ -107,8 +109,8 @@ export class AccountModule extends AppModule
 
     /**
      * Changes the password for the current user, or the user identified by the specified token.
-     * @param context.body.currentPassword The new password chosen by the user.
-     * @param context.body.newPassword The token specified in the recovery link sent to the user, or undefined if already authenticated.
+     * @param context.request.body.currentPassword The new password chosen by the user.
+     * @param context.request.body.newPassword The token specified in the recovery link sent to the user, or undefined if already authenticated.
      * @returns
      * - 200: No content
      */
@@ -180,7 +182,8 @@ export class AccountModule extends AppModule
 
     /**
      * Saves the profile for the current user.
-     * @param context.body The profile to save.
+     * @param context.request.body The profile to save.
+     * @param context.request.body.confirmEmailUrl The URL for the "Confirm email" page.
      * @returns
      * - 204: No content
      */
@@ -197,6 +200,7 @@ export class AccountModule extends AppModule
                 fullName: context.request.body.fullName,
                 preferredName: context.request.body.preferredName,
                 pictureUrl: context.request.body.pictureUrl,
+                confirmEmailUrl: context.request.body.confirmEmailUrl,
                 settings:
                 {
                     locale: context.request.body.settings.localeCode,

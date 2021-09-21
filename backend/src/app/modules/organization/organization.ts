@@ -125,8 +125,7 @@ export class OrganizationModule extends AppModule
             body:
             {
                 organizationId: context.params.organizationId,
-                name: context.request.body.name,
-                confirmEmailUrl: context.request.body.confirmEmailUrl
+                name: context.request.body.name
             }
         });
 
@@ -138,6 +137,7 @@ export class OrganizationModule extends AppModule
      * Sends the specified invite.
      * @param context.params.organizationId The ID of the organization.
      * @param context.request.body The invite to send.
+     * @param context.request.body.acceptUrl The URL for the "Accept invite" page.
      * @returns
      * - 200: An object representing the new user.
      */
