@@ -6,7 +6,7 @@ import "inert-polyfill";
 
 import { PLATFORM, Aurelia, Container, LogManager } from "aurelia-framework";
 import { Settings as LuxonSettings } from "luxon";
-import { Log, LogAppender, Cookies, ApiClient, ResponseStubInterceptor } from "shared/infrastructure";
+import { Log, LogAppender, Cookies, ApiClient, ResponseStubInterceptor, HistoryHelper } from "shared/infrastructure";
 import { ThemeService, ITheme } from "shared/framework";
 import { LocaleService, Locale, CurrencyService, Currency } from "shared/localization";
 import { GoogleMapsService } from "shared/google-maps";
@@ -307,12 +307,13 @@ async function setTheme(newTheme: ITheme, oldTheme: ITheme | undefined, finish: 
 
 /**
  * Called before the identity changes.
- * This prepares the app for the new identity, if any.
+ * This prepares the app for the new identity, or if no new identity is set, navigates to the sign-in page.
  * @param newIdentity The new identity that was authenticated, if any.
  * @param oldIdentity The old identity that was unauthenticated, if any.
  * @param finish A function that, if called, finishes the change immediately.
+ * @returns A promise that will never be resolved after navigating to the the sign-in page.
  */
-function setIdentity(newIdentity: Identity | undefined, oldIdentity: Identity | undefined, finish: () => void): void
+async function setIdentity(newIdentity: Identity | undefined, oldIdentity: Identity | undefined, finish: () => void): Promise<void>
 {
     if (newIdentity != null)
     {
@@ -323,5 +324,9 @@ function setIdentity(newIdentity: Identity | undefined, oldIdentity: Identity | 
     {
         // Reset the identity associated with log entries.
         Log.setUser(undefined);
+
+        // Navigate to the sign-in page.
+        const historyHelper = Container.instance.get(HistoryHelper);
+        await historyHelper.navigate("/account/sign-in");
     }
 }

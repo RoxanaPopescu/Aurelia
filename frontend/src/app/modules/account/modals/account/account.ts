@@ -249,22 +249,32 @@ export class AccountModalPanel
     }
 
     /**
+     * Called when the `Sign out` button is pressed.
+     * Saves changes, then signs the user out.
+     */
+    protected async onSignOutClick(): Promise<void>
+    {
+        // Save any changes made to the profile, then sign out.
+        await this.saveChanges(true, undefined);
+    }
+
+    /**
      * Called when the user select an organization from the `Sign-out` menu.
-     * Signs the user out of the current organization, and in to the specified organization.
+     * Saves changes, then signs the user out of the current organization, and in to the specified organization.
      * @param organization The organization that was selected.
      */
     protected async onOrganizationSelect(organization: OrganizationInfo): Promise<void>
     {
-        // Save any changes made to the profile,
-        // then reload the app with the new organization.
-        await this.saveChanges(organization.id);
+        // Save any changes made to the profile, then reload the app with the new organization.
+        await this.saveChanges(false, organization.id);
     }
 
     /**
      * Saves the changes made to the settings.
+     * @param shouldSignOut True to sign the user out, once changes have been saved.
      * @param newOrganizationId The ID of the organization to switch to, once changes have been saved.
      */
-    private async saveChanges(newOrganizationId?: string): Promise<void>
+    private async saveChanges(shouldSignOut?: boolean, newOrganizationId?: string): Promise<void>
     {
         // Activate validation so any further changes will be validated immediately.
         this.validation.active = true;
@@ -294,8 +304,11 @@ export class AccountModalPanel
                 await this._accountService.changePasswordUsingCurrentPassword(this.settingsModel.currentPassword!, this.newPassword);
             }
 
-            // Reauthenticate to ensure we get the updated identity.
-            await this._identityService.reauthorize();
+            if (!shouldSignOut)
+            {
+                // Reauthenticate to ensure we get the updated identity.
+                await this._identityService.reauthorize();
+            }
 
             const changePromises: Promise<any>[] = [];
 
@@ -342,15 +355,22 @@ export class AccountModalPanel
             this._modal.busy = false;
         }
 
-        if (newOrganizationId != null && this._result === true)
+        if (this._result === true)
         {
-            // Authorize for the specified organization.
-            const success = await this._identityService.authorize(newOrganizationId);
-
-            if (success)
+            if (shouldSignOut)
             {
-                // Reload the app.
-                location.reload();
+                await this._historyHelper.navigate("/account/sign-out");
+            }
+            else if (newOrganizationId != null)
+            {
+                // Authorize for the specified organization.
+                const success = await this._identityService.authorize(newOrganizationId);
+
+                if (success)
+                {
+                    // Reload the app.
+                    location.reload();
+                }
             }
         }
     }

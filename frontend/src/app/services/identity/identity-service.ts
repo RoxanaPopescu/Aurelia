@@ -442,7 +442,7 @@ export class IdentityService
 
         if (tokens != null)
         {
-            const padding = Duration.fromObject({ minutes: 2 });
+            const padding = Duration.fromObject({ minutes: 5 });
             const expires = tokens.accessTokenExpires?.diffNow().minus(padding).valueOf();
 
             if (expires && expires < 0)
