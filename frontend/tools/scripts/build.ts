@@ -88,7 +88,7 @@ const compilerOptions: ICompilerOptions =
                 sentry:
                 {
                     dsn: "https://e1c6cac2640e4683b490730936816c46@sentry.io/1430333",
-                    eventUrlPattern: "https://sentry.io/organizations/lingu-io/issues/?project=1430333&query={id}"
+                    eventUrlPattern: "https://sentry.io/organizations/mover-systems-aps/issues/?project=1430333&query={id}"
                 }
             }
         }
