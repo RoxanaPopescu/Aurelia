@@ -95,15 +95,37 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
         issuer: options.issuer
     };
 
-    const jwksRsaClient = jwksRsa(
-    {
-        jwksUri: settings.app.oAuth.jwksUri
-    });
+    let jwksRsaClient = jwksRsa({ jwksUri: settings.app.oAuth.jwksUri });
 
     const getKeyFunc = (header: any, callback: any) =>
     {
-        jwksRsaClient.getSigningKey(header.kid, (error: any, key: any) =>
-            callback(error, key?.publicKey || key?.rsaPublicKey));
+        // Try to get the signing key.
+        jwksRsaClient.getSigningKey(header.kid, (error1: any, key1: any) =>
+        {
+            if (error1)
+            {
+                // Try recreating the client, as potential workaround for
+                // https://github.com/auth0/node-jwks-rsa/issues/257
+
+                jwksRsaClient = jwksRsa({ jwksUri: settings.app.oAuth.jwksUri });
+
+                // Try fetching the signing key again.
+                jwksRsaClient.getSigningKey(header.kid, (error2: any, key2: any) =>
+                {
+                    if (error1)
+                    {
+                        // Recreate the client again, before giving up.
+                        jwksRsaClient = jwksRsa({ jwksUri: settings.app.oAuth.jwksUri });
+                    }
+
+                    callback(error2, key2?.publicKey || key2?.rsaPublicKey);
+                });
+            }
+            else
+            {
+                callback(error1, key1?.publicKey || key1?.rsaPublicKey);
+            }
+        });
     };
 
     return async (context, next) =>
