@@ -47,7 +47,7 @@ export class AccountModule extends AppModule
     {
         await this.apiClient.post("identity/account/confirmuseraccount",
         {
-            query:
+            body:
             {
                 token: context.request.body.token
             }
