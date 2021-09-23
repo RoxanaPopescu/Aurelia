@@ -249,11 +249,12 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
                     </div>
                     <div className="c-routePlanning-routes-list-headerInfo-fade" />
                   </div>
-                  {this.props.store.plan.routes.map(route => (
+                  {this.props.store.plan.routes.map((route, index) => (
                     <RouteInfoComponent
                       store={this.props.store}
                       key={route.id}
                       route={route}
+                      index={index}
                     />
                   ))}
                 </div>
