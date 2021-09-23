@@ -26,7 +26,7 @@ export class RouteStopInfo
             this.hidden = data.hidden;
             this.id = data.id;
             this.type = new RouteStopType(data.type);
-            this.status = new RouteStopStatus(data.status);
+            this.status = new RouteStopStatus(data.status ?? "not-visited");
             this.location = new Location(data.location);
             this.reference = data.reference;
 

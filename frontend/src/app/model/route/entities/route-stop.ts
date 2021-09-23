@@ -25,11 +25,11 @@ export class RouteStop extends RouteStopBase
         {
             super(data, stopNumber, route);
 
-            this.pickups = data.pickups.map(p => new Pickup(p));
-            this.deliveries = data.deliveries.map(d => new Delivery(d));
+            this.pickups = data.pickups?.map(p => new Pickup(p)) ?? [];
+            this.deliveries = data.deliveries?.map(d => new Delivery(d)) ?? [];
             this.actions = new RouteStopActions(data.actions);
-            this.deviations = data.deviations.map(p => new RouteStopDeviation(p));
-            this.selfies = data.selfies.map(p => new Photo(p));
+            this.deviations = data.deviations?.map(p => new RouteStopDeviation(p)) ?? [];
+            this.selfies = data.selfies?.map(p => new Photo(p)) ?? [];
             this.tags = data.tags;
             this.collectionPointId = data.collectionPointId;
 

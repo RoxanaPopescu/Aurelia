@@ -5,7 +5,7 @@ import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithL
 import { MoverMarker } from "shared/src/webKit";
 import Localization from "shared/src/localization";
 import { AutomaticDispatchJob, AutomaticDispatchJobResult, AutomaticDispatchJobStatus, AutomaticDispatchService } from "app/model/automatic-dispatch";
-import { Route, RouteBase, RouteStop, RouteStopInfo } from "app/model/route";
+import { Route, RouteBase, RouteStop, RouteStopBase, RouteStopInfo } from "app/model/route";
 import { ShipmentStop } from "app/model/shipment";
 import { DateTime, Duration } from "luxon";
 import { DateTimeRange } from "shared/types";
@@ -100,7 +100,7 @@ export class RoutePlanningStore {
         let index = 0;
         for (const route of job.result.routes) {
           // Calculate timeframe
-          let timeFrame = route.estimates!.timeFrame;
+          let timeFrame = new DateTimeRange({ from: (route.stops[0] as RouteStopBase).estimates!.timeFrame.from!, to: (route.stops[route.stops.length-1] as RouteStopBase).estimates!.timeFrame.from! }, { setZone: true });
 
           if (timeFrame.from! < minimumDate)
           {
