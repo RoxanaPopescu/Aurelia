@@ -124,7 +124,7 @@ export class IdentityModule extends AppModule
         }
         catch (error)
         {
-            if (error instanceof ApiError && error.data.error === "invalid_grant")
+            if (error instanceof ApiError && error.data?.error === "invalid_grant")
             {
                 context.response.status = 401;
             }

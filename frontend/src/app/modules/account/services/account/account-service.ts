@@ -29,7 +29,13 @@ export class AccountService
     {
         await this._apiClient.post("account/create",
         {
-            body: accountInit
+            body:
+            {
+                ...accountInit,
+
+                // TODO: This should take into account the baseUrl.
+                confirmEmailUrl: `${location.protocol}//${location.host}/account/confirm-email?token={token}`
+            }
         });
     }
 

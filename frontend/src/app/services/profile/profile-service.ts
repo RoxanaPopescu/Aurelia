@@ -39,7 +39,13 @@ export class ProfileService
     {
         await this._apiClient.post("account/profile/save",
         {
-            body: profile
+            body:
+            {
+                ...profile,
+
+                // TODO: This should take into account the baseUrl.
+                confirmEmailUrl: `${location.protocol}//${location.host}/account/confirm-email?token={token}`
+            }
         });
     }
 }

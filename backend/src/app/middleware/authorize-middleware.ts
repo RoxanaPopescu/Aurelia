@@ -112,7 +112,7 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
                 // Try fetching the signing key again.
                 jwksRsaClient.getSigningKey(header.kid, (error2: any, key2: any) =>
                 {
-                    if (error1)
+                    if (error2)
                     {
                         // Recreate the client again, before giving up.
                         jwksRsaClient = jwksRsa({ jwksUri: settings.app.oAuth.jwksUri });
