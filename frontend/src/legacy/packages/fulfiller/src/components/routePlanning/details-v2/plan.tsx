@@ -285,7 +285,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
                 loading={this.props.store.approving}
                 type={ButtonType.Action}
                 onClick={() => {
-                  if (confirm("Sikker på du vil godkende denne ruteplan?")) {
+                  if (confirm(Localization.operationsValue("RoutePlanning_ApprovalValidation"))) {
                     this.props.store.approvePlan();
                   }
                 }}

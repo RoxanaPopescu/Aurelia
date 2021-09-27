@@ -45,6 +45,24 @@ export class AutomaticDispatchModule extends AppModule
         });
 
         /**
+         * Gets the automatic dispatch job by ID.
+         * @param context.params.id The ID of the automatic dispatch job to receive.
+         * @returns The automatic dispatch job of the specified ID.
+         */
+        this.router.post("/v2/automatic-dispatch/jobs/:id/approve", async context =>
+        {
+            context.authorize("edit-routes");
+
+            const result = await this.apiClient.post(`automatic-dispatch/jobs/${context.params.id}/approve`,
+            {
+                headers: { "ownerId": context.user?.outfitId }
+            });
+
+            context.response.body = result.data;
+            context.response.status = 200;
+        });
+
+        /**
          * Starts a manual automatic dispatch
          * @returns 200 when the event is received
          */

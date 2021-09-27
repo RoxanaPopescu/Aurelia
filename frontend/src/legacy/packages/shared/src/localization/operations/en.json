@@ -1,5 +1,6 @@
 {
   "Agremeents_List_Title": "Agreements",
+  "AutomaticDispatch_JobNotReady": "This job is not ready",
   "Communication_Consignor_ChooseConsignor_Headline": "Consignor",
   "Communication_Consignor_ChooseConsignor_Placeholder": "Choose consignor",
   "Communication_Consignor_Event_Delay_DelayThreshold": "How long should the delay be, before a message is sent?",
@@ -292,7 +293,9 @@
   "Profile_GeneralInformation_Name": "Name:",
   "Profile_GeneralInformation_Username": "Username:",
   "Profile_Title": "Profile",
+  "RoutePlanning_ApprovalValidation": "Do you want to approve this plan?",
   "RoutePlanning_ApproveButton": "Approve route plan",
+  "RoutePlanning_Approved": "The plan has been approved",
   "RoutePlanning_Approving": "Approving...",
   "RoutePlanning_Depots_List_TotalCount": "{count} distribution centers",
   "RoutePlanning_RoutePlan_Details_Title": "Route plan",

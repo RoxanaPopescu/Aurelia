@@ -31,11 +31,11 @@ export default class MetaHeaderComponent extends React.Component<Props> {
           }
         />
         <HeaderItemComponent
-          title={Localization.sharedValue("Unplanned_Tasks")}
+          title={Localization.sharedValue("Unplanned_Shipments")}
           description={
             this.props.store.plan.unscheduledShipments.length +
             " " +
-            Localization.sharedValue("Tasks")
+            Localization.sharedValue("Shipments")
           }
         />
       </React.Fragment>

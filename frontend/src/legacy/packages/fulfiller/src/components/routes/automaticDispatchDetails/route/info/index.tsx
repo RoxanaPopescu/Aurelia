@@ -7,6 +7,7 @@ import { RouteBase } from "app/model/route";
 interface Props {
   store: RoutePlanningStore;
   route: RouteBase;
+  index: number;
 }
 
 @observer
@@ -21,7 +22,7 @@ export default class RoutePlanningRouteInfoComponent extends React.Component<
       >
         <div className="c-routePlanning-routes-route-infoContent">
           <div className="c-routePlanning-routes-route-id">
-            {this.props.route.slug ? this.props.route.slug : "--"}
+            {this.props.index + 1}
           </div>
         </div>
       </div>

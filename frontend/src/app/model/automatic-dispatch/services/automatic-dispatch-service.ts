@@ -55,7 +55,7 @@ export class AutomaticDispatchService
     }
 
     /**
-     * Gets the specified route.
+     * Gets the specified job.
      * @param id The id identifying the automatic dispatch job.
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the automatic dispatch job.
@@ -68,6 +68,20 @@ export class AutomaticDispatchService
         });
 
         return new AutomaticDispatchJob(result.data);
+    }
+
+    /**
+     * Approves a job.
+     * @param id The id identifying the automatic dispatch job.
+     * @param signal The abort signal to use, or undefined to use no abort signal.
+     * @returns A promise that will be resolved with the automatic dispatch job.
+     */
+    public async approve(id: string, signal?: AbortSignal): Promise<void>
+    {
+        await this._apiClient.post(`automatic-dispatch/jobs/${id}/approve`,
+        {
+            signal
+        });
     }
 
     /**

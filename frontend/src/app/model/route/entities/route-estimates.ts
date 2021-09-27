@@ -58,6 +58,18 @@ export class RouteEstimates
      * The time range of the estimate
      */
     public get timeFrame(): DateTimeRange {
-        return new DateTimeRange({ from: this.arrivalTime, to: this.completionTime }, { setZone: true });
+        let fromTime = this.arrivalTime;
+
+        if (this.waitingTime != null)
+        {
+            fromTime = fromTime.minus(this.waitingTime);
+        }
+
+        if (this.drivingTime != null)
+        {
+            fromTime = fromTime.minus(this.drivingTime);
+        }
+
+        return new DateTimeRange({ from: fromTime, to: this.completionTime }, { setZone: true });
     }
 }

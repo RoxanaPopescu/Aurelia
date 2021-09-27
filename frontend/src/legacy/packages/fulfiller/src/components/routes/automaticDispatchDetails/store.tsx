@@ -3,10 +3,9 @@ import { observable, action } from "mobx";
 import { Marker, Polyline, GoogleMap } from "react-google-maps";
 import MarkerWithLabel from "react-google-maps/lib/components/addons/MarkerWithLabel";
 import { MoverMarker } from "shared/src/webKit";
-import Base from "shared/src/services/base";
 import Localization from "shared/src/localization";
-import { AutomaticDispatchJob, AutomaticDispatchJobResult, AutomaticDispatchService } from "app/model/automatic-dispatch";
-import { Route, RouteBase, RouteStop, RouteStopInfo } from "app/model/route";
+import { AutomaticDispatchJob, AutomaticDispatchJobResult, AutomaticDispatchJobStatus, AutomaticDispatchService } from "app/model/automatic-dispatch";
+import { Route, RouteBase, RouteStop, RouteStopBase, RouteStopInfo } from "app/model/route";
 import { ShipmentStop } from "app/model/shipment";
 import { DateTime, Duration } from "luxon";
 import { DateTimeRange } from "shared/types";
@@ -101,7 +100,7 @@ export class RoutePlanningStore {
         let index = 0;
         for (const route of job.result.routes) {
           // Calculate timeframe
-          let timeFrame = route.estimates!.timeFrame;
+          let timeFrame = new DateTimeRange({ from: (route.stops[0] as RouteStopBase).estimates!.timeFrame.from!, to: (route.stops[route.stops.length-1] as RouteStopBase).estimates!.timeFrame.to! }, { setZone: true });
 
           if (timeFrame.from! < minimumDate)
           {
@@ -665,21 +664,15 @@ export class RoutePlanningStore {
     this.approving = true;
     this.error = undefined;
 
-    await fetch(
-      Base.url("RoutePlanning/plans/approve"),
-      Base.defaultConfig([])
-    );
+    try {
+      await this.service.approve(this.job.id);
 
-    // FIXME: Approval flow
-    /*
-    if (!response.ok) {
+      this.toastMessage = Localization.operationsValue("RoutePlanning_Approved");
+      this.job.status = new AutomaticDispatchJobStatus("succeeded");
+    } catch {
       this.error = Localization.sharedValue("Error_General");
-    } else {
-      this.toastMessage = "Ruteplanen er godkendt";
-      this.plan.status = "succeeded";
+    } finally {
+      this.approving = false;
     }
-
-    this.approving = false;
-    */
   }
 }

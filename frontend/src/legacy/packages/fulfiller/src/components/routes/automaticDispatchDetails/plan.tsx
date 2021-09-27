@@ -249,11 +249,12 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
                     </div>
                     <div className="c-routePlanning-routes-list-headerInfo-fade" />
                   </div>
-                  {this.props.store.plan.routes.map(route => (
+                  {this.props.store.plan.routes.map((route, index) => (
                     <RouteInfoComponent
                       store={this.props.store}
                       key={route.id}
                       route={route}
+                      index={index}
                     />
                   ))}
                 </div>
@@ -273,12 +274,12 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
           </div>
           {Profile.claims.has("create-routeplan-simulation") &&
           <div className="c-routePlanning-routes-list-bottomBar">
-            {(this.props.store.job.status.slug as any) == "FIXME: Approval flow" &&
+            {this.props.store.job.status.slug == "waiting-for-approval" &&
               <Button
                 loading={this.props.store.approving}
                 type={ButtonType.Action}
                 onClick={() => {
-                  if (confirm("Sikker på du vil godkende denne plan?")) {
+                  if (confirm(Localization.operationsValue("RoutePlanning_ApprovalValidation"))) {
                     this.props.store.approvePlan();
                   }
                 }}

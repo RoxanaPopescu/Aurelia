@@ -35,7 +35,6 @@
                     <button
                         appearance="outline"
                         accent="primary"
-                        if-environment="development,preview"
                         disabled.bind="workspace.selectedExpressRoutes.length == 0 || workspace.selectedDriverRoutes.length == 0"
                         click.trigger="onStartAutomaticDispatch()"
                         translate>
