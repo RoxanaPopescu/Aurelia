@@ -836,16 +836,16 @@ workflows:
           requires:
             - client-user-management-approve-test
 
-      - bff-user-management-approve-prod:
+      - bff-user-management-approve-production:
           type: approval
-      - bff-user-management-setup-prod:
+      - bff-user-management-setup-production:
           requires:
-            - bff-user-management-approve-prod
-      - client-user-management-approve-prod:
+            - bff-user-management-approve-production
+      - client-user-management-approve-production:
           type: approval
-      - client-user-management-setup-prod:
+      - client-user-management-setup-production:
           requires:
-            - client-user-management-approve-prod
+            - client-user-management-approve-production
 
       - bff-approve-test:
           type: approval
@@ -899,14 +899,14 @@ workflows:
       - client-user-management-deploy-test:
           requires:
             - client-user-management-build-test
-      - client-user-management-build-prod:
+      - client-user-management-build-production:
           filters:
             branches:
               only:
                 - user-management
-      - client-user-management-deploy-prod:
+      - client-user-management-deploy-production:
           requires:
-            - client-user-management-build-prod
+            - client-user-management-build-production
 
   bff-build-and-deploy:
     jobs:
