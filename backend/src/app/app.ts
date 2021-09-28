@@ -13,8 +13,8 @@ import { logErrorMiddleware } from "./middleware/log-error-middleware";
 import { apiErrorMiddleware } from "./middleware/api-error-middleware";
 import { headersMiddleware } from "./middleware/headers-middleware";
 import { authorizeMiddleware } from "./middleware/authorize-middleware";
-import { sortingMiddleware } from "./middleware/sorting-middleware";
 import { pagingMiddleware } from "./middleware/paging-middleware";
+import { sortingMiddleware } from "./middleware/sorting-middleware";
 
 /**
  * Represents the app.
