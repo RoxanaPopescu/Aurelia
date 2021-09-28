@@ -41,7 +41,6 @@ export class IdentityModule extends AppModule
 
             context.response.body = await this.getAuthResponse(result);
             context.response.status = 200;
-
         }
         catch (error)
         {

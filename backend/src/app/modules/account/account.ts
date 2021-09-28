@@ -1,5 +1,6 @@
 import { AppModule } from "../../app-module";
 import { AppContext } from "../../app-context";
+import { ApiOriginError } from "../../../shared/infrastructure";
 
 /**
  * Represents a module exposing endpoints related to account management.
@@ -18,22 +19,38 @@ export class AccountModule extends AppModule
      *   The client may now authenticate using the email and password.
      *   An email will be sent to the user, with a link they can use to confirm their email address.
      *   Note that the email template will be selected based on the API key specified in the request.
+     * - 409: Conflict
+     *   An account with the specified email already exists.
      */
     public "POST /v2/account/create" = async (context: AppContext) =>
     {
-        await this.apiClient.post("identity/account/signup",
+        try
         {
-            body:
+            await this.apiClient.post("identity/account/signup",
             {
-                fullName: context.request.body.fullName,
-                preferredName: context.request.body.preferredName,
-                email: context.request.body.email,
-                password: context.request.body.password,
-                confirmEmailUrl: context.request.body.confirmEmailUrl
-            }
-        });
+                body:
+                {
+                    fullName: context.request.body.fullName,
+                    preferredName: context.request.body.preferredName,
+                    email: context.request.body.email,
+                    password: context.request.body.password,
+                    confirmEmailUrl: context.request.body.confirmEmailUrl
+                }
+            });
 
-        context.response.status = 204;
+            context.response.status = 204;
+        }
+        catch (error)
+        {
+            if (error instanceof ApiOriginError && "DuplicateEmail" in error.data.errors)
+            {
+                context.response.status = 409;
+            }
+            else
+            {
+                throw error;
+            }
+        }
     }
 
     /**
