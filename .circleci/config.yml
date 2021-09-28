@@ -79,7 +79,7 @@ jobs:
             --parameters
             dockerImage="DOCKER|nginx"
             environment="prod"
-            serviceName=${BACKEND_NAME}
+            serviceName="bff-v3"
             dockerRegistryURL=${DOCKER_REGISTRY_PRODUCTION}
             dockerRegistryUsername=${DOCKER_REGISTRY_PRODUCTION}
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
@@ -415,7 +415,7 @@ jobs:
             --parameters
             dockerImage="DOCKER|nginx"
             environment="prod"
-            serviceName=${PROJECT_NAME}
+            serviceName="platform-v2"
             dockerRegistryURL=${DOCKER_REGISTRY_PRODUCTION}
             dockerRegistryUsername=${DOCKER_REGISTRY_PRODUCTION}
             dockerRegistryPassword=${DOCKER_REGISTRY_PASSWORD_PRODUCTION}
