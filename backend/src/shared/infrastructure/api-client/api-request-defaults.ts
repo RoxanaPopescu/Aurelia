@@ -16,6 +16,7 @@ export const apiRequestDefaults: IApiRequestOptions =
     keepalive: false,
     optional: false,
     deserialize: true,
+    highWaterMark: 1000000,
     jsonReviver: undefined,
     noi: false
 };
