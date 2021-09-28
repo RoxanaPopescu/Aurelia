@@ -24,8 +24,8 @@ import "./index.scss";
 import { PageHeaderComponent } from "shared/src/components/pageHeader";
 import { PageContentComponent } from "shared/src/components/pageContent";
 import { ButtonSize } from "../../../../../shared/src/webKit/button/index";
-import { Log } from "shared/infrastructure";
 import { Profile } from "shared/src/model/profile";
+import { Log } from "shared/infrastructure";
 
 @observer
 export default class AutoContractorComponent extends React.Component {
