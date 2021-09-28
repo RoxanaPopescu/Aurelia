@@ -21,17 +21,9 @@ export class RoutesListModule extends AppModule
             const body: any =
             {
                 slug: context.query.slug,
-                currentOutfit: context.user?.outfitId
+                currentOutfit: context.user?.outfitId,
+                fulfillerIds: [context.user?.outfitId]
             };
-
-            if (context.query.organizationType === "fulfiller")
-            {
-                body.fulfillerIds = [context.user?.outfitId];
-            }
-            else
-            {
-                body.consignorIds = [context.user?.outfitId];
-            }
 
             const result = await this.apiClient.post("logistics-platform/routes/v4/details",
             {
