@@ -904,9 +904,12 @@ workflows:
             branches:
               only:
                 - user-management
-      - client-user-management-deploy-production:
+      - client-user-management-deploy-build-production:
           requires:
             - client-user-management-build-production
+      - client-user-management-deploy-production:
+          requires:
+            - client-user-management-deploy-build-production
 
   bff-build-and-deploy:
     jobs:
