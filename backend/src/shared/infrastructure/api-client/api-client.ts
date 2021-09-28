@@ -363,8 +363,7 @@ export class ApiClient
             method,
             headers: options.headers,
             redirect: options.redirect,
-            signal: options.signal,
-            highWaterMark: options.highWaterMark
+            signal: options.signal
         };
 
         // If keepalive is enabled, use a custom HTTP or HTTPS agent.

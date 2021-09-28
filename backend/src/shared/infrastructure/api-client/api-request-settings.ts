@@ -55,12 +55,6 @@ export interface IApiRequestSettings
     deserialize?: boolean;
 
     /**
-     * The max size of the stream buffer, in bytes.
-     * The default is 1Mb.
-     */
-    highWaterMark?: number;
-
-    /**
      * The JSON reviver function to use when deserializing the body of a response.
      * The default is undefined, or the configured default value.
      */
