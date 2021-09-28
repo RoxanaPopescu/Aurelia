@@ -51,7 +51,7 @@ export class AutomaticDispatchModule extends AppModule
          */
         this.router.post("/v2/automatic-dispatch/jobs/:id/approve", async context =>
         {
-            context.authorize("edit-routes");
+            await context.authorize("edit-routes");
 
             const result = await this.apiClient.post(`automatic-dispatch/jobs/${context.params.id}/approve`,
             {
