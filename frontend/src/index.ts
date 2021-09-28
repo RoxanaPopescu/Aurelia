@@ -74,7 +74,6 @@ export async function configure(aurelia: Aurelia): Promise<void>
         }
 
         // Configure features.
-
         const apiClient = aurelia.container.get(ApiClient);
         apiClient.configure(settings.infrastructure.api);
 
