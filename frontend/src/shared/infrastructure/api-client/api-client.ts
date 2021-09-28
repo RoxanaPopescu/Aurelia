@@ -1,5 +1,6 @@
 import { Container, autoinject } from "aurelia-framework";
-import { once, delay } from "shared/utilities";
+import { MapObject } from "shared/types";
+import { once, delay, lowerCaseKeys } from "shared/utilities";
 import { IApiClientSettings, IApiEndpointSettings } from "./api-client-settings";
 import { IApiInterceptor } from "./api-interceptor";
 import { IApiRequestOptions } from "./api-request-options";
@@ -208,11 +209,12 @@ export class ApiClient
 
         mergedOptions.headers =
         {
-            ...apiRequestDefaults.headers,
-            ...this._settings.defaults?.headers,
+            ...lowerCaseKeys(apiRequestDefaults.headers),
+            ...lowerCaseKeys(this._settings.defaults?.headers),
             ...(options?.body == null || options?.body === "" ? { "content-type": undefined } : undefined),
-            ...options?.headers
-        };
+            ...lowerCaseKeys(options?.headers)
+
+        } as MapObject;
 
         for (const key of Object.keys(mergedOptions.headers))
         {
@@ -523,15 +525,21 @@ export class ApiClient
     {
         // Does the response conform to the RFC-7807 specification,
         // indicating it came from the origin server?
-        if (response != null && response.headers.get("content-type") === "application/problem+json")
+        if (response != null)
         {
-            // Does the error represent a validation error?
-            if (data?.status || response.status === 400 && data?.errors)
-            {
-                return new ApiValidationError(transient, request, response, message, data);
-            }
+            const contentType = response.headers.get("content-type");
+            const hasProblemBody = contentType != null && /^application\/problem\+json(;|$)/.test(contentType);
 
-            return new ApiOriginError(transient, request, response, message, data);
+            if (hasProblemBody)
+            {
+                // Does the error represent a validation error?
+                if (data?.status || response.status === 400 && data?.errors)
+                {
+                    return new ApiValidationError(transient, request, response, message, data);
+                }
+
+                return new ApiOriginError(transient, request, response, message, data);
+            }
         }
 
         return new ApiError(transient, request, response, message, data);

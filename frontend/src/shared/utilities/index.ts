@@ -4,6 +4,7 @@ export * from "./event-manager/event-manager";
 export * from "./get-property-value/get-property-value";
 export * from "./group-items/group-items";
 export * from "./id/id";
+export * from "./lower-case-keys/lower-case-keys";
 export * from "./map/map";
 export * from "./math/math";
 export * from "./operation/operation";

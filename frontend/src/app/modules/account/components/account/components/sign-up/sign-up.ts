@@ -165,7 +165,14 @@ export class SignUpCustomElement
             }
             catch (error)
             {
-                Log.error("An error occurred while signing up.", error);
+                if (error.response?.status === 409)
+                {
+                    Log.error("An account with the specified email already exists.");
+                }
+                else
+                {
+                    Log.error("An error occurred while signing up.", error);
+                }
 
                 return;
             }
