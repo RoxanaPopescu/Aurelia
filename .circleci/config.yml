@@ -735,7 +735,7 @@ jobs:
       - run:
           name: Set defaults
           command: az configure
-            --defaults web="client-platform-prod-v2-mover"
+            --defaults web="client-platform-v2-prod-mover"
       - run:
           name: Add docker image to build slot
           command: az webapp config container set
@@ -757,7 +757,7 @@ jobs:
       - run:
           name: Set defaults
           command: az configure
-            --defaults web="client-platform-prod-v2-mover"
+            --defaults web="client-platform-v2-prod-mover"
       - run:
           name: Start staging slot
           command: az webapp start -s staging
@@ -770,22 +770,22 @@ jobs:
       - run:
           name: Smoketest the build slot
           command: |
-            curl -f -LI https://client-platform-prod-v2-mover-build.azurewebsites.net
+            curl -f -LI https://client-platform-v2-prod-mover-build.azurewebsites.net
       - run:
           name: Swap build -> staging slot
           command: az webapp deployment slot swap
-            -n client-platform-prod-v2-mover
+            -n client-platform-v2-prod-mover
             -s build
             --action swap
             --target-slot staging
       - run:
           name: Smoketest the staging slot
           command: |
-            curl -f -LI https://client-platform-prod-v2-mover-staging.azurewebsites.net
+            curl -f -LI https://client-platform-v2-prod-mover-staging.azurewebsites.net
       - run:
           name: Swap staging -> production
           command: az webapp deployment slot swap
-            -n client-platform-prod-v2-mover
+            -n client-platform-v2-prod-mover
             -s staging
             --action swap
       - run:
