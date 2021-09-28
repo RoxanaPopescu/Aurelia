@@ -14,7 +14,7 @@ export function lowerCaseKeys<T extends MapObject | null | undefined>(object: T)
 
     const result = {} as any;
 
-    for (const key of Object.keys(object!))
+    for (const key of Object.keys(object))
     {
         result[key.toLowerCase()] = object[key];
     }
