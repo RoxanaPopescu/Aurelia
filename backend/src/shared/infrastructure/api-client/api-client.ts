@@ -450,7 +450,9 @@ export class ApiClient
             try
             {
                 // Send the request and await the response.
-                fetchResponse = await fetch(fetchRequest.clone());
+                // BUG: Stream cloning disabled due to https://github.com/node-fetch/node-fetch/issues/151.
+                // fetchResponse = await fetch(fetchRequest.clone());
+                fetchResponse = await fetch(fetchRequest);
 
                 // Does the response represent a transient error?
                 if (transientHttpStatusCodes.includes(fetchResponse.status))
@@ -524,7 +526,9 @@ export class ApiClient
         if (options.deserialize && hasJsonBody)
         {
             // Await the response body.
-            let text = await fetchResponse.clone().text();
+            // BUG: Stream cloning disabled due to https://github.com/node-fetch/node-fetch/issues/151.
+            // let text = await fetchResponse.clone().text();
+            let text = await fetchResponse.text();
 
             if (text.length > 0)
             {

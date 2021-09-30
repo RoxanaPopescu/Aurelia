@@ -229,8 +229,6 @@ page-section:not(.--expanded) + page-section.--expanded
     > icon
     {
         margin-left: calc(var(--size-inline-spacing) /2);
-
-        // Set icon size and line height.
         line-height: 1;
         font-size: 1.286em;
     }

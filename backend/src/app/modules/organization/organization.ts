@@ -145,13 +145,13 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        const result = await this.apiClient.post("identity/memberships/invitation",
+        const result = await this.apiClient.post("identity/memberships/invitations",
         {
             body:
             {
                 userEmail: context.request.body.email,
                 roleId: context.request.body.roleId,
-                teamId: context.request.body.teamId, // TODO: missing
+                teamId: context.request.body.teamId,
                 message: context.request.body.message,
                 acceptUrl: context.request.body.acceptUrl
             }
@@ -162,7 +162,7 @@ export class OrganizationModule extends AppModule
             id: result.data.id,
             email: result.data.email,
             role: result.data.role,
-            teams: result.data.teams // TODO: missing
+            teams: result.data.teams
         };
 
         context.response.status = 200;
@@ -178,7 +178,7 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        const result = await this.apiClient.get("identity/memberships/invitation",
+        const result = await this.apiClient.get("identity/memberships/invitations",
         {
             query:
             {
@@ -191,7 +191,7 @@ export class OrganizationModule extends AppModule
             id: invite.id,
             email: invite.invitedEmailAddress,
             role: invite.role,
-            teams: invite.teams // TODO: missing
+            teams: invite.teams
         }));
 
         context.response.status = 200;
@@ -207,15 +207,22 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        const result = await this.apiClient.get(`identity/memberships/invitation/${context.params.inviteId}`);
+        const result1 = await this.apiClient.get(`identity/memberships/invitations/${context.params.inviteId}`);
+
+        const result2 = await this.apiClient.get(`organization/organizations/${result1.data.organizationId}`);
 
         context.response.body =
         {
-            id: result.data.id,
-            email: result.data.invitedEmailAddress,
-            organization: result.data.organization,
-            role: result.data.role,
-            teams: result.data.teams // TODO: missing
+            id: result1.data.id,
+            email: result1.data.invitedEmailAddress,
+            organization:
+            {
+                id: result2.data.organization.organizationId,
+                name: result2.data.organization.name,
+                type: result2.data.organization.organizationType
+            },
+            role: result1.data.role,
+            teams: result1.data.teams
         };
 
         context.response.status = 200;
@@ -231,7 +238,7 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        await this.apiClient.post(`identity/memberships/invitation/${context.params.inviteId}/resend`);
+        await this.apiClient.post(`identity/memberships/invitations/${context.params.inviteId}/resend`);
 
         context.response.status = 204;
     }
@@ -246,7 +253,7 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        await this.apiClient.post(`identity/memberships/invitation/${context.params.inviteId}/accept`);
+        await this.apiClient.post(`identity/memberships/invitations/${context.params.inviteId}/accept`);
 
         context.response.status = 204;
     }
@@ -261,7 +268,7 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize();
 
-        await this.apiClient.delete(`identity/memberships/invitation/${context.params.inviteId}`);
+        await this.apiClient.delete(`identity/memberships/invitations/${context.params.inviteId}`);
 
         context.response.status = 204;
     }
@@ -294,8 +301,8 @@ export class OrganizationModule extends AppModule
             phoneNumber: user.phone,
             pictureUrl: user.pictureUrl,
             role: user.role,
-            teams: user.teams, // TODO: missing
-            lastOnline: user.lastOnline // TODO: missing
+            teams: user.teams,
+            lastOnline: user.lastOnline
         }));
 
         context.response.status = 200;

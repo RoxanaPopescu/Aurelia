@@ -103,6 +103,10 @@ async function appendDebugInfo(context: BaseContext, error: ApiError): Promise<v
  */
 async function getFormattedBody(requestOrResponse: Request | Response): Promise<string | undefined>
 {
+    // BUG: Disabled because it relies on stream cloning, which is disabled due to https://github.com/node-fetch/node-fetch/issues/151.
+    return "(Not available due to bug";
+
+    /*
     let body: string | undefined;
 
     if (!requestOrResponse.bodyUsed)
@@ -125,4 +129,5 @@ async function getFormattedBody(requestOrResponse: Request | Response): Promise<
     }
 
     return body;
+    */
 }
