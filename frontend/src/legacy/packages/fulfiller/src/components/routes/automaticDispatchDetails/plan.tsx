@@ -318,7 +318,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
         >
           {Localization.operationsValue(
             "RoutePlanning_RoutePlan_Route_ExitSingle"
-          ).replace("{route_id}", route.slug)}
+          ).replace("{route_id}", (route as any).number)}
         </Button>
       </div>
     );

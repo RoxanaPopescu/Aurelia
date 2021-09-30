@@ -125,6 +125,7 @@ export class RoutePlanningStore {
           ];
 
           (route as any).color = colors[index];
+          (route as any).number = index + 1;
 
           if (index == 7) {
             index = 0;
@@ -481,7 +482,7 @@ export class RoutePlanningStore {
               this.hoveredItem = {
                 title: Localization.operationsValue(
                   "RoutePlanning_RoutePlan_RouteHover_Title"
-                ).replace("{number}", route.slug),
+                ).replace("{number}", (route as any).number),
                 rows: this.getRouteRows(route),
                 color: (route as any).color,
                 point: event.latLng,
@@ -520,7 +521,7 @@ export class RoutePlanningStore {
           let title = Localization.operationsValue(
             "RoutePlanning_RoutePlan_StopHover_Title"
           )
-            .replace("{routeId}", stop.route.slug)
+            .replace("{routeId}", (stop.route as any).number)
             .replace("{stopNumber}", stop.stopNumber.toString());
 
           this.hoveredItem = {
