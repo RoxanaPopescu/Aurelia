@@ -30,6 +30,11 @@ export default class RoutePlanningRouteComponent extends React.Component<
     const route = this.props.route;
     const stops = route.stops;
 
+    if (stops.length == 0)
+    {
+      return;
+    }
+
     const firstStop = route.stops[0] as RouteStop;
     const firstStopTimeFrame = firstStop.estimates!.timeFrame;
 

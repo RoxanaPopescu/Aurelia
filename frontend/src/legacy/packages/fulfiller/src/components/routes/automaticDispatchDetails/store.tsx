@@ -94,11 +94,16 @@ export class RoutePlanningStore {
 
       if (job.result != null)
       {
-        let minimumDate = DateTime.local().plus(Duration.fromObject({ years: 1}));
-        let maximumDate = DateTime.local().minus(Duration.fromObject({ years: 1}));
+        let minimumDate = DateTime.local().plus(Duration.fromObject({ days: 2}));
+        let maximumDate = DateTime.local().minus(Duration.fromObject({ days: 2}));
 
         let index = 0;
         for (const route of job.result.routes) {
+          if (route.stops.length == 0)
+          {
+            continue;
+          }
+
           // Calculate timeframe
           let timeFrame = new DateTimeRange({ from: (route.stops[0] as RouteStopBase).estimates!.timeFrame.from!, to: (route.stops[route.stops.length-1] as RouteStopBase).estimates!.timeFrame.to! }, { setZone: true });
 
