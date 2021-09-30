@@ -33,7 +33,8 @@ export function apiErrorMiddleware(): Middleware
 
                 if (environment.debug)
                 {
-                    await appendDebugInfo(context, error);
+                    // BUG: Disabled because it relies on stream cloning, which is disabled due to https://github.com/node-fetch/node-fetch/issues/151.
+                    // await appendDebugInfo(context, error);
                 }
 
                 // Do we have a response, and should we forward its status code downstream?
