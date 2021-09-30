@@ -176,7 +176,7 @@ export class AutomaticDispatchModule extends AppModule
                 }
 
                 routes.push({
-                    driverId: String(route.driver.id),
+                    driverId: `${route.driver.id}`,
                     id: route.id,
                     vehicleType: route.vehicleType,
                     availability: route.plannedTimeFrame,
