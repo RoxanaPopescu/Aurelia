@@ -22,7 +22,6 @@ export class RoutesListModule extends AppModule
             body.includeTotalCount = false;
             body.fulfillerIds = [context.user?.outfitId];
 
-
             const result = await this.apiClient.post("logistics-platform/routes/v4/list",
             {
                 noi: true,
