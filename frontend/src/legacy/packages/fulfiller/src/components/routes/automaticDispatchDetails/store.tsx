@@ -94,11 +94,16 @@ export class RoutePlanningStore {
 
       if (job.result != null)
       {
-        let minimumDate = DateTime.local().plus(Duration.fromObject({ years: 1}));
-        let maximumDate = DateTime.local().minus(Duration.fromObject({ years: 1}));
+        let minimumDate = DateTime.local().plus(Duration.fromObject({ days: 2}));
+        let maximumDate = DateTime.local().minus(Duration.fromObject({ days: 2}));
 
         let index = 0;
         for (const route of job.result.routes) {
+          if (route.stops.length == 0)
+          {
+            continue;
+          }
+
           // Calculate timeframe
           let timeFrame = new DateTimeRange({ from: (route.stops[0] as RouteStopBase).estimates!.timeFrame.from!, to: (route.stops[route.stops.length-1] as RouteStopBase).estimates!.timeFrame.to! }, { setZone: true });
 
@@ -125,6 +130,7 @@ export class RoutePlanningStore {
           ];
 
           (route as any).color = colors[index];
+          (route as any).number = index + 1;
 
           if (index == 7) {
             index = 0;
@@ -481,7 +487,7 @@ export class RoutePlanningStore {
               this.hoveredItem = {
                 title: Localization.operationsValue(
                   "RoutePlanning_RoutePlan_RouteHover_Title"
-                ).replace("{number}", route.slug),
+                ).replace("{number}", (route as any).number),
                 rows: this.getRouteRows(route),
                 color: (route as any).color,
                 point: event.latLng,
@@ -520,7 +526,7 @@ export class RoutePlanningStore {
           let title = Localization.operationsValue(
             "RoutePlanning_RoutePlan_StopHover_Title"
           )
-            .replace("{routeId}", stop.route.slug)
+            .replace("{routeId}", (stop.route as any).number)
             .replace("{stopNumber}", stop.stopNumber.toString());
 
           this.hoveredItem = {

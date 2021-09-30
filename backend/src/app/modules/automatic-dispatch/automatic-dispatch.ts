@@ -176,7 +176,7 @@ export class AutomaticDispatchModule extends AppModule
                 }
 
                 routes.push({
-                    driverId: String(route.driver.id),
+                    driverId: `${route.driver.id}`,
                     id: route.id,
                     vehicleType: route.vehicleType,
                     availability: route.plannedTimeFrame,
@@ -185,7 +185,7 @@ export class AutomaticDispatchModule extends AppModule
                 });
             }
 
-            request.name = `${context.user?.fullName} - ${DateTime.local().toHTTP()}`;
+            request.name = `${context.user?.fullName} - routes ${routes.length} - shipments ${shipments.length}`;
             request.routes = routes;
             request.shipments = shipments;
 

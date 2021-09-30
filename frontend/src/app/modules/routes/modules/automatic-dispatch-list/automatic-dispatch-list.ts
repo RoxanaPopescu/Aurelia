@@ -101,14 +101,9 @@ export class AutomaticDispatchListPage
      * Called by the list when looping through the dispatches
      * @returns The details link if not cancelled or failed.
      */
-    public detailsLink(plan: AutomaticDispatchRoutePlanInfo): string | undefined
+    public detailsLink(plan: AutomaticDispatchRoutePlanInfo): string
     {
-        if (plan.status.slug === "succeeded")
-        {
-            return `/routes/automatic-dispatch/${plan.id}`;
-        }
-
-        return undefined;
+        return `/routes/automatic-dispatch/${plan.id}`;
     }
 
     /**

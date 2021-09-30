@@ -90,12 +90,14 @@ export class AutomaticDispatchService
      * @param addRouteIds The ids identifying the routes to be added to the active driver routes.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async startManual(activeRouteIds: string[], addRouteIds: string[], signal?: AbortSignal): Promise<void>
+    public async startManual(activeRouteIds: string[], addRouteIds: string[], signal?: AbortSignal): Promise<string>
     {
-        await this._apiClient.post("automatic-dispatch/jobs/start-manual",
+        const result = await this._apiClient.post("automatic-dispatch/jobs/start-manual",
         {
             body: { activeRouteIds, addRouteIds },
             signal
         });
+
+        return result.data.id;
     }
 }

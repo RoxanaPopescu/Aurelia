@@ -270,16 +270,16 @@ export class DriversColumnCustomElement
 
         try
         {
+            const id = await this._automaticDispatchService.startManual(this.workspace.selectedDriverRoutes.map(r => r.routeId), this.workspace.selectedExpressRoutes.map(r => r.id));
+
             const toastModel =
-                {
-                    heading: startedAutomaticDispatchToast.heading,
-                    body: startedAutomaticDispatchToast.body,
-                    url: "/routes/automatic-dispatch"
-                };
+            {
+                heading: startedAutomaticDispatchToast.heading,
+                body: startedAutomaticDispatchToast.body,
+                url: `/routes/automatic-dispatch/${id}`
+            };
 
             this.toastService.open("success", toastModel);
-
-            await this._automaticDispatchService.startManual(this.workspace.selectedDriverRoutes.map(r => r.routeId), this.workspace.selectedExpressRoutes.map(r => r.id));
         }
         catch (error)
         {
