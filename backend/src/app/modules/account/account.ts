@@ -88,7 +88,7 @@ export class AccountModule extends AppModule
         {
             body:
             {
-                userEmail: context.request.body.email,
+                email: context.request.body.email,
                 changePasswordUrl: context.request.body.changePasswordUrl
             }
         });

@@ -38,8 +38,6 @@ export class OrganizationModule extends AppModule
         context.response.status = 200;
     }
 
-    // WORKS, BUT...
-    // TODO:BACKEND: Don't include pending invites in teh response, due to security risk
     // TODO:BACKEND: Return full objects to avoid N+1 problem
     /**
      * Gets all organizations visible to the current user.
@@ -151,7 +149,7 @@ export class OrganizationModule extends AppModule
             {
                 userEmail: context.request.body.email,
                 roleId: context.request.body.roleId,
-                teamId: context.request.body.teamId,
+                teamIds: context.request.body.teamIds,
                 message: context.request.body.message,
                 acceptUrl: context.request.body.acceptUrl
             }
@@ -208,6 +206,13 @@ export class OrganizationModule extends AppModule
         await context.authorize();
 
         const result1 = await this.apiClient.get(`identity/memberships/invitations/${context.params.inviteId}`);
+
+        if (result1.data.invitedEmailAddress.toLowerCase() !== context.user?.email.toLowerCase())
+        {
+            context.response.status = 403;
+
+            return;
+        }
 
         const result2 = await this.apiClient.get(`organization/organizations/${result1.data.organizationId}`);
 
@@ -349,7 +354,7 @@ export class OrganizationModule extends AppModule
 
         await this.apiClient.delete("identity/memberships",
         {
-            body:
+            query:
             {
                 organizationId: context.params.organizationId,
                 userId: context.params.userId
@@ -359,9 +364,6 @@ export class OrganizationModule extends AppModule
         context.response.status = 204;
     }
 
-    // TODO:BACKEND: Fix casing in group names
-    // TODO:BACKEND: Permission type MUST be lower-case
-    // TODO:BACKEND: Permission slug MUST be lower-kebab-case, both here and in roles
     /**
      * Gets the permissions available within the specified organization.
      * @param context.params.organizationId The ID of the organization.

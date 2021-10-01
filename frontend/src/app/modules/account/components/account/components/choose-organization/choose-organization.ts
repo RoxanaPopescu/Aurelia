@@ -99,7 +99,18 @@ export class ChooseOrganizationCustomElement
                     .then(invite => this.invite = invite)
                     .catch(error =>
                     {
-                        Log.error("Could not get the invite.", error);
+                        if (error.response?.sattus === 404)
+                        {
+                            Log.error("Could not find the specified invite");
+                        }
+                        else if (error.response?.sattus === 403)
+                        {
+                            Log.error("The specified invite does not match the email you signed in with");
+                        }
+                        else
+                        {
+                            Log.error("Could not get the invite.", error);
+                        }
 
                         throw error;
                     }));
