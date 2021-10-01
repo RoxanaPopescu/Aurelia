@@ -175,11 +175,17 @@ export class AutomaticDispatchModule extends AppModule
                     });
                 }
 
+                const availability = route.plannedTimeFrame;
+                const now = DateTime.utc();
+                const timeZone = route.stops[0].location.timeZone;
+                const local = now.setZone(timeZone);
+                availability.from = local.toString()
+
                 routes.push({
                     driverId: `${route.driver.id}`,
                     id: route.id,
                     vehicleType: route.vehicleType,
-                    availability: route.plannedTimeFrame,
+                    availability: availability,
                     driverPosition: route.driverPosition,
                     stops: stops
                 });
