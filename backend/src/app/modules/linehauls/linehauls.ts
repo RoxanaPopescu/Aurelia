@@ -27,7 +27,7 @@ export class LinehaulsModule extends AppModule
                     body:
                     {
                         reference: context.params.reference,
-                        outfitId: context.user?.outfitId,
+                        outfitId: context.user?.organizationId,
                         actionById: context.user?.id
                     }
                 });
@@ -44,7 +44,7 @@ export class LinehaulsModule extends AppModule
                         body:
                         {
                             reference: context.params.reference,
-                            ownerId: context.user?.outfitId,
+                            ownerId: context.user?.organizationId,
                             actionById: context.user?.id
                         }
                     });
@@ -56,7 +56,7 @@ export class LinehaulsModule extends AppModule
                         body:
                         {
                             id: result.data.id,
-                            outfitId: context.user?.outfitId,
+                            outfitId: context.user?.organizationId,
                             actionById: context.user?.id
                         }
                     });
@@ -86,7 +86,7 @@ export class LinehaulsModule extends AppModule
                 body:
                 {
                     reference: context.params.reference,
-                    outfitId: context.user?.outfitId,
+                    outfitId: context.user?.organizationId,
                     actionById: context.user?.id
                 }
             });
@@ -109,7 +109,7 @@ export class LinehaulsModule extends AppModule
                 body:
                 {
                     id: context.params.id,
-                    outfitId: context.user?.outfitId,
+                    outfitId: context.user?.organizationId,
                     actionById: context.user?.id
                 }
             });
@@ -131,7 +131,7 @@ export class LinehaulsModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    outfitId: context.user?.outfitId,
+                    outfitId: context.user?.organizationId,
                     actionById: context.user?.id
                 }
             });
@@ -153,7 +153,7 @@ export class LinehaulsModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    outfitId: context.user?.outfitId,
+                    outfitId: context.user?.organizationId,
                     actionById: context.user?.id
                 }
             });
@@ -175,7 +175,7 @@ export class LinehaulsModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    outfitId: context.user?.outfitId,
+                    outfitId: context.user?.organizationId,
                     actionById: context.user?.id
                 }
             });
@@ -197,7 +197,7 @@ export class LinehaulsModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    outfitId: context.user?.outfitId,
+                    outfitId: context.user?.organizationId,
                     actionById: context.user?.id
                 }
             });
@@ -219,7 +219,7 @@ export class LinehaulsModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    outfitId: context.user?.outfitId,
+                    outfitId: context.user?.organizationId,
                     actionById: context.user?.id
                 }
             });

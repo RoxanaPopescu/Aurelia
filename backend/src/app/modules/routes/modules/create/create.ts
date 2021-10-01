@@ -20,7 +20,7 @@ export class RouteCreateModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    ownerId: context.user?.outfitId,
+                    ownerId: context.user?.organizationId,
                     actionById: context.user?.id
                 }
             });
@@ -42,7 +42,7 @@ export class RouteCreateModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    ownerId: context.user?.outfitId,
+                    ownerId: context.user?.organizationId,
                     actionById: context.user?.id
                 }
             });

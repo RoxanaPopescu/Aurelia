@@ -136,7 +136,7 @@ export class RouteService
      */
     public async setRouteStatus(route: Route, statusSlug: RouteStatusSlug): Promise<void>
     {
-        await this._apiClient.post("routes/v2/updateStatus",
+        await this._apiClient.post("routes/update-status",
         {
             body:
             {
@@ -174,7 +174,7 @@ export class RouteService
      */
     public async updateRoute(route: Route): Promise<void>
     {
-        await this._apiClient.post("routes/v2/update",
+        await this._apiClient.post("routes/update",
         {
             body:
             {
@@ -354,7 +354,7 @@ export class RouteService
      */
     public async addSupportNote(route: Route, note: string): Promise<void>
     {
-        await this._apiClient.post("routes/addSupportNote",
+        await this._apiClient.post("routes/add-support-note",
         {
             body: { routeId: route.id, note }
         });

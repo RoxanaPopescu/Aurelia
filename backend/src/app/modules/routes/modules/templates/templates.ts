@@ -20,7 +20,7 @@ export class RouteTemplatesModule extends AppModule
             {
                 body:
                 {
-                    ownerId: context.user?.outfitId
+                    ownerId: context.user?.organizationId
                 }
             });
 
@@ -41,7 +41,7 @@ export class RouteTemplatesModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    ownerId: context.user?.outfitId
+                    ownerId: context.user?.organizationId
                 }
             });
 
@@ -62,7 +62,7 @@ export class RouteTemplatesModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    ownerId: context.user?.outfitId,
+                    ownerId: context.user?.organizationId,
                     changedById: context.user?.id
                 }
             });
@@ -84,7 +84,7 @@ export class RouteTemplatesModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    ownerId: context.user?.outfitId,
+                    ownerId: context.user?.organizationId,
                     changedById: context.user?.id
                 }
             });
@@ -106,7 +106,7 @@ export class RouteTemplatesModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    ownerId: context.user?.outfitId,
+                    ownerId: context.user?.organizationId,
                     changedById: context.user?.id
                 }
             });
@@ -127,7 +127,7 @@ export class RouteTemplatesModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    ownerId: context.user?.outfitId,
+                    ownerId: context.user?.organizationId,
                     changedById: context.user?.id
                 }
             });
@@ -149,7 +149,7 @@ export class RouteTemplatesModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    ownerId: context.user?.outfitId,
+                    ownerId: context.user?.organizationId,
                     changedById: context.user?.id
                 }
             });
@@ -171,7 +171,7 @@ export class RouteTemplatesModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    ownerId: context.user?.outfitId,
+                    ownerId: context.user?.organizationId,
                     changedById: context.user?.id
                 }
             });
@@ -193,7 +193,7 @@ export class RouteTemplatesModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    ownerId: context.user?.outfitId,
+                    ownerId: context.user?.organizationId,
                     changedById: context.user?.id
                 }
             });
@@ -215,7 +215,7 @@ export class RouteTemplatesModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    ownerId: context.user?.outfitId,
+                    ownerId: context.user?.organizationId,
                     changedById: context.user?.id
                 }
             });
@@ -236,7 +236,7 @@ export class RouteTemplatesModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    ownerId: context.user?.outfitId,
+                    ownerId: context.user?.organizationId,
                     changedById: context.user?.id
                 }
             });
@@ -258,7 +258,7 @@ export class RouteTemplatesModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    ownerId: context.user?.outfitId,
+                    ownerId: context.user?.organizationId,
                     changedById: context.user?.id
                 }
             });
@@ -279,7 +279,7 @@ export class RouteTemplatesModule extends AppModule
                 body:
                 {
                     ...context.request.body,
-                    ownerId: context.user?.outfitId,
+                    ownerId: context.user?.organizationId,
                     changedById: context.user?.id
                 }
             });

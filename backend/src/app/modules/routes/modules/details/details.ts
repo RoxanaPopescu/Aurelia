@@ -21,8 +21,8 @@ export class RoutesListModule extends AppModule
             const body: any =
             {
                 slug: context.query.slug,
-                currentOutfit: context.user?.outfitId,
-                fulfillerIds: [context.user?.outfitId]
+                currentOutfit: context.user?.organizationId,
+                fulfillerIds: [context.user?.organizationId]
             };
 
             const result = await this.apiClient.post("logistics-platform/routes/v4/details",

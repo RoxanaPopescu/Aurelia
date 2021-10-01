@@ -1,4 +1,3 @@
-import { DateTime } from "luxon";
 import { AppModule } from "../../app-module";
 
 /**
@@ -18,7 +17,7 @@ export class AutomaticDispatchModule extends AppModule
 
             const result = await this.apiClient.get("automatic-dispatch/jobs",
             {
-                headers: { "ownerId": context.user?.outfitId },
+                headers: { "ownerId": context.user?.organizationId },
                 query: context.query
             });
 
@@ -37,7 +36,7 @@ export class AutomaticDispatchModule extends AppModule
 
             const result = await this.apiClient.get(`automatic-dispatch/jobs/${context.params.id}`,
             {
-                headers: { "ownerId": context.user?.outfitId }
+                headers: { "ownerId": context.user?.organizationId }
             });
 
             context.response.body = result.data;
@@ -55,7 +54,7 @@ export class AutomaticDispatchModule extends AppModule
 
             const result = await this.apiClient.post(`automatic-dispatch/jobs/${context.params.id}/approve`,
             {
-                headers: { "ownerId": context.user?.outfitId }
+                headers: { "ownerId": context.user?.organizationId }
             });
 
             context.response.body = result.data;
@@ -78,7 +77,7 @@ export class AutomaticDispatchModule extends AppModule
             {
                 noi: true,
                 body: {
-                    fulfillerIds: [context.user?.outfitId],
+                    fulfillerIds: [context.user?.organizationId],
                     routeIds: [...activeRouteIds, ...addRouteIds],
                     include: { vehicle: true, stops: true, driver: true, driverPosition: true },
                     statuses: [1, 2, 3, 6],
@@ -103,7 +102,7 @@ export class AutomaticDispatchModule extends AppModule
             {
                 noi: true,
                 body: {
-                    accessOutfits: [context.user?.outfitId],
+                    accessOutfits: [context.user?.organizationId],
                     stopIds: activeStopIds
                 }
             });
@@ -193,7 +192,7 @@ export class AutomaticDispatchModule extends AppModule
             const result = await this.apiClient.post("automatic-dispatch/jobs",
             {
                 body: request,
-                headers: { "ownerId": context.user?.outfitId }
+                headers: { "ownerId": context.user?.organizationId }
             });
 
             context.response.body = result.data;

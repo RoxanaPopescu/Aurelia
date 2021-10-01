@@ -28,7 +28,7 @@ export class User
     public constructor(jwtObject: any)
     {
         this.id = jwtObject["sub"];
-        this.outfitId = jwtObject["organization"];
+        this.organizationId = jwtObject["organization"];
 
         // TODO: This does not exist in the JWT.
         this.email = jwtObject["email"];
@@ -74,7 +74,7 @@ export class User
     /**
      * The ID of the outfit to which the user belongs.
      */
-    public outfitId: string;
+    public organizationId: string;
 
     /**
      * The permissions assigned to the user.

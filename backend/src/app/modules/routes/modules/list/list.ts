@@ -20,7 +20,7 @@ export class RoutesListModule extends AppModule
 
             const body = context.request.body;
             body.includeTotalCount = false;
-            body.fulfillerIds = [context.user?.outfitId];
+            body.fulfillerIds = [context.user?.organizationId];
 
             const result = await this.apiClient.post("logistics-platform/routes/v4/list",
             {

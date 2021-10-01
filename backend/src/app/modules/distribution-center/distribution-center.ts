@@ -22,7 +22,7 @@ export class DistributionCenterModule extends AppModule
             {
                 body:
                 {
-                    ownerIds: [context.user?.outfitId]
+                    ownerIds: [context.user?.organizationId]
                 }
             });
 

@@ -18,7 +18,7 @@ export class UsersModule extends AppModule
             {
                 body: {
                     ...context.request.body,
-                    accessOutfits: [context.user?.outfitId],
+                    accessOutfits: [context.user?.organizationId],
                     updatedBy: context.user?.email
                 }
             });

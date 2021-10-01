@@ -1,9 +1,9 @@
-import { AppModule } from "../../../../app-module";
+import { AppModule } from "../../app-module";
 
 /**
- * Represents a module exposing endpoints related to route stops
+ * Represents a module exposing endpoints related to route details
  */
-export class RoutesStopsModule extends AppModule
+export class RoutesModule extends AppModule
 {
     /**
      * Configures the module.
@@ -11,17 +11,18 @@ export class RoutesStopsModule extends AppModule
     public configure(): void
     {
         /**
-         * Add one stop to the route at a specific index
-         * @returns 200 OK if added
+         * Will add a support note to the route
+         * @returns 200 OK if support note is saved
          */
-        this.router.post("/v2/routes/stops/add", async context =>
+        this.router.post("/v2/routes/add-support-note", async context =>
         {
             await context.authorize("edit-routes");
 
             const body = context.request.body;
             body.fulfillerIds = [context.user?.organizationId];
+            body.username = context.user?.id;
 
-            const result = await this.apiClient.post("logistics-platform/routes/v3/add-stop",
+            const result = await this.apiClient.post("logistics-platform/routes/v3/add-support-note",
             {
                 noi: true,
                 body: body
@@ -32,17 +33,17 @@ export class RoutesStopsModule extends AppModule
         });
 
         /**
-         * Update one stop to the route at a specific route
-         * @returns 200 OK if added
+         * Will add a support note to the route
+         * @returns 200 OK if support note is saved
          */
-        this.router.post("/v2/routes/stops/update", async context =>
+        this.router.post("/v2/routes/update", async context =>
         {
             await context.authorize("edit-routes");
 
             const body = context.request.body;
             body.fulfillerIds = [context.user?.organizationId];
 
-            const result = await this.apiClient.post("logistics-platform/routes/v3/update-stop",
+            const result = await this.apiClient.post("logistics-platform/routes/v4/update-route",
             {
                 noi: true,
                 body: body
@@ -53,17 +54,17 @@ export class RoutesStopsModule extends AppModule
         });
 
         /**
-         * Switch the order of two stops
+         * Updated the status of the route
          * @returns 200 OK if added
          */
-        this.router.post("/v2/routes/stops/move", async context =>
+        this.router.post("/v2/routes/update-status", async context =>
         {
             await context.authorize("edit-routes");
 
             const body = context.request.body;
             body.fulfillerIds = [context.user?.organizationId];
 
-            const result = await this.apiClient.post("logistics-platform/routes/v3/move-stop",
+            const result = await this.apiClient.post("logistics-platform/routes/v4/update-status",
             {
                 noi: true,
                 body: body

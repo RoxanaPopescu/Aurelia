@@ -16,7 +16,7 @@ export class DriversModule extends AppModule
             await context.authorize();
 
             const body = context.request.body;
-            body.executorId = context.user?.outfitId;
+            body.executorId = context.user?.organizationId;
 
             const result = await this.apiClient.post("logistics-platform/drivers/send-message",
             {
@@ -37,8 +37,8 @@ export class DriversModule extends AppModule
             await context.authorize();
 
             const body = context.request.body;
-            body.fulfillerIds = [context.user?.outfitId];
-            body.currentOutfit = context.user?.outfitId;
+            body.fulfillerIds = [context.user?.organizationId];
+            body.currentOutfit = context.user?.organizationId;
 
             const result = await this.apiClient.post("logistics-platform/drivers/online-in-area",
             {
