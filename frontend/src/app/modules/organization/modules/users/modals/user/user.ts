@@ -171,6 +171,11 @@ export class UserModalPanel
                     .then(() => this.user.teams?.splice(this.user.teams.findIndex(t => t.id === team.id), 1)));
             }
 
+            if (this.user.teams != null)
+            {
+                this.user.teams = [...this.user.teams];
+            }
+
             await Promise.all(promises);
 
             await this._modal.close();
