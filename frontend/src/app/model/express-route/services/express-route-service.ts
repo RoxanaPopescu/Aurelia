@@ -28,7 +28,7 @@ export class ExpressRouteService
      */
     public async getExpressRoutes(date: DateTime, signal?: AbortSignal): Promise<{ routes: ExpressRoute[]; routeCount: number }>
     {
-        const result = await this._apiClient.get("expressdispatch/newroutes",
+        const result = await this._apiClient.get("dispatch/express/new-routes",
         {
             query: { date },
             signal
@@ -48,7 +48,7 @@ export class ExpressRouteService
      */
     public async getDriverRoutes(date: DateTime, signal?: AbortSignal): Promise<{ routes: DriverRoute[]; routeCount: number }>
     {
-        const result = await this._apiClient.get("expressdispatch/driverroutes",
+        const result = await this._apiClient.get("dispatch/express/driver-routes",
         {
             query: { date },
             signal
@@ -69,7 +69,7 @@ export class ExpressRouteService
      */
     public async estimateDriverRoute(routeId: string, stopIds: string[], addRouteIds: string[], signal?: AbortSignal): Promise<DriverRoute>
     {
-        const result = await this._apiClient.post("expressdispatch/estimatedriverroute",
+        const result = await this._apiClient.post("dispatch/express/estimate-driver-route",
         {
             body: { routeId, stopIds, addRouteIds },
             signal
@@ -87,7 +87,7 @@ export class ExpressRouteService
      */
     public async updateDriverRoute(routeId: string, stopIds: string[], addRouteIds: string[], signal?: AbortSignal): Promise<void>
     {
-        await this._apiClient.post("expressdispatch/updatedriverroute",
+        await this._apiClient.post("dispatch/express/update-driver-route",
         {
             body: { routeId, stopIds, addRouteIds },
             signal
@@ -102,7 +102,7 @@ export class ExpressRouteService
      */
     public async releaseExpressRoutes(routeIds: string[], signal?: AbortSignal): Promise<void>
     {
-        await this._apiClient.post("expressdispatch/releaseroute",
+        await this._apiClient.post("dispatch/express/release-routes",
         {
             body: { routeIds },
             signal

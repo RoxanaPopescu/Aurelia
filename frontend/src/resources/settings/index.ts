@@ -100,6 +100,7 @@ export default
                 "collection-point": { version: "2", obfuscate: false },
                 "automatic-dispatch": { version: "2", obfuscate: false },
                 "files": { version: "2", obfuscate: false },
+                "dispatch/express": { version: "2", obfuscate: false },
                 "": { version: "1", obfuscate: false }
             },
             interceptors:

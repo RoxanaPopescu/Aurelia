@@ -377,6 +377,8 @@ export class MergeColumnCustomElement
         }
         finally
         {
+            this.canApply = true;
+            this.addingStops = false;
             this.workspace.isBusy = false;
         }
     }
