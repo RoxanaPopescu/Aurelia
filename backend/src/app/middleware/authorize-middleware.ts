@@ -72,7 +72,7 @@ export class User
     public roleName: string;
 
     /**
-     * The ID of the outfit to which the user belongs.
+     * The ID of the organization to which the user belongs.
      */
     public organizationId: string;
 

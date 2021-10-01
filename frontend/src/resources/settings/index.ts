@@ -98,6 +98,7 @@ export default
                 "organizations": { version: "2", obfuscate: false },
                 "invites": { version: "2", obfuscate: false },
                 "account": { version: "2", obfuscate: false },
+                "dispatch/express": { version: "2", obfuscate: false },
                 "": { version: "1", obfuscate: false }
             },
             interceptors:

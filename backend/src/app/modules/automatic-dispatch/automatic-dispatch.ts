@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import { AppModule } from "../../app-module";
 
 /**
@@ -169,16 +170,22 @@ export class AutomaticDispatchModule extends AppModule
                         estimates: stop.estimates,
                         location: stop.location,
                         arrivalTimeFrame: stop.arrivalTimeFrame,
-                        taskTime: stop.initialEstimates.taskTime,
+                        taskTime: stop.initialEstimates?.taskTime,
                         groupId: link.originalRequestId
                     });
                 }
+
+                const availability = route.plannedTimeFrame;
+                const now = DateTime.utc();
+                const timeZone = route.stops[0].location.timeZone;
+                const local = now.setZone(timeZone);
+                availability.from = local.toString();
 
                 routes.push({
                     driverId: `${route.driver.id}`,
                     id: route.id,
                     vehicleType: route.vehicleType,
-                    availability: route.plannedTimeFrame,
+                    availability: availability,
                     driverPosition: route.driverPosition,
                     stops: stops
                 });
