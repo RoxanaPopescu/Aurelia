@@ -170,7 +170,7 @@ export class AutomaticDispatchModule extends AppModule
                         estimates: stop.estimates,
                         location: stop.location,
                         arrivalTimeFrame: stop.arrivalTimeFrame,
-                        taskTime: stop.initialEstimates.taskTime,
+                        taskTime: stop.initialEstimates?.taskTime,
                         groupId: link.originalRequestId
                     });
                 }
