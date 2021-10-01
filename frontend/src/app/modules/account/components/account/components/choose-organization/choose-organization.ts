@@ -156,9 +156,9 @@ export class ChooseOrganizationCustomElement
     /**
      * Called when an invite is clicked.
      * Accepts the invite and authorizes the user to access the organization.
-     * @param inviteId The ID of the invite that was clicked.
+     * @param invite The invite that was clicked.
      */
-    protected async onInviteClick(inviteId: string): Promise<void>
+    protected async onInviteClick(invite: OrganizationUserInvite): Promise<void>
     {
         this.model.busy = true;
 
@@ -166,7 +166,7 @@ export class ChooseOrganizationCustomElement
         {
             try
             {
-                await this._organizationService.acceptInvite(inviteId);
+                await this._organizationService.acceptInvite(invite.id);
             }
             catch (error)
             {
@@ -180,7 +180,7 @@ export class ChooseOrganizationCustomElement
                 // NOTE:
                 // The invite is created asynchronously, so failed API requests are to be expected.
                 // However, due to the retry logic, authorization should eventually succeed.
-                await this._identityService.authorize(inviteId, true);
+                await this._identityService.authorize(invite.organization.id, true);
             }
             catch (error)
             {
