@@ -38,7 +38,7 @@ export class RouteAssignmentService
      */
     public async assignDriver(route: RouteBase, driver: Driver): Promise<void>
     {
-        await this._apiClient.post("dispatch/route/assigndriver",
+        await this._apiClient.post("dispatch/route/assign-driver",
         {
             body:
             {
@@ -59,7 +59,7 @@ export class RouteAssignmentService
      */
     public async pushToDrivers(route: RouteBase, drivers: Driver[], message: string | undefined): Promise<void>
     {
-        await this._apiClient.post("dispatch/route/pushDrivers",
+        await this._apiClient.post("dispatch/route/push-drivers",
         {
             body:
             {
@@ -78,7 +78,7 @@ export class RouteAssignmentService
      */
     public async assignVehicle(route: RouteBase, vehicle: Vehicle): Promise<void>
     {
-        await this._apiClient.post("dispatch/route/assignvehicle",
+        await this._apiClient.post("dispatch/route/assign-vehicle",
         {
             body:
             {
@@ -91,23 +91,23 @@ export class RouteAssignmentService
     }
 
     /**
-     * Assigns the specified route to the specified fulfiller.
+     * Assigns the specified route to the specified executor.
      * @param route The route to assign.
-     * @param fulfiller The fulfiller to which the route should be assigned.
+     * @param executor The executor to which the route should be assigned.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async assignFulfiller(route: RouteBase, fulfiller: Fulfiller, currentOutfit?: Outfit): Promise<void>
+    public async assignExecutor(route: RouteBase, executor: Fulfiller, currentOutfit?: Outfit): Promise<void>
     {
-        await this._apiClient.post("dispatch/route/assignfulfiller",
+        await this._apiClient.post("dispatch/route/assign-executor",
         {
             body:
             {
                 routeId: route.id,
-                fulfillerId: fulfiller.id,
+                newFulfillerId: executor.id,
                 currentFulfillerId: currentOutfit?.id ?? this._identityService.identity!.outfit!.id
             }
         });
 
-        route.fulfiller = fulfiller;
+        route.fulfiller = executor;
     }
 }

@@ -8,7 +8,7 @@ import { DateTime } from "luxon";
 import { RouteListColumn } from "app/model/route/entities/route-list-column";
 import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
 import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
-import { AssignFulfillerPanel } from "../../modals/assign-fulfiller/assign-fulfiller";
+import { AssignOrganizationPanel } from "../../modals/assign-organization/assign-organization";
 import { SelectColumnsPanel } from "./modals/select-columns/select-columns";
 import { Address, Position } from "app/model/shared";
 import { AddressService } from "app/components/address-input/services/address-service/address-service";
@@ -349,30 +349,30 @@ export class ListPage
     }
 
     /**
-     * Called when the `Assign fulfiller` button is clicked.
-     * Opens the panel for assigning a fulfiller to a route, and once assigned, re-fetches the route.
+     * Called when the `Assign executor` button is clicked.
+     * Opens the panel for assigning a executor to a route, and once assigned, re-fetches the route.
      */
-    protected async onAssignFulfillerClick(route: RouteInfo, updating: any): Promise<void>
+    protected async onAssignExecutorClick(route: RouteInfo, updating: any): Promise<void>
     {
-        const fulfiller = await this._modalService.open(
-            AssignFulfillerPanel,
+        const executor = await this._modalService.open(
+            AssignOrganizationPanel,
             { route: route, assignOnSelect: false }
         ).promise;
 
-        if (fulfiller != null)
+        if (executor != null)
         {
             const previousValue = route.fulfiller;
-            route.fulfiller = fulfiller;
+            route.fulfiller = executor;
             updating.executor = true;
 
             try
             {
-                await this._routeAssignmentService.assignFulfiller(route, fulfiller);
+                await this._routeAssignmentService.assignExecutor(route, executor);
             }
             catch
             {
                 route.fulfiller = previousValue;
-                Log.error(`Could not assign fulfiller '${fulfiller.companyName}'`);
+                Log.error(`Could not assign fulfiller '${executor.companyName}'`);
             }
 
             updating.executor = false;
@@ -547,7 +547,7 @@ export class ListPage
                     {
                         owner: this.columns.map(c => c.slug).includes("owner"),
                         vehicle: this.columns.map(c => c.slug).includes("vehicle"),
-                        fulfiller: this.columns.map(c => c.slug).includes("fulfiller"),
+                        fulfiller: this.columns.map(c => c.slug).includes("executor"),
                         driver: this.columns.map(c => c.slug).includes("driver") || this.columns.map(c => c.slug).includes("driver-id"),
                         tags: this.columns.map(c => c.slug).includes("tags"),
                         criticality: this.columns.map(c => c.slug).includes("criticality"),

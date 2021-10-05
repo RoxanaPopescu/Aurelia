@@ -6,7 +6,7 @@ import { IScroll, ModalService } from "shared/framework";
 import { RouteService, RouteInfo, RouteAssignmentService, RouteStatusSlug } from "app/model/route";
 import { DateTime } from "luxon";
 import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
-import { AssignFulfillerPanel } from "../../modals/assign-fulfiller/assign-fulfiller";
+import { AssignOrganizationPanel } from "../../modals/assign-organization/assign-organization";
 import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
 
 /**
@@ -306,20 +306,20 @@ export class ListPage
     }
 
     /**
-     * Called when the `Assign fulfiller` button is clicked.
-     * Opens the panel for assigning a fulfiller to a route, and once assigned, re-fetches the route.
+     * Called when the `Assign executor` button is clicked.
+     * Opens the panel for assigning a executor to a route, and once assigned, re-fetches the route.
      */
-    protected async onAssignFulfillerClick(route: RouteInfo): Promise<void>
+    protected async onAssignExecutorClick(route: RouteInfo): Promise<void>
     {
-        const fulfiller = await this._modalService.open(
-            AssignFulfillerPanel,
+        const executor = await this._modalService.open(
+            AssignOrganizationPanel,
             { route: route, assignOnSelect: false }
         ).promise;
 
-        if (fulfiller != null)
+        if (executor != null)
         {
             this.routesUpdating.push(route);
-            await this._routeAssignmentService.assignFulfiller(route, fulfiller);
+            await this._routeAssignmentService.assignExecutor(route, executor);
             this.routesUpdating.splice(this.routesUpdating.indexOf(route), 1);
         }
     }

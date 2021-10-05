@@ -124,9 +124,9 @@ export class RouteListColumn
             columnSize: "1fr",
             column: "visible"
         },
-        "fulfiller":
+        "executor":
         {
-            name: listColumn.fulfiller,
+            name: listColumn.executor,
             columnSize: "1fr",
             column: "visible"
         },

@@ -7,7 +7,7 @@ import { RouteService, Route, RouteStop, RouteStatus, RouteStatusSlug } from "ap
 import { RouteStopPanel } from "./modals/route-stop/route-stop";
 import { CancelDeleteStopDialog } from "./modals/confirm-cancel-stop/confirm-cancel-stop";
 import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
-import { AssignFulfillerPanel } from "../../modals/assign-fulfiller/assign-fulfiller";
+import { AssignOrganizationPanel } from "../../modals/assign-organization/assign-organization";
 import { IdentityService, moverOrganizationId } from "app/services/identity";
 import { AddSupportNoteDialog } from "./modals/add-support-note/add-support-note";
 import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
@@ -162,17 +162,17 @@ export class DetailsModule
     }
 
     /**
-     * Called when the `Assign fulfiller` button is clicked.
-     * Opens the panel for assigning a fulfiller to a route, and once assigned, re-fetches the route.
+     * Called when the `Assign executor` button is clicked.
+     * Opens the panel for assigning a executor to a route, and once assigned, re-fetches the route.
      */
-    protected async onAssignFulfillerClick(): Promise<void>
+    protected async onAssignExecutorClick(): Promise<void>
     {
-        const fulfiller = await this._modalService.open(
-            AssignFulfillerPanel,
+        const organization = await this._modalService.open(
+            AssignOrganizationPanel,
             { route: this.route!, assignOnSelect: true }
         ).promise;
 
-        if (fulfiller != null)
+        if (organization != null)
         {
             this.fetchRoute();
         }

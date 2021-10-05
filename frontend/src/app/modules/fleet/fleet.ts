@@ -98,7 +98,7 @@ export class FleetModule
                     ]
                 },
                 title: routeTitles.dispatch,
-                nav: true,
+                nav: false,
                 href: "/fleet-management/dispatch",
                 icon: "dispatch"
             },

@@ -13,7 +13,6 @@
     "driver": "Driver",
     "driverId": "Driver id",
     "executor": "Executor",
-    "fulfiller": "Fulfiller",
     "complexity": "Complexity",
     "status": "Status",
     "legacyId": "Legacy id",

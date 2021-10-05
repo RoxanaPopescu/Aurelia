@@ -1,20 +1,20 @@
 <template>
 
-    <require from="./assign-fulfiller.scss"></require>
+    <require from="./assign-organization.scss"></require>
 
     <modal-backdrop close="all"></modal-backdrop>
 
-    <modal-panel name="assign-fulfiller" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
+    <modal-panel name="assign-organization" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
 
         <modal-header scroll-fade>
 
             <h1 class="font-largest margin-bottom flex-row">
                 <div>
                     <template if.bind="route.fulfiller.id != identityService.identity.outfit.id" translate>
-                        Reassign fulfiller
+                        Reassign organization
                     </template>
                     <template if.bind="route.fulfiller.id == identityService.identity.outfit.id" translate>
-                        Assign fulfiller
+                        Assign organization
                     </template>
                 </div>
 
@@ -63,7 +63,7 @@
 
                 <template repeat.for="fulfiller of filteredFulfillers">
 
-                    <data-table-row click.call="onFulfillerClick(fulfiller)">
+                    <data-table-row click.call="onOrganizationClick(fulfiller)">
 
                         <data-table-cell>
                             <span class="text-truncate">

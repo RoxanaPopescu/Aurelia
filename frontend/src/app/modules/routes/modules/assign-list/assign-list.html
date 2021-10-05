@@ -311,13 +311,13 @@
                             <data-table-cell>
                                 <a
                                     class="text-truncate"
-                                    click.trigger="onAssignFulfillerClick(route)"
+                                    click.trigger="onAssignExecutorClick(route)"
                                 >
                                     <template if.bind="route.fulfiller.companyName">
                                         ${route.fulfiller.companyName}
                                     </template>
                                     <template if.bind="!route.fulfiller.companyName" translate>
-                                        Assign fulfiller
+                                        Assign executor
                                     </template>
                                 </a>
                             </data-table-cell>

@@ -3,7 +3,7 @@ import { Modal } from "shared/framework/services/modal";
 import { Fulfiller } from "app/model/outfit";
 
 @autoinject
-export class ConfirmRemoveFulfillerDialog
+export class ConfirmRemoveOrganizationDialog
 {
     /**
      * Creates a new instance of the type.
@@ -16,17 +16,17 @@ export class ConfirmRemoveFulfillerDialog
 
     private readonly _modal: Modal;
     private _result = false;
-    protected currentFulfiller: Fulfiller;
-    protected newFulfiller: Fulfiller;
+    protected currentOrganization: Fulfiller;
+    protected newOrganization: Fulfiller;
 
     /**
      * Called by the framework when the modal is activated.
      * @param model The model to use.
      */
-    public activate(model: { currentFulfiller: Fulfiller; newFulfiller: Fulfiller }): void
+    public activate(model: { currentOrganization: Fulfiller; newOrganization: Fulfiller }): void
     {
-        this.currentFulfiller = model.currentFulfiller;
-        this.newFulfiller = model.newFulfiller;
+        this.currentOrganization = model.currentOrganization;
+        this.newOrganization = model.newOrganization;
     }
 
     /**

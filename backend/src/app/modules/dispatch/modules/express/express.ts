@@ -3,7 +3,7 @@ import { AppModule } from "../../../../app-module";
 /**
  * Represents a module exposing endpoints related to route list
  */
-export class RoutesListModule extends AppModule
+export class DispatchExpressModule extends AppModule
 {
     /**
      * Configures the module.

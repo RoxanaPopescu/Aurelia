@@ -342,11 +342,11 @@
                                     </span>
                                 </data-table-cell>
 
-                                <data-table-cell if.bind="column.slug === 'fulfiller'" class="${updating.executor ? 'opacity-faded' : ''}">
+                                <data-table-cell if.bind="column.slug === 'executor'" class="${updating.executor ? 'opacity-faded' : ''}">
                                     <a
                                         class="text-truncate"
                                         if-claims="assign-executor-route"
-                                        click.trigger="onAssignFulfillerClick(route, updating)"
+                                        click.trigger="onAssignExecutorClick(route, updating)"
                                     >
                                         <template if.bind="route.fulfiller.companyName">
                                             ${route.fulfiller.companyName}

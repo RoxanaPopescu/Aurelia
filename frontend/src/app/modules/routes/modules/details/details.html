@@ -513,12 +513,12 @@
 
                 <toolbar if.bind="route" class="flex-push-right">
 
-                    <button if-claims="assign-executor-route" appearance="outline" accent="primary" click.trigger="onAssignFulfillerClick()">
+                    <button if-claims="assign-executor-route" appearance="outline" accent="primary" click.trigger="onAssignExecutorClick()">
                         <template if.bind="route.fulfiller.id == identityService.identity.outfit.id" translate>
-                            Assign fulfiller
+                            Assign executor
                         </template>
                         <template if.bind="route.fulfiller.id != identityService.identity.outfit.id" translate>
-                            Reassign fulfiller
+                            Reassign executor
                         </template>
                     </button>
 

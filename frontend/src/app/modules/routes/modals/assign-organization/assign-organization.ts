@@ -5,11 +5,11 @@ import { Modal, ModalService } from "shared/framework";
 import { RouteAssignmentService, RouteBase } from "app/model/route";
 import { AgreementService } from "app/model/agreement";
 import { Fulfiller } from "app/model/outfit";
-import { ConfirmRemoveFulfillerDialog } from "./confirm-remove-fulfiller/confirm-remove-fulfiller";
+import { ConfirmRemoveOrganizationDialog } from "./confirm-remove-fulfiller/confirm-remove-organization";
 import { IdentityService } from "app/services/identity";
 
 @autoinject
-export class AssignFulfillerPanel
+export class AssignOrganizationPanel
 {
     /**
      * Creates a new instance of the class.
@@ -112,19 +112,19 @@ export class AssignFulfillerPanel
     }
 
     /**
-     * Called when a fulfiller in the list of fulfillers is clicked.
-     * Assigns the fulfiller to the route and closes the modal.
-     * If the fulfiller of the route is not the current user,
-     * we are removing fulfillers, therefore we confirm it.
+     * Called when a organization in the list of organizations is clicked.
+     * Assigns the organization to the route and closes the modal.
+     * If the organization of the route is not the current user,
+     * we are removing organization, therefore we confirm it.
      */
-    protected async onFulfillerClick(fulfiller: Fulfiller): Promise<void>
+    protected async onOrganizationClick(organization: Fulfiller): Promise<void>
     {
         if (this.route.fulfiller.id !== this.identityService.identity?.outfit!.id)
         {
-            const confirmed = await this._modalService.open(ConfirmRemoveFulfillerDialog,
+            const confirmed = await this._modalService.open(ConfirmRemoveOrganizationDialog,
             {
-                currentFulfiller: this.route.fulfiller,
-                newFulfiller: fulfiller
+                currentOrganization: this.route.fulfiller,
+                newOrganization: organization
             }).promise;
 
             if (!confirmed)
@@ -138,10 +138,10 @@ export class AssignFulfillerPanel
             if (this.assignOnSelect)
             {
                 this._modal.busy = true;
-                await this._routeAssignmentService.assignFulfiller(this.route, fulfiller, this.identityService.identity!.outfit);
+                await this._routeAssignmentService.assignExecutor(this.route, organization, this.identityService.identity!.outfit);
             }
 
-            this._result = fulfiller;
+            this._result = organization;
 
             await this._modal.close();
         }

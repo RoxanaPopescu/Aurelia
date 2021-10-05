@@ -50,7 +50,7 @@ export class OrderService
         paging?: IPaging,
         signal?: AbortSignal): Promise<{ orders: OrderInfo[]; orderCount: number }>
     {
-        const result = await this._apiClient.post("orderlist",
+        const result = await this._apiClient.post("orders/list",
         {
             body:
             {
