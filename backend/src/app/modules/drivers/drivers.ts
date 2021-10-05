@@ -83,10 +83,7 @@ export class DriversModule extends AppModule
         {
             await context.authorize("edit-driver");
 
-            const body = {
-                driver: context.request.body,
-                fulfillerId: context.user?.organizationId
-            };
+            const body = { driver: context.request.body, fulfillerId: context.user?.organizationId };
 
             const result = await this.apiClient.post("logistics-platform/drivers/update",
             {
@@ -106,21 +103,26 @@ export class DriversModule extends AppModule
         {
             await context.authorize("edit-driver");
 
-            const body = {
-                driver: context.request.body,
-                fulfillerId: context.user?.organizationId
-            };
+            const body = { driver: context.request.body, fulfillerId: context.user?.organizationId };
 
-            console.log(body);
-
-            const result = await this.apiClient.post("logistics-platform/drivers/create",
+            try
             {
-                noi: true,
-                body: body
-            });
+                const result = await this.apiClient.post("logistics-platform/drivers/create",
+                {
+                    noi: true,
+                    body: body
+                });
 
-            context.response.body = result.data;
-            context.response.status = 200;
+                context.response.body = result.data;
+                context.response.status = 200;
+            }
+            catch (error: any)
+            {
+                if (error.data?.status == 103)
+                {
+                    context.response.status = 409;
+                }
+            }
         });
 
          /**
@@ -131,10 +133,7 @@ export class DriversModule extends AppModule
         {
             await context.authorize("edit-driver");
 
-            const body = {
-                driverId: context.request.body.id,
-                fulfillerId: [context.user?.organizationId]
-            };
+            const body = { driverId: context.request.body.id, fulfillerId: [context.user?.organizationId] };
 
             const result = await this.apiClient.post("logistics-platform/drivers/delete",
             {
