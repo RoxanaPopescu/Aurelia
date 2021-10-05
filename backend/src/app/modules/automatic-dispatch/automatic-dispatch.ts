@@ -93,6 +93,8 @@ export class AutomaticDispatchModule extends AppModule
 
             for (const route of activeRoutes)
             {
+                route.timeZone = route.stops[0].location.timeZone;
+
                 const filteredStops: any[] = route.stops.filter((s: any) => s.status === "NotVisited" && ["Pickup", "Delivery"].includes(s.type));
                 activeStopIds.push(...filteredStops.map((s: any) => s.id));
                 route.stops = filteredStops;
@@ -177,8 +179,7 @@ export class AutomaticDispatchModule extends AppModule
 
                 const availability = route.plannedTimeFrame;
                 const now = DateTime.utc();
-                const timeZone = route.stops[0].location.timeZone;
-                const local = now.setZone(timeZone);
+                const local = now.setZone(route.timeZone);
                 availability.from = local.toString();
 
                 routes.push({

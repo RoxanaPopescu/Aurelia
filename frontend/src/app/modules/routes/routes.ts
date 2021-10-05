@@ -101,7 +101,7 @@ export class RoutesModule
                     ]
                 },
                 title: routeTitles.automaticDispatch,
-                nav: ENVIRONMENT.name !== "production",
+                nav: true,
                 icon: "auto-dispatch"
             },
             {
