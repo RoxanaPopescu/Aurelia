@@ -118,7 +118,7 @@ export class DriversModule extends AppModule
             }
             catch (error: any)
             {
-                if (error.data?.status == 103)
+                if (error.data?.status === 103)
                 {
                     context.response.status = 409;
                 }
