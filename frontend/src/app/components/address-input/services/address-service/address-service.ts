@@ -32,13 +32,13 @@ export class AddressService
             return [];
         }
 
-        const result = await this._apiClient.post("locations/addressautocomplete",
+        const result = await this._apiClient.post("locations/address-auto-complete",
         {
             body: { query },
             signal
         });
 
-        return result.data.results.filter(data => data.id != null).map(data => new Address(data));
+        return result.data.filter(data => data.id != null).map(data => new Address(data));
     }
 
     /**

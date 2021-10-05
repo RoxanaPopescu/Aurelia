@@ -57,7 +57,6 @@ export class DispatchRouteModule extends AppModule
             context.response.status = 200;
         });
 
-
         /**
          * Assigns a executor
          * @returns 200 OK if successfull
@@ -81,7 +80,6 @@ export class DispatchRouteModule extends AppModule
             context.response.body = data;
             context.response.status = 200;
         });
-
 
         /**
          * Sends a push message to 1...x drivers about an available route
