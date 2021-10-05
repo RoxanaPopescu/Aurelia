@@ -87,7 +87,7 @@
 
         </email-input>
 
-        <phone-input class="margin-double-top" label="above" value.bind="model.phone" autocomplete="tel" readonly.bind="model.currentPassword == null">
+        <phone-input if-environment="development" class="margin-double-top" label="above" value.bind="model.phone" autocomplete="tel" readonly.bind="model.currentPassword == null">
 
             <div slot="heading" translate>
                 Phone number
