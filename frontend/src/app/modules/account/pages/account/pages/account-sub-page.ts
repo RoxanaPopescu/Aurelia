@@ -89,13 +89,13 @@ export abstract class AccountSubPage
     {
         let url: string;
 
-        if (urlParam)
-        {
-            url = this.getUrlWithQuery(urlParam, { url: urlParam, invite: inviteId });
-        }
-        else if (this.identityService.identity?.outfit == null)
+        if (this.identityService.identity?.outfit == null)
         {
             url = this.getUrlWithQuery("/account/choose-organization", { url: urlParam, invite: inviteId });
+        }
+        else if (urlParam)
+        {
+            url = this.getUrlWithQuery(urlParam, { url: urlParam, invite: inviteId });
         }
         else
         {
