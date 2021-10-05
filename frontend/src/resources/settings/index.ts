@@ -84,22 +84,7 @@ export default
             endpointUrlPattern: `${ENVIRONMENT.apiBaseUrl}v{version}/{path}`,
             endpointSettings:
             {
-                "distribution-center": { version: "2", obfuscate: false },
-                "communication/sms": { version: "2", obfuscate: false },
-                "routes": { version: "2", obfuscate: false },
-                "orders/events": { version: "2", obfuscate: false },
-                "users/reactivate": { version: "2", obfuscate: false },
-                "drivers/send-message": { version: "2", obfuscate: false },
-                "drivers/online-in-area": { version: "2", obfuscate: false },
-                "collection-point": { version: "2", obfuscate: false },
-                "automatic-dispatch": { version: "2", obfuscate: false },
-                "files": { version: "2", obfuscate: false },
-                "identity": { version: "2", obfuscate: false },
-                "organizations": { version: "2", obfuscate: false },
-                "invites": { version: "2", obfuscate: false },
-                "account": { version: "2", obfuscate: false },
-                "dispatch/express": { version: "2", obfuscate: false },
-                "": { version: "1", obfuscate: false }
+                "": { version: "2", obfuscate: false }
             },
             interceptors:
             [

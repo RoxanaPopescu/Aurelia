@@ -126,6 +126,7 @@ export class FleetModule
                         "create-prebooking"
                     ]
                 },
+                nav: false,
                 title: routeTitles.createPrebooking
             },
             {
@@ -140,7 +141,7 @@ export class FleetModule
                     ]
                 },
                 title: routeTitles.forecasts,
-                nav: true,
+                nav: false,
                 href: "/fleet-management/forecasts",
                 icon: "forecast"
             },

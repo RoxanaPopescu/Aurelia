@@ -123,7 +123,7 @@ export class DriverService
      */
     public async updatePassword(driverId: string, newPassword: string): Promise<void>
     {
-        await this._apiClient.post("drivers/setpassword",
+        await this._apiClient.post("drivers/set-password",
         {
             body: { id: driverId, newPassword }
         });
@@ -136,10 +136,7 @@ export class DriverService
      */
     public async get(driverId: string): Promise<Driver>
     {
-        const result = await this._apiClient.get("drivers/details",
-        {
-            query: { id: driverId }
-        });
+        const result = await this._apiClient.get(`drivers/${driverId}`);
 
         return new Driver(result.data);
     }

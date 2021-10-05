@@ -8,6 +8,145 @@ export class DriversModule extends AppModule
     public configure(): void
     {
         /**
+         * Gets the drivers for an organization
+         * @returns The a list of drivers.
+         */
+        this.router.post("/v2/drivers/list", async context =>
+        {
+            await context.authorize("view-drivers");
+
+            const body = context.request.body;
+            body.outfitIds = [context.user?.organizationId];
+
+            const result = await this.apiClient.post("logistics-platform/drivers/list-v2",
+            {
+                noi: true,
+                body: body
+            });
+
+            context.response.body = result.data;
+            context.response.status = 200;
+        });
+
+        /**
+         * Updated the password for a driver
+         * @returns 200 OK.
+         */
+        this.router.post("/v2/drivers/set-password", async context =>
+        {
+            await context.authorize("edit-driver");
+
+            const body = context.request.body;
+
+            const result = await this.apiClient.post("logistics-platform/drivers/set-password",
+            {
+                noi: true,
+                body: {
+                    fulfillerId: context.user?.organizationId,
+                    driverId: body.id,
+                    password: body.newPassword,
+                    actionBy: context.user?.id
+                }
+            });
+
+            context.response.body = result.data;
+            context.response.status = 200;
+        });
+
+        /**
+         * Gets the driver by ID.
+         * @param context.params.id The ID of the driver to receive.
+         * @returns The driver of the specified ID.
+         */
+        this.router.get("/v2/drivers/:id", async context =>
+        {
+            await context.authorize("view-drivers");
+
+            const result = await this.apiClient.get("logistics-platform/drivers/details",
+            {
+                query: {
+                    driverId: context.params.id,
+                    fulfillerId: context.user?.organizationId
+                },
+                noi: true
+            });
+
+            context.response.body = result.data;
+            context.response.status = 200;
+        });
+
+        /**
+         * Updates a driver
+         * @returns 200 OK.
+         */
+        this.router.post("/v2/drivers/update", async context =>
+        {
+            await context.authorize("edit-driver");
+
+            const body = {
+                driver: context.request.body,
+                fulfillerId: context.user?.organizationId
+            };
+
+            const result = await this.apiClient.post("logistics-platform/drivers/update",
+            {
+                noi: true,
+                body: body
+            });
+
+            context.response.body = result.data;
+            context.response.status = 200;
+        });
+
+         /**
+          * Creates a driver
+          * @returns 200 OK.
+          */
+        this.router.post("/v2/drivers/create", async context =>
+        {
+            await context.authorize("edit-driver");
+
+            const body = {
+                driver: context.request.body,
+                fulfillerId: context.user?.organizationId
+            };
+
+            console.log(body);
+
+            const result = await this.apiClient.post("logistics-platform/drivers/create",
+            {
+                noi: true,
+                body: body
+            });
+
+            context.response.body = result.data;
+            context.response.status = 200;
+        });
+
+         /**
+          * Deletes a driver
+          * @returns 200 OK.
+          */
+        this.router.post("/v2/drivers/delete", async context =>
+        {
+            await context.authorize("edit-driver");
+
+            const body = {
+                driverId: context.request.body.id,
+                fulfillerId: [context.user?.organizationId]
+            };
+
+            const result = await this.apiClient.post("logistics-platform/drivers/delete",
+            {
+                noi: true,
+                body: body
+            });
+
+            context.response.body = result.data;
+            context.response.status = 200;
+        });
+
+        /**
          * Sends a message to a driver
          * @returns 200 OK if successfull
          */
