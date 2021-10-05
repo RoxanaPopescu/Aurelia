@@ -630,6 +630,11 @@ export class RoutePlanningStore {
       });
 
       rows.push({
+        headline: "Id",
+        value: stop.id
+      });
+
+      rows.push({
         headline: Localization.sharedValue("Type"),
         value: stop.type.slug
       });
