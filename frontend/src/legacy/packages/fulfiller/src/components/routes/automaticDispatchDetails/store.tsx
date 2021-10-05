@@ -373,6 +373,10 @@ export class RoutePlanningStore {
     let components: JSX.Element[] = [];
 
     for (let route of this.plan.routes) {
+      if (route.stops.length < 2) {
+        continue;
+      }
+
       const positions = route.stops.map(stop =>
         stop.location.position!
       ).map(s => new google.maps.LatLng(s.latitude, s.longitude));
@@ -465,7 +469,7 @@ export class RoutePlanningStore {
         }
       });
 
-      if (polyWithinBounds) {
+      if (polyWithinBounds && route.stops.length >= 2) {
         const positions = route.stops.map(stop =>
           stop.location.position!
         ).map(s => new google.maps.LatLng(s.latitude, s.longitude));
@@ -561,6 +565,10 @@ export class RoutePlanningStore {
   }
 
   polylinesForRoute(route: RouteBase): JSX.Element[] {
+    if (route.stops.length < 2) {
+      return [];
+    }
+
     let polylines: JSX.Element[] = [];
 
     const positions = route.stops.map(stop =>
@@ -619,6 +627,11 @@ export class RoutePlanningStore {
       rows.push({
         headline: Localization.sharedValue("Expected_WaitingTime"),
         value: Localization.formatDuration(stop.estimates.waitingTime)
+      });
+
+      rows.push({
+        headline: Localization.sharedValue("Type"),
+        value: stop.type.slug
       });
 
       if (stop.estimates.distance != null) {
