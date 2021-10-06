@@ -211,7 +211,9 @@ export class ApiClient
         {
             ...lowerCaseKeys(apiRequestDefaults.headers),
             ...lowerCaseKeys(this._settings.defaults?.headers),
-            ...(options?.body == null || options?.body === "" ? { "content-type": undefined } : undefined),
+            ...(options?.body == null || options?.body === "" || options?.body instanceof FormData
+                ? { "content-type": undefined }
+                : undefined),
             ...lowerCaseKeys(options?.headers)
 
         } as MapObject;
