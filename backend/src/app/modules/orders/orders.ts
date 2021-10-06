@@ -120,13 +120,13 @@ export class OrdersModule extends AppModule
             {
                 pickupPosition = { latitude: order.consignorAddressPosition.latitude, longitude: order.consignorAddressPosition.longitude }
                 pickupLocationId = order.consignorAddressPosition.locationId;
-            }
+            };
 
             if (order.consigneeAddressPosition != null)
             {
                 deliveryPosition = { latitude: order.consigneeAddressPosition.latitude, longitude: order.consigneeAddressPosition.longitude }
                 deliveryLocationId = order.consigneeAddressPosition.locationId;
-            }
+            };
 
             const pickup =
             {
@@ -137,7 +137,7 @@ export class OrdersModule extends AppModule
                 email: order.consignorEmail,
                 appointment: { earliestArrivalDate: order.pickupEarliestDate, earliestArrivalTime: order.pickupEarliestTime, latestArrivalDate: order.pickupLatestDate, latestArrivalTime: order.pickupLatestTime },
                 instructions: order.pickupInstructions
-            }
+            };
 
             const delivery =
             {
@@ -148,7 +148,7 @@ export class OrdersModule extends AppModule
                 email: order.consigneeEmail,
                 appointment: { earliestArrivalDate: order.deliveryEarliestDate, earliestArrivalTime: order.deliveryEarliestTime, latestArrivalDate: order.deliveryLatestDate, latestArrivalTime: order.deliveryLatestTime },
                 instructions: order.deliveryInstructions
-            }
+            };
 
             context.response.body =
             {
@@ -175,7 +175,7 @@ export class OrdersModule extends AppModule
             return [];
         }
 
-        var result: any[] = [];
+        const result: any[] = [];
 
         for (const collo of colli)
         {
@@ -195,7 +195,7 @@ export class OrdersModule extends AppModule
                 {
                     width: dimension.width,
                     height: dimension.height,
-                    length: dimension.length == null ? dimension.lenght : dimension.length,
+                    length: dimension.length == null ? dimension.lenght : dimension.length
                 };
             }
 
