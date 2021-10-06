@@ -118,15 +118,15 @@ export class OrdersModule extends AppModule
 
             if (order.consignorAddressPosition != null)
             {
-                pickupPosition = { latitude: order.consignorAddressPosition.latitude, longitude: order.consignorAddressPosition.longitude }
+                pickupPosition = { latitude: order.consignorAddressPosition.latitude, longitude: order.consignorAddressPosition.longitude };
                 pickupLocationId = order.consignorAddressPosition.locationId;
-            };
+            }
 
             if (order.consigneeAddressPosition != null)
             {
-                deliveryPosition = { latitude: order.consigneeAddressPosition.latitude, longitude: order.consigneeAddressPosition.longitude }
+                deliveryPosition = { latitude: order.consigneeAddressPosition.latitude, longitude: order.consigneeAddressPosition.longitude };
                 deliveryLocationId = order.consigneeAddressPosition.locationId;
-            };
+            }
 
             const pickup =
             {
