@@ -175,7 +175,7 @@ export default class FulfillersKpiComponent extends React.Component<Props> {
     return (
       <>
         <PageHeaderComponent
-          path={[{ title: "KPI", href: "/kpi" }, { title: "Fulfillers" }]}
+          path={[{ title: "KPI", href: "/kpi" }]}
           history={this.props.history}
           tabs={tabs}
           tab={

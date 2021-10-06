@@ -75,15 +75,12 @@ export class OrderService
 
     /**
      * Gets the specified order.
-     * @param orderSlug The slug identifying the order.
+     * @param slug The slug identifying the order.
      * @returns A promise that will be resolved with the order.
      */
-    public async get(orderSlug: string): Promise<Order>
+    public async get(slug: string): Promise<Order>
     {
-        const result = await this._apiClient.get("orders/v2/details",
-        {
-            query: { slug: orderSlug }
-        });
+        const result = await this._apiClient.get(`orders/${slug}`);
 
         return new Order(result.data);
     }
@@ -95,10 +92,7 @@ export class OrderService
      */
     public async getRouteId(orderSlug: string): Promise<string | undefined>
     {
-        const result = await this._apiClient.get("journeydetails",
-        {
-            query: { orderId: orderSlug }
-        });
+        const result = await this._apiClient.get(`orders/journey/${orderSlug}`);
 
         if (result.data.passages.length > 0)
         {

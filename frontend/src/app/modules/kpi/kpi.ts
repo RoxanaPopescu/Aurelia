@@ -20,11 +20,6 @@ export class KpiModule
             {
                 name: "default",
                 route: "",
-                redirect: "fulfillers"
-            },
-            {
-                name: "fulfillers",
-                route: "fulfillers",
                 moduleId: PLATFORM.moduleName("./modules/fulfillers/fulfillers"),
                 settings:
                 {
@@ -33,24 +28,9 @@ export class KpiModule
                         "view-kpis"
                     ]
                 },
-                title: routeTitles.fulfillers,
+                title: routeTitles.kpi,
                 icon: "kpi",
-                nav: true
-            },
-            {
-                name: "consignors",
-                route: "consignors",
-                moduleId: PLATFORM.moduleName("./modules/consignors/consignors"),
-                settings:
-                {
-                    claims:
-                    [
-                        "view-kpis"
-                    ]
-                },
-                title: routeTitles.consignors,
-                icon: "kpi",
-                nav: true
+                nav: false
             }
         ]);
     }

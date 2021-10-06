@@ -155,7 +155,7 @@ export class RouteService
      */
     public async getDriverPositions(route: Route): Promise<RouteDriverPositionsService>
     {
-        const result = await this._apiClient.post("routes/driverPositions",
+        const result = await this._apiClient.post("routes/driver-positions",
         {
             body:
             {
@@ -190,31 +190,12 @@ export class RouteService
      */
     public async removeDriver(route: Route): Promise<void>
     {
-        await this._apiClient.post("routes/v2/removeDriver",
+        await this._apiClient.post("routes/remove-driver",
         {
             body:
             {
                 routeSlug: route.slug,
                 routeId: route.id
-            }
-        });
-    }
-
-    /**
-     * FIXME: Remove when we use new add-order
-     * Associate an the specified route with the specified order.
-     * @param route The route.
-     * @param orderSlug The slug identifying the order to associate with the route.
-     */
-    public async addOrder(route: Route, orderSlug: string): Promise<void>
-    {
-        await this._apiClient.post("routes/v2/addOrder",
-        {
-            body:
-            {
-                routeSlug: route.slug,
-                routeId: route.id,
-                orderSlug: orderSlug
             }
         });
     }
@@ -400,7 +381,7 @@ export class RouteService
      */
     public async reloadRoute(route: Route): Promise<void>
     {
-        await this._apiClient.post("routes/reloadRouteInApp",
+        await this._apiClient.post("routes/reload-driver-app",
         {
             body: { routeId: route.id }
         });

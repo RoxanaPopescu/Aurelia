@@ -24,35 +24,35 @@ export class OrderInfo
         this.earliestPickupTime = TimeOfDay.fromString(data.earliestPickupTime);
         this.latestPickupDate = DateTime.fromISO(data.latestPickupDate, { setZone: true });
         // tslint:disable-next-line: deprecation
-        this.latestPickupTime = TimeOfDay.fromString(data.latestPickupTime);
+        this.latestPickupTime = TimeOfDay.fromString(data.latestPickuptime);
 
         this.earliestDeliveryDate = DateTime.fromISO(data.earliestDeliveryDate, { setZone: true });
         // tslint:disable-next-line: deprecation
         this.earliestDeliveryTime = TimeOfDay.fromString(data.earliestDeliveryTime);
         this.latestDeliveryDate = DateTime.fromISO(data.latestDeliveryDate, { setZone: true });
         // tslint:disable-next-line: deprecation
-        this.latestDeliveryTime = TimeOfDay.fromString(data.latestDeliveryTime);
+        this.latestDeliveryTime = TimeOfDay.fromString(data.latestDeliverytime);
 
         this.pickupLocation = new Location(
         {
             address:
             {
-                primary: data.pickupLocation.address,
+                primary: data.pickupAddress.address,
                 secondary: ""
             },
-            position: data.pickupLocation.position,
-            timeZone: data.pickupLocation.timeZone
+            position: data.pickupAddress.position,
+            timeZone: data.pickupAddress.timeZone
         });
 
         this.deliveryLocation = new Location(
         {
             address:
             {
-                primary: data.deliveryLocation.address,
+                primary: data.deliveryAddress.address,
                 secondary: ""
             },
-            position: data.deliveryLocation.position,
-            timeZone: data.pickupLocation.timeZone
+            position: data.deliveryAddress.position,
+            timeZone: data.pickupAddress.timeZone
         });
     }
 
