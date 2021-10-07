@@ -240,7 +240,7 @@ export class IdentityModule extends AppModule
             fullName: result1.data.name,
             preferredName: result1.data.preferred_username,
             pictureUrl: result1.data.picture,
-            outfit: result2 == null ? undefined :
+            organization: result2 == null ? undefined :
             {
                 id: result2.data.organization.organizationId,
                 companyName: result2.data.organization.name

@@ -282,7 +282,7 @@ export class AppModule
                     ]
                 },
                 title: routeTitles.agreements,
-                nav: true,
+                nav: false,
                 href: "/agreements",
                 icon: "agreements"
             },

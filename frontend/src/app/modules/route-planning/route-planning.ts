@@ -1,7 +1,6 @@
 import { autoinject, PLATFORM } from "aurelia-framework";
 import { RouterConfiguration, Router } from "aurelia-router";
 import routeTitles from "./resources/strings/route-titles.json";
-import { coopOrganizationId, IdentityService, moverOrganizationId } from "app/services/identity";
 
 /**
  * Represents the module.
@@ -9,36 +8,6 @@ import { coopOrganizationId, IdentityService, moverOrganizationId } from "app/se
 @autoinject
 export class RoutePlanningModule
 {
-    /**
-     * Creates a new instance of the class.
-     * @param identityService The `IdentityService` instance.
-     */
-    public constructor(identityService: IdentityService)
-    {
-        this._identityService = identityService;
-    }
-
-    private readonly _identityService: IdentityService;
-
-    /**
-     * Routeplan rule sets supports two implementations.
-     * Legacy: What coop and Mover is still using
-     * TODO: This should be removed when we move all customers to the new routeplans
-     */
-    private get showLegacy(): boolean
-    {
-        const identity = this._identityService.identity;
-
-        if (identity == null)
-        {
-            return false;
-        }
-
-        const legacyOrganizationIds = [moverOrganizationId, coopOrganizationId];
-
-        return legacyOrganizationIds.includes(identity.outfit!.id);
-    }
-
     /**
      * Called to configure the router for the module.
      * @param config The router configuration associated with the module.
@@ -51,62 +20,7 @@ export class RoutePlanningModule
             {
                 name: "default",
                 route: "",
-                redirect: this.showLegacy ? "plans-legacy" : "plans"
-            },
-            {
-                name: "list-legacy",
-                route: "plans-legacy",
-                moduleId: PLATFORM.moduleName("./modules/legacy-route-plans/list/list"),
-                settings:
-                {
-                    claims:
-                    [
-                        "view-routeplans"
-                    ]
-                },
-                title: routeTitles.routePlans,
-                nav: false
-            },
-            {
-                name: "details-legacy",
-                route: "plans-legacy/details/:id",
-                moduleId: PLATFORM.moduleName("./modules/legacy-route-plans/details/details"),
-                settings:
-                {
-                    claims:
-                    [
-                        "view-routeplans"
-                    ]
-                },
-                title: routeTitles.details
-            },
-            {
-                name: "rule-sets-list-legacy",
-                route: "rule-sets-legacy",
-                moduleId: PLATFORM.moduleName("./modules/legacy-route-settings/list/list"),
-                settings:
-                {
-                    claims:
-                    [
-                        "view-routeplan-settings"
-                    ]
-                },
-                title: routeTitles.rulesList,
-                nav: this.showLegacy,
-                icon: "settings"
-            },
-            {
-                name: "rule-sets-details-legacy",
-                route: [ "rule-sets-legacy/details/:id", "rule-sets-legacy/create" ],
-                moduleId: PLATFORM.moduleName("./modules/legacy-route-settings/details/details"),
-                settings:
-                {
-                    claims:
-                    [
-                        "view-routeplan-settings"
-                    ]
-                },
-                title: routeTitles.rulesDetails
+                redirect: "plans"
             },
             {
                 name: "list",
@@ -119,8 +33,8 @@ export class RoutePlanningModule
                         "view-routeplans"
                     ]
                 },
-                title: this.showLegacy ? routeTitles.routePlansNew : routeTitles.routePlans,
-                nav: this.showLegacy,
+                title: routeTitles.routePlans,
+                nav: true,
                 icon: "route-planning"
             },
             {
@@ -147,7 +61,7 @@ export class RoutePlanningModule
                         "view-routeplan-settings"
                     ]
                 },
-                title: this.showLegacy ? routeTitles.rulesListNew : routeTitles.rulesList,
+                title: routeTitles.rulesList,
                 nav: true,
                 icon: "settings"
             },

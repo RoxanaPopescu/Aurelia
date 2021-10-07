@@ -68,7 +68,7 @@ export class OrganizationService
      */
     public async delete(): Promise<void>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         await this._apiClient.post(`organizations/${organizationId}/delete`);
     }
@@ -80,7 +80,7 @@ export class OrganizationService
      */
     public async getProfile(signal?: AbortSignal): Promise<OrganizationProfile>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         const result = await this._apiClient.get(`organizations/${organizationId}/profile`,
         {
@@ -98,7 +98,7 @@ export class OrganizationService
      */
     public async saveProfile(profile: OrganizationProfile): Promise<void>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         await this._apiClient.post(`organizations/${organizationId}/profile/save`,
         {
@@ -113,7 +113,7 @@ export class OrganizationService
      */
     public async inviteUser(invite: IOrganizationUserInviteInit): Promise<OrganizationUser>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         const result = await this._apiClient.post(`organizations/${organizationId}/invites/send`,
         {
@@ -168,7 +168,7 @@ export class OrganizationService
      */
     public async getUsers(signal?: AbortSignal): Promise<OrganizationUser[]>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         const [result1, result2] = await Promise.all(
         [
@@ -196,7 +196,7 @@ export class OrganizationService
      */
     public async changeUserRole(userId: string, roleId: string): Promise<void>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         await this._apiClient.post(`organizations/${organizationId}/users/${userId}/change-role`,
         {
@@ -211,7 +211,7 @@ export class OrganizationService
      */
     public async removeUser(user: OrganizationUser): Promise<void>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         if (user.status.slug === "invited")
         {
@@ -230,7 +230,7 @@ export class OrganizationService
      */
     public async getPermissions(signal?: AbortSignal): Promise<OrganizationPermission[]>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         const result = await this._apiClient.get(`organizations/${organizationId}/permissions`,
         {
@@ -247,7 +247,7 @@ export class OrganizationService
      */
     public async createRole(role: OrganizationRole): Promise<OrganizationRole>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         const result = await this._apiClient.post(`organizations/${organizationId}/roles/create`,
         {
@@ -264,7 +264,7 @@ export class OrganizationService
      */
     public async getRoles(signal?: AbortSignal): Promise<OrganizationRole[]>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         const result = await this._apiClient.get(`organizations/${organizationId}/roles`,
         {
@@ -281,7 +281,7 @@ export class OrganizationService
      */
     public async duplicateRole(roleId: string): Promise<OrganizationRole>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         const result = await this._apiClient.post(`organizations/${organizationId}/roles/${roleId}/duplicate`);
 
@@ -295,7 +295,7 @@ export class OrganizationService
      */
     public async saveRole(role: OrganizationRole): Promise<OrganizationRole>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         const result = await this._apiClient.post(`organizations/${organizationId}/roles/${role.id}/save`,
         {
@@ -312,7 +312,7 @@ export class OrganizationService
      */
     public async deleteRole(roleId: string): Promise<void>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         await this._apiClient.post(`organizations/${organizationId}/roles/${roleId}/delete`);
     }
@@ -324,7 +324,7 @@ export class OrganizationService
      */
     public async createTeam(team: OrganizationTeam): Promise<OrganizationTeam>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         const result = await this._apiClient.post(`organizations/${organizationId}/teams/create`,
         {
@@ -341,7 +341,7 @@ export class OrganizationService
      */
     public async getTeams(signal?: AbortSignal): Promise<OrganizationTeam[]>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         const result = await this._apiClient.get(`organizations/${organizationId}/teams`,
         {
@@ -359,7 +359,7 @@ export class OrganizationService
      */
     public async getTeam(teamId: string, signal?: AbortSignal): Promise<OrganizationTeam>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         const result = await this._apiClient.get(`organizations/${organizationId}/teams/${teamId}`,
         {
@@ -376,7 +376,7 @@ export class OrganizationService
      */
     public async saveTeam(team: OrganizationTeam): Promise<OrganizationTeam>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         const result = await this._apiClient.post(`organizations/${organizationId}/teams/${team.id}/save`,
         {
@@ -393,7 +393,7 @@ export class OrganizationService
      */
     public async deleteTeam(teamId: string): Promise<void>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         await this._apiClient.post(`organizations/${organizationId}/teams/${teamId}/delete`);
     }
@@ -406,7 +406,7 @@ export class OrganizationService
      */
     public async addUserToTeam(teamId: string, userId: string): Promise<void>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         await this._apiClient.post(`organizations/${organizationId}/teams/${teamId}/users/add`,
         {
@@ -422,7 +422,7 @@ export class OrganizationService
      */
     public async getUsersInTeam(teamId: string, signal?: AbortSignal): Promise<OrganizationUser[]>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         const [result1, result2] = await Promise.all(
         [
@@ -450,7 +450,7 @@ export class OrganizationService
      */
     public async removeUserFromTeam(teamId: string, userId: string): Promise<void>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         await this._apiClient.post(`organizations/${organizationId}/teams/${teamId}/users/${userId}/remove`);
     }
@@ -462,7 +462,7 @@ export class OrganizationService
      */
     public async createConnection(connectionId: string): Promise<OrganizationConnection>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         const result = await this._apiClient.post(`organizations/${organizationId}/connections/create`,
         {
@@ -479,7 +479,7 @@ export class OrganizationService
      */
     public async getConnections(signal?: AbortSignal): Promise<OrganizationConnection[]>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         const result = await this._apiClient.get(`organizations/${organizationId}/connections`,
         {
@@ -497,7 +497,7 @@ export class OrganizationService
      */
     public async getConnection(connectionId: string, signal?: AbortSignal): Promise<OrganizationConnection>
     {
-        const organizationId = this._identityService.identity!.outfit!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
         const result = await this._apiClient.get(`organizations/${organizationId}/connections/${connectionId}`,
         {

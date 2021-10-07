@@ -434,7 +434,7 @@ export class DetailsModule
 
         const legacyOrganizationIds = [moverOrganizationId];
 
-        return legacyOrganizationIds.includes(identity.outfit!.id);
+        return legacyOrganizationIds.includes(identity.organization!.id);
     }
 
     /**

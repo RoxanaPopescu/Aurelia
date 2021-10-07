@@ -47,5 +47,71 @@ export class TriggersModule extends AppModule
             context.response.body = result.data;
             context.response.status = 200;
         });
+
+        /**
+         * Creates a trigger
+         * @returns 200 OK.
+         */
+        this.router.post("/v2/communication/triggers", async context =>
+        {
+            await context.authorize("edit-communication");
+
+            const body = context.request.body;
+
+            const result = await this.apiClient.post("notification/templates/add",
+            {
+                body: {
+                    ...body,
+                    ownerOutfitId: context.user?.organizationId,
+                    changedBy: context.user?.id
+                }
+            });
+
+            context.response.body = result.data;
+            context.response.status = 200;
+        });
+
+        /**
+         * Deletes a trigger
+         * @returns 200 OK.
+         */
+        this.router.post("/v2/communication/triggers/delete", async context =>
+        {
+            await context.authorize("edit-communication");
+
+            const body = context.request.body;
+            const result = await this.apiClient.post("notification/templates/Delete",
+            {
+                body: {
+                    ...body,
+                    outfitIds: [context.user?.organizationId]
+                }
+            });
+
+            context.response.body = result.data;
+            context.response.status = 200;
+        });
+
+        /**
+         * Updates a trigger
+         * @returns 200 OK.
+         */
+        this.router.post("/v2/communication/triggers/update", async context =>
+        {
+            await context.authorize("edit-communication");
+
+            const body = context.request.body;
+            const result = await this.apiClient.post("notification/templates/update",
+            {
+                body: {
+                    ...body,
+                    outfitIds: [context.user?.organizationId],
+                    changedBy: context.user?.id
+                }
+            });
+
+            context.response.body = result.data;
+            context.response.status = 200;
+        });
     }
 }

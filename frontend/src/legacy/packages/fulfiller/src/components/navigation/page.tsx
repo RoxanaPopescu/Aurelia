@@ -1,16 +1,11 @@
 import React from "react";
 import { Route } from "react-router";
-import RoutePlansComponent from "../routePlanning/list";
-import RoutePlanningDetails from "../routePlanning/details-v1";
 import Localization from "shared/src/localization";
 import { Base } from "shared/src/webKit/utillity/base";
 import DepotsDetailsComponent from "../depots/details";
 import DepotsListComponent from "../depots/list";
-import RoutePlanningSettingDetailsComponent from "../routePlanning/settings/details";
 import OrderGroupListComponent from "fulfiller/src/components/orderGroup/list";
 import OrderGroupComponent from "../orderGroup/single/index";
-import RoutePlanSettingListComponent from "../routePlanning/settings/list";
-import RoutePlanSettingDetailsComponent from "../routePlanning/settings/details";
 import SimulationListComponent from "../routePlanning/simulation/components/list";
 import SimulationStartComponent from "../routePlanning/simulation/components/start";
 import SimulationResultComponent from "../routePlanning/simulation/components/result";
@@ -236,17 +231,17 @@ export namespace FulfillerSubPage {
     // tslint:disable-next-line:switch-default
     switch (page) {
       case FulfillerSubPage.RoutePlanningList:
-        return RoutePlansComponent;
+        return OrderGroupListComponent;
       case FulfillerSubPage.RoutePlanningSettingList:
-        return RoutePlanSettingListComponent;
+        return OrderGroupListComponent;
       case FulfillerSubPage.RoutePlanningSettingDetails:
-        return RoutePlanSettingDetailsComponent;
+        return OrderGroupListComponent;
       case FulfillerSubPage.RoutePlanningSettingCreate:
-        return RoutePlanSettingDetailsComponent;
+        return OrderGroupListComponent;
       case FulfillerSubPage.RoutePlanningSettingList:
-        return RoutePlanningSettingDetailsComponent;
+        return OrderGroupListComponent;
       case FulfillerSubPage.RoutePlanningDetails:
-        return RoutePlanningDetails;
+        return OrderGroupListComponent;
       case FulfillerSubPage.OrderGroupList:
         return OrderGroupListComponent;
       case FulfillerSubPage.OrderGroupCreate:

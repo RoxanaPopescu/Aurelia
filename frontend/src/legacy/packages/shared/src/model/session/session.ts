@@ -101,16 +101,16 @@ export class _Session {
 
     this.vehicleTypes = vehicleTypes.map(t => new VehicleType(t));
 
-    switch (identity.outfit!.type.slug) {
+    switch (identity.organization!.type.slug) {
       case "fulfiller":
-        this.outfit = new Fulfiller(identity.outfit!);
+        this.outfit = new Fulfiller(identity.organization!);
         break;
       case "consignor":
-        this.outfit = new Consignor(identity.outfit!);
+        this.outfit = new Consignor(identity.organization!);
         break;
       default:
         // TODO: This probably breaks something, somewhere.
-        this.outfit = new Outfit(identity.outfit!, "Unknown");
+        this.outfit = new Outfit(identity.organization!, "Unknown");
     }
   }
 }

@@ -104,7 +104,7 @@ export class RouteAssignmentService
             {
                 routeId: route.id,
                 newFulfillerId: executor.id,
-                currentFulfillerId: currentOutfit?.id ?? this._identityService.identity!.outfit!.id
+                currentFulfillerId: currentOutfit?.id ?? this._identityService.identity!.organization!.id
             }
         });
 

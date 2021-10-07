@@ -5,6 +5,7 @@ import { IValidation } from "shared/framework";
 import { CommunicationService, CommunicationTrigger, CommunicationTriggerEvent, CommunicationRecipient, CommunicationMessageType } from "app/model/_communication";
 import { AgreementService } from "app/model/agreement";
 import { Outfit } from "app/model/outfit";
+import { IdentityService } from "app/services/identity";
 
 /**
  * Represents the route parameters for the page.
@@ -27,16 +28,19 @@ export class DetailsPage
      * Creates a new instance of the class.
      * @param communicationService The `CommunicationService` instance.
      * @param agreementService The `AgreementService` instance.
+     * @param identityService The `IdentityService` instance.
      */
-    public constructor(communicationService: CommunicationService, agreementService: AgreementService, router: Router)
+    public constructor(communicationService: CommunicationService, agreementService: AgreementService, router: Router, identityService: IdentityService)
     {
         this._communicationService = communicationService;
         this._agreementService = agreementService;
         this._router = router;
+        this._identityService = identityService;
     }
 
     private readonly _communicationService: CommunicationService;
     private readonly _agreementService: AgreementService;
+    private readonly _identityService: IdentityService;
     private readonly _router: Router;
 
     /**
@@ -122,6 +126,8 @@ export class DetailsPage
             this.model = new CommunicationTrigger();
         }
 
+        this.availableCustomers = [];
+
         try
         {
             this.availableCustomers = (await this._agreementService.getAll()).agreements;
@@ -129,9 +135,9 @@ export class DetailsPage
         catch
         {
             // FIXME: Remove when fulfillers works again
-            // FIXME: Add current organization also
-            this.availableCustomers = [];
         }
+
+        this.availableCustomers.unshift(this._identityService.identity!.organization!);
     }
 
     /**

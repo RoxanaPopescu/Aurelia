@@ -1,9 +1,0 @@
-@import "resources/index";
-
-page[name="route-planning"] page[name="route-plans-list-legacy"]
-{
-    data-table
-    {
-        --data-table-columns: 1.5fr 1fr 1fr 0.5fr 1fr 1fr;
-    }
-}

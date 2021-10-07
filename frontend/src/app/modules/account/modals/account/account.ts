@@ -163,7 +163,7 @@ export class AccountModalPanel
         new Operation(async () =>
         {
             this.organizations = await this._organizationService.getAll();
-            this.organization = this.organizations.find(o => o.id === this._identityService.identity!.outfit!.id)!;
+            this.organization = this.organizations.find(o => o.id === this._identityService.identity!.organization!.id)!;
         });
     }
 

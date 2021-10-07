@@ -119,7 +119,7 @@ export class AssignOrganizationPanel
      */
     protected async onOrganizationClick(organization: Fulfiller): Promise<void>
     {
-        if (this.route.fulfiller.id !== this.identityService.identity?.outfit!.id)
+        if (this.route.fulfiller.id !== this.identityService.identity?.organization!.id)
         {
             const confirmed = await this._modalService.open(ConfirmRemoveOrganizationDialog,
             {
@@ -138,7 +138,7 @@ export class AssignOrganizationPanel
             if (this.assignOnSelect)
             {
                 this._modal.busy = true;
-                await this._routeAssignmentService.assignExecutor(this.route, organization, this.identityService.identity!.outfit);
+                await this._routeAssignmentService.assignExecutor(this.route, organization, this.identityService.identity!.organization);
             }
 
             this._result = organization;

@@ -233,7 +233,7 @@ export class IdentityService
                     this.setTokens(tokens);
                     this._identity = identity;
 
-                    if (this._identity.outfit != null)
+                    if (this._identity.organization != null)
                     {
                         this.startLegacySession();
                     }

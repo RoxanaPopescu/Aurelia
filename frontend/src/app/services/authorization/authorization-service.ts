@@ -44,7 +44,7 @@ export class AuthorizationService
     public isAuthorizedForRoute(routeSettings: (IAuthorizationSettings | undefined)[]): boolean
     {
         const identity = this._identityService.identity;
-        const organization = this._identityService.identity?.outfit;
+        const organization = this._identityService.identity?.organization;
 
         for (const settings of routeSettings)
         {

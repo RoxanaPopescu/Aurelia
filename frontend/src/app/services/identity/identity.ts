@@ -26,9 +26,9 @@ export class Identity
             this.pictureUrl = gravatarUrl(result.data.username, { default: this.pictureUrl ?? "blank" });
         }
 
-        if (result.data.outfit != null)
+        if (result.data.organization != null)
         {
-            this.outfit = new Outfit(result.data.outfit);
+            this.organization = new Outfit(result.data.organization);
         }
 
         const accessToken = result.data.accessToken || tokens.accessToken;
@@ -77,7 +77,7 @@ export class Identity
     /**
      * The outfit to which the user belongs, if any.
      */
-    public readonly outfit: Outfit | undefined;
+    public readonly organization: Outfit | undefined;
 
     /**
      * The claims assigned to the user.

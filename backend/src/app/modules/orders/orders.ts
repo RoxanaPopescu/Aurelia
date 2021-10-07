@@ -71,10 +71,12 @@ export class OrdersModule extends AppModule
             };
 
             const pickup = requestBody.pickup;
-            pickup.location = pickup.location.address.secondary == null ? pickup.location.address.primary : `${pickup.location.address.primary}, ${pickup.location.address.secondary}`;
+            pickup.address = pickup.location.address.secondary == null ? pickup.location.address.primary : `${pickup.location.address.primary}, ${pickup.location.address.secondary}`;
+            pickup.instructions = { text: pickup.instructions };
 
             const delivery = requestBody.delivery;
-            delivery.location = delivery.location.address.secondary == null ? delivery.location.address.primary : `${delivery.location.address.primary}, ${delivery.location.address.secondary}`;
+            delivery.address = delivery.location.address.secondary == null ? delivery.location.address.primary : `${delivery.location.address.primary}, ${delivery.location.address.secondary}`;
+            delivery.instructions = { text: delivery.instructions };
 
             body.order =
             {
@@ -90,20 +92,13 @@ export class OrdersModule extends AppModule
                 createdBy: context.user?.id
             };
 
-            try
+            const result = await this.apiClient.post("logistics/orders/edit/v2",
             {
-                const result = await this.apiClient.post("logistics/orders/edit/v2",
-                {
-                    body: body
-                });
+                body: body
+            });
 
-                context.response.body = result.data;
-                context.response.status = 200;
-            }
-            catch (error: any)
-            {
-                console.log(error.data);
-            }
+            context.response.body = result.data;
+            context.response.status = 200;
         });
 
         /**
