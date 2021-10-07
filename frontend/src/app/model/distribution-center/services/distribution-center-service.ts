@@ -1,13 +1,13 @@
 import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { IPaging, ISorting } from "shared/types";
-import { Depot } from "../entities/depot";
+import { DistributionCenter } from "../entities/distribution-center";
 
 /**
  * Represents a service that manages depots.
  */
 @autoinject
-export class DepotService
+export class DistributionCenterService
 {
     /**
      * Creates a new instance of the type.
@@ -27,19 +27,13 @@ export class DepotService
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the depots.
      */
-    public async getAll(sorting?: ISorting, paging?: IPaging, signal?: AbortSignal): Promise<{ depots: Depot[]; depotCount: number }>
+    public async getAll(sorting?: ISorting, paging?: IPaging, signal?: AbortSignal): Promise<DistributionCenter[]>
     {
-        const result = await this._apiClient.post("depots/list",
+        const result = await this._apiClient.get("distribution-centers",
         {
-            body:
-            {
-            },
             signal
         });
 
-        return {
-            depots: result.data.map((data: any) => new Depot(data)),
-            depotCount: result.data.length
-        };
+        return result.data.map((data: any) => new DistributionCenter(data));
     }
 }

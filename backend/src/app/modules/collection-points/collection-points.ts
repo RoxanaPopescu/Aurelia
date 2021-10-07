@@ -13,7 +13,7 @@ export class CollectionPointModule extends AppModule
          * @param context.params.id The ID of the collection point to receive.
          * @returns The collection point of the specified ID.
          */
-        this.router.get("/v2/collection-point/details/:id", async context =>
+        this.router.get("/v2/collection-points/:id", async context =>
         {
             const validationResult = await this.validateLogin(context, "view-routes");
 
@@ -34,7 +34,7 @@ export class CollectionPointModule extends AppModule
          * Saves the colected order event
          * @returns 200 when the event is received
          */
-        this.router.post("/v2/collection-point/orders/collected", async context =>
+        this.router.post("/v2/collection-points/orders/collected", async context =>
         {
             const validationResult = await this.validateLogin(context, "edit-routes");
 
@@ -56,7 +56,7 @@ export class CollectionPointModule extends AppModule
          * Saves the missing order event
          * @returns 200 when the event is received
          */
-        this.router.post("/v2/collection-point/orders/missing", async context =>
+        this.router.post("/v2/collection-points/orders/missing", async context =>
         {
             const validationResult = await this.validateLogin(context, "edit-routes");
 
@@ -78,7 +78,7 @@ export class CollectionPointModule extends AppModule
          * Saves the damaged order event
          * @returns 200 when the event is received
          */
-        this.router.post("/v2/collection-point/orders/damaged", async context =>
+        this.router.post("/v2/collection-points/orders/damaged", async context =>
         {
             const validationResult = await this.validateLogin(context, "edit-routes");
 
@@ -100,7 +100,7 @@ export class CollectionPointModule extends AppModule
          * Saves the rejected order event
          * @returns 200 when the event is received
          */
-        this.router.post("/v2/collection-point/orders/rejected", async context =>
+        this.router.post("/v2/collection-points/orders/rejected", async context =>
         {
             const validationResult = await this.validateLogin(context, "edit-routes");
 
@@ -122,7 +122,7 @@ export class CollectionPointModule extends AppModule
          * Saves the not collected order event
          * @returns 200 when the event is received
          */
-        this.router.post("/v2/collection-point/orders/not-collected", async context =>
+        this.router.post("/v2/collection-points/orders/not-collected", async context =>
         {
             const validationResult = await this.validateLogin(context, "edit-routes");
 
@@ -152,7 +152,8 @@ export class CollectionPointModule extends AppModule
         let userId: string;
 
         // Allow legacy token authorization
-        if (context.request.headers["token"] != null)
+        const noiOrigin = context.request.headers["x-noi-origin"];
+        if (noiOrigin === "true")
         {
             const driver = await this.validateDriverLogin(context);
             outfitId = driver.outfitId;
@@ -160,8 +161,8 @@ export class CollectionPointModule extends AppModule
         }
         else
         {
-            context.authorize(permission);
-            outfitId = context.user.outfitId;
+            await context.authorize(permission);
+            outfitId = context.user.organizationId;
             userId = context.user.id;
         }
 

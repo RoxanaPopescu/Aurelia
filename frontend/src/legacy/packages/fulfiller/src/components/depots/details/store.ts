@@ -23,10 +23,8 @@ export class DepotStore {
     this.error = undefined;
 
     let response = await fetch(
-      Base.url("Depots/Details"),
-      Base.defaultConfig({
-        id: id
-      })
+      Base.url(`distribution-centers/${id}`),
+      Base.defaultConfig(undefined)
     );
 
     if (response.ok) {

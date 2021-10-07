@@ -3,7 +3,7 @@ import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { IScroll } from "shared/framework";
-import { DepotService, Depot } from "app/model/depot";
+import { DistributionCenterService, DistributionCenter } from "app/model/distribution-center";
 
 /**
  * Represents the route parameters for the page.
@@ -24,17 +24,17 @@ export class ListPage
 {
     /**
      * Creates a new instance of the class.
-     * @param depotService The `DepotService` instance.
+     * @param distributionCenterService The `DistributionCenterService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(depotService: DepotService, historyHelper: HistoryHelper)
+    public constructor(distributionCenterService: DistributionCenterService, historyHelper: HistoryHelper)
     {
-        this._depotService = depotService;
+        this._distributionCenterService = distributionCenterService;
         this._historyHelper = historyHelper;
         this._constructed = true;
     }
 
-    private readonly _depotService: DepotService;
+    private readonly _distributionCenterService: DistributionCenterService;
     private readonly _historyHelper: HistoryHelper;
     private readonly _constructed;
 
@@ -69,14 +69,9 @@ export class ListPage
     };
 
     /**
-     * The total number of items matching the query, or undefined if unknown.
-     */
-    protected depotCount: number | undefined;
-
-    /**
      * The items to present in the table.
      */
-    protected depots: Depot[];
+    protected distributionCenters: DistributionCenter[];
 
     /**
      * Called by the framework when the module is activated.
@@ -127,14 +122,13 @@ export class ListPage
         this.updateOperation = new Operation(async signal =>
         {
             // Fetch the data.
-            const result = await this._depotService.getAll(
+            const result = await this._distributionCenterService.getAll(
                 this.sorting,
                 this.paging,
                 signal);
 
             // Update the state.
-            this.depots = result.depots;
-            this.depotCount = result.depotCount;
+            this.distributionCenters = result;
 
             // Reset page.
             if (propertyName !== "paging")

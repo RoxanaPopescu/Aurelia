@@ -14,7 +14,7 @@ export class DistributionCenterStagingModule extends AppModule
          * Saves the collo verified event
          * @returns 202 ok
          */
-        this.router.post("/v2/distribution-center/staging/collo/validated", async context =>
+        this.router.post("/v2/distribution-centers/staging/collo/validated", async context =>
         {
             await context.authorize();
 
@@ -37,7 +37,7 @@ export class DistributionCenterStagingModule extends AppModule
          * Saves the collo damaged event
          * @returns 202 ok
          */
-        this.router.post("/v2/distribution-center/staging/collo/damaged", async context =>
+        this.router.post("/v2/distribution-centers/staging/collo/damaged", async context =>
         {
             await context.authorize();
 
@@ -60,7 +60,7 @@ export class DistributionCenterStagingModule extends AppModule
          * Saves the collo missing event
          * @returns 202 ok
          */
-        this.router.post("/v2/distribution-center/staging/collo/missing", async context =>
+        this.router.post("/v2/distribution-centers/staging/collo/missing", async context =>
         {
             await context.authorize();
 

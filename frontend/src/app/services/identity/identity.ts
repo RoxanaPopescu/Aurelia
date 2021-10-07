@@ -16,14 +16,15 @@ export class Identity
     public constructor(result: ApiResult, tokens: IIdentityTokens)
     {
         this.id = result.data.id;
-        this.username = result.data.username;
+        this.email = result.data.email;
+        this.emailVerified = result.data.emailVerified;
         this.fullName = result.data.fullName;
         this.preferredName = result.data.preferredName;
         this.pictureUrl = result.data.pictureUrl;
 
         if (this.pictureUrl == null)
         {
-            this.pictureUrl = gravatarUrl(result.data.username, { default: this.pictureUrl ?? "blank" });
+            this.pictureUrl = gravatarUrl(result.data.email, { default: this.pictureUrl ?? "blank" });
         }
 
         if (result.data.organization != null)
@@ -55,9 +56,14 @@ export class Identity
     public readonly id: string;
 
     /**
-     * The username identifying the user.
+     * The email identifying the user.
      */
-    public readonly username: string;
+    public readonly email: string;
+
+    /**
+     * If the users email is verified.
+     */
+     public readonly emailVerified: boolean;
 
     /**
      * The full name of the user.

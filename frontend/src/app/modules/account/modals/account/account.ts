@@ -222,7 +222,7 @@ export class AccountModalPanel
             this._modal.busy = true;
 
             // Delete the account.
-            await this._accountService.delete(this._identityService.identity!.username);
+            await this._accountService.delete(this._identityService.identity!.email);
 
             // Indicate that the operation succeeded.
             this._result = true;

@@ -27,7 +27,7 @@ export class CollectionPointService
      */
     public async get(id: string, signal?: AbortSignal): Promise<CollectionPoint>
     {
-        const result = await this._apiClient.get(`collection-point/details/${id}`,
+        const result = await this._apiClient.get(`collection-points/${id}`,
         {
             signal
         });
@@ -42,7 +42,7 @@ export class CollectionPointService
      */
     public async saveDeviation(order: Order): Promise<void>
     {
-        await this._apiClient.post(`collection-point/orders/${order.status.slug}`,
+        await this._apiClient.post(`collection-points/orders/${order.status.slug}`,
         {
             body:
             {
@@ -62,7 +62,7 @@ export class CollectionPointService
      */
     public async orderCollected(order: Order): Promise<void>
     {
-        await this._apiClient.post("collection-point/orders/collected",
+        await this._apiClient.post("collection-points/orders/collected",
         {
             body:
             {

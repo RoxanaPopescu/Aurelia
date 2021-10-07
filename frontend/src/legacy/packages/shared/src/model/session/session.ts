@@ -93,10 +93,10 @@ export class _Session {
 
     this.userInfo = new UserInfo({
       userId: identity.id,
-      username: identity.username,
+      username: identity.email,
       firstName: firstName,
       lastName: lastName,
-      email: identity.username
+      email: identity.email
     });
 
     this.vehicleTypes = vehicleTypes.map(t => new VehicleType(t));
