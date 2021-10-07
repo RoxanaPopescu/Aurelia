@@ -25,7 +25,6 @@ import AddressSearchComponent from "../../addressSearch";
 import OrderService from "../service";
 import { SubPage } from "../../../utillity/page";
 import { Link } from "react-router-dom";
-import OrderGroupService from "fulfiller/src/services/orderGroupService";
 import Select from "../../../webKit/select/index";
 import { Session } from "../../../model/session/session";
 import { Fulfiller } from "../../../model/logistics/fulfiller";
@@ -736,6 +735,8 @@ export default class SaveOrderComponent extends React.Component<Props> {
   }
 
   private fetchConsignors() {
+    // TODO: If we re-enable add order
+    /*
     OrderGroupService.listConsignors()
       .then(consignors => {
         this.saveOrdersStore.consignors = consignors;
@@ -743,5 +744,6 @@ export default class SaveOrderComponent extends React.Component<Props> {
       .catch(error => {
         this.saveOrdersStore.error = error.message;
       });
+      */
   }
 }

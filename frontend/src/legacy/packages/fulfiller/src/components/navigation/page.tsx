@@ -4,8 +4,6 @@ import Localization from "shared/src/localization";
 import { Base } from "shared/src/webKit/utillity/base";
 import DepotsDetailsComponent from "../depots/details";
 import DepotsListComponent from "../depots/list";
-import OrderGroupListComponent from "fulfiller/src/components/orderGroup/list";
-import OrderGroupComponent from "../orderGroup/single/index";
 import SimulationListComponent from "../routePlanning/simulation/components/list";
 import SimulationStartComponent from "../routePlanning/simulation/components/start";
 import SimulationResultComponent from "../routePlanning/simulation/components/result";
@@ -231,23 +229,23 @@ export namespace FulfillerSubPage {
     // tslint:disable-next-line:switch-default
     switch (page) {
       case FulfillerSubPage.RoutePlanningList:
-        return OrderGroupListComponent;
+        return DepotsListComponent;
       case FulfillerSubPage.RoutePlanningSettingList:
-        return OrderGroupListComponent;
+        return DepotsListComponent;
       case FulfillerSubPage.RoutePlanningSettingDetails:
-        return OrderGroupListComponent;
+        return DepotsListComponent;
       case FulfillerSubPage.RoutePlanningSettingCreate:
-        return OrderGroupListComponent;
+        return DepotsListComponent;
       case FulfillerSubPage.RoutePlanningSettingList:
-        return OrderGroupListComponent;
+        return DepotsListComponent;
       case FulfillerSubPage.RoutePlanningDetails:
-        return OrderGroupListComponent;
+        return DepotsListComponent;
       case FulfillerSubPage.OrderGroupList:
-        return OrderGroupListComponent;
+        return DepotsListComponent;
       case FulfillerSubPage.OrderGroupCreate:
-        return OrderGroupComponent;
+        return DepotsListComponent;
       case FulfillerSubPage.OrderGroupDetails:
-        return OrderGroupComponent;
+        return DepotsListComponent;
       case FulfillerSubPage.SimulationList:
         return SimulationListComponent;
       case FulfillerSubPage.SimulationStart:

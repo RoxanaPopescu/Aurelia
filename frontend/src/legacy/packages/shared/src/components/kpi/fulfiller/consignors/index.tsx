@@ -3,11 +3,7 @@ import H from "history";
 import Localization from "shared/src/localization";
 import React from "react";
 import KpiTableComponent from "../../components/table";
-import OrderGroupService from "fulfiller/src/services/orderGroupService";
-import { DateTime } from "luxon";
 import { KpiService } from "../../service";
-import { OutfitData } from "../../models/outfitData";
-import { KpiFormat } from "../../models/kpiFormat";
 import { KpiStore } from "../../store";
 import { PageHeaderComponent } from "shared/src/components/pageHeader";
 import { PageContentComponent } from "shared/src/components/pageContent";
@@ -71,21 +67,7 @@ export default class ConsignorsKpiComponent extends React.Component<Props> {
   }
 
   private fetchConsignors() {
-    OrderGroupService.listConsignors()
-      .then(consignors => {
-        consignorsKpiStore.outfitsData = consignors.map(consignor => {
-          return new OutfitData(
-            consignor,
-            DateTime.local(),
-            DateTime.local(),
-            new KpiFormat("numbers")
-          );
-        });
-        this.fetchKpi();
-      })
-      .catch(error => {
-        consignorsKpiStore.error = error.message;
-      });
+    // DO nothing
   }
 
   renderTable() {
