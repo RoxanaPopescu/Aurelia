@@ -58,7 +58,7 @@ export class CommunicationService
      */
     public async getAll(signal?: AbortSignal): Promise<CommunicationTriggerInfo[]>
     {
-        const result = await this._apiClient.post("communication/triggers/list",
+        const result = await this._apiClient.get("communication/triggers",
         {
             signal
         });
@@ -73,10 +73,7 @@ export class CommunicationService
      */
     public async get(slug: string): Promise<CommunicationTrigger>
     {
-        const result = await this._apiClient.post("communication/triggers/details",
-        {
-            body: { slug }
-        });
+        const result = await this._apiClient.get(`communication/triggers/${slug}`);
 
         return new CommunicationTrigger(result.data);
     }

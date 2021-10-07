@@ -8,34 +8,43 @@ export class TriggersModule extends AppModule
     public configure(): void
     {
         /**
-         * Missing
-         * @returns The phone number and message to send
+         * Communication triggers
+         * @returns A list of communication triggers
          */
-        this.router.post("/v2/communication/triggers", async context =>
+        this.router.get("/v2/communication/triggers", async context =>
         {
-            const requestBody = context.request.body;
-            let to = requestBody.phone.nationalNumber;
+            await context.authorize("view-communication");
 
-            if (requestBody.phone.countryCallingCode != null)
-            {
-                to = `${requestBody.phone.countryCallingCode}${to}`;
-            }
-
-            const routesResult = await this.apiClient.post("communication/sms/Send",
+            const result = await this.apiClient.post("notification/templates/List",
             {
                 body:
                 {
-                    "to": to,
-                    "message":
-                    {
-                      "from": "Mover",
-                      "content": requestBody.message
-                    },
-                    "isSimulation": false
+                    outfitIds: [context.user?.organizationId]
                 }
             });
 
-            context.response.body = routesResult.data;
+            context.response.body = result.data.results;
+            context.response.status = 200;
+        });
+
+        /**
+         * Details of a trigger
+         * @returns A single trigger
+         */
+        this.router.get("/v2/communication/triggers/:slug", async context =>
+        {
+            await context.authorize("view-communication");
+
+            const result = await this.apiClient.post("notification/templates/Details",
+            {
+                body:
+                {
+                    outfitIds: [context.user?.organizationId],
+                    slug: context.params.slug
+                }
+            });
+
+            context.response.body = result.data;
             context.response.status = 200;
         });
     }

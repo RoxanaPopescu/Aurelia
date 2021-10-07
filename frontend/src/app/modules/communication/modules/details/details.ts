@@ -122,7 +122,16 @@ export class DetailsPage
             this.model = new CommunicationTrigger();
         }
 
-        this.availableCustomers = (await this._agreementService.getAll()).agreements.filter(a => a.type.slug === "consignor");
+        try
+        {
+            this.availableCustomers = (await this._agreementService.getAll()).agreements;
+        }
+        catch
+        {
+            // FIXME: Remove when fulfillers works again
+            // FIXME: Add current organization also
+            this.availableCustomers = [];
+        }
     }
 
     /**
