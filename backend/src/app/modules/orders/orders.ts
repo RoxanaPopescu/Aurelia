@@ -71,10 +71,10 @@ export class OrdersModule extends AppModule
             };
 
             const pickup = requestBody.pickup;
-            pickup.location = pickup.location.address.secondary == null ? pickup.location.address.primary : `${pickup.location.address.primary}, ${pickup.location.address.secondary}`
+            pickup.location = pickup.location.address.secondary == null ? pickup.location.address.primary : `${pickup.location.address.primary}, ${pickup.location.address.secondary}`;
 
             const delivery = requestBody.delivery;
-            delivery.location = delivery.location.address.secondary == null ? delivery.location.address.primary : `${delivery.location.address.primary}, ${delivery.location.address.secondary}`
+            delivery.location = delivery.location.address.secondary == null ? delivery.location.address.primary : `${delivery.location.address.primary}, ${delivery.location.address.secondary}`;
 
             body.order =
             {
