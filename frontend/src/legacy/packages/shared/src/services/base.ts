@@ -40,7 +40,7 @@ export default class BaseService {
     return config;
   }
 
-  static url(name: string, items: { [Key: string]: string } = {}, version: "v1" | "v2" = "v1"): string {
+  static url(name: string, items: { [Key: string]: string } = {}, version: "v2" = "v2"): string {
     var base = BaseService.baseURL(version) + name;
 
     let index = 0;

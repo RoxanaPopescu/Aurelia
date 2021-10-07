@@ -109,7 +109,7 @@ export class OrderService
      */
     public async getRelabelUrl(barcode: string): Promise<string | undefined>
     {
-        const result = await this._apiClient.post("orders/relabel",
+        const result = await this._apiClient.post("orders/re-label",
         {
             body: { barcode: barcode }
         });

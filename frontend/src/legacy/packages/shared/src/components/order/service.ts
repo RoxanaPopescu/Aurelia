@@ -24,7 +24,7 @@ export default class OrderService {
       };
 
       let response = await fetch(
-        Base.url("PlaceOrders", {}),
+        Base.url("orders/create", {}),
         Base.defaultConfig(items)
       );
 

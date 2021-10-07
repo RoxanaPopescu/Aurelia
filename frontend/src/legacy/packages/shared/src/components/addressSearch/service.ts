@@ -11,12 +11,12 @@ export default class LocationService {
       };
 
       let response = await fetch(
-        Base.url("locations/AddressAutocomplete"),
+        Base.url("locations/address-auto-complete"),
         Base.defaultConfig(items)
       );
       if (response.status >= 200 && response.status < 300) {
         let responseJson = await response.json();
-        return responseJson.results.map(result => new Address(result));
+        return responseJson.map(result => new Address(result));
       } else {
         let responseJson = await response.json();
         if (
@@ -42,7 +42,7 @@ export default class LocationService {
       };
 
       let response = await fetch(
-        Base.url("locations/Address"),
+        Base.url("locations/address"),
         Base.defaultConfig(items)
       );
       if (response.status >= 200 && response.status < 300) {

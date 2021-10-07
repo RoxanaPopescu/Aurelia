@@ -11,6 +11,27 @@ export class OrdersModule extends AppModule
     public configure(): void
     {
         /**
+         * Updates a vehicle
+         * @returns 200 OK.
+         */
+        this.router.post("/v2/orders/create", async context =>
+        {
+            await context.authorize("edit-order");
+
+            const body = context.request.body;
+            body.accessIds = [context.user?.organizationId];
+
+            const result = await this.apiClient.post("logistics-platform/vehicles/update",
+            {
+                noi: true,
+                body: body
+            });
+
+            context.response.body = result.data;
+            context.response.status = 200;
+        });
+
+        /**
          * Gets the vehicles for an organization
          * @returns The a list of vehicle.
          */

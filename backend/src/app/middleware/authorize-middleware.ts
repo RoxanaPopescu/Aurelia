@@ -29,12 +29,10 @@ export class User
     {
         this.id = jwtObject["sub"];
         this.organizationId = jwtObject["organization"];
-
-        // TODO: This does not exist in the JWT.
         this.email = jwtObject["email"];
         this.fullName = jwtObject["name"];
         this.preferredName = jwtObject["preferred_username"];
-        this.roleName = jwtObject["role"];
+        this.roleId = jwtObject["role_id"];
 
         // Convert claims to a permission set.
 
@@ -69,7 +67,7 @@ export class User
     /**
      * The role of the user.
      */
-    public roleName: string;
+    public roleId?: string;
 
     /**
      * The ID of the organization to which the user belongs.

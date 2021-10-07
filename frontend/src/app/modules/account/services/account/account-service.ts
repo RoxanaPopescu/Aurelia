@@ -79,7 +79,7 @@ export class AccountService
      */
     public async changePasswordUsingToken(token: string, newPassword: string): Promise<{ email: string }>
     {
-        const result = await this._apiClient.post("account/change-password",
+        const result = await this._apiClient.post("account/forgot-password/change-password",
         {
             body: { token, newPassword }
         });

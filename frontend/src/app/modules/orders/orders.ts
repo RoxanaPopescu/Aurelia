@@ -26,7 +26,7 @@ export class OrdersModule
      * Legacy: What coop is using
      * TODO: This should be removed when we have figured out the real solution for new user system
      */
-    private get showDAORelabel(): boolean
+    public get showDAORelabel(): boolean
     {
         if (ENVIRONMENT.name === "development")
         {
@@ -119,7 +119,7 @@ export class OrdersModule
                     ]
                 },
                 title: routeTitles.daoRelabel,
-                nav: this.showDAORelabel,
+                nav: false,
                 icon: "orders"
             },
 
