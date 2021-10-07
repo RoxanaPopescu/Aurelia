@@ -401,8 +401,6 @@ export class IdentityService
             this._identity.tokens = undefined as any;
         }
 
-        Profile.reset();
-
         if (tokens != null)
         {
             if (this._identity != null)
@@ -428,6 +426,10 @@ export class IdentityService
             }
 
             Profile.setTokens(tokens.accessToken, tokens.refreshToken, this._identity?.claims);
+        }
+        else
+        {
+            Profile.reset();
         }
 
         // tslint:disable

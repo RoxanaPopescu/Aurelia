@@ -13,10 +13,12 @@ export default class BaseService {
 
     if (Profile.tokens) {
       headers.set("authorization", `Bearer ${Profile.tokens.access}`);
-      headers.set("refresh-token", Profile.tokens.refresh);
+      // headers.set("refresh-token", Profile.tokens.refresh);
     }
 
-    headers.set("mover-correlationid", GUID.generate());
+    const correlationId = GUID.generate();
+    headers.set("x-correlation", correlationId);
+    headers.set("mover-correlationid", correlationId);
 
     return headers;
   }

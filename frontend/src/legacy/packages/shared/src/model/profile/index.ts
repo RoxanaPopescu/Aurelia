@@ -50,7 +50,7 @@ export class _Profile {
     // localStorage.setItem(Path.RefreshToken, refreshToken);
     // localStorage.setItem(Path.AccessToken, accessToken);
     // this.claims = new Set(getUserClaims(this.tokens));
-    this.tokens = { access: "yes, we have a token", refresh: "yes, we have a token" };
+    this.tokens = { access: accessToken, refresh: refreshToken };
     this.claims = claims ?? new Set<string>();
   }
 

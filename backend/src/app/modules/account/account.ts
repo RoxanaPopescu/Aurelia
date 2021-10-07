@@ -125,9 +125,9 @@ export class AccountModule extends AppModule
     }
 
     /**
-     * Changes the password for the current user, or the user identified by the specified token.
-     * @param context.request.body.currentPassword The new password chosen by the user.
-     * @param context.request.body.newPassword The token specified in the recovery link sent to the user, or undefined if already authenticated.
+     * Changes the password for the current user.
+     * @param context.request.body.currentPassword The current password.
+     * @param context.request.body.newPassword The new password chosen by the user.
      * @returns
      * - 200: No content
      */
