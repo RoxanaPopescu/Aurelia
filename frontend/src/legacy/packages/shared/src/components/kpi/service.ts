@@ -21,7 +21,7 @@ export class KpiService {
       };
 
       let response = await fetch(
-        Base.url("kpi/fulfiller", {}),
+        Base.url("kpi/routes", {}),
         Base.defaultConfig(items)
       );
 

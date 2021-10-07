@@ -74,6 +74,7 @@ export default class FulfillersKpiComponent extends React.Component<Props> {
   }
 
   private fetchFulfillers() {
+    // FIXME: Fix when connections have been made
     AgreementsService.fulfillers()
       .then(fulfillers => {
         this.fulfillersKpiStore.outfitsData = fulfillers.map(fulfiller => {
@@ -96,8 +97,19 @@ export default class FulfillersKpiComponent extends React.Component<Props> {
 
         this.fetchKpi();
       })
-      .catch(error => {
-        this.fulfillersKpiStore.error = error.message;
+      .catch(() => {
+        this.fulfillersKpiStore.outfitsData = [];
+
+        this.fulfillersKpiStore.outfitsData.unshift(
+          new OutfitData(
+            undefined,
+            DateTime.local(),
+            DateTime.local(),
+            new KpiFormat("numbers")
+          )
+        );
+
+        this.fetchKpi();
       });
   }
 

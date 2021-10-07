@@ -164,9 +164,9 @@ export class OrderService
      */
     public async saveOrder(order: Order): Promise<void>
     {
-        await this._apiClient.post("orders/v2/edit",
+        await this._apiClient.post("orders/edit",
         {
-            body: { order: order.toJSON() }
+            body: order.toJSON()
         });
     }
 
@@ -177,7 +177,7 @@ export class OrderService
      */
     public async updateStatus(order: Order, status: OrderStatusSlug): Promise<void>
     {
-        await this._apiClient.post("orders/updatestatus",
+        await this._apiClient.post("orders/update-status",
         {
             body: { id: order.id, slug: order.slug, status: status }
         });

@@ -11,24 +11,99 @@ export class OrdersModule extends AppModule
     public configure(): void
     {
         /**
-         * Updates a vehicle
-         * @returns 200 OK.
+         * Gets the vehicles for an organization
+         * @returns The a list of vehicle.
          */
-        this.router.post("/v2/orders/create", async context =>
+        this.router.post("/v2/orders/update-status", async context =>
         {
             await context.authorize("edit-order");
 
             const body = context.request.body;
-            body.accessIds = [context.user?.organizationId];
 
-            const result = await this.apiClient.post("logistics-platform/vehicles/update",
+            if (body.status === "ready")
             {
-                noi: true,
-                body: body
-            });
+                const result = await this.apiClient.post("logistics/orders/MarkOrderReady",
+                {
+                    body: {
+                        internalOrderId: body.id,
+                        createdBy: context.user?.id
+                    }
+                });
 
-            context.response.body = result.data;
-            context.response.status = 200;
+                context.response.body = result.data;
+                context.response.status = 200;
+            }
+            else if (body.status === "cancelled")
+            {
+                const result = await this.apiClient.post("logistics/orders/fulfiller/cancel",
+                {
+                    body: {
+                        outfitIds: [context.user?.organizationId],
+                        orderId: body.slug,
+                        cancelledBy: context.user?.id
+                    }
+                });
+
+                context.response.body = result.data;
+                context.response.status = 200;
+            }
+            else
+            {
+                context.response.status = 404;
+            }
+        });
+
+        /**
+         * Edits an order
+         * @returns 200 OK
+         */
+        this.router.post("/v2/orders/edit", async context =>
+        {
+            await context.authorize("edit-order");
+
+            const organizationIds = [context.user?.organizationId];
+            const requestBody = context.request.body;
+
+            const body: any =
+            {
+                outfitIds: organizationIds,
+                editedBy: context.user?.id
+            };
+
+            const pickup = requestBody.pickup;
+            pickup.location = pickup.location.address.secondary == null ? pickup.location.address.primary : `${pickup.location.address.primary}, ${pickup.location.address.secondary}`
+
+            const delivery = requestBody.delivery;
+            delivery.location = delivery.location.address.secondary == null ? delivery.location.address.primary : `${delivery.location.address.primary}, ${delivery.location.address.secondary}`
+
+            body.order =
+            {
+                internalOrderId: requestBody.id,
+                ownerId: context.user?.organizationId,
+                ownerOrderId: requestBody.slug,
+                relationalId: requestBody.relationalId,
+                departmentId: "",
+                pickup: pickup,
+                delivery: delivery,
+                tags: requestBody.tags,
+                requirements: [],
+                createdBy: context.user?.id
+            };
+
+            try
+            {
+                const result = await this.apiClient.post("logistics/orders/edit/v2",
+                {
+                    body: body
+                });
+
+                context.response.body = result.data;
+                context.response.status = 200;
+            }
+            catch (error: any)
+            {
+                console.log(error.data);
+            }
         });
 
         /**
@@ -181,7 +256,7 @@ export class OrdersModule extends AppModule
                 delivery: delivery,
                 estimatedColli: this.cleanupColli(order.estimatedColli),
                 actualColli: this.cleanupColli(order.actualColli),
-                tags: order.tags,
+                tags: order.tags.map((t: any) => t.tag),
                 consignorId: order.consignorId
             };
 

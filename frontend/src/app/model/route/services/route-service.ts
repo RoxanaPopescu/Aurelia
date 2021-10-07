@@ -253,7 +253,7 @@ export class RouteService
      */
     public async createRoute(orderIds: string[], routeReference: string, vehicleType: VehicleType): Promise<string>
     {
-        const result = await this._apiClient.post("routes/create",
+        const result = await this._apiClient.post("routes/create/from-orders",
         {
             body: { orderIds: orderIds, routeReference: routeReference, vehicleTypeId: vehicleType.id }
         });

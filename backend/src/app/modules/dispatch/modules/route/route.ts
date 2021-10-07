@@ -1,5 +1,5 @@
-import { randomUUID } from "crypto";
 import { AppModule } from "../../../../app-module";
+import { v4 as uuidV4 } from "uuid";
 
 /**
  * Represents a module exposing endpoints related to route list
@@ -68,7 +68,7 @@ export class DispatchRouteModule extends AppModule
             const body: any = context.request.body;
             body.fulfillerIds = [context.user?.organizationId];
             body.createdBy = context.user?.id;
-            body.correlationId = randomUUID();
+            body.correlationId = uuidV4();
 
             const result = await this.apiClient.post("logistics-platform/routes/v2/add-fulfiller",
             {
