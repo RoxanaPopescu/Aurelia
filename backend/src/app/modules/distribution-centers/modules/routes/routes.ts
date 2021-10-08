@@ -41,8 +41,8 @@ export class DistributionCenteRoutesModule extends AppModule
                 noi: true
             });
 
-            var routes = routeResult.data.routes;
-            var routeIds = routes.map((r: any) => r.id);
+            const routes = routeResult.data.routes;
+            const routeIds = routes.map((r: any) => r.id);
 
             if (routeIds.length <= 0)
             {
@@ -69,7 +69,7 @@ export class DistributionCenteRoutesModule extends AppModule
                 }
             });
 
-            for(const route of routes)
+            for (const route of routes)
             {
                 route.colliTotal = route.totalNumberOfColli;
                 delete route.totalNumberOfColli;
@@ -86,14 +86,14 @@ export class DistributionCenteRoutesModule extends AppModule
          * Updates a distribution center
          * @returns 200 OK.
          */
-        this.router.post("/v2/distribution-centers/update", async context =>
+        this.router.post("/v2/distribution-centers/routes/save-remarks", async context =>
         {
             await context.authorize("edit-depot");
 
             const body = context.request.body;
             body.createdBy = context.user?.id;
 
-            const result = await this.apiClient.post("logistics/depots/update",
+            const result = await this.apiClient.post("logistics/routeremarks/save",
             {
                 body: body
             });

@@ -81,7 +81,7 @@ export class DepotRouteService {
 
   public async saveRoute(route: DepotRoute): Promise<void> {
     const response = await fetch(
-      BaseService.url("distribution-centers/routes/update"),
+      BaseService.url("distribution-centers/routes/save-remarks"),
       BaseService.defaultConfig({
         routeId: route.id,
         depotId: this.depotId,
