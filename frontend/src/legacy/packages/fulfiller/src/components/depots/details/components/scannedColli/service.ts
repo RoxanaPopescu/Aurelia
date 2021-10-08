@@ -27,12 +27,12 @@ export class DepotColliService {
     toDate: DateTime
   ): Promise<void> {
     const response = await fetch(
-      BaseService.url("depots/colli/overview"),
-      BaseService.defaultConfig({
-        depotId: depotId,
-        fromDate: fromDate,
-        toDate: toDate
-      })
+      BaseService.url("distribution-centers/colli/overview", {
+        distributionCenterId: depotId,
+        fromDate: fromDate.toISO(),
+        toDate: toDate.toISO()
+      }),
+      BaseService.defaultConfig()
     );
 
     if (!response.ok) {
@@ -51,14 +51,15 @@ export class DepotColliService {
   ): Promise<void> {
     this.loadingColli = true;
 
+    const items = {
+      distributionCenterId: depotId,
+      fromDate: fromDate.toISO(),
+      toDate: toDate.toISO()
+    };
+
     const response = await fetch(
-      BaseService.url("depots/colli/missing"),
-      BaseService.defaultConfig({
-        depotId: depotId,
-        fromDate: fromDate,
-        toDate: toDate,
-        consignorIds: consignorId ? [consignorId] : undefined
-      })
+      BaseService.url("distribution-centers/colli/missing", items),
+      BaseService.defaultConfig()
     );
 
     if (!response.ok) {

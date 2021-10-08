@@ -121,26 +121,5 @@ export class DistributionCenteRoutesModule extends AppModule
             context.response.body = result.data;
             context.response.status = 200;
         });
-
-        /**
-         * Gets the distribution center with the specified ID.
-         * @param context.params.id The ID of the distribution center to get.
-         * @returns The distribution center with the specified ID.
-         */
-        this.router.get("/v2/distribution-centers/:id", async context =>
-        {
-            await context.authorize("view-depot");
-
-            const result = await this.apiClient.post("logistics/depots/details",
-            {
-                body:
-                {
-                    id: context.params.id
-                }
-            });
-
-            context.response.body = result.data;
-            context.response.status = 200;
-        });
     }
 }
