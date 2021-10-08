@@ -53,7 +53,7 @@ export default
         {
             accessToken:
             {
-                issuer: "https://identity-v1-test-mover.azurewebsites.net",
+                issuer: environment.issuer,
                 header: "authorization",
                 cookie: "access-token",
                 secret: "TODO: Remove - This is my little secret for protecting my resources. Muhahaha!!"

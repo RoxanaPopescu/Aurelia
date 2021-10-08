@@ -32,6 +32,9 @@ export class ServerEnvironment
         this.subscriptionKey = this.name === "development"
             ? "bcf1f656a0844acb9fd5a33d61832afd"
             : "afc3a3e5918b4dec9d3cf96090388532";
+        this.issuer = this.name === "development"
+            ? "https://identity-v1-test-mover.azurewebsites.net"
+            : "https://identity-v1-prod-mover.azurewebsites.net";
         this.sentryDns = "https://cdd542607b484957a281e7f79f55ff19@o98352.ingest.sentry.io/5696520";
     }
 
@@ -81,6 +84,11 @@ export class ServerEnvironment
      * The subscription key for our gateway
      */
     public subscriptionKey: string;
+
+    /**
+     * The identity server issuer
+     */
+    public issuer: string;
 
     /**
      * The dns for sentry.io
