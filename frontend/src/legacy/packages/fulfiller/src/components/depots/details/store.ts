@@ -51,7 +51,7 @@ export class DepotStore {
 
     if (this.depot.id) {
       let response = await fetch(
-        Base.url("Depots/Update"),
+        Base.url("distribution-centers/update"),
         Base.defaultConfig(this.depot)
       );
 
@@ -60,7 +60,7 @@ export class DepotStore {
       }
     } else {
       let response = await fetch(
-        Base.url("Depots/Create"),
+        Base.url("distribution-centers"),
         Base.defaultConfig(this.depot)
       );
 

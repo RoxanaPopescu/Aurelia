@@ -17,6 +17,8 @@ export class DriversModule extends AppModule
 
             const body = context.request.body;
             body.outfitIds = [context.user?.organizationId];
+            body.statuses = body.filter.statuses;
+            body.searchQuery = body.filter.searchQuery;
 
             const result = await this.apiClient.post("logistics-platform/drivers/list-v2",
             {

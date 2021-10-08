@@ -131,7 +131,7 @@ export class RoutePlanningModule
                     ]
                 },
                 title: routeTitles.simulationsList,
-                nav: true,
+                nav: false,
                 icon: "simulations"
             },
             {

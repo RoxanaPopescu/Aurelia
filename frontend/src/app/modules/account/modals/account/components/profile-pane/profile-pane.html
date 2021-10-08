@@ -87,6 +87,10 @@
 
         </email-input>
 
+        <div if.bind="!model.emailVerified" class="margin-small-top font-small" translate>
+            This email is not verified
+        </div>
+
         <phone-input if-environment="development" class="margin-double-top" label="above" value.bind="model.phone" autocomplete="tel" readonly.bind="model.currentPassword == null">
 
             <div slot="heading" translate>

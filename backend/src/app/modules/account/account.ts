@@ -182,6 +182,7 @@ export class AccountModule extends AppModule
         context.response.body =
         {
             email: result.data.email,
+            emailVerified: result.data.emailVerified,
             phone: result.data.phone,
             fullName: result.data.fullName,
             preferredName: result.data.preferredName,

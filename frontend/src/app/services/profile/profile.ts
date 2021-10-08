@@ -12,6 +12,7 @@ export class Profile
     public constructor(data: any)
     {
         this.email = data.email;
+        this.emailVerified = data.emailVerified;
         this.phone = data.phone;
         this.fullName = data.fullName;
         this.preferredName = data.preferredName;
@@ -22,6 +23,11 @@ export class Profile
      * The email address of the user.
      */
     public email: string;
+
+    /**
+     * If the users email is verified.
+     */
+     public emailVerified: boolean;
 
     /**
      * The phone number of the user.

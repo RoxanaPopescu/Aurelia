@@ -3,7 +3,6 @@ import { Route } from "react-router";
 import Localization from "shared/src/localization";
 import { Base } from "shared/src/webKit/utillity/base";
 import DepotsDetailsComponent from "../depots/details";
-import DepotsListComponent from "../depots/list";
 import SimulationListComponent from "../routePlanning/simulation/components/list";
 import SimulationStartComponent from "../routePlanning/simulation/components/start";
 import SimulationResultComponent from "../routePlanning/simulation/components/result";
@@ -229,23 +228,23 @@ export namespace FulfillerSubPage {
     // tslint:disable-next-line:switch-default
     switch (page) {
       case FulfillerSubPage.RoutePlanningList:
-        return DepotsListComponent;
+        return AssignRoutesComponent;
       case FulfillerSubPage.RoutePlanningSettingList:
-        return DepotsListComponent;
+        return AssignRoutesComponent;
       case FulfillerSubPage.RoutePlanningSettingDetails:
-        return DepotsListComponent;
+        return AssignRoutesComponent;
       case FulfillerSubPage.RoutePlanningSettingCreate:
-        return DepotsListComponent;
+        return AssignRoutesComponent;
       case FulfillerSubPage.RoutePlanningSettingList:
-        return DepotsListComponent;
+        return AssignRoutesComponent;
       case FulfillerSubPage.RoutePlanningDetails:
-        return DepotsListComponent;
+        return AssignRoutesComponent;
       case FulfillerSubPage.OrderGroupList:
-        return DepotsListComponent;
+        return AssignRoutesComponent;
       case FulfillerSubPage.OrderGroupCreate:
-        return DepotsListComponent;
+        return AssignRoutesComponent;
       case FulfillerSubPage.OrderGroupDetails:
-        return DepotsListComponent;
+        return AssignRoutesComponent;
       case FulfillerSubPage.SimulationList:
         return SimulationListComponent;
       case FulfillerSubPage.SimulationStart:
@@ -253,7 +252,7 @@ export namespace FulfillerSubPage {
       case FulfillerSubPage.SimulationResult:
         return SimulationResultComponent;
       case FulfillerSubPage.DepotList:
-        return DepotsListComponent;
+        return AssignRoutesComponent;
       case FulfillerSubPage.DepotCreate:
         return DepotsDetailsComponent;
       case FulfillerSubPage.DepotDetails:
