@@ -218,35 +218,30 @@ export class IdentityService
 
             tokens = new IdentityTokens({ ...tokens, ...result.data });
 
-            if (this._identity != null)
+            const identity = new Identity(result, tokens);
+
+            let finished = false;
+
+            const finishFunc = () =>
             {
+                const shouldStartLegacySession = this._identity == null && identity.organization != null;
+
                 this.setTokens(tokens);
-            }
-            else
-            {
-                const identity = new Identity(result, tokens);
+                this._identity = identity;
 
-                let finished = false;
-
-                const finishFunc = () =>
+                if (shouldStartLegacySession)
                 {
-                    this.setTokens(tokens);
-                    this._identity = identity;
-
-                    if (this._identity.organization != null)
-                    {
-                        this.startLegacySession();
-                    }
-
-                    finished = true;
-                };
-
-                await this._changeFunc?.(identity, undefined, finishFunc);
-
-                if (!finished)
-                {
-                    finishFunc();
+                    this.startLegacySession();
                 }
+
+                finished = true;
+            };
+
+            await this._changeFunc?.(identity, undefined, finishFunc);
+
+            if (!finished)
+            {
+                finishFunc();
             }
 
             return true;
