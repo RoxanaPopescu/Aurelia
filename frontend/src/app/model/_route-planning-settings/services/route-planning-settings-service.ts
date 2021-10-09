@@ -28,9 +28,8 @@ export class RoutePlanningSettingsService
      */
     public async getAll(signal?: AbortSignal): Promise<RoutePlanningSettingsInfo[]>
     {
-        const response = await this._apiClient.post("routeplanning/rulesets/list",
+        const response = await this._apiClient.get("route-planning/rule-sets",
         {
-            body: {},
             signal
         });
 
@@ -45,9 +44,8 @@ export class RoutePlanningSettingsService
      */
     public async get(slug: string, signal?: AbortSignal): Promise<RoutePlanningSettings>
     {
-        const result = await this._apiClient.post("routeplanning/rulesets/details",
+        const result = await this._apiClient.get(`route-planning/rule-sets/${slug}`,
         {
-            body: { slug },
             signal
         });
 
@@ -61,7 +59,7 @@ export class RoutePlanningSettingsService
      */
     public async create(settings: RoutePlanningSettings): Promise<void>
     {
-        const result = await this._apiClient.post("routeplanning/rulesets/create",
+        const result = await this._apiClient.post("route-planning/rule-sets",
         {
             body: settings
         });
@@ -78,7 +76,7 @@ export class RoutePlanningSettingsService
      */
     public async update(settings: RoutePlanningSettings): Promise<void>
     {
-        const result = await this._apiClient.post("routeplanning/rulesets/update",
+        const result = await this._apiClient.post("route-planning/rule-sets/update",
         {
             body: settings
         });
@@ -95,7 +93,7 @@ export class RoutePlanningSettingsService
      */
     public async delete(id: string): Promise<void>
     {
-        await this._apiClient.post("routeplanning/rulesets/delete",
+        await this._apiClient.post("route-planning/rule-sets/delete",
         {
             body: { id }
         });
