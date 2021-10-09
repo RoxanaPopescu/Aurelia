@@ -203,7 +203,6 @@ export class ListPage
                         searchQuery: this.textFilter,
                         statuses: this.statusFilter
                     },
-                    this.sorting,
                     this.paging,
                     signal);
 

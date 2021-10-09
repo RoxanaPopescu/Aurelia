@@ -1,7 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { DateTime } from "luxon";
 import { ApiClient } from "shared/infrastructure";
-import { IPaging, ISorting } from "shared/types";
+import { IPaging } from "shared/types";
 import { RoutePlanInfo } from "../entities/route-plan-info";
 import { RoutePlanStatusSlug } from "../entities/route-plan-status";
 
@@ -37,7 +37,6 @@ export class RoutePlanService
             searchQuery?: string;
             statuses?: RoutePlanStatusSlug[];
         },
-        sorting?: ISorting,
         paging?: IPaging,
         signal?: AbortSignal):
         Promise<{ plans: RoutePlanInfo[] }>
