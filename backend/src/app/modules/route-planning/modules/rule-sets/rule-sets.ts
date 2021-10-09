@@ -27,7 +27,6 @@ export class RoutePlanningRuleSetsModule extends AppModule
             context.response.status = 200;
         });
 
-
         /**
          * Gets the rule-set by ID.
          * @param context.params.slug The slug of the rule set to receive.
