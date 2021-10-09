@@ -81,7 +81,7 @@ export class Identity
     public readonly pictureUrl: string;
 
     /**
-     * The outfit to which the user belongs, if any.
+     * The organization to which the user belongs, if any.
      */
     public readonly organization: Outfit | undefined;
 
