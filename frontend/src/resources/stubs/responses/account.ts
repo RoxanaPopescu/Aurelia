@@ -29,6 +29,7 @@ export default
         body:
         {
             email: "john-doe@example.com",
+            emailVerified: true,
             phone:
             {
                 nationalNumber: "42424242",
@@ -46,6 +47,7 @@ export default
         body:
         {
             email: "john-doe@example.com",
+            emailVerified: true,
             phone:
             {
                 nationalNumber: "42424242",
@@ -63,6 +65,7 @@ export default
         body:
         {
             email: "john-doe@example.com",
+            emailVerified: false,
             fullName: "John Doe",
             preferredName: "John",
             pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4?s=200"

@@ -48,6 +48,22 @@ export class OrganizationService
     }
 
     /**
+     * Gets the specified organization.
+     * @param organizationId The ID of the organization to get.
+     * @param signal The abort signal to use, or undefined to use no abort signal.
+     * @returns A promise that will be resolved with info about the specified organization.
+     */
+    public async get(organizationId: string, signal?: AbortSignal): Promise<OrganizationInfo>
+    {
+        const result = await this._apiClient.get(`organizations/${organizationId}`,
+        {
+            signal
+        });
+
+        return new OrganizationInfo(result.data);
+    }
+
+    /**
      * Gets all organizations visible to the current user.
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with info about the organizations.
@@ -457,17 +473,31 @@ export class OrganizationService
 
     /**
      * Creates the specified connection within the current organization.
-     * @param organizationId The ID of he organization to connect to.
+     * @param otherOrganizationId The ID of he organization to connect to.
      * @returns A promise that will be resolved with the new connection.
      */
-    public async createConnection(connectionId: string): Promise<OrganizationConnection>
+    public async inviteConnection(otherOrganizationId: string): Promise<OrganizationConnection>
     {
         const organizationId = this._identityService.identity!.organization!.id;
 
         const result = await this._apiClient.post(`organizations/${organizationId}/connections/create`,
         {
-            body: { organizationId }
+            body: { organizationId: otherOrganizationId }
         });
+
+        return new OrganizationConnection(result.data);
+    }
+
+    /**
+     * Accepts the specified connection.
+     * @param connectionId The ID of the connection.
+     * @returns A promise that will be resolved with the accepted connection.
+     */
+    public async acceptConnection(connectionId: string): Promise<OrganizationConnection>
+    {
+        const organizationId = this._identityService.identity!.organization!.id;
+
+        const result = await this._apiClient.post(`organizations/${organizationId}/connections/${connectionId}/accept`);
 
         return new OrganizationConnection(result.data);
     }
@@ -490,20 +520,14 @@ export class OrganizationService
     }
 
     /**
-     * Gets the specified connection.
+     * Deletes the specified connection.
      * @param connectionId The ID of the connection.
-     * @param signal The abort signal to use, or undefined to use no abort signal.
-     * @returns A promise that will be resolved with the specified connection.
+     * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async getConnection(connectionId: string, signal?: AbortSignal): Promise<OrganizationConnection>
+    public async deleteConnection(connectionId: string): Promise<void>
     {
         const organizationId = this._identityService.identity!.organization!.id;
 
-        const result = await this._apiClient.get(`organizations/${organizationId}/connections/${connectionId}`,
-        {
-            signal
-        });
-
-        return new OrganizationConnection(result.data);
+        await this._apiClient.post(`organizations/${organizationId}/connections/${connectionId}/delete`);
     }
 }

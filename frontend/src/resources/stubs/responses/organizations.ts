@@ -23,6 +23,29 @@ export default
       body: organizations
     },
 
+    "GET /api/v2/organizations/mover-organization-id":
+    {
+      body: organizations[0]
+    },
+    "GET /api/v2/organizations/ikea-organization-id":
+    {
+      body: organizations[1]
+    },
+    "GET /api/v2/organizations/coop-organization-id":
+    {
+      body: organizations[2]
+    },
+    "GET /api/v2/organizations/42424242-4242-4242-4242-424242424242":
+    {
+      delay: 1000,
+      body: { id: "42424242-4242-4242-4242-424242424242", name: "Test" }
+    },
+    "GET /api/v2/organizations/42424242-4242-4242-4242-424242424241":
+    {
+      delay: 3000,
+      status: 404
+    },
+
     "POST /api/v2/organizations/mover-organization-id/delete":
     {
       status: 204
@@ -321,6 +344,64 @@ export default
       status: 204
     },
     "POST /api/v2/organizations/mover-organization-id/teams/team-1-id/users/user-6-id/remove":
+    {
+      status: 204
+    },
+
+    "POST /api/v2/organizations/mover-organization-id/connections/create":
+    {
+      body:
+      {
+        id: "connection-3-id",
+        organization: { id: "foo-organization-id", name: "Foo" },
+        status: "invite-sent",
+        createdDateTime: DateTime.utc().minus({ week: 1 }).toISO(),
+        acceptedDateTime: undefined
+      }
+    },
+
+    "POST /api/v2/organizations/mover-organization-id/connections/connection-2-id/accept":
+    {
+      body:
+      {
+        id: "connection-2-id",
+        organization: { id: "ikea-organization-id", name: "IKEA" },
+        status: "active",
+        createdDateTime: DateTime.utc().minus({ week: 1 }).toISO(),
+        acceptedDateTime: DateTime.utc().minus({ day: 1 }).toISO(),
+      }
+    },
+
+    "GET /api/v2/organizations/mover-organization-id/connections":
+    {
+      body:
+      [
+        {
+          id: "connection-1-id",
+          organization: { id: "coop-organization-id", name: "Coop" },
+          status: "active",
+          createdDateTime: DateTime.utc().minus({ week: 1 }).toISO(),
+          acceptedDateTime: DateTime.utc().minus({ day: 1 }).toISO()
+        },
+        {
+          id: "connection-2-id",
+          organization: { id: "ikea-organization-id", name: "IKEA" },
+          status: "invite-received",
+          createdDateTime: DateTime.utc().minus({ week: 1 }).toISO(),
+          acceptedDateTime: undefined
+        }
+      ]
+    },
+
+    "POST /api/v2/organizations/mover-organization-id/connections/connection-1-id/delete":
+    {
+      status: 204
+    },
+    "POST /api/v2/organizations/mover-organization-id/connections/connection-2-id/delete":
+    {
+      status: 204
+    },
+    "POST /api/v2/organizations/mover-organization-id/connections/connection-3-id/delete":
     {
       status: 204
     },
