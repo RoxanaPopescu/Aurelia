@@ -13,12 +13,12 @@ export class MatchingCriteria
     {
         if (data != null)
         {
-            this.consignors = data.consignors.map(d => new Consignor(d));
+            this.organizations = data.organizations.map(d => new Consignor(d));
             this.tags = data.tags;
         }
         else
         {
-            this.consignors = [];
+            this.organizations = [];
             this.tags = [];
         }
     }
@@ -29,9 +29,9 @@ export class MatchingCriteria
     public tags: string[];
 
     /**
-     * The consignors of which one must match for the criteriea to be fulfilled.
+     * The organizations of which one must match for the criteriea to be fulfilled.
      */
-    public consignors: Consignor[];
+    public organizations: Consignor[];
 
     /**
      * Gets the data representing this instance.
@@ -40,7 +40,7 @@ export class MatchingCriteria
     {
         return {
             tags: this.tags,
-            consignorIds: this.consignors.map(c => c.id)
+            consignorIds: this.organizations.map(c => c.id)
         };
     }
 
@@ -51,7 +51,7 @@ export class MatchingCriteria
     {
         const entity = new MatchingCriteria();
         entity.tags = [...this.tags];
-        entity.consignors = [...this.consignors];
+        entity.organizations = [...this.organizations];
 
         return entity;
     }

@@ -84,21 +84,16 @@ export class ListPage
     protected textFilter: string | undefined;
 
     /**
-     * The consignors for which order groups should be shown.
+     * The organizations for which order groups should be shown.
      */
     @observable({ changeHandler: "update" })
-    protected consignorFilter: Consignor[] = [];
+    protected organizationsFilter: Consignor[] = [];
 
     /**
      * The tags for which order groups should be shown.
      */
     @observable({ changeHandler: "update" })
     protected tagFilter: string[] = [];
-
-    /**
-     * The total number of items matching the query, or undefined if unknown.
-     */
-    protected orderGroupCount: number | undefined;
 
     /**
      * The items to present in the table.
@@ -108,7 +103,7 @@ export class ListPage
     /**
      * The consignors to show in the filter.
      */
-    protected consignors: Consignor[];
+    protected organizations: Consignor[];
 
     /**
      * The tags to show in the filter.
@@ -134,9 +129,7 @@ export class ListPage
         (async () =>
         {
             const agreements = await this._agreementService.getAll();
-            this.consignors = agreements.agreements.filter(c => c.type.slug === "consignor");
-
-            this.tags = await this._orderGroupsService.getAllTags();
+            this.organizations = agreements.agreements.filter(c => c.type.slug === "consignor");
         })();
     }
 
@@ -178,7 +171,7 @@ export class ListPage
             const result = await this._orderGroupsService.getAll(
                 {
                     text: this.textFilter,
-                    consignorIds: this.consignorFilter.map(c => c.id),
+                    consignorIds: this.organizationsFilter.map(c => c.id),
                     tags: this.tagFilter
                 },
                 this.sorting,
@@ -186,8 +179,7 @@ export class ListPage
                 signal);
 
             // Update the state.
-            this.orderGroups = result.orderGroups;
-            this.orderGroupCount = result.orderGroupCount;
+            this.orderGroups = result;
 
             // Reset page.
             if (propertyName !== "paging")
@@ -229,7 +221,6 @@ export class ListPage
             await this._orderGroupsService.delete(orderGroup);
 
             this.orderGroups.splice(this.orderGroups.indexOf(orderGroup), 1);
-            this.orderGroupCount!--;
         }
         catch (error)
         {

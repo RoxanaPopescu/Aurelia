@@ -81,7 +81,7 @@ export class OrderGroup
     public get allConsignors(): Consignor[]
     {
         let consignors: Consignor[] = [];
-        this.matchingCriteria.forEach(m => consignors = [...new Set(consignors.concat(m.consignors))]);
+        this.matchingCriteria.forEach(m => consignors = [...new Set(consignors.concat(m.organizations))]);
 
         return consignors;
     }

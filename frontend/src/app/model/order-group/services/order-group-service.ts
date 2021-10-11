@@ -22,21 +22,6 @@ export class OrderGroupService
     private readonly _apiClient: ApiClient;
 
     /**
-     * Gets the tags using which order groups may be filtered.
-     * @param signal The abort signal to use, or undefined to use no abort signal.
-     * @returns A promise that will be resolved with the available tags.
-     */
-    public async getAllTags(signal?: AbortSignal): Promise<string[]>
-    {
-        const result = await this._apiClient.post("ordergroups/tags",
-        {
-            signal
-        });
-
-        return result.data;
-    }
-
-    /**
      * Gets all order groups visible to the current user.
      * @param filter The filter options to use.
      * @param sorting The sorting options to use.
@@ -44,9 +29,9 @@ export class OrderGroupService
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the order groups.
      */
-    public async getAll(filter?: IOrderGroupFilter, sorting?: ISorting, paging?: IPaging, signal?: AbortSignal): Promise<{ orderGroups: OrderGroup[]; orderGroupCount: number }>
+    public async getAll(filter?: IOrderGroupFilter, sorting?: ISorting, paging?: IPaging, signal?: AbortSignal): Promise<OrderGroup[]>
     {
-        const result = await this._apiClient.post("ordergroups/list",
+        const result = await this._apiClient.post("route-planning/order-groups/list",
         {
             body:
             {
@@ -57,10 +42,7 @@ export class OrderGroupService
             signal
         });
 
-        return {
-            orderGroups: result.data.orderGroups.map((data: any) => new OrderGroup(data)),
-            orderGroupCount: result.data.orderGroupCount
-        };
+        return result.data.map((data: any) => new OrderGroup(data));
     }
 
     /**
@@ -71,9 +53,8 @@ export class OrderGroupService
      */
     public async get(id: string, signal?: AbortSignal): Promise<OrderGroup>
     {
-        const result = await this._apiClient.post("ordergroups/details",
+        const result = await this._apiClient.get(`route-planning/order-groups/${id}`,
         {
-            body: { id },
             signal
         });
 

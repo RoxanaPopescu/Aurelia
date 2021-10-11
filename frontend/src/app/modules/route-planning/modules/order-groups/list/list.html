@@ -27,17 +27,17 @@
             <page-section toggle.bind="true">
 
                 <div slot="header" translate>
-                    Consignors
+                    Organizations
                 </div>
 
-                <check-filter value.bind="consignorFilter">
+                <check-filter value.bind="organizationsFilter">
 
                     <div slot="placeholder" translate>
                         Type to filter…
                     </div>
 
-                    <check-filter-item repeat.for="consignor of consignors" model.bind="consignor">
-                        ${consignor.primaryName}
+                    <check-filter-item repeat.for="organization of organizations" model.bind="organization">
+                        ${organization.primaryName}
                     </check-filter-item>
 
                 </check-filter>
@@ -115,9 +115,9 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell DISABLED-name="consignors">
+                        <data-table-cell DISABLED-name="organizations">
                             <span class="text-truncate" translate>
-                                Consignors
+                                Organizations
                             </span>
                         </data-table-cell>
 

@@ -106,13 +106,6 @@ export class DetailsPage
         // tslint:disable-next-line: no-floating-promises
         (async () =>
         {
-            // Fetch available tags.
-            this.availableTags = await this._orderGroupsService.getAllTags();
-        })();
-
-        // tslint:disable-next-line: no-floating-promises
-        (async () =>
-        {
             // Fetch available rule-sets.
             this.ruleSets = await this._routePlanningSettingsService.getAll();
         })();
