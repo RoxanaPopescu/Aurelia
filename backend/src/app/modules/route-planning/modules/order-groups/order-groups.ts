@@ -16,11 +16,11 @@ export class RoutePlanningOrderGroupsModule extends AppModule
             await context.authorize("create-order-group");
 
             const body = context.request.body;
-            body.ownerId = context.user?.organizationId;
+            body.ownerOutfitId = context.user?.organizationId;
             body.createdBy = context.user?.id;
-            body.updatedBy = context.user?.id;
+            body.id = context.user?.id;
 
-            const createResult = await this.apiClient.post("routeoptimization/settings/add",
+            const createResult = await this.apiClient.post("logistics/ordergroups/create",
             {
                 body: body
             });
@@ -42,13 +42,13 @@ export class RoutePlanningOrderGroupsModule extends AppModule
          * Creates a order-group
          * @returns The created order group.
          */
-         this.router.get("/v2/route-planning/order-groups/:id", async context =>
-         {
-             await context.authorize("view-order-groups");
+        this.router.get("/v2/route-planning/order-groups/:id", async context =>
+        {
+            await context.authorize("view-order-groups");
 
-             context.response.body = await this.fetchDetails(context.params.id, context);
-             context.response.status = 200;
-         });
+            context.response.body = await this.fetchDetails(context.params.id, context);
+            context.response.status = 200;
+        });
 
         /**
          * Gets the order groups
@@ -149,7 +149,7 @@ export class RoutePlanningOrderGroupsModule extends AppModule
         });
 
         const orderGroup = result.data;
-        let organizationIds: string[] = [];
+        const organizationIds: string[] = [];
 
         orderGroup.matchingCriteria.forEach((m: any) =>
         {
