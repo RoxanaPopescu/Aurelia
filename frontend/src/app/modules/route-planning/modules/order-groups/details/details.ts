@@ -181,7 +181,7 @@ export class DetailsPage
         {
             matchingCriteria,
             tags: this.availableTags,
-            consignors: this.availableConsignors
+            organizations: this.availableConsignors
         }).promise;
 
         if (result)
@@ -212,7 +212,7 @@ export class DetailsPage
         {
             matchingCriteria,
             tags: this.availableTags,
-            consignors: this.availableConsignors
+            organizations: this.availableConsignors
         }).promise;
 
         if (result)

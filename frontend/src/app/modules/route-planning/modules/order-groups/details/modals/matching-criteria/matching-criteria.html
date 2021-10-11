@@ -27,27 +27,27 @@
             </div>
 
             <tags-input
-                value.bind="model.matchingCriteria.consignors"
+                value.bind="model.matchingCriteria.organizations"
                 label="above"
                 filter="auto"
                 fixed.bind="true">
 
                 <div slot="heading" translate>
-                    Consignors
+                    Organizations
                 </div>
 
                 <span slot="placeholder" translate>
-                    Choose consignors
+                    Choose Organizations
                 </span>
 
                 <div slot="value">
-                    <tag repeat.for="consignor of model.matchingCriteria.consignors">
-                        ${consignor.primaryName}
+                    <tag repeat.for="organization of model.matchingCriteria.organizations">
+                        ${organization.primaryName}
                     </tag>
                 </div>
 
-                <item repeat.for="consignor of model.consignors" model.bind="consignor">
-                    ${consignor.primaryName}
+                <item repeat.for="organization of model.organizations" model.bind="organization">
+                    ${organization.primaryName}
                 </item>
 
                 <div slot="validation">
@@ -104,10 +104,10 @@
 
                 <custom-validator
                     view-model.ref="notEmptyValidator"
-                    valid.bind="model.matchingCriteria.consignors.length > 0 || model.matchingCriteria.tags.length > 0">
+                    valid.bind="model.matchingCriteria.organizations.length > 0 || model.matchingCriteria.tags.length > 0">
 
                     <template replace-part="invalid" translate>
-                        Please choose at least one consignor or tag.
+                        Please choose at least one organization or tag.
                     </template>
 
                 </custom-validator>

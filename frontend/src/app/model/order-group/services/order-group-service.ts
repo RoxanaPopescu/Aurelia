@@ -86,7 +86,7 @@ export class OrderGroupService
      */
     public async update(orderGroup: OrderGroup, signal?: AbortSignal): Promise<OrderGroup>
     {
-        const result = await this._apiClient.post("ordergroups/update",
+        const result = await this._apiClient.post("route-planning/order-groups/update",
         {
             body: orderGroup,
             signal

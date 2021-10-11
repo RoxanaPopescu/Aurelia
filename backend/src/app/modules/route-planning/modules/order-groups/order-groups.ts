@@ -31,30 +31,67 @@ export class RoutePlanningOrderGroupsModule extends AppModule
         });
 
         /**
+         * Updates a order-group
+         * @returns The updated order group.
+         */
+        this.router.post("/v2/route-planning/order-groups/update", async context =>
+        {
+            await context.authorize("edit-order-group");
+
+            const body = context.request.body;
+            body.ownerOutfitId = context.user?.organizationId;
+            body.modifiedBy = context.user?.id;
+
+            await this.apiClient.post("logistics/ordergroups/update",
+            {
+                body: body
+            });
+
+            context.response.body = await this.fetchDetails(body.id, context);
+            context.response.status = 200;
+        });
+
+        /**
+         * Updates a order-group
+         * @returns The updated order group.
+         */
+        this.router.post("/v2/route-planning/order-groups/delete", async context =>
+        {
+            await context.authorize("edit-order-group");
+
+            const body = context.request.body;
+            body.ownerOutfitId = context.user?.organizationId;
+            body.modifiedBy = context.user?.id;
+
+            const result = await this.apiClient.post("logistics/ordergroups/delete",
+            {
+                body: body
+            });
+
+            context.response.body = result.data;
+            context.response.status = 200;
+        });
+
+        /**
          * Unpause order-group
          * @returns The order group.
          */
-         this.router.post("/v2/route-planning/order-groups/unpause", async context =>
-         {
-             await context.authorize("edit-order-group");
+        this.router.post("/v2/route-planning/order-groups/unpause", async context =>
+        {
+            await context.authorize("edit-order-group");
 
-             try {
-                const body = context.request.body;
-                body.ownerOutfitId = context.user?.organizationId;
-                body.modifiedBy = context.user?.id;
+            const body = context.request.body;
+            body.ownerOutfitId = context.user?.organizationId;
+            body.modifiedBy = context.user?.id;
 
-                await this.apiClient.post("logistics/ordergroups/activate",
-                {
-                    body: body
-                });
+            await this.apiClient.post("logistics/ordergroups/activate",
+            {
+                body: body
+            });
 
-                context.response.body = await this.fetchDetails(body.id, context);
-                context.response.status = 200;
-             } catch (error: any)
-             {
-                 console.log(error.data);
-             }
-         });
+            context.response.body = await this.fetchDetails(body.id, context);
+            context.response.status = 200;
+        });
 
         /**
          * Pauses order-group
@@ -107,8 +144,10 @@ export class RoutePlanningOrderGroupsModule extends AppModule
                 body: body
             });
 
-            const orderGroups = result.data;
+            let orderGroups = result.data;
             let organizationIds: string[] = [];
+
+            orderGroups = orderGroups.filter((o: any) => o.status.name.toLowerCase() !== "deleted");
 
             orderGroups.forEach((g: any) =>
             {
@@ -138,7 +177,7 @@ export class RoutePlanningOrderGroupsModule extends AppModule
                 delete g.status;
             });
 
-            context.response.body = result.data;
+            context.response.body = orderGroups;
             context.response.status = 200;
         });
     }

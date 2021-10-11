@@ -7,7 +7,7 @@ interface IModel
 {
     matchingCriteria: MatchingCriteria;
     tags: string[];
-    consignors: Consignor[];
+    organizations: Consignor[];
 }
 
 @autoinject
