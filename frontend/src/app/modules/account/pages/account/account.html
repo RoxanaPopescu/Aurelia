@@ -34,14 +34,17 @@
                     join an organization
                 </h1>
 
-                <h2 if.bind="isChoosingOrganization" class="font-larger" translate>
-                    To accept the invite, please choose it in the list<br>
-                    &nbsp;
-                </h2>
+                <h2 class="font-larger">
 
-                <h2 else class="font-larger" translate>
-                    To see your invite, please sign up, or sign in, using<br class="br-hint">
-                    the email address to which the invite was sent
+                    <template if.bind="isChoosingOrganization" translate>
+                        To accept the invite, please choose it in the list
+                    </template>
+
+                    <template else translate>
+                        To see your invite, please sign up, or sign in, using<br class="br-hint">
+                        the email address to which the invite was sent
+                    </template>
+
                 </h2>
 
                 <a
@@ -52,6 +55,10 @@
                     <span translate>Powered by</span>
                     <img src="/resources/themes/mover/images/logo-wide.svg">
                 </a>
+
+                <div if.bind="isChoosingOrganization" class="font-larger">
+                    &nbsp;
+                </div>
 
             </div>
 
