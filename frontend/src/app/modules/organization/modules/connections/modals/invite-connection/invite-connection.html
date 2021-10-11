@@ -40,11 +40,25 @@
                             value.bind="organizationId">
                         </required-validator>
 
-                        <length-validator
+                        <pattern-validator
                             value.bind="organizationId"
-                            min.bind="36"
-                            max.bind="36">
-                        </length-validator>
+                            pattern="^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$">
+
+                            <template replace-part="invalid" translate>
+                                Please provide an ID of the form <kbd>########-####-####-####-############</kbd>.
+                            </template>
+
+                        </pattern-validator>
+
+                        <invalid-validator
+                            if.bind="organization === null"
+                            active.bind="true">
+
+                            <template replace-part="invalid" translate>
+                                Could not find an organization with the specified ID.
+                            </template>
+
+                        </invalid-validator>
 
                     </div>
 

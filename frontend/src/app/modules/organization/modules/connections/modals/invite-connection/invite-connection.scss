@@ -2,6 +2,8 @@
 
 modal-panel[name="invite-connection"]
 {
+    --modal-panel-min-width: 572rem;
+
     text-input > .input-control > [slot="after"]
     {
         > busy-indicator

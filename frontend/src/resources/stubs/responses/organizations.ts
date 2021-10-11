@@ -38,12 +38,7 @@ export default
     "GET /api/v2/organizations/42424242-4242-4242-4242-424242424242":
     {
       delay: 1000,
-      body: { id: "42424242-4242-4242-4242-424242424242", name: "Test" }
-    },
-    "GET /api/v2/organizations/42424242-4242-4242-4242-424242424241":
-    {
-      delay: 3000,
-      status: 404
+      body: { id: "42424242-4242-4242-4242-424242424242", name: "Foo" }
     },
 
     "POST /api/v2/organizations/mover-organization-id/delete":
@@ -352,8 +347,8 @@ export default
     {
       body:
       {
-        id: "connection-3-id",
-        organization: { id: "foo-organization-id", name: "Foo" },
+        id: "42424242-4242-4242-4242-424242424242",
+        organization: { id: "42424242-4242-4242-4242-424242424242", name: "Foo" },
         status: "invite-sent",
         createdDateTime: DateTime.utc().minus({ week: 1 }).toISO(),
         acceptedDateTime: undefined
@@ -401,7 +396,7 @@ export default
     {
       status: 204
     },
-    "POST /api/v2/organizations/mover-organization-id/connections/connection-3-id/delete":
+    "POST /api/v2/organizations/mover-organization-id/connections/42424242-4242-4242-4242-424242424242/delete":
     {
       status: 204
     },
