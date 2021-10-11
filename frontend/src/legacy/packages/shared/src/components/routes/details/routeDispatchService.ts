@@ -3,6 +3,7 @@ import { Driver } from "shared/src/model/logistics/driver";
 import { VehicleType } from "shared/src/model/logistics/vehicleType";
 import { Fulfiller } from "shared/src/model/logistics/fulfiller";
 import { Route } from "../../../model/logistics/routes/details";
+import { delay } from "shared/utilities";
 
 export class DriverInfo {
 
@@ -54,6 +55,7 @@ export class RouteDispatchService {
   }
 
   public async getFulfillers(): Promise<Fulfiller[]> {
+    /*
     const response = await fetch(
       BaseService.url("dispatch/getFulfillers"),
       BaseService.defaultConfig()
@@ -66,6 +68,11 @@ export class RouteDispatchService {
     const data = await response.json();
 
     return data.map(f => new Fulfiller(f));
+    */
+
+    // FIXME: Fix connections
+    await delay(200);
+    return [];
   }
 
   public async assignFulfiller(route: Route, fulfiller: Fulfiller): Promise<void> {

@@ -107,7 +107,7 @@ export class AutoDispatchService {
     this._busy = true;
 
     const response = await fetch(
-      BaseService.url("dispatch/route/settings/fulfillers/save"),
+      BaseService.url("dispatch/route/automatic-contractor/save"),
       BaseService.defaultConfig(rule)
     );
 
@@ -133,7 +133,7 @@ export class AutoDispatchService {
     this._busy = true;
 
     const response = await fetch(
-      BaseService.url("dispatch/route/settings/fulfillers/delete"),
+      BaseService.url("dispatch/route/automatic-contractor/delete"),
       BaseService.defaultConfig({ ruleId: rule.id })
     );
 
@@ -150,8 +150,10 @@ export class AutoDispatchService {
   public async loadRules(): Promise<void> {
     this._busy = true;
 
+    // FIXME: agreements
+
     const response = await fetch(
-      BaseService.url("dispatch/route/settings/fulfillers/list"),
+      BaseService.url("dispatch/route/automatic-contractor"),
       BaseService.defaultConfig()
     );
 

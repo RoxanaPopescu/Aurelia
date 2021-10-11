@@ -1,9 +1,11 @@
 import BaseService from "shared/src/services/base";
 import { Fulfiller } from "shared/src/model/logistics/fulfiller";
 import { Order } from "shared/src/model/logistics/order";
+import { delay } from "shared/utilities";
 
 export class OrderDispatchService {
   public async getFulfillers(): Promise<Fulfiller[]> {
+    /*
     const response = await fetch(
       BaseService.url("dispatch/getFulfillers"),
       BaseService.defaultConfig()
@@ -16,6 +18,10 @@ export class OrderDispatchService {
     const data = await response.json();
 
     return data.map(f => new Fulfiller(f));
+    */
+
+    await delay(200);
+    return [];
   }
 
   public async assignFulfiller(
