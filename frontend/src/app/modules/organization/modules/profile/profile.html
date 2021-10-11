@@ -39,6 +39,34 @@
                     Profile
                 </div>
 
+                <div class="flex-row margin-large-bottom">
+
+                    <text-input class="flex-basis-1-of-4" label="above" readonly.bind="true" value.bind="organizationId">
+
+                        <div slot="heading" translate>
+                            ID of the organization
+                        </div>
+
+                        <div slot="description" translate>
+                            You can provide this ID to another organization,<br>
+                            so they can invite your organization to connect
+                        </div>
+
+                        <div slot="after">
+
+                            <button
+                                title.translate="Copy to clipboard"
+                                appearance="none"
+                                click.trigger="onCopyIdToClipboard()">
+                                <icon name="md-copy"></icon>
+                            </button>
+
+                        </div>
+
+                    </text-input>
+
+                </div>
+
                 <div class="flex-row">
 
                     <text-input class="flex-basis-1-of-4" label="above" value.bind="profile.name">
@@ -58,7 +86,6 @@
                     </text-input>
 
                 </div>
-
 
             </page-section>
 

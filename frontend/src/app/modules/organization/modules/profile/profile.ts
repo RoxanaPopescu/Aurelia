@@ -2,6 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { AbortError } from "shared/types";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
+import { IdentityService } from "app/services/identity";
 import { OrganizationService, OrganizationProfile } from "app/model/organization";
 
 /**
@@ -12,11 +13,13 @@ export class ProfilePage
 {
     /**
      * Creates a new instance of the class.
+     * @param identityService The `IdentityService` instance.
      * @param organizationService The `OrganizationService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(organizationService: OrganizationService)
+    public constructor(identityService: IdentityService, organizationService: OrganizationService)
     {
+        this.organizationId = identityService.identity!.organization!.id;
         this._organizationService = organizationService;
     }
 
@@ -26,6 +29,11 @@ export class ProfilePage
      * The most recent operation.
      */
     protected operation: Operation;
+
+    /**
+     * The ID of the organization.
+     */
+    protected organizationId: string | undefined;
 
     /**
      * The profile for the organization.
@@ -88,5 +96,21 @@ export class ProfilePage
         {
             Log.error("Could not save the organization profile", error);
         });
+    }
+
+    /**
+     * Called when the `Copy to clipboard` icon is clicked in the ID input.
+     * Copies the ID to the clipboard.
+     */
+    protected async onCopyIdToClipboard(): Promise<void>
+    {
+        try
+        {
+            await navigator.clipboard.writeText(this.organizationId!);
+        }
+        catch (error)
+        {
+            Log.error("Could not copy the text to clipboard", error);
+        }
     }
 }

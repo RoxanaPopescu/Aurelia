@@ -68,7 +68,7 @@ export class OrganizationModule
                     moduleId: PLATFORM.moduleName("./modules/connections/connections"),
                     title: routeTitles.connections,
                     nav: true,
-                    icon: "agreements"
+                    icon: "md-hub"
                 }
             ] : []
         ]);
