@@ -1,4 +1,5 @@
 import { AppModule } from "../../../../app-module";
+import { v4 as uuidV4 } from "uuid";
 
 /**
  * Represents a module exposing endpoints related to tracking.
@@ -18,20 +19,11 @@ export class RoutePlanningOrderGroupsModule extends AppModule
             const body = context.request.body;
             body.ownerOutfitId = context.user?.organizationId;
             body.createdBy = context.user?.id;
-            body.id = context.user?.id;
+            body.id = uuidV4();
 
-            const createResult = await this.apiClient.post("logistics/ordergroups/create",
+            const result = await this.apiClient.post("logistics/ordergroups/create",
             {
                 body: body
-            });
-
-            const result = await this.apiClient.post("routeoptimization/settings/details",
-            {
-                body:
-                {
-                    outfitIds: [context.user?.organizationId],
-                    slug: createResult.data.slug
-                }
             });
 
             context.response.body = await this.fetchDetails(result.data.id, context);

@@ -53,7 +53,7 @@ export class DetailsPage
     private readonly _routePlanningSettingsService: RoutePlanningSettingsService;
 
     private availableConsignors: Consignor[];
-    private availableTags: string[];
+    private readonly availableTags: string[];
 
     /**
      * The original name of the order group.
