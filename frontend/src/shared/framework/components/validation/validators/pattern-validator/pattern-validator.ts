@@ -12,7 +12,7 @@ import { ValidationReason } from "../../validation-trigger";
 @containerless
 export class PatternValidatorCustomElement extends Validator
 {
-    private _pattern: RegExp | undefined;
+    private _regExp: RegExp | undefined;
 
     /**
      * The value to validate, or undefined.
@@ -21,10 +21,16 @@ export class PatternValidatorCustomElement extends Validator
     public value: string | undefined;
 
     /**
-     * The pattern to match, or undefined to disable this requirement.
+     * The regular expression to match, or undefined to disable this requirement.
      */
     @bindable
     public pattern: string | RegExp | undefined;
+
+    /**
+     * The regular expression flags use, if the pattern is specified as a string.
+     */
+    @bindable
+    public flags: string | undefined;
 
     /**
      * True to invert the validation, meaning that a valid input is one that does not match the pattern.
@@ -45,7 +51,7 @@ export class PatternValidatorCustomElement extends Validator
         }
         else
         {
-            const match = this._pattern != null && !this._pattern.test(this.value);
+            const match = this._regExp != null && !this._regExp.test(this.value);
 
             this.invalid = this.invert ? !match : match;
         }
@@ -54,13 +60,29 @@ export class PatternValidatorCustomElement extends Validator
     }
 
     /**
-     * Called by the framework when the `pattern`property changes.
+     * Called by the framework when the `pattern` property changes.
      */
     protected patternChanged(): void
     {
-        this._pattern =
+        this.updateRegExp();
+    }
+
+    /**
+     * Called by the framework when the `flags` property changes.
+     */
+    protected flagsChanged(): void
+    {
+        this.updateRegExp();
+    }
+
+    /**
+     * Updates the regular expression to match the specified pattern and flags.
+     */
+    private updateRegExp(): void
+    {
+        this._regExp =
             !this.pattern ? undefined :
             this.pattern instanceof RegExp ? this.pattern :
-            new RegExp(this.pattern);
+            new RegExp(this.pattern, this.flags);
     }
 }
