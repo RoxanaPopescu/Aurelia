@@ -71,13 +71,16 @@ export class RoutePlanningPlansModule extends AppModule
             const routeplan = result.data;
             const orderIds: string[] = [];
 
-            routeplan.routes.forEach((r: any) => {
-                r.stops.forEach((s: any) => {
+            routeplan.routes.forEach((r: any) =>
+            {
+                r.stops.forEach((s: any) =>
+                {
                     orderIds.push(...s.orderIds);
                 });
             });
 
-            routeplan.unscheduledTasks.forEach((t: any) => {
+            routeplan.unscheduledTasks.forEach((t: any) =>
+            {
                 orderIds.push(t.orderId);
             });
 
@@ -112,7 +115,7 @@ export class RoutePlanningPlansModule extends AppModule
                 {
                     isOptimized: false,
                     positions: route.stops.map((s: any) => s.location.position)
-                }
+                };
             }
 
             for (const unscheduledTask of routeplan.unscheduledTasks)
