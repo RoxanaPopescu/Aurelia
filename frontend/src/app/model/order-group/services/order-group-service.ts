@@ -69,7 +69,7 @@ export class OrderGroupService
      */
     public async create(orderGroup: Partial<OrderGroup>, signal?: AbortSignal): Promise<OrderGroup>
     {
-        const result = await this._apiClient.post("ordergroups/create",
+        const result = await this._apiClient.post("route-planning/order-groups/create",
         {
             body: orderGroup,
             signal
@@ -102,7 +102,7 @@ export class OrderGroupService
      */
     public async delete(orderGroup: OrderGroup): Promise<void>
     {
-        await this._apiClient.post("ordergroups/delete",
+        await this._apiClient.post("route-planning/order-groups/delete",
         {
             body: { id: orderGroup.id, etag: orderGroup.etag }
         });
@@ -115,7 +115,7 @@ export class OrderGroupService
      */
     public async pause(orderGroup: OrderGroup): Promise<{ etag: string }>
     {
-        const result = await this._apiClient.post("ordergroups/pause",
+        const result = await this._apiClient.post("route-planning/order-groups/pause",
         {
             body: { id: orderGroup.id, etag: orderGroup.etag }
         });
@@ -130,7 +130,7 @@ export class OrderGroupService
      */
     public async unpause(orderGroup: OrderGroup): Promise<{ etag: string }>
     {
-        const result = await this._apiClient.post("ordergroups/unpause",
+        const result = await this._apiClient.post("route-planning/order-groups/unpause",
         {
             body: { id: orderGroup.id, etag: orderGroup.etag }
         });

@@ -21,12 +21,60 @@ export class RoutePlanningOrderGroupsModule extends AppModule
             body.createdBy = context.user?.id;
             body.id = uuidV4();
 
-            const result = await this.apiClient.post("logistics/ordergroups/create",
+            await this.apiClient.post("logistics/ordergroups/create",
             {
                 body: body
             });
 
-            context.response.body = await this.fetchDetails(result.data.id, context);
+            context.response.body = await this.fetchDetails(body.id, context);
+            context.response.status = 200;
+        });
+
+        /**
+         * Unpause order-group
+         * @returns The order group.
+         */
+         this.router.post("/v2/route-planning/order-groups/unpause", async context =>
+         {
+             await context.authorize("edit-order-group");
+
+             try {
+                const body = context.request.body;
+                body.ownerOutfitId = context.user?.organizationId;
+                body.modifiedBy = context.user?.id;
+
+                await this.apiClient.post("logistics/ordergroups/activate",
+                {
+                    body: body
+                });
+
+                context.response.body = await this.fetchDetails(body.id, context);
+                context.response.status = 200;
+             } catch (error: any)
+             {
+                 console.log(error.data);
+             }
+         });
+
+        /**
+         * Pauses order-group
+         * @returns The order group.
+         */
+        this.router.post("/v2/route-planning/order-groups/pause", async context =>
+        {
+            await context.authorize("edit-order-group");
+
+            const body = context.request.body;
+            body.ownerOutfitId = context.user?.organizationId;
+            body.modifiedBy = context.user?.id;
+
+            await this.apiClient.post("logistics/ordergroups/pause",
+            {
+                body: body
+            });
+
+            context.response.body = await this.fetchDetails(body.id, context);
+
             context.response.status = 200;
         });
 
@@ -82,6 +130,12 @@ export class RoutePlanningOrderGroupsModule extends AppModule
                     m.organizations = organizations.filter(o => m.consignorIds.includes(o.id));
                     delete m.consignorIds;
                 });
+
+                g.etag = g.eTag;
+                delete g.eTag;
+
+                g.paused = g.status.name.toLowerCase() === "paused";
+                delete g.status;
             });
 
             context.response.body = result.data;
@@ -155,6 +209,12 @@ export class RoutePlanningOrderGroupsModule extends AppModule
             m.organizations = organizations.filter(o => m.consignorIds.includes(o.id));
             delete m.consignorIds;
         });
+
+        orderGroup.paused = orderGroup.status.name.toLowerCase() === "paused";
+        delete orderGroup.status;
+
+        orderGroup.etag = orderGroup.eTag;
+        delete orderGroup.eTag;
 
         return result.data;
     }
