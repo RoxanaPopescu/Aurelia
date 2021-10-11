@@ -55,7 +55,9 @@ export abstract class AccountSubPage
             onChangedPassword: () => this.onChangedPassword(url),
             onChooseOrganization: () => this.onChooseOrganization(url),
 
-            ...accountModel
+            ...accountModel,
+
+            inviteId
 
         } as any;
 

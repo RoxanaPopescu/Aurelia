@@ -27,7 +27,35 @@
 
         <section class="account-hero">
 
-            <div context="marketing">
+            <div if.bind="hasInvite" context="marketing">
+
+                <h1 class="font-largest margin-bottom" translate>
+                    You have been invited to<br>
+                    join an organization
+                </h1>
+
+                <h2 if.bind="isChoosingOrganization" class="font-larger" translate>
+                    To accept the invite, please choose it in the list<br>
+                    &nbsp;
+                </h2>
+
+                <h2 else class="font-larger" translate>
+                    To see your invite, please sign up, or sign in, using<br class="br-hint">
+                    the email address to which the invite was sent
+                </h2>
+
+                <a
+                    if.bind="showPoweredBy"
+                    class="account-powered-by font-larger margin-larger-top opacity-faded"
+                    href="https://www.movertransport.com"
+                    target="_blank">
+                    <span translate>Powered by</span>
+                    <img src="/resources/themes/mover/images/logo-wide.svg">
+                </a>
+
+            </div>
+
+            <div else context="marketing">
 
                 <h1 class="font-largest margin-bottom" translate>
                     The future of logistics<br>
