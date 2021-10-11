@@ -41,6 +41,22 @@ export class AccountPage
     protected readonly locales: ReadonlyArray<Locale>;
 
     /**
+     * True if an invite ID is specified in the URL, otherwise false.
+     */
+    protected get hasInvite(): boolean
+    {
+        return location.search.includes("invite=");
+    }
+
+    /**
+     * True if the page being presented is the `choose-organization` page.
+     */
+    protected get isChoosingOrganization(): boolean
+    {
+        return location.pathname.includes("/choose-organization");
+    }
+
+    /**
      * Called to configure the router for the page.
      * @param config The router configuration associated with the page.
      * @param router The router associated with the page.
