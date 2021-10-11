@@ -4,6 +4,7 @@ import { IPaging, ISorting } from "shared/types";
 import { Outfit } from "app/model/outfit";
 import { FulfillerAgreementInvite } from "../entities/fulfiller-agreement-invite";
 import { ConsignorAgreementInvite } from "../entities/consignor-agreement-invite";
+import { delay } from "shared/utilities";
 
 /**
  * Represents a service that manages agreements.
@@ -31,21 +32,12 @@ export class AgreementService
      */
     public async getAll(sorting?: ISorting, paging?: IPaging, signal?: AbortSignal): Promise<{ agreements: Outfit[]; agreementCount: number }>
     {
-        const fulfillersResult = await this._apiClient.get("agreements/fulfillers/list",
-        {
-            signal
-        });
-
-        const fulfileesResult = await this._apiClient.get("agreements/fulfilees/list",
-        {
-            signal
-        });
-
-        const resultData = [...fulfillersResult.data, ...fulfileesResult.data];
+        // FIXME: Cleanup when connections has been made
+        await delay(100);
 
         return {
-            agreements: resultData.map((data: any) => new Outfit(data)),
-            agreementCount: resultData.length
+            agreements: [],
+            agreementCount: 0
         };
     }
 

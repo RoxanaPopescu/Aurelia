@@ -81,13 +81,9 @@ export class RoutePlanningStore {
     this.loading = true;
     this.initialError = undefined;
 
-    let items: { [Key: string]: string } = {
-      id: id
-    };
-
     let response = await fetch(
-      Base.url("RoutePlanning/plans/Details"),
-      Base.defaultConfig(items)
+      Base.url(`route-planning/plans/${id}`),
+      Base.defaultConfig()
     );
 
     if (response.ok) {
@@ -527,11 +523,11 @@ export class RoutePlanningStore {
     if (stop instanceof RoutePlanRouteStop && stop.route) {
       rows.push({
         headline: Localization.sharedValue("Expected_Arrival"),
-        value: Localization.formatTime(stop.estimates.arrival)
+        value: Localization.formatTime(stop.estimates.arrivalTime)
       });
       rows.push({
         headline: Localization.sharedValue("Expected_TaskTimeStart"),
-        value: Localization.formatTime(stop.estimates.arrival.plus(stop.estimates.waitingTime))
+        value: Localization.formatTime(stop.estimates.arrivalTime.plus(stop.estimates.waitingTime))
       });
       rows.push({
         headline: Localization.sharedValue("Expected_DrivingTime"),
@@ -623,13 +619,9 @@ export class RoutePlanningStore {
     this.approving = true;
     this.error = undefined;
 
-    let items: { [Key: string]: string } = {
-      id: this.plan.id
-    };
-
     let response = await fetch(
-      Base.url("RoutePlanning/plans/approve"),
-      Base.defaultConfig(items)
+      Base.url(`route-planning/plans/${this.plan.id}/approve`),
+      Base.defaultConfig()
     );
 
     if (!response.ok) {

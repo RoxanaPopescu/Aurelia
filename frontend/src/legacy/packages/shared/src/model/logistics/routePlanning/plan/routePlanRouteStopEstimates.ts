@@ -11,7 +11,8 @@ export class RoutePlanRouteStopEstimates {
     this.drivingTime = Duration.fromObject({ seconds: data.drivingTime });
     this.taskTime = Duration.fromObject({ seconds: data.taskTime });
     this.waitingTime = Duration.fromObject({ seconds: data.waitingTime });
-    this.timeFrame = new DateTimeRange(data.timeFrame, { setZone: true });
+    this.arrivalTime = DateTime.fromISO(data.arrivalTime, { setZone: true });
+    this.timeFrame = new DateTimeRange({ from: this.arrivalTime.minus(this.drivingTime).minus(this.waitingTime), to: this.arrivalTime.plus(this.taskTime)}, { setZone: true });
   }
 
   /**
@@ -39,7 +40,8 @@ export class RoutePlanRouteStopEstimates {
    */
   public timeFrame: DateTimeRange;
 
-  public get arrival(): DateTime {
-    return this.timeFrame.from!.plus(this.waitingTime).plus(this.drivingTime);
-  }
+  /**
+   * The arrival time.
+   */
+  public arrivalTime: DateTime;
 }
