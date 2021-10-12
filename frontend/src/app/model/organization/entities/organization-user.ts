@@ -30,7 +30,7 @@ export class OrganizationUser
             this.fullName = data.fullName;
             this.preferredName = data.preferredName;
             this.email = data.email;
-            this.phoneNumber = data.phone;
+            this.phone = data.phone;
             this.pictureUrl = data.pictureUrl;
             this.role = data.role;
             this.teams = data.teams;
@@ -66,7 +66,7 @@ export class OrganizationUser
     /**
      * The phone number of the user, if any.
      */
-    public phoneNumber: IPhoneNumber | undefined;
+    public phone: IPhoneNumber | undefined;
 
     /**
      * The URL for the user picture, if any.

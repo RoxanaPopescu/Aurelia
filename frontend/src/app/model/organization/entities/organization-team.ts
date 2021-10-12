@@ -18,7 +18,7 @@ export class OrganizationTeam
         {
             this.id = data.id;
             this.name = data.name;
-            this.phoneNumber = data.phoneNumber;
+            this.phone = data.phoneNumber;
             this.address = new Address(data.address);
             this.vatNumber = data.vatNumber;
             this.invoiceDirectly = data.invoiceDirectly;
@@ -40,7 +40,7 @@ export class OrganizationTeam
     /**
      * The phone number of the team, if any.
      */
-    public phoneNumber: IPhoneNumber | undefined;
+    public phone: IPhoneNumber | undefined;
 
     /**
      * The address of the team, if any.

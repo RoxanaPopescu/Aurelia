@@ -95,11 +95,11 @@
         </email-input>
 
         <phone-input
-            if.bind="user.phoneNumber"
+            if.bind="user.phone"
             readonly.bind="true"
             class="margin-double-top"
             label="above"
-            value.bind="user.phoneNumber">
+            value.bind="user.phone">
 
             <div slot="heading" translate>
                 Phone number
@@ -111,7 +111,7 @@
 
             <div slot="after">
 
-                <a href="${user.phoneNumber | phone: 'rfc3966'}" appearance="none">
+                <a href="${user.phone | phone: 'rfc3966'}" appearance="none">
                     <icon name="md-open-in-new"></icon>
                 </a>
 
