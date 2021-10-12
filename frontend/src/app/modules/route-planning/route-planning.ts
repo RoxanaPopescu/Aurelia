@@ -34,7 +34,7 @@ export class RoutePlanningModule
                     ]
                 },
                 title: routeTitles.routePlans,
-                nav: true,
+                nav: false,
                 icon: "route-planning"
             },
             {

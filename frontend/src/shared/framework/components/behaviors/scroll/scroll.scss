@@ -21,12 +21,6 @@
     // Prevent pull-to-refresh.
     overscroll-behavior-y: none;
 
-    &.disable-hover *
-    {
-        // Disable pointer events to prevent hover effects while scrolling.
-        pointer-events: none !important;
-    }
-
     [scroll-fade]
     {
         // Apply transition to smoothe opacity changes.

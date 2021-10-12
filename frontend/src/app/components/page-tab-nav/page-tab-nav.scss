@@ -1,7 +1,21 @@
 @import "resources/index";
 
+
 page-tab-nav
 {
+
+    /// The width of the border of the component.
+    --tab-nav-border-width: var(--border-width-medium);
+
+    /// The radius of the border of the component.
+    --tab-nav-border-radius: var(--border-radius-medium);
+
+    /// The color of the border of the component.
+    --tab-nav-border-color: var(--palette-color-neutral-light);
+
+    /// The color of the border of the component.
+    --tab-surface-color--active: var(--palette-color-neutral-light);
+
     // Use horizontal flex layout.
     display: flex;
 
