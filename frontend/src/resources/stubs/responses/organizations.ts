@@ -435,66 +435,66 @@ export function getUsers(...ids: string[]): any[]
       email: "john-doe@example.com",
       fullName: "John Doe",
       preferredName: "John",
-      phoneNumber: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
+      phone: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
       pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4?s=200",
       role: { id: "role-1-id", name: "Role 1" },
       teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }],
-      lastOnline: DateTime.utc().toISO()
+      lastActivity: DateTime.utc().toISO()
     },
     {
         id: "user-2-id",
         email: "jessica-richards@example.com",
         fullName: "Jessica Richards",
         preferredName: "Jessica",
-        phoneNumber: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
+        phone: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
         pictureUrl: "https://randomuser.me/api/portraits/women/82.jpg",
         role: { id: "role-1-id", name: "Role 1" },
         teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }],
-        lastOnline: DateTime.utc().toISO()
+        lastActivity: DateTime.utc().toISO()
     },
     {
         id: "user-3-id",
         email: "annie-freeman@example.com",
         fullName: "Annie Freeman",
         preferredName: "Annie",
-        phoneNumber: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
+        phone: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
         pictureUrl: "https://randomuser.me/api/portraits/women/63.jpg",
         role: { id: "role-1-id", name: "Role 1" },
         teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }],
-        lastOnline: DateTime.utc().toISO()
+        lastActivity: DateTime.utc().toISO()
     },
     {
         id: "user-4-id",
         email: "monica-bennett@example.com",
         fullName: "Monica Bennett",
         preferredName: "Monica",
-        phoneNumber: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
+        phone: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
         pictureUrl: "https://randomuser.me/api/portraits/women/54.jpg",
         role: { id: "role-1-id", name: "Role 1" },
         teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }],
-        lastOnline: DateTime.utc().toISO()
+        lastActivity: DateTime.utc().toISO()
     },
     {
         id: "user-5-id",
         email: "mark-riley@example.com",
         fullName: "Mark Riley",
         preferredName: "Mark",
-        phoneNumber: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
+        phone: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
         pictureUrl: "https://randomuser.me/api/portraits/men/32.jpg",
         role: { id: "role-1-id", name: "Role 1" },
         teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }],
-        lastOnline: DateTime.utc().toISO()
+        lastActivity: DateTime.utc().toISO()
     },
     {
         id: "user-6-id",
         email: "andrew-wilson@example.com",
         fullName: "Andrew Wilson",
         preferredName: "Andrew",
-        phoneNumber: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
+        phone: { countryCode: "DK", countryCallingCode: "45", nationalNumber: "42424242" },
         pictureUrl: "https://randomuser.me/api/portraits/men/86.jpg",
         role: { id: "role-1-id", name: "Role 1" },
         teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }],
-        lastOnline: DateTime.utc().toISO()
+        lastActivity: DateTime.utc().toISO()
     }
   ]
   .filter(u => ids.includes(u.id));

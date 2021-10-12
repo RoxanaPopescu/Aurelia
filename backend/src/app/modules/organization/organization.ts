@@ -278,7 +278,6 @@ export class OrganizationModule extends AppModule
         context.response.status = 204;
     }
 
-    // TODO:BACKEND: Missing properties in response (team, lastOnline)
     /**
      * Gets the users within the specified organization.
      * @param context.params.organizationId The ID of the organization.
@@ -297,18 +296,7 @@ export class OrganizationModule extends AppModule
             }
         });
 
-        context.response.body = result.data.users.map((user: any) =>
-        ({
-            id: user.id,
-            fullName: user.fullName,
-            preferredName: user.preferredName,
-            email: user.email,
-            phoneNumber: user.phone,
-            pictureUrl: user.pictureUrl,
-            role: user.role,
-            teams: user.teams,
-            lastOnline: user.lastOnline
-        }));
+        context.response.body = result.data.users;
 
         context.response.status = 200;
     }

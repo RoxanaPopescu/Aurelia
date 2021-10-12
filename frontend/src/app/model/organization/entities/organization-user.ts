@@ -30,15 +30,15 @@ export class OrganizationUser
             this.fullName = data.fullName;
             this.preferredName = data.preferredName;
             this.email = data.email;
-            this.phoneNumber = data.phoneNumber;
+            this.phoneNumber = data.phone;
             this.pictureUrl = data.pictureUrl;
             this.role = data.role;
             this.teams = data.teams;
             this.status = new OrganizationUserStatus("active");
 
-            if (data.lastOnline != null)
+            if (data.lastActivity != null)
             {
-                this.lastOnline = DateTime.fromISO(data.lastOnline, { setZone: true });
+                this.lastActivity = DateTime.fromISO(data.lastActivity, { setZone: true });
             }
         }
     }
@@ -89,9 +89,9 @@ export class OrganizationUser
     public readonly status: OrganizationUserStatus;
 
     /**
-     * The date and time at which the user last signed in.
+     * The date and time at which the user last signed in, re-authenticated or signed-out.
      */
-    public readonly lastOnline: DateTime | undefined;
+    public readonly lastActivity: DateTime | undefined;
 
     /**
      * The model representing the searchable text in the entity.
