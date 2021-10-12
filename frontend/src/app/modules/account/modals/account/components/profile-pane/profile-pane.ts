@@ -1,6 +1,7 @@
 import { autoinject, bindable, computedFrom } from "aurelia-framework";
 import { ModalService } from "shared/framework";
 import { Profile } from "app/services/profile";
+import { IPhoneNumber } from "shared/types";
 
 /**
  * Represents a tab pane for managing the profile for the current user.
@@ -18,6 +19,16 @@ export class ProfilePaneCustomElement
     }
 
     private readonly _modalService: ModalService;
+
+    /**
+     * The original email address, used to detect changes.
+     */
+    protected originalEmail: string | undefined;
+
+    /**
+     * The original phone number, used to detect changes.
+     */
+    protected originalPhone: IPhoneNumber | undefined;
 
     /**
      * The model representing the profile for the current user.
@@ -46,5 +57,11 @@ export class ProfilePaneCustomElement
         }
 
         return this.model.currentPassword != null;
+    }
+
+    protected modelChanged(): void
+    {
+        this.originalEmail = this.model.email;
+        this.originalPhone = this.model.phone;
     }
 }

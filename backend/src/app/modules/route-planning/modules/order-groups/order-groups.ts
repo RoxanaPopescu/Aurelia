@@ -215,7 +215,7 @@ export class RoutePlanningOrderGroupsModule extends AppModule
         }
         catch (error: any)
         {
-            console.log(error.data.errors);
+            console.log(error.data?.errors);
             // We should not fail if organizations can't be found
         }
 

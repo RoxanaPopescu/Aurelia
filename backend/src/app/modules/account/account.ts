@@ -42,7 +42,7 @@ export class AccountModule extends AppModule
         }
         catch (error)
         {
-            if (error instanceof ApiOriginError && "DuplicateEmail" in error.data.errors)
+            if (error instanceof ApiOriginError && error.data?.errors != null && "DuplicateEmail" in error.data.errors)
             {
                 context.response.status = 409;
             }

@@ -83,13 +83,13 @@
                     value.bind="model.email">
                 </required-validator>
 
+                <validation-message if.bind="model.email != null && model.email === originalEmail && !model.emailVerified">
+                    This email is not verified.
+                </validation-message>
+
             </div>
 
         </email-input>
-
-        <div if.bind="!model.emailVerified" class="margin-small-top font-small" translate>
-            This email is not verified.
-        </div>
 
         <phone-input if-environment="development" class="margin-double-top" label="above" value.bind="model.phone" autocomplete="tel" readonly.bind="model.currentPassword == null">
 
@@ -108,11 +108,15 @@
                 </input-lock>
             </div>
 
-        </phone-input>
+            <div slot="validation">
 
-        <div if.bind="!model.phoneVerified" class="margin-small-top font-small" translate>
-            This phone number is not verified.
-        </div>
+                <validation-message if.bind="model.phone != null && model.phone === originalPhone && !model.phoneVerified">
+                    This phone number is not verified.
+                </validation-message>
+
+            </div>
+
+        </phone-input>
 
     </modal-section>
 

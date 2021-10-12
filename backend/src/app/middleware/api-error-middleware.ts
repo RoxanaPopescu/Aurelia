@@ -103,16 +103,14 @@ async function appendDebugInfo(context: BaseContext, error: ApiError): Promise<v
  */
 async function getFormattedBody(requestOrResponse: Request | Response): Promise<string | undefined>
 {
-    // BUG: Disabled because it relies on stream cloning, which is disabled due to https://github.com/node-fetch/node-fetch/issues/151.
-    return "(Not available due to bug";
-
-    /*
     let body: string | undefined;
 
     if (!requestOrResponse.bodyUsed)
     {
         // Read the body as text.
-        body = await requestOrResponse.clone().text();
+        // BUG: Stream cloning disabled due to https://github.com/node-fetch/node-fetch/issues/151.
+        // body = await requestOrResponse.clone().text();
+        body = await requestOrResponse.text();
     }
 
     if (body)
@@ -129,5 +127,4 @@ async function getFormattedBody(requestOrResponse: Request | Response): Promise<
     }
 
     return body;
-    */
 }
