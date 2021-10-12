@@ -570,6 +570,7 @@ export class OrganizationModule extends AppModule
     /**
      * Updates the specified team within the specified organization.
      * @param context.params.organizationId The ID of the organization.
+     * @param context.params.teamId The ID of the team.
      * @param context.request.body The team to save.
      * @returns
      * - 200: An object representing the updated team.
@@ -653,6 +654,75 @@ export class OrganizationModule extends AppModule
         await context.authorize();
 
         await this.apiClient.delete(`identity/organizations/${context.params.organizationId}/teams/${context.params.teamId}/users/${context.params.userId}`);
+
+        context.response.status = 204;
+    }
+
+    /**
+     * Creates the specified connection.
+     * @param context.params.organizationId The ID of the organization.
+     * @param context.request.body The connection to create.
+     * @returns
+     * - 200: An object representing the new connection.
+     */
+    public "POST /v2/organizations/:organizationId/connections/create" = async (context: AppContext) =>
+    {
+        await context.authorize();
+
+        const result = await this.apiClient.post(`identity/organizations/${context.params.organizationId}/connections`,
+        {
+            body: context.request.body
+        });
+
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Gets the connections associated with the specified organization.
+     * @param context.params.organizationId The ID of the organization.
+     * @returns
+     * - 200: An array of objects representing the connections within the organization.
+     */
+    public "GET /v2/organizations/:organizationId/connections" = async (context: AppContext) =>
+    {
+        await context.authorize();
+
+        const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/connections`);
+
+        context.response.body = result.data.connections;
+        context.response.status = 200;
+    }
+
+    /**
+     * Accepts the specified connection.
+     * @param context.params.organizationId The ID of the organization.
+     * @param context.params.connectionId The ID of the connection to accept.
+     * @returns
+     * - 200: An object representing the accepted connection.
+     */
+    public "POST /v2/organizations/:organizationId/connections/:connectionId/accept" = async (context: AppContext) =>
+    {
+        await context.authorize();
+
+        const result = await this.apiClient.post(`identity/organizations/${context.params.organizationId}/connections/${context.params.connectionId}/accept`);
+
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Deletes the specified connection.
+     * @param context.params.organizationId The ID of the organization.
+     * @param context.params.connectionId The ID of the connection to delete.
+     * @returns
+     * - 204: No content
+     */
+    public "POST /v2/organizations/:organizationId/connections/:connectionId/delete" = async (context: AppContext) =>
+    {
+        await context.authorize();
+
+        await this.apiClient.delete(`identity/organizations/${context.params.organizationId}/connections/${context.params.teamId}`);
 
         context.response.status = 204;
     }
