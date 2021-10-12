@@ -32,15 +32,18 @@ export class App extends Koa<any, IAppContext>
 
         this._appRouter = appRouter;
 
-        // Send errors to Sentry
-        this.on("error", (error, context) =>
+        // Log unhandled errors to Sentry.
+        if (environment.name !== "development")
         {
-            Sentry.withScope(scope =>
+            this.on("error", (error, context) =>
             {
-                scope.addEventProcessor(event => Sentry.Handlers.parseRequest(event, context.request));
-                Sentry.captureException(error);
+                Sentry.withScope(scope =>
+                {
+                    scope.addEventProcessor(event => Sentry.Handlers.parseRequest(event, context.request));
+                    Sentry.captureException(error);
+                });
             });
-        });
+        }
     }
 
     private readonly _appRouter: AppRouter;

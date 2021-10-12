@@ -7,12 +7,15 @@ import { AppRouter } from "./app/app-router";
 import settings from "./resources/settings/settings";
 
 // Configure error logging using Sentry.
-Sentry.init(
+if (environment.name !== "development")
 {
-    dsn: environment.sentryDns,
-    environment: environment.name,
-    tracesSampleRate: 0.8
-});
+    Sentry.init(
+    {
+        dsn: environment.sentryDns,
+        environment: environment.name,
+        tracesSampleRate: 1
+    });
+}
 
 // Add and configure the interceptors used by the API client.
 settings.infrastructure.api.interceptors.push(new RequestHeadersInterceptor(() => getRequestHeaders()));

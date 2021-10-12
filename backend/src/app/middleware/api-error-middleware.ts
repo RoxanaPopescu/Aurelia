@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/node";
 import { Middleware, BaseContext } from "koa";
 import { Request, Response } from "node-fetch";
 import { ApiError, NoiApiOriginError } from "../../shared/infrastructure";
@@ -51,6 +52,16 @@ export function apiErrorMiddleware(): Middleware
                 else
                 {
                     context.status = 500;
+                }
+
+                // Log upstream request failures to Sentry.
+                if (environment.name !== "development")
+                {
+                    Sentry.withScope(scope =>
+                    {
+                        scope.addEventProcessor(event => Sentry.Handlers.parseRequest(event, context.request));
+                        Sentry.captureException(error);
+                    });
                 }
             }
             else
