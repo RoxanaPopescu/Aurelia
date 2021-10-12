@@ -59,7 +59,6 @@
                 background: var(--surface-primary-icon-color);
                 opacity: var(--opacity-faded-more);
                 transition: opacity var(--animation-duration-short);
-                box-shadow: 1rem 1rem 0 0.125px rgba(255, 255, 255, 0.5);
             }
 
             pointer-events: none;
@@ -67,7 +66,7 @@
             margin-left: -1rem;
             width: calc(100% + 1rem);
             height: 3rem;
-            background: var(--palette-color-whitepoint);
+            background: var(--surface-color);
             margin-top: -1rem;
         }
 
@@ -94,12 +93,15 @@
 
     &.data-table-append-action .data-table-row-insert
     {
-        opacity: 1;
-
         .data-table-row-insert-line
         {
             margin-left: 0;
             width: 100%;
+
+            &::after
+            {
+                opacity: 1;
+            }
         }
 
         .data-table-row-insert-action
@@ -207,11 +209,32 @@ data-table[appearance="cards"]
             border-bottom-right-radius: var(--data-table-row-border-radius);
         }
 
+        .data-table-row-insert
+        {
+            transform: translateY(calc(1rem + (var(--data-table-row-gap) - 3rem) / 2));
+        }
+
         &:first-of-type
         {
             data-table-cell
             {
                 margin-top: 0;
+            }
+        }
+
+        &:first-of-type:not(.data-table-append-action)
+        {
+            .data-table-row-insert
+            {
+                transform: translateY(calc(-2rem - (var(--data-table-row-gap) - 3rem) / 2));
+            }
+        }
+
+        &.data-table-append-action
+        {
+            data-table-cell
+            {
+                margin-top: var(--data-table-row-gap);
             }
         }
     }

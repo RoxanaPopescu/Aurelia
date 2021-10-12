@@ -19,6 +19,11 @@ data-table[appearance="rows"]
 {
     data-table-headers
     {
+        data-table-cell
+        {
+            margin-bottom: 2rem;
+        }
+
         data-table-cell:first-of-type::before
         {
             content: none;
@@ -39,6 +44,11 @@ data-table[appearance="cards"]
 {
     data-table-headers
     {
+        data-table-cell
+        {
+            margin-bottom: 6rem;
+        }
+
         data-table-cell:first-of-type::before
         {
             content: "";
