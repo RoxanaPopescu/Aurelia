@@ -41,6 +41,26 @@
 
                 <div class="flex-row margin-large-bottom">
 
+                    <text-input class="flex-basis-1-of-4" label="above" value.bind="profile.name">
+
+                        <div slot="heading" translate>
+                            Name of the organization
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="profile.name">
+                            </required-validator>
+
+                        </div>
+
+                    </text-input>
+
+                </div>
+
+                <div class="flex-row">
+
                     <text-input class="flex-basis-1-of-4" label="above" readonly.bind="true" value.bind="organizationId">
 
                         <div slot="heading" translate>
@@ -60,26 +80,6 @@
                                 click.trigger="onCopyIdToClipboard()">
                                 <icon name="md-copy"></icon>
                             </button>
-
-                        </div>
-
-                    </text-input>
-
-                </div>
-
-                <div class="flex-row">
-
-                    <text-input class="flex-basis-1-of-4" label="above" value.bind="profile.name">
-
-                        <div slot="heading" translate>
-                            Name of the organization
-                        </div>
-
-                        <div slot="validation">
-
-                            <required-validator
-                                value.bind="profile.name">
-                            </required-validator>
 
                         </div>
 
