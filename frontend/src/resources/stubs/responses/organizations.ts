@@ -105,7 +105,7 @@ export default
       status: 204
     },
 
-    "POST /api/v2/invites/invite-1-id/revoke":
+    "POST /api/v2/invites/invite-1-id/delete":
     {
       status: 204
     },

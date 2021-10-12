@@ -231,7 +231,7 @@ export class OrganizationService
 
         if (user.status.slug === "invited")
         {
-            await this._apiClient.post(`invites/${user.id}/revoke`);
+            await this._apiClient.post(`invites/${user.id}/delete`);
         }
         else
         {

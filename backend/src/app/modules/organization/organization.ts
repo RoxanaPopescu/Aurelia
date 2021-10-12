@@ -132,7 +132,7 @@ export class OrganizationModule extends AppModule
 
     // TODO:BACKEND: Properties missing in request model (team)
     /**
-     * Sends the specified invite.
+     * Sends the specified user invite.
      * @param context.params.organizationId The ID of the organization.
      * @param context.request.body The invite to send.
      * @param context.request.body.acceptUrl The URL for the "Accept invite" page.
@@ -196,10 +196,10 @@ export class OrganizationModule extends AppModule
     }
 
     /**
-     * Gets the specified invite.
+     * Gets the specified user invite.
      * @param context.params.inviteId The ID of the invite.
      * @returns
-     * - 200: An object representing the specified invite.
+     * - 200: An object representing the specified user invite.
      */
     public "GET /v2/invites/:inviteId" = async (context: AppContext) =>
     {
@@ -234,7 +234,7 @@ export class OrganizationModule extends AppModule
     }
 
     /**
-     * Resends the specified invite.
+     * Resends the specified user invite.
      * @param context.params.inviteId The ID of the invite to resend.
      * @returns
      * - 204: No content
@@ -249,8 +249,8 @@ export class OrganizationModule extends AppModule
     }
 
     /**
-     * Accepts the specified invite.
-     * @param context.params.inviteId The ID of the invite to resend.
+     * Accepts the specified user invite.
+     * @param context.params.inviteId The ID of the invite to accept.
      * @returns
      * - 204: No content
      */
@@ -264,12 +264,12 @@ export class OrganizationModule extends AppModule
     }
 
     /**
-     * Revokes the specified invite.
+     * Deletes the specified user invite.
      * @param context.params.inviteId The ID of the invite to revoke.
      * @returns
      * - 204: No content
      */
-    public "POST /v2/invites/:inviteId/revoke" = async (context: AppContext) =>
+    public "POST /v2/invites/:inviteId/delete" = async (context: AppContext) =>
     {
         await context.authorize();
 
