@@ -14,6 +14,7 @@ export class Profile
         this.email = data.email;
         this.emailVerified = data.emailVerified;
         this.phone = data.phone;
+        this.phoneVerified = data.phoneVerified;
         this.fullName = data.fullName;
         this.preferredName = data.preferredName;
         this.pictureUrl = data.pictureUrl;
@@ -25,7 +26,7 @@ export class Profile
     public email: string;
 
     /**
-     * If the users email is verified.
+     * True if the email is verified, otherwise false.
      */
      public emailVerified: boolean;
 
@@ -33,6 +34,11 @@ export class Profile
      * The phone number of the user.
      */
     public phone: IPhoneNumber;
+
+    /**
+     * True if the phone is verified, otherwise false.
+     */
+    public phoneVerified: boolean;
 
     /**
      * The full name of the user.
