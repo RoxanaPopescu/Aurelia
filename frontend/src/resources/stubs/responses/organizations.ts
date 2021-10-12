@@ -439,7 +439,7 @@ export function getUsers(...ids: string[]): any[]
       pictureUrl: "https://www.gravatar.com/avatar/db94528473d63829a2f0ea8c274ac6b4?s=200",
       role: { id: "role-1-id", name: "Role 1" },
       teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }],
-      lastActivity: DateTime.utc().toISO()
+      activeDateTime: DateTime.utc().toISO()
     },
     {
         id: "user-2-id",
@@ -450,7 +450,7 @@ export function getUsers(...ids: string[]): any[]
         pictureUrl: "https://randomuser.me/api/portraits/women/82.jpg",
         role: { id: "role-1-id", name: "Role 1" },
         teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }],
-        lastActivity: DateTime.utc().toISO()
+        activeDateTime: DateTime.utc().toISO()
     },
     {
         id: "user-3-id",
@@ -461,7 +461,7 @@ export function getUsers(...ids: string[]): any[]
         pictureUrl: "https://randomuser.me/api/portraits/women/63.jpg",
         role: { id: "role-1-id", name: "Role 1" },
         teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }],
-        lastActivity: DateTime.utc().toISO()
+        activeDateTime: DateTime.utc().toISO()
     },
     {
         id: "user-4-id",
@@ -472,7 +472,7 @@ export function getUsers(...ids: string[]): any[]
         pictureUrl: "https://randomuser.me/api/portraits/women/54.jpg",
         role: { id: "role-1-id", name: "Role 1" },
         teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }],
-        lastActivity: DateTime.utc().toISO()
+        activeDateTime: DateTime.utc().toISO()
     },
     {
         id: "user-5-id",
@@ -483,7 +483,7 @@ export function getUsers(...ids: string[]): any[]
         pictureUrl: "https://randomuser.me/api/portraits/men/32.jpg",
         role: { id: "role-1-id", name: "Role 1" },
         teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }],
-        lastActivity: DateTime.utc().toISO()
+        activeDateTime: DateTime.utc().toISO()
     },
     {
         id: "user-6-id",
@@ -494,7 +494,7 @@ export function getUsers(...ids: string[]): any[]
         pictureUrl: "https://randomuser.me/api/portraits/men/86.jpg",
         role: { id: "role-1-id", name: "Role 1" },
         teams: [{ id: "team-1-id", name: "Team 1" }, { id: "team-2-id", name: "Team 2" }],
-        lastActivity: DateTime.utc().toISO()
+        activeDateTime: DateTime.utc().toISO()
     }
   ]
   .filter(u => ids.includes(u.id));

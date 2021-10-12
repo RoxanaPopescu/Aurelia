@@ -36,9 +36,9 @@ export class OrganizationUser
             this.teams = data.teams;
             this.status = new OrganizationUserStatus("active");
 
-            if (data.lastActivity != null)
+            if (data.activeDateTime != null)
             {
-                this.lastActivity = DateTime.fromISO(data.lastActivity, { setZone: true });
+                this.activeDateTime = DateTime.fromISO(data.activeDateTime, { setZone: true });
             }
         }
     }
@@ -91,7 +91,7 @@ export class OrganizationUser
     /**
      * The date and time at which the user last signed in, re-authenticated or signed-out.
      */
-    public readonly lastActivity: DateTime | undefined;
+    public readonly activeDateTime: DateTime | undefined;
 
     /**
      * The model representing the searchable text in the entity.
