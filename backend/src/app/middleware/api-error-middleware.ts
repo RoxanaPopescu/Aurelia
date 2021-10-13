@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/node";
 import { Middleware, BaseContext } from "koa";
 import { Request, Response } from "node-fetch";
 import { ApiError, NoiApiOriginError } from "../../shared/infrastructure";
@@ -52,6 +53,16 @@ export function apiErrorMiddleware(): Middleware
                 {
                     context.status = 500;
                 }
+
+                // Log upstream request failures to Sentry.
+                if (environment.name !== "development")
+                {
+                    Sentry.withScope(scope =>
+                    {
+                        scope.addEventProcessor(event => Sentry.Handlers.parseRequest(event, context.request));
+                        Sentry.captureException(error);
+                    });
+                }
             }
             else
             {
@@ -87,7 +98,7 @@ async function appendDebugInfo(context: BaseContext, error: ApiError): Promise<v
 
     if (error.response != null)
     {
-        const responseBody = await getFormattedBody(error.response);
+        const responseBody = await getFormattedBody(error.response, error.data);
 
         if (responseBody)
         {
@@ -99,9 +110,10 @@ async function appendDebugInfo(context: BaseContext, error: ApiError): Promise<v
 /**
  * Gets the formatted body of the specified request or response.
  * @param requestOrResponse The request or response whose body should be formatted.
+ * @param bodyData The data represented by the body, if already parsed.
  * @returns A promise that will be resolved with the formatted body of the specified request or response.
  */
-async function getFormattedBody(requestOrResponse: Request | Response): Promise<string | undefined>
+async function getFormattedBody(requestOrResponse: Request | Response, bodyData?: any): Promise<string | undefined>
 {
     let body: string | undefined;
 
@@ -111,6 +123,15 @@ async function getFormattedBody(requestOrResponse: Request | Response): Promise<
         // BUG: Stream cloning disabled due to https://github.com/node-fetch/node-fetch/issues/151.
         // body = await requestOrResponse.clone().text();
         body = await requestOrResponse.text();
+    }
+    else if (bodyData)
+    {
+        // Format the body as JSON.
+        body = JSON.stringify(requestOrResponse, undefined, 2);
+    }
+    else if (parseInt(requestOrResponse.headers.get("content-length") ?? "0"))
+    {
+        body = "(Unavailable, as the stream has already been consumed)";
     }
 
     if (body)
