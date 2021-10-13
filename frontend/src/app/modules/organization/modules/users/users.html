@@ -25,12 +25,14 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button appearance="outline" accent="primary" click.trigger="onInviteUserClick()" class="flex-row">
-                        <icon name="add" class="font-larger margin-right"></icon>
-                        <span translate>
-                            Invite user
-                        </span>
-                    </button>
+                    <template if-claims="edit-users">
+                        <button appearance="outline" accent="primary" click.trigger="onInviteUserClick()" class="flex-row">
+                            <icon name="add" class="font-larger margin-right"></icon>
+                            <span translate>
+                                Invite user
+                            </span>
+                        </button>
+                    </template>
 
                 </toolbar>
 
@@ -173,31 +175,35 @@
 
                                 <div class="icon-row">
 
-                                    <button
-                                        if.bind="user.status.slug === 'invited'"
-                                        title.translate="Resend invite"
-                                        appearance="none"
-                                        accent="primary"
-                                        click.trigger="onResendInviteClick(user)">
-                                        <icon name="md-replay"></icon>
-                                    </button>
+                                    <template if-claims="edit-users">
 
-                                    <button
-                                        if.bind="user.status.slug !== 'invited'"
-                                        title.translate="Edit user"
-                                        appearance="none"
-                                        accent="primary"
-                                        click.trigger="onUserClick(user)">
-                                        <icon name="edit-small"></icon>
-                                    </button>
+                                        <button
+                                            if.bind="user.status.slug === 'invited'"
+                                            title.translate="Resend invite"
+                                            appearance="none"
+                                            accent="primary"
+                                            click.trigger="onResendInviteClick(user)">
+                                            <icon name="md-replay"></icon>
+                                        </button>
 
-                                    <button
-                                        title.translate="Remove user"
-                                        appearance="none"
-                                        accent="primary"
-                                        click.trigger="onRemoveUserClick(user)">
-                                        <icon name="delete-small"></icon>
-                                    </button>
+                                        <button
+                                            if.bind="user.status.slug !== 'invited'"
+                                            title.translate="Edit user"
+                                            appearance="none"
+                                            accent="primary"
+                                            click.trigger="onUserClick(user)">
+                                            <icon name="edit-small"></icon>
+                                        </button>
+
+                                        <button
+                                            title.translate="Remove user"
+                                            appearance="none"
+                                            accent="primary"
+                                            click.trigger="onRemoveUserClick(user)">
+                                            <icon name="delete-small"></icon>
+                                        </button>
+
+                                    </template>
 
                                 </div>
 

@@ -20,14 +20,16 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button
-                        appearance="solid"
-                        accent="primary"
-                        click.trigger="onSaveChangesClick()"
-                        disabled.bind="operation.pending"
-                        translate>
-                        Save changes
-                    </button>
+                    <template if-claims="edit-organization">
+                        <button
+                            appearance="solid"
+                            accent="primary"
+                            click.trigger="onSaveChangesClick()"
+                            disabled.bind="operation.pending"
+                            translate>
+                            Save changes
+                        </button>
+                    </template>
 
                 </toolbar>
 
@@ -41,7 +43,7 @@
 
                 <div class="flex-row margin-large-bottom">
 
-                    <text-input class="flex-basis-1-of-4" label="above" value.bind="profile.name">
+                    <text-input class="flex-basis-1-of-4" label="above" readonly.bind="readonly" value.bind="profile.name">
 
                         <div slot="heading" translate>
                             Name of the organization

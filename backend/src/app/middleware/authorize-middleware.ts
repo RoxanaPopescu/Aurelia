@@ -129,7 +129,7 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
     return async (context, next) =>
     {
         // Add the `authorize` method to the context.
-        context.authorize = async (...permissions: string[]) =>
+        context.authorize = async (...permissions: (string | (() => boolean))[]) =>
         {
             // Try to parse and verify the JWT, if not done already.
             if (context.user === undefined)
@@ -172,9 +172,14 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
             // Verify that the JWT contains the specified permissions.
             if (permissions.length > 0)
             {
-                if (!permissions.some(permission => context.user!.permissions.has(permission)))
+                if (!permissions.filter(p => typeof p === "string").every((p: string) => context.user!.permissions.has(p)))
                 {
                     throw new AuthorizationError("The request contained a JWT with insufficient permissions.");
+                }
+
+                if (!permissions.filter(p => typeof p === "function").every((p: any) => p() === true))
+                {
+                    throw new AuthorizationError("The request was not authorized.");
                 }
             }
         };

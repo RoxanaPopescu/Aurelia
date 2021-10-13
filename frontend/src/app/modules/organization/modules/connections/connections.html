@@ -24,12 +24,16 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button appearance="outline" accent="primary" click.trigger="onInviteConnectionClick()" class="flex-row">
-                        <icon name="add" class="font-larger margin-right"></icon>
-                        <span translate>
-                            New connection
-                        </span>
-                    </button>
+                    <template if-claims="create-connection">
+
+                        <button appearance="outline" accent="primary" click.trigger="onInviteConnectionClick()" class="flex-row">
+                            <icon name="add" class="font-larger margin-right"></icon>
+                            <span translate>
+                                New connection
+                            </span>
+                        </button>
+
+                    </template>
 
                 </toolbar>
 
@@ -126,22 +130,26 @@
 
                                 <div class="icon-row">
 
-                                    <button
-                                        if.bind="connection.status.slug === 'invite-received'"
-                                        title.translate="Accept invite"
-                                        appearance="none"
-                                        accent="primary"
-                                        click.trigger="onAcceptInviteClick(connection)">
-                                        <icon name="md-check-mark"></icon>
-                                    </button>
+                                    <template if-claims="accept-connection">
+                                        <button
+                                            if.bind="connection.status.slug === 'invite-received'"
+                                            title.translate="Accept invite"
+                                            appearance="none"
+                                            accent="primary"
+                                            click.trigger="onAcceptInviteClick(connection)">
+                                            <icon name="md-check-mark"></icon>
+                                        </button>
+                                    </template>
 
-                                    <button
-                                        title.translate="Delete connection"
-                                        appearance="none"
-                                        accent="primary"
-                                        click.trigger="onDeleteConnectionClick(connection)">
-                                        <icon name="delete-small"></icon>
-                                    </button>
+                                    <template if-claims="delete-connection">
+                                        <button
+                                            title.translate="Delete connection"
+                                            appearance="none"
+                                            accent="primary"
+                                            click.trigger="onDeleteConnectionClick(connection)">
+                                            <icon name="delete-small"></icon>
+                                        </button>
+                                    </template>
 
                                 </div>
 

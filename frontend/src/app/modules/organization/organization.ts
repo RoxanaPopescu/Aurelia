@@ -26,12 +26,26 @@ export class OrganizationModule
                 name: "profile",
                 route: "profile",
                 moduleId: PLATFORM.moduleName("./modules/profile/profile"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-organization"
+                    ]
+                },
                 title: routeTitles.profile
             },
             {
                 name: "users",
                 route: "users",
                 moduleId: PLATFORM.moduleName("./modules/users/users"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-users"
+                    ]
+                },
                 title: routeTitles.users,
                 nav: true,
                 icon: "users"
@@ -40,6 +54,13 @@ export class OrganizationModule
                 name: "teams",
                 route: "teams",
                 moduleId: PLATFORM.moduleName("./modules/teams/teams"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-teams"
+                    ]
+                },
                 title: routeTitles.teams,
                 nav: true,
                 icon: "departments"
@@ -48,12 +69,26 @@ export class OrganizationModule
                 name: "team-details",
                 route: "teams/:teamId",
                 moduleId: PLATFORM.moduleName("./modules/team-details/team-details"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-teams"
+                    ]
+                },
                 title: routeTitles.teamDetails
             },
             {
                 name: "roles",
                 route: "roles",
                 moduleId: PLATFORM.moduleName("./modules/roles/roles"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-roles"
+                    ]
+                },
                 title: routeTitles.roles,
                 nav: true,
                 icon: "md-rules"
@@ -66,6 +101,13 @@ export class OrganizationModule
                     name: "connections",
                     route: "connections",
                     moduleId: PLATFORM.moduleName("./modules/connections/connections"),
+                    settings:
+                    {
+                        claims:
+                        [
+                            "view-connections"
+                        ]
+                    },
                     title: routeTitles.connections,
                     nav: true,
                     icon: "md-hub"

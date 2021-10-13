@@ -20,6 +20,8 @@ export class ProfilePage
     public constructor(identityService: IdentityService, organizationService: OrganizationService)
     {
         this.organizationId = identityService.identity!.organization!.id;
+        this.readonly = !identityService.identity!.claims.has("edit-organization");
+
         this._organizationService = organizationService;
     }
 
@@ -39,6 +41,11 @@ export class ProfilePage
      * The profile for the organization.
      */
     protected profile: OrganizationProfile | undefined;
+
+    /**
+     * True if the profile is readonly, otherwise false.
+     */
+    protected readonly: boolean;
 
     /**
      * Called by the framework when the module is activated.

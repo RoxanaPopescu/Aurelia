@@ -24,12 +24,14 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button appearance="outline" accent="primary" click.trigger="onNewTeamClick()" class="flex-row">
-                        <icon name="add" class="font-larger margin-right"></icon>
-                        <span translate>
-                            New team
-                        </span>
-                    </button>
+                    <template if-claims="create-team">
+                        <button appearance="outline" accent="primary" click.trigger="onNewTeamClick()" class="flex-row">
+                            <icon name="add" class="font-larger margin-right"></icon>
+                            <span translate>
+                                New team
+                            </span>
+                        </button>
+                    </template>
 
                 </toolbar>
 
@@ -142,21 +144,25 @@
 
                                 <div class="icon-row">
 
-                                    <button
-                                        title.translate="Edit team"
-                                        appearance="none"
-                                        accent="primary"
-                                        click.trigger="onEditTeamClick(team)">
-                                        <icon name="edit-small"></icon>
-                                    </button>
+                                    <template if-claims="edit-team">
+                                        <button
+                                            title.translate="Edit team"
+                                            appearance="none"
+                                            accent="primary"
+                                            click.trigger="onEditTeamClick(team)">
+                                            <icon name="edit-small"></icon>
+                                        </button>
+                                    </template>
 
-                                    <button
-                                        title.translate="Delete team"
-                                        appearance="none"
-                                        accent="primary"
-                                        click.trigger="onDeleteTeamClick(team)">
-                                        <icon name="delete-small"></icon>
-                                    </button>
+                                    <template if-claims="delete-team">
+                                        <button
+                                            title.translate="Delete team"
+                                            appearance="none"
+                                            accent="primary"
+                                            click.trigger="onDeleteTeamClick(team)">
+                                            <icon name="delete-small"></icon>
+                                        </button>
+                                    </template>
 
                                 </div>
 
