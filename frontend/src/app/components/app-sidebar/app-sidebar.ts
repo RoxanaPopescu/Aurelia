@@ -1,5 +1,6 @@
 import { autoinject, bindable, computedFrom } from "aurelia-framework";
 import { Router, NavModel } from "aurelia-router";
+import { IdentityService } from "app/services/identity";
 import { AuthorizationService } from "app/services/authorization";
 
 /**
@@ -8,9 +9,10 @@ import { AuthorizationService } from "app/services/authorization";
 @autoinject
 export class AppSidebarCustomElement
 {
-    public constructor(router: Router, authorizationService: AuthorizationService)
+    public constructor(router: Router, identityService: IdentityService, authorizationService: AuthorizationService)
     {
         this._router = router;
+        this._identityService = identityService;
         this._authorizationService = authorizationService;
 
         this.expanded = localStorage.getItem("app-sidebar-expanded") === "true";
@@ -20,9 +22,12 @@ export class AppSidebarCustomElement
     private readonly _router: Router;
     private readonly _authorizationService: AuthorizationService;
 
+    // @ts-expect-error
+    private readonly _identityService: IdentityService;
+
     protected readonly environment = ENVIRONMENT.name;
 
-    @computedFrom("_router.navigation", "_router.currentInstruction")
+    @computedFrom("_router.navigation", "_router.currentInstruction", "_identityService.identity")
     protected get navModels(): NavModel[]
     {
         return this._router.navigation
@@ -32,7 +37,7 @@ export class AppSidebarCustomElement
             ]));
     }
 
-    @computedFrom("_router.navigation", "_router.currentInstruction")
+    @computedFrom("_router.navigation", "_router.currentInstruction", "_identityService.identity")
     protected get childNavModels(): NavModel[] | undefined
     {
         if (this._router.currentInstruction == null)

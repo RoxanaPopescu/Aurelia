@@ -2,6 +2,7 @@ import { autoinject, computedFrom } from "aurelia-framework";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { IValidation, Modal } from "shared/framework";
+import { IdentityService } from "app/services/identity";
 import { OrganizationRole, OrganizationService, OrganizationTeam, OrganizationUser } from "app/model/organization";
 
  /**
@@ -12,15 +13,18 @@ export class UserModalPanel
 {
     /**
      * Creates a new instance of the type.
+     * @param identityService The `IdentityService` instance.
      * @param organizationService The `OrganizationService` instance.
      * @param modal The `Modal` instance representing the modal.
      */
-    public constructor(organizationService: OrganizationService, modal: Modal)
+    public constructor(identityService: IdentityService, organizationService: OrganizationService, modal: Modal)
     {
+        this._identityService = identityService;
         this._organizationService = organizationService;
         this._modal = modal;
     }
 
+    private readonly _identityService: IdentityService;
     private readonly _organizationService: OrganizationService;
     private readonly _modal: Modal;
 
@@ -80,7 +84,7 @@ export class UserModalPanel
             return true;
         }
 
-        if (this.selectedTeams?.map(t => t.id).sort().join(" ") !== this.user.teams?.map(t => t.id).sort().join(" "))
+        if (this.selectedTeams?.map(t => t.id).sort().join(" ") !== this.user.teams.map(t => t.id).sort().join(" "))
         {
             return true;
         }
@@ -110,11 +114,7 @@ export class UserModalPanel
                 ]);
 
                 this.selectedRole = this.availableRoles.find(r => r.id === this.user.role.id)!;
-
-                if (this.user.teams != null)
-                {
-                    this.selectedTeams = this.availableTeams.filter(t1 => this.user.teams!.some(t2 => t2.id === t1.id));
-                }
+                this.selectedTeams = this.availableTeams.filter(t1 => this.user.teams.some(t2 => t2.id === t1.id));
 
                 this._modal.busy = false;
             }
@@ -151,32 +151,39 @@ export class UserModalPanel
 
             this._modal.busy = true;
 
-            const promises: Promise<any>[] = [];
+            const updateTeamsPromises: Promise<any>[] = [];
 
-            if (this.selectedRole!.id !== this.user.role.id)
+            for (const team of this.selectedTeams?.filter(t1 => !this.user.teams.some(t2 => t2.id === t1.id)) ?? [])
             {
-                promises.push(this._organizationService.changeUserRole(this.user.id, this.selectedRole!.id)
-                    .then(() => this.user.role = this.selectedRole!));
+                updateTeamsPromises.push(this._organizationService.addUserToTeam(team.id, this.user.id)
+                    .then(() => this.user.teams.push(team)));
             }
 
-            for (const team of this.selectedTeams?.filter(t1 => !this.user.teams?.some(t2 => t2.id === t1.id)) ?? [])
+            for (const team of this.user.teams.filter(t1 => !this.selectedTeams?.some(t2 => t2.id === t1.id)) ?? [])
             {
-                promises.push(this._organizationService.addUserToTeam(team.id, this.user.id)
-                    .then(() => this.user.teams?.push(team)));
+                updateTeamsPromises.push(this._organizationService.removeUserFromTeam(team.id, this.user.id)
+                    .then(() => this.user.teams.splice(this.user.teams.findIndex(t => t.id === team.id), 1)));
             }
 
-            for (const team of this.user.teams?.filter(t1 => !this.selectedTeams?.some(t2 => t2.id === t1.id)) ?? [])
+            if (updateTeamsPromises.length > 0)
             {
-                promises.push(this._organizationService.removeUserFromTeam(team.id, this.user.id)
-                    .then(() => this.user.teams?.splice(this.user.teams.findIndex(t => t.id === team.id), 1)));
-            }
-
-            if (this.user.teams != null)
-            {
+                // Ensure bindings are updated.
                 this.user.teams = [...this.user.teams];
             }
 
-            await Promise.all(promises);
+            await Promise.all(updateTeamsPromises);
+
+            if (this.selectedRole!.id !== this.user.role.id)
+            {
+                await this._organizationService.changeUserRole(this.user.id, this.selectedRole!.id)
+                    .then(() => this.user.role = this.selectedRole!);
+            }
+
+            if (this.user.id === this._identityService.identity!.id)
+            {
+                // Reauthenticate to ensure we get the updated permissions.
+                await this._identityService.reauthorize();
+            }
 
             await this._modal.close();
         }

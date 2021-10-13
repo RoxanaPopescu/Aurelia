@@ -674,16 +674,7 @@ export class OrganizationModule extends AppModule
             body: context.request.body
         });
 
-        const sent = result.data.fromOrganization === context.params.organizationId;
-
-        context.response.body =
-        {
-            id: result.data.id,
-            organization: sent ? result.data.toOrganization : result.data.fromOrganization,
-            status: result.data.acceptedAt != null ? "active" : sent ? "invite-sent" : "invite-received",
-            createdDateTime: result.data.createdAt,
-            acceptedDateTime: result.data.acceptedAt
-        };
+        context.response.body = this.mapConnectionModel(context, result.data);
 
         context.response.status = 200;
     }
@@ -700,7 +691,7 @@ export class OrganizationModule extends AppModule
 
         const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/connections`);
 
-        context.response.body = result.data.connections;
+        context.response.body = result.data.map((data: any) => this.mapConnectionModel(context, data));
         context.response.status = 200;
     }
 
@@ -717,7 +708,7 @@ export class OrganizationModule extends AppModule
 
         const result = await this.apiClient.post(`identity/organizations/${context.params.organizationId}/connections/${context.params.connectionId}/accept`);
 
-        context.response.body = result.data;
+        context.response.body = this.mapConnectionModel(context, result.data);
         context.response.status = 200;
     }
 
@@ -735,5 +726,27 @@ export class OrganizationModule extends AppModule
         await this.apiClient.delete(`identity/organizations/${context.params.organizationId}/connections/${context.params.teamId}`);
 
         context.response.status = 204;
+    }
+
+    /**
+     * Maps the connection model to what the frontend expects.
+     * @param context The request context.
+     * @param data The data representing the connection in the backend.
+     * @returns The data representing the connection in the frontend.
+     */
+    private mapConnectionModel(context: AppContext, data: any): any
+    {
+        const sent = data.fromOrganization === context.params.organizationId;
+
+        const result =
+        {
+            id: data.id,
+            organization: sent ? data.toOrganization : data.fromOrganization,
+            status: data.acceptedAt != null ? "active" : sent ? "invite-sent" : "invite-received",
+            createdDateTime: data.createdAt,
+            acceptedDateTime: data.acceptedAt
+        };
+
+        return result;
     }
 }

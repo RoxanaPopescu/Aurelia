@@ -14,7 +14,9 @@ export class OrganizationPermission implements IPermission
         this.slug = data.slug;
         this.name = data.name;
         this.group = data.group;
-        this.type = data.type;
+
+        // HACK: The frontend doesn't supports the types `create` and `delete`.
+        this.type = data.type === "create" || data.type === "edit" || data.type === "delete" ? "edit" : data.type;
     }
 
     /**

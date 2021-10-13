@@ -214,7 +214,7 @@ export class IdentityModule extends AppModule
                 error ? reject(error) : resolve(decoded));
         });
 
-        const [result1, result2] = await Promise.all(
+        const [result1, result2, result3] = await Promise.all(
         [
             this.apiClient.get("identity/connect/userinfo",
             {
@@ -230,6 +230,13 @@ export class IdentityModule extends AppModule
                     "authorization": `Bearer ${authResult.data.access_token}`
                 }
             })
+            // jwtObject.role_id == null ? undefined : this.apiClient.get(`organization/organizations/${jwtObject.organization}/roles/${jwtObject.role_id}`,
+            // {
+            //     headers:
+            //     {
+            //         "authorization": `Bearer ${authResult.data.access_token}`
+            //     }
+            // })
         ]);
 
         return {
@@ -245,6 +252,11 @@ export class IdentityModule extends AppModule
             {
                 id: result2.data.organization.organizationId,
                 companyName: result2.data.organization.name
+            },
+            role: // result3 == null ? undefined :
+            {
+                id: jwtObject.role_id, // result3.data.id,
+                companyName: "TODO" // result3.data.name
             }
         };
     }

@@ -79,9 +79,9 @@ export class OrganizationUser
     public role: { id: string; name: string };
 
     /**
-     * The team with which the user is associated, if any.
+     * The team with which the user is associated.
      */
-    public teams: { id: string; name: string }[] | undefined;
+    public teams: { id: string; name: string }[];
 
     /**
      * The status of the user.
