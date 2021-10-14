@@ -2,9 +2,9 @@ import { DateTime } from "luxon";
 import { RouteStatus } from "shared/src/model/logistics/routes";
 import { Fulfiller } from "shared/src/model/logistics/fulfiller";
 import { Address } from "shared/src/model/general/address";
-import { VehicleType } from "shared/src/model/session";
 import { Driver } from "shared/src/model/logistics/driver";
 import { Consignor } from "app/model/outfit/entities/consignor";
+import { VehicleType } from "app/model/vehicle";
 
 export class Route {
   /* tslint:disable-next-line: no-any */

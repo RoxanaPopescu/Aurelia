@@ -22,6 +22,7 @@ export class RoutesListModule extends AppModule
             body.includeTotalCount = false;
             body.fulfillerIds = [context.user?.organizationId];
             body.organizationId = context.user?.organizationId;
+            body.teamIds = ["80302a70-d32c-4e2d-bc2b-e2ce00e76f45"];
 
             const result = await this.apiClient.post("logistics-platform/routes/v4/list",
             {

@@ -20,7 +20,7 @@ export class RoutesModule extends AppModule
 
             const body = context.request.body;
             body.fulfillerIds = [context.user?.organizationId];
-            body.username = context.user?.id;
+            body.username = context.user?.email;
 
             const result = await this.apiClient.post("logistics-platform/routes/v3/add-support-note",
             {

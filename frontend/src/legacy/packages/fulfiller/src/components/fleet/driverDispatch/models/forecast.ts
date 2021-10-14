@@ -1,6 +1,6 @@
+import { VehicleType } from "app/model/vehicle";
 import { DateTime } from "luxon";
 import { DateTimeRange } from "shared/src/model/general/dateTimeRange";
-import { VehicleType } from "shared/src/model/session";
 import { Location } from "shared/src/model/general/location";
 
 /**

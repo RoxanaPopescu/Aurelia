@@ -1,12 +1,12 @@
 import Base from "../../services/base";
 import { ApiResult } from "shared/infrastructure";
 import { UserInfo } from "./userInfo";
-import { VehicleType } from "../logistics/vehicleType";
 import { Profile } from "../profile";
 import { Fulfiller } from "../logistics/fulfiller";
 import { Consignor } from "../logistics/consignor";
 import { Identity } from "app/services/identity";
 import { Outfit } from "../logistics/outfit";
+import { VehicleType } from "app/model/vehicle";
 
 /**
  * Represents reference data for the session.
@@ -22,11 +22,6 @@ export class _Session {
    * The user of the app.
    */
   public userInfo: UserInfo;
-
-  /**
-   * The available vehicle types.
-   */
-  public vehicleTypes: VehicleType[];
 
   /**
    * Updates the reference data.
@@ -66,7 +61,6 @@ export class _Session {
     }
 
     this.userInfo = new UserInfo(data.userInfo);
-    this.vehicleTypes = data.vehicleTypes.map(t => new VehicleType(t));
 
     switch (data.outfit.type) {
       case "Fulfiller":
@@ -98,8 +92,6 @@ export class _Session {
       lastName: lastName,
       email: identity.email
     });
-
-    this.vehicleTypes = vehicleTypes.map(t => new VehicleType(t));
 
     switch (identity.organization!.type.slug) {
       case "fulfiller":

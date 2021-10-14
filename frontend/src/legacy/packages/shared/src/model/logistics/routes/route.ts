@@ -2,7 +2,6 @@ import { observable } from "mobx";
 import { DateTime } from "luxon";
 import { DateTimeRange } from "../../general/dateTimeRange";
 import { Position } from "../../general/position";
-import { VehicleType } from "../vehicleType";
 import { Fulfiller } from "../fulfiller";
 import { Driver } from "../driver";
 import { Vehicle } from "../vehicle";
@@ -14,6 +13,7 @@ import { RouteCriticality } from "./routeCriticality";
 import { RouteEstimates } from "./routeEstimates";
 import { Outfit } from "../outfit";
 import { ProductType } from "app/model/product";
+import { VehicleType } from "app/model/vehicle";
 
 /**
  * Represents the live status of a route.

@@ -1,7 +1,7 @@
 import { observable, computed } from "mobx";
 import { ProductTypeSlug, ProductType } from "app/model/product";
-import { VehicleType } from "shared/src/model/session";
 import { RouteCriticalitySlug, RouteStatusSlug, RouteCriticality } from "app/model/route";
+import { VehicleType } from "app/model/vehicle";
 
 const filterProductTypesKey = "live-tracking-filter-products";
 const filterTypesKey = "live-tracking-filter";

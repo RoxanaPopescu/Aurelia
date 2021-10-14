@@ -1,10 +1,10 @@
 import React from "react";
 import { observer } from "mobx-react";
 import Localization from "shared/src/localization";
-import { VehicleType } from "shared/src/model/logistics/vehicleType";
 import { DriverInfo } from "shared/src/components/liveTracking/services/routeSplitService";
 import "./routeInfo.scss";
 import { RouteStop, Route } from "app/model/route";
+import { VehicleType } from "app/model/vehicle";
 
 export interface RoutesLayerProps {
   route: Route;

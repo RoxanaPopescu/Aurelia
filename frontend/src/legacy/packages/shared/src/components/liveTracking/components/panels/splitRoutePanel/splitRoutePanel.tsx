@@ -14,9 +14,9 @@ import { Filters } from "./components/filters/filters";
 import { Driver } from "./components/driver/driver";
 import "./splitRoutePanel.scss";
 import Localization from "shared/src/localization";
-import { VehicleType } from "shared/src/model/logistics/vehicleType";
 import { Log } from "shared/infrastructure";
 import { RouteStop } from "app/model/route";
+import { VehicleType } from "app/model/vehicle";
 
 export interface SplitRoutePanelProps {
   service: LiveTrackingService;

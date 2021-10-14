@@ -214,7 +214,7 @@ export class IdentityModule extends AppModule
                 error ? reject(error) : resolve(decoded));
         });
 
-        const [result1, result2, result3] = await Promise.all(
+        const [result1, result2] = await Promise.all(
         [
             this.apiClient.get("identity/connect/userinfo",
             {

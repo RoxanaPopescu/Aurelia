@@ -1,4 +1,5 @@
-import { VehicleType } from "./vehicleType";
+import { VehicleType } from "app/model/vehicle";
+
 
 /**
  * Represents a vehicle that may be used to deliver a shipment.

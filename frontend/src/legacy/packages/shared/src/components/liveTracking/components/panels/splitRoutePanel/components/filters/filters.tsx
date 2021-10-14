@@ -1,9 +1,9 @@
 import React from "react";
 import { observer } from "mobx-react";
 import Localization from "shared/src/localization";
-import { VehicleType } from "shared/src/model/logistics/vehicleType";
 import { Input, Select } from "shared/src/webKit";
 import "./filters.scss";
+import { VehicleType } from "app/model/vehicle";
 
 export interface RoutesLayerProps {
   vehicleType: VehicleType | undefined;
@@ -35,7 +35,7 @@ export class Filters extends React.Component<RoutesLayerProps> {
           value={this.props.textFilter}
           onChange={value => this.props.onTextFilterChange(value)}
         />
-        
+
       </div>
     );
   }

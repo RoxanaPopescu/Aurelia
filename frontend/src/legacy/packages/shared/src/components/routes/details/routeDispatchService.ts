@@ -1,9 +1,9 @@
 import BaseService from "shared/src/services/base";
 import { Driver } from "shared/src/model/logistics/driver";
-import { VehicleType } from "shared/src/model/logistics/vehicleType";
 import { Fulfiller } from "shared/src/model/logistics/fulfiller";
 import { Route } from "../../../model/logistics/routes/details";
 import { delay } from "shared/utilities";
+import { VehicleType } from "app/model/vehicle";
 
 export class DriverInfo {
 

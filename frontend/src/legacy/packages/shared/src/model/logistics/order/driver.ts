@@ -1,5 +1,5 @@
+import { VehicleType } from "app/model/vehicle";
 import { Phone } from "../../general/phone";
-import { VehicleType } from "../../session";
 
 export class Driver {
   public id: number;

@@ -7,7 +7,7 @@ import "./filters.scss";
 import { observable } from "mobx";
 import { RouteCriticality, RouteStatus } from "app/model/route";
 import { ProductType } from "app/model/product";
-import { VehicleType } from "shared/src/model/session";
+import { VehicleType } from "app/model/vehicle";
 
 export interface RoutesLayerProps {
   service: LiveTrackingService;

@@ -119,6 +119,14 @@ export class OrdersModule extends AppModule
                 body: body
             });
 
+            if (orderIdsResult.data.internalOrderIds.length === 0)
+            {
+                context.response.body = { orders: []};
+                context.response.status = 200;
+
+                return;
+            }
+
             const result = await this.apiClient.post("logistics/orders/fulfiller/listorders",
             {
                 body: {
