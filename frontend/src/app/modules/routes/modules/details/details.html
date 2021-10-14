@@ -160,7 +160,7 @@
 
                 </name-value-pair>
 
-                <name-value-pair>
+                <name-value-pair class="margin-bottom">
 
                     <div slot="name" translate>
                         Criticality
@@ -172,6 +172,38 @@
 
                 </name-value-pair>
 
+                <name-value-pair>
+
+                    <div slot="name" translate>
+                        Distance
+                    </div>
+
+                    <div if.bind="route.initialEstimates.distance" slot="value" empty-value>
+                        ${route.initialEstimates.distance/1000 | number : undefined : 1 } km
+                    </div>
+
+                    <div if.bind="!route.initialEstimates.distance" slot="value" empty-value>
+                        ${route.distance/1000 | number : undefined : 1 } km
+                    </div>
+
+                </name-value-pair>
+
+            </page-section>
+
+            <page-section
+                if.bind="environment == 'development' || route.isPrimaryFulfiller"
+                toggle.bind="true"
+                expanded.to-view="route.supportNote">
+
+                <div slot="header" translate>
+                    Support note
+                </div>
+
+                <name-value-pair>
+
+                    <div slot="value" class="text-align-left white-space-pre-line" empty-value>${route.supportNote}</div>
+
+                </name-value-pair>
             </page-section>
 
             <page-section toggle.bind="true">
@@ -307,22 +339,6 @@
 
                 </name-value-pair>
 
-            </page-section>
-
-            <page-section
-                if.bind="environment == 'development' || route.isPrimaryFulfiller"
-                toggle.bind="true"
-                expanded.to-view="false">
-
-                <div slot="header" translate>
-                    Support note
-                </div>
-
-                <name-value-pair>
-
-                    <div slot="value" class="text-align-left white-space-pre-line" empty-value>${route.supportNote}</div>
-
-                </name-value-pair>
             </page-section>
 
             <page-section toggle.bind="true" expanded.to-view="false">
