@@ -85,10 +85,30 @@ export class OrganizationModule extends AppModule
     }
 
     /**
+     * Gets info about the specified organization.
+     * @param context.params.organizationId The ID of the organization.
+     * @returns
+     * - 200: An object representing info about the specified organization.
+     */
+    public "GET /v2/organizations/:organizationId" = async (context: AppContext) =>
+    {
+        const result = await this.apiClient.get(`organization/organizations/${context.params.organizationId}`);
+
+        context.response.body =
+        {
+            id: result.data.organization.organizationId,
+            name: result.data.organization.name,
+            type: result.data.organization.organizationType
+        };
+
+        context.response.status = 200;
+    }
+
+    /**
      * Gets the profile for the specified organization.
      * @param context.params.organizationId The ID of the organization.
      * @returns
-     * - 200: An object representing the profile for the organization.
+     * - 200: An object representing the profile for the specified organization.
      */
     public "GET /v2/organizations/:organizationId/profile" = async (context: AppContext) =>
     {
@@ -660,7 +680,9 @@ export class OrganizationModule extends AppModule
 
     /**
      * Creates the specified connection.
-     * @param context.params.organizationId The ID of the organization.
+     * @param context.params.organizationId The ID of the current organization.
+     * @param context.request.body.organizationId The ID of the organization to invite.
+     * @param context.request.body.acceptUrl The URL for the page on which the connection can be accepted.
      * @param context.request.body The connection to create.
      * @returns
      * - 200: An object representing the new connection.
@@ -669,12 +691,31 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize("create-connection", () => context.params.organizationId === context.user!.organizationId);
 
+        const [result1, result2] = await Promise.all(
+        [
+            this.apiClient.get(`organization/organizations/${context.params.organizationId}`),
+            this.apiClient.get(`organization/organizations/${context.request.body.organizationId}`)
+        ]);
+
         const result = await this.apiClient.post(`identity/organizations/${context.params.organizationId}/connections`,
         {
-            body: context.request.body
+            body:
+            {
+                fromOrganization:
+                {
+                    id: context.params.organizationId,
+                    name: result1.data.organization.name
+                },
+                toOrganization:
+                {
+                    id: context.request.body.organizationId,
+                    name: result2.data.organization.name
+                },
+                acceptUrl: context.request.body.acceptUrl
+            }
         });
 
-        context.response.body = this.mapConnectionModel(context, result.data);
+        context.response.body = await this.mapConnectionModel(context, result.data);
 
         context.response.status = 200;
     }
@@ -691,7 +732,24 @@ export class OrganizationModule extends AppModule
 
         const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/connections`);
 
-        context.response.body = result.data.map((data: any) => this.mapConnectionModel(context, data));
+        context.response.body = await Promise.all(result.data.map((data: any) => this.mapConnectionModel(context, data)));
+        context.response.status = 200;
+    }
+
+    /**
+     * Gets the specified connection.
+     * @param context.params.organizationId The ID of the organization.
+     * @param context.params.connectionId The ID of the connection to get.
+     * @returns
+     * - 200: An object representing the connection.
+     */
+    public "GET /v2/organizations/:organizationId/connections/:connectionId" = async (context: AppContext) =>
+    {
+        await context.authorize("view-connections", () => context.params.organizationId === context.user!.organizationId);
+
+        const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/connections/${context.params.connectionId}`);
+
+        context.response.body = await this.mapConnectionModel(context, result.data);
         context.response.status = 200;
     }
 
@@ -706,9 +764,17 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize("accept-connection", () => context.params.organizationId === context.user!.organizationId);
 
-        const result = await this.apiClient.post(`identity/organizations/${context.params.organizationId}/connections/${context.params.connectionId}/accept`);
+        // TODO: Use the response body, once fixed in the backend.
 
-        context.response.body = this.mapConnectionModel(context, result.data);
+        /*const result = */
+        await this.apiClient.post(`identity/organizations/${context.params.organizationId}/connections/${context.params.connectionId}/accept`);
+
+        // context.response.body = await this.mapConnectionModel(context, result.data);
+        // context.response.status = 200;
+
+        const result2 = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/connections/${context.params.connectionId}`);
+
+        context.response.body = await this.mapConnectionModel(context, result2.data);
         context.response.status = 200;
     }
 
@@ -723,7 +789,7 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize("delete-connection", () => context.params.organizationId === context.user!.organizationId);
 
-        await this.apiClient.delete(`identity/organizations/${context.params.organizationId}/connections/${context.params.teamId}`);
+        await this.apiClient.delete(`identity/organizations/${context.params.organizationId}/connections/${context.params.connectionId}`);
 
         context.response.status = 204;
     }
@@ -734,14 +800,22 @@ export class OrganizationModule extends AppModule
      * @param data The data representing the connection in the backend.
      * @returns The data representing the connection in the frontend.
      */
-    private mapConnectionModel(context: AppContext, data: any): any
+    private async mapConnectionModel(context: AppContext, data: any): Promise<any>
     {
-        const sent = data.fromOrganization === context.params.organizationId;
+        const [result1, result2] = await Promise.all(
+        [
+            this.apiClient.get(`organization/organizations/${data.fromOrganization.id}`),
+            this.apiClient.get(`organization/organizations/${data.toOrganization.id}`)
+        ]);
+
+        const sent = data.fromOrganization.id === context.user!.organizationId;
 
         const result =
         {
             id: data.id,
-            organization: sent ? data.toOrganization : data.fromOrganization,
+            organization: sent
+                ? { id: data.toOrganization.id, name: result2.data.organization.name }
+                : { id: data.fromOrganization.id, name: result1.data.organization.name },
             status: data.acceptedAt != null ? "active" : sent ? "invite-sent" : "invite-received",
             createdDateTime: data.createdAt,
             acceptedDateTime: data.acceptedAt
