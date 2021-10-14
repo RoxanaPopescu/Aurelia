@@ -482,7 +482,14 @@ export class OrganizationService
 
         const result = await this._apiClient.post(`organizations/${organizationId}/connections/create`,
         {
-            body: { organizationId: otherOrganizationId }
+            body:
+            {
+                organizationId: otherOrganizationId,
+
+                // TODO: This should take into account the baseUrl.
+                // TODO: Eventually, this should probably reference the details page for a connection.
+                acceptUrl: `${location.protocol}//${location.host}/organization/connections`
+            }
         });
 
         return new OrganizationConnection(result.data);
