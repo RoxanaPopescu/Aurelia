@@ -21,6 +21,7 @@ export class Identity
         this.fullName = result.data.fullName;
         this.preferredName = result.data.preferredName;
         this.pictureUrl = result.data.pictureUrl;
+        this.role = result.data.role;
 
         if (this.pictureUrl == null)
         {
@@ -84,6 +85,11 @@ export class Identity
      * The organization to which the user belongs, if any.
      */
     public readonly organization: Outfit | undefined;
+
+    /**
+     * The role assigned to the user within the organization.
+     */
+    public readonly role: { id: string; name: string } | undefined;
 
     /**
      * The claims assigned to the user.

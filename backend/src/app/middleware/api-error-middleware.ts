@@ -127,7 +127,7 @@ async function getFormattedBody(requestOrResponse: Request | Response, bodyData?
     else if (bodyData)
     {
         // Format the body as JSON.
-        body = JSON.stringify(requestOrResponse, undefined, 2);
+        body = JSON.stringify(bodyData, undefined, 2);
     }
     else if (parseInt(requestOrResponse.headers.get("content-length") ?? "0"))
     {

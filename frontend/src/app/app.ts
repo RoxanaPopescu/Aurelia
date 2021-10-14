@@ -195,7 +195,6 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("./modules/collection-points/collection-points"),
                 settings:
                 {
-                    outfits: ["fulfiller", "consignor"],
                     claims:
                     [
                         "view-routes"
@@ -271,22 +270,6 @@ export class AppModule
                 icon: "communication"
             },
             {
-                name: "agreements",
-                route: "agreements",
-                moduleId: PLATFORM.moduleName("./modules/agreements/agreements"),
-                settings:
-                {
-                    claims:
-                    [
-                        "view-agreements"
-                    ]
-                },
-                title: routeTitles.agreements,
-                nav: false,
-                href: "/agreements",
-                icon: "agreements"
-            },
-            {
                 name: "organization",
                 route: "organization",
                 moduleId: PLATFORM.moduleName("./modules/organization/organization"),
@@ -294,6 +277,7 @@ export class AppModule
                 {
                     claims:
                     [
+                        "view-organization"
                     ]
                 },
                 title: routeTitles.organization,

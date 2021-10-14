@@ -3,6 +3,7 @@ import { Log } from "shared/infrastructure";
 import { Modal, IValidation } from "shared/framework";
 import { OrganizationService, OrganizationRole } from "app/model/organization";
 import { Operation } from "shared/utilities";
+import { IdentityService } from "app/services/identity";
 import { IPermission } from "./components/permissions/permissions";
 
 @autoinject
@@ -10,15 +11,18 @@ export class EditRolePanel
 {
     /**
      * Creates a new instance of the type.
+     * @param identityService The `IdentityService` instance.
      * @param organizationService The `OrganizationService` instance.
      * @param modal The `Modal` instance representing the modal.
      */
-    public constructor(organizationService: OrganizationService, modal: Modal)
+    public constructor(identityService: IdentityService, organizationService: OrganizationService, modal: Modal)
     {
+        this._identityService = identityService;
         this._organizationService = organizationService;
         this._modal = modal;
     }
 
+    private readonly _identityService: IdentityService;
     private readonly _organizationService: OrganizationService;
     private readonly _modal: Modal;
     private _fetchOperation: Operation | undefined;
@@ -104,6 +108,12 @@ export class EditRolePanel
             if (this.role.id)
             {
                 this._result = await this._organizationService.saveRole(this.role);
+
+                if (this.role.id === this._identityService.identity!.role!.id)
+                {
+                    // Reauthenticate to ensure we get the updated permissions.
+                    await this._identityService.reauthorize();
+                }
             }
             else
             {

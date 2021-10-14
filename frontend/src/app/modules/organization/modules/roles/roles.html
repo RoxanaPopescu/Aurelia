@@ -24,12 +24,16 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button appearance="outline" accent="primary" click.trigger="onNewRoleClick()" class="flex-row">
-                        <icon name="add" class="font-larger margin-right"></icon>
-                        <span translate>
-                            New role
-                        </span>
-                    </button>
+                    <template if-claims="create-role">
+
+                        <button appearance="outline" accent="primary" click.trigger="onNewRoleClick()" class="flex-row">
+                            <icon name="add" class="font-larger margin-right"></icon>
+                            <span translate>
+                                New role
+                            </span>
+                        </button>
+
+                    </template>
 
                 </toolbar>
 
@@ -134,31 +138,37 @@
 
                                 <div class="icon-row">
 
-                                    <button
-                                        disabled.bind="role.readonly"
-                                        title.translate="Edit role"
-                                        appearance="none"
-                                        accent="primary"
-                                        click.trigger="onRoleClick(role)">
-                                        <icon name="edit-small"></icon>
-                                    </button>
+                                    <template if-claims="edit-role">
+                                        <button
+                                            disabled.bind="role.readonly"
+                                            title.translate="Edit role"
+                                            appearance="none"
+                                            accent="primary"
+                                            click.trigger="onRoleClick(role)">
+                                            <icon name="edit-small"></icon>
+                                        </button>
+                                    </template>
 
-                                    <button
-                                        title.translate="Duplicate role"
-                                        appearance="none"
-                                        accent="primary"
-                                        click.trigger="onDuplicateRoleClick(role)">
-                                        <icon name="md-copy"></icon>
-                                    </button>
+                                    <template if-claims="create-role">
+                                        <button
+                                            title.translate="Duplicate role"
+                                            appearance="none"
+                                            accent="primary"
+                                            click.trigger="onDuplicateRoleClick(role)">
+                                            <icon name="md-copy"></icon>
+                                        </button>
+                                    </template>
 
-                                    <button
-                                        disabled.bind="role.readonly || role.userCount > 0"
-                                        title.translate="Delete role"
-                                        appearance="none"
-                                        accent="primary"
-                                        click.trigger="onDeleteRoleClick(role)">
-                                        <icon name="delete-small"></icon>
-                                    </button>
+                                    <template if-claims="delete-role">
+                                        <button
+                                            disabled.bind="role.readonly || role.userCount > 0"
+                                            title.translate="Delete role"
+                                            appearance="none"
+                                            accent="primary"
+                                            click.trigger="onDeleteRoleClick(role)">
+                                            <icon name="delete-small"></icon>
+                                        </button>
+                                    </template>
 
                                 </div>
 
