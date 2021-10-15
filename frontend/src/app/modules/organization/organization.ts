@@ -93,26 +93,21 @@ export class OrganizationModule
                 nav: true,
                 icon: "md-rules"
             },
-
-            ...
-            ENVIRONMENT.name !== "production" ?
-            [
+            {
+                name: "connections",
+                route: "connections",
+                moduleId: PLATFORM.moduleName("./modules/connections/connections"),
+                settings:
                 {
-                    name: "connections",
-                    route: "connections",
-                    moduleId: PLATFORM.moduleName("./modules/connections/connections"),
-                    settings:
-                    {
-                        claims:
-                        [
-                            "view-connections"
-                        ]
-                    },
-                    title: routeTitles.connections,
-                    nav: true,
-                    icon: "md-hub"
-                }
-            ] : []
+                    claims:
+                    [
+                        "view-connections"
+                    ]
+                },
+                title: routeTitles.connections,
+                nav: true,
+                icon: "md-hub"
+            }
         ]);
     }
 }
