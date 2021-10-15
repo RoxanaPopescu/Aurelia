@@ -13,6 +13,7 @@ import { SelectColumnsPanel } from "./modals/select-columns/select-columns";
 import { Address, Position } from "app/model/shared";
 import { AddressService } from "app/components/address-input/services/address-service/address-service";
 import { IdentityService, moverOrganizationId } from "app/services/identity";
+import { OrganizationService, OrganizationTeam } from "app/model/organization";
 
 /**
  * Represents the route parameters for the page.
@@ -48,6 +49,7 @@ export class ListPage
      * @param modalService The `ModalService` instance.
      * @param routeAssignmentService The `RouteAssignmentService` instance.
      * @param historyHelper The `HistoryHelper` instance.
+     * @param organizationService The `OrganizationService` instance.
      * @param identityService The `IdentityService` instance.
      */
     public constructor(
@@ -56,6 +58,7 @@ export class ListPage
         routeAssignmentService: RouteAssignmentService,
         modalService: ModalService,
         historyHelper: HistoryHelper,
+        organizationService: OrganizationService,
         identityService: IdentityService)
     {
         this._routeService = routeService;
@@ -63,6 +66,7 @@ export class ListPage
         this._routeAssignmentService = routeAssignmentService;
         this._historyHelper = historyHelper;
         this._addressService = addressService;
+        this._organizationService = organizationService;
         this._identityService = identityService;
         this._constructed = true;
 
@@ -87,6 +91,7 @@ export class ListPage
     private readonly _routeService: RouteService;
     private readonly _modalService: ModalService;
     private readonly _addressService: AddressService;
+    private readonly _organizationService: OrganizationService;
     private readonly _routeAssignmentService: RouteAssignmentService;
     private readonly _historyHelper: HistoryHelper;
     private readonly _identityService: IdentityService;
@@ -259,6 +264,11 @@ export class ListPage
     protected legacyOwnerIdsFilter: any[] = [];
 
     /**
+     * The teams for the organization
+     */
+    protected teams: OrganizationTeam[] = [];
+
+    /**
      * Our old system uses another 'user system', Mover Transport will need some legacy features in this transition period.
      */
     protected get showLegacy(): boolean
@@ -346,6 +356,19 @@ export class ListPage
         }
 
         return undefined;
+    }
+
+    /**
+     * Called from the table when team is being represented
+     */
+    public teamName(teamId?: string): string | undefined
+    {
+        if (teamId == null)
+        {
+            return undefined;
+        }
+
+        return this.teams.find(t => t.id === teamId)?.name;
     }
 
     /**
@@ -509,6 +532,17 @@ export class ListPage
             this.updateOperation.abort();
         }
 
+        const columnSlugs = this.columns.map(c => c.slug);
+
+        // Fetch teams if needed
+        if (this.teams.length === 0 && columnSlugs.includes("team"))
+        {
+            new Operation(async signal =>
+            {
+                this.teams = await this._organizationService.getTeams(signal);
+            });
+        }
+
         // Create and execute the new operation.
         this.updateOperation = new Operation(async signal =>
         {
@@ -545,15 +579,15 @@ export class ListPage
                         legacyOwnerIds: this.legacyOwnerIdsFilter
                     },
                     {
-                        owner: this.columns.map(c => c.slug).includes("owner"),
-                        vehicle: this.columns.map(c => c.slug).includes("vehicle"),
-                        fulfiller: this.columns.map(c => c.slug).includes("executor"),
-                        driver: this.columns.map(c => c.slug).includes("driver") || this.columns.map(c => c.slug).includes("driver-id"),
-                        tags: this.columns.map(c => c.slug).includes("tags"),
-                        criticality: this.columns.map(c => c.slug).includes("criticality"),
-                        estimates: this.columns.map(c => c.slug).includes("estimated-time-frame"),
-                        delayedStops: this.columns.map(c => c.slug).includes("delayed-stops"),
-                        stops: this.columns.map(c => c.slug).includes("distance") || this.columns.map(c => c.slug).includes("planned-start-time-frame")
+                        owner: columnSlugs.includes("owner"),
+                        vehicle: columnSlugs.includes("vehicle"),
+                        fulfiller: columnSlugs.includes("executor"),
+                        driver: columnSlugs.includes("driver") || columnSlugs.includes("driver-id"),
+                        tags: columnSlugs.includes("tags"),
+                        criticality: columnSlugs.includes("criticality"),
+                        estimates: columnSlugs.includes("estimated-time-frame"),
+                        delayedStops: columnSlugs.includes("delayed-stops"),
+                        stops: columnSlugs.includes("distance") || columnSlugs.includes("planned-start-time-frame")
                     },
                     this.sorting,
                     this.paging,

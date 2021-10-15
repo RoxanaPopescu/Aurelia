@@ -200,6 +200,12 @@ export class RouteListColumn
             name: listColumn.distance,
             columnSize: "min-content",
             column: "visible"
+        },
+        "team":
+        {
+            name: listColumn.team,
+            columnSize: "min-content",
+            column: "visible"
         }
     };
 }

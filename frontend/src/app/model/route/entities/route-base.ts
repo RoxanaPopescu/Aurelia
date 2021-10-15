@@ -27,6 +27,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     {
         this.id = data.id;
         this.slug = data.slug;
+        this.teamId = data.teamId;
         this.productType = new ProductType(data.productType ?? "solution");
         this.reference = data.reference;
         this.criticality = new RouteCriticality(data.criticality ?? "low");
@@ -154,6 +155,11 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
      * The type of vehicle required for the route.
      */
     public readonly vehicleType: VehicleType;
+
+    /**
+     * The id of the current team if any.
+     */
+    public teamId?: string;
 
     /**
      * The fulfiller responsible for the colli.

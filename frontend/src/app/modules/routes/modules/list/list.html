@@ -466,6 +466,12 @@
                                     </span>
                                 </data-table-cell>
 
+                                <data-table-cell if.bind="column.slug === 'team'">
+                                    <span class="text-truncate">
+                                        ${teamName(route.teamId)}
+                                    </span>
+                                </data-table-cell>
+
                                 <data-table-cell if.bind="column.slug === 'driving-list'" align="right">
 
                                     <div class="icon-row">

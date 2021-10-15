@@ -23,6 +23,7 @@
     "plannedTime": "Planned time",
     "plannedStartTime": "Planned start time",
     "criticality": "Criticality",
-    "distance": "Distance"
+    "distance": "Distance",
+    "team": "Team"
 
 }
