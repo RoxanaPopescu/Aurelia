@@ -250,7 +250,7 @@ export class IdentityModule extends AppModule
             pictureUrl: result1.data.picture,
             organization: result2 == null ? undefined :
             {
-                id: result2.data.organization.organizationId,
+                id: result2.data.organization.id,
                 companyName: result2.data.organization.name
             },
             role: result3 == null ? undefined :

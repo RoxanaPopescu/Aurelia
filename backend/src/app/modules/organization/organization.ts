@@ -54,14 +54,7 @@ export class OrganizationModule extends AppModule
         {
             const result2 = await this.apiClient.get(`organization/organizations/${membership.organizationId}`);
 
-            const organization =
-            {
-                id: result2.data.organization.organizationId,
-                name: result2.data.organization.name,
-                type: result2.data.organization.organizationType
-            };
-
-            return organization;
+            return result2.data.organization;
         }));
 
         context.response.body = organizations;
@@ -94,12 +87,7 @@ export class OrganizationModule extends AppModule
     {
         const result = await this.apiClient.get(`organization/organizations/${context.params.organizationId}`);
 
-        context.response.body =
-        {
-            id: result.data.organization.organizationId,
-            name: result.data.organization.name,
-            type: result.data.organization.organizationType
-        };
+        context.response.body = result.data.organization;
 
         context.response.status = 200;
     }
@@ -116,12 +104,7 @@ export class OrganizationModule extends AppModule
 
         const result = await this.apiClient.get(`organization/organizations/${context.params.organizationId}`);
 
-        context.response.body =
-        {
-            id: result.data.organization.organizationId,
-            name: result.data.organization.name,
-            type: result.data.organization.organizationType
-        };
+        context.response.body = result.data.organization;
 
         context.response.status = 200;
     }
@@ -240,12 +223,7 @@ export class OrganizationModule extends AppModule
         {
             id: result1.data.id,
             email: result1.data.invitedEmailAddress,
-            organization:
-            {
-                id: result2.data.organization.organizationId,
-                name: result2.data.organization.name,
-                type: result2.data.organization.organizationType
-            },
+            organization: result2.data.organization,
             role: result1.data.role,
             teams: result1.data.teams
         };
