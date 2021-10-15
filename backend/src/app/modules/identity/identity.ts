@@ -44,7 +44,7 @@ export class IdentityModule extends AppModule
         }
         catch (error)
         {
-            if (error instanceof ApiError && error.data?.error === "invalid_grant")
+            if (error instanceof ApiError && error.data?.error_description === "invalid_username_or_password")
             {
                 context.response.status = 401;
             }
@@ -123,7 +123,7 @@ export class IdentityModule extends AppModule
         }
         catch (error)
         {
-            if (error instanceof ApiError && error.data?.error === "invalid_grant")
+            if (error instanceof ApiError && error.data?.error_description === "invalid_username_or_password")
             {
                 context.response.status = 401;
             }
