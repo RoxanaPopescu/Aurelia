@@ -33,7 +33,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
         this.criticality = new RouteCriticality(data.criticality ?? "low");
         this.complexity = Math.round(data.complexity ?? 0);
         this.status = new RouteStatus(data.status ?? "not-started");
-        this.fulfiller = new Fulfiller(data.fulfiller);
+        this.executor = new Fulfiller(data.fulfiller);
         this.driverOnline = data.driverOnline;
         this.driverListUrl = data.driverListUrl;
         this.stops = stops;
@@ -162,9 +162,9 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     public teamId?: string;
 
     /**
-     * The fulfiller responsible for the colli.
+     * The executor responsible for the route.
      */
-    public fulfiller: Fulfiller;
+    public executor: Fulfiller;
 
     /**
      * If the fulfiller is the primary one.

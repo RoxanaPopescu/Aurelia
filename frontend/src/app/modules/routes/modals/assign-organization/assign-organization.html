@@ -10,11 +10,11 @@
 
             <h1 class="font-largest margin-bottom flex-row">
                 <div>
-                    <template if.bind="route.fulfiller.id != identityService.identity.organization.id" translate>
-                        Reassign organization
+                    <template if.bind="route.executor.id != identityService.identity.organization.id" translate>
+                        Reassign executor
                     </template>
-                    <template if.bind="route.fulfiller.id == identityService.identity.organization.id" translate>
-                        Assign organization
+                    <template if.bind="route.executor.id == identityService.identity.organization.id" translate>
+                        Assign executor
                     </template>
                 </div>
 
@@ -53,39 +53,44 @@
                         </span>
                     </data-table-cell>
 
+                    <!--
                     <data-table-cell>
                         <span class="text-truncate" translate>
                             Phone
                         </span>
                     </data-table-cell>
+                    -->
 
                 </data-table-headers>
 
-                <template repeat.for="fulfiller of filteredFulfillers">
+                <template repeat.for="connection of filteredConnections">
 
-                    <data-table-row click.call="onOrganizationClick(fulfiller)">
-
-                        <data-table-cell>
-                            <span class="text-truncate">
-                                ${fulfiller.primaryName}
-                            </span>
-                        </data-table-cell>
+                    <data-table-row click.call="onOrganizationClick(connection)">
 
                         <data-table-cell>
                             <span class="text-truncate">
-                                ${fulfiller.contactPhone}
+                                ${connection.organization.name}
                             </span>
                         </data-table-cell>
+
+                        <!--
+                        <data-table-cell>
+                            <span class="text-truncate">
+                                ${organization.contactPhone}
+                            </span>
+                        </data-table-cell>
+                        -->
 
                     </data-table-row>
+
 
                 </template>
 
             </data-table>
 
-            <busy-indicator if.bind="fulfillers == null" class="margin-largest"></busy-indicator>
+            <busy-indicator if.bind="connections == null" class="margin-largest"></busy-indicator>
 
-            <empty-indicator if.bind="filteredFulfillers.length == 0" class="margin-largest">
+            <empty-indicator if.bind="filteredConnections.length == 0" class="margin-largest">
                 <div slot="heading" translate>No results</div>
             </empty-indicator>
 

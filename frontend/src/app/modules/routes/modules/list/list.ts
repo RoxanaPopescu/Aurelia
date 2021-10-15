@@ -14,6 +14,7 @@ import { Address, Position } from "app/model/shared";
 import { AddressService } from "app/components/address-input/services/address-service/address-service";
 import { IdentityService, moverOrganizationId } from "app/services/identity";
 import { OrganizationService, OrganizationTeam } from "app/model/organization";
+import { Fulfiller } from "app/model/outfit";
 
 /**
  * Represents the route parameters for the page.
@@ -384,8 +385,8 @@ export class ListPage
 
         if (executor != null)
         {
-            const previousValue = route.fulfiller;
-            route.fulfiller = executor;
+            const previousValue = route.executor;
+            route.executor = new Fulfiller({ id: executor.organization.id, companyName: executor.organization.name });
             updating.executor = true;
 
             try
@@ -394,8 +395,8 @@ export class ListPage
             }
             catch
             {
-                route.fulfiller = previousValue;
-                Log.error(`Could not assign fulfiller '${executor.companyName}'`);
+                route.executor = previousValue;
+                Log.error(`Could not assign executor '${executor.organization.name}'`);
             }
 
             updating.executor = false;
@@ -537,13 +538,11 @@ export class ListPage
         // Fetch teams if needed
         if (this.teams.length === 0 && columnSlugs.includes("team"))
         {
-            this._organizationService.getTeams().then(teams =>
+            // tslint:disable-next-line: no-floating-promises
+            (async () =>
             {
-                this.teams = teams;
-            }).catch(() =>
-            {
-                // Not handled
-            });
+                this.teams = await this._organizationService.getTeams();
+            })();
         }
 
         // Create and execute the new operation.

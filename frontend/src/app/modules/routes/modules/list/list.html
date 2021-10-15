@@ -348,16 +348,16 @@
                                         if-claims="assign-executor-route"
                                         click.trigger="onAssignExecutorClick(route, updating)"
                                     >
-                                        <template if.bind="route.fulfiller.companyName">
-                                            ${route.fulfiller.companyName}
+                                        <template if.bind="route.executor.companyName">
+                                            ${route.executor.companyName}
                                         </template>
-                                        <template if.bind="!route.fulfiller.companyName" translate>
+                                        <template if.bind="!route.executor.companyName" translate>
                                             Assign executor
                                         </template>
                                     </a>
                                     <span else empty-value>
-                                        <template if.bind="route.fulfiller.companyName">
-                                            ${route.fulfiller.companyName}
+                                        <template if.bind="route.executor.companyName">
+                                            ${route.executor.companyName}
                                         </template>
                                     </span>
                                 </data-table-cell>

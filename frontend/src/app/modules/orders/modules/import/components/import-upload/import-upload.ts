@@ -4,7 +4,6 @@ import { DropzoneFile, DropzoneOptions } from "dropzone";
 import { Log } from "shared/infrastructure";
 import { ImportService } from "app/model/import";
 import { Consignor } from "app/model/outfit";
-import { AgreementService } from "app/model/agreement";
 
 /**
  * Represents the module.
@@ -17,24 +16,24 @@ export class ImportUploadCustomElement
      * @param importOrdersService The `ImportOrdersService` instance.
      * @param importService The `ImportService` instance.
      */
-    public constructor(importOrdersService: ImportOrdersService, importService: ImportService, agreementService: AgreementService)
+    public constructor(importOrdersService: ImportOrdersService, importService: ImportService)
     {
         this._importOrdersService = importOrdersService;
         this._importService = importService;
-        this._agreementService = agreementService;
 
         // tslint:disable-next-line: no-floating-promises
+        /*
         (async () =>
         {
             // Fetch available consignors.
             const agreements = await this._agreementService.getAll();
             this.availableConsignors = agreements.agreements.filter(c => c.type.slug === "consignor");
         })();
+        */
     }
 
     private readonly _importOrdersService: ImportOrdersService;
     private readonly _importService: ImportService;
-    private readonly _agreementService: AgreementService;
     protected availableConsignors: Consignor[];
 
     protected dropzone: Dropzone;

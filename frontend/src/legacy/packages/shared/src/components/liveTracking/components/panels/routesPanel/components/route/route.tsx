@@ -20,7 +20,7 @@ export class RouteComponent extends React.Component<RoutesLayerProps> {
 
     const driverOrFulfillerPhone = route.driver
       ? route.driver.phone.toString()
-      : route.fulfiller.contactPhone ? route.fulfiller.contactPhone!.toString()
+      : route.executor.contactPhone ? route.executor.contactPhone!.toString()
       : undefined;
 
     const isFlagged = routeFlagService.isFlagged(route.id);
@@ -84,7 +84,7 @@ export class RouteComponent extends React.Component<RoutesLayerProps> {
             }
 
             { !route.driver &&
-              <div>{route.fulfiller.primaryName}</div>
+              <div>{route.executor.primaryName}</div>
             }
 
               {driverOrFulfillerPhone &&

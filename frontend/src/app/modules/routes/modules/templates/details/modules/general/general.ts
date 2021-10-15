@@ -1,7 +1,6 @@
 import { autoinject, bindable, computedFrom } from "aurelia-framework";
 import { RouteTemplate } from "app/model/route-template";
 import { Consignor } from "app/model/outfit";
-import { AgreementService } from "app/model/agreement";
 import { VehicleType } from "app/model/vehicle";
 
 /**
@@ -14,6 +13,7 @@ export class General
      * Creates a new instance of the class.
      * @param agreementService The `AgreementService` instance.
      */
+    /*
     public constructor(agreementService: AgreementService)
     {
         this._agreementService = agreementService;
@@ -28,6 +28,8 @@ export class General
     }
 
     private readonly _agreementService: AgreementService;
+
+    */
 
     /**
      * The template to present.

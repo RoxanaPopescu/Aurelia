@@ -313,10 +313,10 @@
                                     class="text-truncate"
                                     click.trigger="onAssignExecutorClick(route)"
                                 >
-                                    <template if.bind="route.fulfiller.companyName">
-                                        ${route.fulfiller.companyName}
+                                    <template if.bind="route.executor.companyName">
+                                        ${route.executor.companyName}
                                     </template>
-                                    <template if.bind="!route.fulfiller.companyName" translate>
+                                    <template if.bind="!route.executor.companyName" translate>
                                         Assign executor
                                     </template>
                                 </a>

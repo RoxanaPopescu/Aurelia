@@ -3,10 +3,9 @@ import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { Modal, ModalService } from "shared/framework";
 import { RouteAssignmentService, RouteBase } from "app/model/route";
-import { AgreementService } from "app/model/agreement";
-import { Fulfiller } from "app/model/outfit";
 import { ConfirmRemoveOrganizationDialog } from "./confirm-remove-fulfiller/confirm-remove-organization";
 import { IdentityService } from "app/services/identity";
+import { OrganizationConnection, OrganizationService } from "app/model/organization";
 
 @autoinject
 export class AssignOrganizationPanel
@@ -17,22 +16,22 @@ export class AssignOrganizationPanel
      * @param modalService The `ModalService` instance.
      * @param identityService The `IdentityService` instance.
      * @param routeAssignmentService The `RouteAssignmentService` instance.
-     * @param agreementService The `AgreementService` instance.
+     * @param organizationService The `OrganizationService` instance.
      */
-    public constructor(modal: Modal, modalService: ModalService, identityService: IdentityService, routeAssignmentService: RouteAssignmentService, agreementService: AgreementService)
+    public constructor(modal: Modal, modalService: ModalService, identityService: IdentityService, routeAssignmentService: RouteAssignmentService, organizationService: OrganizationService)
     {
         this._modal = modal;
         this._modalService = modalService;
         this.identityService = identityService;
         this._routeAssignmentService = routeAssignmentService;
-        this._agreementService = agreementService;
+        this._organizationService = organizationService;
     }
 
     private readonly _modal: Modal;
     private readonly _modalService: ModalService;
     private readonly _routeAssignmentService: RouteAssignmentService;
-    private readonly _agreementService: AgreementService;
-    private _result: Fulfiller | undefined;
+    private readonly _organizationService: OrganizationService;
+    private _result: OrganizationConnection | undefined;
 
     /**
      * The `IdentityService` instance.
@@ -55,34 +54,30 @@ export class AssignOrganizationPanel
     protected assignOnSelect: boolean;
 
     /**
-     * The available fulfillers.
+     * The available connections.
      */
-    protected fulfillers: Fulfiller[] | undefined;
+    protected connections: OrganizationConnection[] | undefined;
 
     /**
-     * The available fulfillers, filtered to include only those matching the route requirements and query text.
+     * The available organizations, filtered to include only those matching the route requirements and query text.
      */
-    @computedFrom("fulfillers", "queryText")
-    protected get filteredFulfillers(): Fulfiller[] | undefined
+    @computedFrom("connections", "queryText")
+    protected get filteredConnections(): OrganizationConnection[] | undefined
     {
-        if (this.fulfillers == null)
+        if (this.connections == null)
         {
             return undefined;
         }
 
         if (!this.queryText)
         {
-            return this.fulfillers;
+            return this.connections;
         }
 
-        const text = this.queryText.toLowerCase();
+        const textFilter = this.queryText.toLowerCase();
 
-        return this.fulfillers
-
-            .filter(d =>
-                d.id.toString().includes(text) ||
-                d.primaryName.toString().toLowerCase().includes(text) ||
-                d.contactPhone && d.contactPhone.toString().toLowerCase().includes(text));
+        return this.connections
+            .filter(connection => !textFilter || connection.searchModel.contains(textFilter));
     }
 
     /**
@@ -97,8 +92,7 @@ export class AssignOrganizationPanel
         // tslint:disable-next-line: no-unused-expression
         new Operation(async () =>
         {
-            const agreements = await this._agreementService.getAll();
-            this.fulfillers = agreements.agreements.filter(c => c.type.slug === "fulfiller");
+            this.connections = await this._organizationService.getConnections();
         });
     }
 
@@ -106,7 +100,7 @@ export class AssignOrganizationPanel
      * Called by the framework when the modal is deactivated.
      * @returns The selected fulfiller, or undefined if cancelled.
      */
-    public async deactivate(): Promise<Fulfiller | undefined>
+    public async deactivate(): Promise<OrganizationConnection | undefined>
     {
         return this._result;
     }
@@ -117,14 +111,14 @@ export class AssignOrganizationPanel
      * If the organization of the route is not the current user,
      * we are removing organization, therefore we confirm it.
      */
-    protected async onOrganizationClick(organization: Fulfiller): Promise<void>
+    protected async onOrganizationClick(connection: OrganizationConnection): Promise<void>
     {
-        if (this.route.fulfiller.id !== this.identityService.identity?.organization!.id)
+        if (this.route.executor.id !== this.identityService.identity?.organization!.id)
         {
             const confirmed = await this._modalService.open(ConfirmRemoveOrganizationDialog,
             {
-                currentOrganization: this.route.fulfiller,
-                newOrganization: organization
+                currentExecutor: this.route.executor,
+                newExecutor: connection
             }).promise;
 
             if (!confirmed)
@@ -138,10 +132,10 @@ export class AssignOrganizationPanel
             if (this.assignOnSelect)
             {
                 this._modal.busy = true;
-                await this._routeAssignmentService.assignExecutor(this.route, organization, this.identityService.identity!.organization);
+                await this._routeAssignmentService.assignExecutor(this.route, connection, this.identityService.identity!.organization);
             }
 
-            this._result = organization;
+            this._result = connection;
 
             await this._modal.close();
         }

@@ -5,6 +5,7 @@ import { Fulfiller, Outfit } from "app/model/outfit";
 import { Vehicle } from "app/model/vehicle";
 import { RouteBase } from "../entities/route-base";
 import { IdentityService } from "app/services/identity";
+import { OrganizationConnection } from "app/model/organization";
 
 /**
  * Represents a service assigns routes to fulfillers or drivers.
@@ -96,18 +97,18 @@ export class RouteAssignmentService
      * @param executor The executor to which the route should be assigned.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async assignExecutor(route: RouteBase, executor: Fulfiller, currentOutfit?: Outfit): Promise<void>
+    public async assignExecutor(route: RouteBase, executor: OrganizationConnection, currentExecutor?: Outfit): Promise<void>
     {
         await this._apiClient.post("dispatch/route/assign-executor",
         {
             body:
             {
                 routeId: route.id,
-                newFulfillerId: executor.id,
-                currentFulfillerId: currentOutfit?.id ?? this._identityService.identity!.organization!.id
+                newExecutorId: executor.organization.id,
+                currentExecutorId: currentExecutor?.id ?? this._identityService.identity!.organization!.id
             }
         });
 
-        route.fulfiller = executor;
+        route.executor = new Fulfiller({ id: executor.organization.id, companyName: executor.organization.name });
     }
 }

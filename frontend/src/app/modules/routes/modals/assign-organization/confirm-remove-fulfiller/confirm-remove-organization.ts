@@ -1,5 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { Modal } from "shared/framework/services/modal";
+import { OrganizationConnection } from "app/model/organization";
 import { Fulfiller } from "app/model/outfit";
 
 @autoinject
@@ -16,17 +17,17 @@ export class ConfirmRemoveOrganizationDialog
 
     private readonly _modal: Modal;
     private _result = false;
-    protected currentOrganization: Fulfiller;
-    protected newOrganization: Fulfiller;
+    protected currentExecutor: Fulfiller;
+    protected newExecutor: OrganizationConnection;
 
     /**
      * Called by the framework when the modal is activated.
      * @param model The model to use.
      */
-    public activate(model: { currentOrganization: Fulfiller; newOrganization: Fulfiller }): void
+    public activate(model: { currentExecutor: Fulfiller; newExecutor: OrganizationConnection }): void
     {
-        this.currentOrganization = model.currentOrganization;
-        this.newOrganization = model.newOrganization;
+        this.currentExecutor = model.currentExecutor;
+        this.newExecutor = model.newExecutor;
     }
 
     /**

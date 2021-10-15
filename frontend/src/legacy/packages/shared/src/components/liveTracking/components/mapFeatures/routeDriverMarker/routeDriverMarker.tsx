@@ -44,7 +44,7 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
     } else if (this.props.route.owner) {
       labelText = this.props.route.owner.companyName?.substring(0,3) ?? "--";
     } else {
-      labelText = this.props.route.fulfiller!.companyName!.substring(0, 2);
+      labelText = this.props.route.executor!.companyName!.substring(0, 2);
     }
 
     let additionalBaseClass = this.props.route.driver == null ? "noDriver" : "driver";
@@ -131,8 +131,8 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
 
         <div className="c-worldMap-popup-title">{this.props.route.driver!.name.toString()}</div>
 
-        {this.props.route.fulfiller.companyName &&
-        <div className="c-worldMap-popup-subtitle">{this.props.route.fulfiller.primaryName}</div>}
+        {this.props.route.executor.companyName &&
+        <div className="c-worldMap-popup-subtitle">{this.props.route.executor.primaryName}</div>}
 
         <div className="c-worldMap-popup-section">
 
@@ -201,10 +201,10 @@ export class RouteDriverMarker extends Marker<RouteDriverMarkerProps> {
           <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Fulfiller_Heading")}</div>
         </div>
 
-        <div className="c-worldMap-popup-title">{this.props.route.fulfiller.primaryName}</div>
+        <div className="c-worldMap-popup-title">{this.props.route.executor.primaryName}</div>
 
-        {this.props.route.fulfiller.secondaryName &&
-        <div className="c-worldMap-popup-subtitle">{this.props.route.fulfiller.secondaryName}</div>}
+        {this.props.route.executor.secondaryName &&
+        <div className="c-worldMap-popup-subtitle">{this.props.route.executor.secondaryName}</div>}
 
       </React.Fragment>
     );

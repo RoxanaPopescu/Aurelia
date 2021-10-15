@@ -274,7 +274,7 @@
                     </div>
 
                     <div slot="value" empty-value>
-                        ${route.fulfiller.primaryName}
+                        ${route.executor.primaryName}
                     </div>
 
                 </name-value-pair>
@@ -530,10 +530,10 @@
                 <toolbar if.bind="route" class="flex-push-right">
 
                     <button if-claims="assign-executor-route" appearance="outline" accent="primary" click.trigger="onAssignExecutorClick()">
-                        <template if.bind="route.fulfiller.id == identityService.identity.organization.id" translate>
+                        <template if.bind="route.executor.id == identityService.identity.organization.id" translate>
                             Assign executor
                         </template>
-                        <template if.bind="route.fulfiller.id != identityService.identity.organization.id" translate>
+                        <template if.bind="route.executor.id != identityService.identity.organization.id" translate>
                             Reassign executor
                         </template>
                     </button>

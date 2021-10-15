@@ -9,7 +9,7 @@
         <modal-header>
 
             <h1 class="font-larger" tabindex="-1" autofocus="visible.bind: false" translate>
-                You have already assigned this route to <b>${currentFulfiller.companyName}</b>, want to assign it to <b>${newFulfiller.companyName}</b> instead?
+                You have already assigned this route to <b>${currentExecutor.companyName}</b>, want to assign it to <b>${newExecutor.organization.name}</b> instead?
             </h1>
 
         </modal-header>
@@ -23,7 +23,7 @@
                 </button>
 
                 <button appearance="solid" accent="negative" click.delegate="onButtonClick(true)" translate>
-                    Assign to <b>${newFulfiller.companyName}</b>
+                    Assign to <b>${newOrganization.organization.name}</b>
                 </button>
 
             </div>
