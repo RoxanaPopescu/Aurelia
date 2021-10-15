@@ -18,6 +18,7 @@ export class _Profile {
   @observable claims = new Set<string>() as ReadonlySet<string>;
   @observable tokens?: Tokens;
   @observable isAuthenticated = false;
+  organizationId?: string;
 
   constructor() {
     // const accessToken = sessionStorage.getItem(Path.AccessToken) || localStorage.getItem(Path.AccessToken);

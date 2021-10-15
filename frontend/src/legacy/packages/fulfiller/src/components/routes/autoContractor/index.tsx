@@ -10,8 +10,6 @@ import {
 } from "shared/src/webKit";
 import { Dialog } from "shared/src/components/dialog/dialog";
 import { WorldMap } from "shared/src/components/worldMap";
-import { Fulfiller } from "shared/src/model/logistics/fulfiller";
-import { RouteDispatchService } from "shared/src/components/routes/details/routeDispatchService";
 import {
   AutoDispatchService,
   AutoDispatchRule
@@ -26,6 +24,8 @@ import { PageContentComponent } from "shared/src/components/pageContent";
 import { ButtonSize } from "../../../../../shared/src/webKit/button/index";
 import { Profile } from "shared/src/model/profile";
 import { Log } from "shared/infrastructure";
+import { OrganizationConnection } from "app/model/organization";
+import { AgreementsService } from "shared/src/services/agreementsService";
 
 @observer
 export default class AutoContractorComponent extends React.Component {
@@ -39,11 +39,9 @@ export default class AutoContractorComponent extends React.Component {
     this.loadRules();
   }
 
-  private readonly routeDispatchService = new RouteDispatchService();
-
   private readonly autoDispatchService = new AutoDispatchService();
 
-  private fulfillers: Fulfiller[];
+  private fulfillers: OrganizationConnection[];
 
   @observable
   private openRule: AutoDispatchRule | undefined;
@@ -210,8 +208,8 @@ export default class AutoContractorComponent extends React.Component {
 
   private async loadFulfillers(): Promise<void> {
     try {
-      this.fulfillers = await this.routeDispatchService.getFulfillers();
-    } catch (error) {
+      this.fulfillers = await AgreementsService.connections();
+    } catch (error: any) {
       this.error = error;
     }
   }

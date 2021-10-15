@@ -127,7 +127,6 @@ export class DetailsModule
             }
             finally
             {
-                // Only update if in progress #FIXME: && this.collectionPoint.status.slug === "in-progress"
                 if (this.collectionPoint != null)
                 {
                     this._pollTimeout = setTimeout(() => this.fetchDetails(), 6000);

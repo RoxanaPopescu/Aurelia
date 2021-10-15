@@ -3,12 +3,12 @@ import { observer } from "mobx-react";
 import { Input, Select } from "shared/src/webKit";
 import Localization from "shared/src/localization";
 import { AutoDispatchRule } from "../../services/autoDispatchService";
-import { Fulfiller } from "shared/src/model/logistics/fulfiller";
 import MultiSelectComponent from "shared/src/webKit/select/multiSelect";
+import { OrganizationConnection } from "app/model/organization";
 
 export interface EditRuleFormProps {
   rule: AutoDispatchRule;
-  fulfillers: Fulfiller[];
+  fulfillers: OrganizationConnection[];
   validate: boolean;
 }
 
@@ -70,9 +70,9 @@ export class EditRuleForm extends React.Component<EditRuleFormProps> {
           }}
         />
         <Select
-          headline={Localization.operationsValue("Routes_AutoDispatch_Rule_Fulfiller")}
-          placeholder={Localization.operationsValue("Routes_AutoDispatch_Rule_Fulfiller")}
-          options={(this.props.fulfillers?.map(f => ({ label: f.primaryName, value: f.id }))) ?? []}
+          headline={"Organization"}
+          placeholder={"Organization"}
+          options={(this.props.fulfillers?.map(f => ({ label: f.organization.name, value: f.organization.id }))) ?? []}
           size={"medium"}
           onSelect={option => {
             this.props.rule.fulfillerId = option ? option.value : undefined;

@@ -20,7 +20,7 @@ export class KpiModule extends AppModule
 
             if (body.fulfillerId != null)
             {
-                organizationIds.push(body.fulfillerI);
+                organizationIds.push(body.fulfillerId);
             }
 
             const result = await this.apiClient.post("logistics-platform/kpi/shared",

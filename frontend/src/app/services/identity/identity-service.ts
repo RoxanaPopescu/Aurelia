@@ -94,6 +94,7 @@ export class IdentityService
             {
                 this.setTokens(tokens);
                 this._identity = identity;
+                Profile.organizationId = identity.organization?.id;
                 finished = true;
             };
 
@@ -228,6 +229,7 @@ export class IdentityService
 
                 this.setTokens(tokens);
                 this._identity = identity;
+                Profile.organizationId = identity.organization?.id;
 
                 if (shouldStartLegacySession)
                 {

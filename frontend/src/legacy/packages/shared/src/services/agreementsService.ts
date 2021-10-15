@@ -2,14 +2,12 @@
 import { OrganizationConnection } from "app/model/organization";
 import Base from "shared/src/services/base";
 import Localization from "../localization";
+import { Profile } from "../model/profile";
 
 export class AgreementsService {
   static async connections(): Promise<OrganizationConnection[]> {
-    // FIXME: Use correct ORG
-    var organizationId = "dasd";
-
     let response = await fetch(
-      Base.url(`organizations/${organizationId}/connections`),
+      Base.url(`organizations/${Profile.organizationId}/connections`),
       Base.defaultConfig()
     );
 

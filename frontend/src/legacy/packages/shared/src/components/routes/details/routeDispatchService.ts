@@ -1,8 +1,6 @@
 import BaseService from "shared/src/services/base";
 import { Driver } from "shared/src/model/logistics/driver";
-import { Fulfiller } from "shared/src/model/logistics/fulfiller";
 import { Route } from "../../../model/logistics/routes/details";
-import { delay } from "shared/utilities";
 import { VehicleType } from "app/model/vehicle";
 
 export class DriverInfo {
@@ -52,44 +50,6 @@ export class RouteDispatchService {
     }
 
     route.driver = driver;
-  }
-
-  public async getFulfillers(): Promise<Fulfiller[]> {
-    /*
-    const response = await fetch(
-      BaseService.url("dispatch/getFulfillers"),
-      BaseService.defaultConfig()
-    );
-
-    if (!response.ok) {
-      throw new Error("Could not get the list of fulfillers.");
-    }
-
-    const data = await response.json();
-
-    return data.map(f => new Fulfiller(f));
-    */
-
-    await delay(200);
-    return [];
-  }
-
-  public async assignFulfiller(route: Route, fulfiller: Fulfiller): Promise<void> {
-    const response = await fetch(
-      BaseService.url("dispatch/route/assignFulfiller"),
-      BaseService.defaultConfig({
-        routeId: route.id,
-        fulfillerId: fulfiller.id,
-        currentFulfillerId: route.fulfiller.id
-      })
-    );
-
-    if (!response.ok) {
-      throw new Error("Could not assign the fulfiller to the route.");
-    }
-
-    route.fulfiller = fulfiller;
-    route.allowAssignment = false;
   }
 }
 

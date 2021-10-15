@@ -804,18 +804,18 @@ export class OrganizationModule extends AppModule
     {
         const [result1, result2] = await Promise.all(
         [
-            this.apiClient.get(`organization/organizations/${data.fromOrganization.id}`),
-            this.apiClient.get(`organization/organizations/${data.toOrganization.id}`)
+            this.apiClient.get(`organization/organizations/${data.fromOrganizationId}`),
+            this.apiClient.get(`organization/organizations/${data.toOrganizationId}`)
         ]);
 
-        const sent = data.fromOrganization.id === context.user!.organizationId;
+        const sent = data.fromOrganizationId === context.user!.organizationId;
 
         const result =
         {
             id: data.id,
             organization: sent
-                ? { id: data.toOrganization.id, name: result2.data.organization.name }
-                : { id: data.fromOrganization.id, name: result1.data.organization.name },
+                ? { id: data.toOrganizationId, name: result2.data.organization.name }
+                : { id: data.fromOrganizationId, name: result1.data.organization.name },
             status: data.acceptedAt != null ? "active" : sent ? "invite-sent" : "invite-received",
             createdDateTime: data.createdAt,
             acceptedDateTime: data.acceptedAt
