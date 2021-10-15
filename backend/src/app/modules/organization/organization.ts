@@ -1,3 +1,4 @@
+import { getStrings } from "../../../shared/localization";
 import { AppModule } from "../../app-module";
 import { AppContext } from "../../app-context";
 
@@ -384,12 +385,15 @@ export class OrganizationModule extends AppModule
 
         const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/permissions`);
 
+        const permissionGroupNames = getStrings("./resources/strings/permission-group-names.json");
+        const permissionNames = getStrings("./resources/strings/permission-names.json");
+
         context.response.body = result.data.permissions.map((permission: any) =>
         ({
             slug: permission.slug,
             type: permission.type.toLowerCase(),
-            group: permission.group,
-            name: permission.name ?? permission.slug
+            group: permissionGroupNames[permission.group] ?? permission.group,
+            name: permissionNames[permission.slug] ?? permission.slug
         }));
 
         context.response.status = 200;
