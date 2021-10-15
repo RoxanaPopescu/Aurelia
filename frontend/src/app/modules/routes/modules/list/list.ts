@@ -537,8 +537,12 @@ export class ListPage
         // Fetch teams if needed
         if (this.teams.length === 0 && columnSlugs.includes("team"))
         {
-            this._organizationService.getTeams().then(teams => {
+            this._organizationService.getTeams().then(teams =>
+            {
                 this.teams = teams;
+            }).catch(() =>
+            {
+                // Not handled
             });
         }
 
