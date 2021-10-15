@@ -1,6 +1,6 @@
+import { OrganizationConnection } from "app/model/organization";
 import { DateTime } from "luxon";
 import { KpiTemplate } from ".";
-import { Outfit } from "shared/src/model/logistics/outfit";
 import { KpiFormat } from "./kpiFormat";
 
 /**
@@ -9,13 +9,13 @@ import { KpiFormat } from "./kpiFormat";
 export class OutfitData {
   /* tslint:disable-next-line: no-any */
   public constructor(
-    fulfiller: Outfit | undefined,
+    connection: OrganizationConnection | undefined,
     toDate: DateTime,
     toDateChosen: DateTime,
     format: KpiFormat,
     consignorKpi?: KpiTemplate
   ) {
-    this.outfit = fulfiller;
+    this.connection = connection;
     this.toDate = toDate;
     this.toDateChosen = toDateChosen;
     this.outfitKpi = consignorKpi;
@@ -25,7 +25,7 @@ export class OutfitData {
   /**
    * The outfit
    */
-  public outfit: Outfit | undefined;
+  public connection: OrganizationConnection | undefined;
 
   /**
    * The date time selected

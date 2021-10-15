@@ -109,7 +109,6 @@ export class RoutePlanningStore {
     this.loading = false;
   }
 
-  // FIXME: should take from & to
   async updateRoutes(droppedInRoute: RoutePlanRoute, stopIndex: number) {
     this.updatingRoute = true;
 

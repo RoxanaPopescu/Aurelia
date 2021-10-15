@@ -82,32 +82,6 @@ export class OrdersModule
                 }
             },
             {
-                name: "edit",
-                route: "edit/:id",
-                moduleId: PLATFORM.moduleName("./modules/edit/edit"),
-                settings:
-                {
-                    claims:
-                    [
-                        "edit-order"
-                    ]
-                },
-                title: routeTitles.edit
-            },
-            {
-                name: "create",
-                route: "create",
-                moduleId: PLATFORM.moduleName("./modules/create/create"),
-                settings:
-                {
-                    claims:
-                    [
-                        "create-order"
-                    ]
-                },
-                title: routeTitles.create
-            },
-            {
                 name: "dao-relabel",
                 route: "dao-relabel",
                 moduleId: PLATFORM.moduleName("./modules/dao-relabel/dao-relabel"),

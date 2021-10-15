@@ -15,7 +15,6 @@ import {
 } from "shared/src/model/general/sorting";
 import { Route } from "shared/src/components/routes/list/models/route";
 import { Outfit } from "shared/src/model/logistics/outfit";
-import { AgreementsService } from "shared/src/services/agreementsService";
 
 export class DispatchState {
   public static readonly map = {
@@ -263,6 +262,7 @@ export class DriverDispatchService {
         this.toast = { message: Localization.sharedValue("Error_General"), type: "error" };
       }
     } else {
+      /*
       try {
         let response = await AgreementsService.fulfilees();
         fulfillees = response.map(o => {
@@ -271,12 +271,13 @@ export class DriverDispatchService {
             id: o.id
           }
         });
+
       } catch {
         this.toast = { message: Localization.sharedValue("Error_General"), type: "error" };
       }
+      */
     }
 
-    // FIXME: Remove when this filter works correctly again
     fulfillees = [];
     this.fulfillees = fulfillees;
 

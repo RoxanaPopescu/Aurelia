@@ -28,11 +28,12 @@ export class User
     public constructor(jwtObject: any)
     {
         this.id = jwtObject["sub"];
-        this.organizationId = jwtObject["organization"];
+        this.organizationId = jwtObject["organization_id"];
         this.email = jwtObject["email"];
         this.fullName = jwtObject["name"];
         this.preferredName = jwtObject["preferred_username"];
         this.roleId = jwtObject["role_id"];
+        this.teamIds = jwtObject["team_ids"];
 
         // Convert claims to a permission set.
 
@@ -73,6 +74,11 @@ export class User
      * The ID of the organization to which the user belongs.
      */
     public organizationId: string;
+
+    /**
+     * The IDs of the teams to which the user belongs.
+     */
+     public teamIds: string;
 
     /**
      * The permissions assigned to the user.

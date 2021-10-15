@@ -389,7 +389,7 @@ export default class KpiTableComponent extends React.Component<Props, State> {
         <div className="c-fulfillerKpi-tableOutercontainer">
           {this.renderTable(
             new OutfitData(
-              outfitData.outfit,
+              outfitData.connection,
               outfitData.toDate,
               outfitData.toDateChosen,
               new KpiFormat("numbers"),

@@ -150,7 +150,7 @@ export class AutoDispatchService {
   public async loadRules(): Promise<void> {
     this._busy = true;
 
-    // FIXME: agreements
+    // FIXME: connections should be used here!
 
     const response = await fetch(
       BaseService.url("dispatch/route/automatic-contractor"),

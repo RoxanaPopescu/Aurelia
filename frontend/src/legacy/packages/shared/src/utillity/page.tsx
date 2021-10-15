@@ -3,25 +3,14 @@ import { Route, Redirect } from "react-router";
 
 import Localization from "shared/src/localization";
 import TrackingRoute from "shared/src/components/tracking/route";
-import OrderListComponent from "shared/src/components/order/list";
-import SaveOrderComponent from "shared/src/components/order/save";
-import OrderDetailsComponent from "shared/src/components/order/details";
-import OrderSettingsComponent from "shared/src/components/order/settings";
 import LiveTrackingComponent from "shared/src/components/liveTracking";
-import ProfileComponent from "shared/src/components/profile";
-import DepartmentsListComponent from "shared/src/components/departments/list";
-import AgreementsListComponent from "../components/agreements/list/index";
 import FulfillersKpiComponent from "../components/kpi/fulfiller/fulfillers";
 import ConsignorsKpiComponent from "../components/kpi/fulfiller/consignors";
 import ConsignorKpiComponent from "../components/kpi/consignor";
 import { Session } from "../model/session/session";
 import { Consignor } from "../model/logistics/consignor";
-import UserComponent from "../components/users/user";
-import UserManagementComponent from "../components/users/management";
-import CreateUserComponent from "../components/users/create";
 import { Fulfiller } from "../model/logistics/fulfiller";
 import AutoDispatchComponent from "fulfiller/src/components/routes/autoContractor";
-import DepartmentComponent from "../components/departments/department";
 
 export type PageType =
   | "Orders"
@@ -279,23 +268,23 @@ export namespace SubPage {
       case SubPage.FulfillerRouteAutoDispatch:
         return AutoDispatchComponent;
       case SubPage.OrderCreate:
-        return SaveOrderComponent;
+        return FulfillersKpiComponent;
       case SubPage.OrderUpdate:
-        return SaveOrderComponent;
+        return FulfillersKpiComponent;
       case SubPage.OrderList:
-        return OrderListComponent;
+        return FulfillersKpiComponent;
       case SubPage.OrderSettings:
-        return OrderSettingsComponent;
+        return FulfillersKpiComponent;
       case SubPage.OrderDetails:
-        return OrderDetailsComponent;
+        return FulfillersKpiComponent;
       case SubPage.Profile:
-        return ProfileComponent;
+        return FulfillersKpiComponent;
       case SubPage.UsersCreate:
-        return CreateUserComponent;
+        return FulfillersKpiComponent;
       case SubPage.UsersManagement:
-        return UserManagementComponent;
+        return FulfillersKpiComponent;
       case SubPage.UsersDetails:
-        return UserComponent;
+        return FulfillersKpiComponent;
       case SubPage.FulfillerKpiFulfillers:
         return FulfillersKpiComponent;
       case SubPage.FulfillerKpiConsignors:
@@ -303,13 +292,13 @@ export namespace SubPage {
       case SubPage.ConsignorKpi:
         return ConsignorKpiComponent;
       case SubPage.DepartmentsList:
-        return DepartmentsListComponent;
+        return FulfillersKpiComponent;
       case SubPage.Department:
-        return DepartmentComponent;
+        return FulfillersKpiComponent;
       case SubPage.DepartmentsCreate:
-        return DepartmentComponent;
+        return FulfillersKpiComponent;
       case SubPage.AgreementsList:
-        return AgreementsListComponent;
+        return FulfillersKpiComponent;
     }
   }
 

@@ -3,12 +3,8 @@ import H from "history";
 import Localization from "shared/src/localization";
 import React from "react";
 import KpiTableComponent from "../components/table";
-import { DateTime } from "luxon";
 import { KpiService } from "../service";
-import { OutfitData } from "../models/outfitData";
-import { KpiFormat } from "../models/kpiFormat";
 import { KpiStore } from "../store";
-import { Session } from "../../../model/session/session";
 import { PageHeaderComponent } from "../../pageHeader";
 import { PageContentComponent } from "../../pageContent";
 
@@ -24,6 +20,7 @@ export default class ConsignorKpiComponent extends React.Component<Props> {
     super(props);
     document.title = Localization.sharedValue("Kpi_Title");
 
+    /*
     consignorKpiStore.outfitsData = [
       new OutfitData(
         Session.outfit,
@@ -33,6 +30,8 @@ export default class ConsignorKpiComponent extends React.Component<Props> {
       )
     ];
     this.fetchKpi();
+
+    */
   }
 
   componentWillMount() {
@@ -59,7 +58,7 @@ export default class ConsignorKpiComponent extends React.Component<Props> {
 
       KpiService.consignor(
         consignorKpiStore.outfitsData[consignorKpiStore.activeOutfitIndex]
-          .outfit!.id,
+          .connection!.organization.id,
         consignorKpiStore.outfitsData[consignorKpiStore.activeOutfitIndex]
           .toDateChosen,
         consignorKpiStore.outfitsData[consignorKpiStore.activeOutfitIndex]
@@ -121,10 +120,10 @@ export default class ConsignorKpiComponent extends React.Component<Props> {
   render() {
     const tabs = consignorKpiStore.outfitsData
       ? consignorKpiStore.outfitsData.map(consignorData => {
-          if (consignorData.outfit) {
+          if (consignorData.connection) {
             return {
-              name: `outfit:${consignorData.outfit.id}`,
-              title: consignorData.outfit.primaryName
+              name: `outfit:${consignorData.connection.organization.id}`,
+              title: consignorData.connection.organization.name
             };
           } else {
             return {

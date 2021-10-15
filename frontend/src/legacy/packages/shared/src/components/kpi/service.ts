@@ -3,21 +3,21 @@ import Base from "../../services/base";
 import { DateTime, Duration } from "luxon";
 import { KpiTemplate, Kpi, KpiGroup } from "./models";
 import { KpiFormat } from "./models/kpiFormat";
-import { Outfit } from "shared/src/model/logistics/outfit";
+import { OrganizationConnection } from "app/model/organization";
 
 export class KpiService {
   static async fulfiller(
     toDate: DateTime,
     format: KpiFormat,
     consignorId?: string,
-    fulfiller?: Outfit
+    connetion?: OrganizationConnection
   ): Promise<KpiTemplate> {
     try {
       var items = {
         consignorId: consignorId,
         toDate: toDate,
         format: format.value,
-        fulfillerId: fulfiller ? fulfiller.id : undefined
+        fulfillerId: connetion?.organization.id
       };
 
       let response = await fetch(

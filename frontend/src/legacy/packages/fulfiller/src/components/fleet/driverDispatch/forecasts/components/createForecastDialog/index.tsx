@@ -15,7 +15,6 @@ import { DateTime } from "luxon";
 import AddressSearchComponent from "shared/src/components/addressSearch";
 import { Location } from "shared/src/model/general/location";
 import { Outfit } from "shared/src/model/logistics/outfit";
-import { AgreementsService } from "shared/src/services/agreementsService";
 import { driverDispatchService } from "../../../driverDispatchService";
 import Localization from '../../../../../../../../shared/src/localization/index';
 import { VehicleType } from "app/model/vehicle";
@@ -59,6 +58,7 @@ export default class extends React.Component<Props, State> {
   }
 
   componentDidMount() {
+    /*
     AgreementsService.fulfilees()
       .then(outfits => {
         this.setState({
@@ -68,6 +68,7 @@ export default class extends React.Component<Props, State> {
       .catch(error => {
         // Do nothing
       });
+      */
   }
 
   componentWillReceiveProps(props: Props) {

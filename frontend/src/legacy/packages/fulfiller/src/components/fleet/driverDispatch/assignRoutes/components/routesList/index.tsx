@@ -119,6 +119,7 @@ export default class extends React.Component<Props, State> {
   }
 
   private async fetchData(): Promise<void> {
+    /*
     if (this.props.ids) {
       try {
         var routes = await driverDispatchService.fetchUnassignedRoutesByIds(
@@ -142,6 +143,8 @@ export default class extends React.Component<Props, State> {
         routes: prebookingResponse
       })
     }
+
+    */
   }
 
   private getHeaders() {

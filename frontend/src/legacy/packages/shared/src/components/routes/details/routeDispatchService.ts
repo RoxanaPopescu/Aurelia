@@ -70,7 +70,6 @@ export class RouteDispatchService {
     return data.map(f => new Fulfiller(f));
     */
 
-    // FIXME: Fix connections
     await delay(200);
     return [];
   }

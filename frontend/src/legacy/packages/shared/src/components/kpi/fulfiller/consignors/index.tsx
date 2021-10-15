@@ -51,7 +51,7 @@ export default class ConsignorsKpiComponent extends React.Component<Props> {
         consignorsKpiStore.outfitsData[consignorsKpiStore.activeOutfitIndex]
           .format,
         consignorsKpiStore.outfitsData[consignorsKpiStore.activeOutfitIndex]
-          .outfit!.id
+          .connection!.organization.id
       )
         .then(kpiTemplate => {
           consignorsKpiStore.outfitsData![
@@ -116,8 +116,8 @@ export default class ConsignorsKpiComponent extends React.Component<Props> {
     const tabs = consignorsKpiStore.outfitsData
     ? consignorsKpiStore.outfitsData.map(consignorData => {
         return {
-          name: `outfit:${consignorData.outfit!.id}`,
-          title: consignorData.outfit!.primaryName
+          name: `outfit:${consignorData.connection!.organization.id}`,
+          title: consignorData.connection!.organization.name
         };
       })
     : undefined;

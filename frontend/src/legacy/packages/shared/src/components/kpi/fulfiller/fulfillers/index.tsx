@@ -58,7 +58,7 @@ export default class FulfillersKpiComponent extends React.Component<Props> {
         undefined,
         this.fulfillersKpiStore.outfitsData[
           this.fulfillersKpiStore.activeOutfitIndex
-        ].outfit
+        ].connection
       )
         .then(kpiTemplate => {
           this.fulfillersKpiStore.outfitsData![
@@ -74,12 +74,11 @@ export default class FulfillersKpiComponent extends React.Component<Props> {
   }
 
   private fetchFulfillers() {
-    // FIXME: Fix when connections have been made
-    AgreementsService.fulfillers()
-      .then(fulfillers => {
-        this.fulfillersKpiStore.outfitsData = fulfillers.map(fulfiller => {
+    AgreementsService.connections()
+      .then(connections => {
+        this.fulfillersKpiStore.outfitsData = connections.map(connection => {
           return new OutfitData(
-            fulfiller,
+            connection,
             DateTime.local(),
             DateTime.local(),
             new KpiFormat("numbers")
@@ -167,10 +166,10 @@ export default class FulfillersKpiComponent extends React.Component<Props> {
         ];
       } else {
         tabs = this.fulfillersKpiStore.outfitsData.map(consignorData => {
-          if (consignorData.outfit) {
+          if (consignorData.connection) {
             return {
-              name: `outfit:${consignorData.outfit.id}`,
-              title: consignorData.outfit.primaryName
+              name: `outfit:${consignorData.connection.organization.id}`,
+              title: consignorData.connection.organization.name
             };
           } else {
             return {
