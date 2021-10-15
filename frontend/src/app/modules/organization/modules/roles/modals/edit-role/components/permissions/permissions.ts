@@ -78,8 +78,8 @@ export class PermissionGroup
         this.expanded = false;
         this.viewExpanded = false;
         this.editExpanded = false;
-        this.viewPermissions = types.get("view")?.map(p => new Permission(p)) ?? [];
-        this.editPermissions = types.get("edit")?.map(p => new Permission(p)) ?? [];
+        this.viewPermissions = types.get("view")?.map(p => new Permission(p)).sort((a, b) => a.name.localeCompare(b.name)) ?? [];
+        this.editPermissions = types.get("edit")?.map(p => new Permission(p)).sort((a, b) => a.name.localeCompare(b.name)) ?? [];
     }
 
     /**
@@ -184,6 +184,8 @@ export class PermissionConfig
         {
             this.groups.push(new PermissionGroup(group, groupPermissions));
         }
+
+        this.groups.sort((a, b) => a.name.localeCompare(b.name));
     }
 
     /**
