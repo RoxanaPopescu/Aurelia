@@ -701,6 +701,7 @@ export class OrganizationModule extends AppModule
         {
             body:
             {
+                fromUserId: context.user!.fullName,
                 fromOrganization:
                 {
                     id: context.params.organizationId,
@@ -764,17 +765,9 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize("accept-connection", () => context.params.organizationId === context.user!.organizationId);
 
-        // TODO: Use the response body, once fixed in the backend.
+        const result = await this.apiClient.post(`identity/organizations/${context.params.organizationId}/connections/${context.params.connectionId}/accept`);
 
-        /*const result = */
-        await this.apiClient.post(`identity/organizations/${context.params.organizationId}/connections/${context.params.connectionId}/accept`);
-
-        // context.response.body = await this.mapConnectionModel(context, result.data);
-        // context.response.status = 200;
-
-        const result2 = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/connections/${context.params.connectionId}`);
-
-        context.response.body = await this.mapConnectionModel(context, result2.data);
+        context.response.body = await this.mapConnectionModel(context, result.data);
         context.response.status = 200;
     }
 

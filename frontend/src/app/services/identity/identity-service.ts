@@ -136,7 +136,7 @@ export class IdentityService
 
             let result: ApiResult = undefined as any;
 
-            for (let attempt = 0; attempt < 30; attempt++)
+            for (let attempt = 30; attempt >= 1; attempt--)
             {
                 try
                 {
@@ -150,7 +150,7 @@ export class IdentityService
                 }
                 catch (error)
                 {
-                    if (!retry || error.response?.status !== 401)
+                    if (!retry || attempt === 1 || error.response?.status !== 401)
                     {
                         throw error;
                     }
