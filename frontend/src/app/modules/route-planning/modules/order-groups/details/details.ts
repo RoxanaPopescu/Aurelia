@@ -2,12 +2,13 @@ import { autoinject, computedFrom } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
 import { ModalService, IValidation, ToastService } from "shared/framework";
 import { Consignor } from "app/model/outfit";
-import { AgreementService } from "app/model/agreement";
 import { OrderGroupService, OrderGroup, MatchingCriteria, RoutePlanningTime } from "app/model/order-group";
 import { MatchingCriteriaDialog } from "./modals/matching-criteria/matching-criteria";
 import { RoutePlanningTimeDialog } from "./modals/route-planning-time/route-planning-time";
 import updatedToast from "./resources/strings/updated-toast.json";
 import { RoutePlanningSettingsService, RoutePlanningSettingsInfo } from "app/model/_route-planning-settings";
+import { OrganizationService } from "app/model/organization";
+import { IdentityService } from "app/services/identity";
 
 /**
  * Represents the route parameters for the page.
@@ -27,28 +28,32 @@ export class DetailsPage
      * Creates a new instance of the class.
      * @param modalService The `ModalService` instance.
      * @param orderGroupsService The `OrderGroupService` instance.
-     * @param agreementService The `AgreementService` instance.
+     * @param organizationService The `OrganizationService` instance.
      * @param toastService The `ToastService` instance.
      * @param routePlanningSettingsService The `RoutePlanningSettingsService` instance.
+     * @param identityService The `IdentityService` instance.
      */
     public constructor(
         modalService: ModalService,
         orderGroupsService: OrderGroupService,
-        agreementService: AgreementService,
+        organizationService: OrganizationService,
         toastService: ToastService,
-        routePlanningSettingsService: RoutePlanningSettingsService
+        routePlanningSettingsService: RoutePlanningSettingsService,
+        identityService: IdentityService
     )
     {
         this._modalService = modalService;
         this._orderGroupsService = orderGroupsService;
-        this._agreementService = agreementService;
+        this._organizationService = organizationService;
         this._toastService = toastService;
+        this._identityService = identityService;
         this._routePlanningSettingsService = routePlanningSettingsService;
     }
 
     private readonly _modalService: ModalService;
     private readonly _orderGroupsService: OrderGroupService;
-    private readonly _agreementService: AgreementService;
+    private readonly _organizationService: OrganizationService;
+    private readonly _identityService: IdentityService;
     private readonly _toastService: ToastService;
     private readonly _routePlanningSettingsService: RoutePlanningSettingsService;
 
@@ -98,9 +103,9 @@ export class DetailsPage
         // tslint:disable-next-line: no-floating-promises
         (async () =>
         {
-            // Fetch available consignors.
-            const agreements = await this._agreementService.getAll();
-            this.availableConsignors = agreements.agreements.filter(c => c.type.slug === "consignor");
+            const connections = await this._organizationService.getConnections();
+            this.availableConsignors = connections.map(c => new Consignor({ id: c.organization.id, companyName: c.organization.name }));
+            this.availableConsignors.push(this._identityService.identity!.organization!);
         })();
 
         // tslint:disable-next-line: no-floating-promises

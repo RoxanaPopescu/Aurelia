@@ -3,9 +3,9 @@ import { Router } from "aurelia-router";
 import { Log } from "shared/infrastructure";
 import { IValidation } from "shared/framework";
 import { CommunicationService, CommunicationTrigger, CommunicationTriggerEvent, CommunicationRecipient, CommunicationMessageType } from "app/model/_communication";
-import { AgreementService } from "app/model/agreement";
 import { Outfit } from "app/model/outfit";
 import { IdentityService } from "app/services/identity";
+import { OrganizationService } from "app/model/organization";
 
 /**
  * Represents the route parameters for the page.
@@ -27,19 +27,19 @@ export class DetailsPage
     /**
      * Creates a new instance of the class.
      * @param communicationService The `CommunicationService` instance.
-     * @param agreementService The `AgreementService` instance.
+     * @param organizationService The `OrganizationService` instance.
      * @param identityService The `IdentityService` instance.
      */
-    public constructor(communicationService: CommunicationService, agreementService: AgreementService, router: Router, identityService: IdentityService)
+    public constructor(communicationService: CommunicationService, organizationService: OrganizationService, router: Router, identityService: IdentityService)
     {
         this._communicationService = communicationService;
-        this._agreementService = agreementService;
+        this._organizationService = organizationService;
         this._router = router;
         this._identityService = identityService;
     }
 
     private readonly _communicationService: CommunicationService;
-    private readonly _agreementService: AgreementService;
+    private readonly _organizationService: OrganizationService;
     private readonly _identityService: IdentityService;
     private readonly _router: Router;
 
@@ -80,7 +80,7 @@ export class DetailsPage
         .map(key => new CommunicationTriggerEvent(key as any));
 
     /**
-     * The available customers - i.e. consignors.
+     * The available customers #TODO: Should use new models.
      */
     protected availableCustomers: Outfit[];
 
@@ -128,16 +128,9 @@ export class DetailsPage
 
         this.availableCustomers = [];
 
-        try
-        {
-            this.availableCustomers = (await this._agreementService.getAll()).agreements;
-        }
-        catch
-        {
-            // FIXME: Remove when fulfillers works again
-        }
-
-        this.availableCustomers.unshift(this._identityService.identity!.organization!);
+        const connections = await this._organizationService.getConnections();
+        this.availableCustomers.push(...connections.map(c => new Outfit({ id: c.organization.id, companyName: c.organization.name })));
+        this.availableCustomers.push(this._identityService.identity!.organization!);
     }
 
     /**

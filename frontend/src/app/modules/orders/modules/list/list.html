@@ -115,26 +115,6 @@
             <page-section toggle.bind="true">
 
                 <div slot="header" translate>
-                    Consignors
-                </div>
-
-                <check-filter value.bind="consignorFilter">
-
-                    <div slot="placeholder" translate>
-                        Type to filter…
-                    </div>
-
-                    <check-filter-item repeat.for="consignor of consignors" model.bind="consignor">
-                        ${consignor.primaryName}
-                    </check-filter-item>
-
-                </check-filter>
-
-            </page-section>
-
-            <page-section toggle.bind="true">
-
-                <div slot="header" translate>
                     Tags
                 </div>
 

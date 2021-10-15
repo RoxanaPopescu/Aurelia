@@ -4,9 +4,10 @@ import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
 import { IScroll, ModalService } from "shared/framework";
 import { OrderGroupService, OrderGroup } from "app/model/order-group";
-import { AgreementService } from "app/model/agreement";
 import { Consignor } from "app/model/outfit";
 import { DeleteOrderGroupDialog } from "./modals/confirm-delete/confirm-delete";
+import { OrganizationService } from "app/model/organization";
+import { IdentityService } from "app/services/identity";
 
 /**
  * Represents the route parameters for the page.
@@ -29,22 +30,25 @@ export class ListPage
      * Creates a new instance of the class.
      * @param orderGroupsService The `OrderGroupService` instance.
      * @param historyHelper The `HistoryHelper` instance.
-     * @param agreementService The `AgreementService` instance.
+     * @param organizationService The `OrganizationService` instance.
      * @param modalService The `ModalService` instance.
+     * @param identityService The `IdentityService` instance.
      */
-    public constructor(orderGroupsService: OrderGroupService, historyHelper: HistoryHelper, agreementService: AgreementService, modalService: ModalService)
+    public constructor(orderGroupsService: OrderGroupService, historyHelper: HistoryHelper, organizationService: OrganizationService, modalService: ModalService, identityService: IdentityService)
     {
         this._orderGroupsService = orderGroupsService;
         this._historyHelper = historyHelper;
-        this._agreementService = agreementService;
+        this._organizationService = organizationService;
         this._modalService = modalService;
+        this._identityService = identityService;
         this._constructed = true;
     }
 
     private readonly _orderGroupsService: OrderGroupService;
     private readonly _historyHelper: HistoryHelper;
-    private readonly _agreementService: AgreementService;
+    private readonly _organizationService: OrganizationService;
     private readonly _modalService: ModalService;
+    private readonly _identityService: IdentityService;
     private readonly _constructed;
 
     /**
@@ -101,7 +105,7 @@ export class ListPage
     protected orderGroups: OrderGroup[];
 
     /**
-     * The consignors to show in the filter.
+     * The organizations to show in the filter.
      */
     protected organizations: Consignor[];
 
@@ -123,13 +127,12 @@ export class ListPage
 
         this.update();
 
-        // Execute tasks that should not block rendering.
-
         // tslint:disable-next-line: no-floating-promises
         (async () =>
         {
-            const agreements = await this._agreementService.getAll();
-            this.organizations = agreements.agreements.filter(c => c.type.slug === "consignor");
+            const connections = await this._organizationService.getConnections();
+            this.organizations = connections.map(c => new Consignor({ id: c.organization.id, companyName: c.organization.name }));
+            this.organizations.push(this._identityService.identity!.organization!);
         })();
     }
 

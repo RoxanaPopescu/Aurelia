@@ -21,15 +21,7 @@ export class ImportUploadCustomElement
         this._importOrdersService = importOrdersService;
         this._importService = importService;
 
-        // tslint:disable-next-line: no-floating-promises
-        /*
-        (async () =>
-        {
-            // Fetch available consignors.
-            const agreements = await this._agreementService.getAll();
-            this.availableConsignors = agreements.agreements.filter(c => c.type.slug === "consignor");
-        })();
-        */
+        // TODO: Make it work with connections
     }
 
     private readonly _importOrdersService: ImportOrdersService;

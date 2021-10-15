@@ -4,7 +4,6 @@ import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
 import { IScroll, ModalService, ToastService } from "shared/framework";
-import { AgreementService } from "app/model/agreement";
 import { OrderService, OrderInfo, OrderStatusSlug, OrderListColumn } from "app/model/order";
 import { Consignor } from "app/model/outfit";
 import { OrderSelectColumnsPanel } from "./modals/select-columns/select-columns";
@@ -41,20 +40,17 @@ export class ListPage
      * Creates a new instance of the class.
      * @param orderService The `RouteService` instance.
      * @param historyHelper The `HistoryHelper` instance.
-     * @param agreementService The `AgreementService` instance.
      */
     public constructor(
         orderService: OrderService,
         historyHelper: HistoryHelper,
         modalService: ModalService,
-        toastService: ToastService,
-        agreementService: AgreementService)
+        toastService: ToastService)
     {
         this._orderService = orderService;
         this._historyHelper = historyHelper;
         this._modalService = modalService;
         this._toastService = toastService;
-        this._agreementService = agreementService;
         this._constructed = true;
 
         const localData = localStorage.getItem("order-columns");
@@ -70,7 +66,6 @@ export class ListPage
     private readonly _historyHelper: HistoryHelper;
     private readonly _modalService: ModalService;
     private readonly _toastService: ToastService;
-    private readonly _agreementService: AgreementService;
     private readonly _constructed;
 
     /**
@@ -219,27 +214,6 @@ export class ListPage
         this.orderTagsFilter = params.orderTagsFilter?.split(",") || this.orderTagsFilter;
         this.fromDateFilter = params.fromDateFilter ? DateTime.fromISO(params.fromDateFilter, { setZone: true }) : undefined;
         this.toDateFilter = params.toDateFilter ? DateTime.fromISO(params.toDateFilter, { setZone: true }) : undefined;
-
-        if (params.consignorFilter)
-        {
-            const agreements = await this._agreementService.getAll();
-            this.consignors = agreements.agreements.filter(c => c.type.slug === "consignor");
-
-            this.consignorFilter = params.consignorFilter?.split(",")
-                .map(id => this.consignors.find(o => o.id === id)) || this.consignorFilter;
-        }
-        else
-        {
-            // Execute tasks that should not block rendering.
-
-            // tslint:disable-next-line: no-floating-promises
-            (async () =>
-            {
-                const agreements = await this._agreementService.getAll();
-                this.consignors = agreements.agreements.filter(c => c.type.slug === "consignor");
-
-            })();
-        }
 
         this.update();
     }

@@ -186,9 +186,13 @@ export class RoutePlanningOrderGroupsModule extends AppModule
     {
         const organizations: any[] = [];
 
+        if (ids.length === 0)
+        {
+            return [];
+        }
+
         try
         {
-            // FIXME:
             ids.push("bf6d4bf2-49a2-44e7-9c49-489405c5776d");
 
             const legacyConsignorsRequest = this.apiClient.post("logistics/outfits/consignor/list",
@@ -198,7 +202,6 @@ export class RoutePlanningOrderGroupsModule extends AppModule
                 }
             });
 
-            /*
             const organizationsRequest = this.apiClient.get("organization/organizations",
             {
                 query:
@@ -206,11 +209,10 @@ export class RoutePlanningOrderGroupsModule extends AppModule
                     ids: ids
                 }
             });
-            */
 
-            const [result1] = await Promise.all([legacyConsignorsRequest]);
+            const [result1, result2] = await Promise.all([legacyConsignorsRequest, organizationsRequest]);
 
-            // console.log("d2", result2.data);
+            console.log("d2", result2.data);
             organizations.push(...result1.data.results);
         }
         catch (error: any)

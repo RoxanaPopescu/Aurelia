@@ -10,33 +10,12 @@ import { VehicleType } from "app/model/vehicle";
 export class General
 {
     /**
-     * Creates a new instance of the class.
-     * @param agreementService The `AgreementService` instance.
-     */
-    /*
-    public constructor(agreementService: AgreementService)
-    {
-        this._agreementService = agreementService;
-
-        // tslint:disable-next-line: no-floating-promises
-        (async () =>
-        {
-            const response = await this._agreementService.getAll();
-            this.consignors = response.agreements.filter(c => c.type.slug === "consignor");
-
-        })();
-    }
-
-    private readonly _agreementService: AgreementService;
-
-    */
-
-    /**
      * The template to present.
      */
     @bindable
     protected template: RouteTemplate;
 
+    // TODO: Make it work with connections
     /**
      * The available consignors.
      */
