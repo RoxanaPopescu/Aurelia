@@ -203,7 +203,7 @@ export class ListPage
      * Called by the framework when the module is activated.
      * @param params The order parameters from the URL.
      */
-    public async activate(params: IRouteParams): Promise<void>
+    public activate(params: IRouteParams): void
     {
         this.paging.page = params.page || this.paging.page;
         this.paging.pageSize = params.pageSize || this.paging.pageSize;
