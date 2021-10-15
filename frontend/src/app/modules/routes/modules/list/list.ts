@@ -537,9 +537,8 @@ export class ListPage
         // Fetch teams if needed
         if (this.teams.length === 0 && columnSlugs.includes("team"))
         {
-            new Operation(async signal =>
-            {
-                this.teams = await this._organizationService.getTeams(signal);
+            this._organizationService.getTeams().then(teams => {
+                this.teams = teams;
             });
         }
 
