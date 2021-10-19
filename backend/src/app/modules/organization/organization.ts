@@ -683,7 +683,7 @@ export class OrganizationModule extends AppModule
         {
             body:
             {
-                fromUserId: context.user!.fullName,
+                fromUserId: context.user!.id,
                 fromOrganization:
                 {
                     id: context.params.organizationId,
