@@ -72,5 +72,6 @@
     "delete-organization": "Delete organization",
     "view-drivers": "View drivers",
     "accept-connection": "Accept connection",
-    "view-vehicles": "View vehicles"
+    "view-vehicles": "View vehicles",
+    "data-access-scope": "Data access"
 }
