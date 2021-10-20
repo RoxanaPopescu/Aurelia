@@ -405,8 +405,8 @@ export default
     {
       body:
       [
-        { slug: "view-organization",   type: "view", group: "Organization", name: "View organization"  },
-        { slug: "edit-organization",   type: "edit", group: "Organization", name: "Edit organization"  },
+        { slug: "view-organizations",   type: "view", group: "Organization", name: "View organization"  },
+        { slug: "edit-organizations",   type: "edit", group: "Organization", name: "Edit organization"  },
 
         { slug: "view-orders",         type: "view", group: "Orders",       name: "View orders"        },
         { slug: "view-order-details",  type: "view", group: "Orders",       name: "View order details" },

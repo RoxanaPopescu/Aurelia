@@ -30,7 +30,7 @@ export class OrdersModule
                 {
                     claims:
                     [
-                        "view-communication"
+                        "view-communications"
                     ]
                 },
                 title: routeTitles.list,
@@ -45,7 +45,7 @@ export class OrdersModule
                 {
                     claims:
                     [
-                        "view-communication"
+                        "view-communications"
                     ]
                 },
                 title: routeTitles.details
@@ -58,7 +58,7 @@ export class OrdersModule
                 {
                     claims:
                     [
-                        "view-communication"
+                        "view-communications"
                     ]
                 },
                 title: routeTitles.details

@@ -30,7 +30,7 @@ export class OrganizationModule
                 {
                     claims:
                     [
-                        "view-organization"
+                        "view-organizations"
                     ]
                 },
                 title: routeTitles.profile

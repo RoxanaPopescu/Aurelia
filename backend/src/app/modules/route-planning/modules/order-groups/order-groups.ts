@@ -14,7 +14,7 @@ export class RoutePlanningOrderGroupsModule extends AppModule
          */
         this.router.post("/v2/route-planning/order-groups/create", async context =>
         {
-            await context.authorize("create-order-group");
+            await context.authorize("create-order-groups");
 
             const body = context.request.body;
             body.ownerOutfitId = context.user?.organizationId;
@@ -36,7 +36,7 @@ export class RoutePlanningOrderGroupsModule extends AppModule
          */
         this.router.post("/v2/route-planning/order-groups/update", async context =>
         {
-            await context.authorize("edit-order-group");
+            await context.authorize("edit-order-groups");
 
             const body = context.request.body;
             body.ownerOutfitId = context.user?.organizationId;
@@ -57,7 +57,7 @@ export class RoutePlanningOrderGroupsModule extends AppModule
          */
         this.router.post("/v2/route-planning/order-groups/delete", async context =>
         {
-            await context.authorize("edit-order-group");
+            await context.authorize("edit-order-groups");
 
             const body = context.request.body;
             body.ownerOutfitId = context.user?.organizationId;
@@ -78,7 +78,7 @@ export class RoutePlanningOrderGroupsModule extends AppModule
          */
         this.router.post("/v2/route-planning/order-groups/unpause", async context =>
         {
-            await context.authorize("edit-order-group");
+            await context.authorize("edit-order-groups");
 
             const body = context.request.body;
             body.ownerOutfitId = context.user?.organizationId;
@@ -99,7 +99,7 @@ export class RoutePlanningOrderGroupsModule extends AppModule
          */
         this.router.post("/v2/route-planning/order-groups/pause", async context =>
         {
-            await context.authorize("edit-order-group");
+            await context.authorize("edit-order-groups");
 
             const body = context.request.body;
             body.ownerOutfitId = context.user?.organizationId;

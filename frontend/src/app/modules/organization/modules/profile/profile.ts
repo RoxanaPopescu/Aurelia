@@ -20,7 +20,7 @@ export class ProfilePage
     public constructor(identityService: IdentityService, organizationService: OrganizationService)
     {
         this.organizationId = identityService.identity!.organization!.id;
-        this.readonly = !identityService.identity!.claims.has("edit-organization");
+        this.readonly = !identityService.identity!.claims.has("edit-organizations");
 
         this._organizationService = organizationService;
     }

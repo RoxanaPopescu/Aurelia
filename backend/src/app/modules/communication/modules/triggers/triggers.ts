@@ -13,7 +13,7 @@ export class TriggersModule extends AppModule
          */
         this.router.get("/v2/communication/triggers", async context =>
         {
-            await context.authorize("view-communication");
+            await context.authorize("view-communications");
 
             const result = await this.apiClient.post("notification/templates/List",
             {
@@ -33,7 +33,7 @@ export class TriggersModule extends AppModule
          */
         this.router.get("/v2/communication/triggers/:slug", async context =>
         {
-            await context.authorize("view-communication");
+            await context.authorize("view-communications");
 
             const result = await this.apiClient.post("notification/templates/Details",
             {
@@ -54,7 +54,7 @@ export class TriggersModule extends AppModule
          */
         this.router.post("/v2/communication/triggers", async context =>
         {
-            await context.authorize("edit-communication");
+            await context.authorize("edit-communications");
 
             const body = context.request.body;
 
@@ -77,7 +77,7 @@ export class TriggersModule extends AppModule
          */
         this.router.post("/v2/communication/triggers/delete", async context =>
         {
-            await context.authorize("edit-communication");
+            await context.authorize("edit-communications");
 
             const body = context.request.body;
             const result = await this.apiClient.post("notification/templates/Delete",
@@ -98,7 +98,7 @@ export class TriggersModule extends AppModule
          */
         this.router.post("/v2/communication/triggers/update", async context =>
         {
-            await context.authorize("edit-communication");
+            await context.authorize("edit-communications");
 
             const body = context.request.body;
             const result = await this.apiClient.post("notification/templates/update",

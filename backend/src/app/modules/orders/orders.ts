@@ -16,7 +16,7 @@ export class OrdersModule extends AppModule
          */
         this.router.post("/v2/orders/update-status", async context =>
         {
-            await context.authorize("edit-order");
+            await context.authorize("edit-orders");
 
             const body = context.request.body;
 
@@ -59,7 +59,7 @@ export class OrdersModule extends AppModule
          */
         this.router.post("/v2/orders/edit", async context =>
         {
-            await context.authorize("edit-order");
+            await context.authorize("edit-orders");
 
             const organizationIds = [context.user?.organizationId];
             const requestBody = context.request.body;
