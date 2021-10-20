@@ -36,13 +36,11 @@ export class User
         this.teamIds = jwtObject["team_ids"];
 
         // Convert claims to a permission set.
-
         const permissions = typeof jwtObject.organization_permissions === "string"
             ? [jwtObject.organization_permissions as string]
             : jwtObject.organization_permissions as string[] ?? [];
 
-        // HACK: Transform permission names to slugs.
-        this.permissions = new Set<string>(permissions.map(p => p.toLowerCase().replace(/\s/g, "-")));
+        this.permissions = new Set<string>(permissions);
     }
 
     /**
@@ -78,7 +76,7 @@ export class User
     /**
      * The IDs of the teams to which the user belongs.
      */
-     public teamIds: string;
+    public teamIds: string;
 
     /**
      * The permissions assigned to the user.

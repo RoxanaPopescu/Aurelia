@@ -36,7 +36,7 @@ export class DriversModule extends AppModule
          */
         this.router.post("/v2/drivers/set-password", async context =>
         {
-            await context.authorize("edit-driver");
+            await context.authorize("edit-drivers");
 
             const body = context.request.body;
 
@@ -83,7 +83,7 @@ export class DriversModule extends AppModule
          */
         this.router.post("/v2/drivers/update", async context =>
         {
-            await context.authorize("edit-driver");
+            await context.authorize("edit-drivers");
 
             const body = { driver: context.request.body, fulfillerId: context.user?.organizationId };
 
@@ -103,7 +103,7 @@ export class DriversModule extends AppModule
           */
         this.router.post("/v2/drivers/create", async context =>
         {
-            await context.authorize("edit-driver");
+            await context.authorize("edit-drivers");
 
             const body = { driver: context.request.body, fulfillerId: context.user?.organizationId };
 
@@ -133,7 +133,7 @@ export class DriversModule extends AppModule
           */
         this.router.post("/v2/drivers/delete", async context =>
         {
-            await context.authorize("edit-driver");
+            await context.authorize("edit-drivers");
 
             const body = { driverId: context.request.body.id, fulfillerId: [context.user?.organizationId] };
 

@@ -223,14 +223,14 @@ export class IdentityModule extends AppModule
                     "authorization": `Bearer ${authResult.data.access_token}`
                 }
             }),
-            jwtObject.organization == null ? undefined : this.apiClient.get(`organization/organizations/${jwtObject.organization}`,
+            jwtObject.organization_id == null ? undefined : this.apiClient.get(`organization/organizations/${jwtObject.organization_id}`,
             {
                 headers:
                 {
                     "authorization": `Bearer ${authResult.data.access_token}`
                 }
             }),
-            jwtObject.role_id == null ? undefined : this.apiClient.get(`identity/organizations/${jwtObject.organization}/roles/${jwtObject.role_id}`,
+            jwtObject.role_id == null ? undefined : this.apiClient.get(`identity/organizations/${jwtObject.organization_id}/roles/${jwtObject.role_id}`,
             {
                 headers:
                 {
