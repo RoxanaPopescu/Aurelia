@@ -60,7 +60,7 @@ export class FleetModule
                 {
                     claims:
                     [
-                        "invite-driver"
+                        "invite-drivers"
                     ]
                 },
                 title: routeTitles.create
@@ -109,7 +109,7 @@ export class FleetModule
                 {
                     claims:
                     [
-                        "invite-driver"
+                        "invite-drivers"
                     ]
                 },
                 title: routeTitles.createMultipleDrivers,
