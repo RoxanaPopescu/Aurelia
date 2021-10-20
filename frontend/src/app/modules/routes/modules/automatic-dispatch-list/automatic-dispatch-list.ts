@@ -188,7 +188,7 @@ export class AutomaticDispatchListPage
                 }
 
                 // Scroll to top.
-                this.scroll.reset();
+                this.scroll?.reset();
 
                 // tslint:disable-next-line: no-floating-promises
                 this._historyHelper.navigate((state: IHistoryState) =>

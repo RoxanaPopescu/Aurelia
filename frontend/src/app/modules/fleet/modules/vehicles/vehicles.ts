@@ -98,7 +98,7 @@ export class ListPage
             this.vehicles = result;
 
             // Scroll to top.
-            this.scroll.reset();
+            this.scroll?.reset();
         });
     }
 

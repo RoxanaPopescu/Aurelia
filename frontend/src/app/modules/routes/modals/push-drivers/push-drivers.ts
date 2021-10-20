@@ -169,7 +169,7 @@ export class PushDriversPanel
                 this.results = data.results;
 
                 // Scroll to top.
-                this.scroll.reset();
+                this.scroll?.reset();
             }
             catch (error)
             {
