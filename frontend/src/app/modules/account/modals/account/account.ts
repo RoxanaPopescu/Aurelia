@@ -290,13 +290,16 @@ export class AccountModalPanel
             // Indicate that the modal is busy.
             this._modal.busy = true;
 
-            // Store the current locale code, currency code and theme slug in the profile.
+            // Store the current locale code, currency code and theme slug in the settings.
             this.settingsModel.settings!.localeCode = this.locale.code;
             this.settingsModel.settings!.currencyCode = this.currency.code;
             this.settingsModel.settings!.themeSlug = this.theme.slug;
 
             // Saves the users profile.
             await this._profileService.save(this.settingsModel);
+
+            // Apply the settings to the profile.
+            this._profile.setSettings(this.settingsModel);
 
             // If a new password was specified, change the users password.
             if (this.newPassword)
@@ -307,7 +310,20 @@ export class AccountModalPanel
             if (!shouldSignOut)
             {
                 // Reauthenticate to ensure we get the updated identity.
-                await this._identityService.reauthorize();
+                const reauthorized = await this._identityService.reauthorize();
+
+                if (!reauthorized)
+                {
+                    // Indicate that the operation failed.
+                    this._result = undefined;
+
+                    Log.error("Failed to reauthorize.");
+
+                    // Indicate that the modal is ready.
+                    this._modal.busy = false;
+
+                    return;
+                }
             }
 
             const changePromises: Promise<any>[] = [];

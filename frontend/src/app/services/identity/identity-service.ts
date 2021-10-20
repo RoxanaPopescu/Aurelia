@@ -61,7 +61,16 @@ export class IdentityService
     {
         this._changeFunc = identityChangeFunc;
 
-        // Validate each minute if the tokens are invalid, we have to do it this way since the setTimeout can fail
+        // Reauthorize whenever the page becomes visible.
+        document.addEventListener("visibilitychange", async () =>
+        {
+            if (document.visibilityState !== "hidden")
+            {
+                await this.reauthorizeBeforeExpiry();
+            }
+        });
+
+        // Continuously check whether the tokens are approaching expiry, and reauthorize if nessesary.
         setInterval(() => this.reauthorizeBeforeExpiry(), 60 * 1000);
     }
 
@@ -196,9 +205,10 @@ export class IdentityService
 
     /**
      * Attempts to reauthorize the user using the refresh token stored on the device.
+     * @param unauthorizeOnFailure True to unauthorize if reauthorization fails, otherwise false.
      * @returns A promise that will be resolved with true if reauthorization succeeded, otherwise false.
      */
-    public async reauthorize(): Promise<boolean>
+    public async reauthorize(unauthorizeOnFailure = true): Promise<boolean>
     {
         try
         {
@@ -252,7 +262,12 @@ export class IdentityService
         {
             if ([401, 403].includes(error.response?.status))
             {
-                await this.unauthenticate();
+                console.warn(error);
+
+                if (unauthorizeOnFailure)
+                {
+                    await this.unauthenticate();
+                }
             }
             else
             {
@@ -435,9 +450,9 @@ export class IdentityService
     /**
      * Reauthorizes if the access token is about to expire.
      */
-    private reauthorizeBeforeExpiry(): void
+    private async reauthorizeBeforeExpiry(): Promise<void>
     {
-        const tokens = this._identity?.tokens;
+        const tokens = this.getTokens();
 
         if (tokens != null)
         {
@@ -446,7 +461,8 @@ export class IdentityService
 
             if (expires && expires < 0)
             {
-                this.reauthorize();
+                // HACK: Don't unauthorize on failure, as it screws things up when multiple tabs are open.
+                await this.reauthorize(false);
             }
         }
     }
