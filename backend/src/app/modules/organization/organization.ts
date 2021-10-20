@@ -71,7 +71,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/organizations/:organizationId/delete" = async (context: AppContext) =>
     {
-        await context.authorize("delete-organizations", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("delete-organizations", { organization: context.params.organizationId });
 
         await this.apiClient.delete(`organization/organizations/${context.params.organizationId}`);
 
@@ -101,7 +101,7 @@ export class OrganizationModule extends AppModule
      */
     public "GET /v2/organizations/:organizationId/profile" = async (context: AppContext) =>
     {
-        await context.authorize("view-organizations", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("view-organizations", { organization: context.params.organizationId });
 
         const result = await this.apiClient.get(`organization/organizations/${context.params.organizationId}`);
 
@@ -120,7 +120,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/organizations/:organizationId/profile/save" = async (context: AppContext) =>
     {
-        await context.authorize("edit-organizations", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("edit-organizations", { organization: context.params.organizationId });
 
         await this.apiClient.post("organization/organizations/update",
         {
@@ -145,7 +145,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/organizations/:organizationId/invites/send" = async (context: AppContext) =>
     {
-        await context.authorize("edit-users", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("edit-users", { organization: context.params.organizationId });
 
         const result = await this.apiClient.post("identity/memberships/invitations",
         {
@@ -178,7 +178,7 @@ export class OrganizationModule extends AppModule
      */
     public "GET /v2/organizations/:organizationId/invites" = async (context: AppContext) =>
     {
-        await context.authorize("edit-users", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("edit-users", { organization: context.params.organizationId });
 
         const result = await this.apiClient.get("identity/memberships/invitations",
         {
@@ -240,7 +240,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/invites/:inviteId/resend" = async (context: AppContext) =>
     {
-        await context.authorize("edit-users", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("edit-users", { organization: context.params.organizationId });
 
         await this.apiClient.post(`identity/memberships/invitations/${context.params.inviteId}/resend`);
 
@@ -270,7 +270,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/invites/:inviteId/delete" = async (context: AppContext) =>
     {
-        await context.authorize("edit-users", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("edit-users", { organization: context.params.organizationId });
 
         await this.apiClient.delete(`identity/memberships/invitations/${context.params.inviteId}`);
 
@@ -285,7 +285,7 @@ export class OrganizationModule extends AppModule
      */
     public "GET /v2/organizations/:organizationId/users" = async (context: AppContext) =>
     {
-        await context.authorize("view-users", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("view-users", { organization: context.params.organizationId });
 
         const result = await this.apiClient.get("identity/users",
         {
@@ -310,7 +310,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/organizations/:organizationId/users/:userId/change-role" = async (context: AppContext) =>
     {
-        await context.authorize("edit-users", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("edit-users", { organization: context.params.organizationId });
 
         await this.apiClient.put("identity/memberships",
         {
@@ -337,7 +337,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/organizations/:organizationId/users/:userId/remove" = async (context: AppContext) =>
     {
-        await context.authorize("edit-users", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("edit-users", { organization: context.params.organizationId });
 
         await this.apiClient.delete("identity/memberships",
         {
@@ -359,7 +359,7 @@ export class OrganizationModule extends AppModule
      */
     public "GET /v2/organizations/:organizationId/permissions" = async (context: AppContext) =>
     {
-        await context.authorize("edit-roles", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("edit-roles", { organization: context.params.organizationId });
 
         const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/permissions`);
 
@@ -386,7 +386,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/organizations/:organizationId/roles/create" = async (context: AppContext) =>
     {
-        await context.authorize("create-roles", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("create-roles", { organization: context.params.organizationId });
 
         const result = await this.apiClient.post("identity/roles",
         {
@@ -420,7 +420,7 @@ export class OrganizationModule extends AppModule
      */
     public "GET /v2/organizations/:organizationId/roles" = async (context: AppContext) =>
     {
-        await context.authorize("view-roles", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("view-roles", { organization: context.params.organizationId });
 
         const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/roles`);
 
@@ -447,7 +447,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/organizations/:organizationId/roles/:roleId/duplicate" = async (context: AppContext) =>
     {
-        await context.authorize("create-roles", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("create-roles", { organization: context.params.organizationId });
 
         const result = await this.apiClient.post(`identity/roles/${context.params.roleId}/duplicate`);
 
@@ -475,7 +475,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/organizations/:organizationId/roles/:roleId/save" = async (context: AppContext) =>
     {
-        await context.authorize("edit-roles", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("edit-roles", { organization: context.params.organizationId });
 
         const result = await this.apiClient.put(`identity/roles/${context.params.roleId}`,
         {
@@ -509,7 +509,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/organizations/:organizationId/roles/:roleId/delete" = async (context: AppContext) =>
     {
-        await context.authorize("delete-roles", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("delete-roles", { organization: context.params.organizationId });
 
         await this.apiClient.delete(`identity/roles/${context.params.roleId}`);
 
@@ -525,7 +525,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/organizations/:organizationId/teams/create" = async (context: AppContext) =>
     {
-        await context.authorize("create-teams", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("create-teams", { organization: context.params.organizationId });
 
         const result = await this.apiClient.post(`identity/organizations/${context.params.organizationId}/teams`,
         {
@@ -540,15 +540,40 @@ export class OrganizationModule extends AppModule
      * Gets the teams within the specified organization.
      * @param context.params.organizationId The ID of the organization.
      * @returns
-     * - 200: An array of objects representing the teams within the organization.
+     * - 200: An array of objects representing the teams within the specified organization.
      */
     public "GET /v2/organizations/:organizationId/teams" = async (context: AppContext) =>
     {
-        await context.authorize("view-teams", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("view-teams", { organization: context.params.organizationId });
+
+        await context.authorize("view-teams",
+        {
+            organization: context.params.organizationId,
+            teams: context.query.teams
+        });
 
         const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/teams`);
 
         context.response.body = result.data.teams;
+        context.response.status = 200;
+    }
+
+    /**
+     * Gets the teams accessible to the specified user, within the specified organization.
+     * @param context.params.organizationId The ID of the organization.
+     * @param context.params.userId The ID of the user.
+     * @returns
+     * - 200: An array of objects representing the teams associated with the specified user, within the specified organization.
+     */
+    public "GET /v2/organizations/:organizationId/users/:userId/accessible-teams" = async (context: AppContext) =>
+    {
+        const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/teams`);
+
+        const accessibleTeams = context.user?.permissions.has("access-all-teams")
+            ? result.data.teams
+            : result.data.teams.filter((t: any) => context.user?.teamIds.includes(t.id));
+
+        context.response.body = accessibleTeams;
         context.response.status = 200;
     }
 
@@ -561,7 +586,7 @@ export class OrganizationModule extends AppModule
      */
     public "GET /v2/organizations/:organizationId/teams/:teamId" = async (context: AppContext) =>
     {
-        await context.authorize("view-teams", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("view-teams", { organization: context.params.organizationId });
 
         const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/teams/${context.params.teamId}`);
 
@@ -579,7 +604,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/organizations/:organizationId/teams/:teamId/save" = async (context: AppContext) =>
     {
-        await context.authorize("edit-teams", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("edit-teams", { organization: context.params.organizationId });
 
         const result = await this.apiClient.put(`identity/organizations/${context.params.organizationId}/teams/${context.params.teamId}`,
         {
@@ -599,7 +624,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/organizations/:organizationId/teams/:teamId/delete" = async (context: AppContext) =>
     {
-        await context.authorize("delete-teams", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("delete-teams", { organization: context.params.organizationId });
 
         await this.apiClient.delete(`identity/organizations/${context.params.organizationId}/teams/${context.params.teamId}`);
 
@@ -616,7 +641,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/organizations/:organizationId/teams/:teamId/users/add" = async (context: AppContext) =>
     {
-        await context.authorize("edit-teams", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("edit-teams", { organization: context.params.organizationId });
 
         await this.apiClient.post(`identity/organizations/${context.params.organizationId}/teams/${context.params.teamId}/users`,
         {
@@ -635,7 +660,7 @@ export class OrganizationModule extends AppModule
      */
     public "GET /v2/organizations/:organizationId/teams/:teamId/users" = async (context: AppContext) =>
     {
-        await context.authorize("view-teams", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("view-teams", { organization: context.params.organizationId });
 
         const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/teams/${context.params.teamId}/users`);
 
@@ -653,7 +678,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/organizations/:organizationId/teams/:teamId/users/:userId/remove" = async (context: AppContext) =>
     {
-        await context.authorize("edit-teams", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("edit-teams", { organization: context.params.organizationId });
 
         await this.apiClient.delete(`identity/organizations/${context.params.organizationId}/teams/${context.params.teamId}/users/${context.params.userId}`);
 
@@ -671,7 +696,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/organizations/:organizationId/connections/create" = async (context: AppContext) =>
     {
-        await context.authorize("create-connections", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("create-connections", { organization: context.params.organizationId });
 
         const [result1, result2] = await Promise.all(
         [
@@ -711,7 +736,7 @@ export class OrganizationModule extends AppModule
      */
     public "GET /v2/organizations/:organizationId/connections" = async (context: AppContext) =>
     {
-        await context.authorize("view-connections", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("view-connections", { organization: context.params.organizationId });
 
         const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/connections`);
 
@@ -728,7 +753,7 @@ export class OrganizationModule extends AppModule
      */
     public "GET /v2/organizations/:organizationId/connections/:connectionId" = async (context: AppContext) =>
     {
-        await context.authorize("view-connections", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("view-connections", { organization: context.params.organizationId });
 
         const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/connections/${context.params.connectionId}`);
 
@@ -745,7 +770,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/organizations/:organizationId/connections/:connectionId/accept" = async (context: AppContext) =>
     {
-        await context.authorize("accept-connections", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("accept-connections", { organization: context.params.organizationId });
 
         const result = await this.apiClient.post(`identity/organizations/${context.params.organizationId}/connections/${context.params.connectionId}/accept`);
 
@@ -762,7 +787,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/organizations/:organizationId/connections/:connectionId/delete" = async (context: AppContext) =>
     {
-        await context.authorize("delete-connections", () => context.params.organizationId === context.user!.organizationId);
+        await context.authorize("delete-connections", { organization: context.params.organizationId });
 
         await this.apiClient.delete(`identity/organizations/${context.params.organizationId}/connections/${context.params.connectionId}`);
 

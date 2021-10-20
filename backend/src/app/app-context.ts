@@ -30,7 +30,7 @@ export interface IAppContext
      * @param permissions The permissions required for authorization to succeede.
      * @returns A promise that will be resolved when the operation completes.
      */
-    authorize(...permissions: (string | (() => boolean))[]): Promise<void>;
+    authorize(...permissions: AuthorizeParameter[]): Promise<void>;
 
     /**
      * Marks any code that is executed after the call to this method as internal.
@@ -40,6 +40,11 @@ export interface IAppContext
      */
     internal(): void;
 }
+
+/**
+ * Represents a parameter for the `authorize` method on the context.
+ */
+export type AuthorizeParameter = string | boolean | (() => boolean | Promise<boolean>) | { organization?: string; teams?: string | string[] };
 
 /**
  * Represents the context passed to the request handler.

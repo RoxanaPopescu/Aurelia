@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import jwksRsa from "jwks-rsa";
 import { Middleware } from "koa";
 import { AuthorizationError } from "../../shared/types";
-import { IAppContext } from "../../app/app-context";
+import { AuthorizeParameter, IAppContext } from "../../app/app-context";
 import settings from "../../resources/settings/settings";
 
 /**
@@ -133,7 +133,7 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
     return async (context, next) =>
     {
         // Add the `authorize` method to the context.
-        context.authorize = async (...permissions: (string | (() => boolean))[]) =>
+        context.authorize = async (...permissions: AuthorizeParameter[]) =>
         {
             // Try to parse and verify the JWT, if not done already.
             if (context.user === undefined)
@@ -174,16 +174,70 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
             }
 
             // Verify that the JWT contains the specified permissions.
-            if (permissions.length > 0)
+            for (const permission of permissions)
             {
-                if (!permissions.filter(p => typeof p === "string").every((p: string) => context.user!.permissions.has(p)))
+                switch (typeof permission)
                 {
-                    throw new AuthorizationError("The request contained a JWT with insufficient permissions.");
-                }
+                    case "string":
 
-                if (!permissions.filter(p => typeof p === "function").every((p: any) => p() === true))
-                {
-                    throw new AuthorizationError("The request was not authorized.");
+                        if (!context.user.permissions.has(permission))
+                        {
+                            throw new AuthorizationError("The request contained a JWT with insufficient permissions.");
+                        }
+
+                        break;
+
+                    case "boolean":
+
+                        // tslint:disable-next-line: no-boolean-literal-compare
+                        if (permission !== true)
+                        {
+                            throw new AuthorizationError("The request was not authorized.");
+                        }
+
+                        break;
+
+                    case "function":
+
+                        // tslint:disable-next-line: no-boolean-literal-compare
+                        if (await permission() !== true)
+                        {
+                            throw new AuthorizationError("The request was not authorized.");
+                        }
+
+                        break;
+
+                    case "object":
+
+                        // tslint:disable-next-line: no-boolean-literal-compare
+                        if (permission.organization != null)
+                        {
+                            if (context.user.organizationId !== permission.organization)
+                            {
+                                throw new AuthorizationError("The request was not authorized for the specified organization.");
+                            }
+                        }
+
+                        // tslint:disable-next-line: no-boolean-literal-compare
+                        if (permission.teams != null)
+                        {
+                            // HACK: For convenience, if specified as a query string value, split on `,`.
+                            const teamIds = (typeof permission.teams === "string" ? permission.teams.trim().split(/\s*,\s*/) : permission.teams)
+
+                                // HACK: For convenience, if specified as a query string value, filter out the "no-team" value.
+                                .filter(teamId => teamId !== "no-team");
+
+                            if (!context.user.permissions.has("access-all-teams") && !teamIds.every(teamId => context.user!.teamIds.includes(teamId)))
+                            {
+                                throw new AuthorizationError("The request was not authorized for the specified teams.");
+                            }
+                        }
+
+                        break;
+
+                    default:
+
+                        throw new Error("Invalid permission.");
                 }
             }
         };
