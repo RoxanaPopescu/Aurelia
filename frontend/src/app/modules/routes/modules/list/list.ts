@@ -281,10 +281,10 @@ export class ListPage
     protected legacyOwnerIdsFilter: any[] | undefined;
 
     /**
-     * The legacy owner IDs to show, only used by Mover Transport in a transition phase.
+     * The IDs of the teams for which data should be presented, or undefined if no team is selected.
      */
     @observable({ changeHandler: "update" })
-    protected teamsFilter: ("no-team" | OrganizationTeam)[] | undefined;
+    protected teamsFilter: ("no-team" | string)[] | undefined;
 
     /**
      * The teams for the organization
@@ -346,16 +346,15 @@ export class ListPage
         this.createdTimeToFilter = params.createdTimeToFilter ? DateTime.fromISO(params.createdTimeToFilter, { setZone: true }) : undefined;
         this.legacyOwnerIdsFilter = params.owners?.split(",");
 
-        // tslint:disable-next-line: no-floating-promises
-        this.teamFilterService.fetchAccessibleTeams().then(() =>
+        if (params.teams)
         {
-            if (params.teams)
-            {
-                this.teamFilterService.fromQueryValue(params.teams);
-            }
+            this.teamFilterService.selectedTeamIds = params.teams?.split(",");
+        }
 
-            this.teamsFilter = this.teamFilterService.selectedTeams;
-        });
+        this.teamsFilter = this.teamFilterService.selectedTeamIds;
+
+        // tslint:disable-next-line: no-floating-promises
+        this.teamFilterService.fetchAccessibleTeams();
 
         this.update();
     }
@@ -561,6 +560,9 @@ export class ListPage
             return;
         }
 
+        // Update the global teams filter.
+        this.teamFilterService.selectedTeamIds = this.teamsFilter;
+
         // Abort any existing operation.
         if (this.updateOperation != null)
         {
@@ -568,9 +570,6 @@ export class ListPage
         }
 
         const columnSlugs = this.columns.map(c => c.slug);
-
-        // Update the global teams filter.
-        this.teamFilterService.selectedTeams = this.teamsFilter;
 
         // Fetch teams if needed
         if (this.teams.length === 0 && columnSlugs.includes("team"))
@@ -615,7 +614,7 @@ export class ListPage
                         assignedDriver: assignedDriver,
                         assignedVehicle: assignedVehicle,
                         pickupNearby: (this.pickupNearbyPosition != null) ? { position: this.pickupNearbyPosition, precision: 3 } : undefined,
-                        teams: this.teamFilterService.toQueryValue(),
+                        teams: this.teamFilterService.selectedTeamIds,
                         legacyOwnerIds: this.legacyOwnerIdsFilter
                     },
                     {
@@ -666,7 +665,7 @@ export class ListPage
                     state.params.createdTimeFromFilter = this.createdTimeFromFilter?.toISO();
                     state.params.createdTimeToFilter = this.createdTimeToFilter?.toISO();
                     state.params.owners = this.legacyOwnerIdsFilter?.join(",");
-                    state.params.teams = this.teamFilterService.toQueryValue();
+                    state.params.teams = this.teamFilterService.selectedTeamIds;
                 },
                 { trigger: false, replace: true });
             }

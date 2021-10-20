@@ -209,7 +209,7 @@
                     class="margin-large-bottom">
 
                     <div slot="value">
-                        <tag repeat.for="team of teamsFilter" model.bind="team">
+                        <tag repeat.for="team of teamFilterService.selectedTeams">
                             <template if.bind="team === 'no-team'" translate>
                                 No team
                             </template>
@@ -219,7 +219,7 @@
                         </tag>
                     </div>
 
-                    <item repeat.for="team of teamFilterService.accessibleTeams" model.bind="team">
+                    <item repeat.for="team of teamFilterService.accessibleTeams" model.bind="team.id || team">
                         <template if.bind="team === 'no-team'" translate>
                             No team
                         </template>
@@ -308,8 +308,8 @@
 
                     <template repeat.for="route of results">
                         <data-table-row
-                            accent.bind="route.criticality.accent"
-                        >
+                            accent.bind="route.criticality.accent">
+
                             <template repeat.for="column of columns">
 
                                 <let updating.bind="{ driver: false, vehicle: false, executor: false }"></let>

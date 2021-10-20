@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, computedFrom } from "aurelia-framework";
 import { OrganizationService, OrganizationTeam } from "app/model/organization";
 
 /**
@@ -21,34 +21,21 @@ export class TeamFilterService
     /**
      * The teams for which data should be presented, or undefined if no team is selected.
      */
-    public selectedTeams: (OrganizationTeam | "no-team")[] | undefined;
-
-    /**
-     * The teams for which data should be presented, or undefined if no team is selected.
-     */
     public accessibleTeams: (OrganizationTeam | "no-team")[] | undefined;
 
     /**
-     * The selcted teams, formatted as a query value.
+     * The IDs of the teams for which data should be presented, or undefined if no team is selected.
      */
-    public toQueryValue(): string[] | undefined
-    {
-        return this.selectedTeams?.map(team => team === "no-team" ? "no-team" : team.id);
-    }
+    public selectedTeamIds: (string | "no-team")[] | undefined;
 
     /**
      * The teams for which data should be presented, or undefined if no team is selected.
      */
-    public fromQueryValue(value: string): void
+    @computedFrom("selectedTeamIds")
+    public get selectedTeams(): (OrganizationTeam | "no-team")[] | undefined
     {
-        if (this.accessibleTeams == null)
-        {
-            throw Error("Cannot set selected teams before teams are fetched.");
-        }
-
-        this.selectedTeams = value
-            .split(",")
-            .map(teamId => teamId === "no-team" ? "no-team" : this.accessibleTeams!.find(team => (team as OrganizationTeam).id === teamId)!)
+        return this.selectedTeamIds?.map(
+            teamId => teamId === "no-team" ? "no-team" : this.accessibleTeams!.find(team => (team as OrganizationTeam).id === teamId)!)
             .filter(team => team != null);
     }
 
@@ -69,7 +56,7 @@ export class TeamFilterService
      */
     public reset(): void
     {
-        this.selectedTeams = undefined;
+        this.selectedTeamIds = undefined;
         this.accessibleTeams = undefined;
     }
 }
