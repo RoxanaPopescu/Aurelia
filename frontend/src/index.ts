@@ -12,6 +12,7 @@ import { LocaleService, Locale, CurrencyService, Currency } from "shared/localiz
 import { GoogleMapsService } from "shared/google-maps";
 import { Visitor } from "app/types/visitor";
 import { IdentityService, Identity } from "app/services/identity";
+import { TeamFilterService } from "app/services/team-filter";
 import settings from "resources/settings";
 
 // Legacy Mover services that need to be configured.
@@ -314,6 +315,13 @@ async function setTheme(newTheme: ITheme, oldTheme: ITheme | undefined, finish: 
  */
 async function setIdentity(newIdentity: Identity | undefined, oldIdentity: Identity | undefined, finish: () => void): Promise<void>
 {
+    if (newIdentity?.id !== oldIdentity?.id)
+    {
+        // Reset the selected teams.
+        const teamFilterService = Container.instance.get(TeamFilterService);
+        teamFilterService.reset();
+    }
+
     if (newIdentity != null)
     {
         // Set the identity associated with log entries.

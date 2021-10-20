@@ -14,6 +14,7 @@ import { Address, Position } from "app/model/shared";
 import { AddressService } from "app/components/address-input/services/address-service/address-service";
 import { IdentityService, moverOrganizationId } from "app/services/identity";
 import { OrganizationService, OrganizationTeam } from "app/model/organization";
+import { TeamFilterService } from "app/services/team-filter";
 import { Fulfiller } from "app/model/outfit";
 
 /**
@@ -36,6 +37,8 @@ interface IRouteParams
     startTimeToFilter?: string;
     createdTimeFromFilter?: string;
     createdTimeToFilter?: string;
+    owners?: string;
+    teams?: string;
 }
 
 /**
@@ -51,6 +54,7 @@ export class ListPage
      * @param routeAssignmentService The `RouteAssignmentService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      * @param organizationService The `OrganizationService` instance.
+     * @param teamFilterService The `TeamFilterService` instance.
      * @param identityService The `IdentityService` instance.
      */
     public constructor(
@@ -60,6 +64,7 @@ export class ListPage
         modalService: ModalService,
         historyHelper: HistoryHelper,
         organizationService: OrganizationService,
+        teamFilterService: TeamFilterService,
         identityService: IdentityService)
     {
         this._routeService = routeService;
@@ -68,6 +73,7 @@ export class ListPage
         this._historyHelper = historyHelper;
         this._addressService = addressService;
         this._organizationService = organizationService;
+        this.teamFilterService = teamFilterService;
         this._identityService = identityService;
         this._constructed = true;
 
@@ -117,6 +123,16 @@ export class ListPage
      * The most recent update operation.
      */
     protected pickupNearbyOperation: Operation;
+
+    /**
+     * The `TeamFilterService` instance.
+     */
+    protected readonly teamFilterService: TeamFilterService;
+
+    /**
+     * The teams accessible to the current user.
+     */
+    protected accessibleTeams: OrganizationTeam[];
 
     /**
      * The custom grid column widths calculated from the columns
@@ -259,10 +275,16 @@ export class ListPage
     protected createdTimeToFilter: DateTime | undefined;
 
     /**
-     * The legacy owner ids to show, only used by Mover Transport in a transition phase.
+     * The legacy owner IDs to show, only used by Mover Transport in a transition phase.
      */
     @observable({ changeHandler: "update" })
-    protected legacyOwnerIdsFilter: any[] = [];
+    protected legacyOwnerIdsFilter: any[] | undefined;
+
+    /**
+     * The legacy owner IDs to show, only used by Mover Transport in a transition phase.
+     */
+    @observable({ changeHandler: "update" })
+    protected teamsFilter: ("no-team" | OrganizationTeam)[] | undefined;
 
     /**
      * The teams for the organization
@@ -322,6 +344,18 @@ export class ListPage
         this.startTimeToFilter = params.startTimeToFilter ? DateTime.fromISO(params.startTimeToFilter, { setZone: true }) : undefined;
         this.createdTimeFromFilter = params.createdTimeFromFilter ? DateTime.fromISO(params.createdTimeFromFilter, { setZone: true }) : undefined;
         this.createdTimeToFilter = params.createdTimeToFilter ? DateTime.fromISO(params.createdTimeToFilter, { setZone: true }) : undefined;
+        this.legacyOwnerIdsFilter = params.owners?.split(",");
+
+        // tslint:disable-next-line: no-floating-promises
+        this.teamFilterService.fetchAccessibleTeams().then(() =>
+        {
+            if (params.teams)
+            {
+                this.teamFilterService.fromQueryValue(params.teams);
+            }
+
+            this.teamsFilter = this.teamFilterService.selectedTeams;
+        });
 
         this.update();
     }
@@ -535,6 +569,9 @@ export class ListPage
 
         const columnSlugs = this.columns.map(c => c.slug);
 
+        // Update the global teams filter.
+        this.teamFilterService.selectedTeams = this.teamsFilter;
+
         // Fetch teams if needed
         if (this.teams.length === 0 && columnSlugs.includes("team"))
         {
@@ -578,6 +615,7 @@ export class ListPage
                         assignedDriver: assignedDriver,
                         assignedVehicle: assignedVehicle,
                         pickupNearby: (this.pickupNearbyPosition != null) ? { position: this.pickupNearbyPosition, precision: 3 } : undefined,
+                        teams: this.teamFilterService.toQueryValue(),
                         legacyOwnerIds: this.legacyOwnerIdsFilter
                     },
                     {
@@ -627,6 +665,8 @@ export class ListPage
                     state.params.startTimeToFilter = this.startTimeToFilter?.toISO();
                     state.params.createdTimeFromFilter = this.createdTimeFromFilter?.toISO();
                     state.params.createdTimeToFilter = this.createdTimeToFilter?.toISO();
+                    state.params.owners = this.legacyOwnerIdsFilter?.join(",");
+                    state.params.teams = this.teamFilterService.toQueryValue();
                 },
                 { trigger: false, replace: true });
             }

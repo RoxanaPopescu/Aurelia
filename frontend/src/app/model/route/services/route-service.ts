@@ -54,6 +54,7 @@ export class RouteService
             assignedDriver?: boolean;
             assignedVehicle?: boolean;
             pickupNearby?: { position: Position; precision?: number };
+            teams?: string[];
             legacyOwnerIds?: string[];
         },
         include?:
@@ -97,6 +98,7 @@ export class RouteService
                 tagsOneMatching: filter?.tagsOneMatching,
                 include: include ? include : {},
                 pickupNearby: filter?.pickupNearby,
+                teams: filter?.teams,
                 legacyOwnerIds: filter?.legacyOwnerIds
             },
             signal

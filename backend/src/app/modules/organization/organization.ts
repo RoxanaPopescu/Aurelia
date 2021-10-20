@@ -567,6 +567,8 @@ export class OrganizationModule extends AppModule
      */
     public "GET /v2/organizations/:organizationId/users/:userId/accessible-teams" = async (context: AppContext) =>
     {
+        await context.authorize();
+
         const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/teams`);
 
         const accessibleTeams = context.user?.permissions.has("access-all-teams")

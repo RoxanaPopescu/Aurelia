@@ -199,7 +199,43 @@
             <page-section if.bind="showLegacy" toggle.bind="true">
 
                 <div slot="header" translate>
-                    Owner ids
+                    Teams
+                </div>
+
+                <tags-input
+                    label="above"
+                    filter="auto"
+                    value.bind="teamsFilter"
+                    class="margin-large-bottom">
+
+                    <div slot="value">
+                        <tag repeat.for="team of teamsFilter" model.bind="team">
+                            <template if.bind="team === 'no-team'" translate>
+                                No team
+                            </template>
+                            <template else>
+                                ${team.name}
+                            </template>
+                        </tag>
+                    </div>
+
+                    <item repeat.for="team of teamFilterService.accessibleTeams" model.bind="team">
+                        <template if.bind="team === 'no-team'" translate>
+                            No team
+                        </template>
+                        <template else>
+                            ${team.name}
+                        </template>
+                    </item>
+
+                </tags-input>
+
+            </page-section>
+
+            <page-section if.bind="showLegacy" toggle.bind="true">
+
+                <div slot="header" translate>
+                    Owner ID's
                 </div>
 
                 <tags-input

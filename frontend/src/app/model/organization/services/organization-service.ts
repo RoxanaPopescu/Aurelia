@@ -368,6 +368,24 @@ export class OrganizationService
     }
 
     /**
+     * Gets the teams accessible to the current user, within the current organization
+     * @param signal The abort signal to use, or undefined to use no abort signal.
+     * @returns A promise that will be resolved with the teams.
+     */
+    public async getAccessibleTeams(signal?: AbortSignal): Promise<OrganizationTeam[]>
+    {
+        const organizationId = this._identityService.identity!.organization!.id;
+        const userId = this._identityService.identity!.id;
+
+        const result = await this._apiClient.get(`organizations/${organizationId}/users/${userId}/accessible-teams`,
+        {
+            signal
+        });
+
+        return result.data.map(team => new OrganizationTeam(team));
+    }
+
+    /**
      * Gets the specified team within the current organization.
      * @param teamId The ID of the team.
      * @param signal The abort signal to use, or undefined to use no abort signal.
