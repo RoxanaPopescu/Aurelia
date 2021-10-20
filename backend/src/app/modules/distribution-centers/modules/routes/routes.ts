@@ -16,7 +16,7 @@ export class DistributionCenteRoutesModule extends AppModule
          */
         this.router.get("/v2/distribution-centers/routes/list", async context =>
         {
-            await context.authorize("view-depot");
+            await context.authorize("view-distribution-centers");
 
             // Fetch the distribution center
             const dcResult = await this.apiClient.post("logistics/depots/details",
@@ -88,7 +88,7 @@ export class DistributionCenteRoutesModule extends AppModule
          */
         this.router.post("/v2/distribution-centers/routes/save-remarks", async context =>
         {
-            await context.authorize("edit-depot");
+            await context.authorize("edit-distribution-centers");
 
             const body = context.request.body;
             body.createdBy = context.user?.id;
@@ -108,7 +108,7 @@ export class DistributionCenteRoutesModule extends AppModule
          */
         this.router.get("/v2/distribution-centers/routes/remarks", async context =>
         {
-            await context.authorize("view-depot");
+            await context.authorize("view-distribution-centers");
 
             const result = await this.apiClient.post("logistics/depots/list",
             {

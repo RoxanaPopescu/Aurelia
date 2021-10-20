@@ -14,7 +14,7 @@ export class RouteTemplatesModule extends AppModule
          */
         this.router.post("/v2/routes/templates/list", async context =>
         {
-            await context.authorize("view-route-templates");
+            await context.authorize("view-routes");
 
             const result = await this.apiClient.post("routetemplate/List",
             {
@@ -34,7 +34,7 @@ export class RouteTemplatesModule extends AppModule
          */
         this.router.post("/v2/routes/templates/details", async context =>
         {
-            await context.authorize("view-route-templates");
+            await context.authorize("view-routes");
 
             const routesResult = await this.apiClient.post("routetemplate/details",
             {

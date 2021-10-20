@@ -17,7 +17,7 @@ export class DispatchRouteModule extends AppModule
          */
         this.router.get("/v2/dispatch/route/automatic-contractor", async context =>
         {
-            await context.authorize("view-fulfiller-dispatch");
+            await context.authorize("view-automatic-organization-route-assignments");
 
             const result = await this.apiClient.post("logistics/dispatch/settings/fulfillers/list",
             {
@@ -36,7 +36,7 @@ export class DispatchRouteModule extends AppModule
          */
         this.router.post("/v2/dispatch/route/automatic-contractor/save", async context =>
         {
-            await context.authorize("view-fulfiller-dispatch");
+            await context.authorize("edit-automatic-organization-route-assignments");
 
             const body: any = context.request.body;
             body.outfitId = context.user?.organizationId;
@@ -75,7 +75,7 @@ export class DispatchRouteModule extends AppModule
          */
         this.router.post("/v2/dispatch/route/automatic-contractor/delete", async context =>
         {
-            await context.authorize("view-fulfiller-dispatch");
+            await context.authorize("edit-automatic-organization-route-assignments");
 
             const result = await this.apiClient.post("logistics/dispatch/settings/fulfillers/delete",
             {

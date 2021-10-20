@@ -24,7 +24,7 @@
 
                 <toolbar class="flex-push-right">
 
-                    <template if-claims="create-role">
+                    <template if-claims="create-roles">
 
                         <button appearance="outline" accent="primary" click.trigger="onNewRoleClick()" class="flex-row">
                             <icon name="add" class="font-larger margin-right"></icon>
@@ -138,7 +138,7 @@
 
                                 <div class="icon-row">
 
-                                    <template if-claims="edit-role">
+                                    <template if-claims="edit-roles">
                                         <button
                                             disabled.bind="role.readonly"
                                             title.translate="Edit role"
@@ -149,7 +149,7 @@
                                         </button>
                                     </template>
 
-                                    <template if-claims="create-role">
+                                    <template if-claims="create-roles">
                                         <button
                                             title.translate="Duplicate role"
                                             appearance="none"
@@ -159,7 +159,7 @@
                                         </button>
                                     </template>
 
-                                    <template if-claims="delete-role">
+                                    <template if-claims="delete-roles">
                                         <button
                                             disabled.bind="role.readonly || role.userCount > 0"
                                             title.translate="Delete role"

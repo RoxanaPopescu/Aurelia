@@ -17,7 +17,7 @@ export class DistributionCenterModule extends AppModule
          */
         this.router.post("/v2/distribution-centers", async context =>
         {
-            await context.authorize("create-depot");
+            await context.authorize("create-distribution-centers");
 
             const body = context.request.body;
             body.ownerId = context.user?.organizationId;
@@ -39,7 +39,7 @@ export class DistributionCenterModule extends AppModule
          */
         this.router.post("/v2/distribution-centers/update", async context =>
         {
-            await context.authorize("edit-depot");
+            await context.authorize("edit-distribution-centers");
 
             const body = context.request.body;
             body.createdBy = context.user?.id;
@@ -59,7 +59,7 @@ export class DistributionCenterModule extends AppModule
          */
         this.router.get("/v2/distribution-centers", async context =>
         {
-            await context.authorize("view-depot");
+            await context.authorize("view-distribution-centers");
 
             const result = await this.apiClient.post("logistics/depots/list",
             {
@@ -80,7 +80,7 @@ export class DistributionCenterModule extends AppModule
          */
         this.router.get("/v2/distribution-centers/:id", async context =>
         {
-            await context.authorize("view-depot");
+            await context.authorize("view-distribution-centers");
 
             const result = await this.apiClient.post("logistics/depots/details",
             {

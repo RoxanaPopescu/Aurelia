@@ -34,7 +34,7 @@ export class VehiclesModule extends AppModule
          */
         this.router.post("/v2/vehicles/update", async context =>
         {
-            await context.authorize("create-vehicle");
+            await context.authorize("create-vehicles");
 
             const body = context.request.body;
             body.accessIds = [context.user?.organizationId];
@@ -55,7 +55,7 @@ export class VehiclesModule extends AppModule
          */
         this.router.post("/v2/vehicles/create", async context =>
         {
-            await context.authorize("create-vehicle");
+            await context.authorize("create-vehicles");
 
             const body = context.request.body;
             body.accessIds = [context.user?.organizationId];
@@ -77,7 +77,7 @@ export class VehiclesModule extends AppModule
          */
         this.router.post("/v2/vehicles/delete", async context =>
         {
-            await context.authorize("create-vehicle");
+            await context.authorize("create-vehicles");
 
             const body = context.request.body;
             body.accessIds = [context.user?.organizationId];

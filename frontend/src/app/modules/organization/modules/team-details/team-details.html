@@ -29,7 +29,7 @@
 
                 <toolbar class="flex-push-right">
 
-                    <template if-claims="edit-team">
+                    <template if-claims="edit-teams">
 
                         <button appearance="outline" accent="primary" click.trigger="onInviteUserClick()" class="flex-row">
                             <icon name="add" class="font-larger margin-right"></icon>
@@ -176,7 +176,7 @@
 
                                 <div class="icon-row">
 
-                                    <template if-claims="edit-team">
+                                    <template if-claims="edit-teams">
 
                                         <button
                                             if.bind="user.status.slug === 'invited'"

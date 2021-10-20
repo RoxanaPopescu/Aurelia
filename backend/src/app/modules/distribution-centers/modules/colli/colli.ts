@@ -16,7 +16,7 @@ export class DistributionCenteColliModule extends AppModule
          */
         this.router.get("/v2/distribution-centers/colli/overview", async context =>
         {
-            await context.authorize("view-depot");
+            await context.authorize("view-distribution-centers");
 
             // Fetch the distribution center
             const dcResult = await this.apiClient.post("logistics/depots/details",
@@ -48,7 +48,7 @@ export class DistributionCenteColliModule extends AppModule
          */
         this.router.get("/v2/distribution-centers/colli/missing", async context =>
         {
-            await context.authorize("view-depot");
+            await context.authorize("view-distribution-centers");
 
             // Fetch the distribution center
             const dcResult = await this.apiClient.post("logistics/depots/details",

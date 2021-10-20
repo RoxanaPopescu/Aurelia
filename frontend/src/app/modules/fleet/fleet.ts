@@ -87,65 +87,6 @@ export class FleetModule
                 redirect: "dispatch/forecasts"
             },
             {
-                name: "dispatch",
-                route: "dispatch/*state",
-                moduleId: PLATFORM.moduleName("./modules/dispatch/dispatch"),
-                settings:
-                {
-                    claims:
-                    [
-                        ["view-forecast", "view-prebooking", "view-routes"]
-                    ]
-                },
-                title: routeTitles.dispatch,
-                nav: false,
-                href: "/fleet-management/dispatch",
-                icon: "dispatch"
-            },
-            {
-                name: "assign-routes",
-                route: "assign-routes/:origin/:ids",
-                moduleId: PLATFORM.moduleName("./modules/assign-routes/assign-routes"),
-                settings:
-                {
-                    claims:
-                    [
-                        "edit-routes"
-                    ]
-                },
-                title: routeTitles.assignRoutes
-            },
-            {
-                name: "create-prebooking",
-                route: "create-prebooking/:id",
-                moduleId: PLATFORM.moduleName("./modules/create-prebooking/create-prebooking"),
-                settings:
-                {
-                    claims:
-                    [
-                        "create-prebooking"
-                    ]
-                },
-                nav: false,
-                title: routeTitles.createPrebooking
-            },
-            {
-                name: "forecasts",
-                route: "forecasts",
-                moduleId: PLATFORM.moduleName("./modules/forecasts/forecasts"),
-                settings:
-                {
-                    claims:
-                    [
-                        "view-forecast"
-                    ]
-                },
-                title: routeTitles.forecasts,
-                nav: false,
-                href: "/fleet-management/forecasts",
-                icon: "forecast"
-            },
-            {
                 name: "driver-tracking",
                 route: "driver-tracking",
                 moduleId: PLATFORM.moduleName("./modules/driver-tracking/driver-tracking"),

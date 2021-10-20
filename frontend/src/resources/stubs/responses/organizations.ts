@@ -150,9 +150,9 @@ export default
           "view-routes",
           "view-route-details",
           "edit-routes",
-          "edit-route-details",
-          "view-route-plans",
-          "edit-route-plans"
+          "edit-routedetails",
+          "view-routeplans",
+          "edit-routeplans"
         ],
         userCount: i === 1 ? 1 : 0
       }))
@@ -421,7 +421,7 @@ export default
         { slug: "view-route-plans",    type: "view", group: "Route plans",  name: "View route plans"   },
         { slug: "edit-route-plans",    type: "edit", group: "Route plans",  name: "Edit route plans"   },
 
-        { slug: "view-kpi",            type: "view", group: "KPI",          name: "View route plans"   },
+        { slug: "view-kpis",            type: "view", group: "KPI",          name: "View route plans"   },
         { slug: "edit-route-plans",    type: "edit", group: "KPI",          name: "Edit route plans"   }
       ]
     }

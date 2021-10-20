@@ -129,7 +129,7 @@ export class RoutesModule
                     {
                         claims:
                         [
-                            "view-route-templates"
+                            "view-routes"
                         ]
                     },
                     title: routeTitles.templates,
@@ -144,7 +144,7 @@ export class RoutesModule
                     {
                         claims:
                         [
-                            "view-route-templates"
+                            "view-routes"
                         ]
                     },
                     title: routeTitles.templateDetails
@@ -157,7 +157,7 @@ export class RoutesModule
                     {
                         claims:
                         [
-                            "create-route-template"
+                            "edit-routes"
                         ]
                     },
                     title: routeTitles.newTemplate

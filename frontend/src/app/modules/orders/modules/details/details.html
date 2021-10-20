@@ -323,7 +323,7 @@
 
                     <div class="flex-push-right control-row" if.bind="order">
 
-                        <select-button disabled.bind="order == null" if-claims="edit-order" appearance="outline" accent="primary">
+                        <select-button disabled.bind="order == null" if-claims="edit-orders" appearance="outline" accent="primary">
 
                             <div slot="label" translate>
                                 Change status
@@ -360,7 +360,7 @@
                         </select-button>
 
                         <button
-                            if-claims="edit-order"
+                            if-claims="edit-orders"
                             disabled.bind="!order.state.canBeEdited"
                             appearance="outline"
                             accent="primary"
