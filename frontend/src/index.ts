@@ -12,7 +12,7 @@ import { LocaleService, Locale, CurrencyService, Currency } from "shared/localiz
 import { GoogleMapsService } from "shared/google-maps";
 import { Visitor } from "app/types/visitor";
 import { IdentityService, Identity } from "app/services/identity";
-import { TeamFilterService } from "app/services/team-filter";
+import { TeamsFilterService } from "app/services/teams-filter";
 import settings from "resources/settings";
 
 // Legacy Mover services that need to be configured.
@@ -318,8 +318,8 @@ async function setIdentity(newIdentity: Identity | undefined, oldIdentity: Ident
     if (newIdentity?.id !== oldIdentity?.id)
     {
         // Reset the selected teams.
-        const teamFilterService = Container.instance.get(TeamFilterService);
-        teamFilterService.reset();
+        const teamsFilterService = Container.instance.get(TeamsFilterService);
+        teamsFilterService.reset();
     }
 
     if (newIdentity != null)

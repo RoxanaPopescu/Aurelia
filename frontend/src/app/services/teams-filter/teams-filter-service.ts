@@ -5,7 +5,7 @@ import { OrganizationService, OrganizationTeam } from "app/model/organization";
  * Represents a service for managing the global teams filter.
  */
 @autoinject
-export class TeamFilterService
+export class TeamsFilterService
 {
     /**
      * Creates a new instance of the type.

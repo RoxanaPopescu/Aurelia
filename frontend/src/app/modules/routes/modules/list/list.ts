@@ -14,7 +14,7 @@ import { Address, Position } from "app/model/shared";
 import { AddressService } from "app/components/address-input/services/address-service/address-service";
 import { IdentityService, moverOrganizationId } from "app/services/identity";
 import { OrganizationService, OrganizationTeam } from "app/model/organization";
-import { TeamFilterService } from "app/services/team-filter";
+import { TeamsFilterService } from "app/services/teams-filter";
 import { Fulfiller } from "app/model/outfit";
 
 /**
@@ -54,7 +54,7 @@ export class ListPage
      * @param routeAssignmentService The `RouteAssignmentService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      * @param organizationService The `OrganizationService` instance.
-     * @param teamFilterService The `TeamFilterService` instance.
+     * @param teamsFilterService The `TeamsFilterService` instance.
      * @param identityService The `IdentityService` instance.
      */
     public constructor(
@@ -64,7 +64,7 @@ export class ListPage
         modalService: ModalService,
         historyHelper: HistoryHelper,
         organizationService: OrganizationService,
-        teamFilterService: TeamFilterService,
+        teamsFilterService: TeamsFilterService,
         identityService: IdentityService)
     {
         this._routeService = routeService;
@@ -73,7 +73,7 @@ export class ListPage
         this._historyHelper = historyHelper;
         this._addressService = addressService;
         this._organizationService = organizationService;
-        this.teamFilterService = teamFilterService;
+        this.teamsFilterService = teamsFilterService;
         this._identityService = identityService;
         this._constructed = true;
 
@@ -125,9 +125,9 @@ export class ListPage
     protected pickupNearbyOperation: Operation;
 
     /**
-     * The `TeamFilterService` instance.
+     * The `TeamsFilterService` instance.
      */
-    protected readonly teamFilterService: TeamFilterService;
+    protected readonly teamsFilterService: TeamsFilterService;
 
     /**
      * The teams accessible to the current user.
@@ -348,13 +348,12 @@ export class ListPage
 
         if (params.teams)
         {
-            this.teamFilterService.selectedTeamIds = params.teams?.split(",");
+            this.teamsFilterService.selectedTeamIds = params.teams?.split(",");
         }
 
-        this.teamsFilter = this.teamFilterService.selectedTeamIds;
+        this.teamsFilter = this.teamsFilterService.selectedTeamIds;
 
-        // tslint:disable-next-line: no-floating-promises
-        this.teamFilterService.fetchAccessibleTeams();
+        this.teamsFilterService.fetchAccessibleTeams().catch(error => Log.error(error));
 
         this.update();
     }
@@ -561,7 +560,7 @@ export class ListPage
         }
 
         // Update the global teams filter.
-        this.teamFilterService.selectedTeamIds = this.teamsFilter;
+        this.teamsFilterService.selectedTeamIds = this.teamsFilter;
 
         // Abort any existing operation.
         if (this.updateOperation != null)
@@ -614,7 +613,7 @@ export class ListPage
                         assignedDriver: assignedDriver,
                         assignedVehicle: assignedVehicle,
                         pickupNearby: (this.pickupNearbyPosition != null) ? { position: this.pickupNearbyPosition, precision: 3 } : undefined,
-                        teams: this.teamFilterService.selectedTeamIds,
+                        teams: this.teamsFilterService.selectedTeamIds,
                         legacyOwnerIds: this.legacyOwnerIdsFilter
                     },
                     {
@@ -665,7 +664,7 @@ export class ListPage
                     state.params.createdTimeFromFilter = this.createdTimeFromFilter?.toISO();
                     state.params.createdTimeToFilter = this.createdTimeToFilter?.toISO();
                     state.params.owners = this.legacyOwnerIdsFilter?.join(",");
-                    state.params.teams = this.teamFilterService.selectedTeamIds;
+                    state.params.teams = this.teamsFilterService.selectedTeamIds;
                 },
                 { trigger: false, replace: true });
             }

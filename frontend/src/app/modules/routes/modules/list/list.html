@@ -209,7 +209,7 @@
                     class="margin-large-bottom">
 
                     <div slot="value">
-                        <tag repeat.for="team of teamFilterService.selectedTeams">
+                        <tag repeat.for="team of teamsFilterService.selectedTeams">
                             <template if.bind="team === 'no-team'" translate>
                                 No team
                             </template>
@@ -219,7 +219,7 @@
                         </tag>
                     </div>
 
-                    <item repeat.for="team of teamFilterService.accessibleTeams" model.bind="team.id || team">
+                    <item repeat.for="team of teamsFilterService.accessibleTeams" model.bind="team.id || team">
                         <template if.bind="team === 'no-team'" translate>
                             No team
                         </template>
