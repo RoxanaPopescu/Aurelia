@@ -25,16 +25,16 @@
                 </h1>
 
                 <toolbar class="flex-push-right">
-                    <button if.bind="driver.id" if-claims="create-vehicle" appearance="outline" accent="primary" click.trigger="onAddVehicleClick()" class="flex-row">
+                    <button if.bind="driver.id" if-claims="create-vehicles" appearance="outline" accent="primary" click.trigger="onAddVehicleClick()" class="flex-row">
                         <icon name="add" class="font-larger margin-right"></icon>
                         <span translate>
                             New vehicle
                         </span>
                     </button>
-                    <button if.bind="driver.id" translate if-claims="create-vehicle" appearance="outline" accent="primary" click.trigger="onSendMessageClick()">
+                    <button if.bind="driver.id" translate if-claims="create-vehicles" appearance="outline" accent="primary" click.trigger="onSendMessageClick()">
                         Send message
                     </button>
-                    <button if.bind="driver.id" translate if-claims="create-vehicle" appearance="outline" accent="primary" click.trigger="onChangePasswordClick()">
+                    <button if.bind="driver.id" translate if-claims="create-vehicles" appearance="outline" accent="primary" click.trigger="onChangePasswordClick()">
                         Change password
                     </button>
                     <button disabled.bind="updating" appearance="solid" accent="primary" click.trigger="onSaveClick()">
@@ -306,7 +306,7 @@
 
                             <data-table-cell align="right">
 
-                                <div if-claims="create-vehicle" class="icon-row">
+                                <div if-claims="create-vehicles" class="icon-row">
 
                                     <button appearance="none" accent="primary" click.trigger="onRemoveVehicleClick(vehicle)">
                                         <icon name="delete-small"></icon>

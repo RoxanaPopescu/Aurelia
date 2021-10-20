@@ -67,7 +67,7 @@ export class RoutesModule
                 {
                     claims:
                     [
-                        "view-fulfiller-dispatch"
+                        "view-automatic-organization-route-assignments"
                     ]
                 },
                 title: routeTitles.autoContractorAssignment,

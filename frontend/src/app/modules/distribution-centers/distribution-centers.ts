@@ -25,7 +25,7 @@ export class DistributionCentersModule
                 {
                     claims:
                     [
-                        "view-depot"
+                        "view-distribution-centers"
                     ]
                 },
                 title: routeTitles.list
@@ -38,7 +38,7 @@ export class DistributionCentersModule
                 {
                     claims:
                     [
-                        "view-depot"
+                        "view-distribution-centers"
                     ]
                 },
                 title: routeTitles.details
@@ -51,7 +51,7 @@ export class DistributionCentersModule
                 {
                     claims:
                     [
-                        "create-depot"
+                        "create-distribution-centers"
                     ]
                 },
                 title: routeTitles.create

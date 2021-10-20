@@ -51,7 +51,7 @@ export class IdentityTokens
                 ? accessJwt.organization_permissions as string[]
                 : [accessJwt.organization_permissions as string];
 
-        this.claims = new Set<string>(permissions.map(p => p.toLowerCase().replace(/\s/g, "-")));
+        this.claims = new Set<string>(permissions);
     }
 
     /**

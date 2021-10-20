@@ -31,7 +31,7 @@ export class PortComponent extends React.Component<Props> {
         {Localization.operationsValue("Depots_Gates_DaysOfWeek")
           .replace("{daysOfWeek}", Localization.formatWeekdays(this.props.port.daysOfWeek!))}
         <div className="c-depotsPort-rule-actions">
-          {Profile.claims.has("edit-depot") &&
+          {Profile.claims.has("edit-distribution-centers") &&
           <Icon name="edit" onClick={() => this.props.onEdit()} />}
         </div>
       </div>

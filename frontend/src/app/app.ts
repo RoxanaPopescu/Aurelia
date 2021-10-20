@@ -228,7 +228,7 @@ export class AppModule
                 {
                     claims:
                     [
-                        "view-depot"
+                        "view-distribution-centers"
                     ]
                 },
                 title: routeTitles.distributionCenters,
@@ -261,7 +261,7 @@ export class AppModule
                 {
                     claims:
                     [
-                        "view-communication"
+                        "view-communications"
                     ]
                 },
                 title: routeTitles.communication,
@@ -277,7 +277,7 @@ export class AppModule
                 {
                     claims:
                     [
-                        "view-organization"
+                        "view-organizations"
                     ]
                 },
                 title: routeTitles.organization,

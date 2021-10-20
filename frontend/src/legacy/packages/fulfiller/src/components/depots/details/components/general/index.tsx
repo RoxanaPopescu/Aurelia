@@ -36,7 +36,7 @@ export default class DepotGeneralComponent extends React.Component<Props> {
           onChange={name => (this.props.store.depot.name = name)}
           error={this.validate && !this.props.store.depot.name}
           value={this.props.store.depot.name}
-          readonly={!Profile.claims.has("edit-depot")}
+          readonly={!Profile.claims.has("edit-distribution-centers")}
         />
         <AddressSearchComponent
           headline={Localization.sharedValue("Address")}
@@ -47,7 +47,7 @@ export default class DepotGeneralComponent extends React.Component<Props> {
           value={this.props.store.depot.location}
           placeholder={Localization.operationsValue("Depots_General_Address:Placeholder")}
           locationRequired={true}
-          disabled={!Profile.claims.has("edit-depot")}
+          disabled={!Profile.claims.has("edit-distribution-centers")}
         />
         <InputNumbers
           size={"medium"}
@@ -66,9 +66,9 @@ export default class DepotGeneralComponent extends React.Component<Props> {
               ? this.props.store.depot.slotInterval / 60
               : undefined
           }
-          readonly={!Profile.claims.has("edit-depot")}
+          readonly={!Profile.claims.has("edit-distribution-centers")}
         />
-        {Profile.claims.has("edit-depot") &&
+        {Profile.claims.has("edit-distribution-centers") &&
         <Button
           size={ButtonSize.Medium}
           onClick={() => this.validateInput()}

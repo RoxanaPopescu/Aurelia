@@ -89,7 +89,7 @@ export class OrdersModule
                 {
                     claims:
                     [
-                        "create-order"
+                        "create-orders"
                     ]
                 },
                 title: routeTitles.daoRelabel,
@@ -108,7 +108,7 @@ export class OrdersModule
                     {
                         claims:
                         [
-                            "create-order"
+                            "create-orders"
                         ]
                     },
                     title: routeTitles.import,

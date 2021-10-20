@@ -114,51 +114,10 @@ export class RoutePlanningModule
                 {
                     claims:
                     [
-                        "create-order-group"
+                        "create-order-groups"
                     ]
                 },
                 title: routeTitles.orderGroupsDetails
-            },
-            {
-                name: "simulations-list",
-                route: "simulations",
-                moduleId: PLATFORM.moduleName("./modules/route-simulations/list/list"),
-                settings:
-                {
-                    claims:
-                    [
-                        "view-routeplan-simulations"
-                    ]
-                },
-                title: routeTitles.simulationsList,
-                nav: false,
-                icon: "simulations"
-            },
-            {
-                name: "simulations-details",
-                route: "simulations/details/:id",
-                moduleId: PLATFORM.moduleName("./modules/route-simulations/details/details"),
-                settings:
-                {
-                    claims:
-                    [
-                        "view-routeplan-simulations"
-                    ]
-                },
-                title: routeTitles.simulationsDetails
-            },
-            {
-                name: "simulations-start",
-                route: "simulations/start/:id",
-                moduleId: PLATFORM.moduleName("./modules/route-simulations/start/start"),
-                settings:
-                {
-                    claims:
-                    [
-                        "create-routeplan-simulation"
-                    ]
-                },
-                title: routeTitles.simulationsDetails
             }
         ]);
     }

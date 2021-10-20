@@ -30,8 +30,7 @@ export function getUserClaims(tokens?: { access: string; refresh: string; }): st
     }
 
     return Object.keys(parsedBody)
-        .filter(claim => parsedBody[claim] === "true")
-        .map(claim => claim.toLowerCase().replace(/\s/g, "-"));
+        .filter(claim => parsedBody[claim] === "true");
 }
 
 /**

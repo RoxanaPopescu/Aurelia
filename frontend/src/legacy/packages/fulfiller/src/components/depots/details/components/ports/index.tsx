@@ -33,7 +33,7 @@ export default class DepotPortsComponent extends React.Component<Props> {
             }}
           />
         ))}
-        {Profile.claims.has("edit-depot") &&
+        {Profile.claims.has("edit-distribution-centers") &&
         <Button
           className="c-depotPort-add"
           size={ButtonSize.Medium}

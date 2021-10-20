@@ -529,7 +529,7 @@
 
                 <toolbar if.bind="route" class="flex-push-right">
 
-                    <button if-claims="assign-executor-route" appearance="outline" accent="primary" click.trigger="onAssignExecutorClick()">
+                    <button if-claims="assign-organization-route" appearance="outline" accent="primary" click.trigger="onAssignExecutorClick()">
                         <template if.bind="route.executor.id == identityService.identity.organization.id" translate>
                             Assign executor
                         </template>

@@ -345,7 +345,7 @@
                                 <data-table-cell if.bind="column.slug === 'executor'" class="${updating.executor ? 'opacity-faded' : ''}">
                                     <a
                                         class="text-truncate"
-                                        if-claims="assign-executor-route"
+                                        if-claims="assign-organization-route"
                                         click.trigger="onAssignExecutorClick(route, updating)"
                                     >
                                         <template if.bind="route.executor.companyName">
