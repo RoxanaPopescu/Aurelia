@@ -59,7 +59,7 @@
 }
 
 .c-liveTracking-box-neutral {
-  background-color: var(--colorNeutralRegular) !important;
+  background-color: var(--legacy-card-surface-box-surface-color, var(--colorNeutralRegular)) !important;
 
   &.c-liveTracking-box-clickable:hover {
     opacity: 0.7;
@@ -67,7 +67,7 @@
 }
 
 .c-liveTracking-box-positive {
-  color: white !important;
+  color: var(--surface-positive-surface-text-color) !important;
   background-color: var(--colorOk) !important;
 
   &.c-liveTracking-box-clickable:hover {
@@ -76,7 +76,7 @@
 }
 
 .c-liveTracking-box-warning {
-  color: white !important;
+  color: var(--surface-attention-surface-text-color) !important;
   background-color: var(--colorWarning) !important;
 
   &.c-liveTracking-box-clickable:hover {
@@ -85,7 +85,7 @@
 }
 
 .c-liveTracking-box-negative {
-  color: white !important;
+  color: var(--surface-negative-surface-text-color) !important;
   background-color: var(--colorAlert) !important;
 
   &.c-liveTracking-box-clickable:hover {

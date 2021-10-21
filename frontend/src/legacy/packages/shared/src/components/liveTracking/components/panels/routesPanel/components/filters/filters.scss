@@ -19,13 +19,13 @@
   line-height: 1.33;
   font-size: 12px;
   text-align: center;
-  background: var(--colorNeutralRegular);
+  background: var(--legacy-card-surface-box-surface-color, var(--colorNeutralRegular));
   color: white;
 }
 
 .c-livetracking-filter {
   margin-left: 10px;
-  color: var(--colorInteractivePrimary);
+  color: var(--surface-primary-text-color);
   font-size: 20rem;
 }
 
@@ -38,11 +38,11 @@
 .c-liveTracking-routesPanel-filters-count {
   margin-top: -3px;
   text-align: right;
-  color: var(--colorInteractivePrimary);
+  color: var(--surface-primary-text-color);
 }
 
 .c-liveTracking-routesPanel-filters-enabledCount {
-  color: var(--colorInteractivePrimary);
+  color: var(--surface-primary-text-color);
 }
 
 .c-liveTracking-routesPanel-filters-input {
@@ -64,13 +64,13 @@
 }
 
 .c-liveTracking-box-white {
-  background-color: white;
-  color: #555;
+  background-color: var(--surface-color);
+  color: var(--surface-subtle-color, #555);
 }
 
 .c-liveTracking-box-gray {
   color: white;
-  background-color: #9d9d9d;
+  background-color: var(--legacy-card-surface-color, #9d9d9d);
 }
 
 .c-liveTracking-routesPanel-filters-title {
@@ -82,11 +82,12 @@
 
 .c-liveTracking-routesPanel-filters-expandedOuter {
   border-top: 1px solid var(--colorNeutralLight);
-  background-color: #f8f9f9;
+  background-color: var(--legacy-card-surface-color, #f8f9f9);
 }
 
 .c-liveTracking-routesPanel-filters-expanded {
   padding: 20px;
+  box-shadow: 0 1000px 0 1000px var(--legacy-card-surface-color, #f8f9f9);
 
   > div {
     > div:not(:last-child) {

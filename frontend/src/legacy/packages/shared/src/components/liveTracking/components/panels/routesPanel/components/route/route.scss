@@ -1,15 +1,5 @@
 @import "shared/src/webKit/constants.scss";
 
-.c-liveTracking-route-bar {
-  width: 4px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  border-top-right-radius: 2px;
-  border-bottom-right-radius: 2px;
-}
-
 .c-liveTracking-routesPanel-route {
   position: relative;
   display: flex;
@@ -17,7 +7,7 @@
   padding: 16px 16px 16px 20px;
   border: 1px solid var(--colorNeutralExtraLightDarken);
   border-radius: $listItemBorderRadius;
-  background: var(--colorNeutralExtraLight);
+  background: var(--legacy-card-surface-color, var(--colorNeutralExtraLight));
   cursor: pointer;
 
   & > :last-child {
@@ -25,19 +15,23 @@
   }
 
   &:hover {
-    background-color: var(--colorNeutralExtraLightDarken);
+    background-color: var(--legacy-card-surface-color--hover, var(--colorNeutralExtraLightDarken));
 
     &:before {
-      content: "";
-      position: absolute;
-      right: -1px;
-      top: -1px;
-      bottom: -1px;
-      width: 4px;
-      border-top-right-radius: 2px;
-      border-bottom-right-radius: 2px;
       background-color: var(--colorBackgroundPrimary);
     }
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    bottom: -1px;
+    width: 4px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    background-color: var(--colorNeutralLight);
   }
 }
 
@@ -46,7 +40,7 @@
 }
 
 .c-liveTracking-routesPanel-route-flag {
-  color: var(--colorBackgroundPrimary);
+  color: var(--surface-primary-text-color, var(--colorBackgroundPrimary));
   opacity: 0.3;
   cursor: pointer;
   width: 25px;

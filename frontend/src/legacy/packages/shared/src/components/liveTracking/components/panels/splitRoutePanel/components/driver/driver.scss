@@ -7,24 +7,28 @@
   padding: 16px 20px;
   border: 1px solid var(--colorNeutralExtraLightDarken);
   border-radius: $listItemBorderRadius;
-  background: var(--colorNeutralExtraLight);
+  background: var(--legacy-card-surface-color, var(--colorNeutralExtraLight));
   cursor: pointer;
 
   &.c-liveTracking-splitRoutePanel-driver--selected,
   &:hover {
-    background-color: var(--colorNeutralExtraLightDarken);
+    background-color: var(--legacy-card-surface-color--hover, var(--colorNeutralExtraLightDarken));
 
     &:before {
-      content: "";
-      position: absolute;
-      right: -1px;
-      top: -1px;
-      bottom: -1px;
-      width: 4px;
-      border-top-right-radius: 2px;
-      border-bottom-right-radius: 2px;
       background-color: var(--colorBackgroundPrimary);
     }
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    bottom: -1px;
+    width: 4px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    background-color: var(--colorNeutralLight);
   }
 
   &.c-liveTracking-splitRoutePanel-driver--selected {

@@ -191,7 +191,7 @@ react-module
 
     .radioGroup .radioLabel .radioButton
     {
-        border-color: var(--toggle-surface-indicator-color--focus);
+        border-color: var(--surface-toggle-surface-indicator-color--focus);
     }
 
     .c-orderDetails-meta,
@@ -258,5 +258,10 @@ react-module
         font-weight: 500;
         line-height: var(--font-base-line-height);
         color: inherit;
+    }
+
+    .c-worldMap
+    {
+        color: var(--palette-color-neutral-darkest);
     }
 }

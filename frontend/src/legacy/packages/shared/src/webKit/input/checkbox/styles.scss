@@ -17,16 +17,16 @@ $height: 20px;
   .c-checkbox {
     height: $height;
     width: $height;
-    border: 1px solid var(--colorNeutralRegular);
+    border: 2px solid var(--colorNeutralRegular);
     border-radius: $borderRadius;
-    background-color: white;
+    background-color: transparent;
     transition: border 150ms;
     display: flex;
     align-items: center;
     justify-content: center;
 
     &:hover {
-      border: 1px solid var(--colorNeutralSemiDark);
+      border: 2px solid var(--colorNeutralSemiDark);
     }
 
     span {

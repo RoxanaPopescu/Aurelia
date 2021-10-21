@@ -15,4 +15,13 @@
     font-size: 14px !important;
     color: #333 !important;
   }
+
+  > div > div > .gm-style
+  {
+    > div[style*="border:"]
+    {
+      border: none !important;
+      transition: border 0s;
+    }
+  }
 }

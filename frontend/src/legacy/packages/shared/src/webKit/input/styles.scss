@@ -4,7 +4,7 @@ $paddingLeft: 15px;
 
 .inputContainer {
   display: inline-block;
-  background-color: white;
+  background-color: var(--surface-input-surface-color, white);
 
   .inputWrapper {
 
@@ -32,11 +32,11 @@ $paddingLeft: 15px;
 
     input {
       padding-right: 20px;
-      color: black;
+      color: var(--surface-input-surface-text-color, black);
       height: 100%;
       padding-left: $paddingLeft;
       border-radius: $borderRadius;
-      font-size: 14px;
+      font-size: var(--font-base-font-size, 14px);
 
       &[type="search"] {
         padding-right: 7px;
@@ -50,7 +50,7 @@ $paddingLeft: 15px;
       width: 100%;
       opacity: 1;
       transition: all 150ms;
-      background-color: white;
+      background-color: var(--surface-input-surface-color, white);
 
       &:active,
       &:focus,

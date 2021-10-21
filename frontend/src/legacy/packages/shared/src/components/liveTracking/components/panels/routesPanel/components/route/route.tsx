@@ -25,19 +25,18 @@ export class RouteComponent extends React.Component<RoutesLayerProps> {
 
     const isFlagged = routeFlagService.isFlagged(route.id);
 
-    let boxStyle: string = "c-liveTracking-box-neutral";
+    let accent: string = "--neutral";
     if (route.criticality.slug == "high") {
-      boxStyle = "c-liveTracking-box-negative";
+      accent = "--negative";
     } else if (route.criticality.slug == "medium") {
-      boxStyle = "c-liveTracking-box-warning";
+      accent = "--warning";
     }
 
     return (
       <div
-        className="c-liveTracking-routesPanel-route"
+        className={"c-liveTracking-routesPanel-route " + accent}
         onClick={() => this.onClick()}
       >
-        <div className={"c-liveTracking-route-bar " + boxStyle} />
         <div>
 
           <div className="c-liveTracking-panel-section user-select-text suppress-double-click">

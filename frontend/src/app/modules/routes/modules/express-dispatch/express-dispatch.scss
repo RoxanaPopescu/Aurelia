@@ -8,7 +8,7 @@ page[name="routes"] page[name="express-dispatch"]
         z-index: 2;
         right: 192rem;
         top: 28rem;
-        background: white;
+        background: var(--surface-color, white);
     }
 
     page-content > header > .flex-row > toolbar
