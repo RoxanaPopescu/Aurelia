@@ -607,7 +607,7 @@ a {
 }
 
 .inactive {
-  color: var(--textDarkInactive);
+  color: var(--surface-subtle-color, var(--textDarkInactive));
 }
 
 .dark {

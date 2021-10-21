@@ -271,7 +271,8 @@ react-module
         color: var(--surface-input-surface-text-color) !important;
     }
 
-    .selectContainer .selectWrapper .react-selectize .dropdown-menu
+    .selectContainer .selectWrapper .react-selectize .dropdown-menu,
+    .gridTable-container-old .c-gridTable .c-gridTable-header
     {
         background-color: var(--surface-color) !important;
     }
@@ -287,7 +288,8 @@ react-module
         background-color: var(--surface-color, white) !important;
     }
 
-    .c-dialog-header
+    .c-dialog-header,
+    .c-depots-scannedColli-infoTitle
     {
         background-color: var(--legacy-card-surface-color, var(--colorNeutralExtraLight)) !important;
     }
