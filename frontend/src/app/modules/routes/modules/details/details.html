@@ -529,32 +529,49 @@
 
                 <toolbar if.bind="route" class="flex-push-right">
 
-                    <button if-claims="assign-organization-route" appearance="outline" accent="primary" click.trigger="onAssignExecutorClick()">
-                        <template if.bind="route.executor.id == identityService.identity.organization.id" translate>
-                            Assign executor
-                        </template>
-                        <template if.bind="route.executor.id != identityService.identity.organization.id" translate>
-                            Reassign executor
-                        </template>
-                    </button>
+                    <select-button appearance="outline" accent="primary">
 
-                    <button if-claims="assign-driver-route" appearance="outline" accent="primary" click.trigger="onAssignDriverClick()">
-                        <template if.bind="!route.driver" translate>
-                            Assign driver
-                        </template>
-                        <template if.bind="route.driver" translate>
-                            Reassign driver
-                        </template>
-                    </button>
+                        <div slot="label" translate>
+                            Assign
+                        </div>
 
-                    <button if-claims="edit-routes" appearance="outline" accent="primary" click.trigger="onAssignVehicleClick()">
-                        <template if.bind="!route.vehicle" translate>
-                            Assign vehicle
-                        </template>
-                        <template if.bind="route.vehicle" translate>
-                            Reassign vehicle
-                        </template>
-                    </button>
+                        <item
+                            if-claims="assign-organization-route"
+                            model="assign-executor"
+                            click.trigger="onAssignExecutorClick()">
+                            <template if.bind="route.executor.id == identityService.identity.organization.id" translate>
+                                Assign executor
+                            </template>
+                            <template if.bind="route.executor.id != identityService.identity.organization.id" translate>
+                                Reassign executor
+                            </template>
+                        </item>
+
+                        <item
+                            if-claims="assign-driver-route"
+                            model="assign-driver"
+                            click.trigger="onAssignDriverClick()">
+                            <template if.bind="!route.driver" translate>
+                                Assign driver
+                            </template>
+                            <template if.bind="route.driver" translate>
+                                Reassign driver
+                            </template>
+                        </item>
+
+                        <item
+                            if-claims="edit-routes"
+                            model="assign-vehicle"
+                            click.trigger="onAssignVehicleClick()">
+                            <template if.bind="!route.vehicle" translate>
+                                Assign vehicle
+                            </template>
+                            <template if.bind="route.vehicle" translate>
+                                Reassign vehicle
+                            </template>
+                        </item>
+
+                    </select-button>
 
                     <select-button if-claims="edit-routes" appearance="outline" accent="primary">
 

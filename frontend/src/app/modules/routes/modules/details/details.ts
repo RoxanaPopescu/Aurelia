@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, computedFrom } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
@@ -103,6 +103,17 @@ export class DetailsModule
      */
     protected statusValues = Object.keys(RouteStatus.values).map(slug => new RouteStatus(slug as any));
 
+    /**
+     * True if the `Assign` button should be visible, otherwise false,
+     */
+    @computedFrom("identityService.identity.claims.size")
+    protected get canAssign(): boolean
+    {
+        return (
+            this.identityService.identity!.claims.has("assign-organization-route") ||
+            this.identityService.identity!.claims.has("assign-driver-route") ||
+            this.identityService.identity!.claims.has("edit-routes"));
+    }
     /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
