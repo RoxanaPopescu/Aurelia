@@ -9,7 +9,7 @@ $speed: 250ms;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(white, 0.92);
+  background-color: rgba(var(--surface-color, white), 0.92);
 
   &.loadingOverlayContainer--fade {
     -webkit-animation: fadeInOverlay $speed ease-in-out; /* Safari 4+ */

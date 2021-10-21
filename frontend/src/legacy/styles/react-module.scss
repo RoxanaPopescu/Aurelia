@@ -252,6 +252,22 @@ react-module
         opacity: var(--opacity-faded) !important
     }
 
+    .selectContainer .selectWrapper .react-selectize .react-selectize-control
+    {
+        background-color: var(--surface-input-surface-color) !important;
+    }
+
+    .selectContainer .selectWrapper .react-selectize .dropdown-menu
+    {
+        background-color: var(--surface-color) !important;
+    }
+
+    .multiSelectContainer.selectContainer .selectWrapper .react-selectize .react-selectize-control
+    .react-selectize-search-field-and-selected-values .value-wrapper
+    {
+        background-color: var(--surface-input-surface-tag-surface-color) !important;
+    }
+
     .gridTable-container-old .c-gridTable .c-gridTable-header.font-heading
     {
         font-size: var(--font-base-font-size);
