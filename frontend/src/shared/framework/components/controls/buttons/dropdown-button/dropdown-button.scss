@@ -43,7 +43,8 @@ dropdown-button
             opacity: var(--opacity-faded);
         }
 
-        [slot="label"]:not(:empty) + [slot="icon"]:not(:empty)
+        [slot="label"]:not(:empty) + [slot="icon"]:not(:empty),
+        [slot="label"]:not(:empty) + dropdown-icon
         {
             // Apply spacing between the label and icon.
             margin-left: var(--size-inline-spacing);
