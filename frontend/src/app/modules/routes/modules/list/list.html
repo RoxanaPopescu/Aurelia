@@ -144,61 +144,6 @@
             <page-section toggle.bind="true">
 
                 <div slot="header" translate>
-                    Created date
-                </div>
-
-                <div class="control-row">
-
-                    <date-input label="above" fixed.bind="true" value.bind="createdTimeFromFilter" class="flex-grow">
-
-                        <div slot="heading" translate>
-                            From
-                        </div>
-
-                    </date-input>
-
-                    <date-input label="above" fixed.bind="true" value.bind="createdTimeToFilter" class="flex-grow">
-
-                        <div slot="heading" translate>
-                            To
-                        </div>
-
-                    </date-input>
-
-                </div>
-
-            </page-section>
-
-            <page-section toggle.bind="true">
-
-                <div slot="header" translate>
-                    Tags
-                </div>
-
-                <tags-input
-                    label="above"
-                    value.bind="tagsFilter"
-                    new.bind="true"
-                    class="margin-large-bottom">
-                </tags-input>
-
-            </page-section>
-
-            <page-section toggle.bind="true">
-
-                <div slot="header" translate>
-                    Pickup nearby
-                </div>
-
-                <address-input label="above" value.bind="pickupNearbyAddress" class="flex-basis-1-of-1">
-
-                </address-input>
-
-            </page-section>
-
-            <page-section if.bind="showLegacy" toggle.bind="true">
-
-                <div slot="header" translate>
                     Teams
                 </div>
 
@@ -232,6 +177,33 @@
 
             </page-section>
 
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Tags
+                </div>
+
+                <tags-input
+                    label="above"
+                    value.bind="tagsFilter"
+                    new.bind="true"
+                    class="margin-large-bottom">
+                </tags-input>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Pickup nearby
+                </div>
+
+                <address-input label="above" value.bind="pickupNearbyAddress" class="flex-basis-1-of-1">
+
+                </address-input>
+
+            </page-section>
+
             <page-section if.bind="showLegacy" toggle.bind="true">
 
                 <div slot="header" translate>
@@ -244,6 +216,34 @@
                     new.bind="true"
                     class="margin-large-bottom">
                 </tags-input>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Created date
+                </div>
+
+                <div class="control-row">
+
+                    <date-input label="above" fixed.bind="true" value.bind="createdTimeFromFilter" class="flex-grow">
+
+                        <div slot="heading" translate>
+                            From
+                        </div>
+
+                    </date-input>
+
+                    <date-input label="above" fixed.bind="true" value.bind="createdTimeToFilter" class="flex-grow">
+
+                        <div slot="heading" translate>
+                            To
+                        </div>
+
+                    </date-input>
+
+                </div>
 
             </page-section>
 

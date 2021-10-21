@@ -1,5 +1,4 @@
 import { AppModule } from "../../../../app-module";
-import { environment } from "../../../../../env";
 
 /**
  * Represents a module exposing endpoints related to route list
@@ -17,16 +16,43 @@ export class RoutesListModule extends AppModule
          */
         this.router.post("/v2/routes/list", async context =>
         {
-            await context.authorize("view-routes");
-
             const body = context.request.body;
+            await context.authorize("view-routes", { teams: body.teams });
+
             body.includeTotalCount = false;
             body.fulfillerIds = [context.user?.organizationId];
             body.organizationId = context.user?.organizationId;
-            if (environment.debug)
+
+            // TODO: Generalize this part
+            const accessAllTeams = context.user?.permissions.has("access-all-teams") ?? false;
+
+            let teams = body.teams;
+            if (teams == null)
             {
-                // body.teamIds = ["80302a70-d32c-4e2d-bc2b-e2ce00e76f45"];
+                if (!accessAllTeams)
+                {
+                    teams = context.user?.teamIds ?? [];
+                }
             }
+
+            if (teams == null)
+            {
+                delete body.teams;
+            }
+            else
+            {
+                const teamIds = teams.filter((t: any) => t !== "no-team");
+                const includeNoTeam: boolean | undefined = teams.some((t: any) => t === "no-team");
+
+                body.teams =
+                {
+                    ids: teamIds ?? [],
+                    includeNoTeam: includeNoTeam ?? true
+                };
+            }
+
+            console.log(body.teams);
+            // TODO: End generalize
 
             const result = await this.apiClient.post("logistics-platform/routes/v4/list",
             {
