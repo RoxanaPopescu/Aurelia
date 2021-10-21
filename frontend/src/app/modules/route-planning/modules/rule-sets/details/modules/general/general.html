@@ -262,7 +262,7 @@
 
     <page-section class="--line-above">
 
-        <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
+        <h1 class="font-largest margin-bottom" translate>
             Collection points
         </h1>
 
@@ -334,9 +334,9 @@
 
     <page-section class="--line-above">
 
-        <div slot="header" translate>
+        <h1 class="font-largest margin-bottom" translate>
             Route creation
-        </div>
+        </h1>
 
         <h2 class="margin-large-bottom" translate>
             Here you can specify how the routes should be created, tagged and approved.
@@ -365,13 +365,12 @@
                 <select-button appearance="text-without-hover" accent="primary">
 
                     <div slot="label" class="flex-row">
-                        <icon name="placeholder-small" accent="primary" class="margin-right"></icon>
                         <span translate>
                             Insert placeholder
                         </span>
                     </div>
 
-                    <item click.trigger="onRouteNamePlaceholderClick('{DayOfWeek}')">
+                    <item click.trigger="onRouteNamePlaceholderClick('{DayOfWeek}')" model="day-of-wek">
                         <div accent="primary">
                             {DayOfWeek}
                         </div>
@@ -380,7 +379,7 @@
                         </div>
                     </item>
 
-                    <item click.trigger="onRouteNamePlaceholderClick('{DayOfWeek}')">
+                    <item click.trigger="onRouteNamePlaceholderClick('{DayOfWeek}')" model="day-of-year">
                         <div accent="primary">
                             {DayOfYear}
                         </div>
@@ -389,7 +388,7 @@
                         </div>
                     </item>
 
-                    <item click.trigger="onRouteNamePlaceholderClick('{StartLocation}')">
+                    <item click.trigger="onRouteNamePlaceholderClick('{StartLocation}')" model="start-location">
                         <div accent="primary">
                             {StartLocation}
                         </div>
@@ -398,7 +397,7 @@
                         </div>
                     </item>
 
-                    <item click.trigger="onRouteNamePlaceholderClick('{EndLocation}')">
+                    <item click.trigger="onRouteNamePlaceholderClick('{EndLocation}')" model="end-location">
                         <div accent="primary">
                             {EndLocation}
                         </div>
@@ -407,7 +406,7 @@
                         </div>
                     </item>
 
-                    <item click.trigger="onRouteNamePlaceholderClick('{Gate}')">
+                    <item click.trigger="onRouteNamePlaceholderClick('{Gate}')" model="gate">
                         <div accent="primary">
                             {Gate}
                         </div>
@@ -416,7 +415,7 @@
                         </div>
                     </item>
 
-                    <item click.trigger="onRouteNamePlaceholderClick('{StartTime}')">
+                    <item click.trigger="onRouteNamePlaceholderClick('{StartTime}')" model="day-of-wek">
                         <div accent="primary">
                             {StartTime}
                         </div>
@@ -425,7 +424,7 @@
                         </div>
                     </item>
 
-                    <item click.trigger="onRouteNamePlaceholderClick('{Number}')">
+                    <item click.trigger="onRouteNamePlaceholderClick('{Number}')" model="number">
                         <div accent="primary">
                             {Number}
                         </div>
@@ -434,7 +433,7 @@
                         </div>
                     </item>
 
-                    <item click.trigger="onRouteNamePlaceholderClick('{Year}')">
+                    <item click.trigger="onRouteNamePlaceholderClick('{Year}')" model="year">
                         <div accent="primary">
                             {Year}
                         </div>
@@ -443,7 +442,7 @@
                         </div>
                     </item>
 
-                    <item click.trigger="onRouteNamePlaceholderClick('{Month}')">
+                    <item click.trigger="onRouteNamePlaceholderClick('{Month}')" model="month">
                         <div accent="primary">
                             {Month}
                         </div>
@@ -452,7 +451,7 @@
                         </div>
                     </item>
 
-                    <item click.trigger="onRouteNamePlaceholderClick('{Day}')">
+                    <item click.trigger="onRouteNamePlaceholderClick('{Day}')" model="day">
                         <div accent="primary">
                             {Day}
                         </div>
@@ -461,7 +460,7 @@
                         </div>
                     </item>
 
-                    <item click.trigger="onRouteNamePlaceholderClick('{StartLocationZip1}')">
+                    <item click.trigger="onRouteNamePlaceholderClick('{StartLocationZip1}')" model="start-location-zip-1">
                         <div accent="primary">
                             {StartLocationZip1}
                         </div>
@@ -470,7 +469,7 @@
                         </div>
                     </item>
 
-                    <item click.trigger="onRouteNamePlaceholderClick('{StartLocationZip}')">
+                    <item click.trigger="onRouteNamePlaceholderClick('{StartLocationZip}')" model="start-location-zip">
                         <div accent="primary">
                             {StartLocationZip}
                         </div>
@@ -479,7 +478,7 @@
                         </div>
                     </item>
 
-                    <item click.trigger="onRouteNamePlaceholderClick('{LastDeliveryZip}')">
+                    <item click.trigger="onRouteNamePlaceholderClick('{LastDeliveryZip}')" model="last-delivery-zip">
                         <div accent="primary">
                             {LastDeliveryZip}
                         </div>

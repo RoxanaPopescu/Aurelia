@@ -500,7 +500,6 @@
                                 <select-button appearance="text-without-hover" accent="primary" class="flex-push-right">
 
                                     <div slot="label" class="flex-row">
-                                        <icon name="placeholder-small" accent="primary" class="margin-right"></icon>
                                         <span translate>
                                             Insert placeholder
                                         </span>
@@ -508,6 +507,7 @@
 
                                     <item
                                         repeat.for="placeholder of options.placeholders"
+                                        model.bind="placeholder.placeholder"
                                         click.trigger="onMessagePlaceholderClick(placeholder.placeholder)">
 
                                         <div accent="primary">
