@@ -61,6 +61,12 @@ export class LiveTrackingFilter {
     public assignedToDriver: boolean | undefined;
 
     /**
+     * The number of selected teams
+     */
+     @observable
+    public selectedTeamCount = 0;
+
+    /**
      * The vehicle type ids
      */
     @computed
@@ -75,6 +81,10 @@ export class LiveTrackingFilter {
     @computed
     public get enabledCount(): number {
       let count = 0;
+
+      if (this.selectedTeamCount > 0) {
+        count++;
+      }
 
       if (this.criticalities.length > 0 && this.criticalities.length != 3) {
         count++;

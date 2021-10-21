@@ -1,13 +1,15 @@
 import React from "react";
+import { Container } from "aurelia-framework";
 import { observer } from "mobx-react";
 import Localization from "shared/src/localization";
 import { LiveTrackingService } from "../../../../../services/liveTrackingService";
-import { Input, InputCheckbox, Icon, InputRadioGroup } from "shared/src/webKit";
+import { Input, InputCheckbox, Icon, InputRadioGroup, MultiSelect } from "shared/src/webKit";
 import "./filters.scss";
 import { observable } from "mobx";
 import { RouteCriticality, RouteStatus } from "app/model/route";
 import { ProductType } from "app/model/product";
 import { VehicleType } from "app/model/vehicle";
+import { TeamsFilterService } from "app/services/teams-filter";
 
 export interface RoutesLayerProps {
   service: LiveTrackingService;
@@ -16,6 +18,15 @@ export interface RoutesLayerProps {
 @observer
 export class Filters extends React.Component<RoutesLayerProps> {
   @observable expanded = false;
+  teamsFilterService: TeamsFilterService
+
+  public constructor(props)
+  {
+    super(props);
+
+    this.teamsFilterService = Container.instance.get(TeamsFilterService)
+    this.teamsFilterService.fetchAccessibleTeams();
+  }
 
   public render() {
 
@@ -76,6 +87,22 @@ export class Filters extends React.Component<RoutesLayerProps> {
         {this.expanded &&
         <div className="c-liveTracking-routesPanel-filters-expandedOuter">
         <div className="c-liveTracking-routesPanel-filters-expanded">
+          <div>
+            <div className="c-liveTracking-routesPanel-filters-title">{Localization.sharedValue("Teams")}</div>
+            <MultiSelect
+              size={"medium"}
+              onChange={values => {
+                this.teamsFilterService.selectedTeamIds = (values ?? [])!.map(t => t.value);
+                this.props.service.filter.selectedTeamCount = this.teamsFilterService.selectedTeamIds.length;
+              }}
+              options={(this.teamsFilterService.accessibleTeams ?? []).map((t: any) => {
+                return { label: t.name ?? "No team", value: t.id ?? "no-team" };
+              })}
+              values={(this.teamsFilterService.selectedTeams ?? []).map((t: any) => {
+                return { label: t.name ?? "No team", value: t.id ?? "no-team" };
+              })}
+            />
+          </div>
           <div>
             <div className="c-liveTracking-routesPanel-filters-title">{Localization.sharedValue("Criticality")}</div>
             <InputCheckbox

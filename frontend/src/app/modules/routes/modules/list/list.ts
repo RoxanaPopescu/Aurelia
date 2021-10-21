@@ -130,11 +130,6 @@ export class ListPage
     protected readonly teamsFilterService: TeamsFilterService;
 
     /**
-     * The teams accessible to the current user.
-     */
-    protected accessibleTeams: OrganizationTeam[];
-
-    /**
      * The custom grid column widths calculated from the columns
      */
     @computedFrom("columns")

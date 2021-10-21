@@ -1,4 +1,5 @@
 import { observable, computed } from "mobx";
+import { Container } from "aurelia-framework";
 import BaseService from "shared/src/services/base";
 import Localization from "shared/src/localization";
 import { routeFlagService } from "./routeFlagService";
@@ -9,6 +10,7 @@ import { DateTime, Duration } from "luxon";
 import { CommunicationService } from "app/model/_communication";
 import { ToastType } from "shared/src/webKit";
 import { Log } from "shared/infrastructure";
+import { TeamsFilterService } from "app/services/teams-filter";
 
 const routeStatusSortOrder: (keyof typeof RouteStatus.values)[] =
   ["not-started", "in-progress", "not-approved", "completed", "cancelled"];
@@ -438,13 +440,13 @@ export class LiveTrackingService {
         to = to.plus(Duration.fromObject({hours: 3}));
       }
 
-
       const result = await this.routeService.getAll(
           {
               statuses: statuses,
               startTimeFrom: from.toUTC(),
               startTimeTo: to.toUTC(),
               assignedDriver: assignedDriver,
+              teams: Container.instance.get(TeamsFilterService)?.selectedTeamIds
           },
           {
               owner: true,
