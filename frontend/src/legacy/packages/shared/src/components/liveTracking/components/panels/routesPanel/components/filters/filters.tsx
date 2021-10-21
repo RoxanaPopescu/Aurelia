@@ -25,7 +25,12 @@ export class Filters extends React.Component<RoutesLayerProps> {
     super(props);
 
     this.teamsFilterService = Container.instance.get(TeamsFilterService)
+  }
+
+  public componentWillMount()
+  {
     this.teamsFilterService.fetchAccessibleTeams();
+    this.props.service.filter.selectedTeamCount = this.teamsFilterService.selectedTeamIds?.length ?? 0;
   }
 
   public render() {
@@ -92,8 +97,8 @@ export class Filters extends React.Component<RoutesLayerProps> {
             <MultiSelect
               size={"medium"}
               onChange={values => {
-                this.teamsFilterService.selectedTeamIds = (values ?? [])!.map(t => t.value);
-                this.props.service.filter.selectedTeamCount = this.teamsFilterService.selectedTeamIds.length;
+                this.teamsFilterService.selectedTeamIds = values?.length ? values?.map(t => t.value) : undefined;
+                this.props.service.filter.selectedTeamCount = this.teamsFilterService.selectedTeamIds?.length ?? 0;
               }}
               options={(this.teamsFilterService.accessibleTeams ?? []).map((t: any) => {
                 return { label: t.name ?? "No team", value: t.id ?? "no-team" };
