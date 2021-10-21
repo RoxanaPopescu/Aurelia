@@ -132,6 +132,11 @@ react-module
                 overflow: hidden;
                 white-space: nowrap;
 
+                &:not(:last-child)
+                {
+                    border-right: var(--border-width-medium) solid var(--surface-neutral-border-color) !important;
+                }
+
                 &.active
                 {
                     color: inherit;
@@ -144,7 +149,8 @@ react-module
     .inputContainer:not(.error) .inputWrapper input:not(.noBorder),
     .selectContainer:not(.error) .selectWrapper .react-selectize .react-selectize-control,
     .buttonContainer.moverButton.buttonLight,
-    .c-checkboxContainer:not(.checked) .c-checkbox
+    .c-checkboxContainer:not(.checked) .c-checkbox,
+    .dateWrapper .middleWrapper .react-datepicker-wrapper .dateTimeInput
     {
         &, &:hover, &:focus
         {
@@ -252,9 +258,17 @@ react-module
         opacity: var(--opacity-faded) !important
     }
 
-    .selectContainer .selectWrapper .react-selectize .react-selectize-control
+    .selectContainer .selectWrapper .react-selectize .react-selectize-control,
+    .dateWrapper .middleWrapper .react-datepicker-wrapper .dateTimeInput,
+    .react-kronos > input
     {
-        background-color: var(--surface-input-surface-color) !important;
+        color: var(--surface-input-surface-text-color) !important;
+        background-color: var(--surface-input-surface-color, white) !important;
+    }
+
+    .react-selectize-search-field-and-selected-values > input
+    {
+        color: var(--surface-input-surface-text-color) !important;
     }
 
     .selectContainer .selectWrapper .react-selectize .dropdown-menu
@@ -266,6 +280,16 @@ react-module
     .react-selectize-search-field-and-selected-values .value-wrapper
     {
         background-color: var(--surface-input-surface-tag-surface-color) !important;
+    }
+
+    .c-dialog-content
+    {
+        background-color: var(--surface-color, white) !important;
+    }
+
+    .c-dialog-header
+    {
+        background-color: var(--legacy-card-surface-color, var(--colorNeutralExtraLight)) !important;
     }
 
     .gridTable-container-old .c-gridTable .c-gridTable-header.font-heading

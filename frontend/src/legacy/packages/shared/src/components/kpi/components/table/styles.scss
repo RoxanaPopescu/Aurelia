@@ -3,10 +3,11 @@
 .c-fulfillerKpi {
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: var(--surface-color);
 
   .c-fulfillerKpi-tableSkeleton-bone {
     animation: animation-skeleton 2s ease-in-out 0s infinite normal none running;
+    opacity: 0.5;
   }
 
   .c-fulfillerKpi-actionContainer {
@@ -35,7 +36,7 @@
       .c-fulfillerKpi-formatToggle-format {
         height: 42px;
         width: 42px;
-        background-color: white;
+        background-color: var(--surface-color);
         border: 1px solid var(--colorNeutralLight);
         display: flex;
         align-items: center;
@@ -108,7 +109,7 @@
 
         &:not(.c-fulfillerKpi-kpiColumn-head) {
           &:nth-child(11n + 2) {
-            background-color: var(--colorNeutralExtraLight);
+            background-color: var(--legacy-card-surface-color, var(--colorNeutralExtraLight));
             border-left: 1px solid var(--colorNeutralLight);
             border-right: 1px solid var(--colorNeutralLight);
             text-align: center;
@@ -129,7 +130,7 @@
         &.c-fulfillerKpi-kpiColumn-head {
           border-top: 1px solid var(--colorNeutralLight);
           border-bottom: 1px solid var(--colorNeutralLight);
-          color: var(--colorNeutralRegularDarken);
+          color: var(--surface-subtle-color, var(--colorNeutralRegularDarken));
         }
 
         &.c-fulfillerKpi-kpiGroupHeadline,
