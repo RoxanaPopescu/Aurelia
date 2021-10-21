@@ -194,6 +194,8 @@ export class DetailsPage
     {
         setTimeout(() =>
         {
+            (this.messageInputElement.querySelector(".input-input") as HTMLElement).focus();
+
             document.execCommand("insertText", false, placeholder);
         });
     }

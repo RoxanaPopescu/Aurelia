@@ -75,9 +75,9 @@ export class General
     {
         setTimeout(() =>
         {
-            this.routeNameTempleteInputElement.focus();
+            (this.routeNameTempleteInputElement.querySelector(".input-input") as HTMLElement).focus();
+
             document.execCommand("insertText", false, placeholder);
-        },
-        150000);
+        });
     }
 }
