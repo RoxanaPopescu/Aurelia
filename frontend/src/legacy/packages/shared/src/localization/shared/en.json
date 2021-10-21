@@ -50,6 +50,7 @@
   "CreditCardType_AmericanExpress": "American Express",
   "CreditCardType_MasterCard": "Master Card",
   "CreditCardType_Visa": "Visa",
+  "Teams": "Teams",
   "Criticality": "Criticality",
   "Departments_List_TotalCount": "{count} departments",
   "Departure_TimeFrame": "Departure timeframe",

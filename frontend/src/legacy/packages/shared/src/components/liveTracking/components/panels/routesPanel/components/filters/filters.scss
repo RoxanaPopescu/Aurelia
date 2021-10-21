@@ -69,8 +69,8 @@
 }
 
 .c-liveTracking-box-gray {
-  color: white;
-  background-color: var(--legacy-card-surface-color, #9d9d9d);
+  color: var(--surface-neutral-surface-text-color, white);
+  background-color: var(--surface-neutral-surface-color, #9d9d9d);
 }
 
 .c-liveTracking-routesPanel-filters-title {

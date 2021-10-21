@@ -44,6 +44,10 @@ $__summary: comment;
      * The label color, set in temp.scss.
      */
     --temp-label-color: #555555;
+
+    --legacy-card-surface-color: var(--palette-color-neutral-lightest);
+    --legacy-card-surface-color--hover: var(--palette-color-neutral-lighter);
+    --legacy-card-surface-box-surface-color: var(--palette-color-neutral-light);
 }
 
 permissions
