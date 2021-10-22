@@ -50,8 +50,6 @@ export class RoutesListModule extends AppModule
                     includeNoTeam: includeNoTeam ?? true
                 };
             }
-
-            console.log(body.teams);
             // TODO: End generalize
 
             const result = await this.apiClient.post("logistics-platform/routes/v4/list",
