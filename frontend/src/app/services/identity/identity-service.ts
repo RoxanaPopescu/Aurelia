@@ -61,15 +61,6 @@ export class IdentityService
     {
         this._changeFunc = identityChangeFunc;
 
-        // Reauthorize whenever the page becomes visible.
-        document.addEventListener("visibilitychange", async () =>
-        {
-            if (document.visibilityState !== "hidden")
-            {
-                await this.reauthorizeBeforeExpiry();
-            }
-        });
-
         // Continuously check whether the tokens are approaching expiry, and reauthorize if nessesary.
         setInterval(() => this.reauthorizeBeforeExpiry(), 60 * 1000);
     }
@@ -205,10 +196,9 @@ export class IdentityService
 
     /**
      * Attempts to reauthorize the user using the refresh token stored on the device.
-     * @param unauthorizeOnFailure True to unauthorize if reauthorization fails, otherwise false.
      * @returns A promise that will be resolved with true if reauthorization succeeded, otherwise false.
      */
-    public async reauthorize(unauthorizeOnFailure = true): Promise<boolean>
+    public async reauthorize(): Promise<boolean>
     {
         try
         {
@@ -264,10 +254,7 @@ export class IdentityService
             {
                 console.warn(error);
 
-                if (unauthorizeOnFailure)
-                {
-                    await this.unauthenticate();
-                }
+                await this.unauthenticate();
             }
             else
             {
@@ -450,9 +437,9 @@ export class IdentityService
     /**
      * Reauthorizes if the access token is about to expire.
      */
-    private async reauthorizeBeforeExpiry(): Promise<void>
+    private reauthorizeBeforeExpiry(): void
     {
-        const tokens = this.getTokens();
+        const tokens = this._identity?.tokens;
 
         if (tokens != null)
         {
@@ -461,8 +448,7 @@ export class IdentityService
 
             if (expires && expires < 0)
             {
-                // HACK: Don't unauthorize on failure, as it screws things up when multiple tabs are open.
-                await this.reauthorize(false);
+                this.reauthorize();
             }
         }
     }
