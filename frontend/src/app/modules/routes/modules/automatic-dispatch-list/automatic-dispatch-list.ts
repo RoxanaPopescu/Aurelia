@@ -150,7 +150,7 @@ export class AutomaticDispatchListPage
      * Called when the `Start manual` button is clicked.
      * Opens the panel for creating a manual automatic dispatch.
      */
-    protected async onStartManualClick(): Promise<void>
+    protected onStartManualClick(): void
     {
         this._modalService.open(StartManualPanel);
     }

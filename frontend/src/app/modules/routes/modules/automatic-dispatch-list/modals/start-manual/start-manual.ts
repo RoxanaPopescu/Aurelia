@@ -23,24 +23,24 @@ export class StartManualPanel
         this._modal = modal;
     }
 
-    /**
-     * Called by the framework when the module is activated.
-     */
-     public activate(): void
-     {
-         // tslint:disable-next-line: no-floating-promises
-         (async () =>
-         {
-             const connections = await this._organizationService.getConnections();
-             this.organizations = connections.map(c => new Outfit({ id: c.organization.id, companyName: c.organization.name }));
-             this.organizations.push(this._identityService.identity!.organization!);
-         })();
-     }
-
     private readonly _automaticDispatchService: AutomaticDispatchService;
     private readonly _organizationService: OrganizationService;
     private readonly _identityService: IdentityService;
     private readonly _modal: Modal;
+
+    /**
+     * Called by the framework when the module is activated.
+     */
+    public activate(): void
+    {
+        // tslint:disable-next-line: no-floating-promises
+        (async () =>
+        {
+            const connections = await this._organizationService.getConnections();
+            this.organizations = connections.map(c => new Outfit({ id: c.organization.id, companyName: c.organization.name }));
+            this.organizations.push(this._identityService.identity!.organization!);
+        })();
+    }
 
     /**
      * The model to change.
@@ -75,7 +75,7 @@ export class StartManualPanel
         this._modal.busy = true;
 
         // FIXME: Do correct call!
-        this._automaticDispatchService.startManual(this.model);
+        await this._automaticDispatchService.startManual(this.model);
 
         await this._modal.close();
     }
