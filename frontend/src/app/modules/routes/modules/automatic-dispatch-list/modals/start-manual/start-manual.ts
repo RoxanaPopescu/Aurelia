@@ -29,20 +29,6 @@ export class StartManualPanel
     private readonly _modal: Modal;
 
     /**
-     * Called by the framework when the module is activated.
-     */
-    public activate(): void
-    {
-        // tslint:disable-next-line: no-floating-promises
-        (async () =>
-        {
-            const connections = await this._organizationService.getConnections();
-            this.organizations = connections.map(c => new Outfit({ id: c.organization.id, companyName: c.organization.name }));
-            this.organizations.push(this._identityService.identity!.organization!);
-        })();
-    }
-
-    /**
      * The model to change.
      */
     protected model = new AutomaticDispatchStartManual();
@@ -56,6 +42,20 @@ export class StartManualPanel
      * The validation for the modal.
      */
     protected validation: IValidation;
+
+    /**
+     * Called by the framework when the module is activated.
+     */
+    public activate(): void
+    {
+        // tslint:disable-next-line: no-floating-promises
+        (async () =>
+        {
+            const connections = await this._organizationService.getConnections();
+            this.organizations = connections.map(c => new Outfit({ id: c.organization.id, companyName: c.organization.name }));
+            this.organizations.push(this._identityService.identity!.organization!);
+        })();
+    }
 
     /**
      * Called when the automatic dispatch should start with the current filters
