@@ -64,7 +64,7 @@ export class AutomaticDispatchStartManualFiltersShipments
     /**
      * The pickup duration we search with.
      */
-    public pickupDuration: Duration;
+    public pickupTime: Duration;
 }
 
 export class AutomaticDispatchStartManualFiltersRoutes
@@ -92,5 +92,5 @@ export class AutomaticDispatchStartManualFiltersRoutes
     /**
      * The pickup duration we search with.
      */
-    public pickupDuration: Duration;
+    public pickupTime: Duration;
 }
