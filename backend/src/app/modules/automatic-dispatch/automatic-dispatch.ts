@@ -63,10 +63,28 @@ export class AutomaticDispatchModule extends AppModule
         });
 
         /**
-         * Starts a manual automatic dispatch
-         * @returns 200 when the event is received
+         * Starts a manual automatic dispatch dependent on filters
+         * @returns 200 OK if succeded.
          */
         this.router.post("/v2/automatic-dispatch/jobs/start-manual", async context =>
+        {
+            await context.authorize("edit-routes");
+
+            // TODO:
+            const result = await this.apiClient.post(`automatic-dispatch/jobs/${context.params.id}/approve`,
+            {
+                headers: { "ownerId": context.user?.organizationId }
+            });
+
+            context.response.body = result.data;
+            context.response.status = 200;
+        });
+
+        /**
+         * Starts a manual automatic dispatch from express dispatch
+         * @returns 200 when the event is received
+         */
+        this.router.post("/v2/automatic-dispatch/jobs/start-manual-from-express", async context =>
         {
             await context.authorize("edit-routes");
 

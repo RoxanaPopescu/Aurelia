@@ -270,7 +270,7 @@ export class DriversColumnCustomElement
 
         try
         {
-            const id = await this._automaticDispatchService.startManual(this.workspace.selectedDriverRoutes.map(r => r.routeId), this.workspace.selectedExpressRoutes.map(r => r.id));
+            const id = await this._automaticDispatchService.startManualFromExpress(this.workspace.selectedDriverRoutes.map(r => r.routeId), this.workspace.selectedExpressRoutes.map(r => r.id));
 
             const toastModel =
             {

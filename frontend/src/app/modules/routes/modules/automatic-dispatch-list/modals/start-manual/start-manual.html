@@ -1,0 +1,104 @@
+<template>
+
+    <require from="./start-manual.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="start-manual" position="right" close-button.bind="true" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest margin-bottom flex-row">
+                <div translate>
+                    Start manual automatic dispatch
+                </div>
+            </h1>
+
+        </modal-header>
+
+        <modal-section if.bind="true" class="margin-bottom">
+
+            <div slot="header" translate>
+                Shipment filters
+            </div>
+
+            <div class="control-row">
+
+                <tags-input
+                label="above"
+                value.bind="model.tags"
+                new.bind="true"
+                class="flex-basis-1-of-1">
+
+                </tags-input>
+
+            </div>
+
+            <div class="control-row">
+
+                <tags-input
+                    label="above"
+                    value.bind="model.tags"
+                    new.bind="true"
+                    class="flex-basis-1-of-1">
+
+                </tags-input>
+
+            </div>
+
+            <div class="control-row">
+
+                <number-input
+                    label="above"
+                    none.bind="false"
+                    value.bind="model.timeSubtractedFromEstimate | scale: 1/60"
+                    class="margin-large-bottom"
+                    min.bind="0">
+
+                    <div slot="heading" translate>
+                        Minutes from now
+                    </div>
+
+                    <span slot="after" class="opacity-faded" translate>
+                        min
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.timeSubtractedFromEstimate">
+                        </required-validator>
+
+                        <range-validator
+                            active.bind="true"
+                            value.bind="model.timeSubtractedFromEstimate"
+                            min.bind="0">
+                        </range-validator>
+
+                    </div>
+
+                </number-input>
+
+            </div>
+
+        </modal-section>
+
+        <modal-section if.bind="true" class="--line-above" >
+
+            <div slot="header" translate>
+                Route filters
+            </div>
+
+        </modal-section>
+
+        <div class="button-container margin-larger-top">
+
+            <button appearance="solid" accent="primary" click.trigger="onStartClick()" translate>
+                Start
+            </button>
+
+        </div>
+
+    </modal-panel>
+
+</template>

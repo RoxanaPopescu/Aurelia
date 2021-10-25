@@ -2,7 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { DateTime } from "luxon";
 import { IPaging } from "shared/types";
-import { AutomaticDispatchJob, AutomaticDispatchJobStatusSlug, AutomaticDispatchRoutePlanInfo } from "..";
+import { AutomaticDispatchJob, AutomaticDispatchJobStatusSlug, AutomaticDispatchRoutePlanInfo, AutomaticDispatchStartManual } from "..";
 
 /**
  * Represents a service that manages dispatching of express routes.
@@ -85,14 +85,14 @@ export class AutomaticDispatchService
     }
 
     /**
-     * Starts a manual automatic dispatch.
+     * Starts a manual automatic dispatch based on ids.
      * @param activeRouteIds The ids identifying the routes the drivers is active on.
      * @param addRouteIds The ids identifying the routes to be added to the active driver routes.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async startManual(activeRouteIds: string[], addRouteIds: string[], signal?: AbortSignal): Promise<string>
+    public async startManualFromExpress(activeRouteIds: string[], addRouteIds: string[], signal?: AbortSignal): Promise<string>
     {
-        const result = await this._apiClient.post("automatic-dispatch/jobs/start-manual",
+        const result = await this._apiClient.post("automatic-dispatch/jobs/start-manual-from-express",
         {
             body: { activeRouteIds, addRouteIds },
             signal
@@ -100,4 +100,20 @@ export class AutomaticDispatchService
 
         return result.data.id;
     }
+
+    /**
+     * Starts a manual automatic dispatch based on filters.
+     * @param manual The manual object with filters.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+     public async startManual(manual: AutomaticDispatchStartManual, signal?: AbortSignal): Promise<string>
+     {
+         const result = await this._apiClient.post("automatic-dispatch/jobs/start-manual",
+         {
+             body: manual,
+             signal
+         });
+
+         return result.data.id;
+     }
 }

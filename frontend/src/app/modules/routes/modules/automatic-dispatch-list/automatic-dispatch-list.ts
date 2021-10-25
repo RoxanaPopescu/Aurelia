@@ -2,9 +2,10 @@ import { autoinject, observable } from "aurelia-framework";
 import { IPaging } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
-import { IScroll } from "shared/framework";
+import { IScroll, ModalService } from "shared/framework";
 import { DateTime } from "luxon";
 import { AutomaticDispatchJobStatusSlug, AutomaticDispatchRoutePlanInfo, AutomaticDispatchService } from "app/model/automatic-dispatch";
+import { StartManualPanel } from "./modals/start-manual/start-manual";
 
 /**
  * Represents the route parameters for the page.
@@ -25,16 +26,19 @@ export class AutomaticDispatchListPage
      * Creates a new instance of the class.
      * @param automaticDispatchService The `AutomaticDispatchService` instance.
      * @param historyHelper The `HistoryHelper` instance.
+     * @param modalService The `ModalService` instance.
      */
-    public constructor(automaticDispatchService: AutomaticDispatchService, historyHelper: HistoryHelper)
+    public constructor(automaticDispatchService: AutomaticDispatchService, historyHelper: HistoryHelper, modalService: ModalService)
     {
         this._automaticDispatchService = automaticDispatchService;
         this._historyHelper = historyHelper;
+        this._modalService = modalService;
         this._constructed = true;
     }
 
     private readonly _automaticDispatchService: AutomaticDispatchService;
     private readonly _historyHelper: HistoryHelper;
+    private readonly _modalService: ModalService;
     private readonly _constructed;
 
     /**
@@ -140,6 +144,15 @@ export class AutomaticDispatchListPage
         {
             this.createdDateFromFilter = this.createdDateToFilter;
         }
+    }
+
+    /**
+     * Called when the `Start manual` button is clicked.
+     * Opens the panel for creating a manual automatic dispatch.
+     */
+    protected async onStartManualClick(): Promise<void>
+    {
+        this._modalService.open(StartManualPanel);
     }
 
     /**
