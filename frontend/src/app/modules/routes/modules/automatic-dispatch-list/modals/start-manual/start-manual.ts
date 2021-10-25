@@ -84,7 +84,7 @@ export class StartManualPanel
         // Mark the modal as busy.
         this._modal.busy = true;
 
-        // FIXME: Do correct call!
+        // FIXME: Do correct call - try catch problems.
         await this._automaticDispatchService.startManual(this.model);
 
         await this._modal.close();

@@ -69,10 +69,10 @@
 
             <div class="control-row">
 
-                <number-input
+                <duration-input
                     label="above"
                     none.bind="false"
-                    value.bind="model.timeSubtractedFromEstimate | scale: 1/60"
+                    value.bind="model.filters.shipments.pickupTime"
                     class="margin-large-bottom"
                     min.bind="0">
 
@@ -87,18 +87,12 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.timeSubtractedFromEstimate">
+                            value.bind="model.filters.shipments.pickupTime">
                         </required-validator>
-
-                        <range-validator
-                            active.bind="true"
-                            value.bind="model.timeSubtractedFromEstimate"
-                            min.bind="0">
-                        </range-validator>
 
                     </div>
 
-                </number-input>
+                </duration-input>
 
             </div>
 
