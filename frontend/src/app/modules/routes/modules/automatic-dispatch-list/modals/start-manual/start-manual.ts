@@ -58,6 +58,16 @@ export class StartManualPanel
     }
 
     /**
+     * Called to link the creator id to customerName in the UI
+     * @param params the id of the creator
+     * @returns The outfit if found
+     */
+    protected getOrganizationFromId(id: string): Outfit | undefined
+    {
+        return this.organizations.find(c => c.id === id);
+    }
+
+    /**
      * Called when the automatic dispatch should start with the current filters
      */
     protected async onStartClick(): Promise<void>

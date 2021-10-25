@@ -25,10 +25,31 @@
             <div class="control-row">
 
                 <tags-input
-                label="above"
-                value.bind="model.tags"
-                new.bind="true"
-                class="flex-basis-1-of-1">
+                    label="above"
+                    value.bind="model.filters.shipments.organizationIds"
+                    class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Applies to
+                    </div>
+
+                    <div slot="value">
+                        <tag repeat.for="id of model.filters.shipments.organizationIds" model.bind="id">
+                            ${getOrganizationFromId(id).primaryName}
+                        </tag>
+                    </div>
+
+                    <item repeat.for="organization of organizations" model.bind="organization.id">
+                        ${organization.primaryName}
+                    </item>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.filters.shipments.organizationIds.length > 0 ? true : undefined">
+                        </required-validator>
+
+                    </div>
 
                 </tags-input>
 
@@ -87,6 +108,39 @@
 
             <div slot="header" translate>
                 Route filters
+            </div>
+
+            <div class="control-row">
+
+                <tags-input
+                    label="above"
+                    value.bind="model.filters.routes.organizationIds"
+                    class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Applies to
+                    </div>
+
+                    <div slot="value">
+                        <tag repeat.for="id of model.filters.routes.organizationIds" model.bind="id">
+                            ${getOrganizationFromId(id).primaryName}
+                        </tag>
+                    </div>
+
+                    <item repeat.for="organization of organizations" model.bind="organization.id">
+                        ${organization.primaryName}
+                    </item>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.filters.routes.organizationIds.length > 0 ? true : undefined">
+                        </required-validator>
+
+                    </div>
+
+                </tags-input>
+
             </div>
 
         </modal-section>
