@@ -1,0 +1,59 @@
+<template>
+
+    <require from="./starred-item.scss"></require>
+
+    <card if.bind="model != null" page-href.bind="model.url">
+
+        <div slot="actions">
+
+            <button
+                if.bind="model.starId"
+                disabled.bind="starClick == null"
+                title.translate="${model.starred ? 'Remove from starred' : 'Add to starred'}"
+                appearance="none"
+                class="${model.starred ? '--active' : ''}"
+                click.trigger="starClick()">
+                <icon name="starred"></icon>
+            </button>
+
+        </div>
+
+        <div class="flex-row">
+
+            <div if.bind="model.type.icon != null" class="starred-item-icon-column">
+
+                <icon name.bind="model.type.icon"></icon>
+
+            </div>
+
+            <div class="starred-item-content-column">
+
+                <div class="text-truncate">
+                    ${model.name}
+                </div>
+
+                <div class="font-small text-truncate opacity-faded margin-top">
+
+                    ${model.type.name}
+
+                    <span if.bind="ancestors.length > 0" class="starred-item-path">
+
+                        <span
+                            repeat.for="ancestor of ancestors"
+                            class="starred-item-path-segment">
+                            ${ancestor.name}
+                        </span>
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </card>
+
+    <card-skeleton if.bind="model == null"></card-skeleton>
+
+</template>

@@ -85,12 +85,12 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("app/modals/overlays/dashboard/dashboard")
             },
             {
-                name: "search",
-                moduleId: PLATFORM.moduleName("app/modals/panels/search/search")
+                name: "starred",
+                moduleId: PLATFORM.moduleName("app/modules/starred/modals/starred/starred", "starred")
             },
             {
-                name: "starred",
-                moduleId: PLATFORM.moduleName("app/modals/panels/starred/starred")
+                name: "search",
+                moduleId: PLATFORM.moduleName("app/modules/search/modals/search/search", "search")
             },
             {
                 name: "add",

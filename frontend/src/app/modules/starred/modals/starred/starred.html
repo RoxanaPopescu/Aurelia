@@ -1,0 +1,135 @@
+<template>
+
+    <require from="./components/starred-item/starred-item"></require>
+    <require from="app/components/info-card/info-card"></require>
+    <require from="./starred.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="starred" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest margin-bottom" translate>
+                Starred and recent
+            </h1>
+
+            <search-input value.bind="textFilter" autofocus>
+
+                <span slot="before">
+                    <icon name="md-search" class="font-larger opacity-faded"></icon>
+                </span>
+
+                <span slot="placeholder" translate>
+                    Type to filter…
+                </span>
+
+            </search-input>
+
+        </modal-header>
+
+        <modal-section class="margin-bottom" toggle.bind="true" expanded.from-view="starredSectionExpanded">
+
+            <div slot="header" translate>
+                Starred items
+            </div>
+
+            <list-layout if.bind="starredItems == null">
+
+                <starred-item repeat.for="i of 3"></starred-item>
+
+            </list-layout>
+
+            <div if.bind="starredItems != null">
+
+                <info-card
+                    if.bind="starredItems.length == 0"
+                    heading.translate="You have no starred items"
+                    translate>
+                    To add an item to your personal list of starred items, click the <icon inline name="starred" accent="primary"></icon> on the item
+                </info-card>
+
+                <div if.bind="starredItems.length > 0 && filteredStarredItems.length == 0" class="opacity-faded" translate>
+                    No items match your filter
+                </div>
+
+                <list-layout>
+
+                    <starred-item
+                        repeat.for="item of filteredStarredItems | take: showMoreStarred ? undefined : starredItemsLimit"
+                        model.bind="item"
+                        star-click.call="starClick(item)">
+                    </starred-item>
+
+                </list-layout>
+
+                <div if.bind="filteredStarredItems.length > starredItemsLimit" class="margin-top">
+
+                    <a if.bind="!showMoreStarred" click.trigger="showMoreStarred = true" translate>
+                        Show all
+                    </a>
+
+                    <a if.bind="showMoreStarred" click.trigger="showMoreStarred = false" translate>
+                        Show less
+                    </a>
+
+                </div>
+
+            </div>
+
+        </modal-section>
+
+        <modal-section toggle.bind="true" expanded.from-view="recentSectionExpanded">
+
+            <div slot="header" translate>
+                Recent items
+            </div>
+
+            <list-layout if.bind="recentItems == null">
+
+                <starred-item repeat.for="i of 3"></starred-item>
+
+            </list-layout>
+
+            <div if.bind="recentItems != null">
+
+                <info-card
+                    if.bind="recentItems.length == 0"
+                    heading.translate="You have no recent items"
+                    translate>
+                    Any items you interact with will automatically appear here, so they are easy to find again
+                </info-card>
+
+                <div if.bind="recentItems.length > 0 && filteredRecentItems.length == 0" class="opacity-faded" translate>
+                    No items match your filter
+                </div>
+
+                <list-layout>
+
+                    <starred-item
+                        repeat.for="item of filteredRecentItems | take: showMoreRecent ? undefined : recentItemsLimit"
+                        model.bind="item"
+                        star-click.call="starClick(item)">
+                    </starred-item>
+
+                </list-layout>
+
+                <div if.bind="filteredRecentItems.length > recentItemsLimit" class="margin-top">
+
+                    <a if.bind="!showMoreRecent" click.trigger="showMoreRecent = true" translate>
+                        Show more
+                    </a>
+
+                    <a if.bind="showMoreRecent" click.trigger="showMoreRecent = false" translate>
+                        Show less
+                    </a>
+
+                </div>
+
+            </div>
+
+        </modal-section>
+
+    </modal-panel>
+
+</template>

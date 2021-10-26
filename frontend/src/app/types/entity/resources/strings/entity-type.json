@@ -1,0 +1,15 @@
+{
+    "unknown": "Unknown",
+    "user": "User",
+    "organization": "Organization",
+    "driver": "Driver",
+    "order": "Order",
+    "route": "Route",
+    "routeTemplate": "Route template",
+    "routePlan": "Route plan",
+    "ruleSet": "Rule set",
+    "orderGroup": "Order group",
+    "distributionCenter": "Distribution center",
+    "vehicle": "Vehicle",
+    "communicationTrigger": "Communication trigger"
+}

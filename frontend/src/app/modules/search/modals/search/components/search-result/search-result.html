@@ -1,0 +1,59 @@
+<template>
+
+    <require from="./search-result.scss"></require>
+
+    <card if.bind="model != null" page-href.bind="model.url">
+
+        <div slot="actions">
+
+            <button
+                if.bind="model.starId"
+                disabled.bind="starClick == null"
+                title.translate="${model.starred ? 'Remove from starred' : 'Add to starred'}"
+                appearance="none"
+                class="${model.starred ? '--active' : ''}"
+                click.trigger="starClick()">
+                <icon name="starred"></icon>
+            </button>
+
+        </div>
+
+        <div class="flex-row">
+
+            <div if.bind="model.type.icon != null" class="search-result-icon-column">
+
+                <icon name.bind="model.type.icon"></icon>
+
+            </div>
+
+            <div class="search-result-content-column">
+
+                <div class="text-truncate user-select-contain">
+                    ${model.name}
+                </div>
+
+                <div class="font-small text-truncate opacity-faded margin-top">
+
+                    ${model.type.name}
+
+                    <span if.bind="ancestors.length > 0" class="search-result-path user-select-contain">
+
+                        <span
+                            repeat.for="ancestor of ancestors"
+                            class="search-result-path-segment">
+                            ${ancestor.name}
+                        </span>
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </card>
+
+    <card-skeleton if.bind="model == null"></card-skeleton>
+
+</template>

@@ -1,4 +1,9 @@
 import { IResponseStubs } from "shared/infrastructure";
+import entitiesStarred from "./responses/entities-starred";
+import entitiesRecent from "./responses/entities-recent";
+import searchesSaved from "./responses/searches-saved";
+import searchesRecent from "./responses/searches-recent";
+import searchesQuery from "./responses/searches-query";
 // import orderEvents from "./responses/order-events-all";
 // import orderEvents from "./responses/order-events";
 // import routesCreate from "./responses/routes-create";
@@ -41,4 +46,9 @@ export const stubs: IResponseStubs =
     // ...identity,
     // ...organizations,
     // ...account
+    ...entitiesStarred,
+    ...entitiesRecent,
+    ...searchesSaved,
+    ...searchesRecent,
+    ...searchesQuery
 };
