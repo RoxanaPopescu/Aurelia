@@ -123,3 +123,18 @@ body
         outline-offset: 2rem;
     }
 }
+
+.feature-overlay-scrollbar [inert]
+{
+    &[scroll], [scroll]
+    {
+        // HACK:
+        // This is a workaround for what appears to be a bug in Chrome,
+        // where overlay scrollbars appear while modals are animating.
+        // Note that the hack only applies if all scrollbars are of the
+        // overlay type, as it might otherwise cause a layout shift.
+
+        // Hide scrollbars on, or within, inert elements.
+        overflow: hidden !important;
+    }
+}
