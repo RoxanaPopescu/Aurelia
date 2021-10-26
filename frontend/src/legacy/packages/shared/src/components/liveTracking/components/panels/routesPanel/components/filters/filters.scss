@@ -1,7 +1,6 @@
 @import "shared/src/webKit/constants.scss";
 
 .c-liveTracking-routesPanel-filters-outer {
-  border-radius: $listItemBorderRadius;
   border-bottom: 1px solid var(--colorNeutralLight);
 }
 
@@ -88,6 +87,11 @@
 .c-liveTracking-routesPanel-filters-expanded {
   padding: 20px;
   box-shadow: 0 1000px 0 1000px var(--legacy-card-surface-color, #f8f9f9);
+
+  .multiSelectContainer
+  {
+    width: 100%;
+  }
 
   > div {
     > div:not(:last-child) {

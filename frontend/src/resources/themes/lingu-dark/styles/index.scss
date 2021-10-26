@@ -28,6 +28,8 @@ $__summary: comment;
 {
     --modal-panel-afterglow: 0 0 20px 0 rgba(30, 30, 30, 0.4) !important;
 
+    --legacy-card-border-color: var(--palette-color-neutral-light);
+    --legacy-card-edge-color: var(--palette-color-neutral-light);
     --legacy-card-surface-color: var(--palette-color-neutral);
     --legacy-card-surface-color--hover: var(--palette-color-neutral);
     --legacy-card-surface-box-surface-color: var(--palette-color-neutral-darker);
