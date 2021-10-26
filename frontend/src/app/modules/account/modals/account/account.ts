@@ -8,6 +8,7 @@ import { AccountService } from "../../services/account";
 import { AccountDeleteModalDialog } from "./modals/account-delete/account-delete";
 import { Operation } from "shared/utilities";
 import { OrganizationService, OrganizationInfo } from "app/model/organization";
+import { Host } from "app/types/host";
 
 /**
  * Represents the global `account` modal panel.
@@ -28,6 +29,7 @@ export class AccountModalPanel
      * @param localeService The `LocaleService` instance.
      * @param currencyService The `CurrencyService` instance.
      * @param themeService The `ThemeService` instance.
+     * @param host The `Host` instance.
      */
     public constructor(
         modal: Modal,
@@ -39,7 +41,8 @@ export class AccountModalPanel
         organizationService: OrganizationService,
         localeService: LocaleService,
         currencyService: CurrencyService,
-        themeService: ThemeService)
+        themeService: ThemeService,
+        host: Host)
     {
         this._modal = modal;
         this._modalService = modalService;
@@ -51,6 +54,7 @@ export class AccountModalPanel
         this._localeService = localeService;
         this._currencyService = currencyService;
         this._themeService = themeService;
+        this._host = host;
     }
 
     private readonly _modal: Modal;
@@ -63,6 +67,7 @@ export class AccountModalPanel
     private readonly _localeService: LocaleService;
     private readonly _currencyService: CurrencyService;
     private readonly _themeService: ThemeService;
+    private readonly _host: Host;
     private _profile: Profile;
     private _result: boolean | undefined;
 
@@ -149,7 +154,13 @@ export class AccountModalPanel
         this.currency = this._currencyService.currency;
 
         // Get the available themes.
-        this.themes = this._themeService.themes;
+
+        // HACK: In the production environment, hide themes associated with other hosts.
+        this.themes = this._themeService.themes.filter(theme =>
+            !theme.isHostSpecific ||
+            this._host.theme === undefined ||
+            theme.slug === this._host.theme ||
+            theme.slug.startsWith(this._host.theme.replace(/{variant}$/, "")));
 
         // Get the selected theme.
         this.theme = this._themeService.theme;

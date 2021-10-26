@@ -1,0 +1,15 @@
+////
+/// @group resources/themes/mover-light/surfaces/website
+////
+
+/// Defines the appearance of the website surface.
+$__summary: comment;
+
+
+/* stylelint-disable no-duplicate-selectors, scss/selector-no-redundant-nesting-selector */
+
+html[route^="website"],
+[surface$="/website"]
+{
+    --surface-color: var(--palette-color-whitepoint);
+}

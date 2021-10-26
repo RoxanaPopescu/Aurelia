@@ -44,6 +44,11 @@ export interface ITheme
      * True if the theme has a separate logo for use on the account pages, otherwise false.
      */
     hasAccountLogo?: boolean;
+
+    /**
+     * True if the theme is associated with a specific host, otherwise false.
+     */
+    isHostSpecific?: boolean;
 }
 
 /**
@@ -76,6 +81,7 @@ export class Theme
         this.classes = data.classes ?? [];
         this.environments = data.environments;
         this.hasAccountLogo = data.hasAccountLogo ?? false;
+        this.isHostSpecific = data.isHostSpecific ?? false;
     }
 
     /**
@@ -119,4 +125,9 @@ export class Theme
      * True if the theme has a separate logo for use on the account pages, otherwise false.
      */
     public hasAccountLogo: boolean;
+
+    /**
+     * True if the theme is associated with a specific host, otherwise false.
+     */
+    public isHostSpecific: boolean;
 }

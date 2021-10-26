@@ -1,11 +1,37 @@
 [
     {
-        "slug": "mover",
-        "name": "Mover",
+        "slug": "mover-light",
+        "name": "Mover (Light)",
+        "preview":
+        {
+            "primary": "#ffffff"
+        },
+        "hasAccountLogo": true
+    },
+    {
+        "slug": "mover-dark",
+        "name": "Mover (Dark)",
+        "preview":
+        {
+            "primary": "#252526"
+        }
+    },
+    {
+        "slug": "mover-blue",
+        "name": "Mover (Blue)",
         "preview":
         {
             "primary": "#11253e"
         }
+    },
+    {
+        "slug": "mover",
+        "name": "Mover (Old)",
+        "preview":
+        {
+            "primary": "#11253e"
+        },
+        "isHostSpecific": true
     },
     {
         "slug": "coop",
@@ -13,7 +39,8 @@
         "preview":
         {
             "primary": "#c80016"
-        }
+        },
+        "isHostSpecific": true
     },
     {
         "slug": "ikea",
@@ -21,7 +48,8 @@
         "preview":
         {
             "primary": "#0051ba"
-        }
+        },
+        "isHostSpecific": true
     },
     {
         "slug": "interflora",
@@ -29,34 +57,7 @@
         "preview":
         {
             "primary": "#cbad61"
-        }
-    },
-    {
-        "slug": "lingu-blue",
-        "name": "Lingu (Blue)",
-        "preview":
-        {
-            "primary": "#11253e"
         },
-        "environments": ["development", "preview"]
-    },
-    {
-        "slug": "lingu-light",
-        "name": "Lingu (Light)",
-        "preview":
-        {
-            "primary": "#ffffff"
-        },
-        "environments": ["development", "preview"],
-        "hasAccountLogo": true
-    },
-    {
-        "slug": "lingu-dark",
-        "name": "Lingu (Dark)",
-        "preview":
-        {
-            "primary": "#252526"
-        },
-        "environments": ["development", "preview"]
+        "isHostSpecific": true
     }
 ]

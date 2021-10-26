@@ -1,0 +1,99 @@
+////
+/// @group resources/themes/mover-blue
+////
+
+/// Public interface for the theme.
+$__summary: comment;
+
+
+// Export the legacy variables.
+@import "legacy/packages/shared/src/webKit/assets/themes/default/constants";
+
+// Export the palettes.
+// Palettes define the standard values used within the theme.
+@import "./palettes/color";
+
+// Export the settings.
+// Settings define theme specific overrides to the base settings.
+@import "./settings/font-face";
+@import "./settings/font";
+
+// HACK: Override default styles.
+
+[surface="base"],
+[surface$="/base"],
+[surface$="/neutral"],
+{
+    --surface-separator-color: var(--palette-color-neutral);
+}
+
+permissions
+{
+    &,
+    & .permissions-group
+    {
+        --surface-separator-color: var(--palette-color-neutral-light);
+
+        &[surface$="/neutral"]
+        {
+            // --surface-color: var(--palette-color-neutral-lighter);
+        }
+    }
+}
+
+:root
+{
+    /**
+     * The label color, set in temp.scss.
+     */
+    --temp-label-color: #555555;
+
+    --legacy-card-border-color: var(--palette-color-neutral-light);
+    --legacy-card-edge-color: var(--palette-color-neutral);
+    --legacy-card-surface-color: var(--palette-color-neutral-lightest);
+    --legacy-card-surface-color--hover: var(--palette-color-neutral-lighter);
+    --legacy-card-surface-box-surface-color: var(--palette-color-neutral-light);
+}
+
+body page-sidebar page-section:not(.--header-slot-empty) .page-section-header
+{
+    padding-top: 16rem;
+    border-top: var(--border-width-thin) solid var(--surface-separator-color) !important;
+    border-bottom: none !important;
+    background-color: transparent !important;
+    color: var(--surface-subtle-color) !important;
+}
+
+button[appearance="outline"]
+{
+    // border-color: var(--palette-color-neutral-light) !important;
+}
+
+html body page-sidebar page-section:not(.--header-slot-empty) .page-section-header
+{
+    background: transparent !important;
+    border-bottom: var(--border-width-medium) solid var(--palette-color-neutral-light);
+}
+
+/* BEGIN: USE DARK BLUE COLOR */
+
+html app-sidebar
+{
+    --surface-nav-link-surface-icon-color: #88929e !important;
+    --surface-nav-child-link-surface-icon-color: hsl(213, 10%, 70%) !important;
+
+    &,
+    header::before,
+    footer::before
+    {
+        background: var(--palette-color-primary-darkest);
+    }
+
+    user-identity a identity-picture
+    {
+        // background: var(--surface-nav-link-surface-color--active);
+        background: var(--surface-nav-child-surface-color);
+    }
+}
+
+/* END: USE DARK BLUE COLOR */

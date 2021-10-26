@@ -1,0 +1,122 @@
+////
+/// @group resources/themes/mover-blue/palettes/color
+////
+
+/// Theme specific color palette.
+$__summary: comment;
+
+
+/* stylelint-disable no-duplicate-selectors, scss/selector-no-redundant-nesting-selector */
+
+/// The neutral color and its variations.
+:root
+{
+    --palette-color-whitepoint: white;
+    --palette-color-neutral-lightest: hsl(240, 14%, 99%);
+    --palette-color-neutral-lighter: hsl(240, 24%, 98%);
+    --palette-color-neutral-light: hsl(230, 14%, 96%);
+    --palette-color-neutral-lit: hsl(230, 14%, 91%);
+    --palette-color-neutral: hsl(220, 14%, 87%);
+    --palette-color-neutral-dim: hsl(210, 10%, 73%);
+    --palette-color-neutral-dark: hsl(210, 6%, 43%);
+    --palette-color-neutral-darker: #172b4d; //hsl(0, 0%, 13%);
+    --palette-color-blackpoint: black;
+}
+
+/// The primary color and its variations.
+:root
+{
+
+    /* BEGIN: USE DARK BLUE COLOR */
+
+    --palette-color-primary-lighter: #edf7ff;
+    --palette-color-primary-light: #2278bf;
+    --palette-color-primary: #0565b3;
+    --palette-color-primary-dark: #2c5c9b;
+    --palette-color-primary-darker: #1c3d66;
+    --palette-color-primary-darkest: #11253e;
+
+    --palette-color-primary--hover: transparent;
+    // --palette-color-primary--active: rgba(0, 0, 0, 0.25);
+    // --palette-color-primary--child: rgba(0, 0, 0, 0.5);
+    --palette-color-primary--active: #294970;
+    --palette-color-primary--child: #173454;
+    --palette-color-primary--child-hover: transparent;
+
+    /* END: USE DARK BLUE COLOR */
+
+    /* BEGIN: USE LINGU BLUE COLOR */
+
+    // --palette-color-primary-lighter: hsl(216, 100%, 97%);
+    // --palette-color-primary-light: hsl(218, 47%, 65%);
+    // --palette-color-primary: hsl(216, 92%, 34%);
+    // --palette-color-primary-dark: hsl(216, 91%, 30%);
+    // --palette-color-primary-darker: hsl(217, 86%, 26%);
+    // --palette-color-primary-darkest: hsl(218, 54%, 20%);
+
+    // --palette-color-primary--hover: #06449a;
+    // --palette-color-primary--active: #084091;
+    // --palette-color-primary--child: #0a3985;
+    // --palette-color-primary--child-hover: #0b3678;
+
+    /* END: USE LINGU BLUE COLOR */
+}
+
+/// The accent color indicating information.
+:root
+{
+    --palette-color-info-lighter: hsl(249, 100%, 94%);
+    --palette-color-info-light: hsl(249, 46%, 64%);
+    --palette-color-info: hsl(249, 46%, 54%);
+    --palette-color-info-dark: hsl(249, 46%, 44%);
+    --palette-color-info-darker: hsl(249, 46%, 34%);
+}
+
+/// The accent color indicating that something is good or safe.
+:root
+{
+    --palette-color-positive-lighter: hsl(134, 100%, 94%);
+    --palette-color-positive-light: hsl(134, 61%, 51%);;
+    --palette-color-positive: hsl(134, 61%, 41%);
+    --palette-color-positive-dark: hsl(134, 61%, 31%);
+    --palette-color-positive-darker: hsl(134, 61%, 21%);
+}
+
+/// The accent color indicating that something requires attention.
+:root
+{
+    --palette-color-attention-lighter: hsl(40, 100%, 94%);
+    --palette-color-attention-light: hsl(40, 100%, 60%);
+    --palette-color-attention: hsl(40, 100%, 50%);
+    --palette-color-attention-dark: hsl(40, 100%, 40%);
+    --palette-color-attention-darker: hsl(40, 100%, 20%);
+}
+
+/// The accent color indicating that something is bad or unsafe.
+:root
+{
+    --palette-color-negative-lighter: hsl(350, 100%, 94%);
+    --palette-color-negative-light: hsl(355, 70%, 57%);
+    --palette-color-negative: hsl(355, 70%, 47%);
+    --palette-color-negative-dark: hsl(355, 70%, 37%);
+    --palette-color-negative-darker: hsl(355, 70%, 27%);
+}
+
+/// The color used to highlight text, e.g. because it matches a search query.
+:root
+{
+    --palette-color-mark: var(--palette-color-attention);
+}
+
+/// The colors used for data visualization.
+:root
+{
+    --palette-color-data-1: #268bbc;
+    --palette-color-data-2: #1acce2;
+    --palette-color-data-3: #26bcae;
+    --palette-color-data-4: #c1e21a;
+    --palette-color-data-5: #db9726;
+    --palette-color-data-6: #ff5555;
+    --palette-color-data-7: #e21aa7;
+    --palette-color-data-8: #bd10e0;
+}

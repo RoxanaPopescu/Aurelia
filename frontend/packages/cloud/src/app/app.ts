@@ -128,6 +128,9 @@ export class App
                 response.cookie("theme", context.requestedThemeSlug, { encode: s => s });
             }
 
+            // Ensure the `host-theme` cookie is set.
+            response.cookie("host-theme", context.themeSlugInConfig, { encode: s => s });
+
             // Rewrite requests for theme resources, to use the resolved theme slug.
             if (!context.themeSlugInPath)
             {
