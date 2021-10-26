@@ -7,6 +7,7 @@ import { Input, InputCheckbox, Icon, InputRadioGroup, MultiSelect } from "shared
 import "./filters.scss";
 import { observable } from "mobx";
 import { RouteCriticality, RouteStatus } from "app/model/route";
+import { ProductType } from "app/model/product";
 import { VehicleType } from "app/model/vehicle";
 import { TeamsFilterService } from "app/services/teams-filter";
 
@@ -201,6 +202,46 @@ export class Filters extends React.Component<RoutesLayerProps> {
                   this.props.service.filter.assignedToDriver ? "assigned" : "not-assigned"
                 }
               />
+          </div>
+
+          <div>
+            <div className="c-liveTracking-routesPanel-filters-title">{Localization.sharedValue("Products")}</div>
+            <InputCheckbox
+              className="c-liveTracking-routesPanel-filters-criticality"
+              checked={this.props.service.filter.productEnabled("solution")}
+              onChange={() => this.props.service.filter.productEnableDisable("solution")
+              }
+            >
+              {new ProductType("solution").name} - {
+                this.props.service.filteredRoutes
+                .filter(r => r.productType.slug === "solution")
+                .length
+              }
+            </InputCheckbox>
+            <InputCheckbox
+              className="c-liveTracking-routesPanel-filters-criticality"
+              checked={this.props.service.filter.productEnabled("courier-eco")}
+              onChange={() => this.props.service.filter.productEnableDisable("courier-eco")
+              }
+            >
+              {new ProductType("courier-eco").name} - {
+                this.props.service.filteredRoutes
+                .filter(r => r.productType.slug === "courier-eco")
+                .length
+              }
+            </InputCheckbox>
+            <InputCheckbox
+              className="c-liveTracking-routesPanel-filters-criticality"
+              checked={this.props.service.filter.productEnabled("courier-express")}
+              onChange={() => this.props.service.filter.productEnableDisable("courier-express")
+              }
+            >
+              {new ProductType("courier-express").name} - {
+                this.props.service.filteredRoutes
+                .filter(r => r.productType.slug === "courier-express")
+                .length
+              }
+            </InputCheckbox>
           </div>
           <div>
             <div className="c-liveTracking-routesPanel-filters-title">{Localization.sharedValue("RouteDetails_RouteOverview_VehicleType")}</div>
