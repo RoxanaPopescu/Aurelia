@@ -7,8 +7,8 @@ import { autoinject, bindable } from "aurelia-framework";
 export class InfoCardCustomElement
 {
     /**
-     * The title to show.
+     * The heading to show.
      */
     @bindable
-    public title: string;
+    public heading: string;
 }
