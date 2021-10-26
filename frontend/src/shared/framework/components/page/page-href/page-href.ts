@@ -251,42 +251,42 @@ export class PageHrefCustomAttribute
         // set the attribute to enable styling based on the attribute options.
         if (!isSimpleAnchor)
         {
-            let attributeValue = "";
+            const attributeValueParts: string[] = [];
 
             if (this._url)
             {
                 if (this.attribute != null)
                 {
                     // Hide the URL to reduce clutter in the DOM.
-                    attributeValue += "path: …";
+                    attributeValueParts.push("path: …");
                 }
                 else
                 {
-                    attributeValue += `path: ${this._url}`;
+                    attributeValueParts.push(`path: ${this._url}`);
                 }
             }
 
             if (this.attribute != null)
             {
-                attributeValue += `; attribute: ${this.attribute}`;
+                attributeValueParts.push(`attribute: ${this.attribute}`);
             }
 
             if (this.property != null)
             {
-                attributeValue += `; property: ${this.property}`;
+                attributeValueParts.push(`property: ${this.property}`);
             }
 
             if (this.navigate)
             {
-                attributeValue += `; navigate: ${this.navigate}`;
+                attributeValueParts.push(`navigate: ${this.navigate}`);
 
                 if (this.open)
                 {
-                    attributeValue += "; open: true";
+                    attributeValueParts.push("open: true");
                 }
             }
 
-            this._element.setAttribute("page-href", attributeValue);
+            this._element.setAttribute("page-href", attributeValueParts.join("; "));
         }
     }
 }

@@ -108,7 +108,7 @@ export class EntityInfo
                 return `/routes/templates/details/${this.id}`;
 
             case "route-plan":
-                return `/route-planning/details/${this.id}`;
+                return `/route-planning/plans/details/${this.id}`;
 
             case "rule-set":
                 return `/route-planning/rule-sets/details/${this.id}`;
@@ -119,8 +119,8 @@ export class EntityInfo
             case "distribution-center":
                 return `/distribution-centers/details/${this.id}`;
 
-            case "vehicle":
-                return `/fleet-management/vehicles/${this.id}`;
+            // case "vehicle":
+            //     return undefined; `/fleet-management/vehicles/details/${this.id}`;
 
             case "communication-trigger":
                 return `/communication/details/${this.id}`;
