@@ -25,16 +25,15 @@ export class RouteComponent extends React.Component<RoutesLayerProps> {
 
     const isFlagged = routeFlagService.isFlagged(route.id);
 
-    let accent: string = "--neutral";
-    if (route.criticality.slug == "high") {
-      accent = "--negative";
-    } else if (route.criticality.slug == "medium") {
-      accent = "--warning";
-    }
+
+    const accentClassName =
+      route.criticality.slug == "high" ? "--negative" :
+      route.criticality.slug == "medium" ? "--warning" :
+      "--neutral";
 
     return (
       <div
-        className={"c-liveTracking-routesPanel-route " + accent}
+        className={"c-liveTracking-routesPanel-route " + accentClassName}
         onClick={() => this.onClick()}
       >
         <div>

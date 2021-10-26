@@ -31,7 +31,15 @@
     width: 4px;
     border-top-left-radius: 2px;
     border-bottom-left-radius: 2px;
-    background-color: var(--colorNeutralLight);
+    background-color: var(--surface-neutral-surface-color, var(--colorNeutralLight));
+  }
+
+  &.--negative:before {
+    background-color: var(--surface-negative-surface-color, var(--colorAlert));
+  }
+
+  &.--warning:before {
+    background-color: var(--surface-attention-surface-color, var(--colorWarning));
   }
 }
 

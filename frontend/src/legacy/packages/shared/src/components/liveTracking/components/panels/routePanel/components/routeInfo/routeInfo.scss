@@ -15,7 +15,19 @@
     &:hover {
       background: none;
     }
-    
+
+    &:before {
+      background-color: var(--surface-neutral-surface-color, var(--colorNeutralLight)) !important;
+    }
+
+    &.--negative:before {
+      background-color: var(--surface-negative-surface-color, var(--colorAlert)) !important;
+    }
+
+    &.--warning:before {
+      background-color: var(--surface-attention-surface-color, var(--colorWarning)) !important;
+    }
+
     &:before {
       display: none;
     }
