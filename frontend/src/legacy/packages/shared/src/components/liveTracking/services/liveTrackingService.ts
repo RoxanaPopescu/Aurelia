@@ -46,6 +46,9 @@ export class LiveTrackingService {
   };
 
   @observable
+  public filtersExpanded = false;
+
+  @observable
   public toast?: { type: ToastType.Success, content: string };
 
   public pollInterval = pollIntervalFocus;

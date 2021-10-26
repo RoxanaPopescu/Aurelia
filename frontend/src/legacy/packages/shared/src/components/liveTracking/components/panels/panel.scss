@@ -19,6 +19,7 @@
   top: 0;
   z-index: 1000;
   background: var(--surface-color);
+  max-height: 100vh;
 }
 
 .c-liveTracking-panel-body {

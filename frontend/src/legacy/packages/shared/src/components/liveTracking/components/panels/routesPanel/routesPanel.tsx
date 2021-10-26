@@ -16,9 +16,9 @@ export interface RoutesPanelProps {
 export class RoutesPanel extends React.Component<RoutesPanelProps> {
   public render() {
     return (
-      <Panel className="c-liveTracking-routesPanel" hidden={this.props.hidden}>
+      <Panel className={`c-liveTracking-routesPanel ${this.props.service.filtersExpanded ? "--disable-scroll" : ""}`} hidden={this.props.hidden}>
         <div className="c-liveTracking-panel-header">
-          <Filters service={this.props.service} />
+          <Filters service={this.props.service}/>
         </div>
 
         <div className="c-liveTracking-panel-body">

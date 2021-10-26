@@ -50,7 +50,11 @@ export class Filters extends React.Component<RoutesLayerProps> {
         <div className="c-liveTracking-routesPanel-filters">
 
         <div
-        onClick={() => this.expanded ? this.expanded = false : this.expanded = true}
+        onClick={() =>
+          {
+            this.expanded ? this.expanded = false : this.expanded = true;
+            this.props.service.filtersExpanded = this.expanded;
+          }}
          className="c-liveTracking-routesPanel-filters-info c-liveTracking-box-clickable
         ">
           <span className="c-liveTracking-routesPanel-filters-criticality">
