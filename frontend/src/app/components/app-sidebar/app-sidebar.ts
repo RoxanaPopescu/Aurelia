@@ -67,13 +67,6 @@ export class AppSidebarCustomElement
     protected expanded = true;
 
     /**
-     * True to reduce the visibility of the shadow, otherwise false.
-     * This should only be true when presented together with a modal overlay with the same surface color.
-     */
-    @bindable({ defaultValue: false })
-    public reduceShadow: boolean;
-
-    /**
      * True to disable toggling of the dashboard, otherwise false.
      * This should only be false when presented as the landing page after sign in.
      */

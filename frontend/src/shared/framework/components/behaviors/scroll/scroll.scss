@@ -28,8 +28,7 @@
         transition-timing-function: var(--fade-timing-function);
     }
 
-    html:not(.platform-macos):not(.platform-ios) &,
-    &.scroll--custom
+    html:not(.platform-macos):not(.platform-ios) &
     {
         // The thickness of the scrollbar.
         --scrollbar-thickness: 12rem;

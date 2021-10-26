@@ -19,12 +19,10 @@ app-sidebar
     background: var(--surface-color);
     color: var(--surface-text-color);
 
-    .nav-link.app-sidebar-toggle
+    html:not(.platform-macos):not(.platform-ios) &::-webkit-scrollbar
     {
-        // HACK: Needed because the hover background inteferes with the scroll bar.
-        color: var(--surface-nav-link-surface-text-color);
-        background-color: var(--surface-nav-link-surface-color);
-        border-color: var(--surface-nav-link-border-color);
+        // HACK: On platforms with ugly scroll bars, just hide it.
+        display: none;
     }
 
     app-logo
@@ -69,7 +67,8 @@ app-sidebar
 
     header
     {
-        position: relative;
+        position: sticky;
+        top: 0;
         z-index: 1;
 
         &::before
@@ -79,7 +78,7 @@ app-sidebar
             position: absolute;
             top: 0;
             left: 0;
-            right: 8rem;
+            right: 0;
             bottom: -8rem;
 
             // Apply the surface color to the header and footer,
@@ -98,30 +97,15 @@ app-sidebar
 
     section
     {
-        // Apply negative vertical margins, so the section overlaps the header and footer.
-        // This allows us to apply a gradient fade effect when scrolled.
-        margin-top: -89rem;
-        margin-bottom: -178rem;
-
-        // Apply vertical padding to compensate for the negative margin.
-        padding-top: 97rem;
-        padding-bottom: 187rem;
-
-        // Shrink to allow scrolling.
-        flex-shrink: 1;
-
         overflow-x: hidden !important;
-
-        &::-webkit-scrollbar
-        {
-            --scrollbar-thickness: 8rem;
-            background: var(--surface-color);
-        }
+        padding-top: 8rem;
+        padding-bottom: 8rem;
     }
 
     footer
     {
-        position: relative;
+        position: sticky;
+        bottom: 0;
 
         // Push the footer to the bottom.
         margin-top: auto;
@@ -135,7 +119,7 @@ app-sidebar
             position: absolute;
             top: -8rem;
             left: 0;
-            right: 8rem;
+            right: 0;
             bottom: 0;
 
             // Apply the surface color to the header and footer,
@@ -187,54 +171,15 @@ app-sidebar
             transition: opacity var(--animation-duration-short);
 
             // Set the opacity of the shadow.
-            opacity: 0.5;
+            opacity: 0.3;
 
             // HACK: This assumes all modals that use the `app-sidebar` has the same surface color.
             modal-view &
             {
                 // Reduce the opacity of the shadow while a modal overlay with
                 // the same surface color, such as the `dashboard`, is open.
-                opacity: 0.4;
+                opacity: 0.2;
             }
-        }
-    }
-
-    .app-sidebar-shadow
-    {
-        // Position the shadow along the right edge.
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-
-        // Set the size of the shadow.
-        width: 16rem;
-
-        // Use a gradient to simulate a subtle shadow.
-        background: linear-gradient(
-            to left,
-            rgba(0, 0, 0, 0.3) 0,
-            rgba(0, 0, 0, 0.3) 1rem,
-            rgba(0, 0, 0, 0.15) 1rem,
-            rgba(0, 0, 0, 0.1) 1rem,
-            rgba(0, 0, 0, 0.004) 12rem,
-            rgba(0, 0, 0, 0) 1rem
-        );
-
-        // Ensure the shadow does not interfere with interaction.
-        pointer-events: none;
-
-        // Reduce the visibility of the shadow.
-        opacity: 0.25;
-
-        // Animate opacity changes.
-        transition: opacity var(--animation-duration-short);
-
-        &.--reduce-opacity
-        {
-            // Reduce the visibility of the shadow while a modal overlay with
-            // the same surface color, such as the `dashboard`, is open.
-            opacity: 0.5;
         }
     }
 

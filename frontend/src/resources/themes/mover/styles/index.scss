@@ -133,23 +133,6 @@ html app-sidebar
         background: var(--palette-color-primary-darkest);
     }
 
-    section
-    {
-        // Apply negative vertical margins, so the section overlaps the header and footer.
-        // This allows us to apply a gradient fade effect when scrolled.
-        margin-top: -82rem !important;
-        margin-bottom: -142rem !important;
-
-        // Apply vertical padding to compensate for the negative margin.
-        padding-top: 94rem !important;
-        padding-bottom: 152rem !important;
-
-        &::-webkit-scrollbar
-        {
-            background: var(--palette-color-primary-darkest);
-        }
-    }
-
     app-logo
     {
         margin: 36rem 8rem 24rem 8rem;

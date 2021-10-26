@@ -1,11 +1,11 @@
-<template surface="primary" class="${expanded ? '--expanded' : ''}">
+<template surface="primary" class="${expanded ? '--expanded' : ''}" scroll>
 
     <require from="app/components/user-identity/user-identity"></require>
     <require from="app/components/app-logo/app-logo"></require>
 
     <require from="./app-sidebar.scss"></require>
 
-    <div class="app-sidebar-shadow ${reduceShadow ? '--reduce-opacity' : ''}"><div></div></div>
+    <div class="app-sidebar-shadow"><div></div></div>
 
     <header>
 
@@ -42,7 +42,7 @@
 
     </header>
 
-    <section scroll class="scroll--custom">
+    <section>
 
         <div
             repeat.for="navModel of navModels"

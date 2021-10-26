@@ -89,14 +89,6 @@ html app-sidebar
         background: var(--palette-color-primary-darkest);
     }
 
-    section
-    {
-        &::-webkit-scrollbar
-        {
-            background: var(--palette-color-primary-darkest);
-        }
-    }
-
     user-identity a identity-picture
     {
         // background: var(--surface-nav-link-surface-color--active);
