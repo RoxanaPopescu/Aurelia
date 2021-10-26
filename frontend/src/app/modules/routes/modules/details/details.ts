@@ -17,6 +17,7 @@ import { EditInformationPanel } from "./modals/edit-information/edit-information
 import { RemoveDriverPanel } from "./modals/remove-driver/remove-driver";
 import { AddOrdersPanel } from "./modals/add-orders/add-orders";
 import addedOrdersToast from "./resources/strings/added-orders-toast.json";
+import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
 
 /**
  * Represents the route parameters for the page.
@@ -167,6 +168,22 @@ export class DetailsModule
         ).promise;
 
         if (vehicle != null)
+        {
+            this.fetchRoute();
+        }
+    }
+
+    /**
+     * Called when the `Assign team` button is clicked.
+     */
+    protected async onAssignTeamClick(): Promise<void>
+    {
+        const team = await this._modalService.open(
+            AssignTeamPanel,
+            { route: this.route!, assignOnSelect: true }
+        ).promise;
+
+        if (team != null)
         {
             this.fetchRoute();
         }
@@ -348,9 +365,8 @@ export class DetailsModule
 
     /**
      * Called when the `Edit Information` button is clicked.
-     * @param route The route to edit.
      */
-    protected async onEditRouteClick(route: Route): Promise<void>
+    protected async onEditRouteClick(): Promise<void>
     {
         await this._modalService.open(EditInformationPanel, { route: this.route! }).promise;
     }

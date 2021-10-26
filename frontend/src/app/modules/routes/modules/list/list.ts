@@ -16,6 +16,7 @@ import { IdentityService, moverOrganizationId } from "app/services/identity";
 import { OrganizationService, OrganizationTeam } from "app/model/organization";
 import { TeamsFilterService } from "app/services/teams-filter";
 import { Fulfiller } from "app/model/outfit";
+import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
 
 /**
  * Represents the route parameters for the page.
@@ -519,6 +520,39 @@ export class ListPage
             }
 
             updating.driver = false;
+        }
+    }
+
+    /**
+     * Called when the `Assign team` button is clicked.
+     * Opens the panel for assigning a team to a route, and once assigned, re-fetches the route.
+     */
+    protected async onAssignTeamClick(route: RouteInfo, updating: any): Promise<void>
+    {
+        const result = await this._modalService.open(
+            AssignTeamPanel,
+            { route: route, assignOnSelect: false }
+        ).promise;
+
+        if (result != null)
+        {
+            const team = result === "no-team" ? undefined : result;
+
+            const previousValue = route.teamId;
+            route.teamId = team?.id;
+            updating.team = true;
+
+            try
+            {
+                await this._routeAssignmentService.assignTeam(route, team);
+            }
+            catch
+            {
+                route.teamId = previousValue;
+                Log.error(`Could not assign the team '${team?.name}''`);
+            }
+
+            updating.team = false;
         }
     }
 

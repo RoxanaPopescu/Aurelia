@@ -5,7 +5,7 @@ import { Fulfiller, Outfit } from "app/model/outfit";
 import { Vehicle } from "app/model/vehicle";
 import { RouteBase } from "../entities/route-base";
 import { IdentityService } from "app/services/identity";
-import { OrganizationConnection } from "app/model/organization";
+import { OrganizationConnection, OrganizationTeam } from "app/model/organization";
 
 /**
  * Represents a service assigns routes to fulfillers or drivers.
@@ -110,5 +110,25 @@ export class RouteAssignmentService
         });
 
         route.executor = new Fulfiller({ id: executor.organization.id, companyName: executor.organization.name });
+    }
+
+    /**
+     * Assigns the specified route to the specified team.
+     * @param route The route to assign.
+     * @param team The team to which the route should be assigned, can be null if we remove the team.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async assignTeam(route: RouteBase, team?: OrganizationTeam): Promise<void>
+    {
+        await this._apiClient.post("routes/assign-team",
+        {
+            body:
+            {
+                routeId: route.id,
+                teamId: team?.id
+            }
+        });
+
+        route.teamId = team?.id;
     }
 }

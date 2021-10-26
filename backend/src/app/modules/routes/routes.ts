@@ -11,6 +11,31 @@ export class RoutesModule extends AppModule
     public configure(): void
     {
         /**
+         * Assigns a team or removes a team from a route
+         * @returns 200 OK if the team is changed
+         */
+        this.router.post("/v2/routes/assign-team", async context =>
+        {
+            const body = context.request.body;
+
+            await context.authorize("edit-routes", { teams: body.teamId == null ? undefined : [body.teamId] });
+
+            const result = await this.apiClient.post("logistics-platform/routes/v4/assign-team",
+            {
+                noi: true,
+                body: {
+                    ...body,
+                    fulfillerIds: [context.user?.organizationId],
+                    organizationId: context.user?.organizationId,
+                    modifiedById: context.user?.id
+                }
+            });
+
+            context.response.body = result.data;
+            context.response.status = 200;
+        });
+
+        /**
          * Will add a support note to the route
          * @returns 200 OK if support note is saved
          */

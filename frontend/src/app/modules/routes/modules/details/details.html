@@ -571,6 +571,18 @@
                             </template>
                         </item>
 
+                        <item
+                            if-claims="edit-routes"
+                            model="assign-team"
+                            click.trigger="onAssignTeamClick()">
+                            <template if.bind="!route.teamId" translate>
+                                Assign team
+                            </template>
+                            <template if.bind="route.teamId" translate>
+                                Reassign team
+                            </template>
+                        </item>
+
                     </select-button>
 
                     <select-button if-claims="edit-routes" appearance="outline" accent="primary">

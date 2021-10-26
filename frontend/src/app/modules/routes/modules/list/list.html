@@ -312,7 +312,7 @@
 
                             <template repeat.for="column of columns">
 
-                                <let updating.bind="{ driver: false, vehicle: false, executor: false }"></let>
+                                <let updating.bind="{ driver: false, vehicle: false, executor: false, team: false }"></let>
 
                                 <data-table-cell if.bind="column.slug === 'slug'">
                                     <a href="/routes/details/${route.slug}" class="text-truncate">
@@ -502,8 +502,20 @@
                                     </span>
                                 </data-table-cell>
 
-                                <data-table-cell if.bind="column.slug === 'team'">
-                                    <span class="text-truncate">
+                                <data-table-cell if.bind="column.slug === 'team'" class="${updating.team ? 'opacity-faded' : ''}">
+                                    <a
+                                        class="text-truncate"
+                                        if-claims="edit-routes"
+                                        click.trigger="onAssignTeamClick(route, updating)"
+                                    >
+                                        <template if.bind="!route.teamId" translate>
+                                            Assign team
+                                        </template>
+                                        <template if.bind="route.teamId">
+                                            ${teamName(route.teamId)}
+                                        </template>
+                                    </a>
+                                    <span else empty-value>
                                         ${teamName(route.teamId)}
                                     </span>
                                 </data-table-cell>
