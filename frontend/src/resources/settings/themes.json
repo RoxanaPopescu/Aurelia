@@ -8,15 +8,6 @@
         }
     },
     {
-        "slug": "mover-old",
-        "name": "Mover (Old)",
-        "preview":
-        {
-            "primary": "#008dd5"
-        },
-        "environments": ["development", "preview"]
-    },
-    {
         "slug": "coop",
         "name": "Coop",
         "preview":
