@@ -92,10 +92,10 @@ export class SearchModalPanel
     /**
      * The max number of saved searches to show by default.
      */
-    @computedFrom("recentSectionExpanded")
+    @computedFrom("queryText", "recentSectionExpanded")
     protected get savedSearchesLimit(): number
     {
-        return this.recentSectionExpanded ? 5 : 7;
+        return this.queryText ? 2 : this.recentSectionExpanded ? 5 : 7;
     }
 
     /**
@@ -141,7 +141,11 @@ export class SearchModalPanel
     /**
      * The max number of recent searches to show by default.
      */
-    protected recentSearchesLimit = 50;
+    @computedFrom("queryText")
+    protected get recentSearchesLimit(): number
+    {
+        return this.queryText ? 2 : 50;
+    }
 
     /**
      * The filtered collection of recent searches.
