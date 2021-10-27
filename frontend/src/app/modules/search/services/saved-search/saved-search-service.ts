@@ -1,6 +1,9 @@
 import { autoinject } from "aurelia-framework";
+import { DateTime } from "luxon";
+import { Id } from "shared/utilities";
 import { ApiClient } from "shared/infrastructure";
 import { SearchInfo } from "../search";
+import { LocalStateService } from "app/services/local-state";
 
 /**
  * Represents a service for managing saved searches.
@@ -11,13 +14,16 @@ export class SavedSearchService
     /**
      * Creates a new instance of the type.
      * @param apiClient The `ApiClient` instance.
+     * @param localStateService The `LocalStateService` instance.
      */
-    public constructor(apiClient: ApiClient)
+    public constructor(apiClient: ApiClient, localStateService: LocalStateService)
     {
         this._apiClient = apiClient;
+        this._localStateService = localStateService;
     }
 
     private readonly _apiClient: ApiClient;
+    private readonly _localStateService: LocalStateService;
 
     /**
      * Gets all saved searches.
@@ -26,12 +32,17 @@ export class SavedSearchService
      */
     public async getAll(signal?: AbortSignal): Promise<SearchInfo[]>
     {
-        const result = await this._apiClient.get("searches/saved",
+        if (false)
         {
-            signal
-        });
+            const result = await this._apiClient.get("searches/saved",
+            {
+                signal
+            });
 
-        return result.data.map((data: any) => new SearchInfo(data));
+            return result.data.map((data: any) => new SearchInfo(data));
+        }
+
+        return this._localStateService.get().savedSearches?.map((data: any) => new SearchInfo(data)) ?? [];
     }
 
     /**
@@ -41,12 +52,42 @@ export class SavedSearchService
      */
     public async add(query: string): Promise<SearchInfo>
     {
-        const result = await this._apiClient.post("searches/saved",
+        if (false)
         {
-            body: { text: query }
+            const result = await this._apiClient.post("searches/saved",
+            {
+                body: { text: query }
+            });
+
+            return new SearchInfo(result.data);
+        }
+
+        const searchInfo = new SearchInfo(
+        {
+            id: Id.uuid(1),
+            text: query,
+            createdDateTime: DateTime.local()
         });
 
-        return new SearchInfo(result.data);
+        this._localStateService.mutate(state =>
+        {
+            if (state.savedSearches == null)
+            {
+                state.savedSearches = [];
+            }
+
+            const index = state.savedSearches.findIndex(i => i.text === query);
+
+            if (index > -1)
+            {
+                state.savedSearches.splice(index, 1);
+            }
+
+            // Add the item to the top of the saved collection.
+            state.savedSearches.unshift(searchInfo);
+        });
+
+        return searchInfo;
     }
 
     /**
@@ -56,6 +97,19 @@ export class SavedSearchService
      */
     public async delete(id: string): Promise<void>
     {
-        await this._apiClient.delete(`searches/saved/${id}`);
+        if (false)
+        {
+            await this._apiClient.delete(`searches/saved/${id}`);
+        }
+
+        this._localStateService.mutate(state =>
+        {
+            const index = state.savedSearches?.findIndex(s => s.id === id);
+
+            if (index > -1)
+            {
+                state.savedSearches.splice(index, 1);
+            }
+        });
     }
 }

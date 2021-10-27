@@ -48,7 +48,7 @@ export class RoutesModule extends AppModule
 
         context.response.body =
         [
-            ...ordersResponse?.body.orders.map((order: any) =>
+            ...(ordersResponse?.body.orders ?? []).map((order: any) =>
             ({
                 type: "order",
                 id: order.internalId,
@@ -58,7 +58,7 @@ export class RoutesModule extends AppModule
                 starred: undefined
             })),
 
-            ...routesResponse?.body.routes.map((route: any) =>
+            ...(routesResponse?.body.routes ?? []).map((route: any) =>
             ({
                 type: "route",
                 id: route.id,

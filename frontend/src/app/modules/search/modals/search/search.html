@@ -29,7 +29,7 @@
                 Search
             </h1>
 
-            <search-input value.bind="queryText" autofocus ref="queryInputElement">
+            <search-input value.bind="queryText & debounce: 300" autofocus ref="queryInputElement">
 
                 <span slot="before">
                     <icon name="md-search" class="font-larger opacity-faded"></icon>
@@ -44,7 +44,7 @@
         </modal-header>
 
         <modal-section
-            if.bind="!queryText || filteredSavedItems.length > 0"
+            if.bind="!queryText || filteredSavedSearches.length > 0"
             class="margin-bottom"
             toggle.bind="true"
             expanded.from-view="savedSectionExpanded">
@@ -53,43 +53,43 @@
                 Saved searches
             </div>
 
-            <list-layout if.bind="savedItems == null">
+            <list-layout if.bind="savedSearches == null">
 
                 <search-item repeat.for="i of 3"></search-item>
 
             </list-layout>
 
-            <div if.bind="savedItems != null">
+            <div if.bind="savedSearches != null">
 
                 <info-card
-                    if.bind="savedItems.length == 0"
+                    if.bind="savedSearches.length == 0"
                     heading.translate="You have no saved searches"
                     translate>
                     To save a search, type a query and click <icon inline name="md-save" accent="primary"></icon>
                 </info-card>
 
-                <div if.bind="savedItems.length > 0 && filteredSavedItems.length == 0" class="opacity-faded" translate>
+                <div if.bind="savedSearches.length > 0 && filteredSavedSearches.length == 0" class="opacity-faded" translate>
                     No searches match your filter
                 </div>
 
                 <list-layout>
 
                     <search-item
-                        repeat.for="item of filteredSavedItems | take: showMoreSaved ? undefined : savedItemsLimit"
-                        model.bind="item"
-                        click.trigger="searchClick($event, item, true)"
-                        delete-click.call="deleteClick(item)">
+                        repeat.for="search of filteredSavedSearches | take: showMoreSavedSearches ? undefined : savedSearchesLimit"
+                        model.bind="search"
+                        click.trigger="searchClick($event, search, true)"
+                        delete-click.call="deleteClick(search)">
                     </search-item>
 
                 </list-layout>
 
-                <div if.bind="filteredSavedItems.length > savedItemsLimit" class="margin-top">
+                <div if.bind="filteredSavedSearches.length > savedSearchesLimit" class="margin-top">
 
-                    <a if.bind="!showMoreSaved" click.trigger="showMoreSaved = true" translate>
+                    <a if.bind="!showMoreSavedSearches" click.trigger="showMoreSavedSearches = true" translate>
                         Show all
                     </a>
 
-                    <a if.bind="showMoreSaved" click.trigger="showMoreSaved = false" translate>
+                    <a if.bind="showMoreSavedSearches" click.trigger="showMoreSavedSearches = false" translate>
                         Show less
                     </a>
 
@@ -100,51 +100,51 @@
         </modal-section>
 
         <modal-section
-            if.bind="!queryText || filteredRecentItems.length > 0"
+            if.bind="!queryText || filteredRecentSearches.length > 0"
             class="${queryText ? 'margin-bottom' : ''}"
             toggle.bind="true"
-            expanded.from-view="recentItemsExpanded">
+            expanded.from-view="recentSectionExpanded">
 
             <div slot="header" translate>
                 Recent searches
             </div>
 
-            <list-layout if.bind="recentItems == null">
+            <list-layout if.bind="recentSearches == null">
 
                 <search-item repeat.for="i of 3"></search-item>
 
             </list-layout>
 
-            <div if.bind="recentItems != null">
+            <div if.bind="recentSearches != null">
 
                 <info-card
-                    if.bind="recentItems.length == 0"
+                    if.bind="recentSearches.length == 0"
                     heading.translate="You have no recent searches"
                     translate>
                     Any searches you do will automatically appear here, so they are easy to repeat
                 </info-card>
 
-                <div if.bind="recentItems.length > 0 && filteredRecentItems.length == 0" class="opacity-faded" translate>
+                <div if.bind="recentSearches.length > 0 && filteredRecentSearches.length == 0" class="opacity-faded" translate>
                     No searches match your filter
                 </div>
 
                 <list-layout>
 
                     <search-item
-                        repeat.for="item of filteredRecentItems | take: showMoreRecent ? undefined : recentItemsLimit"
-                        model.bind="item"
-                        click.trigger="searchClick($event, item, false)">
+                        repeat.for="search of filteredRecentSearches | take: showMoreRecentSearches ? undefined : recentSearchesLimit"
+                        model.bind="search"
+                        click.trigger="searchClick($event, search, false)">
                     </search-item>
 
                 </list-layout>
 
-                <div if.bind="filteredRecentItems.length > recentItemsLimit" class="margin-top">
+                <div if.bind="filteredRecentSearches.length > recentSearchesLimit" class="margin-top">
 
-                    <a if.bind="!showMoreRecent" click.trigger="showMoreRecent = true" translate>
+                    <a if.bind="!showMoreRecentSearches" click.trigger="showMoreRecentSearches = true" translate>
                         Show more
                     </a>
 
-                    <a if.bind="showMoreRecent" click.trigger="showMoreRecent = false" translate>
+                    <a if.bind="showMoreRecentSearches" click.trigger="showMoreRecentSearches = false" translate>
                         Show less
                     </a>
 

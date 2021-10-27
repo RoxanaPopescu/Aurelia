@@ -63,26 +63,21 @@ export class SearchModalPanel
     /**
      * True if the search can be saved, otherwise false.
      */
-    @computedFrom("queryText", "savedItems.length")
+    @computedFrom("queryText", "savedSearches.length", "recentSearches.length")
     protected get canSave(): boolean
     {
-        if (!this.queryText || this.recentItems == null || this.savedItems == null)
+        if (!this.queryText || this.savedSearches == null || this.recentSearches == null)
         {
             return false;
         }
 
-        return !this.savedItems.some(i => i.text.toLowerCase() === this.queryText!.toLowerCase());
+        return !this.savedSearches.some(savedSearch => savedSearch.text.toLowerCase() === this.queryText!.toLowerCase());
     }
 
     /**
-     * The saved items for the current user.
+     * The saved searches for the current user.
      */
-    protected savedItems: SearchInfo[] | undefined;
-
-    /**
-     * True to show more saved items, otherwise false.
-     */
-    protected showMoreSaved = false;
+    protected savedSearches: SearchInfo[] | undefined;
 
     /**
      * True if the saved section is expanded, otherwise false.
@@ -90,48 +85,48 @@ export class SearchModalPanel
     protected savedSectionExpanded = true;
 
     /**
-     * The max number of saved items to show by default.
+     * True to show more saved searches, otherwise false.
+     */
+    protected showMoreSavedSearches = false;
+
+    /**
+     * The max number of saved searches to show by default.
      */
     @computedFrom("recentSectionExpanded")
-    protected get savedItemsLimit(): number
+    protected get savedSearchesLimit(): number
     {
         return this.recentSectionExpanded ? 5 : 7;
     }
 
     /**
-     * The filtered list of saved items.
+     * The filtered collection of saved searches.
      */
-    @computedFrom("savedItems.length", "queryText")
-    protected get filteredSavedItems(): SearchInfo[]
+    @computedFrom("queryText", "savedSearches.length")
+    protected get filteredSavedSearches(): SearchInfo[]
     {
-        if (this.savedItems == null)
+        if (this.savedSearches == null)
         {
             return [];
         }
 
         const queryText = this.queryText ? this.queryText.toLowerCase() : "";
 
-        return this.savedItems
+        return this.savedSearches
 
-            // Include only items that match the filter text, but ignore items
+            // Include only searches that match the filter text, but ignore searches
             // that are an exact match, as they would provide no additional value.
-            .filter(item =>
+            .filter(search =>
             {
-                const itemQueryText = item.text.toLowerCase();
+                const searchQueryText = search.text.toLowerCase();
 
-                return itemQueryText.includes(queryText) && itemQueryText !== queryText;
+                return searchQueryText.includes(queryText) && searchQueryText !== queryText;
             });
     }
 
     /**
-     * The recent items for the current user.
+     * The recent searches for the current user.
      */
-    protected recentItems: SearchInfo[] | undefined;
-
-    /**
-     * True to show more recent items, otherwise false.
-     */
-    protected showMoreRecent = false;
+    protected recentSearches: SearchInfo[] | undefined;
 
     /**
      * True if the recent section is expanded, otherwise false.
@@ -139,32 +134,39 @@ export class SearchModalPanel
     protected recentSectionExpanded = true;
 
     /**
-     * The max number of recent items to show by default.
+     * True to show more recent searches, otherwise false.
      */
-    protected recentItemsLimit = 50;
+    protected showMoreRecentSearches = false;
 
     /**
-     * The filtered list of recent items.
+     * The max number of recent searches to show by default.
      */
-    @computedFrom("recentItems.length", "queryText", "savedItems.length")
-    protected get filteredRecentItems(): SearchInfo[]
+    protected recentSearchesLimit = 50;
+
+    /**
+     * The filtered collection of recent searches.
+     */
+    @computedFrom("queryText", "savedSearches.length", "recentSearches.length")
+    protected get filteredRecentSearches(): SearchInfo[]
     {
-        if (this.recentItems == null)
+        if (this.savedSearches == null || this.recentSearches == null)
         {
             return [];
         }
 
         const queryText = this.queryText ? this.queryText.toLowerCase() : "";
 
-        return this.recentItems
+        return this.recentSearches
 
-            // Include only items that match the filter text, but ignore items
+            // Include only searches that match the filter text, but ignore searches
             // that are an exact match, as they would provide no additional value.
-            .filter(item =>
+            // Also ignore searches found in the saved collection.
+            .filter(search =>
             {
-                const itemQueryText = item.text.toLowerCase();
+                const searchQueryText = search.text.toLowerCase();
 
-                return itemQueryText.includes(queryText) && itemQueryText !== queryText;
+                return searchQueryText.includes(queryText) && searchQueryText !== queryText &&
+                    !this.savedSearches!.some(savedSearch => savedSearch.text === search.text);
             });
     }
 
@@ -185,22 +187,13 @@ export class SearchModalPanel
     {
         this._activateOperation = new Operation(async signal =>
         {
-            // Get saved and recent items.
+            // Get saved and recent searches.
 
-            const [savedItems, recentItems] = await Promise.all(
+            [this.savedSearches, this.recentSearches] = await Promise.all(
             [
                 this._savedSearchService.getAll(signal),
                 this._recentSearchService.getAll(signal)
             ]);
-
-            this.savedItems = savedItems;
-
-            this.recentItems = recentItems
-
-                // Include only items not found in the saved list.
-                // TODO:2: We should really compare by UUID here, but entities do not have that at this time.
-                .filter(item =>
-                    !item.text || !this.savedItems!.some(i => i.text === item.text));
         });
 
         this._activateOperation.promise
@@ -222,22 +215,24 @@ export class SearchModalPanel
      */
     protected queryTextChanged(): void
     {
+        // Abort any scheduled logging.
         clearTimeout(this._logTimeoutHandle);
+
+        // Clear the timeout handle to indicate that no logging is scheduled.
         this._logTimeoutHandle = undefined;
 
         if (this.queryText)
         {
-            // Schedule the search to be logged.
-            this._logTimeoutHandle = setTimeout(() => this.ensureSearchIsLogged(), logSearchDelay);
+            // Schedule the search to be logged after a short delay.
+            this._logTimeoutHandle = setTimeout(() => this.ensureLoggedAsRecent(), logSearchDelay);
         }
 
-        if (this.operation != null)
-        {
-            this.operation.abort();
-        }
+        // Abort any pending query operration.
+        this.operation?.abort();
 
         if (this.queryText)
         {
+            // Start a new query operation.
             this.operation = new Operation(async signal =>
             {
                 this.searchResults = await this._searchService.search(this.queryText!, signal);
@@ -245,6 +240,7 @@ export class SearchModalPanel
         }
         else
         {
+            // Clear the results.
             this.searchResults = [];
         }
     }
@@ -257,44 +253,24 @@ export class SearchModalPanel
      */
     protected async saveClick(): Promise<void>
     {
-        const queryText = this.queryText!;
+        // Ensure the search is logged as a recent search.
+        this.ensureLoggedAsRecent();
 
-        // If needed, log the search as a recent search.
-        this.ensureSearchIsLogged();
+        // Save the search.
+        const search = await this._savedSearchService.add(this.queryText!);
 
-        // Save the item.
-        const search = await this._savedSearchService.add(queryText);
-
-        // Remove the existing item from the recent collection, if found there.
-
-        const indexInRecent = this.recentItems!.findIndex(i => i.text === queryText);
-
-        if (indexInRecent > -1)
-        {
-            this.savedItems!.splice(indexInRecent, 1);
-        }
-
-        // Remove the existing item from the saved collection, if found there.
-
-        const indexInSaved = this.savedItems!.findIndex(i => i.text === queryText);
-
-        if (indexInSaved > -1)
-        {
-            this.savedItems!.splice(indexInSaved, 1);
-        }
-
-        // Add the item to the top of the saved collection.
-        this.savedItems!.unshift(search);
+        // Add the search to the top of the saved collection.
+        this.savedSearches!.unshift(search);
     }
 
     /**
      * Called when a saved or recent search is clicked.
      * Executes the query represented by the search.
      * @param event The mouse event.
-     * @param item The item being clicked.
+     * @param search The search being clicked.
      * @param isSavedSearch True id the search is saved, otherwise false.
      */
-    protected searchClick(event: MouseEvent, item: SearchInfo, isSavedSearch: boolean): void
+    protected searchClick(event: MouseEvent, search: SearchInfo, isSavedSearch: boolean): void
     {
         if (event.defaultPrevented)
         {
@@ -302,53 +278,40 @@ export class SearchModalPanel
         }
 
         // Set, and thereby execute, the query represented by the search.
-        this.queryText = item.text;
+        this.queryText = search.text;
 
-        // Remove the existing item from the recent collection, if found there.
-        if (!isSavedSearch)
-        {
-            const indexInRecent = this.recentItems!.findIndex(i => i.text === item.text);
-
-            if (indexInRecent > -1)
-            {
-                this.recentItems!.splice(indexInRecent, 1);
-            }
-
-            // Add the item to the top of the recent collection.
-            this.recentItems!.unshift(item);
-        }
-
+        // Focus the search input, in case the user wants to refine the query.
         this.queryInputElement.focus();
     }
 
     /**
-     * Called when the `delete` icon is clicked on a saved item.
-     * Removes the item from the collection of saved items.
-     * @param item The item being deleted.
+     * Called when the `delete` icon is clicked on a saved search.
+     * Removes the search from the collection of saved searches.
+     * @param search The search being deleted.
      * @returns A promise that will be resolved when the operation succeeds.
      */
-    protected async deleteClick(item: SearchInfo): Promise<void>
+    protected async deleteClick(search: SearchInfo): Promise<void>
     {
-        // If needed, log the search as a recent search.
-        this.ensureSearchIsLogged();
+        // Ensure the search is logged as a recent search.
+        this.ensureLoggedAsRecent();
 
-        // Unstar the item.
-        await this._savedSearchService.delete(item.id);
+        // Delete the search.
+        await this._savedSearchService.delete(search.id);
 
-        // Remove the item from the saved collection.
-        this.savedItems!.splice(this.savedItems!.indexOf(item), 1);
+        // Remove the search from the saved collection.
+        this.savedSearches!.splice(this.savedSearches!.indexOf(search), 1);
     }
 
     /**
      * Called when the `star` icon is clicked on a search result.
-     * Toggles the starred state of the result.
-     * @param result The result being starred or unstarred.
+     * Toggles the starred state of the entity represented by the result.
+     * @param result The entity being starred or unstarred.
      * @returns A promise that will be resolved when the operation succeeds.
      */
     protected async starClick(result: EntityInfo): Promise<void>
     {
-        // If needed, log the search as a recent search.
-        this.ensureSearchIsLogged();
+        // Ensure the search is logged as a recent search.
+        this.ensureLoggedAsRecent();
 
         if (result.starred)
         {
@@ -370,7 +333,7 @@ export class SearchModalPanel
 
     /**
      * Called when a search result is clicked.
-     * Closes the modal and ensures the search is added as a recent search.
+     * Closes the modal and navigates to the URL associated with the result.
      * @param event The mouse event.
      * @returns True to continue.
      */
@@ -381,8 +344,8 @@ export class SearchModalPanel
             return false;
         }
 
-        // If needed, log the search as a recent search.
-        this.ensureSearchIsLogged();
+        // Ensure the search is logged as a recent search.
+        this.ensureLoggedAsRecent();
 
         // Make sure the modal closes, even if no navigation is triggered.
         // tslint:disable-next-line: no-floating-promises
@@ -394,18 +357,41 @@ export class SearchModalPanel
     /**
      * Ensures the current search, if any, is logged as a recent search.
      */
-    private ensureSearchIsLogged(): void
+    private ensureLoggedAsRecent(): void
     {
+        // Only log the search, if logging is already scheduled.
         if (this._logTimeoutHandle != null)
         {
+            // Abort the scheduled logging.
             clearTimeout(this._logTimeoutHandle);
+
+            // Clear the timeout handle to indicate that no logging is scheduled.
             this._logTimeoutHandle = undefined;
 
-            if (this.queryText)
+            // Capture the query text.
+            const queryTextToLog = this.queryText;
+
+            // Only log the search, if a query text is specified.
+            if (queryTextToLog)
             {
                 // Log the search as a recent search.
-                this._recentSearchService.add(this.queryText)
-                    .catch(e => console.error("Failed to add search to recent searches", e));
+                this._recentSearchService.add(queryTextToLog)
+
+                    .then(recentSearch =>
+                    {
+                        // Add or move the search to the top of the recent collection.
+
+                        const indexInRecent = this.recentSearches!.findIndex(s => s.text.toLowerCase() === queryTextToLog.toLowerCase());
+
+                        if (indexInRecent > -1)
+                        {
+                            this.recentSearches!.splice(indexInRecent, 1);
+                        }
+
+                        this.recentSearches!.unshift(recentSearch);
+                    })
+
+                    .catch(error => console.error("Failed to add search to recent searches", error));
             }
         }
     }
