@@ -70,15 +70,15 @@ export class Filters extends React.Component<RoutesLayerProps> {
           </span>
           <span className="c-liveTracking-routesPanel-filters-infoRight">
             <div>
-              <div className="c-liveTracking-routesPanel-filters-enabledCount">
+              <span className="c-liveTracking-routesPanel-filters-enabledCount">
               {Localization.sharedValue("LiveTracking_FiltersEnabled")
-            .replace("{enabled-filter}", this.props.service.filter.enabledCount.toString())}
-              </div>
-              <div className="c-liveTracking-routesPanel-filters-count">
+                .replace("{enabled-filter}", this.props.service.filter.enabledCount.toString())}
+              </span>
+              <span className="c-liveTracking-routesPanel-filters-count">
               {Localization.sharedValue("Route_FilterCount")
-            .replace("{filtered_count}", this.props.service.filteredRoutes.length.toString())
-            .replace("{total_count}", this.props.service.routes.length.toString())}
-              </div>
+                .replace("{filtered_count}", this.props.service.filteredRoutes.length.toString())
+                .replace("{total_count}", this.props.service.routes.length.toString())}
+              </span>
             </div>
             <Icon className="c-livetracking-filter" name="live-tracking-filter"/>
           </span>
