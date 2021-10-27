@@ -31,11 +31,16 @@ export class TeamsFilterService
     /**
      * The teams for which data should be presented, or undefined if no team is selected.
      */
-    @computedFrom("selectedTeamIds")
+    @computedFrom("selectedTeamIds.length", "accessibleTeams.length")
     public get selectedTeams(): (OrganizationTeam | "no-team")[] | undefined
     {
-        return this.selectedTeamIds?.map(
-            teamId => teamId === "no-team" ? "no-team" : this.accessibleTeams!.find(team => (team as OrganizationTeam).id === teamId)!)
+        if (this.selectedTeamIds == null || this.accessibleTeams == null)
+        {
+            return undefined;
+        }
+
+        return this.selectedTeamIds
+            .map(teamId => teamId === "no-team" ? "no-team" : this.accessibleTeams!.find(team => (team as OrganizationTeam).id === teamId)!)
             .filter(team => team != null);
     }
 
