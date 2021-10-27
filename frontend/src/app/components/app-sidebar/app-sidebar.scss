@@ -21,7 +21,7 @@ app-sidebar
 
     html:not(.platform-macos):not(.platform-ios) &::-webkit-scrollbar
     {
-        // HACK: On platforms with ugly scroll bars, just hide it.
+        // HACK: On platforms with ugly scrollbars, just hide it.
         display: none;
     }
 

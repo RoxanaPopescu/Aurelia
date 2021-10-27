@@ -1,5 +1,12 @@
 @import "resources/index";
 
+page-content,
+modal-content
+{
+    // HACK: Without this, scrollbars in Chrome on macOS do not have the correct color.
+    background-color: var(--surface-color);
+}
+
 .input-heading > *,
 .input-description > *,
 .toggle-heading > *,
