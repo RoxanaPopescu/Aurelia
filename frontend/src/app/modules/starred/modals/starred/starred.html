@@ -40,7 +40,7 @@
 
             </list-layout>
 
-            <div if.bind="starredItems != null">
+            <div else>
 
                 <info-card
                     if.bind="starredItems.length == 0"
@@ -91,7 +91,7 @@
 
             </list-layout>
 
-            <div if.bind="recentItems != null">
+            <div else>
 
                 <info-card
                     if.bind="recentItems.length == 0"

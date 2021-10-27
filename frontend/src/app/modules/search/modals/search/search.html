@@ -59,7 +59,7 @@
 
             </list-layout>
 
-            <div if.bind="savedSearches != null">
+            <div else>
 
                 <info-card
                     if.bind="savedSearches.length == 0"
@@ -115,7 +115,7 @@
 
             </list-layout>
 
-            <div if.bind="recentSearches != null">
+            <div else>
 
                 <info-card
                     if.bind="recentSearches.length == 0"
@@ -170,17 +170,13 @@
 
             </list-layout>
 
-            <busy-overlay if.bind="operation.pending || operation.error"></busy-overlay>
+            <div else>
 
-            <div if.bind="searchResults != null" class="search-results">
+                <div if.bind="searchResults.length == 0 && !operation.pending && !operation.error" class="opacity-faded" translate>
+                    No items match your query
+                </div>
 
-                <list-layout>
-                    <div if.bind="searchResults.length == 0" class="search-results-empty" translate>
-                        No items match your query
-                    </div>
-                </list-layout>
-
-                <list-layout>
+                <list-layout else>
 
                     <search-result
                         repeat.for="result of searchResults"
@@ -192,6 +188,8 @@
                 </list-layout>
 
             </div>
+
+            <busy-overlay if.bind="operation.pending || operation.error"></busy-overlay>
 
         </modal-section>
 

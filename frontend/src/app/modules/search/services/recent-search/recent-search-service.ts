@@ -85,6 +85,12 @@ export class RecentSearchService
 
             // Add the item to the top of the recent collection.
             state.recentSearches.unshift(searchInfo);
+
+            // Limit the size of the recent collection.
+            if (state.recentSearches.length > 100)
+            {
+                state.recentSearches = state.recentSearches.slice(0, 201);
+            }
         });
 
         return searchInfo;
