@@ -373,26 +373,26 @@ export class SearchModalPanel
             this._logTimeoutHandle = undefined;
 
             // Capture the query text.
-            const queryTextToLog = this.queryText;
+            const queryText = this.queryText;
 
             // Only log the search, if a query text is specified.
-            if (queryTextToLog)
+            if (queryText)
             {
                 // Log the search as a recent search.
-                this._recentSearchService.add(queryTextToLog)
+                this._recentSearchService.add(queryText)
 
-                    .then(recentSearch =>
+                    .then(newRecentSearch =>
                     {
                         // Add or move the search to the top of the recent collection.
 
-                        const indexInRecent = this.recentSearches!.findIndex(s => s.text.toLowerCase() === queryTextToLog.toLowerCase());
+                        const index = this.recentSearches!.findIndex(recentSearch => recentSearch.text.toLowerCase() === queryText.toLowerCase());
 
-                        if (indexInRecent > -1)
+                        if (index > -1)
                         {
-                            this.recentSearches!.splice(indexInRecent, 1);
+                            this.recentSearches!.splice(index, 1);
                         }
 
-                        this.recentSearches!.unshift(recentSearch);
+                        this.recentSearches!.unshift(newRecentSearch);
                     })
 
                     .catch(error => console.error("Failed to add search to recent searches", error));
