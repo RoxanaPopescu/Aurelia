@@ -85,7 +85,7 @@ export class LocalStateService
         const userId = this._identityService.identity?.id;
         const organizationId = this._identityService.identity?.organization?.id;
 
-        return `userId: ${userId ?? "undefined"}, organizationId: ${organizationId ?? "undefined"}`;
+        return `userId: ${userId}, organizationId: ${organizationId}`;
     }
 
     /**

@@ -11,11 +11,6 @@
       "environments": ["development"]
   },
   {
-      "code": "en-US-x-ikea",
-      "unicodeExtension": "u-ca-iso8601-nu-latn",
-      "name": "English (IKEA)"
-  },
-  {
       "code": "da",
       "unicodeExtension": "u-ca-iso8601-nu-latn",
       "name": "Dansk"
