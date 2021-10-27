@@ -17,10 +17,12 @@
    ```
    npm ci
    cd src/legacy
-   npm ci
+   npm i
    ```
 
    This will install the dependencies listed in the `package-lock.json` file.
+
+   > Note that you must use `npm i` in the legacy folder, as it otherwise won't run `patch-package` during install.
 
    > If you encounter errors related to `node-gyp`, [this may help](https://github.com/nodejs/node-gyp/issues/629).
 
