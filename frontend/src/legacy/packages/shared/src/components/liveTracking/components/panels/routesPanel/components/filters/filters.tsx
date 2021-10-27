@@ -103,6 +103,7 @@ export class Filters extends React.Component<RoutesLayerProps> {
               onChange={values => {
                 this.teamsFilterService.selectedTeamIds = values?.length ? values?.map(t => t.value) : undefined;
                 this.props.service.filter.selectedTeamCount = this.teamsFilterService.selectedTeamIds?.length ?? 0;
+                this.props.service.restartPolling();
               }}
               options={(this.teamsFilterService.accessibleTeams ?? []).map((t: any) => {
                 return { label: t.name ?? "No team", value: t.id ?? "no-team" };
@@ -207,7 +208,24 @@ export class Filters extends React.Component<RoutesLayerProps> {
                 }
               />
           </div>
-
+          <div>
+            <div className="c-liveTracking-routesPanel-filters-title">{Localization.sharedValue("RouteDetails_RouteOverview_VehicleType")}</div>
+            {VehicleType.getAll().map(v =>
+              <InputCheckbox
+                className="c-liveTracking-routesPanel-filters-criticality"
+                key={v.id}
+                checked={this.props.service.filter.vehicleTypeEnabled(v.slug)}
+                onChange={() => this.props.service.filter.vehicleTypeEnableDisable(v.slug)
+                }
+              >
+                {v.name} - {
+                this.props.service.filteredRoutes
+                .filter(r => r.vehicleType.slug === v.slug)
+                .length
+              }
+              </InputCheckbox>
+            )}
+          </div>
           <div>
             <div className="c-liveTracking-routesPanel-filters-title">{Localization.sharedValue("Products")}</div>
             <InputCheckbox
@@ -246,24 +264,6 @@ export class Filters extends React.Component<RoutesLayerProps> {
                 .length
               }
             </InputCheckbox>
-          </div>
-          <div>
-            <div className="c-liveTracking-routesPanel-filters-title">{Localization.sharedValue("RouteDetails_RouteOverview_VehicleType")}</div>
-            {VehicleType.getAll().map(v =>
-              <InputCheckbox
-                className="c-liveTracking-routesPanel-filters-criticality"
-                key={v.id}
-                checked={this.props.service.filter.vehicleTypeEnabled(v.slug)}
-                onChange={() => this.props.service.filter.vehicleTypeEnableDisable(v.slug)
-                }
-              >
-                {v.name} - {
-                this.props.service.filteredRoutes
-                .filter(r => r.vehicleType.slug === v.slug)
-                .length
-              }
-              </InputCheckbox>
-            )}
           </div>
         </div></div>}
       </div>
