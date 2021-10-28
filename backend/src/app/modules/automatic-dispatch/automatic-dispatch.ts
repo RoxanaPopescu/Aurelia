@@ -70,9 +70,9 @@ export class AutomaticDispatchModule extends AppModule
         {
             await context.authorize("edit-routes");
 
-            // TODO:
-            const result = await this.apiClient.post(`automatic-dispatch/jobs/${context.params.id}/approve`,
+            const result = await this.apiClient.post("automatic-dispatch-orchestrator/jobs",
             {
+                body: context.request.body,
                 headers: { "ownerId": context.user?.organizationId }
             });
 

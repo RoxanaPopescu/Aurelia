@@ -188,14 +188,7 @@ export class OrganizationModule extends AppModule
             }
         });
 
-        context.response.body = result.data.invitations.map((invite: any) =>
-        ({
-            id: invite.id,
-            email: invite.invitedEmailAddress,
-            role: invite.role,
-            teams: invite.teams
-        }));
-
+        context.response.body = result.data.invitations;
         context.response.status = 200;
     }
 
@@ -211,7 +204,7 @@ export class OrganizationModule extends AppModule
 
         const result1 = await this.apiClient.get(`identity/memberships/invitations/${context.params.inviteId}`);
 
-        if (result1.data.invitedEmailAddress.toLowerCase() !== context.user?.email.toLowerCase())
+        if (result1.data.email.toLowerCase() !== context.user?.email.toLowerCase())
         {
             context.response.status = 403;
 
@@ -223,7 +216,7 @@ export class OrganizationModule extends AppModule
         context.response.body =
         {
             id: result1.data.id,
-            email: result1.data.invitedEmailAddress,
+            email: result1.data.email,
             organization: result2.data.organization,
             role: result1.data.role,
             teams: result1.data.teams
