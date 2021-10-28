@@ -138,6 +138,9 @@
         [
             {
                 "color": "#7b8e97"
+            },
+            {
+                "visibility": "on"
             }
         ]
     },
@@ -148,6 +151,16 @@
         [
             {
                 "color": "#86a2af"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "all",
+        "stylers":
+        [
+            {
+                "color": "#f2f2f2"
             }
         ]
     },
