@@ -259,6 +259,16 @@ export class LiveTrackingService {
   }
 
   /**
+   * Will restart polling - use when assigning filters that require new data.
+   */
+  public restartPolling() {
+    this.routesInProgress = [];
+    this.routesNotStarted = [];
+    this.routesNoDriver = [];
+    this.startPolling();
+  }
+
+  /**
    * Triggers change detection for the `routes` property.
    */
   public triggerRoutesChanged() {

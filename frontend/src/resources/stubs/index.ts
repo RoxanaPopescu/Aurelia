@@ -1,9 +1,7 @@
 import { IResponseStubs } from "shared/infrastructure";
-import entitiesStarred from "./responses/entities-starred";
-import entitiesRecent from "./responses/entities-recent";
-import searchesSaved from "./responses/searches-saved";
-import searchesRecent from "./responses/searches-recent";
-import searchesQuery from "./responses/searches-query";
+
+// Unmaintained:
+
 // import orderEvents from "./responses/order-events-all";
 // import orderEvents from "./responses/order-events";
 // import routesCreate from "./responses/routes-create";
@@ -16,9 +14,17 @@ import searchesQuery from "./responses/searches-query";
 // import routePlans from "./responses/route-plans";
 // import communication from "./responses/communication";
 // import automaticDispatch from "./responses/automatic-dispatch";
+
+// Maintained:
+
 // import identity from "./responses/identity";
 // import organizations from "./responses/organizations";
 // import account from "./responses/account";
+import entitiesStarred from "./responses/entities-starred";
+import entitiesRecent from "./responses/entities-recent";
+// import searchesSaved from "./responses/searches-saved";
+// import searchesRecent from "./responses/searches-recent";
+// import searchesQuery from "./responses/searches-query";
 
 /**
  * Here you can stub HTTP responses e.g. if the API is not yet available.
@@ -33,6 +39,8 @@ import searchesQuery from "./responses/searches-query";
  */
 export const stubs: IResponseStubs =
 {
+    // Unmaintained:
+
     // ...expressRoutes
     // ...orderGroups
     // ...routeTemplates,
@@ -43,12 +51,15 @@ export const stubs: IResponseStubs =
     // ...communication,
     // ...routesCreate,
     // ...orderEvents,
+
+    // Maintained:
+
     // ...identity,
     // ...organizations,
     // ...account
     ...entitiesStarred,
-    ...entitiesRecent,
-    ...searchesSaved,
-    ...searchesRecent,
-    ...searchesQuery
+    ...entitiesRecent
+    // ...searchesSaved,
+    // ...searchesRecent,
+    // ...searchesQuery
 };

@@ -36,13 +36,13 @@
         // The min length of the scrollbar.
         --scrollbar-min-length: calc(var(--scrollbar-thickness) * 3);
 
-        // Use a thin scroll bar in Firefox browsers.
+        // Use a thin scrollbar in Firefox browsers.
         scrollbar-width: thin;
 
         // Style the scrollbar in Firefox browsers.
         scrollbar-color: var(--surface-scrollbar-thumb-color) var(--surface-scrollbar-track-color);
 
-        // Use overlay scroll bars in browsers based on the Trident and EdgeHTML engines.
+        // Use overlay scrollbars in browsers based on the Trident and EdgeHTML engines.
         -ms-overflow-style: -ms-autohiding-scrollbar;
 
         // Style the scrollbar in browsers based on the WebKit and Blink engines.

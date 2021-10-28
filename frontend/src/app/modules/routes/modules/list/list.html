@@ -154,7 +154,7 @@
                     class="margin-large-bottom">
 
                     <div slot="value">
-                        <tag repeat.for="team of teamsFilterService.selectedTeams">
+                        <tag repeat.for="team of teamsFilterService.selectedTeams" model.bind="team.id || team">
                             <template if.bind="team === 'no-team'" translate>
                                 No team
                             </template>

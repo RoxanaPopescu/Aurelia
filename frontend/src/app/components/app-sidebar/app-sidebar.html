@@ -20,23 +20,27 @@
                 </span>
             </a>
 
-            <a class="nav-link" modal-href="modal: search">
-                <icon title.translate="Search" name="search"></icon>
-                <span translate>
-                    Search
-                </span>
-            </a>
+        </template>
 
-            <!--
+        <a class="nav-link" modal-href="modal: search">
+            <icon title.translate="Search" name="search"></icon>
+            <span translate>
+                Search
+            </span>
+        </a>
+
+        <!--
+        <template if.bind="environment == 'development'">
+
             <a class="nav-link" modal-href="modal: add">
                 <icon title.translate="Add" name="add"></icon>
                 <span translate>
                     Add
                 </span>
             </a>
-            -->
 
         </template>
+        -->
 
         <slot name="header"></slot>
 

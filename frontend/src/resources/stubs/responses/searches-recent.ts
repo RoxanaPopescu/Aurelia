@@ -28,7 +28,8 @@ export default
         body:
         {
             id: "7",
-            text: "new recent search"
+            text: "new recent search",
+            createdDateTime: "2019-04-20T00:00+01:00"
         }
     }
 }

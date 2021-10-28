@@ -23,7 +23,8 @@ export default
         body:
         {
             id: "6",
-            text: "new saved search"
+            text: "new saved search",
+            createdDateTime: "2019-04-20T00:00+01:00"
         }
     },
 

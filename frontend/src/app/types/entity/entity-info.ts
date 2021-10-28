@@ -89,8 +89,8 @@ export class EntityInfo
     {
         switch (this.type.slug)
         {
-            case "organization":
-                return "/organization";
+            // case "organization":
+            //     return "/organization";
 
             // case "user":
             //     return `/organization/users/${this.id}`;
@@ -99,10 +99,10 @@ export class EntityInfo
                 return `/fleet-management/drivers/details/${this.id}`;
 
             case "order":
-                return `/orders/details/${this.id}`;
+                return `/orders/details/${this.slug}`;
 
             case "route":
-                return `/routes/details/${this.id}`;
+                return `/routes/details/${this.slug}`;
 
             case "route-template":
                 return `/routes/templates/details/${this.id}`;

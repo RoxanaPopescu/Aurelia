@@ -16,7 +16,7 @@ export interface RoutesLayerProps {
 export class RouteComponent extends React.Component<RoutesLayerProps> {
 
   public render() {
-    let route = this.props.route;
+    const route = this.props.route;
 
     const driverOrFulfillerPhone = route.driver
       ? route.driver.phone.toString()
@@ -24,7 +24,6 @@ export class RouteComponent extends React.Component<RoutesLayerProps> {
       : undefined;
 
     const isFlagged = routeFlagService.isFlagged(route.id);
-
 
     const accentClassName =
       route.criticality.slug == "high" ? "--negative" :
@@ -161,7 +160,7 @@ export class RouteComponent extends React.Component<RoutesLayerProps> {
   }
 
   private onClick(): void {
-    let route = this.props.route;
+    const route = this.props.route;
 
     if (this.props.service.selectedRouteSlug !== this.props.route.slug) {
       this.props.service.setSelectedRouteSlug(this.props.route.slug);
@@ -175,7 +174,7 @@ export class RouteComponent extends React.Component<RoutesLayerProps> {
   }
 
   private onFlagClick(event: React.MouseEvent): void {
-    // routeFlagService.toggleFlag(route.id);
+    routeFlagService.toggleFlag(this.props.route.id);
     this.forceUpdate();
     this.props.service.triggerRoutesChanged();
     event.stopPropagation();
@@ -190,6 +189,5 @@ export class RouteComponent extends React.Component<RoutesLayerProps> {
       this.props.service.selectedRouteStopId = undefined;
       this.props.service.selectedRouteStopId = this.props.route.expectedDelays[0].id;
     });
-
   }
 }

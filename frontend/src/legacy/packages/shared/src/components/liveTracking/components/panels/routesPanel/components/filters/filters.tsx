@@ -70,15 +70,15 @@ export class Filters extends React.Component<RoutesLayerProps> {
           </span>
           <span className="c-liveTracking-routesPanel-filters-infoRight">
             <div>
-              <div className="c-liveTracking-routesPanel-filters-enabledCount">
+              <span className="c-liveTracking-routesPanel-filters-enabledCount">
               {Localization.sharedValue("LiveTracking_FiltersEnabled")
-            .replace("{enabled-filter}", this.props.service.filter.enabledCount.toString())}
-              </div>
-              <div className="c-liveTracking-routesPanel-filters-count">
+                .replace("{enabled-filter}", this.props.service.filter.enabledCount.toString())}
+              </span>
+              <span className="c-liveTracking-routesPanel-filters-count">
               {Localization.sharedValue("Route_FilterCount")
-            .replace("{filtered_count}", this.props.service.filteredRoutes.length.toString())
-            .replace("{total_count}", this.props.service.routes.length.toString())}
-              </div>
+                .replace("{filtered_count}", this.props.service.filteredRoutes.length.toString())
+                .replace("{total_count}", this.props.service.routes.length.toString())}
+              </span>
             </div>
             <Icon className="c-livetracking-filter" name="live-tracking-filter"/>
           </span>
@@ -103,6 +103,7 @@ export class Filters extends React.Component<RoutesLayerProps> {
               onChange={values => {
                 this.teamsFilterService.selectedTeamIds = values?.length ? values?.map(t => t.value) : undefined;
                 this.props.service.filter.selectedTeamCount = this.teamsFilterService.selectedTeamIds?.length ?? 0;
+                this.props.service.restartPolling();
               }}
               options={(this.teamsFilterService.accessibleTeams ?? []).map((t: any) => {
                 return { label: t.name ?? "No team", value: t.id ?? "no-team" };
@@ -207,7 +208,24 @@ export class Filters extends React.Component<RoutesLayerProps> {
                 }
               />
           </div>
-
+          <div>
+            <div className="c-liveTracking-routesPanel-filters-title">{Localization.sharedValue("RouteDetails_RouteOverview_VehicleType")}</div>
+            {VehicleType.getAll().map(v =>
+              <InputCheckbox
+                className="c-liveTracking-routesPanel-filters-criticality"
+                key={v.id}
+                checked={this.props.service.filter.vehicleTypeEnabled(v.slug)}
+                onChange={() => this.props.service.filter.vehicleTypeEnableDisable(v.slug)
+                }
+              >
+                {v.name} - {
+                this.props.service.filteredRoutes
+                .filter(r => r.vehicleType.slug === v.slug)
+                .length
+              }
+              </InputCheckbox>
+            )}
+          </div>
           <div>
             <div className="c-liveTracking-routesPanel-filters-title">{Localization.sharedValue("Products")}</div>
             <InputCheckbox
@@ -246,24 +264,6 @@ export class Filters extends React.Component<RoutesLayerProps> {
                 .length
               }
             </InputCheckbox>
-          </div>
-          <div>
-            <div className="c-liveTracking-routesPanel-filters-title">{Localization.sharedValue("RouteDetails_RouteOverview_VehicleType")}</div>
-            {VehicleType.getAll().map(v =>
-              <InputCheckbox
-                className="c-liveTracking-routesPanel-filters-criticality"
-                key={v.id}
-                checked={this.props.service.filter.vehicleTypeEnabled(v.slug)}
-                onChange={() => this.props.service.filter.vehicleTypeEnableDisable(v.slug)
-                }
-              >
-                {v.name} - {
-                this.props.service.filteredRoutes
-                .filter(r => r.vehicleType.slug === v.slug)
-                .length
-              }
-              </InputCheckbox>
-            )}
           </div>
         </div></div>}
       </div>

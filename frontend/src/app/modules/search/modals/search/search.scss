@@ -1,16 +1,5 @@
 modal-panel[name="search"]
 {
-    .search-results
-    {
-        position: relative;
-    }
-
-    .search-results-empty
-    {
-        opacity: var(--opacity-faded);
-        min-height: calc(3 * var(--card-height) + var(--list-layout-row-gap));
-    }
-
     search-item,
     search-result
     {
@@ -23,5 +12,10 @@ modal-panel[name="search"]
         {
             opacity: 0.6;
         }
+    }
+
+    info-card
+    {
+        width: 100%;
     }
 }
