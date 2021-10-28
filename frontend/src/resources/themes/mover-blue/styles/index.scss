@@ -6,6 +6,12 @@
 $__summary: comment;
 
 
+html
+{
+    // Indicate to the browser that this is a light theme.
+    color-scheme: light;
+}
+
 // Export the legacy variables.
 @import "legacy/packages/shared/src/webKit/assets/themes/default/constants";
 

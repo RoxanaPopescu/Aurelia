@@ -5,15 +5,14 @@
 /// Public interface for the theme.
 $__summary: comment;
 
-
-:root
+html
 {
     // Indicate to the browser that this is a light theme.
     color-scheme: light;
-
-    // Set the opacity of text skeletons.
-    --text-skeleton-opacity: 0.032;
 }
+
+// Export the legacy variables.
+@import "legacy/packages/shared/src/webKit/assets/themes/default/constants";
 
 // Export the palettes.
 // Palettes define the standard values used within the theme.
@@ -34,8 +33,12 @@ $__summary: comment;
 @import "./surfaces/primary";
 @import "./surfaces/website";
 
+
 :root
 {
+    // Set the opacity of text skeletons.
+    --text-skeleton-opacity: 0.032;
+
     --modal-backdrop-color: rgba(0, 0, 0, 0.54);
     --modal-backdrop-filter: none;
     --palette-color-neutral-darker: hsl(210, 6%, 23%) !important;
