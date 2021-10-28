@@ -16,13 +16,13 @@
 
         </modal-header>
 
-        <modal-section if.bind="true" class="margin-bottom">
+        <modal-section if.bind="true" class="">
 
             <div slot="header" translate>
                 Shipment filters
             </div>
 
-            <div class="control-row">
+            <div class="control-row margin-bottom">
 
                 <tags-input
                     label="above"
@@ -30,7 +30,7 @@
                     class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
-                        Applies to
+                        Organizations id
                     </div>
 
                     <div slot="value">
@@ -55,13 +55,17 @@
 
             </div>
 
-            <div class="control-row">
+            <div class="control-row margin-bottom">
 
                 <tags-input
                     label="above"
                     value.bind="model.tags"
                     new.bind="true"
                     class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Vehicle types
+                    </div>
 
                 </tags-input>
 
@@ -77,7 +81,7 @@
                     min.bind="0">
 
                     <div slot="heading" translate>
-                        Minutes from now
+                        Pickup time (from now)
                     </div>
 
                     <span slot="after" class="opacity-faded" translate>
@@ -104,7 +108,7 @@
                 Route filters
             </div>
 
-            <div class="control-row">
+            <div class="control-row margin-bottom">
 
                 <tags-input
                     label="above"
@@ -112,7 +116,7 @@
                     class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
-                        Applies to
+                        Organizations id
                     </div>
 
                     <div slot="value">
@@ -136,6 +140,66 @@
                 </tags-input>
 
             </div>
+
+            <div class="control-row margin-bottom">
+
+                <tags-input
+                    label="above"
+                    value.bind="model.filters.routes.organizationIds"
+                    class="flex-basis-1-of-1">
+
+                    <div slot="heading" translate>
+                        Tags
+                    </div>
+
+                    <div slot="value">
+                        <tag repeat.for="id of model.filters.routes.organizationIds" model.bind="id">
+                            ${getOrganizationFromId(id).primaryName}
+                        </tag>
+                    </div>
+
+                    <item repeat.for="organization of organizations" model.bind="organization.id">
+                        ${organization.primaryName}
+                    </item>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.filters.routes.organizationIds.length > 0 ? true : undefined">
+                        </required-validator>
+
+                    </div>
+
+                </tags-input>
+
+            </div>
+
+            <div class="control-row">
+
+                <duration-input
+                    label="above"
+                    none.bind="false"
+                    value.bind="model.filters.shipments.pickupTime"
+                    class="margin-large-bottom"
+                    min.bind="0">
+
+                    <div slot="heading" translate>
+                        Pickup time (from now)
+                    </div>
+
+                    <span slot="after" class="opacity-faded" translate>
+                        min
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.filters.shipments.pickupTime">
+                        </required-validator>
+
+                    </div>
+
+                </duration-input>
 
         </modal-section>
 

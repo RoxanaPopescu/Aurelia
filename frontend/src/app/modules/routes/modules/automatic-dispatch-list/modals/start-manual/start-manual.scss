@@ -1,4 +1,10 @@
 modal-panel[name="start-manual"]
 {
-    --modal-panel-min-width: 600rem;
+    --modal-panel-min-width: 450rem;
+
+    duration-input
+    {
+        width: 100%
+
+    }
 }
