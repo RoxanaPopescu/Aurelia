@@ -5,7 +5,7 @@ import "shared/patches";
 import "inert-polyfill";
 
 import { PLATFORM, Aurelia, Container, LogManager } from "aurelia-framework";
-import { Settings as LuxonSettings } from "luxon";
+import { DateTime, Settings as LuxonSettings } from "luxon";
 import { Log, LogAppender, Cookies, ApiClient, ResponseStubInterceptor, HistoryHelper } from "shared/infrastructure";
 import { ThemeService, ITheme } from "shared/framework";
 import { LocaleService, Locale, CurrencyService, Currency } from "shared/localization";
@@ -157,7 +157,10 @@ async function setLocale(newLocale: Locale, oldLocale: Locale | undefined, finis
     {
         const cookies = Container.instance.get(Cookies);
 
-        cookies.set("locale", newLocale.code);
+        cookies.set("locale", newLocale.code,
+        {
+            expires: DateTime.utc().plus({ years: 10 })
+        });
 
         // Schedule a reload of the app.
         setTimeout(() => location.reload());
@@ -230,7 +233,10 @@ function setCurrency(newCurrency: Currency, oldCurrency: Currency | undefined, f
     {
         const cookies = Container.instance.get(Cookies);
 
-        cookies.set("currency", newCurrency.code);
+        cookies.set("currency", newCurrency.code,
+        {
+            expires: DateTime.utc().plus({ years: 10 })
+        });
     }
 
     // Set the `currency` header to use for the `ApiClient`.
@@ -295,7 +301,10 @@ async function setTheme(newTheme: ITheme, oldTheme: ITheme | undefined, finish: 
     {
         const cookies = Container.instance.get(Cookies);
 
-        cookies.set("theme", newTheme.slug);
+        cookies.set("theme", newTheme.slug,
+        {
+            expires: DateTime.utc().plus({ years: 10 })
+        });
 
         // Schedule a reload of the app.
         setTimeout(() => location.reload());

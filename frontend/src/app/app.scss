@@ -29,7 +29,7 @@ router-view
 }
 
 // Import styles for legacy components.
-@import "../legacy/styles/react-module.scss";
+@import "../legacy/styles/index.scss";
 
 // Import experimental styles.
 @import "./temp";

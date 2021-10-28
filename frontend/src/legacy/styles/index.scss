@@ -2,12 +2,6 @@
 
 react-module
 {
-    // Import legacy styles.
-    @import "../packages/shared/src/webKit/LEGACY";
-
-    // Import legacy constants.
-    @import "./constants";
-
     // Ensure react modules fill the content area of the viewport.
     // We must use absoliute positioning to do this, due to the legacy styles.
     position: absolute;
@@ -29,6 +23,16 @@ react-module
     // We can't set it to less than 1 though, as modal backdrops need to overlap
     // the top and bottom of the app-sidebar.
     z-index: 1;
+}
+
+react-module,
+.react-component
+{
+    // Import legacy styles.
+    @import "../packages/shared/src/webKit/LEGACY";
+
+    // Import legacy constants.
+    @import "./constants";
 
     --font-label-base-line-height: 20rem;
     --font-label-base-font-size: 14rem;

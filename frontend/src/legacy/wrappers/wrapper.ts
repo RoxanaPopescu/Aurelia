@@ -30,6 +30,7 @@ export class Wrapper
     public constructor(element: Element)
     {
         this._element = element;
+        this._element.classList.add("react-component");
 
         // Ensure Google Maps is loaded, as legacy code may depend on it.
         Container.instance.get(GoogleMapsService).load();
