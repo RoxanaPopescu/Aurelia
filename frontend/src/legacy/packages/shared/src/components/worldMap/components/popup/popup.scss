@@ -96,8 +96,7 @@
         font-size: 12px;
         font-weight: bold;
         line-height: 18px;
-        color: var(--textDarkSecondary);
-        text-transform: uppercase;
+        opacity: var(--opacity-faded);
 
         &:not(:first-child)
         {
@@ -143,8 +142,7 @@
         font-size: 12px;
         font-weight: bold;
         line-height: 18px;
-        color: var(--textDarkSecondary);
-        text-transform: uppercase;
+        opacity: var(--opacity-faded);
     }
 
     .c-worldMap-popup-section-row

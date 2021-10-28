@@ -1,7 +1,7 @@
 @import "shared/src/webKit/constants.scss";
 
 .routeDetails-routeStopMarker {
-  padding: 0 10px;
+  padding: 2px 10px;
   pointer-events: none;
 
   &.--faded {
