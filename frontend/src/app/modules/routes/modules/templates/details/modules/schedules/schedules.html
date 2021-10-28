@@ -19,8 +19,9 @@
     <page-section class="--line-above">
 
         <data-table
-            appearance="cards"
-            sorting.bind="sorting">
+            appearance="rows"
+            sorting.bind="sorting"
+            append.call="onAddClick()">
 
             <data-table-headers>
 
@@ -120,18 +121,11 @@
 
             </data-table-row>
 
-        </data-table>
+            <template replace-part="append" translate>
+                Add schedule
+            </template>
 
-        <button
-            appearance="outline"
-            accent="primary"
-            class="margin-large-top add-schedule-button flex-push-left"
-            click.trigger="onAddClick()">
-            <icon name="plus-small" class="margin-right"></icon>
-            <span translate>
-                New schedule
-            </span>
-        </button>
+        </data-table>
 
     </page-section>
 

@@ -87,8 +87,7 @@
                 repeat.for="stop of template.stops"
                 model.bind="stop"
                 click.call="onEditStopClick(stop)"
-                insert.call="onAddStopClick($index)"
-            >
+                insert.call="onAddStopClick($index)">
 
                 <data-table-cell>
                     <div class="route-template-stop-number">
@@ -151,6 +150,10 @@
                 </data-table-cell>
 
             </data-table-row>
+
+            <template replace-part="append" translate>
+                Add stop
+            </template>
 
         </data-table>
 
