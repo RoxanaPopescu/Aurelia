@@ -3,7 +3,7 @@
 import fs from "fs";
 import globs from "globs";
 import { Format } from "../webpack/helpers";
-import { paths } from "../paths";
+import { excludedFileGlobs, paths } from "../paths";
 
 // The path for the export file that was just created.
 const exportFilePath = paths.artifacts.translationExportFile;
@@ -12,7 +12,11 @@ const exportFilePath = paths.artifacts.translationExportFile;
 const exportFileContents = JSON.parse(fs.readFileSync(exportFilePath).toString());
 
 // Get the input file paths.
-const importFilePaths = globs.sync(paths.translationImportFile.replace(/\{locale\}/g, "!(*[^.]-x-pseudo?(-*|.*))"));
+const importFilePaths = globs.sync(paths.translationFile.replace(/\{locale\}/g, "!(*[^.]-x-pseudo?(-*|.*))"),
+{
+    ignore: excludedFileGlobs,
+    dot: true
+});
 
 // Update the import files.
 for (const importFilePath of importFilePaths)

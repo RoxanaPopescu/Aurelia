@@ -33,10 +33,10 @@ export const translateConfig: TranslateOptions =
     normalizeContent: true,
 
     // Import options.
-    importFilePath: paths.translationImportFile,
+    importFilePath: paths.translationFile,
     missingContentHandling: "warn",
 
     // File paths.
-    includedFilePaths: paths.translationSources.includedFileGlobs,
-    excludedFilePaths: paths.translationSources.excludedFileGlobs
+    includedFilePaths: paths.translatables.includedFileGlobs,
+    excludedFilePaths: paths.translatables.excludedFileGlobs
 };

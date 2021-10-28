@@ -12,20 +12,20 @@ import { translateConfig } from "../translate";
 const packageFolder = `${pkgDir.sync()}/`;
 const plugin = new Plugin(translateConfig);
 
-const sharedFilePath = resolve(`artifacts/translation/shared.json`);
-const appFilePath = resolve(`artifacts/translation/app.json`);
+const sharedFilePath = resolve("artifacts/translation/shared.json");
+const appFilePath = resolve("artifacts/translation/app.json");
 
 // Translate
 translate("shared", sharedFilePath);
 translate("app", appFilePath);
-console.info(`Translations saved as .json`);
+console.info("Translations saved as .json");
 
 // Export fo xliff
 convertToXliff("shared", sharedFilePath);
 convertToXliff("app", appFilePath);
-console.info(`Translations saved as xcliff`);
+console.info("Translations saved as xcliff");
 
-function translate(type: "shared" | "app", currentPath: string)
+function translate(type: "shared" | "app", currentPath: string): void
 {
     translateConfig.exportFilePath = currentPath;
     const task = plugin.export(translateConfig);
@@ -35,7 +35,8 @@ function translate(type: "shared" | "app", currentPath: string)
         resolve(`src/${type}/**/resources/strings/**/*.json`)
     ],
     {
-        ignore: translateConfig.excludedFilePaths
+        ignore: translateConfig.excludedFilePaths,
+        dot: true
     });
 
     for (const filePath of filePaths)
@@ -50,7 +51,7 @@ function translate(type: "shared" | "app", currentPath: string)
     task.finalize().catch(reason => console.error(reason));
 }
 
-function convertToXliff(type: "shared" | "app", currentPath: string)
+function convertToXliff(type: "shared" | "app", currentPath: string): void
 {
     const taskName = `localize.export-xliff-${type}`;
 
@@ -90,17 +91,17 @@ function convertToXliff(type: "shared" | "app", currentPath: string)
  * @param pathOrGlob The path or glob to append.
  * @returns The absolute path or glob.
  */
- function resolve(pathOrGlob: string): string
- {
-     return path.join(packageFolder, pathOrGlob);
- }
+function resolve(pathOrGlob: string): string
+{
+    return path.join(packageFolder, pathOrGlob);
+}
 
  /**
- * Converts the specified JSON object, representing a translation export file, to an XLIFF string.
- * @param json The JSON object representing the export file.
- * @returns The XLIFF string representing the export file.
- */
-function exportJsonToXliff(json: any)
+  * Converts the specified JSON object, representing a translation export file, to an XLIFF string.
+  * @param json The JSON object representing the export file.
+  * @returns The XLIFF string representing the export file.
+  */
+function exportJsonToXliff(json: any): string
 {
     let xliff =
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
@@ -113,8 +114,7 @@ function exportJsonToXliff(json: any)
     {
         const unit: any = json[key];
 
-        let note =
-            "Found in:\n" + unit.sources.join("\n");
+        let note = "Found in:\n" + unit.sources.join("\n");
 
         if (unit.hint)
         {
@@ -146,7 +146,7 @@ function exportJsonToXliff(json: any)
  * @param text The text to encode.
  * @returns The the encoded text.
  */
-function encodeXmlEntities(text: any, isAttributeContent: any)
+function encodeXmlEntities(text: any, isAttributeContent: any): string
 {
     text = text
         .replace(/&/g, "&amp;")

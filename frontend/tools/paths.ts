@@ -5,6 +5,18 @@ import pkgDir from "pkg-dir";
 const packageFolder = `${pkgDir.sync()}/`;
 
 /**
+ * The paths and globs that should be ignored by the tasks.
+ */
+export const excludedFileGlobs =
+[
+    resolve("**/.*"),
+    resolve("**/.*/**"),
+    resolve("**/~*"),
+    resolve("**/~*/**"),
+    resolve("**/Thumbs.db")
+];
+
+/**
  * The paths and globs used by the tasks.
  */
 export const paths =
@@ -73,17 +85,15 @@ export const paths =
          */
         excludedFileGlobs:
         [
-            resolve("**/.*"),
-            resolve("**/~*"),
-            resolve("**/Thumbs.db"),
+            ...excludedFileGlobs,
             resolve("**/*.psd")
         ]
     },
 
     /**
-     * The globs matching the paths for the files that should be translated.
+     * The globs matching the paths for the files that contain translatable strings.
      */
-    translationSources:
+    translatables:
     {
         /**
          * The globs matching the paths for the files to include.
@@ -101,16 +111,15 @@ export const paths =
          */
         excludedFileGlobs:
         [
-            resolve("**/.*"),
-            resolve("**/~*")
+            ...excludedFileGlobs
         ]
     },
 
     /**
-     * The path for the files containing the translations for the app,
+     * The path for the file that contains the translated strings,
      * where `{locale}` is a placeholder for the locale code.
      */
-    translationImportFile: resolve("src/resources/translations/{locale}.json"),
+    translationFile: resolve("src/resources/translations/{locale}.json"),
 
     /**
      * The artifacts that may be produced.

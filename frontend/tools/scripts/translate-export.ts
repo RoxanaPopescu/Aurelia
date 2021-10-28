@@ -9,7 +9,8 @@ import { Format } from "../webpack/helpers";
 // Get the source file paths.
 const filePaths = globs.sync(translateConfig.includedFilePaths,
 {
-    ignore: translateConfig.excludedFilePaths
+    ignore: translateConfig.excludedFilePaths,
+    dot: true
 });
 
 // Create the export task.
