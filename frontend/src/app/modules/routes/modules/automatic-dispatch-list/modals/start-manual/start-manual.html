@@ -10,7 +10,7 @@
 
             <h1 class="font-largest margin-bottom flex-row">
                 <div translate>
-                    Start manual automatic dispatch
+                    Start manual
                 </div>
             </h1>
 
@@ -30,7 +30,7 @@
                     class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
-                        Organizations id
+                        Organizations
                     </div>
 
                     <div slot="value">
@@ -59,13 +59,22 @@
 
                 <tags-input
                     label="above"
-                    value.bind="model.tags"
-                    new.bind="true"
+                    value.bind="model.filters.shipments.vehicleTypes"
                     class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
                         Vehicle types
                     </div>
+
+                    <div slot="value">
+                        <tag repeat.for="id of model.filters.shipments.vehicleTypes" model.bind="id">
+                            ${getVehicleFromId(id).name}
+                        </tag>
+                    </div>
+
+                    <item repeat.for="vehicleType of vehicleTypes" model.bind="vehicleType.id">
+                        ${vehicleType.name}
+                    </item>
 
                 </tags-input>
 
@@ -116,7 +125,7 @@
                     class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
-                        Organizations id
+                        Organizations
                     </div>
 
                     <div slot="value">
@@ -145,7 +154,8 @@
 
                 <tags-input
                     label="above"
-                    value.bind="model.filters.routes.organizationIds"
+                    value.bind="model.filters.routes.tags"
+                    new.bind="true"
                     class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
@@ -153,21 +163,9 @@
                     </div>
 
                     <div slot="value">
-                        <tag repeat.for="id of model.filters.routes.organizationIds" model.bind="id">
-                            ${getOrganizationFromId(id).primaryName}
+                        <tag repeat.for="tag of model.filters.routes.tags" model.bind="tag">
+                            ${tag}
                         </tag>
-                    </div>
-
-                    <item repeat.for="organization of organizations" model.bind="organization.id">
-                        ${organization.primaryName}
-                    </item>
-
-                    <div slot="validation">
-
-                        <required-validator
-                            value.bind="model.filters.routes.organizationIds.length > 0 ? true : undefined">
-                        </required-validator>
-
                     </div>
 
                 </tags-input>
@@ -179,8 +177,8 @@
                 <duration-input
                     label="above"
                     none.bind="false"
-                    value.bind="model.filters.shipments.pickupTime"
-                    class="margin-large-bottom"
+                    value.bind="model.filters.routes.pickupTime"
+                    class="margin-bottom"
                     min.bind="0">
 
                     <div slot="heading" translate>
@@ -194,7 +192,7 @@
                     <div slot="validation">
 
                         <required-validator
-                            value.bind="model.filters.shipments.pickupTime">
+                            value.bind="model.filters.routes.pickupTime">
                         </required-validator>
 
                     </div>

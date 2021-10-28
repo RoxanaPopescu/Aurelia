@@ -26,6 +26,7 @@ export class AutomaticDispatchStartManualFilters
     public constructor()
     {
         this.shipments = new AutomaticDispatchStartManualFiltersShipments();
+        this.routes = new AutomaticDispatchStartManualFiltersRoutes();
     }
 
     /**
@@ -65,6 +66,17 @@ export class AutomaticDispatchStartManualFiltersShipments
      * The pickup duration we search with.
      */
     public pickupTime?: Duration;
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        const data = { ...this } as any;
+        data.pickupTime = this.pickupTime?.as("seconds");
+
+        return data;
+    }
 }
 
 export class AutomaticDispatchStartManualFiltersRoutes
@@ -93,4 +105,15 @@ export class AutomaticDispatchStartManualFiltersRoutes
      * The pickup duration we search with.
      */
     public pickupTime?: Duration;
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        const data = { ...this } as any;
+        data.pickupTime = this.pickupTime?.as("seconds");
+
+        return data;
+    }
 }
