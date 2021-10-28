@@ -136,12 +136,13 @@ page-content page-header
     --data-table-row-edge-color: var(--palette-color-neutral-light);
 }
 
-google-map
+google-map,
+.react-component
 {
     --google-map-surface-color: #222222 !important;
     --google-map-control-shadow: none !important;
-    --google-map-control-text-color: #333333 !important;
-    --google-map-control-text-color--active: #000000 !important;
+    --google-map-control-surface-text-color: #333333 !important;
+    --google-map-control-surface-text-color--active: #000000 !important;
     --google-map-popover-close-filter: invert(1) !important;
 
     &:not(.--type-street)

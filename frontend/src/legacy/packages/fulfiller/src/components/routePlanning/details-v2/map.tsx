@@ -5,7 +5,7 @@ import {
   withScriptjs,
   InfoWindow
 } from "react-google-maps";
-import { MapStyles, InfoBox } from "shared/src/webKit";
+import { getMapStyles, InfoBox } from "shared/src/webKit";
 import { observer } from "mobx-react";
 import MapHoverArea from "shared/src/components/map/hoverArea";
 import { RoutePlanningStore } from "./store";
@@ -32,7 +32,7 @@ class Map extends React.Component<Props> {
         options={{
           disableDefaultUI: true,
           clickableIcons: false,
-          styles: MapStyles
+          styles: getMapStyles()
         }}
         onDragEnd={() => this.props.store.checkBounds()}
         onZoomChanged={() => this.props.store.checkBounds()}

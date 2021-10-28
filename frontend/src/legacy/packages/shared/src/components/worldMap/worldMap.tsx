@@ -6,7 +6,7 @@ import {
   GoogleMap,
   GoogleMapProps
 } from "react-google-maps";
-import { MapConstants, MapStyles } from "shared/src/webKit";
+import { MapConstants, getMapStyles } from "shared/src/webKit";
 import "./worldMap.scss";
 
 function withWorldMap(map: ComponentClass) {
@@ -35,7 +35,7 @@ export interface WorldMapComponentProps extends GoogleMapProps {
 export class WorldMapComponent extends React.Component<WorldMapComponentProps> {
 
   private isReady = false;
-  
+
   public render() {
     return (
       <GoogleMap
@@ -45,7 +45,7 @@ export class WorldMapComponent extends React.Component<WorldMapComponentProps> {
         options={{
           disableDefaultUI: false,
           clickableIcons: false,
-          styles: MapStyles,
+          styles: getMapStyles(),
           scrollwheel: false,
           ...this.props.options
         }}

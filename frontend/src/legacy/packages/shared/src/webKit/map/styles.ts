@@ -1,5 +1,21 @@
+import settings from "resources/settings";
+
+export function getMapStyles(mapType?: string)
+{
+    const mapStyleName = settings.integrations?.legacyGoogleMaps?.mapStyleName;
+
+    if (mapStyleName)
+    {
+        return mapType === "hybrid" ?
+            require(`legacy/resources/google-map-styles/hybrid.json`) :
+            require(`legacy/resources/google-map-styles/${mapStyleName}.json`);
+    }
+
+    return mapStyles;
+}
+
 // tslint:disable-next-line:no-any
-export const MapStyles: any = [
+const mapStyles: any = [
   {
       featureType: "administrative",
       elementType: "labels.text.fill",

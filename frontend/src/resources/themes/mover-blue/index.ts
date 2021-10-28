@@ -7,3 +7,5 @@ import settings from "resources/settings";
 
 settings.integrations.googleMaps.parameters.mapIds = ["TODO:insert-map-id"];
 settings.integrations.googleMaps.defaults!.mapId = "TODO:insert-map-id";
+
+settings.integrations.legacyGoogleMaps.mapStyleName = "roadmap-light";

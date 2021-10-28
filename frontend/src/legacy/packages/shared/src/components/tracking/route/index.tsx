@@ -17,7 +17,7 @@ import {
   InputPhone,
   InputCheckbox,
   ButtonType,
-  MapStyles,
+  getMapStyles,
   MapConstants,
   InfoBox
 } from "shared/src/webKit";
@@ -151,7 +151,7 @@ class Map extends React.Component<Props> {
         options={{
           disableDefaultUI: true,
           clickableIcons: false,
-          styles: MapStyles
+          styles: getMapStyles()
         }}
       >
         {store.activeMarkers && polylines(store.activeMarkers)}

@@ -26,7 +26,7 @@ export { TablePaginationComponent } from "./table/pagination";
 export { default as SideMenuLegacy } from "./menu/sideMenuLegacy";
 export { default as GlobalTopMenu } from "./menu/globalTopMenu";
 export { default as LoginComponent } from "./login";
-export { MapStyles } from "./map/styles";
+export { getMapStyles } from "./map/styles";
 export { MapConstants } from "./map/constants";
 export { MoverMarker } from "./map/marker";
 export { default as InfoBox } from "./map/infoBox";

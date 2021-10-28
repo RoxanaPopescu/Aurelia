@@ -123,6 +123,16 @@ export default
                 mapId: undefined
             }
 
-        } as IGoogleMapsSettings
+        } as IGoogleMapsSettings,
+
+        /**
+         * Settings related to the legacy Google Maps integration.
+         */
+        legacyGoogleMaps:
+        {
+            // Note: This will be set when the theme loads, if supported by the theme.
+            mapStyleName: undefined
+
+        } as { mapStyleName: "roadmap-light" | "roadmap-dark" | undefined}
     }
 };
