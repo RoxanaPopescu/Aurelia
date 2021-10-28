@@ -28,7 +28,8 @@
         transition-timing-function: var(--fade-timing-function);
     }
 
-    html:not(.platform-macos):not(.platform-ios) &
+    html:not(.platform-macos):not(.platform-ios) &,
+    html:not(.feature-overlay-scrollbar) &
     {
         // The thickness of the scrollbar.
         --scrollbar-thickness: 12rem;
@@ -78,11 +79,6 @@
             }
         }
 
-        &::-webkit-scrollbar-corner
-        {
-            background-color: transparent;
-        }
-
         &::-webkit-scrollbar-thumb
         {
             min-height: calc(var(--scrollbar-thickness) * 3);
@@ -99,6 +95,11 @@
         &::-webkit-scrollbar-button
         {
             display: none;
+        }
+
+        &::-webkit-scrollbar-corner
+        {
+            background-color: transparent;
         }
     }
 }
