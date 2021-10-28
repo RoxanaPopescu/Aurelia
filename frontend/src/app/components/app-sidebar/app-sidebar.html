@@ -11,36 +11,40 @@
 
         <app-logo size.bind="expanded ? 'wide' : 'icon'" disabled.bind="disableDashboard"></app-logo>
 
-        <template if.bind="environment == 'development'">
+        <template if.bind="identityService.identity.organization != null">
 
-            <a class="nav-link" modal-href="modal: starred">
-                <icon title.translate="Starred and recent" name="starred"></icon>
+            <template if.bind="environment == 'development'">
+
+                <a class="nav-link" modal-href="modal: starred">
+                    <icon title.translate="Starred and recent" name="starred"></icon>
+                    <span translate>
+                        Starred and recent
+                    </span>
+                </a>
+
+            </template>
+
+            <a class="nav-link" modal-href="modal: search">
+                <icon title.translate="Search" name="search"></icon>
                 <span translate>
-                    Starred and recent
+                    Search
                 </span>
             </a>
 
-        </template>
+            <!--
+            <template if.bind="environment == 'development'">
 
-        <a class="nav-link" modal-href="modal: search">
-            <icon title.translate="Search" name="search"></icon>
-            <span translate>
-                Search
-            </span>
-        </a>
+                <a class="nav-link" modal-href="modal: add">
+                    <icon title.translate="Add" name="add"></icon>
+                    <span translate>
+                        Add
+                    </span>
+                </a>
 
-        <!--
-        <template if.bind="environment == 'development'">
-
-            <a class="nav-link" modal-href="modal: add">
-                <icon title.translate="Add" name="add"></icon>
-                <span translate>
-                    Add
-                </span>
-            </a>
+            </template>
+            -->
 
         </template>
-        -->
 
         <slot name="header"></slot>
 

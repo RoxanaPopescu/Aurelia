@@ -1,5 +1,5 @@
 import { autoinject, bindable, computedFrom } from "aurelia-framework";
-import { Router, NavModel } from "aurelia-router";
+import { AppRouter, NavModel } from "aurelia-router";
 import { IdentityService } from "app/services/identity";
 import { AuthorizationService } from "app/services/authorization";
 
@@ -9,25 +9,39 @@ import { AuthorizationService } from "app/services/authorization";
 @autoinject
 export class AppSidebarCustomElement
 {
-    public constructor(router: Router, identityService: IdentityService, authorizationService: AuthorizationService)
+    /**
+     * Creates a new instance of the type.
+     * @param router The `AppRouter` instance.
+     * @param identityService The `IdentityService` instance.
+     * @param authorizationService The `AuthorizationService` instance.
+     */
+    public constructor(router: AppRouter, identityService: IdentityService, authorizationService: AuthorizationService)
     {
         this._router = router;
-        this._identityService = identityService;
+        this.identityService = identityService;
         this._authorizationService = authorizationService;
 
         this.expanded = localStorage.getItem("app-sidebar-expanded") === "true";
         document.documentElement.classList.toggle("sideMenu--collapsed", !this.expanded);
     }
 
-    private readonly _router: Router;
+    private readonly _router: AppRouter;
     private readonly _authorizationService: AuthorizationService;
 
-    // @ts-expect-error
-    private readonly _identityService: IdentityService;
+    /**
+     * The `IdentityService` instance.
+     */
+    protected readonly identityService: IdentityService;
 
+    /**
+     * The name identifying the environment.
+     */
     protected readonly environment = ENVIRONMENT.name;
 
-    @computedFrom("_router.navigation", "_router.currentInstruction", "_identityService.identity")
+    /**
+     * The navigation models for the top-level routes.
+     */
+    @computedFrom("_router.navigation", "_router.currentInstruction", "identityService.identity")
     protected get navModels(): NavModel[]
     {
         return this._router.navigation
@@ -37,7 +51,10 @@ export class AppSidebarCustomElement
             ]));
     }
 
-    @computedFrom("_router.navigation", "_router.currentInstruction", "_identityService.identity")
+    /**
+     * The navigation models for the child routes for the current top-level route.
+     */
+    @computedFrom("_router.navigation", "_router.currentInstruction", "identityService.identity")
     protected get childNavModels(): NavModel[] | undefined
     {
         if (this._router.currentInstruction == null)
