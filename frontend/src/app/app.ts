@@ -391,7 +391,7 @@ class AuthorizePipelineStep implements PipelineStep
         {
             let redirectUrl: string;
 
-            if (this._identityService.identity != null)
+            if (this._identityService.identity?.organization != null)
             {
                 // Get the URL for the `unauthorized` page.
 
@@ -405,10 +405,20 @@ class AuthorizePipelineStep implements PipelineStep
             }
             else
             {
-                // Get the URL for the `sign-in` page, including a reference
-                // to the page that the user was denied access to.
+                if (this._identityService.identity != null)
+                {
+                    // Get the URL for the `choose-organization` page.
 
-                redirectUrl = this._historyHelper.getRouteUrl("/account/sign-in");
+                    redirectUrl = this._historyHelper.getRouteUrl("/account/choose-organization");
+                }
+                else
+                {
+                    // Get the URL for the `sign-in` page.
+
+                    redirectUrl = this._historyHelper.getRouteUrl("/account/sign-in");
+                }
+
+                // Set the `url` parameter to the URL user was denied access to.
 
                 const currentUrl = this._historyHelper.getCurrentRouteUrl();
 
