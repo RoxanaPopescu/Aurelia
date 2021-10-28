@@ -14,7 +14,7 @@ export class StartManualPanel
     /**
      * Creates a new instance of the class.
      * The `AutomaticDispatchService` instance.
-     * @param automaticDispatchService
+     * @param automaticDispatchService The `AutomaticDispatchService` instance.
      * @param modal The `Modal` instance.
      * @param organizationService The `OrganizationService` instance.
      * @param identityService The `IdentityService` instance.
@@ -26,7 +26,7 @@ export class StartManualPanel
         this._automaticDispatchService = automaticDispatchService;
         this._organizationService = organizationService;
         this._identityService = identityService;
-        this._toastService = toastService
+        this._toastService = toastService;
         this._modal = modal;
         this._vehicleService = vehicleService;
     }
@@ -118,7 +118,7 @@ export class StartManualPanel
             const toastModel =
             {
                 heading: startedAutomaticDispatchToast.heading,
-                body: startedAutomaticDispatchToast.body,
+                body: startedAutomaticDispatchToast.body
             };
 
             this._toastService.open("success", toastModel);
