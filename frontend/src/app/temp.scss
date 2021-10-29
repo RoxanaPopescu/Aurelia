@@ -1,5 +1,15 @@
 @import "resources/index";
 
+/*
+button[appearance="outline"][accent="primary"]
+{
+    // HACK: Test how it would look, if we change the style of all outline-primary buttons to solid-neutral.
+    border-color: transparent;
+    background-color: var(--surface-neutral-surface-color);
+    color: var(--surface-neutral-surface-text-color);
+}
+*/
+
 page-content,
 modal-content
 {
