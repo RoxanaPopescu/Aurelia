@@ -54,6 +54,7 @@ export class RoutesModule extends AppModule
                 id: order.internalId,
                 slug: order.publicId,
                 name: order.publicId,
+                description: order.relationalId,
                 data: undefined,
                 starred: undefined
             })),
@@ -64,6 +65,7 @@ export class RoutesModule extends AppModule
                 id: route.id,
                 slug: route.slug,
                 name: route.slug,
+                description: route.reference,
                 data: undefined,
                 starred: undefined,
                 parent:

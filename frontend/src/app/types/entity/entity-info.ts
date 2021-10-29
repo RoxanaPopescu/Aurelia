@@ -16,6 +16,7 @@ export class EntityInfo
         this.id = data.id;
         this.slug = data.slug;
         this.name = data.name;
+        this.description = data.description;
         this.data = data.data;
         this.starred = data.starred;
 
@@ -52,6 +53,11 @@ export class EntityInfo
      * The entity name, an excerpt of its content, or undefined if not relevant.
      */
     public name: string | undefined;
+
+    /**
+     * The entity description, an excerpt of its content, or undefined if not relevant.
+     */
+    public description: string | undefined;
 
     /**
      * The additional data describing the entity, or undefined if not relevant.
