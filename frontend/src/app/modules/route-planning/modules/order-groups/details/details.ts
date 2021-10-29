@@ -193,6 +193,11 @@ export class DetailsPage
         {
             this.orderGroup.matchingCriteria.push(matchingCriteria);
         }
+
+        if (this.validation.active)
+        {
+            await this.validation.validate();
+        }
     }
 
     /**
@@ -200,9 +205,14 @@ export class DetailsPage
      * Removes the matching criteria from the model.
      * @param index The index of the matching criteria to remove.
      */
-    protected onRemoveMatchingCriteriaClick(index: number): void
+    protected async onRemoveMatchingCriteriaClick(index: number): Promise<void>
     {
         this.orderGroup.matchingCriteria.splice(index, 1);
+
+        if (this.validation.active)
+        {
+            await this.validation.validate();
+        }
     }
 
     /**
@@ -243,6 +253,11 @@ export class DetailsPage
         {
             this.orderGroup.routePlanningTimes.push(routePlanningTime);
         }
+
+        if (this.validation.active)
+        {
+            await this.validation.validate();
+        }
     }
 
     /**
@@ -250,9 +265,14 @@ export class DetailsPage
      * Removes the route planning time from the model.
      * @param index The index of the route planning time to remove.
      */
-    protected onRemoveRoutePlanningTimeClick(index: number): void
+    protected async onRemoveRoutePlanningTimeClick(index: number): Promise<void>
     {
         this.orderGroup.routePlanningTimes.splice(index, 1);
+
+        if (this.validation.active)
+        {
+            await this.validation.validate();
+        }
     }
 
     /**

@@ -139,6 +139,16 @@
                             These are the criteria an order must fulfill to be included in this group.
                         </p>
 
+                        <invalid-validator
+                            if.bind="orderGroup.matchingCriteria.length === 0"
+                            class="font-small margin-medium-top">
+
+                            <template replace-part="invalid" translate>
+                                Please provide at least one match criteria.
+                            </template>
+
+                        </invalid-validator>
+
                         <data-table
                             appearance="rows"
                             busy.bind="orderGroup == null"
@@ -231,6 +241,16 @@
                         <p class="opacity-faded" translate>
                             These are the rules that control when route planning runs for orders in the group.
                         </p>
+
+                        <invalid-validator
+                            if.bind="orderGroup.routePlanningTimes.length === 0"
+                            class="font-small margin-medium-top">
+
+                            <template replace-part="invalid" translate>
+                                Please provide at least one planning schedule.
+                            </template>
+
+                        </invalid-validator>
 
                         <data-table
                             appearance="rows"
