@@ -39,9 +39,9 @@ export class RoutesModule extends AppModule
             ruleSets,
             orderGroups,
             distributionCenters,
+            communcationTriggers,
             drivers,
             vehicles,
-            communcationTriggers,
             users,
             teams,
             roles,
@@ -93,6 +93,8 @@ export class RoutesModule extends AppModule
 
             this.getResponse(DistributionCenterModule, "GET /v2/distribution-centers", context),
 
+            this.getResponse(TriggersModule, "GET /v2/communication/triggers", context),
+
             this.getResponse(DriversModule, "POST /v2/drivers/list", context,
             {
                 body:
@@ -115,8 +117,6 @@ export class RoutesModule extends AppModule
             }),
 
             this.getResponse(VehiclesModule, "POST /v2/vehicles/list", context),
-
-            this.getResponse(TriggersModule, "GET /v2/communication/triggers", context),
 
             this.getResponse(OrganizationModule, "GET /v2/organizations/:organizationId/users", context,
             {
@@ -220,11 +220,20 @@ export class RoutesModule extends AppModule
             })),
             context.query.text as string),
 
+            ...this.filter((communcationTriggers?.body ?? []).map((entity: any) =>
+            ({
+                type: "communication-trigger",
+                id: entity.id,
+                slug: entity.slug,
+                name: entity.name
+            })),
+            context.query.text as string),
+
             ...(drivers?.body?.results ?? []).map((result: any) =>
             ({
                 type: "driver",
                 id: result.driver.id,
-                name: `${result.driver.name?.first ?? ""} ${result.driver.name?.last ?? ""}`.trim() ?? undefined
+                name: `${result.driver.name?.first ?? ""} ${result.driver.name?.last ?? ""}`.trim() ?? result.driver.id
             })),
 
             ...this.filter((vehicles?.body?.results ?? []).map((entity: any) =>
@@ -233,15 +242,6 @@ export class RoutesModule extends AppModule
                 id: entity.id,
                 name: entity.name || [entity.make, entity.model, entity.productionYear].filter(e => e).join(", "),
                 description: entity.licensePlate
-            })),
-            context.query.text as string),
-
-            ...this.filter((communcationTriggers?.body ?? []).map((entity: any) =>
-            ({
-                type: "communication-trigger",
-                id: entity.id,
-                slug: entity.slug,
-                name: entity.name
             })),
             context.query.text as string),
 
