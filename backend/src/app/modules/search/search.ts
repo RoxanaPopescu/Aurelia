@@ -71,7 +71,7 @@ export class RoutesModule extends AppModule
                     include: { owner: true },
 
                     // HACK: This request times out if we don't limit the search to recent routes.
-                    startTimeFrom: DateTime.utc().minus({ month: 1 })
+                    startTimeFrom: DateTime.utc().minus({ days: 14 })
                 }
             }),
 
