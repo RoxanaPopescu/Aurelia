@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { Type } from "../../../shared/types";
+import { AuthenticationError, Type } from "../../../shared/types";
 import { ApiError, container } from "../../../shared/infrastructure";
 import { AppContext } from "../../app-context";
 import { AppModule } from "../../app-module";
@@ -341,7 +341,7 @@ export class RoutesModule extends AppModule
         }
         catch (error)
         {
-            if (error instanceof ApiError && error.response?.status === 401)
+            if (error instanceof AuthenticationError)
             {
                 console.warn(error);
 
