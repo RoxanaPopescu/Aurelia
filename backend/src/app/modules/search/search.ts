@@ -1,9 +1,18 @@
 import { Type } from "../../../shared/types";
-import { container } from "../../../shared/infrastructure";
+import { ApiError, container } from "../../../shared/infrastructure";
 import { AppContext } from "../../app-context";
 import { AppModule } from "../../app-module";
 import { RoutesListModule } from "../routes/modules/list/list";
 import { OrdersModule } from "../orders/orders";
+import { RoutePlanningPlansModule } from "../route-planning/modules/plans/plans";
+import { RoutePlanningOrderGroupsModule } from "../route-planning/modules/order-groups/order-groups";
+import { RoutePlanningRuleSetsModule } from "../route-planning/modules/rule-sets/rule-sets";
+import { RouteTemplatesModule } from "../routes/modules/templates/templates";
+import { DistributionCenterModule } from "../distribution-centers/distribution-centers";
+import { DriversModule } from "../drivers/drivers";
+import { VehiclesModule } from "../vehicles/vehicles";
+import { TriggersModule } from "../communication/modules/triggers/triggers";
+import { OrganizationModule } from "../organization/organization";
 
 /**
  * Represents a module exposing endpoints related to route details
@@ -20,7 +29,24 @@ export class RoutesModule extends AppModule
     {
         await context.authorize();
 
-        const [ordersResponse, routesResponse] = await Promise.all(
+        const
+        [
+            ordersResponse,
+            routesResponse,
+            routeTemplates,
+            routePlansResponse,
+            ruleSets,
+            orderGroups,
+            distributionCenters,
+            drivers,
+            vehicles,
+            communcationTriggers,
+            users,
+            teams,
+            roles,
+            connections
+        ]
+        = await Promise.all(
         [
             this.getResponse(OrdersModule, "POST /v2/orders/list", context,
             {
@@ -43,47 +69,238 @@ export class RoutesModule extends AppModule
                     searchQuery: context.query.text,
                     include: { owner: true }
                 }
+            }),
+
+            this.getResponse(RouteTemplatesModule, "POST /v2/routes/templates/list", context),
+
+            this.getResponse(RoutePlanningPlansModule, "POST /v2/route-planning/plans/list", context,
+            {
+                body:
+                {
+                    page: 1,
+                    pageSize: 10,
+                    searchQuery: context.query.text
+                }
+            }),
+
+            this.getResponse(RoutePlanningRuleSetsModule, "GET /v2/route-planning/rule-sets", context),
+
+            this.getResponse(RoutePlanningOrderGroupsModule, "POST /v2/route-planning/order-groups/list", context,
+            {
+                body:
+                {
+                    paging:
+                    {
+                        page: 1,
+                        pageSize: 10
+                    },
+                    filter: context.query.text
+                }
+            }),
+
+            this.getResponse(DistributionCenterModule, "GET /v2/distribution-centers", context),
+
+            this.getResponse(DriversModule, "POST /v2/drivers/list", context,
+            {
+                body:
+                {
+                    paging:
+                    {
+                        page: 1,
+                        pageSize: 10
+                    },
+                    sorting:
+                    {
+                        property: "name",
+                        direction: "ascending"
+                    },
+                    filter:
+                    {
+                        searchQuery: context.query.text
+                    }
+                }
+            }),
+
+            this.getResponse(VehiclesModule, "POST /v2/vehicles/list", context),
+
+            this.getResponse(TriggersModule, "GET /v2/communication/triggers", context),
+
+            this.getResponse(OrganizationModule, "GET /v2/organizations/:organizationId/users", context,
+            {
+                params:
+                {
+                    organizationId: context.user?.organizationId
+                }
+            }),
+
+            this.getResponse(OrganizationModule, "GET /v2/organizations/:organizationId/teams", context,
+            {
+                params:
+                {
+                    organizationId: context.user?.organizationId
+                }
+            }),
+
+            this.getResponse(OrganizationModule, "GET /v2/organizations/:organizationId/roles", context,
+            {
+                params:
+                {
+                    organizationId: context.user?.organizationId
+                }
+            }),
+
+            this.getResponse(OrganizationModule, "GET /v2/organizations/:organizationId/connections", context,
+            {
+                params:
+                {
+                    organizationId: context.user?.organizationId
+                }
             })
         ]);
 
         context.response.body =
         [
-            ...(ordersResponse?.body.orders ?? []).map((order: any) =>
+            ...(ordersResponse?.body?.orders ?? []).map((entity: any) =>
             ({
                 type: "order",
-                id: order.internalId,
-                slug: order.publicId,
-                name: order.publicId,
-                description: order.relationalId,
-                data: undefined,
-                starred: undefined
+                id: entity.internalId,
+                slug: entity.publicId,
+                name: entity.publicId,
+                description: entity.relationalId
             })),
 
-            ...(routesResponse?.body.routes ?? []).map((route: any) =>
+            ...(routesResponse?.body?.routes ?? []).map((entity: any) =>
             ({
                 type: "route",
-                id: route.id,
-                slug: route.slug,
-                name: route.slug,
-                description: route.reference,
-                data: undefined,
-                starred: undefined,
+                id: entity.id,
+                slug: entity.slug,
+                name: entity.slug,
+                description: entity.reference,
                 parent:
                 {
                     type: "organization",
-                    id: undefined,
-                    slug: undefined,
-                    name: route.owner.companyName,
-                    data: undefined,
-                    starred: undefined
+                    name: entity.owner.companyName
                 }
-            }))
+            })),
+
+            ...this.filter((routeTemplates?.body?.results ?? []).map((entity: any) =>
+            ({
+                type: "route-template",
+                id: entity.id,
+                slug: entity.slug,
+                name: entity.name,
+                description: entity.reference
+            })),
+            context.query.text as string),
+
+            ...(routePlansResponse?.body?.results ?? []).map((entity: any) =>
+            ({
+                type: "route-plan",
+                id: entity.id,
+                name: entity.name
+            })),
+
+            ...this.filter((ruleSets?.body?.results ?? []).map((entity: any) =>
+            ({
+                type: "rule-set",
+                id: entity.id,
+                slug: entity.slug,
+                name: entity.name
+            })),
+            context.query.text as string),
+
+            ...(orderGroups?.body ?? []).map((entity: any) =>
+            ({
+                type: "order-group",
+                id: entity.id,
+                slug: entity.slug,
+                name: entity.name
+            })),
+
+            ...this.filter((distributionCenters?.body ?? []).map((entity: any) =>
+            ({
+                type: "distribution-center",
+                id: entity.id,
+                name: entity.name,
+                description: `${entity.location?.address?.primary ?? ""} ${entity.location?.address?.secondary ?? ""}`.trim() ?? undefined
+            })),
+            context.query.text as string),
+
+            ...(drivers?.body?.results ?? []).map((result: any) =>
+            ({
+                type: "driver",
+                id: result.driver.id,
+                name: `${result.driver.name?.first ?? ""} ${result.driver.name?.last ?? ""}`.trim() ?? undefined
+            })),
+
+            ...this.filter((vehicles?.body?.results ?? []).map((entity: any) =>
+            ({
+                type: "vehicle",
+                id: entity.id,
+                name: entity.name || [entity.make, entity.model, entity.productionYear].filter(e => e).join(", "),
+                description: entity.licensePlate
+            })),
+            context.query.text as string),
+
+            ...this.filter((communcationTriggers?.body ?? []).map((entity: any) =>
+            ({
+                type: "communication-trigger",
+                id: entity.id,
+                slug: entity.slug,
+                name: entity.name
+            })),
+            context.query.text as string),
+
+            ...this.filter((users?.body ?? []).map((entity: any) =>
+            ({
+                type: "user",
+                id: entity.id,
+                name: entity.fullName,
+                description: entity.email
+            })),
+            context.query.text as string),
+
+            ...this.filter((teams?.body ?? []).map((entity: any) =>
+            ({
+                type: "team",
+                id: entity.id,
+                name: entity.name
+            })),
+            context.query.text as string),
+
+            ...this.filter((roles?.body ?? []).map((entity: any) =>
+            ({
+                type: "role",
+                id: entity.id,
+                name: entity.name
+            })),
+            context.query.text as string),
+
+            ...this.filter((connections?.body ?? []).map((entity: any) =>
+            ({
+                type: "connection",
+                id: entity.id,
+                name: entity.organization.name
+            })),
+            context.query.text as string)
         ];
 
         context.response.status = 200;
     }
 
-    private async getResponse(module: Type, endpoint: string, context: AppContext, request: any): Promise<any>
+    private filter(entityInfos: any[], queryText: string): any[]
+    {
+        const lowerCaseQueryText = queryText.toLowerCase();
+
+        return entityInfos.filter(entityInfo =>
+            entityInfo.id?.toLowerCase().includes(lowerCaseQueryText) ||
+            entityInfo.slug?.toLowerCase().includes(lowerCaseQueryText) ||
+            entityInfo.name?.toLowerCase().includes(lowerCaseQueryText) ||
+            entityInfo.description?.toLowerCase().includes(lowerCaseQueryText)
+        );
+    }
+
+    private async getResponse(module: Type, endpoint: string, context: AppContext, request?: any): Promise<any>
     {
         const fakeContext =
         {
@@ -95,12 +312,14 @@ export class RoutesModule extends AppModule
             internal: context.internal,
             // tslint:enable
 
+            headers: request?.headers ?? context.headers,
+            query: request?.query,
+            params: request?.params,
             request:
             {
-                headers: request.headers ?? context.headers,
-                params: request.params,
-                query: request.query,
-                body: request.body
+                headers: request?.headers ?? context.headers,
+                query: request?.query,
+                body: request?.body
             },
 
             response:
@@ -118,7 +337,14 @@ export class RoutesModule extends AppModule
         }
         catch (error)
         {
-            return undefined;
+            if (error instanceof ApiError && error.response?.status === 401)
+            {
+                console.warn(error);
+
+                return undefined;
+            }
+
+            throw error;
         }
     }
 }

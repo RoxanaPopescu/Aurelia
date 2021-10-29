@@ -539,8 +539,7 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize("view-teams",
         {
-            organization: context.params.organizationId,
-            teams: context.query.teams
+            organization: context.params.organizationId
         });
 
         const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/teams`);

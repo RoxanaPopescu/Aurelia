@@ -95,14 +95,30 @@ export class EntityInfo
     {
         switch (this.type.slug)
         {
-            // case "organization":
-            //     return "/organization";
+            case "organization":
+                return undefined;
 
-            // case "user":
-            //     return `/organization/users/${this.id}`;
+            // TODO: How do we link to the specified user?
+            case "user":
+                return "/organization/users";
+
+            case "team":
+                return `/organization/teams/${this.id}`;
+
+            // TODO: How do we link to the specified connection?
+            case "role":
+                return "/organization/roles";
+
+            // TODO: How do we link to the specified connection?
+            case "connection":
+                return "/organization/connections";
 
             case "driver":
                 return `/fleet-management/drivers/details/${this.id}`;
+
+            // TODO: How do we link to the specified vehicle?
+            case "vehicle":
+                return "/fleet-management/vehicles";
 
             case "order":
                 return `/orders/details/${this.slug}`;
@@ -111,13 +127,13 @@ export class EntityInfo
                 return `/routes/details/${this.slug}`;
 
             case "route-template":
-                return `/routes/templates/details/${this.id}`;
+                return `/routes/templates/details/${this.slug}`;
 
             case "route-plan":
-                return `/route-planning/plans/details/${this.id}`;
+                return `/route-planning/plans/details/${this.slug}`;
 
             case "rule-set":
-                return `/route-planning/rule-sets/details/${this.id}`;
+                return `/route-planning/rule-sets/details/${this.slug}`;
 
             case "order-group":
                 return `/route-planning/order-groups/details/${this.id}`;
@@ -125,11 +141,8 @@ export class EntityInfo
             case "distribution-center":
                 return `/distribution-centers/details/${this.id}`;
 
-            // case "vehicle":
-            //     return undefined; `/fleet-management/vehicles/details/${this.id}`;
-
             case "communication-trigger":
-                return `/communication/details/${this.id}`;
+                return `/communication/details/${this.slug}`;
 
             default:
                 return undefined;

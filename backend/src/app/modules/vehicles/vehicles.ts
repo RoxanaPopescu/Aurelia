@@ -1,3 +1,4 @@
+import { AppContext } from "app/app-context";
 import { AppModule } from "../../app-module";
 
 /**
@@ -5,91 +6,88 @@ import { AppModule } from "../../app-module";
  */
 export class VehiclesModule extends AppModule
 {
-    public configure(): void
+    /**
+     * Gets the vehicles for an organization
+     * @returns The a list of vehicle.
+     */
+    public "POST /v2/vehicles/list" = async (context: AppContext) =>
     {
-        /**
-         * Gets the vehicles for an organization
-         * @returns The a list of vehicle.
-         */
-        this.router.post("/v2/vehicles/list", async context =>
+        await context.authorize("view-vehicles");
+
+        const body = context.request.body ?? {};
+        body.accessIds = [context.user?.organizationId];
+
+        const result = await this.apiClient.post("logistics-platform/vehicles/list",
         {
-            await context.authorize("view-vehicles");
-
-            const body = context.request.body;
-            body.accessIds = [context.user?.organizationId];
-
-            const result = await this.apiClient.post("logistics-platform/vehicles/list",
-            {
-                noi: true,
-                body: body
-            });
-
-            context.response.body = result.data;
-            context.response.status = 200;
+            noi: true,
+            body: body
         });
 
-        /**
-         * Updates a vehicle
-         * @returns 200 OK.
-         */
-        this.router.post("/v2/vehicles/update", async context =>
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Updates a vehicle
+     * @returns 200 OK.
+     */
+    public "POST /v2/vehicles/update" = async (context: AppContext) =>
+    {
+        await context.authorize("create-vehicles");
+
+        const body = context.request.body;
+        body.accessIds = [context.user?.organizationId];
+
+        const result = await this.apiClient.post("logistics-platform/vehicles/update",
         {
-            await context.authorize("create-vehicles");
-
-            const body = context.request.body;
-            body.accessIds = [context.user?.organizationId];
-
-            const result = await this.apiClient.post("logistics-platform/vehicles/update",
-            {
-                noi: true,
-                body: body
-            });
-
-            context.response.body = result.data;
-            context.response.status = 200;
+            noi: true,
+            body: body
         });
 
-        /**
-         * Creates a vehicle
-         * @returns 200 OK.
-         */
-        this.router.post("/v2/vehicles/create", async context =>
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Creates a vehicle
+     * @returns 200 OK.
+     */
+    public "POST /v2/vehicles/create" = async (context: AppContext) =>
+    {
+        await context.authorize("create-vehicles");
+
+        const body = context.request.body;
+        body.accessIds = [context.user?.organizationId];
+        body.outfitId = context.user?.organizationId;
+
+        const result = await this.apiClient.post("logistics-platform/vehicles/create",
         {
-            await context.authorize("create-vehicles");
-
-            const body = context.request.body;
-            body.accessIds = [context.user?.organizationId];
-            body.outfitId = context.user?.organizationId;
-
-            const result = await this.apiClient.post("logistics-platform/vehicles/create",
-            {
-                noi: true,
-                body: body
-            });
-
-            context.response.body = result.data;
-            context.response.status = 200;
+            noi: true,
+            body: body
         });
 
-        /**
-         * Deletes a vehicle
-         * @returns 200 OK.
-         */
-        this.router.post("/v2/vehicles/delete", async context =>
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Deletes a vehicle
+     * @returns 200 OK.
+     */
+    public "POST /v2/vehicles/delete" = async (context: AppContext) =>
+    {
+        await context.authorize("create-vehicles");
+
+        const body = context.request.body;
+        body.accessIds = [context.user?.organizationId];
+
+        const result = await this.apiClient.post("logistics-platform/vehicles/delete",
         {
-            await context.authorize("create-vehicles");
-
-            const body = context.request.body;
-            body.accessIds = [context.user?.organizationId];
-
-            const result = await this.apiClient.post("logistics-platform/vehicles/delete",
-            {
-                noi: true,
-                body: body
-            });
-
-            context.response.body = result.data;
-            context.response.status = 200;
+            noi: true,
+            body: body
         });
+
+        context.response.body = result.data;
+        context.response.status = 200;
     }
 }

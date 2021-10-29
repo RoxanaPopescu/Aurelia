@@ -1,185 +1,183 @@
 import { AppModule } from "../../../../app-module";
 import { v4 as uuidV4 } from "uuid";
+import { AppContext } from "app/app-context";
 
 /**
  * Represents a module exposing endpoints related to tracking.
  */
 export class RoutePlanningOrderGroupsModule extends AppModule
 {
-    public configure(): void
+    /**
+     * Creates a order-group
+     * @returns The created order group.
+     */
+    public "POST /v2/route-planning/order-groups/create" = async (context: AppContext) =>
     {
-        /**
-         * Creates a order-group
-         * @returns The created order group.
-         */
-        this.router.post("/v2/route-planning/order-groups/create", async context =>
+        await context.authorize("create-order-groups");
+
+        const body = context.request.body;
+        body.ownerOutfitId = context.user?.organizationId;
+        body.createdBy = context.user?.id;
+        body.id = uuidV4();
+
+        await this.apiClient.post("logistics/ordergroups/create",
         {
-            await context.authorize("create-order-groups");
-
-            const body = context.request.body;
-            body.ownerOutfitId = context.user?.organizationId;
-            body.createdBy = context.user?.id;
-            body.id = uuidV4();
-
-            await this.apiClient.post("logistics/ordergroups/create",
-            {
-                body: body
-            });
-
-            context.response.body = await this.fetchDetails(body.id, context);
-            context.response.status = 200;
+            body: body
         });
 
-        /**
-         * Updates a order-group
-         * @returns The updated order group.
-         */
-        this.router.post("/v2/route-planning/order-groups/update", async context =>
+        context.response.body = await this.fetchDetails(body.id, context);
+        context.response.status = 200;
+    }
+
+    /**
+     * Updates a order-group
+     * @returns The updated order group.
+     */
+    public "POST /v2/route-planning/order-groups/update" = async (context: AppContext) =>
+    {
+        await context.authorize("edit-order-groups");
+
+        const body = context.request.body;
+        body.ownerOutfitId = context.user?.organizationId;
+        body.modifiedBy = context.user?.id;
+
+        await this.apiClient.post("logistics/ordergroups/update",
         {
-            await context.authorize("edit-order-groups");
-
-            const body = context.request.body;
-            body.ownerOutfitId = context.user?.organizationId;
-            body.modifiedBy = context.user?.id;
-
-            await this.apiClient.post("logistics/ordergroups/update",
-            {
-                body: body
-            });
-
-            context.response.body = await this.fetchDetails(body.id, context);
-            context.response.status = 200;
+            body: body
         });
 
-        /**
-         * Updates a order-group
-         * @returns The updated order group.
-         */
-        this.router.post("/v2/route-planning/order-groups/delete", async context =>
+        context.response.body = await this.fetchDetails(body.id, context);
+        context.response.status = 200;
+    }
+
+    /**
+     * Updates a order-group
+     * @returns The updated order group.
+     */
+    public "POST /v2/route-planning/order-groups/delete" = async (context: AppContext) =>
+    {
+        await context.authorize("edit-order-groups");
+
+        const body = context.request.body;
+        body.ownerOutfitId = context.user?.organizationId;
+        body.modifiedBy = context.user?.id;
+
+        const result = await this.apiClient.post("logistics/ordergroups/delete",
         {
-            await context.authorize("edit-order-groups");
-
-            const body = context.request.body;
-            body.ownerOutfitId = context.user?.organizationId;
-            body.modifiedBy = context.user?.id;
-
-            const result = await this.apiClient.post("logistics/ordergroups/delete",
-            {
-                body: body
-            });
-
-            context.response.body = result.data;
-            context.response.status = 200;
+            body: body
         });
 
-        /**
-         * Unpause order-group
-         * @returns The order group.
-         */
-        this.router.post("/v2/route-planning/order-groups/unpause", async context =>
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Unpause order-group
+     * @returns The order group.
+     */
+    public "POST /v2/route-planning/order-groups/unpause" = async (context: AppContext) =>
+    {
+        await context.authorize("edit-order-groups");
+
+        const body = context.request.body;
+        body.ownerOutfitId = context.user?.organizationId;
+        body.modifiedBy = context.user?.id;
+
+        await this.apiClient.post("logistics/ordergroups/activate",
         {
-            await context.authorize("edit-order-groups");
-
-            const body = context.request.body;
-            body.ownerOutfitId = context.user?.organizationId;
-            body.modifiedBy = context.user?.id;
-
-            await this.apiClient.post("logistics/ordergroups/activate",
-            {
-                body: body
-            });
-
-            context.response.body = await this.fetchDetails(body.id, context);
-            context.response.status = 200;
+            body: body
         });
 
-        /**
-         * Pauses order-group
-         * @returns The order group.
-         */
-        this.router.post("/v2/route-planning/order-groups/pause", async context =>
+        context.response.body = await this.fetchDetails(body.id, context);
+        context.response.status = 200;
+    }
+
+    /**
+     * Pauses order-group
+     * @returns The order group.
+     */
+    public "POST /v2/route-planning/order-groups/pause" = async (context: AppContext) =>
+    {
+        await context.authorize("edit-order-groups");
+
+        const body = context.request.body;
+        body.ownerOutfitId = context.user?.organizationId;
+        body.modifiedBy = context.user?.id;
+
+        await this.apiClient.post("logistics/ordergroups/pause",
         {
-            await context.authorize("edit-order-groups");
-
-            const body = context.request.body;
-            body.ownerOutfitId = context.user?.organizationId;
-            body.modifiedBy = context.user?.id;
-
-            await this.apiClient.post("logistics/ordergroups/pause",
-            {
-                body: body
-            });
-
-            context.response.body = await this.fetchDetails(body.id, context);
-
-            context.response.status = 200;
+            body: body
         });
 
-        /**
-         * Creates a order-group
-         * @returns The created order group.
-         */
-        this.router.get("/v2/route-planning/order-groups/:id", async context =>
-        {
-            await context.authorize("view-order-groups");
+        context.response.body = await this.fetchDetails(body.id, context);
 
-            context.response.body = await this.fetchDetails(context.params.id, context);
-            context.response.status = 200;
+        context.response.status = 200;
+    }
+
+    /**
+     * Creates a order-group
+     * @returns The created order group.
+     */
+    public "GET /v2/route-planning/order-groups/:id" = async (context: AppContext) =>
+    {
+        await context.authorize("view-order-groups");
+
+        context.response.body = await this.fetchDetails(context.params.id, context);
+        context.response.status = 200;
+    }
+
+    /**
+     * Gets the order groups
+     * @returns The list of ordergroups.
+     */
+    public "POST /v2/route-planning/order-groups/list" = async (context: AppContext) =>
+    {
+        await context.authorize("view-order-groups");
+
+        const body = context.request.body;
+        body.outfitIds = [context.user?.organizationId];
+        body.ownerOutfitId = context.user?.organizationId;
+
+        const result = await this.apiClient.post("logistics/ordergroups/list",
+        {
+            body: body
         });
 
-        /**
-         * Gets the order groups
-         * @returns The list of ordergroups.
-         */
-        this.router.post("/v2/route-planning/order-groups/list", async context =>
+        let orderGroups = result.data;
+        let organizationIds: string[] = [];
+
+        orderGroups = orderGroups.filter((o: any) => o.status.name.toLowerCase() !== "deleted");
+
+        orderGroups.forEach((g: any) =>
         {
-            await context.authorize("view-order-groups");
-
-            const body = context.request.body;
-            body.outfitIds = [context.user?.organizationId];
-            body.ownerOutfitId = context.user?.organizationId;
-
-            const result = await this.apiClient.post("logistics/ordergroups/list",
+            g.matchingCriteria.forEach((m: any) =>
             {
-                body: body
+                organizationIds.push(...m.consignorIds);
             });
-
-            let orderGroups = result.data;
-            let organizationIds: string[] = [];
-
-            orderGroups = orderGroups.filter((o: any) => o.status.name.toLowerCase() !== "deleted");
-
-            orderGroups.forEach((g: any) =>
-            {
-                g.matchingCriteria.forEach((m: any) =>
-                {
-                    organizationIds.push(...m.consignorIds);
-                });
-            });
-
-            // Unique ids
-            organizationIds = [...new Set(organizationIds)];
-            const organizations = await this.fetchOrganizations(organizationIds);
-
-            // Remap organizations
-            orderGroups.forEach((g: any) =>
-            {
-                g.matchingCriteria.forEach((m: any) =>
-                {
-                    m.organizations = organizations.filter(o => m.consignorIds.includes(o.id));
-                    delete m.consignorIds;
-                });
-
-                g.etag = g.eTag;
-                delete g.eTag;
-
-                g.paused = g.status.name.toLowerCase() === "paused";
-                delete g.status;
-            });
-
-            context.response.body = orderGroups;
-            context.response.status = 200;
         });
+
+        // Unique ids
+        organizationIds = [...new Set(organizationIds)];
+        const organizations = await this.fetchOrganizations(organizationIds);
+
+        // Remap organizations
+        orderGroups.forEach((g: any) =>
+        {
+            g.matchingCriteria.forEach((m: any) =>
+            {
+                m.organizations = organizations.filter(o => m.consignorIds.includes(o.id));
+                delete m.consignorIds;
+            });
+
+            g.etag = g.eTag;
+            delete g.eTag;
+
+            g.paused = g.status.name.toLowerCase() === "paused";
+            delete g.status;
+        });
+
+        context.response.body = orderGroups;
+        context.response.status = 200;
     }
 
     private async fetchOrganizations(ids: string[]): Promise<any[]>

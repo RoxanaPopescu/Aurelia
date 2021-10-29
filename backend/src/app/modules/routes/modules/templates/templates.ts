@@ -1,3 +1,4 @@
+import { AppContext } from "app/app-context";
 import { AppModule } from "../../../../app-module";
 
 /**
@@ -5,286 +6,261 @@ import { AppModule } from "../../../../app-module";
  */
 export class RouteTemplatesModule extends AppModule
 {
-    public configure(): void
+    /**
+     * Gets the route with the specified ID.
+     * @param context.params.id The ID of the route to get.
+     * @returns The route with the specified ID.
+     */
+    public "POST /v2/routes/templates/list" = async (context: AppContext) =>
     {
-        /**
-         * Gets the route with the specified ID.
-         * @param context.params.id The ID of the route to get.
-         * @returns The route with the specified ID.
-         */
-        this.router.post("/v2/routes/templates/list", async context =>
+        await context.authorize("view-routes");
+
+        const result = await this.apiClient.post("routetemplate/List",
         {
-            await context.authorize("view-routes");
-
-            const result = await this.apiClient.post("routetemplate/List",
+            body:
             {
-                body:
-                {
-                    ownerId: context.user?.organizationId
-                }
-            });
-
-            context.response.body = result.data;
-            context.response.status = 200;
+                ownerId: context.user?.organizationId
+            }
         });
 
-        /**
-         * Returns a single route template
-         * @returns 200 ok
-         */
-        this.router.post("/v2/routes/templates/details", async context =>
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Returns a single route template
+     * @returns 200 ok
+     */
+    public "POST /v2/routes/templates/details" = async (context: AppContext) =>
+    {
+        await context.authorize("view-routes");
+
+        const routesResult = await this.apiClient.post("routetemplate/details",
         {
-            await context.authorize("view-routes");
-
-            const routesResult = await this.apiClient.post("routetemplate/details",
+            body:
             {
-                body:
-                {
-                    ...context.request.body,
-                    ownerId: context.user?.organizationId
-                }
-            });
-
-            context.response.body = routesResult.data;
-            context.response.status = 200;
+                ...context.request.body,
+                ownerId: context.user?.organizationId
+            }
         });
 
-        /**
-         * Creates a route template
-         * @returns The id and slug of the new template
-         */
-        this.router.post("/v2/routes/templates/create", async context =>
+        context.response.body = routesResult.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Creates a route template
+     * @returns The id and slug of the new template
+     */
+    public "POST /v2/routes/templates/create" = async (context: AppContext) =>
+    {
+        await context.authorize("create-route-template");
+
+        const routesResult = await this.apiClient.post("routetemplate/create",
         {
-            await context.authorize("create-route-template");
-
-            const routesResult = await this.apiClient.post("routetemplate/create",
+            body:
             {
-                body:
-                {
-                    ...context.request.body,
-                    ownerId: context.user?.organizationId,
-                    changedById: context.user?.id
-                }
-            });
-
-            context.response.body = routesResult.data;
-            context.response.status = 200;
+                ...context.request.body,
+                ownerId: context.user?.organizationId,
+                changedById: context.user?.id
+            }
         });
 
-        /**
-         * Creates a route template
-         * @returns The id and slug of the new template
-         */
-        this.router.post("/v2/routes/templates/update", async context =>
+        context.response.body = routesResult.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Creates a route template
+     * @returns The id and slug of the new template
+     */
+    public "POST /v2/routes/templates/update" = async (context: AppContext) =>
+    {
+        await context.authorize("create-route-template");
+
+        const routesResult = await this.apiClient.post("routetemplate/update",
         {
-            await context.authorize("create-route-template");
-
-            const routesResult = await this.apiClient.post("routetemplate/update",
+            body:
             {
-                body:
-                {
-                    ...context.request.body,
-                    ownerId: context.user?.organizationId,
-                    changedById: context.user?.id
-                }
-            });
-
-            context.response.body = routesResult.data;
-            context.response.status = 200;
+                ...context.request.body,
+                ownerId: context.user?.organizationId,
+                changedById: context.user?.id
+            }
         });
 
-        /**
-         * Deletes a route template
-         * @returns The id and slug of the new template
-         */
-        this.router.post("/v2/routes/templates/delete", async context =>
+        context.response.body = routesResult.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Deletes a route template
+     * @returns The id and slug of the new template
+     */
+    public "POST /v2/routes/templates/delete" = async (context: AppContext) =>
+    {
+        await context.authorize("create-route-template");
+
+        await this.apiClient.post("routetemplate/delete",
         {
-            await context.authorize("create-route-template");
-
-            await this.apiClient.post("routetemplate/delete",
+            body:
             {
-                body:
-                {
-                    ...context.request.body,
-                    ownerId: context.user?.organizationId,
-                    changedById: context.user?.id
-                }
-            });
-
-            context.response.status = 200;
+                ...context.request.body,
+                ownerId: context.user?.organizationId,
+                changedById: context.user?.id
+            }
         });
 
-        /**
-         * Creates a route template
-         * @returns The id and slug of the new template
-         */
-        this.router.post("/v2/routes/templates/create", async context =>
+        context.response.status = 200;
+    }
+
+    /**
+     * Creates a route template
+     * @returns The id and slug of the new template
+     */
+    public "POST /v2/routes/templates/stops/add" = async (context: AppContext) =>
+    {
+        await context.authorize("create-route-template");
+
+        const routesResult = await this.apiClient.post("routetemplate/stops/add",
         {
-            await context.authorize("create-route-template");
-
-            const routesResult = await this.apiClient.post("routetemplate/create",
+            body:
             {
-                body:
-                {
-                    ...context.request.body,
-                    ownerId: context.user?.organizationId,
-                    changedById: context.user?.id
-                }
-            });
-
-            context.response.body = routesResult.data;
-            context.response.status = 200;
+                ...context.request.body,
+                ownerId: context.user?.organizationId,
+                changedById: context.user?.id
+            }
         });
 
-        /**
-         * Creates a route template
-         * @returns The id and slug of the new template
-         */
-        this.router.post("/v2/routes/templates/stops/add", async context =>
+        context.response.body = routesResult.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Creates a route template
+     * @returns The id and slug of the new template
+     */
+    public "POST /v2/routes/templates/stops/move" = async (context: AppContext) =>
+    {
+        await context.authorize("create-route-template");
+
+        const routesResult = await this.apiClient.post("routetemplate/stops/move",
         {
-            await context.authorize("create-route-template");
-
-            const routesResult = await this.apiClient.post("routetemplate/stops/add",
+            body:
             {
-                body:
-                {
-                    ...context.request.body,
-                    ownerId: context.user?.organizationId,
-                    changedById: context.user?.id
-                }
-            });
-
-            context.response.body = routesResult.data;
-            context.response.status = 200;
+                ...context.request.body,
+                ownerId: context.user?.organizationId,
+                changedById: context.user?.id
+            }
         });
 
-        /**
-         * Creates a route template
-         * @returns The id and slug of the new template
-         */
-        this.router.post("/v2/routes/templates/stops/move", async context =>
+        context.response.body = routesResult.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Creates a route template
+     * @returns The id and slug of the new template
+     */
+    public "POST /v2/routes/templates/stops/update" = async (context: AppContext) =>
+    {
+        await context.authorize("create-route-template");
+
+        const routesResult = await this.apiClient.post("routetemplate/stops/update",
         {
-            await context.authorize("create-route-template");
-
-            const routesResult = await this.apiClient.post("routetemplate/stops/move",
+            body:
             {
-                body:
-                {
-                    ...context.request.body,
-                    ownerId: context.user?.organizationId,
-                    changedById: context.user?.id
-                }
-            });
-
-            context.response.body = routesResult.data;
-            context.response.status = 200;
+                ...context.request.body,
+                ownerId: context.user?.organizationId,
+                changedById: context.user?.id
+            }
         });
 
-        /**
-         * Creates a route template
-         * @returns The id and slug of the new template
-         */
-        this.router.post("/v2/routes/templates/stops/update", async context =>
+        context.response.body = routesResult.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Deletes a route template
+     * @returns The id and slug of the new template
+     */
+    public "POST /v2/routes/templates/stops/delete" = async (context: AppContext) =>
+    {
+        await context.authorize("create-route-template");
+
+        await this.apiClient.post("routetemplate/stops/delete",
         {
-            await context.authorize("create-route-template");
-
-            const routesResult = await this.apiClient.post("routetemplate/stops/update",
+            body:
             {
-                body:
-                {
-                    ...context.request.body,
-                    ownerId: context.user?.organizationId,
-                    changedById: context.user?.id
-                }
-            });
-
-            context.response.body = routesResult.data;
-            context.response.status = 200;
+                ...context.request.body,
+                ownerId: context.user?.organizationId,
+                changedById: context.user?.id
+            }
         });
 
-        /**
-         * Deletes a route template
-         * @returns The id and slug of the new template
-         */
-        this.router.post("/v2/routes/templates/stops/delete", async context =>
+        context.response.status = 200;
+    }
+
+    /**
+     * Creates a schedule
+     * @returns The id and slug of the new schedule
+     */
+    public "POST /v2/routes/templates/schedules/add" = async (context: AppContext) =>
+    {
+        await context.authorize("create-route-template");
+
+        const routesResult = await this.apiClient.post("routetemplate/schedules/add",
         {
-            await context.authorize("create-route-template");
-
-            await this.apiClient.post("routetemplate/stops/delete",
+            body:
             {
-                body:
-                {
-                    ...context.request.body,
-                    ownerId: context.user?.organizationId,
-                    changedById: context.user?.id
-                }
-            });
-
-            context.response.status = 200;
+                ...context.request.body,
+                ownerId: context.user?.organizationId,
+                changedById: context.user?.id
+            }
         });
 
-        /**
-         * Creates a schedule
-         * @returns The id and slug of the new schedule
-         */
-        this.router.post("/v2/routes/templates/schedules/add", async context =>
+        context.response.body = routesResult.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Updated a schedule
+     * @returns The updated schedule
+     */
+    public "POST /v2/routes/templates/schedules/update" = async (context: AppContext) =>
+    {
+        await context.authorize("create-route-template");
+
+        const routesResult = await this.apiClient.post("routetemplate/schedules/update",
         {
-            await context.authorize("create-route-template");
-
-            const routesResult = await this.apiClient.post("routetemplate/schedules/add",
+            body:
             {
-                body:
-                {
-                    ...context.request.body,
-                    ownerId: context.user?.organizationId,
-                    changedById: context.user?.id
-                }
-            });
-
-            context.response.body = routesResult.data;
-            context.response.status = 200;
+                ...context.request.body,
+                ownerId: context.user?.organizationId,
+                changedById: context.user?.id
+            }
         });
 
-        /**
-         * Updated a schedule
-         * @returns The updated schedule
-         */
-        this.router.post("/v2/routes/templates/schedules/update", async context =>
+        context.response.body = routesResult.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Deletes a route template schedule
+     */
+    public "POST /v2/routes/templates/schedules/delete" = async (context: AppContext) =>
+    {
+        await context.authorize("create-route-template");
+
+        await this.apiClient.post("routetemplate/schedules/delete",
         {
-            await context.authorize("create-route-template");
-
-            const routesResult = await this.apiClient.post("routetemplate/schedules/update",
+            body:
             {
-                body:
-                {
-                    ...context.request.body,
-                    ownerId: context.user?.organizationId,
-                    changedById: context.user?.id
-                }
-            });
-
-            context.response.body = routesResult.data;
-            context.response.status = 200;
+                ...context.request.body,
+                ownerId: context.user?.organizationId,
+                changedById: context.user?.id
+            }
         });
 
-        /**
-         * Deletes a route template schedule
-         */
-        this.router.post("/v2/routes/templates/schedules/delete", async context =>
-        {
-            await context.authorize("create-route-template");
-
-            await this.apiClient.post("routetemplate/schedules/delete",
-            {
-                body:
-                {
-                    ...context.request.body,
-                    ownerId: context.user?.organizationId,
-                    changedById: context.user?.id
-                }
-            });
-
-            context.response.status = 200;
-        });
+        context.response.status = 200;
     }
 }

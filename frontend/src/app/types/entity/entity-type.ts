@@ -55,10 +55,30 @@ export class EntityType
             name: strings.user,
             icon: "md-person"
         },
+        "team":
+        {
+            name: strings.team,
+            icon: "departments"
+        },
+        "role":
+        {
+            name: strings.role,
+            icon: "md-rules"
+        },
+        "connection":
+        {
+            name: strings.connection,
+            icon: "md-hub"
+        },
         "driver":
         {
             name: strings.driver,
             icon: "fleet"
+        },
+        "vehicle":
+        {
+            name: strings.vehicle,
+            icon: "vehicles"
         },
         "order":
         {
@@ -94,11 +114,6 @@ export class EntityType
         {
             name: strings.distributionCenter,
             icon: "depots"
-        },
-        "vehicle":
-        {
-            name: strings.vehicle,
-            icon: "vehicles"
         },
         "communication-trigger":
         {
