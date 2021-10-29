@@ -89,18 +89,7 @@ export class RoutesModule extends AppModule
 
             this.getResponse(RoutePlanningRuleSetsModule, "GET /v2/route-planning/rule-sets", context),
 
-            this.getResponse(RoutePlanningOrderGroupsModule, "POST /v2/route-planning/order-groups/list", context,
-            {
-                body:
-                {
-                    paging:
-                    {
-                        page: 1,
-                        pageSize: 10
-                    },
-                    filter: context.query.text
-                }
-            }),
+            this.getResponse(RoutePlanningOrderGroupsModule, "POST /v2/route-planning/order-groups/list", context),
 
             this.getResponse(DistributionCenterModule, "GET /v2/distribution-centers", context),
 
@@ -213,13 +202,14 @@ export class RoutesModule extends AppModule
             })),
             context.query.text as string),
 
-            ...(orderGroups?.body ?? []).map((entity: any) =>
+            ...this.filter((orderGroups?.body ?? []).map((entity: any) =>
             ({
                 type: "order-group",
                 id: entity.id,
                 slug: entity.slug,
                 name: entity.name
             })),
+            context.query.text as string),
 
             ...this.filter((distributionCenters?.body ?? []).map((entity: any) =>
             ({
