@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import { Type } from "../../../shared/types";
 import { ApiError, container } from "../../../shared/infrastructure";
 import { AppContext } from "../../app-context";
@@ -67,7 +68,10 @@ export class RoutesModule extends AppModule
                     pageSize: 10,
                     sorting: { field: 4, direction: 2 },
                     searchQuery: context.query.text,
-                    include: { owner: true }
+                    include: { owner: true },
+
+                    // HACK: This request times out if we don't limit the search to recent routes.
+                    startTimeFrom: DateTime.utc().minus({ weeks: 2 })
                 }
             }),
 
