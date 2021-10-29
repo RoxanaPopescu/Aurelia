@@ -15,7 +15,7 @@ export class DistributionCenterModule extends AppModule
     {
         await context.authorize("create-distribution-centers");
 
-        const body = context.request.body ?? {};
+        const body = context.request.body;
         body.ownerId = context.user?.organizationId;
         body.createdBy = context.user?.id;
         body.id = uuidV4();

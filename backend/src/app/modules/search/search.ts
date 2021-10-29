@@ -307,13 +307,13 @@ export class RoutesModule extends AppModule
             // tslint:enable
 
             headers: request?.headers ?? context.headers,
-            query: request?.query,
-            params: request?.params,
+            query: request?.query ?? {},
+            params: request?.params ?? {},
             request:
             {
                 headers: request?.headers ?? context.headers,
-                query: request?.query,
-                body: request?.body
+                query: request?.query ?? {},
+                body: request?.body ?? {}
             },
 
             response:

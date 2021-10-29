@@ -14,7 +14,7 @@ export class VehiclesModule extends AppModule
     {
         await context.authorize("view-vehicles");
 
-        const body = context.request.body ?? {};
+        const body = context.request.body;
         body.accessIds = [context.user?.organizationId];
 
         const result = await this.apiClient.post("logistics-platform/vehicles/list",

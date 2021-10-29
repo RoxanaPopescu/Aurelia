@@ -14,7 +14,7 @@ export class DriversModule extends AppModule
     {
         await context.authorize("view-drivers");
 
-        const body = context.request.body ?? {};
+        const body = context.request.body;
         body.outfitIds = [context.user?.organizationId];
         body.statuses = body.filter.statuses;
         body.searchQuery = body.filter.searchQuery;

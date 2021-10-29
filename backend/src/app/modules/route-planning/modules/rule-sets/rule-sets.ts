@@ -14,7 +14,7 @@ export class RoutePlanningRuleSetsModule extends AppModule
     {
         await context.authorize("view-routeplan-settings");
 
-        const body = context.request.body ?? {};
+        const body = context.request.body;
         body.outfitIds = [context.user?.organizationId];
 
         const result = await this.apiClient.post("routeoptimization/settings/list",
