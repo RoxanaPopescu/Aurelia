@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
-import { AuthenticationError, Type } from "../../../shared/types";
-import { ApiError, container } from "../../../shared/infrastructure";
+import { AuthorizationError, Type } from "../../../shared/types";
+import { container } from "../../../shared/infrastructure";
 import { AppContext } from "../../app-context";
 import { AppModule } from "../../app-module";
 import { RoutesListModule } from "../routes/modules/list/list";
@@ -341,7 +341,7 @@ export class RoutesModule extends AppModule
         }
         catch (error)
         {
-            if (error instanceof AuthenticationError)
+            if (error instanceof AuthorizationError)
             {
                 console.warn(error);
 
