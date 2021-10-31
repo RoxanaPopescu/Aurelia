@@ -1,11 +1,14 @@
 import React from "react";
 import { observer } from "mobx-react";
+import { Container } from "aurelia-framework";
 import Localization from "shared/src/localization";
 import { LiveTrackingService } from "../../../../../services/liveTrackingService";
 import { routeFlagService } from "../../../../../services/routeFlagService";
 import { Icon } from "shared/src/webKit";
 import "./route.scss";
 import { RouteInfo, RouteStopBase } from "app/model/route";
+import { ModalService } from "shared/framework";
+import { AddSupportNoteDialog } from "app/modules/routes/modules/details/modals/add-support-note/add-support-note";
 
 export interface RoutesLayerProps {
   service: LiveTrackingService;
@@ -13,7 +16,7 @@ export interface RoutesLayerProps {
 }
 
 @observer
-export class RouteComponent extends React.Component<RoutesLayerProps> {
+export class RouteComponent extends React.Component<RoutesLayerProps, { supportNoteExpanded: boolean }> {
 
   public render() {
     const route = this.props.route;
@@ -116,6 +119,7 @@ export class RouteComponent extends React.Component<RoutesLayerProps> {
           </div>}
           {this.renderDriverOffline(route)}
           {this.renderNoDriver(route)}
+          {this.renderSupportNote(route)}
         </div>
 
       </div>
@@ -157,6 +161,79 @@ export class RouteComponent extends React.Component<RoutesLayerProps> {
           {Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_DriverOffline") + " (" + route.status.name + ")"}
       </div>
     );
+  }
+
+  renderSupportNote(route): JSX.Element | undefined {
+    if (route.id !== this.props.service.selectedRoute?.id) {
+      return;
+    }
+
+    const expanded = this.state?.supportNoteExpanded;
+    const supportNote = this.props.service.selectedRoute!.supportNote;
+
+    if (supportNote)
+    {
+
+      return (
+        <div
+          onClick={e => { if (!expanded) this.setState({ supportNoteExpanded: true }); }}
+          className={`
+            c-liveTracking-panel-message
+            c-liveTracking-box-neutral
+            ${!expanded ? "c-liveTracking-box-clickable" : ""}`}
+          >
+            <div style={{ flexGrow: 1 }}>
+              <div
+                onClick={e => { if (expanded) this.setState({ supportNoteExpanded: false }); }}
+                className={expanded ? "c-liveTracking-box-clickable-header" : ""}>
+                {Localization.sharedValue("LiveTracking_Route_SupportNote")}
+              </div>
+              {expanded &&
+              <div>
+                <p style={{ whiteSpace: "pre-line" }}>{supportNote}</p>
+                <a onClick={e => this.onAddSupportNoteClick(e, route)}>
+                  {Localization.sharedValue("LiveTracking_Route_AddSupportNote")}
+                </a>
+              </div>}
+            </div>
+        </div>
+      );
+    }
+    else
+    {
+      return (
+        <div
+          className={`
+            c-liveTracking-panel-message`}
+          style={{ paddingLeft: 0 }}
+          >
+            <a onClick={e => this.onAddSupportNoteClick(e, route)}>
+              {Localization.sharedValue("LiveTracking_Route_AddSupportNote")}
+            </a>
+        </div>
+      );
+    }
+  }
+
+  protected async onAddSupportNoteClick(event, route): Promise<void>
+  {
+      // Just to be sure we have no inconsistent state here...
+      if (route.id !== this.props.service.selectedRoute?.id) {
+        return;
+      }
+
+      event.stopPropagation();
+
+      const added = await Container.instance.get(ModalService).open(AddSupportNoteDialog, { route: this.props.service.selectedRoute! }).promise;
+
+      if (!added)
+      {
+          return;
+      }
+
+      this.setState({ supportNoteExpanded: true });
+
+      this.props.service.pollDetails()
   }
 
   private onClick(): void {

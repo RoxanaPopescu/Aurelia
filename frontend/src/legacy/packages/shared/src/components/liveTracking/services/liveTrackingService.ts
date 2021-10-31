@@ -358,7 +358,7 @@ export class LiveTrackingService {
   /**
    * Fetches the selected detail route
    */
-  private async pollDetails() {
+  public async pollDetails() {
     clearTimeout(this.pollTimeout.selectedRoute);
 
     if (!this.selectedRouteSlug) {
