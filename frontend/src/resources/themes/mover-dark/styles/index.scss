@@ -42,6 +42,11 @@ $__summary: comment;
     --legacy-card-surface-color: var(--palette-color-neutral);
     --legacy-card-surface-color--hover: var(--palette-color-neutral);
     --legacy-card-surface-box-surface-color: var(--palette-color-neutral-darker);
+
+    .c-liveTracking-routePanel-routeInfo
+    {
+        --legacy-card-surface-box-surface-color: var(--palette-color-neutral);
+    }
 }
 
 .card-edge
