@@ -45,9 +45,9 @@ export class AutomaticDispatchJobStatus
             name: statusNames.processing,
             accent: "neutral"
         },
-        "succeeded":
+        "approved":
         {
-            name: statusNames.succeeded,
+            name: statusNames.approved,
             accent: "positive"
         },
         "failed":
@@ -60,9 +60,9 @@ export class AutomaticDispatchJobStatus
             name: statusNames.cancelled,
             accent: "neutral"
         },
-        "waiting-for-approval":
+        "succeeded":
         {
-            name: statusNames.waitingForApproval,
+            name: statusNames.succeeded,
             accent: "neutral"
         }
     };

@@ -18,7 +18,6 @@ import RoutePlanningUnscheduledStopsComponent from "./unscheduledStops";
 import H from "history";
 import RoutePlanningOrderIdsComponent from "./header/orderIds";
 import { Log } from "shared/infrastructure";
-import { Profile } from "shared/src/model/profile";
 
 interface Props {
   history: H.History;
@@ -278,7 +277,6 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
               </div>
             </div>
           </div>
-          {Profile.claims.has("create-routeplan-simulation") &&
           <div className="c-routePlanning-routes-list-bottomBar">
             {this.props.store.plan.waitingForApproval &&
               <Button
@@ -293,7 +291,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
               {this.props.store.approving ? Localization.operationsValue("RoutePlanning_Approving") : Localization.operationsValue("RoutePlanning_ApproveButton")}
             </Button>
           }
-          </div>}
+          </div>
           <div
             className="c-routePlanning-routes-list-resize"
             onMouseDown={() => this.startDrag()}

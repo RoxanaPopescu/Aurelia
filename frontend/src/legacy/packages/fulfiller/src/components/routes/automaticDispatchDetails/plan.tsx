@@ -16,7 +16,6 @@ import Localization from "../../../../../shared/src/localization/index";
 import RoutePlanningUnscheduledStopsComponent from "./unscheduledStops";
 import H from "history";
 import { Log } from "shared/infrastructure";
-import { Profile } from "shared/src/model/profile";
 import { RouteBase } from "app/model/route";
 
 interface Props {
@@ -272,9 +271,8 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
               </div>
             </div>
           </div>
-          {Profile.claims.has("create-routeplan-simulation") &&
           <div className="c-routePlanning-routes-list-bottomBar">
-            {this.props.store.job.status.slug == "waiting-for-approval" &&
+            {this.props.store.job.status.slug == "succeeded" &&
               <Button
                 loading={this.props.store.approving}
                 type={ButtonType.Action}
@@ -287,7 +285,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
               {this.props.store.approving ? Localization.operationsValue("RoutePlanning_Approving") : Localization.operationsValue("RoutePlanning_ApproveButton")}
             </Button>
           }
-          </div>}
+          </div>
           <div
             className="c-routePlanning-routes-list-resize"
             onMouseDown={() => this.startDrag()}

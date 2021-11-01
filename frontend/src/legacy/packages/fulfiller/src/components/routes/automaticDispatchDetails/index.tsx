@@ -64,7 +64,7 @@ export default class RoutePlanningDetailsComponent extends React.Component<
       );
     }
 
-    if (!["succeeded", "waiting-for-approval"].includes(this.store.job.status.slug)) {
+    if (!["succeeded", "waiting-for-approval", "approved"].includes(this.store.job.status.slug)) {
       return (
         <ErrorInline title={`${Localization.operationsValue("AutomaticDispatch_JobNotReady")} (${this.store.job.status.slug})`} description={this.store.job.name}>
           <Button

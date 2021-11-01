@@ -692,7 +692,7 @@ export class RoutePlanningStore {
       await this.service.approve(this.job.id);
 
       this.toastMessage = Localization.operationsValue("RoutePlanning_Approved");
-      this.job.status = new AutomaticDispatchJobStatus("succeeded");
+      this.job.status = new AutomaticDispatchJobStatus("approved");
     } catch {
       this.error = Localization.sharedValue("Error_General");
     } finally {

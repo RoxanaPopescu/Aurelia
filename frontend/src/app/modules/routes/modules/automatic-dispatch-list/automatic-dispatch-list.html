@@ -14,18 +14,18 @@
 
                 <toggle-group class="flex-column" value.bind="statusFilter">
 
-                    <check-toggle label="after" model="succeeded" value.one-time="false">
+                    <check-toggle label="after" model="approved" value.one-time="false">
 
                         <div slot="heading" translate>
-                            Succeeded
+                            Approved
                         </div>
 
                     </check-toggle>
 
-                    <check-toggle label="after" model="waiting-for-approval" value.one-time="false">
+                    <check-toggle label="after" model="succeeded" value.one-time="false">
 
                         <div slot="heading" translate>
-                            Waiting for approval
+                            Succeeded
                         </div>
 
                     </check-toggle>
