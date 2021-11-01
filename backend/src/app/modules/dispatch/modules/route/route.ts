@@ -17,7 +17,7 @@ export class DispatchRouteModule extends AppModule
          */
         this.router.post("/v2/dispatch/route/assign-driver", async context =>
         {
-            await context.authorize("edit-routes");
+            await context.authorize("assign-driver-route");
 
             const body: any = context.request.body;
             body.fulfillerIds = [context.user?.organizationId];
@@ -27,32 +27,6 @@ export class DispatchRouteModule extends AppModule
             {
                 noi: true,
                 body: body
-            });
-
-            const data = result.data;
-            context.response.body = data;
-            context.response.status = 200;
-        });
-
-        /**
-         * Assigns a executor
-         * @returns 200 OK if successfull
-         */
-        this.router.post("/v2/dispatch/route/assign-executor", async context =>
-        {
-            await context.authorize("edit-routes");
-
-            const result = await this.apiClient.post("logistics-platform/routes/v2/add-fulfiller",
-            {
-                noi: true,
-                body: {
-                    organizationId: context.user?.organizationId,
-                    createdBy: context.user?.id,
-                    routeId: context.request.body.routeId,
-                    newFulfillerId: context.request.body.newExecutorId,
-                    currentFulfillerId: context.request.body.currentExecutorId,
-                    correlationId: uuidV4()
-                }
             });
 
             const data = result.data;
@@ -91,15 +65,17 @@ export class DispatchRouteModule extends AppModule
         {
             await context.authorize("edit-routes");
 
-            const body: any = context.request.body;
-            body.fulfillerIds = [context.user?.organizationId];
-            body.createdBy = context.user?.id;
-            body.correlationId = uuidV4();
-
             const result = await this.apiClient.post("logistics-platform/routes/v2/add-fulfiller",
             {
                 noi: true,
-                body: body
+                body: {
+                    organizationId: context.user?.organizationId,
+                    createdBy: context.user?.id,
+                    routeId: context.request.body.routeId,
+                    newFulfillerId: context.request.body.newExecutorId,
+                    currentFulfillerId: context.request.body.currentExecutorId,
+                    correlationId: uuidV4()
+                }
             });
 
             const data = result.data;
