@@ -1,9 +1,0 @@
-@import "resources/index";
-
-page[name="routes"] page[name="assign-list"]
-{
-    data-table
-    {
-        --data-table-columns: 1.5fr 1.5fr min-content 2.2fr 1.5fr min-content 1.5fr 1.5fr 1.5fr;
-    }
-}

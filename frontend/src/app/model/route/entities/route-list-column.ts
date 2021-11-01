@@ -185,6 +185,7 @@ export class RouteListColumn
         "planned-start-time-frame":
         {
             name: listColumn.plannedStartTime,
+            sortingName: "start-date",
             columnName: "Starttime",
             columnSize: "min-content",
             column: "visible"
