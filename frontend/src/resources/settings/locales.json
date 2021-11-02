@@ -14,5 +14,10 @@
       "code": "da",
       "unicodeExtension": "u-ca-iso8601-nu-latn",
       "name": "Dansk"
+  },
+  {
+      "code": "it",
+      "unicodeExtension": "u-ca-iso8601-nu-latn",
+      "name": "Italian"
   }
 ]
