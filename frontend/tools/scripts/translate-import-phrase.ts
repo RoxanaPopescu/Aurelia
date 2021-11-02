@@ -13,7 +13,7 @@ readAndWriteXliff("app");
 // Read  the files and convert them
 function readAndWriteXliff(type: "shared" | "app"): void
 {
-    const currentPath = resolve(type === "shared" ? "artifacts/translation/shared.xliff" : "artifacts/translation/app.xliff");
+    const currentPath = resolve(type === "shared" ? "artifacts/translation/shared.xlf" : "artifacts/translation/app.xlf");
     const taskName = `localize.import-xliff-${type}`;
 
     gulp.task(taskName, () =>
@@ -49,16 +49,18 @@ function readAndWriteXliff(type: "shared" | "app"): void
  */
 function importXliffToJson(xliff: any): string
 {
+
     const json: any = { "./": {} };
 
     const unitRegexp = /<trans-unit id="([^"]*?)">([\s\S]*?)<\/trans-unit>/g;
-    const targetRegexp = /<target>([\s\S]*)<\/target>|$/;
+    const targetRegexp = /<target xml:lang="it">([\s\S]*)<\/target>|$/;
 
     let unitMatch;
 
     while (unitMatch = unitRegexp.exec(xliff))
     {
         const result = targetRegexp.exec(unitMatch[2]);
+
         if (result != null && result[1] != null) {
             json["./"][decodeXmlEntities(unitMatch[1], true)] = decodeXmlEntities(result[1], false);
         }
