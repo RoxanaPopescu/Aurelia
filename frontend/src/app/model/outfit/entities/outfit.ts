@@ -1,6 +1,7 @@
+import { computedFrom } from "aurelia-binding";
+import { EntityInfo } from "app/types/entity";
 import { PhoneNumber } from "app/model/shared";
 import { OutfitType } from "./outfit-type";
-import { computedFrom } from "aurelia-binding";
 
 /**
  * Represents a base type for entities such as a Consignor and Consignee.
@@ -116,5 +117,18 @@ export class Outfit
             address: this.address,
             legacyId: this.legacyId
         };
+    }
+
+    /**
+     * Gets an `EntityInfo` instance representing this instance.
+     */
+    public toEntityInfo(): EntityInfo
+    {
+        return new EntityInfo(
+        {
+            type: this.companyName ? "organization" : "unknown",
+            id: this.id,
+            name: this.companyName ?? this.personName
+        });
     }
 }

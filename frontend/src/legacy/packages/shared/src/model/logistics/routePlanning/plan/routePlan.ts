@@ -2,6 +2,7 @@ import { RoutePlanRoute } from "./routePlanRoute";
 import { RoutePlanMeta } from "./routePlanMeta";
 import { RoutePlanUnscheduledTask } from "./routePlanUnscheduledTask";
 import { Consignor } from "shared/src/model/logistics/consignor";
+import { EntityInfo } from "app/types/entity";
 
 export type RoutePlanStatus =
   | "waiting-for-approval"
@@ -14,6 +15,7 @@ export class RoutePlan {
   /* tslint:disable-next-line: no-any */
   public constructor(data: any, id: string) {
     this.id = id;
+    this.name = name;
     // Consignors are found by index in each stop (Unscheduled & normal stops)
     const consignors = data.consignors.map(s => new Consignor(s));
 
@@ -89,6 +91,11 @@ export class RoutePlan {
   public id: string;
 
   /**
+   * The name of the route plan.
+   */
+  public name: string;
+
+  /**
    * The status of the route plan.
    */
   public status: RoutePlanStatus;
@@ -131,5 +138,16 @@ export class RoutePlan {
     }
 
     return bounds;
+  }
+
+  /**
+   * Gets an `EntityInfo` instance representing this instance.
+   */
+  public toEntityInfo(): EntityInfo {
+    return new EntityInfo({
+      type: "route-plan",
+      id: this.id,
+      name: this.name
+    });
   }
 }

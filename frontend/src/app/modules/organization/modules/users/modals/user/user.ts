@@ -4,6 +4,7 @@ import { Log } from "shared/infrastructure";
 import { IValidation, Modal } from "shared/framework";
 import { IdentityService } from "app/services/identity";
 import { OrganizationRole, OrganizationService, OrganizationTeam, OrganizationUser } from "app/model/organization";
+import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 
  /**
   * Represents a modal panel that presents the public profile of a user.
@@ -122,6 +123,8 @@ export class UserModalPanel
             {
                 Log.error("An error occurred while getting teams or roles.", error);
             }
+
+            addToRecentEntities(this.user.toEntityInfo());
         });
     }
 

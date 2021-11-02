@@ -1,7 +1,8 @@
+import clone from "clone";
+import { EntityInfo } from "app/types/entity";
+import { Collo } from "shared/src/model/logistics/order";
 import { OrderStatus } from "./order-status";
 import { OrderStop } from "./order-stop";
-import { Collo } from "shared/src/model/logistics/order";
-import clone from "clone";
 
 export class Order
 {
@@ -91,5 +92,20 @@ export class Order
             actualColli: this.actualColli,
             estimatedColli: this.estimatedColli
         };
+    }
+
+    /**
+     * Gets an `EntityInfo` instance representing this instance.
+     */
+    public toEntityInfo(): EntityInfo
+    {
+        return new EntityInfo(
+        {
+            type: "order",
+            id: this.id,
+            slug: this.slug,
+            name: this.slug,
+            description: this.relationalId
+        });
     }
 }

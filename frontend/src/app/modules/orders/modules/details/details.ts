@@ -4,6 +4,7 @@ import { Log } from "shared/infrastructure";
 import { ModalService, IScroll } from "shared/framework";
 import { IdentityService } from "app/services/identity";
 import { OrderService, OrderStatus, Order, OrderStatusSlug } from "app/model/order";
+import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 import { EditOrderPanel } from "./modals/edit-order/edit-order";
 
 /**
@@ -98,7 +99,7 @@ export class DetailsModule
         this.orderId = params.id;
 
         // tslint:disable-next-line: no-floating-promises
-        this.fetchOrder();
+        this.fetchOrder(true);
 
         // tslint:disable-next-line: no-floating-promises
         this.fetchRouteId();
@@ -144,13 +145,18 @@ export class DetailsModule
     /**
      * Fetches the specified order.
      */
-    private async fetchOrder(): Promise<void>
+    private async fetchOrder(addToRecent = false): Promise<void>
     {
         try
         {
             this.order = await this._orderService.get(this.orderId);
             this._router.title = this.order.slug;
             this._router.updateTitle();
+
+            if (addToRecent)
+            {
+                addToRecentEntities(this.order.toEntityInfo());
+            }
         }
         catch (error)
         {

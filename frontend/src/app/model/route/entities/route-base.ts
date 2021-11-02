@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
 import { DateTimeRange } from "shared/types";
+import { EntityInfo } from "app/types/entity";
 import { Position } from "app/model/shared";
 import { Fulfiller, Outfit } from "app/model/outfit";
 import { Driver } from "app/model/driver";
@@ -366,5 +367,21 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
                 }
             }
         }
+    }
+
+    /**
+     * Gets an `EntityInfo` instance representing this instance.
+     */
+    public toEntityInfo(): EntityInfo
+    {
+        return new EntityInfo(
+        {
+            type: "route",
+            id: this.id,
+            slug: this.slug,
+            name: this.slug,
+            description: this.reference,
+            parent: this.owner?.toEntityInfo()
+        });
     }
 }

@@ -1,5 +1,6 @@
 import clone from "clone";
 import { DateTime } from "luxon";
+import { EntityInfo } from "app/types/entity";
 import { SearchModel } from "app/model/search-model";
 
 /**
@@ -71,5 +72,18 @@ export class OrganizationRole
     public clone(): any
     {
         return clone(this);
+    }
+
+    /**
+     * Gets an `EntityInfo` instance representing this instance.
+     */
+    public toEntityInfo(): EntityInfo
+    {
+        return new EntityInfo(
+        {
+            type: "role",
+            id: this.id,
+            name: this.name
+        });
     }
 }

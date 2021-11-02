@@ -320,18 +320,12 @@ export class SearchModalPanel
         if (result.starred)
         {
             // Unstar the result.
-            await this._starredItemService.remove(result.starId!);
-
-            // Mark the result as unstarred.
-            result.starred = false;
+            await this._starredItemService.remove(result);
         }
         else
         {
             // Star the result.
-            await this._starredItemService.add(result.starId!);
-
-            // Mark the result as starred.
-            result.starred = true;
+            await this._starredItemService.add(result);
         }
     }
 

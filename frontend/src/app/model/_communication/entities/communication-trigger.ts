@@ -1,3 +1,4 @@
+import { EntityInfo } from "app/types/entity";
 import { SearchModel } from "app/model/search-model";
 import { CommunicationRecipient } from "./communication-recipient";
 import { CommunicationTriggerEvent } from "./communication-trigger-event";
@@ -174,5 +175,19 @@ export class CommunicationTrigger
         };
 
         return data;
+    }
+
+    /**
+     * Gets an `EntityInfo` instance representing this instance.
+     */
+    public toEntityInfo(): EntityInfo
+    {
+        return new EntityInfo(
+        {
+            type: "communication-trigger",
+            id: this.id,
+            slug: this.slug,
+            name: this.name
+        });
     }
 }

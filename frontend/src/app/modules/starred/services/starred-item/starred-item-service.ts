@@ -1,6 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { EntityInfo } from "app/types/entity";
+import { LocalStateService } from "app/services/local-state";
 
 /**
  * Represents a service for managing starred items.
@@ -11,13 +12,16 @@ export class StarredItemService
     /**
      * Creates a new instance of the type.
      * @param apiClient The `ApiClient` instance.
+     * @param localStateService The `LocalStateService` instance.
      */
-    public constructor(apiClient: ApiClient)
+    public constructor(apiClient: ApiClient, localStateService: LocalStateService)
     {
         this._apiClient = apiClient;
+        this._localStateService = localStateService;
     }
 
     private readonly _apiClient: ApiClient;
+    private readonly _localStateService: LocalStateService;
 
     /**
      * Gets all items starred by the user.
@@ -26,31 +30,80 @@ export class StarredItemService
      */
     public async getAll(signal?: AbortSignal): Promise<EntityInfo[]>
     {
-        const result = await this._apiClient.get("starred",
+        if (false)
         {
-            signal
+            const result = await this._apiClient.get("starred",
+            {
+                signal
+            });
+
+            return result.data.map((data: any) => new EntityInfo(data));
+        }
+
+        return this._localStateService.get().starredItems?.map((data: any) => new EntityInfo(data)) ?? [];
+    }
+
+    /**
+     * Stars the specified entity.
+     * @param entityInfo The entity info representing the entity to star.
+     * @returns A promise that will be resolved with the starred item.
+     */
+    public async add(entityInfo: EntityInfo): Promise<EntityInfo>
+    {
+        if (false)
+        {
+            await this._apiClient.put(`starred/${entityInfo.starId}`);
+        }
+
+        this._localStateService.mutate(state =>
+        {
+            if (state.starredItems == null)
+            {
+                state.starredItems = [];
+            }
+
+            // Remove the item from the starred collection.
+
+            const index = state.starredItems.findIndex(e => e.starId === entityInfo.starId);
+
+            if (index > -1)
+            {
+                state.starredItems.splice(index, 1);
+            }
+
+            entityInfo.starred = true;
+
+            // Add the item to the top of the starred collection.
+            state.starredItems.unshift(entityInfo);
         });
 
-        return result.data.map((data: any) => new EntityInfo(data));
+        return entityInfo;
     }
 
     /**
-     * Stars the entity identified by the specified identifier.
-     * @param identifier The identifier for the entity to star.
+     * Unstars the specified entity.
+     * @param entityInfo The entity info representing the entity to unstar.
      * @returns A promise that will be resolved when the operation succeeds.
      */
-    public async add(identifier: string): Promise<void>
+    public async remove(entityInfo: EntityInfo): Promise<void>
     {
-        await this._apiClient.put(`starred/${identifier}`);
-    }
+        if (false)
+        {
+            await this._apiClient.delete(`starred/${entityInfo.starId}`);
+        }
 
-    /**
-     * Unstars the entity identified by the specified identifier.
-     * @param identifier The identifier for the entity to unstar.
-     * @returns A promise that will be resolved when the operation succeeds.
-     */
-    public async remove(identifier: string): Promise<void>
-    {
-        await this._apiClient.delete(`starred/${identifier}`);
+        this._localStateService.mutate(state =>
+        {
+            // Remove the item from the starred collection.
+
+            const index = state.starredItems?.findIndex(e => e.starId === entityInfo.starId);
+
+            if (index > -1)
+            {
+                state.starredItems.splice(index, 1);
+            }
+
+            entityInfo.starred = false;
+        });
     }
 }

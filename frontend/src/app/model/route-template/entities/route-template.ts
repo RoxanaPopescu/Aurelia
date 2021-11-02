@@ -1,3 +1,4 @@
+import { EntityInfo } from "app/types/entity";
 import { RouteTemplateInfo } from "./route-template-info";
 import { RouteTemplateSchedule } from "./route-template-schedule";
 import { RouteTemplateStop } from "./route-template-stop";
@@ -36,4 +37,19 @@ export class RouteTemplate extends RouteTemplateInfo
      * The stops to use for routes based on this template.
      */
     public stops: RouteTemplateStop[];
+
+    /**
+     * Gets an `EntityInfo` instance representing this instance.
+     */
+    public toEntityInfo(): EntityInfo
+    {
+        return new EntityInfo(
+        {
+            type: "route-template",
+            id: this.id,
+            slug: this.slug,
+            name: this.name,
+            description: this.reference
+        });
+    }
 }

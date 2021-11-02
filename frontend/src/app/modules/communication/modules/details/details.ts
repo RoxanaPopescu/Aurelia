@@ -6,6 +6,7 @@ import { CommunicationService, CommunicationTrigger, CommunicationTriggerEvent, 
 import { Outfit } from "app/model/outfit";
 import { IdentityService } from "app/services/identity";
 import { OrganizationService } from "app/model/organization";
+import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 
 /**
  * Represents the route parameters for the page.
@@ -120,6 +121,8 @@ export class DetailsPage
             this.model = await this._communicationService.get(params.slug);
             this.triggerName = this.model.name;
             this.setAvailableOptions(this.model.eventType, this.model.recipientType, this.model.messageType);
+
+            addToRecentEntities(this.model.toEntityInfo());
         }
         else
         {

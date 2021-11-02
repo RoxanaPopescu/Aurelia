@@ -12,6 +12,7 @@ import {
   ToastType
 } from "shared/src/webKit";
 import H from "history";
+import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 
 interface Props {
   history: H.History;
@@ -33,7 +34,8 @@ export default class RoutePlanningDetailsComponent extends React.Component<
   }
 
   componentDidMount() {
-    this.store.fetch(this.props.match.params.id);
+    this.store.fetch(this.props.match.params.id)
+      .then(() => addToRecentEntities(this.store.plan.toEntityInfo()));
   }
 
   render() {

@@ -7,6 +7,7 @@ import { AppRouter } from "aurelia-router";
 import { ModalService, IValidation, ToastService } from "shared/framework";
 import toast from "./resources/strings/toast.json";
 import { CreateRoutePanel } from "./modals/create-route/create-route";
+import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 
 /**
  * Represents the route parameters for the page.
@@ -90,6 +91,8 @@ export class DetailsPage
                 try
                 {
                     this.template = await this._routeTemplateService.get(params.id!, signal);
+
+                    addToRecentEntities(this.template.toEntityInfo());
                 }
                 catch (error)
                 {

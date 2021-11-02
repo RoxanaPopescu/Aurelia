@@ -1,4 +1,5 @@
 import { Duration } from "luxon";
+import { EntityInfo } from "app/types/entity";
 import { Location } from "app/model/shared";
 import { DistributionCenterAvailability } from "./distribution-center-availability";
 
@@ -57,4 +58,18 @@ export class DistributionCenter
      * The availability of the distribution center.
      */
     public availability: DistributionCenterAvailability[];
+
+    /**
+     * Gets an `EntityInfo` instance representing this instance.
+     */
+    public toEntityInfo(): EntityInfo
+    {
+        return new EntityInfo(
+        {
+            type: "distribution-center",
+            id: this.id,
+            name: this.name,
+            description: `${this.location?.address?.primary ?? ""} ${this.location?.address?.secondary ?? ""}`.trim() ?? undefined
+        });
+    }
 }

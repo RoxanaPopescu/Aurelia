@@ -1,7 +1,8 @@
-import { VehicleType } from "./vehicle-type";
-import { Dimensions } from "app/model/shared";
-import { VehicleStatus } from "./vehicle-status";
 import clone from "clone";
+import { EntityInfo } from "app/types/entity";
+import { Dimensions } from "app/model/shared";
+import { VehicleType } from "./vehicle-type";
+import { VehicleStatus } from "./vehicle-status";
 
 /**
  * Represents a vehicle that may be used to deliver a shipment.
@@ -130,5 +131,19 @@ export class Vehicle
             productionYear: this.productionYear,
             color: this.color
         };
+    }
+
+    /**
+     * Gets an `EntityInfo` instance representing this instance.
+     */
+    public toEntityInfo(): EntityInfo
+    {
+        return new EntityInfo(
+        {
+            type: "vehicle",
+            id: this.id,
+            name: this.name || [this.make, this.model, this.productionYear].filter(e => e).join(", "),
+            description: this.licensePlate
+        });
     }
 }

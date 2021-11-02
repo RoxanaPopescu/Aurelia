@@ -21,6 +21,7 @@ import { PageHeaderComponent } from "shared/src/components/pageHeader";
 import { FulfillerSubPage } from "../../navigation/page";
 import { PageContentComponent } from "shared/src/components/pageContent";
 import { observable } from "mobx";
+import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 
 interface Props {
   // tslint:disable-next-line:no-any
@@ -48,7 +49,8 @@ export default class RoutePlanningDepotsDetailsComponent extends React.Component
       this.store.loading = false;
       this.tab = "settings";
     } else {
-      this.store.fetch(this.props.match.params.id);
+      this.store.fetch(this.props.match.params.id)
+        .then(() => addToRecentEntities(this.store.depot.toEntityInfo()));
       this.tab = "activity";
     }
   }

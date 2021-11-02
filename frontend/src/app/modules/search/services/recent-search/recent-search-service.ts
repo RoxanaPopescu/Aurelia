@@ -76,6 +76,8 @@ export class RecentSearchService
                 state.recentSearches = [];
             }
 
+            // Remove the item from the recent collection.
+
             const index = state.recentSearches.findIndex(i => i.text === query);
 
             if (index > -1)
@@ -89,7 +91,7 @@ export class RecentSearchService
             // Limit the size of the recent collection.
             if (state.recentSearches.length > 100)
             {
-                state.recentSearches = state.recentSearches.slice(0, 201);
+                state.recentSearches = state.recentSearches.slice(0, 101);
             }
         });
 

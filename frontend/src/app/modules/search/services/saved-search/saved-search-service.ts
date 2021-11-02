@@ -76,6 +76,8 @@ export class SavedSearchService
                 state.savedSearches = [];
             }
 
+            // Remove the item from the saved collection.
+
             const index = state.savedSearches.findIndex(i => i.text === query);
 
             if (index > -1)
@@ -104,6 +106,8 @@ export class SavedSearchService
 
         this._localStateService.mutate(state =>
         {
+            // Remove the item from the saved collection.
+
             const index = state.savedSearches?.findIndex(s => s.id === id);
 
             if (index > -1)

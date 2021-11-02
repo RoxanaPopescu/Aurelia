@@ -69,8 +69,7 @@ export class StarredModalPanel
 
             // Include only items that match the filter text.
             .filter(item =>
-                (!item.name || item.name.toLowerCase().includes(textFilter)) ||
-                item.type.name.toLowerCase().includes(textFilter));
+                (!textFilter || item.name?.toLowerCase().includes(textFilter) || item.type.name.toLowerCase().includes(textFilter)));
     }
 
     /**
@@ -104,9 +103,10 @@ export class StarredModalPanel
         return this.recentItems
 
             // Include only items that match the filter text.
+            // Also ignore searches found in the saved collection.
             .filter(item =>
-                (!item.name || item.name.toLowerCase().includes(textFilter)) ||
-                item.type.name.toLowerCase().includes(textFilter));
+                !item.starred &&
+                (!textFilter || item.name?.toLowerCase().includes(textFilter) || item.type.name.toLowerCase().includes(textFilter)));
     }
 
     /**
@@ -118,20 +118,11 @@ export class StarredModalPanel
         {
             // Get starred and recent items.
 
-            const [starredItems, recentItems] = await Promise.all(
+            [this.starredItems, this.recentItems] = await Promise.all(
             [
                 this._starredItemService.getAll(signal),
                 this._recentItemService.getAll(signal)
             ]);
-
-            this.starredItems = starredItems;
-
-            this.recentItems = recentItems
-
-                // Include only items not found in the starred list.
-                // TODO:2: We should really compare by UUID here, but entities do not have that at this time.
-                .filter(item =>
-                    !item.url || !this.starredItems.some(i => i.url === item.url));
         });
 
         this._activateOperation.promise
@@ -158,36 +149,24 @@ export class StarredModalPanel
         if (item.starred)
         {
             // Unstar the item.
-            await this._starredItemService.remove(item.starId!);
+            await this._starredItemService.remove(item);
 
-            // Mark the item as unstarred.
-            item.starred = false;
+            // Update the starred state of the item in the recent collection, if found there.
+            // NOTE: For change detection to work, this must be done before the starred collection is mutated.
+            const recentItem = this.recentItems.find(i => i.starId === item.starId);
+
+            if (recentItem != null)
+            {
+                recentItem.starred = false;
+            }
 
             // Remove the item from the starred collection.
             this.starredItems.splice(this.starredItems.indexOf(item), 1);
-
-            // Remove the existing item from the recent collection, if found there.
-
-            const indexInRecent = this.recentItems.findIndex(i => i.starId === item.starId);
-
-            if (indexInRecent > -1)
-            {
-                this.recentItems.splice(indexInRecent, 1);
-            }
-
-            // Add the item to the recent collection.
-            this.recentItems.unshift(item);
         }
         else
         {
             // Star the item.
-            await this._starredItemService.add(item.starId!);
-
-            // Mark the item as starred.
-            item.starred = true;
-
-            // Remove the item from the recent collection.
-            this.recentItems.splice(this.recentItems.indexOf(item), 1);
+            await this._starredItemService.add(item);
 
             // Remove the existing item from the starred collection, if found there.
 
@@ -198,7 +177,7 @@ export class StarredModalPanel
                 this.starredItems.splice(indexInStarred, 1);
             }
 
-            // Add the item to the starred collection.
+            // Add the item to the top of the starred collection.
             this.starredItems.unshift(item);
         }
     }

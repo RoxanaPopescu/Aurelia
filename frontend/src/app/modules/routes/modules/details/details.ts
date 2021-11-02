@@ -18,6 +18,7 @@ import { RemoveDriverPanel } from "./modals/remove-driver/remove-driver";
 import { AddOrdersPanel } from "./modals/add-orders/add-orders";
 import addedOrdersToast from "./resources/strings/added-orders-toast.json";
 import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
+import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 
 /**
  * Represents the route parameters for the page.
@@ -122,7 +123,7 @@ export class DetailsModule
     public activate(params: IRouteParams): void
     {
         this.routeId = params.id;
-        this.fetchRoute();
+        this.fetchRoute(true);
     }
 
     /**
@@ -468,7 +469,7 @@ export class DetailsModule
      * Fetches the specified route.
      * @param routeId The ID of the route to fetch.
      */
-    private fetchRoute(): void
+    private fetchRoute(addToRecent = false): void
     {
         clearTimeout(this._pollTimeout);
 
@@ -485,6 +486,11 @@ export class DetailsModule
 
                 this._router.title = this.route.slug;
                 this._router.updateTitle();
+
+                if (addToRecent)
+                {
+                    addToRecentEntities(this.route.toEntityInfo());
+                }
             }
             catch (error)
             {
