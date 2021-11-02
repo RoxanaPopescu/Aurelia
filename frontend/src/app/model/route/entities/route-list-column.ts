@@ -95,7 +95,7 @@ export class RouteListColumn
         "stop-count":
         {
             name: listColumn.stopCount,
-            columnName: "Stops",
+            columnName: listColumn.stopCountShort,
             columnSize: "min-content",
             sortingName: "stop-count",
             column: "visible"
@@ -164,29 +164,29 @@ export class RouteListColumn
         "estimated-time-frame":
         {
             name: listColumn.estimatedTime,
-            columnName: "Estimate",
+            columnName: listColumn.estimatedTimeShort,
             columnSize: "min-content",
             column: "visible"
         },
         "original-estimated-time-frame":
         {
             name: listColumn.originalEstimatedTime,
-            columnName: "Original estimate",
+            columnName: listColumn.originalEstimatedTimeShort,
             columnSize: "min-content",
             column: "visible"
         },
         "planned-time-frame":
         {
             name: listColumn.plannedTime,
-            columnName: "Planned",
+            columnName: listColumn.plannedTimeShort,
             columnSize: "min-content",
             column: "visible"
         },
         "planned-start-time-frame":
         {
             name: listColumn.plannedStartTime,
+            columnName: listColumn.plannedStartTimeShort,
             sortingName: "start-date",
-            columnName: "Starttime",
             columnSize: "min-content",
             column: "visible"
         },
