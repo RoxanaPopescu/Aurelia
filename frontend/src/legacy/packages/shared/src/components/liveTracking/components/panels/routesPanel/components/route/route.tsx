@@ -16,7 +16,7 @@ export interface RoutesLayerProps {
 }
 
 @observer
-export class RouteComponent extends React.Component<RoutesLayerProps, { supportNoteExpanded: boolean }> {
+export class RouteComponent extends React.Component<RoutesLayerProps, { supportNoteExpanded: boolean | undefined }> {
 
   public render() {
     const route = this.props.route;
@@ -168,8 +168,8 @@ export class RouteComponent extends React.Component<RoutesLayerProps, { supportN
       return;
     }
 
-    const expanded = this.state?.supportNoteExpanded;
     const supportNote = this.props.service.selectedRoute!.supportNote;
+    const expanded = this.state?.supportNoteExpanded ?? supportNote != null;
 
     if (supportNote)
     {
