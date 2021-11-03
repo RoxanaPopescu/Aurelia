@@ -368,7 +368,7 @@ export class OrganizationService
     }
 
     /**
-     * Gets the teams accessible to the current user, within the current organization
+     * Gets the teams to which the specified user has data access, within the specified organization.
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the teams.
      */

@@ -552,11 +552,11 @@ export class OrganizationModule extends AppModule
     }
 
     /**
-     * Gets the teams accessible to the specified user, within the specified organization.
+     * Gets the teams to which the specified user has data access, within the specified organization.
      * @param context.params.organizationId The ID of the organization.
      * @param context.params.userId The ID of the user.
      * @returns
-     * - 200: An array of objects representing the teams associated with the specified user, within the specified organization.
+     * - 200: An array of objects representing the teams.
      */
     public "GET /v2/organizations/:organizationId/users/:userId/accessible-teams" = async (context: AppContext) =>
     {

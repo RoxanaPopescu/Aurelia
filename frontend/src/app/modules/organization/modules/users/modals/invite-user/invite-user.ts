@@ -1,23 +1,27 @@
 import { autoinject } from "aurelia-framework";
+import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { Modal, IValidation } from "shared/framework";
+import { IdentityService } from "app/services/identity";
 import { OrganizationService, OrganizationUser, IOrganizationUserInviteInit, OrganizationTeam, OrganizationRole } from "app/model/organization";
-import { Operation } from "shared/utilities";
 
 @autoinject
 export class InviteUserPanel
 {
     /**
      * Creates a new instance of the type.
+     * @param identityService The `IdentityService` instance.
      * @param organizationService The `OrganizationService` instance.
      * @param modal The `Modal` instance representing the modal.
      */
-    public constructor(organizationService: OrganizationService, modal: Modal)
+    public constructor(identityService: IdentityService, organizationService: OrganizationService, modal: Modal)
     {
+        this._identityService = identityService;
         this._organizationService = organizationService;
         this._modal = modal;
     }
 
+    private readonly _identityService: IdentityService;
     private readonly _organizationService: OrganizationService;
     private readonly _modal: Modal;
     private _fetchOperation: Operation | undefined;
@@ -77,7 +81,7 @@ export class InviteUserPanel
                 [
                     (await this._organizationService.getUsers()).map(user => user.email),
                     await this._organizationService.getRoles(),
-                    await this._organizationService.getTeams()
+                    this._identityService.identity?.claims.has("view-teams") ? await this._organizationService.getTeams() : []
                 ]);
 
                 if (this.invite.roleId)
