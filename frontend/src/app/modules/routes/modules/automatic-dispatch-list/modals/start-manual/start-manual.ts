@@ -110,15 +110,15 @@ export class StartManualPanel
                 return;
             }
 
-            // Mark the modal as busy.
             this._modal.busy = true;
 
-            await this._automaticDispatchService.startManual(this.model);
+            const id = await this._automaticDispatchService.startManual(this.model);
 
             const toastModel =
             {
                 heading: startedAutomaticDispatchToast.heading,
-                body: startedAutomaticDispatchToast.body
+                body: startedAutomaticDispatchToast.body,
+                url: `/routes/automatic-dispatch/${id}`
             };
 
             this._toastService.open("success", toastModel);
