@@ -317,7 +317,7 @@
   "RoutePlanning_Settings_List_TotalCount": "Impostazioni {count}",
   "RoutePlanning_Simulations_List_TotalCount": "{count} simulazioni",
   "RoutePlanning_Title": "Prorammazione del percorso",
-  "Routes_AutoContractorAssignment_Title": "Assegnazione automatica contraente",
+  "Routes_AutoContractorAssignment_Title": "Assegnazione automatica committente",
   "Routes_AutoDispatch_AddRule": "Aggiungi regola",
   "Routes_AutoDispatch_EditRule_EditTitle": "Modifica regola di assegnazione",
   "Routes_AutoDispatch_EditRule_NewTitle": "Nuova regola di assegnazione",
