@@ -102,7 +102,7 @@ export class DriversModule extends AppModule
      */
     public "POST /v2/drivers/create" = async (context: AppContext) =>
     {
-        await context.authorize("edit-drivers");
+        await context.authorize("invite-drivers");
 
         const body = { driver: context.request.body, fulfillerId: context.user?.organizationId };
 
