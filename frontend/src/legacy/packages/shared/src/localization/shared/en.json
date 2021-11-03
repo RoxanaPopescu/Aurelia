@@ -439,7 +439,7 @@
   "Routes_List_TotalCount": "{count} routes",
   "Routes_Not_Assigned_drivers": "Not assigned to a driver",
   "Route_Count": "Route count",
-  "Route_FilterCount": "showing {filtered_count} of {total_count} routes",
+  "Route_FilterCount": "Showing {filtered_count} of {total_count} routes",
   "Route_Loading": "Loading routes...",
   "Route_SearchForDriversRoutes": "Search for drivers or routes",
   "Route_Summary_ArrivedAtStop": "Arrived at stop {number}",

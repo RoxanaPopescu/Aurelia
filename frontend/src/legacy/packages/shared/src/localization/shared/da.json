@@ -439,7 +439,7 @@
   "Routes_List_TotalCount": "{count} ruter",
   "Routes_Not_Assigned_drivers": "Ikke tildelt til chauffør",
   "Route_Count": "Antal ruter",
-  "Route_FilterCount": "viser {filtered_count} af {total_count} ruter",
+  "Route_FilterCount": "Viser {filtered_count} af {total_count} ruter",
   "Route_Loading": "Henter ruter...",
   "Route_SearchForDriversRoutes": "Søg efter chauffører eller ruter",
   "Route_Summary_ArrivedAtStop": "Ankommet til stop {number}",
