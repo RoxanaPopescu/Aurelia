@@ -1,6 +1,7 @@
 <template>
 
     <require from="./details.scss"></require>
+    <require from="app/components/star-icon/star-icon"></require>
     <require from="./modules/general/general"></require>
     <require from="./modules/stops/stops"></require>
     <require from="./modules/schedules/schedules"></require>
@@ -28,6 +29,7 @@
 
                         <span if.bind="template && template.id">
                             ${template.slug}
+                            <star-icon entity.bind="template"></star-icon>
                         </span>
 
                     </path-nav>

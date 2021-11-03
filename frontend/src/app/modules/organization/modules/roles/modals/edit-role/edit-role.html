@@ -1,5 +1,6 @@
 <template>
 
+    <require from="app/components/star-icon/star-icon"></require>
     <require from="app/components/address-input/address-input"></require>
     <require from="./components/permissions/permissions"></require>
     <require from="./edit-role.scss"></require>
@@ -31,6 +32,7 @@
 
                 <span if.bind="role.id" translate>
                     Edit role
+                    <star-icon entity.bind="role"></star-icon>
                 </span>
 
             </h1>

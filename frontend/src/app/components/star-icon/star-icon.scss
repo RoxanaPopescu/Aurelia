@@ -1,0 +1,21 @@
+star-icon
+{
+    display: inline-block;
+
+    button
+    {
+        line-height: 1;
+        opacity: var(--opacity-faded-more);
+
+        &.--active
+        {
+            opacity: var(--opacity-faded-less);
+        }
+    }
+
+    path-nav &,
+    h1 &
+    {
+        margin-left: var(--size-inline-spacing);
+    }
+}

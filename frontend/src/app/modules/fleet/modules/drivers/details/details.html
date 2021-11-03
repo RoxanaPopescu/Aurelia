@@ -1,5 +1,9 @@
 <template>
+
+    <require from="app/components/star-icon/star-icon"></require>
+
     <require from="./details.scss"></require>
+
     <page name="driver-details">
 
         <page-content scroll scroll.ref="scroll" validation validation.ref="validation">
@@ -16,6 +20,7 @@
                         <span>
                             <template if.bind="!isNew">
                                 ${driver.name} (${driver.id})
+                                <star-icon entity.bind="driver"></star-icon>
                             </template>
                             <template if.bind="isNew" translate>
                                 New driver

@@ -1,6 +1,7 @@
 <template>
 
     <require from="./details.scss"></require>
+    <require from="app/components/star-icon/star-icon"></require>
     <require from="app/components/info-card/info-card"></require>
     <require from="app/components/status-message/status-message"></require>
 
@@ -29,6 +30,7 @@
 
                             <span if.bind="orderGroupName">
                                 ${orderGroupName}
+                                <star-icon entity.bind="orderGroup"></star-icon>
                             </span>
 
                         </span>

@@ -1,6 +1,7 @@
 <template>
 
     <require from="app/components/name-value-pair/name-value-pair"></require>
+    <require from="app/components/star-icon/star-icon"></require>
     <require from="./components/order-events/order-events"></require>
     <require from="./components/order-overview/order-overview"></require>
     <require from="./components/order-colli/order-colli"></require>
@@ -287,6 +288,7 @@
 
                         <span class="user-select-text" if.bind="order.slug != null">
                             ${order.slug}
+                            <star-icon entity.bind="order"></star-icon>
                         </span>
 
                         <div if.bind="order.slug == null" class="text-skeleton" style="width: 240rem;"></div>

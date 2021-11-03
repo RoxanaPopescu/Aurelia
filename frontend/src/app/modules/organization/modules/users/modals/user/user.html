@@ -1,5 +1,6 @@
 <template>
 
+    <require from="app/components/star-icon/star-icon"></require>
     <require from="./components/profile-pane/profile-pane"></require>
     <require from="./components/security-pane/security-pane"></require>
 
@@ -31,6 +32,7 @@
                 <template else translate>
                     ${user.fullName}
                 </template>
+                <star-icon entity.bind="role"></star-icon>
             </h1>
 
             <tab-nav if.bind="!readonly && user.status.slug !== 'invited'" appearance="tabs" class="margin-top font-large" value.bind="selectedTab">

@@ -1,5 +1,6 @@
 <template>
 
+    <require from="app/components/star-icon/star-icon"></require>
     <require from="./vehicle.scss"></require>
 
     <modal-backdrop close="all"></modal-backdrop>
@@ -23,7 +24,8 @@
             <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
 
                 <template if.bind="vehicle.id != null" translate>
-                    Edit vehicle (${vehicle.id})
+                    Edit vehicle
+                    <star-icon entity.bind="vehicle"></star-icon>
                 </template>
 
                 <template if.bind="vehicle.id == null" translate>

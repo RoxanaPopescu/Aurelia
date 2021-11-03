@@ -2,6 +2,7 @@
 
     <require from="app/components/name-value-pair/name-value-pair"></require>
     <require from="app/components/name-value-list/name-value-list"></require>
+    <require from="app/components/star-icon/star-icon"></require>
     <require from="app/components/numbered-section/numbered-section"></require>
 
     <require from="./components/order-pickup-completed-params/order-pickup-completed-params"></require>
@@ -32,6 +33,7 @@
 
                             <template if.bind="model.id != null">
                                 ${triggerName}
+                                <star-icon entity.bind="model"></star-icon>
                             </template>
 
                             <template if.bind="model.id == null" translate>

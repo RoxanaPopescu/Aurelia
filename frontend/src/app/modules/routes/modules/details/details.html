@@ -1,6 +1,7 @@
 <template>
 
     <require from="app/components/name-value-pair/name-value-pair"></require>
+    <require from="app/components/star-icon/star-icon"></require>
     <require from="legacy/components/route-details-map/wrapper" as="route-details-map"></require>
     <require from="./components/route-overview/route-overview"></require>
     <require from="./details.scss"></require>
@@ -523,6 +524,7 @@
                             <template if.bind="!route">
                                 ${routeId}
                             </template>
+                            <star-icon entity.bind="route"></star-icon>
                         </span>
                     </path-nav>
                 </h1>

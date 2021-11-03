@@ -2,6 +2,7 @@
 
     <require from="app/components/name-value-pair/name-value-pair"></require>
     <require from="app/components/name-value-list/name-value-list"></require>
+    <require from="app/components/star-icon/star-icon"></require>
 
     <require from="./modules/general/general"></require>
     <require from="./modules/geographic-areas/geographic-areas"></require>
@@ -32,6 +33,7 @@
 
                             <template if.bind="!isNew">
                                 ${settings.name}
+                                <star-icon entity.bind="settings"></star-icon>
                             </template>
 
                             <template if.bind="isNew" translate>

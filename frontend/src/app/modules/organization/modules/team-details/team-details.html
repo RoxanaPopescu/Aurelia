@@ -1,5 +1,6 @@
 <template>
 
+    <require from="app/components/star-icon/star-icon"></require>
     <require from="app/components/identity-picture/identity-picture"></require>
     <require from="./team-details.scss"></require>
 
@@ -22,6 +23,7 @@
 
                         <span translate>
                             ${team.name}
+                            <star-icon entity.bind="role"></star-icon>
                         </span>
 
                     </path-nav>
