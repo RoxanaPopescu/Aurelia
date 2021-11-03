@@ -427,6 +427,7 @@
   "9584b71cf": "Find team…",
   "cf7996999": "Er du sikker på, at du vil annullere invitationen til<br> <b>${user.email}</b> at slutte sig til organisationen?",
   "2de92ec0b": "Dette er den email, som invitationen vil blive sendt til.",
+  "896bb5088": "Organizationen har allerede en bruger med den angivne email adresse",
   "61e4c27b1": "Rolle",
   "5b5463b0b": "Dette er den rolle, der vil blive tildelt brugeren i organisationen.",
   "c329cfa02": "Dette er det team, som brugeren vil blive tildelt.",
