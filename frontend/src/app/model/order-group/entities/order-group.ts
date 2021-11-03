@@ -1,8 +1,9 @@
+import { computedFrom } from "aurelia-framework";
 import { IANAZone, DateTime } from "luxon";
+import { EntityInfo } from "app/types/entity";
+import { Consignor } from "app/model/outfit";
 import { MatchingCriteria as MatchingCriteria } from "./matching-criteria";
 import { RoutePlanningTime } from "./route-planning-time";
-import { computedFrom } from "aurelia-framework";
-import { Consignor } from "app/model/outfit";
 
 /**
  * Represents an order group used for route planning.
@@ -142,5 +143,18 @@ export class OrderGroup
             routePlanningTimes: this.routePlanningTimes,
             routeOptimizationSettingsId: this.routeOptimizationSettingsId
         };
+    }
+
+    /**
+     * Gets an `EntityInfo` instance representing this instance.
+     */
+    public toEntityInfo(): EntityInfo
+    {
+        return new EntityInfo(
+        {
+            type: "order-group",
+            id: this.id,
+            name: this.name
+        });
     }
 }

@@ -1,6 +1,7 @@
 import { computedFrom } from "aurelia-framework";
 import { DateTime } from "luxon";
 import { IPhoneNumber } from "shared/types";
+import { EntityInfo } from "app/types/entity";
 import { SearchModel } from "app/model/search-model";
 import { OrganizationUserStatus } from "./organization-user-status";
 
@@ -105,5 +106,19 @@ export class OrganizationUser
     public get initials(): string
     {
         return (this.fullName || this.preferredName || this.email).trim()[0];
+    }
+
+    /**
+     * Gets an `EntityInfo` instance representing this instance.
+     */
+    public toEntityInfo(): EntityInfo
+    {
+        return new EntityInfo(
+        {
+            type: "user",
+            id: this.id,
+            name: this.fullName,
+            description: this.email
+        });
     }
 }

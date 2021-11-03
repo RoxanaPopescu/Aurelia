@@ -154,6 +154,11 @@ google-map,
     {
         --google-map-control-filter: saturate(0) brightness(0.92) invert(1);
     }
+
+    .c-worldMap
+    {
+        background: var(--surface-color);
+    }
 }
 
 info-icon .info-icon-container:not(:hover) icon

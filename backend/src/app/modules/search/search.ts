@@ -169,10 +169,11 @@ export class RoutesModule extends AppModule
                 slug: entity.slug,
                 name: entity.slug,
                 description: entity.reference,
-                parent:
+                parent: entity.owner == null ? undefined :
                 {
-                    type: "organization",
-                    name: entity.owner.companyName
+                    type: entity.owner.companyName ? "organization" : "unknown",
+                    id: entity.owner.id,
+                    name: entity.owner.companyName ?? entity.owner.contactPerson
                 }
             })),
 
@@ -206,7 +207,6 @@ export class RoutesModule extends AppModule
             ({
                 type: "order-group",
                 id: entity.id,
-                slug: entity.slug,
                 name: entity.name
             })),
             context.query.text as string),

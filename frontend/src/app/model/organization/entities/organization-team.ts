@@ -1,4 +1,5 @@
 import clone from "clone";
+import { EntityInfo } from "app/types/entity";
 import { IPhoneNumber } from "shared/types";
 import { Address } from "app/model/shared";
 import { SearchModel } from "app/model/search-model";
@@ -79,5 +80,18 @@ export class OrganizationTeam
     public clone(): any
     {
         return clone(this);
+    }
+
+    /**
+     * Gets an `EntityInfo` instance representing this instance.
+     */
+    public toEntityInfo(): EntityInfo
+    {
+        return new EntityInfo(
+        {
+            type: "team",
+            id: this.id,
+            name: this.name
+        });
     }
 }

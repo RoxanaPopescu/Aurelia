@@ -1,3 +1,4 @@
+import { EntityInfo } from "app/types/entity";
 import { PersonName, PhoneNumber, Position } from "app/model/shared";
 import { VehicleType, Vehicle } from "app/model/vehicle";
 import { DriverStatus } from "./driver-status";
@@ -104,5 +105,18 @@ export class Driver
     public toString(): string
     {
         return `${this.name.toString()} (${this.id})`;
+    }
+
+    /**
+     * Gets an `EntityInfo` instance representing this instance.
+     */
+    public toEntityInfo(): EntityInfo
+    {
+        return new EntityInfo(
+        {
+            type: "driver",
+            id: this.id,
+            name: `${this.name?.first ?? ""} ${this.name?.last ?? ""}`.trim() ?? this.id
+        });
     }
 }

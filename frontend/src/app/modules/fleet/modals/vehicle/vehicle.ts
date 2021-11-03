@@ -3,6 +3,7 @@ import { Log } from "shared/infrastructure";
 import { Modal, IValidation } from "shared/framework";
 import { VehicleService, Vehicle, VehicleType } from "app/model/vehicle";
 import { VehicleStatus } from "app/model/vehicle/entities/vehicle-status";
+import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 
 @autoinject
 export class VehiclePanel
@@ -56,6 +57,11 @@ export class VehiclePanel
         this.vehicleTypes = await this._vehicleService.getTypes();
         this.driverId = model?.driverId;
         this.vehicle = model?.vehicle?.clone() ?? new Vehicle();
+
+        if (model?.vehicle != null)
+        {
+            addToRecentEntities(model.vehicle.toEntityInfo());
+        }
     }
 
     /**

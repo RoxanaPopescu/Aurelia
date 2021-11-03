@@ -1,9 +1,10 @@
 import { autoinject } from "aurelia-framework";
+import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { Modal, IValidation } from "shared/framework";
-import { OrganizationService, OrganizationRole } from "app/model/organization";
-import { Operation } from "shared/utilities";
 import { IdentityService } from "app/services/identity";
+import { OrganizationService, OrganizationRole } from "app/model/organization";
+import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 import { IPermission } from "./components/permissions/permissions";
 
 @autoinject
@@ -72,6 +73,11 @@ export class EditRolePanel
             catch (error)
             {
                 Log.error("An error occurred while getting permissions.", error);
+            }
+
+            if (model.role != null)
+            {
+                addToRecentEntities(model.role.toEntityInfo());
             }
         });
     }

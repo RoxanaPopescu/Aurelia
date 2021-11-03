@@ -94,7 +94,7 @@ export function createThrottledFunc<TFunc extends Function>(func: TFunc, wait = 
 export function throttle<TFunc extends Function>(wait: number, options?: IThrottleOptions): any;
 
 /**
- * Creates a throittled function that wraps the specified function, such that invocation
+ * Creates a throttled function that wraps the specified function, such that invocation
  * happens at most once every wait period.
  *
  * The function is always called with the arguments provided in the most recent call.

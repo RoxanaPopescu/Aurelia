@@ -1,7 +1,8 @@
 import { autoinject, observable } from "aurelia-framework";
-import { RoutePlanningSettingsService, RoutePlanningSettings as RoutePlanningSettings } from "app/model/_route-planning-settings";
 import { Log } from "shared/infrastructure";
 import { IValidation } from "shared/framework";
+import { RoutePlanningSettingsService, RoutePlanningSettings as RoutePlanningSettings } from "app/model/_route-planning-settings";
+import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 
 /**
  * Represents the route parameters for the page.
@@ -70,6 +71,8 @@ export class DetailsPage
         if (!this.isNew)
         {
             this.settings = await this._routePlanningSettingsService.get(params.id!);
+
+            addToRecentEntities(this.settings.toEntityInfo());
         }
         else
         {

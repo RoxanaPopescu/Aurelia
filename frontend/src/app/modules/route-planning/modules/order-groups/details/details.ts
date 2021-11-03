@@ -9,6 +9,7 @@ import updatedToast from "./resources/strings/updated-toast.json";
 import { RoutePlanningSettingsService, RoutePlanningSettingsInfo } from "app/model/_route-planning-settings";
 import { OrganizationService } from "app/model/organization";
 import { IdentityService } from "app/services/identity";
+import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 
 /**
  * Represents the route parameters for the page.
@@ -92,6 +93,8 @@ export class DetailsPage
             // Fetch the data.
             this.orderGroup = await this._orderGroupsService.get(params.id);
             this.orderGroupName = this.orderGroup.name;
+
+            addToRecentEntities(this.orderGroup.toEntityInfo());
         }
         else
         {

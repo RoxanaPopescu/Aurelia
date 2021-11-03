@@ -9,6 +9,7 @@ import { Log, ApiError } from "shared/infrastructure";
 import { DriverStatus } from "app/model/driver/entities/driver-status";
 import { ChangePasswordPanel } from "./modals/change-password/change-password";
 import { SendMessagePanel } from "../modals/send-message/send-message";
+import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 
 /**
  * Represents the route parameters for the page.
@@ -99,6 +100,8 @@ export class DetailsPage
         {
             this.driver = await this._driverService.get(params.id!);
             this.update();
+
+            addToRecentEntities(this.driver.toEntityInfo());
         }
         else
         {

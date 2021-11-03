@@ -1,4 +1,5 @@
 import { DateTime } from "luxon";
+import { EntityInfo } from "app/types/entity";
 import { SearchModel } from "app/model/search-model";
 import { OrganizationConnectionStatus } from "./organization-connection-status";
 
@@ -56,4 +57,17 @@ export class OrganizationConnection
      * The model representing the searchable text in the entity.
      */
     public readonly searchModel = new SearchModel(this);
+
+    /**
+     * Gets an `EntityInfo` instance representing this instance.
+     */
+    public toEntityInfo(): EntityInfo
+    {
+        return new EntityInfo(
+        {
+            type: "connection",
+            id: this.id,
+            name: this.organization.name
+        });
+    }
 }

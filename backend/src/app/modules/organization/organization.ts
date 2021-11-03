@@ -147,6 +147,8 @@ export class OrganizationModule extends AppModule
     {
         await context.authorize("edit-users", { organization: context.params.organizationId });
 
+        const organizationResult = await this.apiClient.get(`organization/organizations/${context.params.organizationId}`);
+
         const result = await this.apiClient.post("identity/memberships/invitations",
         {
             body:
@@ -155,7 +157,8 @@ export class OrganizationModule extends AppModule
                 roleId: context.request.body.roleId,
                 teamIds: context.request.body.teamIds,
                 message: context.request.body.message,
-                acceptUrl: context.request.body.acceptUrl
+                acceptUrl: context.request.body.acceptUrl,
+                organizationName: organizationResult.data.organization.name
             }
         });
 

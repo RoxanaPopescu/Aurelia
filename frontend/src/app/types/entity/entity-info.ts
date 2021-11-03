@@ -1,5 +1,13 @@
-import { EntityType } from "./entity-type";
+import { EntityType, EntityTypeSlug } from "./entity-type";
 import { MapObject } from "shared/types";
+
+/**
+ * Represents the data needed to create a new instance of the type `EntityInfo`.
+ */
+export type EntityInfoData =
+    Pick<EntityInfo, "id"> &
+    Partial<Omit<EntityInfo, "type" | "parent">> &
+    { type: EntityType | EntityTypeSlug; parent?: EntityInfo | EntityInfoData };
 
 /**
  * Represents info about an entity.
@@ -10,9 +18,9 @@ export class EntityInfo
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data: any)
+    public constructor(data: EntityInfoData)
     {
-        this.type = new EntityType(data.type);
+        this.type = typeof data.type === "string" ? new EntityType(data.type) : data.type;
         this.id = data.id;
         this.slug = data.slug;
         this.name = data.name;
@@ -25,6 +33,13 @@ export class EntityInfo
             this.parent = new EntityInfo(data.parent);
         }
 
+        this.starred = data.starred != null
+            ? data.starred
+
+            // HACK: Require is needed to avoid circular imports.
+            // tslint:disable-next-line: no-require-imports
+            : require("app/modules/starred/services/starred-item").isEntityStarred(this.type.slug, this.id);
+
         this.url = data.url != null
             ? (data.url || undefined)
             : this.resolveUrl();
@@ -35,14 +50,14 @@ export class EntityInfo
     }
 
     /**
-     * The entity type.
+     * The type of the entity.
      */
     public type: EntityType;
 
     /**
-     * The globally unique ID of the entity, or undefined if not relevant.
+     * The ID of the entity.
      */
-    public id: string | undefined;
+    public id: string;
 
     /**
      * The slug, code or id to use in a URL referencing the entity, or undefined if not relevant.
@@ -155,6 +170,6 @@ export class EntityInfo
      */
     private resolveStarId(): string | undefined
     {
-        return this.id;
+        return `${this.type.slug}/${this.id}`;
     }
 }

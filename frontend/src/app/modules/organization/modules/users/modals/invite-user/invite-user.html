@@ -39,6 +39,15 @@
                             value.bind="invite.email">
                         </required-validator>
 
+                        <custom-validator
+                            valid.bind="!invite.email || !unavailableEmailAddresses.includes(invite.email)">
+
+                            <template replace-part="invalid" translate>
+                                The organization already has a user with the specified email address.
+                            </template>
+
+                        </custom-validator>
+
                     </div>
 
                 </email-input>

@@ -1,6 +1,7 @@
 import { Availability } from "./availability";
 import { Location } from "../../general/location";
 import { observable } from "mobx";
+import { EntityInfo } from "app/types/entity";
 
 export class Depot {
   // tslint:disable-next-line:no-any
@@ -49,4 +50,18 @@ export class Depot {
    * When is the different ports available
    */
   @observable public availabilities: Availability[];
+
+  /**
+   * Gets an `EntityInfo` instance representing this instance.
+   */
+  public toEntityInfo(): EntityInfo
+  {
+    return new EntityInfo(
+    {
+      type: "distribution-center",
+      id: this.id,
+      name: this.name,
+      description: `${this.location?.address?.primary ?? ""} ${this.location?.address?.secondary ?? ""}`.trim() ?? undefined
+    });
+  }
 }

@@ -4,6 +4,7 @@ import { getPropertyValue, Operation } from "shared/utilities";
 import { Log, HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { ModalService, ToastService } from "shared/framework";
 import { OrganizationService, OrganizationTeam, OrganizationUser } from "app/model/organization";
+import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 import { ManageTeamUsersPanel } from "./modals/manage-team-users/manage-team-users";
 import { ConfirmRemoveUserDialog } from "./modals/confirm-remove-user/confirm-remove-user";
 import { ConfirmCancelInviteDialog } from "../users/modals/confirm-cancel-invite/confirm-cancel-invite";
@@ -167,6 +168,8 @@ export class TeamDetailsPage
         {
             this.team = await this._organizationService.getTeam(teamId, signal);
             this._users = await this._organizationService.getUsersInTeam(teamId, signal);
+
+            addToRecentEntities(this.team.toEntityInfo());
         });
 
         this.operation.promise.catch(error =>

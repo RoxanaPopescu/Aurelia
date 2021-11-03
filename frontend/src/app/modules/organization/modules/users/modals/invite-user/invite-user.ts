@@ -29,6 +29,12 @@ export class InviteUserPanel
     protected invite: IOrganizationUserInviteInit;
 
     /**
+     * The email addresses of all the users currently in the organization,
+     * used for validation to prevent inviting an existing member.
+     */
+    protected unavailableEmailAddresses: string[] | undefined;
+
+    /**
      * The available teams.
      */
     protected availableTeams: OrganizationTeam[] | undefined;
@@ -67,8 +73,9 @@ export class InviteUserPanel
 
             try
             {
-                [this.availableRoles, this.availableTeams] = await Promise.all(
+                [this.unavailableEmailAddresses, this.availableRoles, this.availableTeams] = await Promise.all(
                 [
+                    (await this._organizationService.getUsers()).map(user => user.email),
                     await this._organizationService.getRoles(),
                     await this._organizationService.getTeams()
                 ]);
@@ -92,7 +99,7 @@ export class InviteUserPanel
             }
             catch (error)
             {
-                Log.error("An error occurred while getting teams or roles.", error);
+                Log.error("An error occurred while getting teams, roles, or existing users.", error);
             }
         });
     }

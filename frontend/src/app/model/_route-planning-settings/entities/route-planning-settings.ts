@@ -1,3 +1,4 @@
+import { EntityInfo } from "app/types/entity";
 import { Restrictions } from "./restrictions";
 import { RouteCreation } from "./route-creation";
 import { VehicleGroup } from "./vehicle-group";
@@ -98,4 +99,18 @@ export class RoutePlanningSettings
      * The settings controlling the creation of collection points.
      */
     public collectionPoint: CollectionPoint;
+
+    /**
+     * Gets an `EntityInfo` instance representing this instance.
+     */
+    public toEntityInfo(): EntityInfo
+    {
+        return new EntityInfo(
+        {
+            type: "rule-set",
+            id: this.id,
+            slug: this.slug,
+            name: this.name
+        });
+    }
 }
