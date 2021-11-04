@@ -80,7 +80,7 @@ export class Filters extends React.Component<RoutesLayerProps> {
                 .replace("{total_count}", this.props.service.routes.length.toString())}
               </span>
             </div>
-            <Icon className="c-livetracking-filter" name="live-tracking-filter"/>
+            <Icon className="c-livetracking-filter" name={this.expanded ? "clear" : "live-tracking-filter"}/>
           </span>
         </div>
         <Input
