@@ -27,6 +27,8 @@ app-sidebar
 
     app-logo
     {
+        z-index: 1;
+
         // Size and position the app logo.
         margin: 36rem 0 24rem 0;
         height: 28rem;

@@ -83,17 +83,11 @@ html body page-sidebar page-section:not(.--header-slot-empty) .page-section-head
 
 /* BEGIN: USE DARK BLUE COLOR */
 
-html app-sidebar
+app-sidebar[surface$="/primary"]
 {
-    --surface-nav-link-surface-icon-color: #88929e !important;
-    --surface-nav-child-link-surface-icon-color: hsl(213, 10%, 70%) !important;
-
-    &,
-    header::before,
-    footer::before
-    {
-        background: var(--palette-color-primary-darkest);
-    }
+    --surface-color: var(--palette-color-primary-darkest);
+    --surface-nav-link-surface-icon-color: #88929e;
+    --surface-nav-child-link-surface-icon-color: hsl(213, 10%, 70%);
 
     user-identity a identity-picture
     {

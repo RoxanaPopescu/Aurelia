@@ -1,0 +1,27 @@
+////
+/// @group resources/themes/ikea-blue
+////
+
+/// Public interface for the theme.
+$__summary: comment;
+
+
+// Import the theme on which this theme is based.
+@import "../../mover-blue/styles/index";
+
+// Export surface styles.
+@import "./surfaces/_app-sidebar";
+
+// Override default styles.
+
+app-sidebar
+{
+    app-logo
+    {
+        // Set the border radius.
+        border-radius: var(--border-radius-small);
+
+        // Add padding to adjust position and size.
+        padding-bottom: 3rem !important;
+    }
+}

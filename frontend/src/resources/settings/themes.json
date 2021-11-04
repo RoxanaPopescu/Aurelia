@@ -25,6 +25,16 @@
         }
     },
     {
+        "slug": "ikea-light",
+        "name": "IKEA (Light)",
+        "preview":
+        {
+            "primary": "#ffffff"
+        },
+        "isHostSpecific": true,
+        "environments": ["development", "preview"]
+    },
+    {
         "slug": "mover",
         "name": "Mover (Old)",
         "preview":
@@ -34,20 +44,40 @@
         "isHostSpecific": true
     },
     {
+        "slug": "ikea-dark",
+        "name": "IKEA (Dark)",
+        "preview":
+        {
+            "primary": "#252526"
+        },
+        "isHostSpecific": true,
+        "environments": ["development", "preview"]
+    },
+    {
+        "slug": "ikea-blue",
+        "name": "IKEA (Blue)",
+        "preview":
+        {
+            "primary": "#0058a3"
+        },
+        "isHostSpecific": true,
+        "environments": ["development", "preview"]
+    },
+    {
+        "slug": "ikea",
+        "name": "IKEA (Old)",
+        "preview":
+        {
+            "primary": "#0051ba"
+        },
+        "isHostSpecific": true
+    },
+    {
         "slug": "coop",
         "name": "Coop",
         "preview":
         {
             "primary": "#c80016"
-        },
-        "isHostSpecific": true
-    },
-    {
-        "slug": "ikea",
-        "name": "IKEA",
-        "preview":
-        {
-            "primary": "#0051ba"
         },
         "isHostSpecific": true
     },

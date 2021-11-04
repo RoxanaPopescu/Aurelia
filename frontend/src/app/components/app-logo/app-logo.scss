@@ -3,11 +3,14 @@
 app-logo
 {
     display: block;
+    overflow: hidden;
 
     a
     {
         height: 100%;
         opacity: 0.94;
+        overflow: hidden;
+        border-radius: inherit;
 
         // Animate the hover effect.
         transition: opacity var(--animation-duration-short);
@@ -22,6 +25,8 @@ app-logo
         {
             height: 100%;
             width: auto;
+            overflow: hidden;
+            border-radius: inherit;
         }
     }
 }
