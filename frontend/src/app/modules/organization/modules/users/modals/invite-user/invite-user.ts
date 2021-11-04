@@ -70,6 +70,7 @@ export class InviteUserPanel
     public activate(model?: Partial<IOrganizationUserInviteInit>): void
     {
         this.invite = model ?? {} as any;
+        const canChangeTeam = this._identityService.identity?.claims.has("view-teams");
 
         this._fetchOperation = new Operation(async () =>
         {
@@ -81,7 +82,7 @@ export class InviteUserPanel
                 [
                     (await this._organizationService.getUsers()).map(user => user.email),
                     await this._organizationService.getRoles(),
-                    this._identityService.identity?.claims.has("view-teams") ? await this._organizationService.getTeams() : []
+                    canChangeTeam ? await this._organizationService.getTeams() : undefined
                 ]);
 
                 if (this.invite.roleId)
@@ -89,9 +90,9 @@ export class InviteUserPanel
                     this.selectedRole = this.availableRoles.find(r => r.id === this.invite.roleId)!;
                 }
 
-                if (this.invite.teamIds)
+                if (canChangeTeam && this.invite.teamIds)
                 {
-                    this.selectedTeams = this.availableTeams.filter(t => this.invite.teamIds!.includes(t.id));
+                    this.selectedTeams = this.availableTeams!.filter(t => this.invite.teamIds!.includes(t.id));
 
                     if (this.selectedTeams.length === 0)
                     {
@@ -122,7 +123,7 @@ export class InviteUserPanel
     /**
      * Called when the `Send invite` button is clicked.
      */
-    protected async onSubmitClick(): Promise<void>
+    protected async onSendClick(): Promise<void>
     {
         try
         {

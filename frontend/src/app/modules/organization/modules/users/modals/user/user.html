@@ -16,7 +16,7 @@
                 if.bind="!readonly && user.status.slug !== 'invited'"
                 appearance="icon"
                 title.translate="Save changes"
-                click.trigger="onSubmitClick()"
+                click.trigger="onSaveClick()"
                 disabled.bind="!hasChanges">
                 <icon name="save"></icon>
             </button>
@@ -61,6 +61,8 @@
             available-roles.bind="availableRoles"
             selected-role.bind="selectedRole"
             readonly.bind="readonly"
+            can-change-role.bind="canChangeRole"
+            can-change-team.bind="canChangeTeam"
             validation.ref="profileValidation">
         </profile-pane>
 

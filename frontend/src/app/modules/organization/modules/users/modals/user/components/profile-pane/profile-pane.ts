@@ -43,6 +43,18 @@ export class ProfilePaneCustomElement
     public readonly: boolean;
 
     /**
+     * True if authorized to change the role, otherwise false.
+     */
+    @bindable
+    public canChangeRole: boolean;
+
+    /**
+     * True if authorized to change the team, otherwise false.
+     */
+    @bindable
+    public canChangeTeam: boolean;
+
+    /**
      * The available teams.
      */
     @bindable
