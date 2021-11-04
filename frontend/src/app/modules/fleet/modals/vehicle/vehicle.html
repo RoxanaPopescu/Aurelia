@@ -23,8 +23,10 @@
 
             <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false">
 
-                <template if.bind="vehicle.id != null" translate>
-                    Edit vehicle
+                <template if.bind="vehicle.id != null">
+                    <span translate>
+                        Edit vehicle (${vehicle.id})
+                    </span>
                     <star-icon entity.bind="vehicle"></star-icon>
                 </template>
 

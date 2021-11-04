@@ -3,10 +3,10 @@
     <require from="./star-icon.scss"></require>
 
     <button
-        if.bind="entityInfo.starred != null"
-        title.translate="${entityInfo.starred ? 'Remove from starred' : 'Add to starred'}"
+        if.bind="model.starred != null"
+        title.translate="${model.starred ? 'Remove from starred' : 'Add to starred'}"
         appearance="none"
-        class="${entityInfo.starred ? '--active' : ''}"
+        class="${model.starred ? '--active' : ''}"
         click.trigger="onClick($event)">
         <icon name="starred"></icon>
     </button>

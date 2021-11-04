@@ -23,7 +23,7 @@ export class StarIcon
     /**
      *  The `EntityInfo` instance representing the entity.
      */
-    protected entityInfo: EntityInfo;
+    protected model: EntityInfo;
 
     /**
      * The entity for which the starred state should be presented.
@@ -37,7 +37,7 @@ export class StarIcon
      */
     protected entityChanged(): void
     {
-        this.entityInfo = this.entity.toEntityInfo();
+        this.model = this.entity.toEntityInfo();
     }
 
     /**
@@ -46,15 +46,15 @@ export class StarIcon
      */
     protected async onClick(): Promise<void>
     {
-        if (this.entityInfo.starred)
+        if (this.model.starred)
         {
             // Unstar the entity.
-            await this._starredItemService.remove(this.entityInfo);
+            await this._starredItemService.remove(this.model);
         }
         else
         {
             // Star the entity.
-            await this._starredItemService.add(this.entityInfo);
+            await this._starredItemService.add(this.model);
         }
     }
 }

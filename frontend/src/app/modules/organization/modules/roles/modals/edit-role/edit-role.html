@@ -30,10 +30,12 @@
                     New role
                 </span>
 
-                <span if.bind="role.id" translate>
-                    Edit role
+                <template if.bind="role.id">
+                    <span translate>
+                        Edit role
+                    </span>
                     <star-icon entity.bind="role"></star-icon>
-                </span>
+                </template>
 
             </h1>
 
