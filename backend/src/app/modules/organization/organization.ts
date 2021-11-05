@@ -416,7 +416,7 @@ export class OrganizationModule extends AppModule
      */
     public "GET /v2/organizations/:organizationId/roles" = async (context: AppContext) =>
     {
-        await context.authorize("view-roles", { organization: context.params.organizationId });
+        await context.authorize({ organization: context.params.organizationId });
 
         const result = await this.apiClient.get(`identity/organizations/${context.params.organizationId}/roles`);
 
