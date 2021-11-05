@@ -160,10 +160,10 @@ export class ManageTeamUsersPanel
      * Opens a modal presenting the public profile of the user.
      * @param user The user that was clicked.
      */
-     protected async onUserClick(user: OrganizationUser): Promise<void>
-     {
-         await this._modalService.open(UserModalPanel, { user, readonly: true }).promise;
-     }
+    protected async onUserClick(user: OrganizationUser): Promise<void>
+    {
+        await this._modalService.open(UserModalPanel, { user, readonly: true }).promise;
+    }
 
     /**
      * Fetches the users within the organization.
