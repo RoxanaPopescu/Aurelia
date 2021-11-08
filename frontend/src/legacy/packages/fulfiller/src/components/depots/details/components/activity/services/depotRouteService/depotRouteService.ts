@@ -51,6 +51,7 @@ export class DepotRouteService {
 
   public stopPolling() {
     clearTimeout(this.pollTimeoutHandle);
+    this.paused = true;
   }
 
   public pausePolling() {
