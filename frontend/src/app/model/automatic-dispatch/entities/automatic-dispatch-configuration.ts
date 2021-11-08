@@ -9,7 +9,7 @@ export class AutomaticDispatchConfiguration
     public constructor(data: any)
     {
         this.available = data.available;
-        this.pickupLeadTime = Duration.fromObject({ seconds: data.pickupLeadTime });;
+        this.pickupLeadTime = Duration.fromObject({ seconds: data.pickupLeadTime });
     }
 
     /**

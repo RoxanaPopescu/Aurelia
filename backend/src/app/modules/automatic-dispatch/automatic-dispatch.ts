@@ -65,8 +65,8 @@ export class AutomaticDispatchModule extends AppModule
         });
 
         /**
-         * Gets the jobs for automatic dispatch
-         * @returns The a list of jobs.
+         * Updates the configuration for automatic dispatch
+         * @returns 200 OK if succeded.
          */
         this.router.post("/v2/automatic-dispatch/configuration", async context =>
         {
@@ -85,11 +85,10 @@ export class AutomaticDispatchModule extends AppModule
             context.response.status = 200;
         });
 
-         /**
-          * Gets the automatic dispatch job by ID.
-          * @param context.params.id The ID of the automatic dispatch job to receive.
-          * @returns The automatic dispatch job of the specified ID.
-          */
+        /**
+         * Gets the configuration for automatic dispatch
+         * @returns The specific configuration.
+         */
         this.router.get("/v2/automatic-dispatch/configuration", async context =>
         {
             await context.authorize("view-routes");
