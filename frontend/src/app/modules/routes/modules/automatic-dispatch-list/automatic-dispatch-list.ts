@@ -6,6 +6,7 @@ import { IScroll, ModalService } from "shared/framework";
 import { DateTime } from "luxon";
 import { AutomaticDispatchJobStatusSlug, AutomaticDispatchRoutePlanInfo, AutomaticDispatchService } from "app/model/automatic-dispatch";
 import { StartManualPanel } from "./modals/start-manual/start-manual";
+import { ConfigurationPanel } from "./modals/configuration/configuration";
 
 /**
  * Represents the route parameters for the page.
@@ -144,6 +145,15 @@ export class AutomaticDispatchListPage
         {
             this.createdDateFromFilter = this.createdDateToFilter;
         }
+    }
+
+    /**
+     * Called when the `Configuration` button is clicked.
+     * Opens the panel for configuration about how orders are received for automatic dispatch.
+     */
+    protected onConfigurationClick(): void
+    {
+        this._modalService.open(ConfigurationPanel);
     }
 
     /**

@@ -116,4 +116,30 @@ export class AutomaticDispatchService
 
          return result.data.id;
      }
+
+    /**
+     * Returns the configuration.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async getConfiguration(signal?: AbortSignal): Promise<void>
+    {
+        const result = await this._apiClient.get("automatic-dispatch/configuration",
+        {
+            signal
+        });
+
+        return result.data.id;
+    }
+
+    /**
+     * Saves the configuration.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async saveConfiguration(signal?: AbortSignal): Promise<void>
+    {
+        await this._apiClient.post("automatic-dispatch/configuration",
+        {
+            signal
+        });
+    }
 }
