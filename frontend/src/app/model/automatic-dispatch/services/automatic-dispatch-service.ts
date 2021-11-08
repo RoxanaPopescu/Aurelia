@@ -2,7 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { DateTime } from "luxon";
 import { IPaging } from "shared/types";
-import { AutomaticDispatchJob, AutomaticDispatchJobStatusSlug, AutomaticDispatchRoutePlanInfo, AutomaticDispatchStartManual } from "..";
+import { AutomaticDispatchConfiguration, AutomaticDispatchJob, AutomaticDispatchJobStatusSlug, AutomaticDispatchRoutePlanInfo, AutomaticDispatchStartManual } from "..";
 
 /**
  * Represents a service that manages dispatching of express routes.
@@ -121,25 +121,26 @@ export class AutomaticDispatchService
      * Returns the configuration.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async getConfiguration(signal?: AbortSignal): Promise<void>
+    public async getConfiguration(signal?: AbortSignal): Promise<AutomaticDispatchConfiguration>
     {
         const result = await this._apiClient.get("automatic-dispatch/configuration",
         {
             signal
         });
 
-        return result.data.id;
+        return new AutomaticDispatchConfiguration(result.data);
     }
 
     /**
      * Saves the configuration.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async saveConfiguration(signal?: AbortSignal): Promise<void>
+    public async saveConfiguration(configuration: AutomaticDispatchConfiguration, signal?: AbortSignal): Promise<void>
     {
         await this._apiClient.post("automatic-dispatch/configuration",
         {
-            signal
+            signal,
+            body: configuration
         });
     }
 }

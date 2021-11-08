@@ -55,7 +55,51 @@ export class AutomaticDispatchModule extends AppModule
 
             const result = await this.apiClient.post(`automatic-dispatch/jobs/${context.params.id}/approve`,
             {
-                headers: { "ownerId": context.user?.organizationId }
+                headers: {
+                    "ownerId": context.user?.organizationId
+                }
+            });
+
+            context.response.body = result.data;
+            context.response.status = 200;
+        });
+
+        /**
+         * Gets the jobs for automatic dispatch
+         * @returns The a list of jobs.
+         */
+        this.router.post("/v2/automatic-dispatch/configuration", async context =>
+        {
+            await context.authorize("view-routes");
+
+            const result = await this.apiClient.post(`externalcourier/courier/configurations/${context.user?.organizationId}/toggle-receive-orders`,
+            {
+                headers: {
+                    "ownerId": context.user?.organizationId,
+                    "magictoken": "6b42afbd-5bdc-4cde-b9e7-7929c0209dd7"
+                },
+                body: context.request.body
+            });
+
+            context.response.body = result.data;
+            context.response.status = 200;
+        });
+
+         /**
+          * Gets the automatic dispatch job by ID.
+          * @param context.params.id The ID of the automatic dispatch job to receive.
+          * @returns The automatic dispatch job of the specified ID.
+          */
+        this.router.get("/v2/automatic-dispatch/configuration", async context =>
+        {
+            await context.authorize("view-routes");
+
+            const result = await this.apiClient.get(`externalcourier/courier/configurations/${context.user?.organizationId}`,
+            {
+                headers: {
+                    "ownerId": context.user?.organizationId,
+                    "magictoken": "6b42afbd-5bdc-4cde-b9e7-7929c0209dd7"
+                }
             });
 
             context.response.body = result.data;

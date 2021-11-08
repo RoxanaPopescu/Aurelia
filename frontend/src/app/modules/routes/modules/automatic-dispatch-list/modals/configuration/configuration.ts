@@ -1,5 +1,5 @@
 import { autoinject } from "aurelia-framework";
-import { AutomaticDispatchService, AutomaticDispatchStartManual } from "app/model/automatic-dispatch";
+import { AutomaticDispatchConfiguration, AutomaticDispatchService } from "app/model/automatic-dispatch";
 import { IValidation, Modal } from "shared/framework";
 import { Log } from "shared/infrastructure";
 
@@ -24,7 +24,7 @@ export class ConfigurationPanel
     /**
      * The model to change.
      */
-    protected model = new AutomaticDispatchStartManual();
+    protected model: AutomaticDispatchConfiguration;
 
     /**
      * The validation for the modal.
@@ -36,17 +36,18 @@ export class ConfigurationPanel
      */
     public async activate(): Promise<void>
     {
-        // tslint:disable-next-line: no-floating-promises
-        (async () =>
-        {
-            // TODO: Fetch data
+        this._modal.busy = true;
 
-            /*
-            const connections = await this._organizationService.getConnections();
-            this.organizations = connections.map(c => new Outfit({ id: c.organization.id, companyName: c.organization.name }));
-            this.organizations.push(this._identityService.identity!.organization!);
-            */
-        })();
+        try
+        {
+            this.model = await this._automaticDispatchService.getConfiguration();
+            this._modal.busy = false;
+        }
+        catch (error)
+        {
+            Log.error("Could not get the configuration", error);
+            await this._modal.close();
+        }
     }
 
     /**
@@ -67,7 +68,7 @@ export class ConfigurationPanel
 
             this._modal.busy = true;
 
-            await this._automaticDispatchService.saveConfiguration();
+            await this._automaticDispatchService.saveConfiguration(this.model);
 
             await this._modal.close();
         }
