@@ -29,6 +29,9 @@ export class ScrollHelper
 
         let didRestorePageHeight: boolean;
 
+        // Capture the navigation direction.
+        let isNavigatingNew: boolean;
+
         window.addEventListener("unload", () =>
         {
             // Try to store the page height associated with the current history state.
@@ -40,23 +43,26 @@ export class ScrollHelper
 
         eventAggregator.subscribe(RouterEvent.Processing, () =>
         {
+            // Capture whether the navigation is to a new route.
+            isNavigatingNew = router.isNavigatingNew;
+
             // Try to store the page height associated with the history state from which the app is navigating.
             this.tryStorePageHeight();
 
-            // Ensure the historic page heights are stored in session storage, so they are available if the window is duplicate.
+            // Ensure the historic page heights are stored in session storage, so they are available if the window is duplicated.
             this.saveHistoricPageHeights();
 
             // Get the navigation ID assigned to the new history state by the router.
             this._navigationId = history.getState("NavigationTracker");
 
             // Try to temporarily restore the page height associated with the history state to which the app is navigating.
-            didRestorePageHeight = !router.isNavigatingNew && this.tryRestorePageHeight();
+            didRestorePageHeight = !isNavigatingNew && this.tryRestorePageHeight();
         });
 
         eventAggregator.subscribe(RouterEvent.Success, () =>
         {
             // Reset the scroll position if navigating to a new history entry.
-            if (router.isNavigatingNew)
+            if (isNavigatingNew)
             {
                 this.scrollToTop();
             }

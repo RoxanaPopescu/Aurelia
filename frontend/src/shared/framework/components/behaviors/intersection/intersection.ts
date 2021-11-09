@@ -1,4 +1,4 @@
-import { autoinject, bindable } from "aurelia-framework";
+import { autoinject, bindable, bindingMode } from "aurelia-framework";
 import { CssAnimator } from "aurelia-animator-css";
 
 /**
@@ -52,6 +52,12 @@ export class IntersectionCustomAttribute
     public threshold: number;
 
     /**
+     * True if the element is considered visible, otherwise false.
+     */
+    @bindable({ defaultBindingMode: bindingMode.fromView })
+    public intersecting: boolean;
+
+    /**
      * Called by the framework when the component is binding.
      */
     public bind(): void
@@ -95,16 +101,18 @@ export class IntersectionCustomAttribute
 
         this._IntersectionObserver = new IntersectionObserver(([entry]) =>
         {
-            if (entry.isIntersecting)
+            this.intersecting = entry.isIntersecting;
+
+            if (this.intersecting)
             {
                 this._element.classList.add("intersection-crossed");
             }
 
-            this._element.classList.toggle("intersection-visible", entry.isIntersecting);
+            this._element.classList.toggle("intersection-visible", this.intersecting);
 
             if (this._element.classList.contains("au-animate"))
             {
-                if (entry.isIntersecting)
+                if (this.intersecting)
                 {
                     // tslint:disable-next-line: no-floating-promises
                     this._cssAnimator.enter(this._element);

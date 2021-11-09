@@ -55,8 +55,8 @@ export default class extends React.Component<Props, State> {
           key="remove-driver-confirm"
           type={ButtonType.Light}
           size={ButtonSize.Medium}
-          onClick={() => {
-            var success = this.props.onRemove(this.state.selectedPrebookings);
+          onClick={async () => {
+            var success = await this.props.onRemove(this.state.selectedPrebookings);
             if (success) {
               this.props.onClose();
             }

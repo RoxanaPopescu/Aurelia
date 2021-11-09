@@ -56,10 +56,14 @@ export class WeekdayValueConverter
 
         const formatOptions: LocaleOptions & DateTimeFormatOptions =
         {
-            locale: localeCodeWithExtension,
             weekday: style
         };
 
-        return valueToFormat.toLocaleString(formatOptions);
+        const localeOptions: LocaleOptions =
+        {
+            locale: localeCodeWithExtension
+        };
+
+        return valueToFormat.toLocaleString(formatOptions, localeOptions);
     }
 }

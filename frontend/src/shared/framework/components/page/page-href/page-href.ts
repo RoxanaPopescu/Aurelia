@@ -45,7 +45,7 @@ export class PageHrefCustomAttribute
     private _url: string | undefined;
 
     /**
-     * The URL path to set or navigate to when the element is clicked.
+     * The path to set or navigate to when the element is clicked.
      */
     @bindable({ primaryProperty: true })
     public path: string | undefined;
@@ -151,7 +151,7 @@ export class PageHrefCustomAttribute
             }
         }
 
-        // Don't handle the event if navigation is disabled or no `href` is specified.
+        // Don't handle the event if navigation is disabled or no `path` is specified.
         if (!this.navigate || this.path == null)
         {
             return;

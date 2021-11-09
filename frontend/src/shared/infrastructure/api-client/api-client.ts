@@ -1,6 +1,6 @@
 import { Container, autoinject } from "aurelia-framework";
 import { MapObject } from "shared/types";
-import { once, delay, lowerCaseKeys } from "shared/utilities";
+import { UrlEncoder, once, delay, lowerCaseKeys } from "shared/utilities";
 import { IApiClientSettings, IApiEndpointSettings } from "./api-client-settings";
 import { IApiInterceptor } from "./api-interceptor";
 import { IApiRequestOptions } from "./api-request-options";
@@ -12,10 +12,6 @@ import { ApiResult } from "./api-result";
 // such that a custom obfuscator/deobfuscator can be used.
 import { obfuscate, deobfuscate } from "./api-obfuscation";
 
-// TODO: We should ideally refactor those dependencies out,
-// such that a custom serializer/deserializer can be used.
-import { DateTime, Duration } from "luxon";
-
 /**
  * Represents a specialized HTTP client for interacting with API endpoints.
  */
@@ -25,13 +21,16 @@ export class ApiClient
     /**
      * Creates a new instance of the type.
      * @param container The `Container` instance.
+     * @param urlEncoder The `UrlEncoder` instance.
      */
-    public constructor(container: Container)
+    public constructor(container: Container, urlEncoder: UrlEncoder)
     {
         this._container = container;
+        this._urlEncoder = urlEncoder;
     }
 
     private readonly _container: Container;
+    private readonly _urlEncoder: UrlEncoder;
     private _settings: IApiClientSettings;
     private _interceptors: IApiInterceptor[];
 
@@ -60,7 +59,7 @@ export class ApiClient
      * Sends a `HEAD` request to the specified endpoint.
      * This should get a response identical to that of a `GET` request, but without the response body.
      * Note that a `HEAD` request cannot have a body.
-     * @param path The path, or path segments, identifying the endpoint.
+     * @param path The path, or unencoded path segments, identifying the endpoint.
      * @param options The request options to use, or undefined to use the default options.
      * @returns A promise that will be resolved with the result of the request, if successful.
      */
@@ -78,7 +77,7 @@ export class ApiClient
      * Sends a `GET` request to the specified endpoint.
      * This should get the entity at the specified resource.
      * Note that a `GET` request cannot have a body.
-     * @param path The path, or path segments, identifying the endpoint.
+     * @param path The path, or unencoded path segments, identifying the endpoint.
      * @param options The request options to use, or undefined to use the default options.
      * @returns A promise that will be resolved with the result of the request, if successful.
      */
@@ -95,7 +94,7 @@ export class ApiClient
     /**
      * Sends a `PUT` request to the specified endpoint.
      * This should replace the entity at the specified resource.
-     * @param path The path, or path segments, identifying the endpoint.
+     * @param path The path, or unencoded path segments, identifying the endpoint.
      * @param options The request options to use, or undefined to use the default options.
      * @returns A promise that will be resolved with the result of the request, if successful.
      */
@@ -107,7 +106,7 @@ export class ApiClient
     /**
      * Sends a `POST` request to the specified endpoint.
      * This should add an entity to the specified resource, or if the resource is an action, execute it.
-     * @param path The path, or path segments, identifying the endpoint.
+     * @param path The path, or unencoded path segments, identifying the endpoint.
      * @param options The request options to use, or undefined to use the default options.
      * @returns A promise that will be resolved with the result of the request, if successful.
      */
@@ -119,7 +118,7 @@ export class ApiClient
     /**
      * Sends a `PATCH` request to the specified endpoint.
      * This should partially update the entity at the specified resource.
-     * @param path The path, or path segments, identifying the endpoint.
+     * @param path The path, or unencoded path segments, identifying the endpoint.
      * @param options The request options to use, or undefined to use the default options.
      * @returns A promise that will be resolved with the result of the request, if successful.
      */
@@ -132,7 +131,7 @@ export class ApiClient
      * Sends a `DELETE` request to the specified endpoint.
      * This should delete the entity at the specified resource.
      * Note that a `DELETE` request cannot have a body.
-     * @param path The path, or path segments, identifying the endpoint.
+     * @param path The path, or unencoded path segments, identifying the endpoint.
      * @param options The request options to use, or undefined to use the default options.
      * @returns A promise that will be resolved with the result of the request, if successful.
      */
@@ -149,14 +148,14 @@ export class ApiClient
     /**
      * Fetches the response from the specified endpoint.
      * @param method The HTTP method to use.
-     * @param path The path, or path segments, identifying the endpoint.
+     * @param path The path, or unencoded path segments, identifying the endpoint.
      * @param options The request options to use.
      * @returns A promise that will be resolved with the result of the request.
      */
     private async fetch<T>(method: string, path: string | string[], options?: IApiRequestOptions): Promise<ApiResult<T>>
     {
         // Get the endpoint path.
-        const endpointPath = path instanceof Array ? path.join("/") : path;
+        const endpointPath = path instanceof Array ? path.map(s => this._urlEncoder.encodePathSegment(s)).join("/") : path;
 
         // Get the endpoint settings.
         const endpointSettings = this.getEndpointSettings(endpointPath);
@@ -232,7 +231,7 @@ export class ApiClient
 
     /**
      * Gets the settings for the endpoint with the specified path.
-     * @param path The path, or path segments, identifying the endpoint.
+     * @param path The path identifying the endpoint.
      * @returns The settings to use for the endpoint.
      */
     private getEndpointSettings(path: string): IApiEndpointSettings
@@ -264,9 +263,9 @@ export class ApiClient
         }
 
         // Resolve whether obfuscation should be used.
-        if (endpointSettings.obfuscate === undefined)
+        if (endpointSettings.obfuscate !== false)
         {
-            endpointSettings.obfuscate = this._settings.obfuscate;
+            endpointSettings.obfuscate = this._settings.cipher != null;
         }
 
         return endpointSettings;
@@ -274,7 +273,7 @@ export class ApiClient
 
     /**
      * Gets the URL to be used for the request.
-     * @param path The path, or path segments, identifying the endpoint.
+     * @param path The path identifying the endpoint.
      * @param options The request options to use.
      * @param endpointSettings The endpoint settings to use.
      * @returns The URL to be used for the request.
@@ -285,7 +284,7 @@ export class ApiClient
         if (endpointSettings.obfuscate)
         {
             /* tslint:disable-next-line: no-parameter-reassignment */
-            path = path.split("/").map(s => obfuscate(s, this._settings.cipher)).join("/");
+            path = path.split("/").map(s => obfuscate(s, this._settings.cipher!)).join("/");
         }
 
         // Construct the endpoint URL.
@@ -311,7 +310,7 @@ export class ApiClient
                 }
 
                 // Add the encoded query parameter.
-                queryParams.push(`${this.encodeQueryComponent(key)}=${this.encodeQueryValue(value)}`);
+                queryParams.push(`${this._urlEncoder.encodeQueryKey(key)}=${this._urlEncoder.encodeQueryValue(value)}`);
             }
 
             if (queryParams.length > 0)
@@ -322,7 +321,7 @@ export class ApiClient
                 // Obfuscate the query string, if enabled.
                 if (endpointSettings.obfuscate)
                 {
-                    query = obfuscate(query, this._settings.cipher);
+                    query = obfuscate(query, this._settings.cipher!);
                 }
 
                 // Append the query string to the endpoint URL.
@@ -373,7 +372,7 @@ export class ApiClient
             // Obfuscate the body, if enabled.
             if (endpointSettings.obfuscate && typeof body === "string")
             {
-                fetchOptions.body = obfuscate(body, this._settings.cipher);
+                fetchOptions.body = obfuscate(body, this._settings.cipher!);
             }
             else
             {
@@ -504,7 +503,7 @@ export class ApiClient
                 // Deobfuscate the body, if enabled.
                 if (endpointSettings.obfuscate)
                 {
-                    text = deobfuscate(text, this._settings.cipher);
+                    text = deobfuscate(text, this._settings.cipher!);
                 }
 
                 // Deserialize the body, using the configured JSON reviver.
@@ -545,78 +544,6 @@ export class ApiClient
         }
 
         return new ApiError(transient, request, response, message, data);
-    }
-
-    /**
-     * Encodes the specified text for use in a query string.
-     * @param text The text to encode.
-     * @returns The encoded text.
-     */
-    private encodeQueryComponent(text: any): string
-    {
-        // Encode the text, taking into account that the characters `/` and `?`
-        // do not need to be encoded in the query part of an URL.
-        return encodeURIComponent(text.toString()).replace(/%2F/g, "/").replace(/%3F/g, "?");
-    }
-
-    /**
-     * Encodes the specified value for use in a query string.
-     * @param value The value to encode.
-     * @param isNested True if the value is nested, and therefore can't be complex, otherwise false.
-     * @returns The encoded value.
-     */
-    private encodeQueryValue(value: any, isNested?: boolean): string
-    {
-        // If the value is null or undefined, return an empty string.
-        if (value == null)
-        {
-            return "";
-        }
-
-        // If the value is a `Date` instance, convert it to ISO 8601 format.
-        if (value instanceof Date)
-        {
-            return this.encodeQueryValue(value.toISOString());
-        }
-
-        // If the value is a `DateTime` instance, convert it to ISO 8601 format.
-        if (value instanceof DateTime)
-        {
-            return this.encodeQueryValue(value.toISO());
-        }
-
-        // If the value is a `Duration`instance, convert it to ISO 8601 format.
-        if (value instanceof Duration)
-        {
-            return this.encodeQueryValue(value.toISO());
-        }
-
-        // If the value is an `Array` instance, convert it to a comma-separated list of values.
-        if (!isNested && value instanceof Array)
-        {
-            return value.map(v => this.encodeQueryValue(v, true)).join(",");
-        }
-
-        // If the value is a `Set` instance, convert it to a comma-separated list of values.
-        if (!isNested && value instanceof Set)
-        {
-            return Array.from(value).map(v => this.encodeQueryValue(v, true)).join(",");
-        }
-
-        // If the value is a `Map` instance, convert it to a comma-separated list of `key:value` pairs.
-        if (!isNested && value instanceof Map)
-        {
-            return Array.from(value).map(([k, v]) => `${k}:${this.encodeQueryValue(v, true)}`).join(",");
-        }
-
-        // If the value is an `Object` instance, convert it to comma-separated list of `key:value` pairs.
-        if (!isNested && value instanceof Object)
-        {
-            return Object.keys(value).map(k => `${k}:${this.encodeQueryValue(value[k], true)}`).join(",");
-        }
-
-        // Otherwise, convert the value to its default string representation.
-        return this.encodeQueryComponent(value.toString());
     }
 
     /**
@@ -678,5 +605,4 @@ export class ApiClient
 
         return current;
     }
-
 }

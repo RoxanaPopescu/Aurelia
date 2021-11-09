@@ -12,7 +12,6 @@ color-picker
         height: var(--input-min-height);
         border: var(--border-width-medium) solid var(--surface-input-border-color);
         border-radius: 50%;
-        color: var(--palette-color-whitepoint);
         cursor: pointer;
 
         &:not(:last-child)
@@ -34,7 +33,8 @@ color-picker
 
         icon
         {
-            filter: drop-shadow(0 0 3px #0005);
+            color: var(--palette-color-whitepoint);
+            filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.1));
         }
 
         &.--selected

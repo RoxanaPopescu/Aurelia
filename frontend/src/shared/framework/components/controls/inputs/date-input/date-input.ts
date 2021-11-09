@@ -72,7 +72,7 @@ export class DateInputCustomElement
             // If open with a focused value, format and return that.
             if (this.focusedValue != null)
             {
-                return this.focusedValue.toFormat(this.dateFormat.inputFormat);
+                return this.focusedValue.setZone(this.zone).toFormat(this.dateFormat.inputFormat);
             }
         }
         else
@@ -80,7 +80,7 @@ export class DateInputCustomElement
             // If closed with a comitted value, format and return that.
             if (this.value != null)
             {
-                return this.value.toFormat(this.dateFormat.inputFormat);
+                return this.value.setZone(this.zone).toFormat(this.dateFormat.inputFormat);
             }
         }
 
@@ -99,7 +99,7 @@ export class DateInputCustomElement
         if (value)
         {
             // Try to parse the value.
-            let date = DateTime.fromFormat(value, this.dateFormat.inputFormat);
+            let date = DateTime.fromFormat(value, this.dateFormat.inputFormat, { zone: this.zone });
 
             // If enabled, preserve the time of the current value.
             if (this.preserveTime && value != null && this.focusedValue != null)
@@ -128,9 +128,9 @@ export class DateInputCustomElement
     public label: LabelPosition | undefined;
 
     /**
-     * The IANA Time Zone Identifier to use, `local` to use the local zone, or `utc` to use the UTC zone.
+     * The IANA Time Zone Identifier to use, `system` to use the system zone, or `utc` to use the UTC zone.
      */
-    @bindable({ defaultValue: "local" })
+    @bindable({ defaultValue: "system" })
     public zone: string | Zone;
 
     /**

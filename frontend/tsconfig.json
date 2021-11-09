@@ -3,11 +3,11 @@
   "compilerOptions": {
     "baseUrl": "src",
     "lib": [
-      "es2018",
+      "esnext",
       "dom",
       "dom.iterable"
     ],
-    "module": "esnext",
+    "module": "es2020",
     "target": "es2018",
 
     "jsx": "react",

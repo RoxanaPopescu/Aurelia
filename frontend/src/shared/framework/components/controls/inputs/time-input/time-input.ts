@@ -8,15 +8,15 @@ import { ItemPickerCustomElement } from "../../pickers/item-picker/item-picker";
 // The items to choose from in the dropdown.
 const timeItems: Duration[] = [];
 
-for (let hour = 0; hour < 24; hour++)
+for (let hours = 0; hours < 24; hours++)
 {
-    for (let minute = 0; minute < 60; minute += 15)
+    for (let minutes = 0; minutes < 60; minutes += 15)
     {
-        timeItems.push(Duration.fromObject({ hour, minute }));
+        timeItems.push(Duration.fromObject({ hours, minutes }));
     }
 }
 
-timeItems.push(Duration.fromObject({ hour: 23, minutes: 59, seconds: 59 }));
+timeItems.push(Duration.fromObject({ hours: 23, minutes: 59, seconds: 59 }));
 
 /**
  * Custom element representing an input for picking a single item from a list.
@@ -141,14 +141,14 @@ export class TimeInputCustomElement
                     throw new Error("Invalid time of day.");
                 }
 
-                const [hour = 0, minute = 0] = value.split(/[^\d]+/, 2).map(s => s ? parseInt(s) : 0);
+                const [hours = 0, minutes = 0] = value.split(/[^\d]+/, 2).map(s => s ? parseInt(s) : 0);
 
-                if (isNaN(hour) || hour < 0 || hour > 23 || isNaN(minute) || minute < 0 || minute > 59)
+                if (isNaN(hours) || hours < 0 || hours > 23 || isNaN(minutes) || minutes < 0 || minutes > 59)
                 {
                     throw new Error("Invalid time of day.");
                 }
 
-                let duration = Duration.fromObject({ hour, minute });
+                let duration = Duration.fromObject({ hours, minutes });
 
                 // If the input value is an exact match for one of the items, use the item.
                 // This is needed to ensure the item is highlighted in the item-picker.
@@ -195,9 +195,9 @@ export class TimeInputCustomElement
                 return Duration.fromISO(this.min);
             }
 
-            const [hour, minute, second, millisecond] = this.min.split(/:|\./g).map(s => parseInt(s));
+            const [hours, minutes, seconds, milliseconds] = this.min.split(/:|\./g).map(s => parseInt(s));
 
-            return Duration.fromObject({ hour, minute, second, millisecond });
+            return Duration.fromObject({ hours, minutes, seconds, milliseconds });
         }
 
         return this.min;
@@ -221,9 +221,9 @@ export class TimeInputCustomElement
                 return Duration.fromISO(this.max);
             }
 
-            const [hour, minute, second, millisecond] = this.max.split(/:|\./g).map(s => parseInt(s));
+            const [hours, minutes, seconds, milliseconds] = this.max.split(/:|\./g).map(s => parseInt(s));
 
-            return Duration.fromObject({ hour, minute, second, millisecond });
+            return Duration.fromObject({ hours, minutes, seconds, milliseconds });
         }
 
         return this.max;
@@ -236,9 +236,9 @@ export class TimeInputCustomElement
     public label: LabelPosition | undefined;
 
     /**
-     * The IANA Time Zone Identifier to use, `local` to use the local zone, or `utc` to use the UTC zone.
+     * The IANA Time Zone Identifier to use, `system` to use the system zone, or `utc` to use the UTC zone.
      */
-    @bindable({ defaultValue: "local" })
+    @bindable({ defaultValue: "system" })
     public zone: string | Zone;
 
     /**

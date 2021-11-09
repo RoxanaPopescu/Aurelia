@@ -5,7 +5,7 @@ import { NumberFormat } from "shared/localization";
 import { Duration } from "luxon";
 
 /**
- * Custom element representing a number input.
+ * Custom element representing a duration input.
  */
 @autoinject
 export class DurationInputCustomElement

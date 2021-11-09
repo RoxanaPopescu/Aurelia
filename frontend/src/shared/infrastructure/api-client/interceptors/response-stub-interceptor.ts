@@ -64,7 +64,7 @@ export class ResponseStubInterceptor implements IApiInterceptor
             ? requestUrl.pathname + requestUrl.search
             : `//${requestUrl.host}${requestUrl.pathname + requestUrl.search}`;
 
-        const stubKey = `${requestMethod} ${stubUrl}`;
+        const stubKey = `${requestMethod} ${stubUrl}` as ResponseStubKey;
         const stubValue = this._stubs[stubKey];
 
         // If no response stub was found, continue with the original request.
@@ -170,6 +170,11 @@ export class ResponseStubInterceptor implements IApiInterceptor
 /**
  * Represents the available response stubs.
  */
+export type ResponseStubKey = `${"HEAD" | "GET" | "POST" | "PUT" | "PATCH" | "DELETE"} ${"/" | "//"}${string}`;
+
+/**
+ * Represents the available response stubs.
+ */
 export interface IResponseStubs
 {
     /**
@@ -177,7 +182,7 @@ export interface IResponseStubs
      * where `METHOD` is the HTTP verb to match and `url` is the URL to match.
      * Note that the URL must start with either `/` or `//`.
      */
-    [key: string]: IResponseStub | ((method: string, url: URL, options: IApiRequestOptions)
+    [key: ResponseStubKey]: IResponseStub | ((method: string, url: URL, options: IApiRequestOptions)
         => IResponseStub | Request | Response | Promise<IResponseStub | Request | Response>);
 }
 

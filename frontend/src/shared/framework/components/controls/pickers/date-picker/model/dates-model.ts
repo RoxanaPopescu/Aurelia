@@ -1,5 +1,5 @@
 import { computedFrom } from "aurelia-binding";
-import { DateTime, DurationObject } from "luxon";
+import { DateTime, DurationLike } from "luxon";
 import { textCase } from "shared/utilities";
 import { DatePickerCustomElement } from "../date-picker";
 
@@ -51,7 +51,7 @@ export class DatesModel
     @computedFrom("_datePicker.cursor", "_datePicker.minValue", "_datePicker.maxValue")
     public get isPreviousDisabled(): boolean
     {
-        const date = this._datePicker.cursor.startOf("month").minus({ day: 1 });
+        const date = this._datePicker.cursor.startOf("month").minus({ days: 1 });
         const item = new DateItem(this._datePicker, date);
 
         return item.isDisabled;
@@ -63,7 +63,7 @@ export class DatesModel
     @computedFrom("_datePicker.cursor", "_datePicker.minValue", "_datePicker.maxValue")
     public get isNextDisabled(): boolean
     {
-        const date = this._datePicker.cursor.startOf("month").plus({ month: 1 });
+        const date = this._datePicker.cursor.startOf("month").plus({ months: 1 });
         const item = new DateItem(this._datePicker, date);
 
         return item.isDisabled;
@@ -86,7 +86,7 @@ export class DatesModel
      */
     public onPreviousClick(): void
     {
-        this._datePicker.cursor = this._datePicker.cursor.minus({ month: 1 });
+        this._datePicker.cursor = this._datePicker.cursor.minus({ months: 1 });
     }
 
     /**
@@ -95,7 +95,7 @@ export class DatesModel
      */
     public onNextClick(): void
     {
-        this._datePicker.cursor = this._datePicker.cursor.plus({ month: 1 });
+        this._datePicker.cursor = this._datePicker.cursor.plus({ months: 1 });
     }
 
     /**
@@ -141,16 +141,16 @@ export class DatesModel
             return;
         }
 
-        let offset: DurationObject | undefined;
+        let offset: DurationLike | undefined;
 
         switch (event.key)
         {
-            case "PageUp": offset = { month: -1 }; break;
-            case "PageDown": offset = { month: 1 }; break;
-            case "ArrowUp": offset = { day: -7 }; break;
-            case "ArrowDown": offset = { day: 7 }; break;
-            case "ArrowLeft": offset = { day: -1 }; break;
-            case "ArrowRight": offset = { day: 1 }; break;
+            case "PageUp": offset = { months: -1 }; break;
+            case "PageDown": offset = { months: 1 }; break;
+            case "ArrowUp": offset = { days: -7 }; break;
+            case "ArrowDown": offset = { days: 7 }; break;
+            case "ArrowLeft": offset = { days: -1 }; break;
+            case "ArrowRight": offset = { days: 1 }; break;
         }
 
         if (offset != null)

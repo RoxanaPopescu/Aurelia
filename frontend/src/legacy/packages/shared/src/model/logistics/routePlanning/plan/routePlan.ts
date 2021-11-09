@@ -15,7 +15,7 @@ export class RoutePlan {
   /* tslint:disable-next-line: no-any */
   public constructor(data: any, id: string) {
     this.id = id;
-    this.name = name;
+    this.name = data.name;
     // Consignors are found by index in each stop (Unscheduled & normal stops)
     const consignors = data.consignors.map(s => new Consignor(s));
 

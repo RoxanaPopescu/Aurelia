@@ -1,7 +1,17 @@
-<template class="au-animate animation-fade-in-long">
+<template>
 
     <require from="./busy-indicator.scss"></require>
 
-    <div class="busy-indicator"><div></div><div></div><div></div></div>
+    <div class="busy-indicator">
+
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="45"/>
+        </svg>
+
+        <div class="busy-indicator-content">
+            <slot></slot>
+        </div>
+
+    </div>
 
 </template>

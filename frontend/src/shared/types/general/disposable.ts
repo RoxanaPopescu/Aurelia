@@ -1,3 +1,5 @@
+import { computedFrom } from "aurelia-framework";
+
 /**
  * Represents an instance that may be disposed.
  */
@@ -29,6 +31,7 @@ export class Disposable implements IDisposable
     /**
      * True if the handle is disposed, otherwise false.
      */
+    @computedFrom("_disposed")
     public get disposed(): boolean
     {
         return this._disposed;

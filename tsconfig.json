@@ -15,7 +15,7 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": false,
-    "removeComments": true,
+    "removeComments": false,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
@@ -24,7 +24,9 @@
     "strictFunctionTypes": false, // TODO: Should we enable this?
     "stripInternal": true,
     "suppressExcessPropertyErrors": false,
-    "suppressImplicitAnyIndexErrors": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "useUnknownInCatchVariables": false,
+    "exactOptionalPropertyTypes": false, // TODO: Should we enable this?
     "plugins": [
       {
         "name": "typescript-tslint-plugin",

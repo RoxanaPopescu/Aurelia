@@ -42,14 +42,16 @@ const compilerOptions: ICompilerOptions =
         {
             publicPath: "/",
             appBaseUrl: "/",
-            apiBaseUrl: commander.api || "/api/"
+            apiBaseUrl: commander.api || "/api/",
+            pushState: true
         }
         :
         commander.platform === "desktop" ?
         {
             publicPath: "/",
             appBaseUrl: "/",
-            apiBaseUrl: commander.api || "http://localhost:8008/"
+            apiBaseUrl: commander.api || "http://localhost:8008/",
+            pushState: true
         }
         :
         {} as never,

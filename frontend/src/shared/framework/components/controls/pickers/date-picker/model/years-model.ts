@@ -1,5 +1,5 @@
 import { computedFrom } from "aurelia-binding";
-import { DateTime, DurationObject } from "luxon";
+import { DateTime, DurationLike } from "luxon";
 import { DatePickerCustomElement } from "../date-picker";
 
 /**
@@ -129,16 +129,16 @@ export class YearsModel
             return;
         }
 
-        let offset: DurationObject | undefined;
+        let offset: DurationLike | undefined;
 
         switch (event.key)
         {
-            case "PageUp": offset = { year: -10 }; break;
-            case "PageDown": offset = { year: 10 }; break;
-            case "ArrowUp": offset = { year: -3 }; break;
-            case "ArrowDown": offset = { year: 3 }; break;
-            case "ArrowLeft": offset = { year: -1 }; break;
-            case "ArrowRight": offset = { year: 1 }; break;
+            case "PageUp": offset = { years: -10 }; break;
+            case "PageDown": offset = { years: 10 }; break;
+            case "ArrowUp": offset = { years: -3 }; break;
+            case "ArrowDown": offset = { years: 3 }; break;
+            case "ArrowLeft": offset = { years: -1 }; break;
+            case "ArrowRight": offset = { years: 1 }; break;
         }
 
         if (offset != null)
