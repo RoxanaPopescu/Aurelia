@@ -3,7 +3,7 @@
 FROM node:14-alpine as build-backend-stage
 
 ## Add additional packages.
-RUN apk add --no-cache git python make g++
+RUN apk add --no-cache git
 
 ## Set the working directory.
 WORKDIR /usr/app/backend
