@@ -219,7 +219,7 @@ export class OrderStatusModule extends AppModule
 
                 // HACK: Because we do not yet have proper support for getting the access outfits associated with the current identity.
                 outfitIds: environment.name === "production"
-                    ? ["F1003E94-D520-4D0C-959A-AFB76BDC91F3"]
+                    ? ["F1003E94-D520-4D0C-959A-AFB76BDC91F3", "78f39900-008f-49bc-b379-369726564346"]
                     : ["5D6DB3D4-7E69-4939-8014-D028A5EB47FF"]
             }
         });
