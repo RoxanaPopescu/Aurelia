@@ -13,7 +13,7 @@ export class AutomaticDispatchConfiguration
     }
 
     /**
-     * The organization ids to filter.
+     * If automatic dispatch is available.
      */
     public available: boolean;
 

@@ -89,4 +89,36 @@ export class DistributionCenterModule extends AppModule
         context.response.body = result.data;
         context.response.status = 200;
     }
+
+    /**
+     * Scans a collo on a distribution center
+     * @returns 200 OK.
+     */
+    public "POST /v2/distribution-centers/scan-collo" = async (context: AppContext) =>
+    {
+        await context.authorize("edit-distribution-centers");
+
+        const requestBody = context.request.body;
+
+        // First we try to get the collo
+        const barcodeResult = await this.apiClient.post("logistics-platform/barcodes/barcode-info",
+        {
+            body: {
+                barcode: requestBody.barcode,
+                depotId: requestBody.distributionCenter.id,
+                depotPosition: requestBody.distributionCenter.position
+            }
+        });
+
+        const body = context.request.body;
+        body.createdBy = context.user?.id;
+
+        const result = await this.apiClient.post("logistics/depots/update",
+        {
+            body: body
+        });
+
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
 }
