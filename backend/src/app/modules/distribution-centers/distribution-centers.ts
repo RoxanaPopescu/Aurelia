@@ -169,7 +169,7 @@ export class DistributionCenterModule extends AppModule
         delete collo.depot;
 
         // If not found we find it through logistics platform
-        if (collo.status == "not-found")
+        if (collo.status === "not-found")
         {
             const orderIdsResult = await this.apiClient.post("logistics/orders/fulfiller/orderslookup",
             {
@@ -196,7 +196,7 @@ export class DistributionCenterModule extends AppModule
                     }
                 });
 
-                var order = ordersResult.data[0];
+                const order = ordersResult.data[0];
 
                 // Find correct status dependent on locationId
                 const pickupLocationId = order.pickupLocation.locationId;
@@ -240,21 +240,21 @@ export class DistributionCenterModule extends AppModule
 
     private MapNOIBarcodeStatus(status: string): string
     {
-        if (status == "AssignedToRoute")
+        if (status === "AssignedToRoute")
         {
             return "assigned-to-route";
         }
-        else if (status == "NotAssignedToRoute")
+
+        if (status === "NotAssignedToRoute")
         {
             return "not-assigned-to-route";
         }
-        else if (status == "NotFound")
+
+        if (status === "NotFound")
         {
             return "not-found";
         }
-        else
-        {
-            return "wrong-depot";
-        }
+
+        return "wrong-depot";
     }
 }
