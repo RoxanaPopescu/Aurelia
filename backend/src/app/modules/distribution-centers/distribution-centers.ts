@@ -214,7 +214,7 @@ export class DistributionCenterModule extends AppModule
         }
 
         // We mark the collo as scanned, this will send an event
-        if (collo.status == "assigned-to-route" || collo.status == "not-assigned-to-route")
+        if (collo.status === "assigned-to-route" || collo.status === "not-assigned-to-route")
         {
             await this.apiClient.post("logistics/Orders/Events/Fulfiller/ColloArrivedAtDepot",
             {
@@ -228,7 +228,7 @@ export class DistributionCenterModule extends AppModule
             });
         }
 
-        if (collo.Status == "wrong-depot")
+        if (collo.Status === "wrong-depot")
         {
             // We could show the incorrect depot in the future
             delete collo.distributionCenter;
