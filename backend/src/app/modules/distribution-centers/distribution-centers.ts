@@ -92,8 +92,8 @@ export class DistributionCenterModule extends AppModule
     }
 
     /**
-     * Will get a cache of colli so that the DC app can quickly scan
-     * @returns An array of colli for today.
+     * Will add a collo to a distribution center
+     * @returns The added collo.
      */
     public "POST /v2/distribution-centers/add-collo" = async (context: AppContext) =>
     {
@@ -102,7 +102,7 @@ export class DistributionCenterModule extends AppModule
         const body = context.request.body;
         body.createdBy = context.user?.id;
 
-        // FIXME: Give better results
+        // FIXME: Add the collo
 
         await this.apiClient.post("logistics/depots/list",
         {
@@ -124,20 +124,60 @@ export class DistributionCenterModule extends AppModule
     {
         await context.authorize("view-distribution-centers");
 
-        const body = context.request.body;
-        body.createdBy = context.user?.id;
+        const organizationIds = [context.user?.organizationId];
+        const requestBody = context.request.body;
+        const locationId = requestBody.distributionCenter.location.locationId;
 
-        // FIXME: Give better results
-
-        await this.apiClient.post("logistics/depots/list",
+        const allColliNOIPromise = this.allColliNOI(requestBody.distributionCenter);
+        const orderIdsResultPromise = this.apiClient.post("logistics/orders/fulfiller/orderslookup",
         {
-            body:
-            {
-                ownerIds: [context.user?.organizationId]
+            body: {
+                outfitIds: organizationIds,
+                status: [1, 2, 3],
+                pickupLocationIds: [locationId],
+                FromDate: DateTime.utc().startOf("day"),
+                ToDate: DateTime.utc().plus({ days: 2 }).endOf("day"),
+                page: 1,
+                pageSize: 1000,
+                consignorIds: []
             }
         });
 
-        context.response.body = [];
+        const [orderIdsResult, allColliNOI] = await Promise.all([orderIdsResultPromise, allColliNOIPromise]);
+
+        const results = allColliNOI;
+        const internalIds = orderIdsResult.data.internalOrderIds;
+
+        // If we get any we use this instead of the data from NOI - since more updated
+        if (internalIds.length > 0)
+        {
+            const ordersResult = await this.apiClient.post("logistics/orders/fulfiller/listorders",
+            {
+                body: {
+                    outfitIds: organizationIds,
+                    internalOrderIds: internalIds
+                }
+            });
+
+            for (const order of ordersResult.data)
+            {
+
+                // Verify the order does not currently exist in the list
+                if (order.actualColli.length > 0 && !results.some(r => r.orderId === order.orderId))
+                {
+                    for (const collo of order.actualColli)
+                    {
+                        results.push({
+                            barcode: collo.barcode,
+                            status: "not-assigned-to-route",
+                            orderId: order.orderId
+                        });
+                    }
+                }
+            }
+        }
+
+        context.response.body = results;
         context.response.status = 200;
     }
 
@@ -158,7 +198,7 @@ export class DistributionCenterModule extends AppModule
             body: {
                 barcode: requestBody.barcode,
                 depotId: requestBody.distributionCenter.id,
-                depotPosition: requestBody.distributionCenter.position
+                depotPosition: requestBody.distributionCenter.location.position
             },
             noi: true
         });
@@ -200,14 +240,14 @@ export class DistributionCenterModule extends AppModule
 
                 // Find correct status dependent on locationId
                 const pickupLocationId = order.pickupLocation.locationId;
-                const currentLocationId = collo.distributionCenter.location.locationId;
+                const currentLocationId = requestBody.distributionCenter.location.locationId;
                 const status = pickupLocationId === currentLocationId ? "not-assigned-to-route" : "wrong-depot";
 
                 collo =
                 {
                     barcode: requestBody.barcode,
                     status: status,
-                    orderId: order.publicId,
+                    orderId: order.orderId,
                     orderPickupLocationId: pickupLocationId
                 };
             }
@@ -223,12 +263,12 @@ export class DistributionCenterModule extends AppModule
                     barcode: requestBody.barcode,
                     scanningTime: DateTime.local(),
                     scannedBy: context.user?.id,
-                    depotId: collo.distributionCenter.id
+                    depotId: requestBody.distributionCenter.id
                 }
             });
         }
 
-        if (collo.Status === "wrong-depot")
+        if (collo.status === "wrong-depot")
         {
             // We could show the incorrect depot in the future
             delete collo.distributionCenter;
@@ -256,5 +296,27 @@ export class DistributionCenterModule extends AppModule
         }
 
         return "wrong-depot";
+    }
+
+    private async allColliNOI(distributionCenter: any): Promise<any[]>
+    {
+        const result = await this.apiClient.post("logistics-platform/barcodes/barcodes-depot",
+        {
+            body: {
+                fromDate: DateTime.utc(),
+                depotId: distributionCenter.id,
+                depotPosition: distributionCenter.location.position
+            },
+            noi: true
+        });
+
+        var colli = result.data.results;
+
+        for (const collo of colli)
+        {
+            collo.status = this.MapNOIBarcodeStatus(collo.status);
+        }
+
+        return colli;
     }
 }
