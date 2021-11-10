@@ -67,9 +67,25 @@ export function fetchMiddleware(): Middleware<any, IAppContext>
  */
 export interface IFakeRequest
 {
+    /**
+     * The headers to use, or undefined to use the headers
+     * associated with the request currently being handled.
+     */
     headers?: AppContext["headers"];
+
+    /**
+     * The route params to use.
+     */
     params?: AppContext["params"];
+
+    /**
+     * The query params to use.
+     */
     query?: AppContext["query"];
+
+    /**
+     * The body to use.
+     */
     body?: AppContext["request"]["body"];
 }
 
@@ -78,7 +94,14 @@ export interface IFakeRequest
  */
 export interface IFakeResponse
 {
+    /**
+     * The response status code, set by the endpoint handler function.
+     */
     status: AppContext["response"]["status"];
+
+    /**
+     * The response body, set by the endpoint handler function.
+     */
     body: AppContext["response"]["body"];
 }
 
