@@ -61,9 +61,9 @@ export class DatePickerCustomElement
     public maxValue: DateTime | undefined;
 
     /**
-     * The IANA Time Zone Identifier to use, `local` to use the local zone, or `utc` to use the UTC zone.
+     * The IANA Time Zone Identifier to use, `system` to use the system zone, or `utc` to use the UTC zone.
      */
-    @bindable({ defaultValue: "local" })
+    @bindable({ defaultValue: "system" })
     public zone: string | Zone;
 
     /**

@@ -105,6 +105,13 @@ declare interface IClientEnvironment
     apiBaseUrl: string;
 
     /**
+     * True to use path-based routing, false to use fragment-based routing.
+     * When building for the `frontend-cloud` package, this should be enabled.
+     * When building for any other package, this must be disabled.
+     */
+    pushState: boolean;
+
+    /**
      * The settings to use for integrations, such as logging and analytics.
      */
     integrations:

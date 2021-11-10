@@ -90,6 +90,10 @@ export async function configure(aurelia: Aurelia): Promise<void>
         themeService.configure(settings.app.themes, setTheme);
         await themeService.setTheme(getThemeSlug());
 
+        const historyHelper = aurelia.container.get(HistoryHelper);
+        historyHelper.configure(/^\//i);
+        historyHelper.setBasePath("/");
+
         const googleMapsService = aurelia.container.get(GoogleMapsService);
         googleMapsService.configure(settings.integrations.googleMaps);
 

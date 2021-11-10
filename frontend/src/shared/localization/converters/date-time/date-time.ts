@@ -61,11 +61,15 @@ export class DateTimeValueConverter
         const formatOptions: LocaleOptions & DateTimeFormatOptions =
         {
             ...dateTimeStyles[style || "narrow"],
-            locale: localeCodeWithExtension,
             hour12: false
         };
 
-        return valueToFormat.toLocaleString(formatOptions)
+        const localeOptions: LocaleOptions =
+        {
+            locale: localeCodeWithExtension
+        };
+
+        return valueToFormat.toLocaleString(formatOptions, localeOptions)
 
             // HACK: Fix common format errors in the browser locale data.
             // See: https://github.com/moment/luxon/issues/726#issuecomment-675151145

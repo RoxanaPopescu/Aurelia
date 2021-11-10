@@ -18,7 +18,13 @@ export function getUserClaims(tokens?: { access: string; refresh: string; }): st
     try
     {
         const jwt = njwt.verify(tokens.access);
-        parsedBody = jwt.parsedBody;
+
+        if (jwt == null)
+        {
+            throw new Error("Could not parse the JWT token.");
+        }
+
+        parsedBody = jwt?.body.toJSON();
     }
     catch(error)
     {
@@ -26,6 +32,7 @@ export function getUserClaims(tokens?: { access: string; refresh: string; }): st
         {
             throw new Error(`Could not parse the JWT token. ${error.message}`);
         }
+
         parsedBody = error.parsedBody;
     }
 
@@ -44,7 +51,13 @@ export function getAccessTokenExpireDuration(accessToken: string): Duration
     try
     {
         const jwt = njwt.verify(accessToken);
-        exp = jwt.parsedBody.exp;
+
+        if (jwt == null)
+        {
+            throw new Error("Could not parse the JWT token.");
+        }
+
+        exp = jwt.body.toJSON().exp as number;
     }
     catch(error)
     {

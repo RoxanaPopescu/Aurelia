@@ -48,6 +48,7 @@ const compilerOptions: ICompilerOptions =
         publicPath: "/",
         appBaseUrl: "/",
         apiBaseUrl: "/api/",
+        pushState: true,
 
         // Environment-specific configuration.
 

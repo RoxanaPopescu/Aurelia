@@ -90,15 +90,30 @@
             return;
         }
 
-        // Don't clear the selection if the element, or one of its ancestors, has a modifier class indicating that selection should be preserved.
-        // This may be needed for e.g. buttons that apply formatting to the selected text, or copies the selected text to the clipboard.
-        if (event.composedPath().some((t: HTMLElement | SVGElement) => t.classList && t.classList.contains("preserve-selection")))
+        // Don't clear the selection if the element, or one of its ancestors, is an input, textarea or contenteditable,
+        // or if it has a modifier class indicating that selection should be preserved. This may be needed for e.g.
+        // buttons that apply formatting to the selected text, or copies the selected text to the clipboard.
+        if (event.composedPath().some((t: Element) =>
+        {
+            if (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.classList?.contains("preserve-selection"))
+            {
+                return true;
+            }
+
+            const contenteditable = t.getAttribute?.("contenteditable")?.toLowerCase();
+
+            if (contenteditable === "" || contenteditable === "true")
+            {
+                return true;
+            }
+
+            return false;
+        }))
         {
             return;
         }
 
         // Schedule the selection to be cleared.
-        // tslint:disable-next-line: no-floating-promises
         clearSelectionTimeoutHandle = setTimeout(() =>
         {
             const selection = window.getSelection();

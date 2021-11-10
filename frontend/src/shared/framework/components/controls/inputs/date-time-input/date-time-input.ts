@@ -44,8 +44,8 @@ export class DateTimeInputCustomElement
             }
             else
             {
-                const [hour, minute] = this.minTime.split(":").map(s => parseInt(s));
-                minTime = Duration.fromObject({ hour, minute });
+                const [hours, minutes] = this.minTime.split(":").map(s => parseInt(s));
+                minTime = Duration.fromObject({ hours, minutes });
             }
         }
         else
@@ -85,8 +85,8 @@ export class DateTimeInputCustomElement
             }
             else
             {
-                const [hour, minute] = this.maxTime.split(":").map(s => parseInt(s));
-                maxTime = Duration.fromObject({ hour, minute });
+                const [hours, minutes] = this.maxTime.split(":").map(s => parseInt(s));
+                maxTime = Duration.fromObject({ hours, minutes });
             }
         }
         else
@@ -111,9 +111,9 @@ export class DateTimeInputCustomElement
     }
 
     /**
-     * The IANA Time Zone Identifier to use, `local` to use the local zone, or `utc` to use the UTC zone.
+     * The IANA Time Zone Identifier to use, `system` to use the system zone, or `utc` to use the UTC zone.
      */
-    @bindable({ defaultValue: "local" })
+    @bindable({ defaultValue: "system" })
     public zone: string | Zone;
 
     /**

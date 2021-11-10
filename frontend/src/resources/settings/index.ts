@@ -72,6 +72,11 @@ export default
          */
         api:
         {
+            endpointUrlPattern: `${ENVIRONMENT.apiBaseUrl}v{version}/{path}`,
+            endpointSettings:
+            {
+                "": { version: "2", obfuscate: false }
+            },
             defaults:
             {
                 headers:
@@ -79,17 +84,13 @@ export default
                     "x-api-key": "a89ba961-1a7d-4a1e-953c-0c8a766979ae"
                 }
             },
-            cipher: "svrmZIDJCKab+o8n-h7wTR6l4XO1Qz95PHMp3BFNiqeYGdEAUx0_SckLVufy2jtgW",
-            obfuscate: ENVIRONMENT.obfuscate,
-            endpointUrlPattern: `${ENVIRONMENT.apiBaseUrl}v{version}/{path}`,
-            endpointSettings:
-            {
-                "": { version: "2", obfuscate: false }
-            },
             interceptors:
             [
                 new CorrelationHeaderInterceptor("x-correlation")
-            ]
+            ],
+            cipher: ENVIRONMENT.obfuscate
+                ? "svrmZIDJCKab+o8n-h7wTR6l4XO1Qz95PHMp3BFNiqeYGdEAUx0_SckLVufy2jtgW"
+                : undefined
 
         } as IApiClientSettings
     },

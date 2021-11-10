@@ -60,14 +60,18 @@ export class TimeValueConverter
             value instanceof Duration ? DateTime.utc().startOf("day").plus(value) :
             value instanceof DateTime && convert ? value.toLocal() : value;
 
-        const formatOptions: LocaleOptions & DateTimeFormatOptions =
+        const formatOptions: DateTimeFormatOptions =
         {
             ...timeStyles[style || "narrow"],
-            locale: localeCodeWithExtension,
             hour12: false
         };
 
-        return valueToFormat.toLocaleString(formatOptions)
+        const localeOptions: LocaleOptions =
+        {
+            locale: localeCodeWithExtension
+        };
+
+        return valueToFormat.toLocaleString(formatOptions, localeOptions)
 
             // HACK: Fix common format errors in the browser locale data.
             .replace(/(^|\s)24:/, "$100:")

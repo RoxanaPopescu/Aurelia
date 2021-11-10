@@ -1,5 +1,5 @@
 import { computedFrom } from "aurelia-binding";
-import { DateTime, DurationObject } from "luxon";
+import { DateTime, DurationLike } from "luxon";
 import { DatePickerCustomElement } from "../date-picker";
 
 /**
@@ -62,7 +62,7 @@ export class MonthsModel
     @computedFrom("_datePicker.cursor", "_datePicker.minValue", "_datePicker.maxValue")
     public get isNextDisabled(): boolean
     {
-        const date = this._datePicker.cursor.startOf("year").plus({ year: 1 });
+        const date = this._datePicker.cursor.startOf("year").plus({ years: 1 });
         const item = new MonthItem(this._datePicker, date);
 
         return item.isDisabled;
@@ -74,7 +74,7 @@ export class MonthsModel
      */
     public onPreviousClick(): void
     {
-        this._datePicker.cursor = this._datePicker.cursor.minus({ year: 1 });
+        this._datePicker.cursor = this._datePicker.cursor.minus({ years: 1 });
     }
 
     /**
@@ -83,7 +83,7 @@ export class MonthsModel
      */
     public onNextClick(): void
     {
-        this._datePicker.cursor = this._datePicker.cursor.plus({ year: 1 });
+        this._datePicker.cursor = this._datePicker.cursor.plus({ years: 1 });
     }
 
     /**
@@ -124,16 +124,16 @@ export class MonthsModel
             return;
         }
 
-        let offset: DurationObject | undefined;
+        let offset: DurationLike | undefined;
 
         switch (event.key)
         {
-            case "PageUp": offset = { year: -1 }; break;
-            case "PageDown": offset = { year: 1 }; break;
-            case "ArrowUp": offset = { month: -3 }; break;
-            case "ArrowDown": offset = { month: 3 }; break;
-            case "ArrowLeft": offset = { month: -1 }; break;
-            case "ArrowRight": offset = { month: 1 }; break;
+            case "PageUp": offset = { years: -1 }; break;
+            case "PageDown": offset = { years: 1 }; break;
+            case "ArrowUp": offset = { months: -3 }; break;
+            case "ArrowDown": offset = { months: 3 }; break;
+            case "ArrowLeft": offset = { months: -1 }; break;
+            case "ArrowRight": offset = { months: 1 }; break;
         }
 
         if (offset != null)

@@ -1,5 +1,25 @@
 dark-mode-toggle
 {
+    position: relative;
+
+    &::before
+    {
+        content: "";
+        position: absolute;
+        top: 2rem;
+        left: 50%;
+        right: 2rem;
+        bottom: 2rem;
+        border-radius: 50%;
+        background: var(--surface-text-color);
+    }
+
+    &.--active::before
+    {
+        left: 2rem;
+        right: 50%;
+    }
+
     &.toggle
     {
         --toggle-surface-indicator-color--active: var(--toggle-surface-indicator-color);

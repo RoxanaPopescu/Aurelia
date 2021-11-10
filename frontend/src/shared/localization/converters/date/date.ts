@@ -60,10 +60,14 @@ export class DateValueConverter
 
         const formatOptions: LocaleOptions & DateTimeFormatOptions =
         {
-            ...dateStyles[style || "narrow"],
+            ...dateStyles[style || "narrow"]
+        };
+
+        const localeOptions: LocaleOptions =
+        {
             locale: localeCodeWithExtension
         };
 
-        return valueToFormat.toLocaleString(formatOptions);
+        return valueToFormat.toLocaleString(formatOptions, localeOptions);
     }
 }

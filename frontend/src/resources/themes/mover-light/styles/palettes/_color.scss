@@ -82,3 +82,16 @@ $__summary: comment;
 {
     --palette-color-mark: var(--palette-color-attention);
 }
+
+/// The colors used for data visualization.
+:root
+{
+    --palette-color-data-1: #268bbc;
+    --palette-color-data-2: #1acce2;
+    --palette-color-data-3: #26bcae;
+    --palette-color-data-4: #c1e21a;
+    --palette-color-data-5: #db9726;
+    --palette-color-data-6: #ff5555;
+    --palette-color-data-7: #e21aa7;
+    --palette-color-data-8: #bd10e0;
+}

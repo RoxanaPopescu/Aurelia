@@ -30,8 +30,24 @@
     /// The radius of the border of the component.
     --input-border-radius: var(--border-radius-medium);
 
+    // The padding to apply to actions within the before or after slot.
+    // Note: To get square action hit areas, this should be equal to the top and bottom input padding.
+    --input-surface-action-padding: 9rem;
+
+    // The padding to apply to the action at the start of the before slot.
+    // Note: This must be equal to the left input padding.
+    --input-surface-action-padding-right: 12rem;
+
+    // The padding to apply to the action at the end of the after slot.
+    // Note: This must be equal to the right input padding.
+    --input-surface-action-padding-left: 12rem;
+}
+
+body
+{
     // The size of icons that are part of the input.
-    --input-icon-size: 20rem;
+    // The default matches the line height of the base text.
+    --input-icon-size: var(--font-base-line-height);
 }
 
 .input
@@ -71,18 +87,6 @@
     // The color of the required indicator.
     --input-required-indicator-color: inherit;
     --input-required-indicator-color--invalid: inherit;
-
-    // The padding to apply to actions within the before or after slot.
-    // Note: To get square action hit areas, this should be equal to the top and bottom input padding.
-    --input-surface-action-padding: 9rem;
-
-    // The padding to apply to the action at the start of the before slot.
-    // Note: This must be equal to the left input padding.
-    --input-surface-action-padding-right: 12rem;
-
-    // The padding to apply to the action at the end of the after slot.
-    // Note: This must be equal to the right input padding.
-    --input-surface-action-padding-left: 12rem;
 }
 
 .input

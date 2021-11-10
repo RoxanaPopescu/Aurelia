@@ -23,10 +23,9 @@ export class DateFormat
         const localeCodeWithExtension = localeService.locale.codeWithUnicodeExtension;
 
         // Get the date format parts.
-        const dateParts = date.toLocaleParts(
+        const dateParts = date.reconfigure({ locale: localeCodeWithExtension }).toLocaleParts(
         {
-            ...DateTime.DATE_SHORT,
-            locale: localeCodeWithExtension
+            ...DateTime.DATE_SHORT
         });
 
         // Extract the relevant info from the date format parts.

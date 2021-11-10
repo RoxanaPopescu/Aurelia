@@ -90,7 +90,12 @@ export class IdentityTokens
         {
             const jwt = njwt.verify(accessToken, "irrelevant, as we don't care about verification here", "HS256");
 
-            return jwt.parsedBody;
+            if (jwt == null)
+            {
+                throw new Error("Could not parse the JWT token.");
+            }
+
+            return jwt.body.toJSON();
         }
         catch (error)
         {
