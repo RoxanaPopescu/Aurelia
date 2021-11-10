@@ -1,5 +1,6 @@
-import { AppModule } from "../../../../app-module";
 import { v4 as uuidV4 } from "uuid";
+import { AppContext } from "../../../../app-context";
+import { AppModule } from "../../../../app-module";
 
 /**
  * Represents a module exposing endpoints related to route list
@@ -7,104 +8,98 @@ import { v4 as uuidV4 } from "uuid";
 export class DispatchRouteModule extends AppModule
 {
     /**
-     * Configures the module.
+     * Assigns a driver
+     * @returns 200 OK if successfull
      */
-    public configure(): void
+    public "POST /v2/dispatch/route/assign-driver" = async (context: AppContext) =>
     {
-        /**
-         * Assigns a driver
-         * @returns 200 OK if successfull
-         */
-        this.router.post("/v2/dispatch/route/assign-driver", async context =>
+        await context.authorize("assign-driver-route");
+
+        const body: any = context.request.body;
+        body.fulfillerIds = [context.user?.organizationId];
+        body.createdBy = context.user?.id;
+
+        const result = await this.apiClient.post("logistics-platform/routes/v4/assign-driver",
         {
-            await context.authorize("assign-driver-route");
-
-            const body: any = context.request.body;
-            body.fulfillerIds = [context.user?.organizationId];
-            body.createdBy = context.user?.id;
-
-            const result = await this.apiClient.post("logistics-platform/routes/v4/assign-driver",
-            {
-                noi: true,
-                body: body
-            });
-
-            const data = result.data;
-            context.response.body = data;
-            context.response.status = 200;
+            noi: true,
+            body: body
         });
 
-        /**
-         * Assigns a vehicle
-         * @returns 200 OK if successfull
-         */
-        this.router.post("/v2/dispatch/route/assign-vehicle", async context =>
+        const data = result.data;
+        context.response.body = data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Assigns a vehicle
+     * @returns 200 OK if successfull
+     */
+    public "POST /v2/dispatch/route/assign-vehicle" = async (context: AppContext) =>
+    {
+        await context.authorize("edit-routes");
+
+        const body: any = context.request.body;
+        body.fulfillerIds = [context.user?.organizationId];
+        body.createdBy = context.user?.id;
+
+        const result = await this.apiClient.post("logistics-platform/routes/v3/assign-vehicle",
         {
-            await context.authorize("edit-routes");
-
-            const body: any = context.request.body;
-            body.fulfillerIds = [context.user?.organizationId];
-            body.createdBy = context.user?.id;
-
-            const result = await this.apiClient.post("logistics-platform/routes/v3/assign-vehicle",
-            {
-                noi: true,
-                body: body
-            });
-
-            const data = result.data;
-            context.response.body = data;
-            context.response.status = 200;
+            noi: true,
+            body: body
         });
 
-        /**
-         * Assigns a executor
-         * @returns 200 OK if successfull
-         */
-        this.router.post("/v2/dispatch/route/assign-executor", async context =>
+        const data = result.data;
+        context.response.body = data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Assigns a executor
+     * @returns 200 OK if successfull
+     */
+    public "POST /v2/dispatch/route/assign-executor" = async (context: AppContext) =>
+    {
+        await context.authorize("edit-routes");
+
+        const result = await this.apiClient.post("logistics-platform/routes/v2/add-fulfiller",
         {
-            await context.authorize("edit-routes");
-
-            const result = await this.apiClient.post("logistics-platform/routes/v2/add-fulfiller",
-            {
-                noi: true,
-                body: {
-                    organizationId: context.user?.organizationId,
-                    createdBy: context.user?.id,
-                    routeId: context.request.body.routeId,
-                    newFulfillerId: context.request.body.newExecutorId,
-                    currentFulfillerId: context.request.body.currentExecutorId,
-                    correlationId: uuidV4()
-                }
-            });
-
-            const data = result.data;
-            context.response.body = data;
-            context.response.status = 200;
+            noi: true,
+            body: {
+                organizationId: context.user?.organizationId,
+                createdBy: context.user?.id,
+                routeId: context.request.body.routeId,
+                newFulfillerId: context.request.body.newExecutorId,
+                currentFulfillerId: context.request.body.currentExecutorId,
+                correlationId: uuidV4()
+            }
         });
 
-        /**
-         * Sends a push message to 1...x drivers about an available route
-         * @returns 200 OK if successfull
-         */
-        this.router.post("/v2/dispatch/route/push-drivers", async context =>
+        const data = result.data;
+        context.response.body = data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Sends a push message to 1...x drivers about an available route
+     * @returns 200 OK if successfull
+     */
+    public "POST /v2/dispatch/route/push-drivers" = async (context: AppContext) =>
+    {
+        await context.authorize("edit-routes");
+
+        const body: any = context.request.body;
+        body.fulfillerIds = [context.user?.organizationId];
+        body.currentOutfit = context.user?.organizationId;
+        body.createdBy = context.user?.id;
+
+        const result = await this.apiClient.post("logistics-platform/routes/v4/push-route",
         {
-            await context.authorize("edit-routes");
-
-            const body: any = context.request.body;
-            body.fulfillerIds = [context.user?.organizationId];
-            body.currentOutfit = context.user?.organizationId;
-            body.createdBy = context.user?.id;
-
-            const result = await this.apiClient.post("logistics-platform/routes/v4/push-route",
-            {
-                noi: true,
-                body: body
-            });
-
-            const data = result.data;
-            context.response.body = data;
-            context.response.status = 200;
+            noi: true,
+            body: body
         });
+
+        const data = result.data;
+        context.response.body = data;
+        context.response.status = 200;
     }
 }

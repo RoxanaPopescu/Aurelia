@@ -1,3 +1,4 @@
+import { AppContext } from "../../app-context";
 import { AppModule } from "../../app-module";
 
 /**
@@ -5,26 +6,23 @@ import { AppModule } from "../../app-module";
  */
 export class UsersModule extends AppModule
 {
-    public configure(): void
+    /**
+     * Reactivates a user.
+     */
+    public "POST /v2/users/reactivate" = async (context: AppContext) =>
     {
-        /**
-         * Reactivates a user.
-         */
-        this.router.post("/v2/users/reactivate", async context =>
+        await context.authorize("create-users");
+
+        const routesResult = await this.apiClient.post("infrastructure/authentication/reactivateuser",
         {
-            await context.authorize("create-users");
-
-            const routesResult = await this.apiClient.post("infrastructure/authentication/reactivateuser",
-            {
-                body: {
-                    ...context.request.body,
-                    accessOutfits: [context.user?.organizationId],
-                    updatedBy: context.user?.email
-                }
-            });
-
-            context.response.body = routesResult.data;
-            context.response.status = 200;
+            body: {
+                ...context.request.body,
+                accessOutfits: [context.user?.organizationId],
+                updatedBy: context.user?.email
+            }
         });
+
+        context.response.body = routesResult.data;
+        context.response.status = 200;
     }
 }

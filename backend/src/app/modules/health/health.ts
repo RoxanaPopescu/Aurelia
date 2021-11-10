@@ -1,3 +1,4 @@
+import { AppContext } from "../../app-context";
 import { AppModule } from "../../app-module";
 
 /**
@@ -6,26 +7,20 @@ import { AppModule } from "../../app-module";
 export class HealthModule extends AppModule
 {
     /**
-     * Configures the module.
+     * Gets the current health status.
      */
-    public configure(): void
+    public "GET /health" = (context: AppContext) =>
     {
-        /**
-         * Gets the current health status.
-         */
-        this.router.get("/health", context =>
-        {
-            context.response.body = "OK";
-            context.response.status = 200;
-        });
+        context.response.body = "OK";
+        context.response.status = 200;
+    }
 
-        /**
-         * Gets the current health status.
-         */
-        this.router.get("/v2/health", context =>
-        {
-            context.response.body = "OK";
-            context.response.status = 200;
-        });
+    /**
+     * Gets the current health status.
+     */
+    public "GET /v2/health" = (context: AppContext) =>
+    {
+        context.response.body = "OK";
+        context.response.status = 200;
     }
 }

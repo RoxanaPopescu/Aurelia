@@ -1,7 +1,7 @@
-import { AppModule } from "../../app-module";
-import { v4 as uuidV4 } from "uuid";
-import { AppContext } from "app/app-context";
 import { DateTime } from "luxon";
+import { v4 as uuidV4 } from "uuid";
+import { AppContext } from "../../app-context";
+import { AppModule } from "../../app-module";
 
 /**
  * Represents a module exposing endpoints related to distribution centers.

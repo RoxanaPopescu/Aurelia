@@ -1,3 +1,4 @@
+import { AppContext } from "../../../../app-context";
 import { AppModule } from "../../../../app-module";
 
 /**
@@ -6,78 +7,72 @@ import { AppModule } from "../../../../app-module";
 export class DistributionCenterStagingModule extends AppModule
 {
     /**
-     * Configures the module.
+     * Saves the collo verified event
+     * @returns 202 ok
      */
-    public configure(): void
+    public "POST /v2/distribution-centers/staging/collo/validated" = async (context: AppContext) =>
     {
-        /**
-         * Saves the collo verified event
-         * @returns 202 ok
-         */
-        this.router.post("/v2/distribution-centers/staging/collo/validated", async context =>
+        await context.authorize();
+
+        const body = context.request.body;
+        await this.addOrderInformation(body);
+
+        const routesResult = await this.apiClient.post("staging/collo/validated",
         {
-            await context.authorize();
-
-            const body = context.request.body;
-            await this.addOrderInformation(body);
-
-            const routesResult = await this.apiClient.post("staging/collo/validated",
+            body:
             {
-                body:
-                {
-                    ...body
-                }
-            });
-
-            context.response.body = routesResult.data;
-            context.response.status = 200;
+                ...body
+            }
         });
 
-        /**
-         * Saves the collo damaged event
-         * @returns 202 ok
-         */
-        this.router.post("/v2/distribution-centers/staging/collo/damaged", async context =>
+        context.response.body = routesResult.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Saves the collo damaged event
+     * @returns 202 ok
+     */
+    public "POST /v2/distribution-centers/staging/collo/damaged" = async (context: AppContext) =>
+    {
+        await context.authorize();
+
+        const body = context.request.body;
+        await this.addOrderInformation(body);
+
+        const routesResult = await this.apiClient.post("staging/collo/damaged",
         {
-            await context.authorize();
-
-            const body = context.request.body;
-            await this.addOrderInformation(body);
-
-            const routesResult = await this.apiClient.post("staging/collo/damaged",
+            body:
             {
-                body:
-                {
-                    ...body
-                }
-            });
-
-            context.response.body = routesResult.data;
-            context.response.status = 200;
+                ...body
+            }
         });
 
-        /**
-         * Saves the collo missing event
-         * @returns 202 ok
-         */
-        this.router.post("/v2/distribution-centers/staging/collo/missing", async context =>
+        context.response.body = routesResult.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Saves the collo missing event
+     * @returns 202 ok
+     */
+    public "POST /v2/distribution-centers/staging/collo/missing" = async (context: AppContext) =>
+    {
+        await context.authorize();
+
+        const body = context.request.body;
+        await this.addOrderInformation(body);
+
+        const routesResult = await this.apiClient.post("staging/collo/missing",
         {
-            await context.authorize();
-
-            const body = context.request.body;
-            await this.addOrderInformation(body);
-
-            const routesResult = await this.apiClient.post("staging/collo/missing",
+            body:
             {
-                body:
-                {
-                    ...body
-                }
-            });
-
-            context.response.body = routesResult.data;
-            context.response.status = 200;
+                ...body
+            }
         });
+
+        context.response.body = routesResult.data;
+        context.response.status = 200;
     }
 
     /**

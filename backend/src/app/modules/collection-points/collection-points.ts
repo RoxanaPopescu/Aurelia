@@ -1,4 +1,4 @@
-import { AppContext } from "app/app-context";
+import { AppContext } from "../../app-context";
 import { AppModule } from "../../app-module";
 
 /**
@@ -6,139 +6,136 @@ import { AppModule } from "../../app-module";
  */
 export class CollectionPointModule extends AppModule
 {
-    public configure(): void
+    /**
+     * Gets the collection point by ID.
+     * @param context.params.id The ID of the collection point to receive.
+     * @returns The collection point of the specified ID.
+     */
+    public "GET /v2/collection-points/:id" = async (context: AppContext) =>
     {
-        /**
-         * Gets the collection point by ID.
-         * @param context.params.id The ID of the collection point to receive.
-         * @returns The collection point of the specified ID.
-         */
-        this.router.get("/v2/collection-points/:id", async context =>
+        const validationResult = await this.validateLogin(context, "view-routes");
+
+        const result = await this.apiClient.post("collection-point/details",
         {
-            const validationResult = await this.validateLogin(context, "view-routes");
-
-            const result = await this.apiClient.post("collection-point/details",
+            body:
             {
-                body:
-                {
-                    id: context.params.id,
-                    outfitId: validationResult.outfitId
-                }
-            });
-
-            context.response.body = result.data;
-            context.response.status = 200;
+                id: context.params.id,
+                outfitId: validationResult.outfitId
+            }
         });
 
-        /**
-         * Saves the colected order event
-         * @returns 200 when the event is received
-         */
-        this.router.post("/v2/collection-points/orders/collected", async context =>
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Saves the colected order event
+     * @returns 200 when the event is received
+     */
+    public "POST /v2/collection-points/orders/collected" = async (context: AppContext) =>
+    {
+        const validationResult = await this.validateLogin(context, "edit-routes");
+
+        const result = await this.apiClient.post("collection-point/orders/collected",
         {
-            const validationResult = await this.validateLogin(context, "edit-routes");
-
-            const result = await this.apiClient.post("collection-point/orders/collected",
+            body:
             {
-                body:
-                {
-                    ...context.request.body,
-                    outfitId: validationResult.outfitId,
-                    actionById: validationResult.userId
-                }
-            });
-
-            context.response.body = result.data;
-            context.response.status = 200;
+                ...context.request.body,
+                outfitId: validationResult.outfitId,
+                actionById: validationResult.userId
+            }
         });
 
-        /**
-         * Saves the missing order event
-         * @returns 200 when the event is received
-         */
-        this.router.post("/v2/collection-points/orders/missing", async context =>
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Saves the missing order event
+     * @returns 200 when the event is received
+     */
+    public "POST /v2/collection-points/orders/missing" = async (context: AppContext) =>
+    {
+        const validationResult = await this.validateLogin(context, "edit-routes");
+
+        const result = await this.apiClient.post("collection-point/orders/missing",
         {
-            const validationResult = await this.validateLogin(context, "edit-routes");
-
-            const result = await this.apiClient.post("collection-point/orders/missing",
+            body:
             {
-                body:
-                {
-                    ...context.request.body,
-                    outfitId: validationResult.outfitId,
-                    actionById: validationResult.userId
-                }
-            });
-
-            context.response.body = result.data;
-            context.response.status = 200;
+                ...context.request.body,
+                outfitId: validationResult.outfitId,
+                actionById: validationResult.userId
+            }
         });
 
-        /**
-         * Saves the damaged order event
-         * @returns 200 when the event is received
-         */
-        this.router.post("/v2/collection-points/orders/damaged", async context =>
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Saves the damaged order event
+     * @returns 200 when the event is received
+     */
+    public "POST /v2/collection-points/orders/damaged" = async (context: AppContext) =>
+    {
+        const validationResult = await this.validateLogin(context, "edit-routes");
+
+        const result = await this.apiClient.post("collection-point/orders/damaged",
         {
-            const validationResult = await this.validateLogin(context, "edit-routes");
-
-            const result = await this.apiClient.post("collection-point/orders/damaged",
+            body:
             {
-                body:
-                {
-                    ...context.request.body,
-                    outfitId: validationResult.outfitId,
-                    actionById: validationResult.userId
-                }
-            });
-
-            context.response.body = result.data;
-            context.response.status = 200;
+                ...context.request.body,
+                outfitId: validationResult.outfitId,
+                actionById: validationResult.userId
+            }
         });
 
-        /**
-         * Saves the rejected order event
-         * @returns 200 when the event is received
-         */
-        this.router.post("/v2/collection-points/orders/rejected", async context =>
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Saves the rejected order event
+     * @returns 200 when the event is received
+     */
+    public "POST /v2/collection-points/orders/rejected" = async (context: AppContext) =>
+    {
+        const validationResult = await this.validateLogin(context, "edit-routes");
+
+        const result = await this.apiClient.post("collection-point/orders/rejected",
         {
-            const validationResult = await this.validateLogin(context, "edit-routes");
-
-            const result = await this.apiClient.post("collection-point/orders/rejected",
+            body:
             {
-                body:
-                {
-                    ...context.request.body,
-                    outfitId: validationResult.outfitId,
-                    actionById: validationResult.userId
-                }
-            });
-
-            context.response.body = result.data;
-            context.response.status = 200;
+                ...context.request.body,
+                outfitId: validationResult.outfitId,
+                actionById: validationResult.userId
+            }
         });
 
-        /**
-         * Saves the not collected order event
-         * @returns 200 when the event is received
-         */
-        this.router.post("/v2/collection-points/orders/not-collected", async context =>
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Saves the not collected order event
+     * @returns 200 when the event is received
+     */
+    public "POST /v2/collection-points/orders/not-collected" = async (context: AppContext) =>
+    {
+        const validationResult = await this.validateLogin(context, "edit-routes");
+
+        const result = await this.apiClient.post("collection-point/orders/NotCollected",
         {
-            const validationResult = await this.validateLogin(context, "edit-routes");
-
-            const result = await this.apiClient.post("collection-point/orders/NotCollected",
+            body:
             {
-                body:
-                {
-                    ...context.request.body,
-                    outfitId: validationResult.outfitId,
-                    actionById: validationResult.userId
-                }
-            });
-
-            context.response.body = result.data;
-            context.response.status = 200;
+                ...context.request.body,
+                outfitId: validationResult.outfitId,
+                actionById: validationResult.userId
+            }
         });
+
+        context.response.body = result.data;
+        context.response.status = 200;
     }
 
     /**

@@ -1,6 +1,6 @@
-import { AppModule } from "../../../../app-module";
 import { v4 as uuidV4 } from "uuid";
-import { AppContext } from "app/app-context";
+import { AppContext } from "../../../../app-context";
+import { AppModule } from "../../../../app-module";
 
 /**
  * Represents a module exposing endpoints related to tracking.
