@@ -310,7 +310,7 @@ export class DistributionCenterModule extends AppModule
             noi: true
         });
 
-        var colli = result.data.results;
+        const colli = result.data.results;
 
         for (const collo of colli)
         {
