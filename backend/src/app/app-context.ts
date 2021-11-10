@@ -1,7 +1,8 @@
 import { ParameterizedContext } from "koa";
 import { IRouterParamContext } from "koa-router";
 import { IPaging, ISorting } from "../shared/types";
-import { User } from "../app/middleware/authorize-middleware";
+import { User } from "./middleware/authorize-middleware";
+import { IFakeRequest, IFakeResponse } from "./middleware/fetch-middleware";
 
 /**
  * Represents the custom properties and methods added to the context.
@@ -39,6 +40,23 @@ export interface IAppContext
      * with status 500, indicating an internal server error.
      */
     internal(): void;
+
+    /**
+     * Makes an internal request to another endpoint.
+     *
+     * Note that only endpoints that are defined as methods on a
+     * module are supported; endpoints that are manually added to
+     * the router are not.
+     *
+     * Also note that no `next` method will be provided to the endpoint,
+     * and that the context provided will not be a real context instance,
+     * but a fake instance with only the the most essential properties.
+     *
+     * @param endpoint The name of the endpoint, which must match the pattern `{HEAD|GET|POST|PUT|PATCH|DELETE} /{path}`.
+     * @param request The fake request object.
+     * @returns The fake response object.
+     */
+    fetch(endpoint: string, request?: IFakeRequest): Promise<IFakeResponse>;
 }
 
 /**

@@ -1,5 +1,36 @@
+import { Next } from "koa";
 import { ApiClient, inject } from "../shared/infrastructure";
+import { AppContext } from "./app-context";
 import { AppRouter } from "./app-router";
+
+/**
+ * Represents the name of an endpoint defined on a module.
+ */
+export type EndpointName = `${"HEAD" | "GET" | "POST" | "PUT" | "PATCH" | "DELETE"} /${string}`;
+
+// Map that associates configured endpoints with their handler functions.
+const _configuredEndpoints = new Map<EndpointName, (context: AppContext, next: Next) => void | Promise<void>>();
+
+/**
+ * Gets the function configured as the handler for the specified endpoint.
+ *
+ * Note that only endpoints that are defined as methods on a module class are supported.
+ * Endpoints that are manually added to the router are not supported.
+ *
+ * @param endpoint The name of the endpoint, which must match the pattern `{HEAD|GET|POST|PUT|PATCH|DELETE} /{path}`.
+ * @returns The function configured as the handler for the specified endpoint.
+ */
+export function getEndpoint(endpoint: EndpointName): (context: AppContext, next: Next) => void | Promise<void>
+{
+    const endpointFunc = _configuredEndpoints.get(endpoint);
+
+    if (endpointFunc == null)
+    {
+        throw new Error(`The endpoint '${endpoint}' has not been configured.`);
+    }
+
+    return endpointFunc;
+}
 
 /**
  * Represents the base class from which all app modules must inherit.
@@ -75,7 +106,11 @@ export abstract class AppModule
                             throw new Error(`The class member '${key}' must be a function.`);
                         }
 
-                        (this.router as any)[verb.toLowerCase()](path, (this as any)[key].bind(this));
+                        const endpointFunc = (this as any)[key].bind(this);
+
+                        (this.router as any)[verb.toLowerCase()](path, endpointFunc);
+
+                        _configuredEndpoints.set(key as EndpointName, endpointFunc);
                     }
                 }
             }
@@ -83,4 +118,9 @@ export abstract class AppModule
             object = Reflect.getPrototypeOf(object);
         }
     }
+
+    /**
+     * Handles requests for the endpoint specified by the method name.
+     */
+    [key: EndpointName]: (context: AppContext, next: Next) => void | Promise<void>;
 }

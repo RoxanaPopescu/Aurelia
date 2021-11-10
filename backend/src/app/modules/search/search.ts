@@ -1,19 +1,7 @@
 import { DateTime } from "luxon";
-import { AuthorizationError, Type } from "../../../shared/types";
-import { container } from "../../../shared/infrastructure";
+import { AuthorizationError } from "../../../shared/types";
 import { AppContext } from "../../app-context";
 import { AppModule } from "../../app-module";
-import { RoutesListModule } from "../routes/modules/list/list";
-import { OrdersModule } from "../orders/orders";
-import { RoutePlanningPlansModule } from "../route-planning/modules/plans/plans";
-import { RoutePlanningOrderGroupsModule } from "../route-planning/modules/order-groups/order-groups";
-import { RoutePlanningRuleSetsModule } from "../route-planning/modules/rule-sets/rule-sets";
-import { RouteTemplatesModule } from "../routes/modules/templates/templates";
-import { DistributionCenterModule } from "../distribution-centers/distribution-centers";
-import { DriversModule } from "../drivers/drivers";
-import { VehiclesModule } from "../vehicles/vehicles";
-import { TriggersModule } from "../communication/modules/triggers/triggers";
-import { OrganizationModule } from "../organization/organization";
 
 /**
  * Represents a module exposing endpoints related to route details
@@ -49,7 +37,7 @@ export class RoutesModule extends AppModule
         ]
         = await Promise.all(
         [
-            this.getResponse(OrdersModule, "POST /v2/orders/list", context,
+            this.tryFetch(context, "POST /v2/orders/list",
             {
                 body:
                 {
@@ -60,7 +48,7 @@ export class RoutesModule extends AppModule
                 }
             }),
 
-            this.getResponse(RoutesListModule, "POST /v2/routes/list", context,
+            this.tryFetch(context, "POST /v2/routes/list",
             {
                 body:
                 {
@@ -75,9 +63,9 @@ export class RoutesModule extends AppModule
                 }
             }),
 
-            this.getResponse(RouteTemplatesModule, "POST /v2/routes/templates/list", context),
+            this.tryFetch(context, "POST /v2/routes/templates/list"),
 
-            this.getResponse(RoutePlanningPlansModule, "POST /v2/route-planning/plans/list", context,
+            this.tryFetch(context, "POST /v2/route-planning/plans/list",
             {
                 body:
                 {
@@ -87,15 +75,15 @@ export class RoutesModule extends AppModule
                 }
             }),
 
-            this.getResponse(RoutePlanningRuleSetsModule, "GET /v2/route-planning/rule-sets", context),
+            this.tryFetch(context, "GET /v2/route-planning/rule-sets"),
 
-            this.getResponse(RoutePlanningOrderGroupsModule, "POST /v2/route-planning/order-groups/list", context),
+            this.tryFetch(context, "POST /v2/route-planning/order-groups/list"),
 
-            this.getResponse(DistributionCenterModule, "GET /v2/distribution-centers", context),
+            this.tryFetch(context, "GET /v2/distribution-centers"),
 
-            this.getResponse(TriggersModule, "GET /v2/communication/triggers", context),
+            this.tryFetch(context, "GET /v2/communication/triggers"),
 
-            this.getResponse(DriversModule, "POST /v2/drivers/list", context,
+            this.tryFetch(context, "POST /v2/drivers/list",
             {
                 body:
                 {
@@ -116,37 +104,37 @@ export class RoutesModule extends AppModule
                 }
             }),
 
-            this.getResponse(VehiclesModule, "POST /v2/vehicles/list", context),
+            this.tryFetch(context, "POST /v2/vehicles/list"),
 
-            this.getResponse(OrganizationModule, "GET /v2/organizations/:organizationId/users", context,
+            this.tryFetch(context, "GET /v2/organizations/:organizationId/users",
             {
                 params:
                 {
-                    organizationId: context.user?.organizationId
+                    organizationId: context.user!.organizationId
                 }
             }),
 
-            this.getResponse(OrganizationModule, "GET /v2/organizations/:organizationId/teams", context,
+            this.tryFetch(context, "GET /v2/organizations/:organizationId/teams",
             {
                 params:
                 {
-                    organizationId: context.user?.organizationId
+                    organizationId: context.user!.organizationId
                 }
             }),
 
-            this.getResponse(OrganizationModule, "GET /v2/organizations/:organizationId/roles", context,
+            this.tryFetch(context, "GET /v2/organizations/:organizationId/roles",
             {
                 params:
                 {
-                    organizationId: context.user?.organizationId
+                    organizationId: context.user!.organizationId
                 }
             }),
 
-            this.getResponse(OrganizationModule, "GET /v2/organizations/:organizationId/connections", context,
+            this.tryFetch(context, "GET /v2/organizations/:organizationId/connections",
             {
                 params:
                 {
-                    organizationId: context.user?.organizationId
+                    organizationId: context.user!.organizationId
                 }
             })
         ]);
@@ -282,6 +270,13 @@ export class RoutesModule extends AppModule
         context.response.status = 200;
     }
 
+    /**
+     * Filters the specified entity infos to include only those
+     * that contains the specified query text, ignoring case.
+     * @param entityInfos The entity infos to filter.
+     * @param queryText The query text.
+     * @returns The filtered entity infos.
+     */
     private filter(entityInfos: any[], queryText: string): any[]
     {
         const lowerCaseQueryText = queryText.toLowerCase();
@@ -294,40 +289,19 @@ export class RoutesModule extends AppModule
         );
     }
 
-    private async getResponse(module: Type, endpoint: string, context: AppContext, request?: any): Promise<any>
+    /**
+     * Makes an internal request to the specified endpoint, returning the response
+     * if successful, or undefined if any authorization error occurs.
+     * @param context The current context.
+     * @param endpoint The endpoint to fetch.
+     * @param request The fake request object.
+     * @returns The fake response object.
+     */
+    private async tryFetch(context: AppContext, endpoint: string, request?: any): Promise<any>
     {
-        const fakeContext =
-        {
-            // tslint:disable: no-unbound-method
-            user: context.user,
-            paging: context.paging,
-            sorting: context.sorting,
-            authorize: context.authorize,
-            internal: context.internal,
-            // tslint:enable
-
-            headers: request?.headers ?? context.headers,
-            query: request?.query ?? {},
-            params: request?.params ?? {},
-            request:
-            {
-                headers: request?.headers ?? context.headers,
-                query: request?.query ?? {},
-                body: request?.body ?? {}
-            },
-
-            response:
-            {
-                status: undefined,
-                body: undefined
-            }
-        };
-
         try
         {
-            await container.get(module)[endpoint](fakeContext);
-
-            return fakeContext.response;
+            return context.fetch(endpoint, request);
         }
         catch (error)
         {
