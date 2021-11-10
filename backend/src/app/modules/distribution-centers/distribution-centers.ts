@@ -100,19 +100,37 @@ export class DistributionCenterModule extends AppModule
         await context.authorize("view-distribution-centers");
 
         const body = context.request.body;
-        body.createdBy = context.user?.id;
 
-        // FIXME: Add the collo
+        // We add the collo to the route and order
+        const addColloToOrderPromise = this.addColloToOrder(body, context.user!.organizationId, context.user!.id);
+        const addColloToRoutePromise = this.apiClient.get("logistics-platform/barcodes/add-collo",
+        {
+            query:
+            {
+                orderId: body.orderId,
+                barcode: body.barcode
+            },
+            noi: true
+        });
 
-        await this.apiClient.post("logistics/depots/list",
+        const [orderIdsResult, allColliNOI] = await Promise.all([addColloToOrderPromise, addColloToRoutePromise]);
+
+        console.log(allColliNOI.data, orderIdsResult);
+
+        // FIXME: Return collo by mocking
+        /*
+        this.getResponse(OrdersModule, "POST /v2/orders/list", context,
         {
             body:
             {
-                ownerIds: [context.user?.organizationId]
+                page: 1,
+                pageSize: 10,
+                sorting: [{ field: 6, direction: 2 }],
+                filter: [context.query.text]
             }
-        });
+        }),
+        */
 
-        context.response.body = [];
         context.response.status = 200;
     }
 
@@ -318,5 +336,35 @@ export class DistributionCenterModule extends AppModule
         }
 
         return colli;
+    }
+
+    private async addColloToOrder(order: any, organizationId: string, userId: string): Promise<void>
+    {
+        const orderIdsResult = await this.apiClient.post("logistics/orders/fulfiller/orderslookup",
+        {
+            body: {
+                outfitIds: [organizationId],
+                orderIds: [order.orderId],
+                page: 1,
+                pageSize: 1,
+                consignorIds: []
+            }
+        });
+
+        const internalIds = orderIdsResult.data.internalOrderIds;
+
+        if (internalIds.length > 0)
+        {
+            uuidV4();
+
+            await this.apiClient.post("logistics/orders/addcollitoorder",
+            {
+                body: {
+                    internalOrderId: internalIds[0],
+                    colli: [{ "barcode": order.barcode }],
+                    createdBy: userId
+                }
+            });
+        }
     }
 }
