@@ -2,6 +2,7 @@ search-result
 {
     display: block;
 
+    --card-height: auto;
     --card-padding: 13rem;
 
     .search-result-icon-column
@@ -19,9 +20,9 @@ search-result
         margin-right: 28rem;
     }
 
-    .search-result-path
+    .search-result-type
     {
-        &::before
+        &:not(:last-child)::after
         {
             content: "|";
             padding: 0 3rem;

@@ -15,6 +15,12 @@ export class SearchResultCustomElement
     public model: EntityInfo;
 
     /**
+     * True to show the type of the search result, otherwise false.
+     */
+    @bindable({ defaultValue: true })
+    public showType: boolean;
+
+    /**
      * The function to call when the star icon is clicked,
      * or undefined to disable the icon.
      */

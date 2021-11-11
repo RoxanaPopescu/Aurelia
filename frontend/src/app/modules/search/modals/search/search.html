@@ -180,16 +180,71 @@
                     No items match your query
                 </div>
 
-                <list-layout else>
+                <div else>
 
-                    <search-result
-                        repeat.for="result of searchResults"
-                        model.bind="result"
-                        click.trigger="resultClick($event)"
-                        star-click.call="starClick(result)">
-                    </search-result>
+                    <let
+                        group-search-results.bind="true">
+                    </let>
 
-                </list-layout>
+                    <list-layout if.bind="!groupSearchResults">
+
+                        <search-result
+                            repeat.for="result of searchResults"
+                            model.bind="result"
+                            show-type.bind="true"
+                            click.trigger="resultClick($event)"
+                            star-click.call="starClick(result)">
+                        </search-result>
+
+                    </list-layout>
+
+                    <div else>
+
+                        <let
+                            grouped-search-results.bind="searchResults | group: 'type.slug'">
+                        </let>
+
+                        <div repeat.for="[typeSlug, searchResultsInGroup] of groupedSearchResults">
+
+                            <let
+                                show-more-search-results.bind="false"
+                                search-results-limit.bind="groupedSearchResults.size > 1 && searchResults.length > 10 ? 5 : searchResults.length"
+                                visible-search-results-in-group.bind="searchResultsInGroup | take: showMoreSearchResults ? undefined : searchResultsLimit">
+                            </let>
+
+                            <div class="font-medium margin-bottom ${$index > 0 ? 'margin-double-top' : ''}">
+                                ${searchResultsInGroup[0].type.name}
+                            </div>
+
+                            <list-layout>
+
+                                <search-result
+                                    repeat.for="result of visibleSearchResultsInGroup"
+                                    model.bind="result"
+                                    show-type.bind="false"
+                                    click.trigger="resultClick($event)"
+                                    star-click.call="starClick(result)">
+                                </search-result>
+
+                            </list-layout>
+
+                            <div if.bind="searchResultsInGroup.length > searchResultsLimit" class="margin-top">
+
+                                <a if.bind="!showMoreSearchResults" click.trigger="showMoreSearchResults = true" translate>
+                                    Show more
+                                </a>
+
+                                <a if.bind="showMoreSearchResults" click.trigger="showMoreSearchResults = false" translate>
+                                    Show less
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
