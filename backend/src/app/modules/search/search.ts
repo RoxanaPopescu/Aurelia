@@ -296,7 +296,7 @@ export class RoutesModule extends AppModule
      * @param context The current context.
      * @param endpoint The endpoint to fetch.
      * @param request The fake request object.
-     * @returns The fake response object.
+     * @returns A promise that will be resolved with the fake response object.
      */
     private async tryFetch(context: AppContext, endpoint: string, request?: any): Promise<IFakeResponse | undefined>
     {

@@ -54,7 +54,7 @@ export interface IAppContext
      *
      * @param endpoint The name of the endpoint, which must match the pattern `{HEAD|GET|POST|PUT|PATCH|DELETE} /{path}`.
      * @param request The fake request object.
-     * @returns The fake response object.
+     * @returns A promise that will be resolved with the fake response object.
      */
     fetch(endpoint: string, request?: IFakeRequest): Promise<IFakeResponse>;
 }
