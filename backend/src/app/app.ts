@@ -15,6 +15,7 @@ import { headersMiddleware } from "./middleware/headers-middleware";
 import { authorizeMiddleware } from "./middleware/authorize-middleware";
 import { sortingMiddleware } from "./middleware/sorting-middleware";
 import { pagingMiddleware } from "./middleware/paging-middleware";
+import { fetchMiddleware } from "./middleware/fetch-middleware";
 
 /**
  * Represents the app.
@@ -65,8 +66,9 @@ export class App extends Koa<any, IAppContext>
         this.use(headersMiddleware());
         this.use(apiErrorMiddleware());
         this.use(authorizeMiddleware(settings.middleware.authorize.accessToken));
-        this.use(pagingMiddleware());
         this.use(sortingMiddleware());
+        this.use(pagingMiddleware());
+        this.use(fetchMiddleware());
 
         // Add router middleware.
         this.use(this._appRouter.routes());

@@ -1,7 +1,7 @@
-import { IAppContext } from "app/app-context";
 import { ParameterizedContext } from "koa";
 import Router from "koa-router";
 import { Readable } from "stream";
+import { AppContext, IAppContext } from "../../app-context";
 import { AppModule } from "../../app-module";
 import settings from "../../../resources/settings/settings";
 
@@ -10,83 +10,80 @@ import settings from "../../../resources/settings/settings";
  */
 export class FilesModule extends AppModule
 {
-    public configure(): void
+    /**
+     * Uploads a file to the public file storage.
+     */
+    public "POST /v2/files/upload/public" = async (context: AppContext) =>
     {
-        /**
-         * Uploads a file to the public file storage.
-         */
-        this.router.post("/v2/files/upload/public", async context =>
-        {
-            const body = await this.readStream(context.req);
-            await this.validateLogin(context);
+        const body = await this.readStream(context.req);
+        await this.validateLogin(context);
 
-            const result = await this.apiClient.post("file/uploadpublic",
+        const result = await this.apiClient.post("file/uploadpublic",
+        {
+            headers:
             {
-                headers:
-                {
-                    "content-type": context.request.headers["content-type"],
-                    "content-length": context.request.headers["content-length"]
-                },
-                body: body
-            });
-
-            context.response.body = result.data;
-            context.response.status = 200;
+                "content-type": context.request.headers["content-type"],
+                "content-length": context.request.headers["content-length"]
+            },
+            body: body
         });
 
-        /**
-         * Uploads a file to the secure file storage.
-         */
-        this.router.post("/v2/files/upload/sensitive", async context =>
-        {
-            const body = await this.readStream(context.req);
-            await this.validateLogin(context);
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
 
-            const result = await this.apiClient.post("file/uploadsensitive",
+    /**
+     * Uploads a file to the secure file storage.
+     */
+    public "POST /v2/files/upload/sensitive" = async (context: AppContext) =>
+    {
+        const body = await this.readStream(context.req);
+        await this.validateLogin(context);
+
+        const result = await this.apiClient.post("file/uploadsensitive",
+        {
+            headers:
             {
-                headers:
-                {
-                    "content-type": context.request.headers["content-type"],
-                    "content-length": context.request.headers["content-length"]
-                },
-                body: body
-            });
-
-            context.response.body = result.data;
-            context.response.status = 200;
+                "content-type": context.request.headers["content-type"],
+                "content-length": context.request.headers["content-length"]
+            },
+            body: body
         });
 
-        /**
-         * Gets info about a public file, including its URL.
-         * @returns An object representing info about the file.
-         */
-        this.router.get("/v2/files/public/:id", context =>
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Gets info about a public file, including its URL.
+     * @returns An object representing info about the file.
+     */
+    public "GET /v2/files/public/:id" = (context: AppContext) =>
+    {
+        const url = `${settings.app.publicImageBaseUrl}${context.params.id}`;
+
+        context.response.body = { url };
+        context.response.status = 200;
+    }
+
+    /**
+     * Gets info about a public file, including its temporary URL.
+     * @returns An object representing info about the file.
+     */
+    public "GET /v2/files/sensitive/:id" = async (context: AppContext) =>
+    {
+        await this.validateLogin(context);
+
+        const result = await this.apiClient.post("file/getsensitive",
         {
-            const url = `${settings.app.publicImageBaseUrl}${context.params.id}`;
-
-            context.response.body = { url };
-            context.response.status = 200;
-        });
-
-        /**
-         * Gets info about a public file, including its temporary URL.
-         * @returns An object representing info about the file.
-         */
-        this.router.get("/v2/files/sensitive/:id", async context =>
-        {
-            await this.validateLogin(context);
-
-            const result = await this.apiClient.post("file/getsensitive",
+            body:
             {
-                body:
-                {
-                    fileName: context.params.id
-                }
-            });
-
-            context.response.body = { url: result.data.url };
-            context.response.status = 200;
+                fileName: context.params.id
+            }
         });
+
+        context.response.body = { url: result.data.url };
+        context.response.status = 200;
     }
 
     /**

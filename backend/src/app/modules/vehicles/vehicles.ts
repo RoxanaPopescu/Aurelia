@@ -1,4 +1,4 @@
-import { AppContext } from "app/app-context";
+import { AppContext } from "../../app-context";
 import { AppModule } from "../../app-module";
 
 /**

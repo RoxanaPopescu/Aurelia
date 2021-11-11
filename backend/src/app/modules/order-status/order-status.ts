@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 import { getStrings } from "../../../shared/localization";
 import { environment } from "../../../env";
+import { AppContext } from "../../app-context";
 import { AppModule } from "../../app-module";
 import { MapObject } from "shared/types";
 
@@ -9,197 +10,194 @@ import { MapObject } from "shared/types";
  */
 export class OrderStatusModule extends AppModule
 {
-    public configure(): void
+    /**
+     * Gets the tracking info for the specified tracking ID.
+     * @param context.params.id The ID of the order for which to get tracking info.
+     * @returns The tracking info for the specified tracking ID.
+     */
+    public "GET /v2/order-status/:id" = async (context: AppContext) =>
     {
-        /**
-         * Gets the tracking info for the specified tracking ID.
-         * @param context.params.id The ID of the order for which to get tracking info.
-         * @returns The tracking info for the specified tracking ID.
-         */
-        this.router.get("/v2/order-status/:id", async context =>
+        const eventTitles = getStrings("./resources/strings/order-status-event-titles.json");
+
+        const trackingId = context.params.id.toLowerCase();
+
+        context.internal();
+
+        // Fetch the order details.
+
+        let orderDetailsData: any;
+
+        try
         {
-            const eventTitles = getStrings("./resources/strings/order-status-event-titles.json");
+            orderDetailsData = await this.fetchOrderDetails(trackingId);
 
-            const trackingId = context.params.id.toLowerCase();
-
-            context.internal();
-
-            // Fetch the order details.
-
-            let orderDetailsData: any;
-
-            try
+            // Was the order found?
+            if (orderDetailsData == null)
             {
-                orderDetailsData = await this.fetchOrderDetails(trackingId);
+                // Set the response status.
+                context.response.status = 404;
 
-                // Was the order found?
-                if (orderDetailsData == null)
-                {
-                    // Set the response status.
-                    context.response.status = 404;
-
-                    return;
-                }
+                return;
             }
-            catch (error: any)
+        }
+        catch (error: any)
+        {
+            // The API returns status 422 if a malformed ID is specified - we handle that as not found.
+            if (error.response?.status === 422)
             {
-                // The API returns status 422 if a malformed ID is specified - we handle that as not found.
-                if (error.response?.status === 422)
-                {
-                    // Set the response status.
-                    context.response.status = 404;
+                // Set the response status.
+                context.response.status = 404;
 
-                    return;
-                }
-
-                throw error;
+                return;
             }
 
-            // Fetch the order events.
-            const orderEventsData = await this.fetchOrderEvents(orderDetailsData.consignorId, orderDetailsData.orderId);
+            throw error;
+        }
 
-            // If the order is already delivered, failed or cancelled, remove any `order-delivery-eta-provided` event.
-            if (orderEventsData.some(e => ["order-delivery-completed", "order-delivery-failed", "order-cancelled"].includes(e.eventType)))
+        // Fetch the order events.
+        const orderEventsData = await this.fetchOrderEvents(orderDetailsData.consignorId, orderDetailsData.orderId);
+
+        // If the order is already delivered, failed or cancelled, remove any `order-delivery-eta-provided` event.
+        if (orderEventsData.some(e => ["order-delivery-completed", "order-delivery-failed", "order-cancelled"].includes(e.eventType)))
+        {
+            const indexToRemove = orderEventsData.findIndex(e => e.eventType === "order-delivery-eta-provided");
+
+            if (indexToRemove > -1)
             {
-                const indexToRemove = orderEventsData.findIndex(e => e.eventType === "order-delivery-eta-provided");
-
-                if (indexToRemove > -1)
-                {
-                    orderEventsData.splice(indexToRemove, 1);
-                }
+                orderEventsData.splice(indexToRemove, 1);
             }
+        }
 
-            // Map the relevant order events to tracking events.
-            const isPickedUp = orderEventsData.some(e => e.eventType === "order-pickup-completed");
-            const trackingEvents = orderEventsData.map(e => this.getTrackingEvent(e, eventTitles, isPickedUp)).filter(e => e != null);
+        // Map the relevant order events to tracking events.
+        const isPickedUp = orderEventsData.some(e => e.eventType === "order-pickup-completed");
+        const trackingEvents = orderEventsData.map(e => this.getTrackingEvent(e, eventTitles, isPickedUp)).filter(e => e != null);
 
-            // Always create the `order` tracking event based on the order details,
-            // as `order-placed` order event does not include all the data we need.
-            trackingEvents.unshift(
+        // Always create the `order` tracking event based on the order details,
+        // as `order-placed` order event does not include all the data we need.
+        trackingEvents.unshift(
+        {
+            id: "order-created-event-id",
+            type: "order",
+            dateTimeRange:
             {
-                id: "order-created-event-id",
-                type: "order",
+                start: DateTime.fromISO(orderDetailsData.createdAt, { setZone: true }),
+                end: DateTime.fromISO(orderDetailsData.createdAt, { setZone: true })
+            },
+            title: eventTitles.orderPlaced,
+            location: undefined,
+            focusOnMap: false,
+            hasOccurred: true
+        });
+
+        // If the order is cancelled, create an `order-cancelled` event.
+        if (orderDetailsData.state.isCancelled)
+        {
+            trackingEvents.push(
+            {
+                id: "order-cancelled-event-id",
+                type: "order-cancelled",
                 dateTimeRange:
                 {
-                    start: DateTime.fromISO(orderDetailsData.createdAt, { setZone: true }),
-                    end: DateTime.fromISO(orderDetailsData.createdAt, { setZone: true })
+                    start: undefined,
+                    end: undefined
                 },
-                title: eventTitles.orderPlaced,
+                title: eventTitles.orderCancelled,
                 location: undefined,
                 focusOnMap: false,
                 hasOccurred: true
             });
+        }
 
-            // If the order is cancelled, create an `order-cancelled` event.
-            if (orderDetailsData.state.isCancelled)
+        // If no `delivery` event exists, create one based on the planned delivery time.
+        else if (!trackingEvents.some(e => e.type === "delivery"))
+        {
+            trackingEvents.push(
             {
-                trackingEvents.push(
+                id: "planned-delivery-event-id",
+                type: "delivery",
+                dateTimeRange:
                 {
-                    id: "order-cancelled-event-id",
-                    type: "order-cancelled",
-                    dateTimeRange:
-                    {
-                        start: undefined,
-                        end: undefined
-                    },
-                    title: eventTitles.orderCancelled,
-                    location: undefined,
-                    focusOnMap: false,
-                    hasOccurred: true
-                });
-            }
-
-            // If no `delivery` event exists, create one based on the planned delivery time.
-            else if (!trackingEvents.some(e => e.type === "delivery"))
-            {
-                trackingEvents.push(
-                {
-                    id: "planned-delivery-event-id",
-                    type: "delivery",
-                    dateTimeRange:
-                    {
-                        start: this.getDateTimeString(orderDetailsData.deliveryEarliestDate, orderDetailsData.deliveryEarliestTime),
-                        end: this.getDateTimeString(orderDetailsData.deliveryLatestDate, orderDetailsData.deliveryLatestTime)
-                    },
-                    title: eventTitles.deliveryEstimated,
-                    location:
-                    {
-                        address:
-                        {
-                            id: orderDetailsData.consigneeAddressPosition?.locationId,
-                            primary: orderDetailsData.consigneeAddress
-                        },
-                        position: orderDetailsData.consigneeAddressPosition == null ? undefined :
-                        {
-                            latitude: orderDetailsData.consigneeAddressPosition.latitude,
-                            longitude: orderDetailsData.consigneeAddressPosition.longitude
-                        }
-                    },
-                    focusOnMap: true,
-                    hasOccurred: false
-                });
-            }
-
-            // Get the data for the driver associated with the estimated delivery.
-            const driverData = orderEventsData.find(e => e.eventType === "order-delivery-eta-provided")?.data.driver;
-
-            // Get the last known position of the driver, if any.
-
-            let driverPosition: any;
-
-            try
-            {
-                if (driverData?.id)
-                {
-                    driverPosition = await this.fetchDriverPosition(driverData.id);
-                }
-            }
-            catch (error)
-            {
-                console.error(error);
-            }
-
-            // Set the response body.
-            context.response.body =
-            {
-                trackingId: trackingId,
-                ownerId: orderDetailsData.consignorId,
-                ownerOrderId: orderDetailsData.orderId,
-                events: trackingEvents,
-                colli: orderDetailsData.actualColli?.map((c: any) =>
-                ({
-                    id: c.internalId,
-                    barcode: c.barcode,
-                    weight: c.weight,
-                    dimensions:
-                    {
-                        // HACK: Misspelling is intentional, to match the property name in the data.
-                        length: c.dimension.lenght,
-                        width: c.dimension.width,
-                        height: c.dimension.height
-                    },
-                    tags: c.tags
-                })),
-                driver: driverData?.id == null || driverPosition == null ? undefined :
-                {
-                    id: driverData.id,
-                    firstName: driverData.firstName,
-                    pictureUrl: undefined,
-                    position: driverPosition
+                    start: this.getDateTimeString(orderDetailsData.deliveryEarliestDate, orderDetailsData.deliveryEarliestTime),
+                    end: this.getDateTimeString(orderDetailsData.deliveryLatestDate, orderDetailsData.deliveryLatestTime)
                 },
-                options:
+                title: eventTitles.deliveryEstimated,
+                location:
                 {
-                    authorityToLeave: orderDetailsData.authorityToLeave == null ? undefined :
+                    address:
                     {
-                        instructions: orderDetailsData.authorityToLeave.deliveryInstructions
+                        id: orderDetailsData.consigneeAddressPosition?.locationId,
+                        primary: orderDetailsData.consigneeAddress
+                    },
+                    position: orderDetailsData.consigneeAddressPosition == null ? undefined :
+                    {
+                        latitude: orderDetailsData.consigneeAddressPosition.latitude,
+                        longitude: orderDetailsData.consigneeAddressPosition.longitude
                     }
+                },
+                focusOnMap: true,
+                hasOccurred: false
+            });
+        }
+
+        // Get the data for the driver associated with the estimated delivery.
+        const driverData = orderEventsData.find(e => e.eventType === "order-delivery-eta-provided")?.data.driver;
+
+        // Get the last known position of the driver, if any.
+
+        let driverPosition: any;
+
+        try
+        {
+            if (driverData?.id)
+            {
+                driverPosition = await this.fetchDriverPosition(driverData.id);
+            }
+        }
+        catch (error)
+        {
+            console.error(error);
+        }
+
+        // Set the response body.
+        context.response.body =
+        {
+            trackingId: trackingId,
+            ownerId: orderDetailsData.consignorId,
+            ownerOrderId: orderDetailsData.orderId,
+            events: trackingEvents,
+            colli: orderDetailsData.actualColli?.map((c: any) =>
+            ({
+                id: c.internalId,
+                barcode: c.barcode,
+                weight: c.weight,
+                dimensions:
+                {
+                    // HACK: Misspelling is intentional, to match the property name in the data.
+                    length: c.dimension.lenght,
+                    width: c.dimension.width,
+                    height: c.dimension.height
+                },
+                tags: c.tags
+            })),
+            driver: driverData?.id == null || driverPosition == null ? undefined :
+            {
+                id: driverData.id,
+                firstName: driverData.firstName,
+                pictureUrl: undefined,
+                position: driverPosition
+            },
+            options:
+            {
+                authorityToLeave: orderDetailsData.authorityToLeave == null ? undefined :
+                {
+                    instructions: orderDetailsData.authorityToLeave.deliveryInstructions
                 }
+            }
 
-            };
+        };
 
-            // Set the response status.
-            context.response.status = 200;
-        });
+        // Set the response status.
+        context.response.status = 200;
     }
 
     /**
