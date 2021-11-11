@@ -25,8 +25,29 @@ export class DispatchRouteModule extends AppModule
             body: body
         });
 
-        const data = result.data;
-        context.response.body = data;
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Assigns a driver
+     * @returns 200 OK if successfull
+     */
+    public "POST /v2/dispatch/route/assign-multiple-drivers" = async (context: AppContext) =>
+    {
+        await context.authorize("assign-driver-route");
+
+        const body: any = context.request.body;
+        body.organizationId = context.user?.organizationId;
+        body.updatedBy = context.user?.id;
+
+        const result = await this.apiClient.post("logistics-platform/routes/v4/assign-multiple-drivers",
+        {
+            noi: true,
+            body: body
+        });
+
+        context.response.body = result.data;
         context.response.status = 200;
     }
 
