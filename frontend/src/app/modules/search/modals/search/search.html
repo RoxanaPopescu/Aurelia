@@ -248,7 +248,7 @@
 
             </div>
 
-            <busy-overlay if.bind="operation.pending || operation.error"></busy-overlay>
+            <busy-overlay if.bind="operation.pending || operation.error" animate.bind="searchResults != null"></busy-overlay>
 
         </modal-section>
 

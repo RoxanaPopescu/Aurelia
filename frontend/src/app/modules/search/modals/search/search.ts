@@ -245,7 +245,7 @@ export class SearchModalPanel
         else
         {
             // Clear the results.
-            this.searchResults = [];
+            this.searchResults = undefined;
         }
     }
 
