@@ -52,7 +52,8 @@ export class RoutesModule
                 {
                     claims:
                     [
-                        "view-routes"
+                        "view-routes",
+                        "assign-driver-route"
                     ]
                 },
                 title: routeTitles.liveTracking,
@@ -120,7 +121,21 @@ export class RoutesModule
             ...
             ENVIRONMENT.name !== "production" ?
             [
-
+                {
+                    name: "assign-drivers",
+                    route: "assign-drivers",
+                    moduleId: PLATFORM.moduleName("./modules/assign-drivers/assign-drivers"),
+                    settings:
+                    {
+                        claims:
+                        [
+                            "edit-routes"
+                        ]
+                    },
+                    title: routeTitles.assignDrivers,
+                    nav: true,
+                    icon: "routes"
+                },
                 {
                     name: "templates-list",
                     route: "templates",

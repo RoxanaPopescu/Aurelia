@@ -1,0 +1,440 @@
+<template>
+    <require from="app/components/address-input/address-input"></require>
+    <require from="./assign-drivers.scss"></require>
+
+    <page name="assign-drivers">
+
+        <page-content scroll scroll.ref="scroll">
+
+            <page-header class="flex-row" scroll-fade>
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <span translate>
+                            Assign drivers
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar class="flex-push-right">
+
+                    <button click.trigger="onTogglePreviewClick()" appearance="outline" accent="primary" class="flex-row flex-push-right">
+
+                        <span translate if.bind="showPreview">
+                            Hide preview
+                        </span>
+
+                        <span translate if.bind="!showPreview">
+                            Show preview
+                        </span>
+
+                    </button>
+
+                    <button click.trigger="onAssignDriversClick()" appearance="outline" accent="primary" class="flex-row flex-push-right">
+
+                        <icon name="add" class="font-larger margin-right"></icon>
+
+                        <span translate>
+                            Assign drivers
+                        </span>
+
+                    </button>
+
+                </toolbar>
+
+            </page-header>
+
+            <page-section>
+
+                <div class="margin-bottom flex-row">
+
+                    <date-input label="above" fixed.bind="true" value.bind="dateFilter" class="flex-push-left flex-grow margin-right">
+
+                        <div slot="heading" translate>
+                            Date
+                        </div>
+
+                    </date-input>
+
+                    <tags-input
+                        label="above"
+                        value.bind="legacyOwnerIdsFilter"
+                        new.bind="true"
+                        class="flex-push-left flex-grow margin-left">
+
+                        <div slot="heading" translate>
+                            Owners
+                        </div>
+
+                    </tags-input>
+
+                </div>
+
+                <h2 class="font-larger margin-top" if.bind="showPreview">Preview</h2>
+
+                <data-table
+                    if.bind="showPreview"
+                    appearance="rows"
+                    busy.bind="assigningDrivers">
+
+                    <data-table-headers>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Driver name
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Driver id
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Route id
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Owner
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+                            <!-- Icons -->
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="result of results">
+
+                        <data-table-row>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${result.driver.name}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${result.driver.id}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <a href="/routes/details/${route.slug}" class="text-truncate">
+                                    ${result.route.slug}
+                                </a>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${result.route.owner.primaryName}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+
+                                <div if-claims="create-vehicles" class="icon-row">
+
+                                    <button appearance="none" accent="primary" click.trigger="onRemoveVehicleClick(vehicle)">
+                                        <icon name="delete-small"></icon>
+                                    </button>
+
+                                </div>
+
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <h2 class="font-larger margin-top">Routes</h2>
+
+                <data-table
+                    appearance="rows"
+                    sorting.bind="sorting"
+                    style.bind="tableStyle"
+                    busy.bind="updateOperation.pending || pickupNearbyOperation.pending">
+
+                    <data-table-headers>
+
+                        <template repeat.for="column of columns">
+                            <data-table-cell if.bind="column.column != 'not-added'" name="${column.sortingName}">
+                                <span if.bind="column.column == 'visible'" class="text-truncate">
+                                    <template if.bind="column.columnName">
+                                        ${column.columnName}
+                                    </template>
+                                    <template if.bind="!column.columnName">
+                                        ${column.name}
+                                    </template>
+                                </span>
+                            </data-table-cell>
+                        </template>
+
+                    </data-table-headers>
+
+                    <template repeat.for="route of routeResults">
+                        <data-table-row
+                            accent.bind="route.criticality.accent">
+
+                            <template repeat.for="column of columns">
+
+                                <let updating.bind="{ driver: false, vehicle: false, executor: false, team: false }"></let>
+
+                                <data-table-cell if.bind="column.slug === 'slug'">
+                                    <a href="/routes/details/${route.slug}" class="text-truncate">
+                                        ${route.slug}
+                                    </a>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'reference'">
+                                    <span class="text-truncate">
+                                        ${route.reference}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'owner'">
+                                    <span class="text-truncate">
+                                        ${route.owner.primaryName}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'start-date'">
+                                    <span class="text-truncate">
+                                        ${route.plannedTimeFrame.from | dateTime: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'start-address'">
+                                    <span class="text-truncate">
+                                        ${route.startLocation.address}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'end-date'">
+                                    <span class="text-truncate">
+                                        ${route.plannedTimeFrame.to | dateTime: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'end-address'">
+                                    <span class="text-truncate">
+                                        ${route.endLocation.address}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'tags'">
+                                    <span class="text-truncate">
+                                        ${route.tags | list: 'short' : 'unit'}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'stop-count'">
+                                    <span class="text-truncate">
+                                        ${route.stopCount}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'vehicle-type'">
+                                    ${route.vehicleType.name}
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'complexity'">
+                                    <span class="text-truncate">
+                                        ${route.complexity | number}%
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'executor'" class="${updating.executor ? 'opacity-faded' : ''}">
+                                    <a
+                                        class="text-truncate"
+                                        if-claims="assign-organization-route"
+                                        click.trigger="onAssignExecutorClick(route, updating)"
+                                    >
+                                        <template if.bind="route.executor.companyName">
+                                            ${route.executor.companyName}
+                                        </template>
+                                        <template if.bind="!route.executor.companyName" translate>
+                                            Assign executor
+                                        </template>
+                                    </a>
+                                    <span else empty-value>
+                                        <template if.bind="route.executor.companyName">
+                                            ${route.executor.companyName}
+                                        </template>
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'driver'" class="${updating.driver ? 'opacity-faded' : ''}">
+                                    <a
+                                        class="text-truncate"
+                                        if-claims="assign-driver-route"
+                                        click.trigger="onAssignDriverClick(route, updating)"
+                                    >
+                                        <template if.bind="!route.driver" translate>
+                                            Assign driver
+                                        </template>
+                                        <template if.bind="route.driver">
+                                            ${route.driver.name}
+                                        </template>
+                                    </a>
+                                    <span else empty-value>
+                                        <template if.bind="route.driver">
+                                            ${route.driver.name}
+                                        </template>
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'driver-id'">
+
+                                    <text-input value.bind="route.driver.id">
+
+                                    </text-input>
+
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'vehicle'" class="${updating.vehicle ? 'opacity-faded' : ''}">
+                                    <a
+                                        class="text-truncate"
+                                        click.trigger="onAssignVehicleClick(route, updating)"
+                                    >
+                                        <template if.bind="!route.vehicle" translate>
+                                            Assign Vehicle
+                                        </template>
+                                        <template if.bind="route.vehicle && route.vehicle.name">
+                                            ${route.vehicle.name}
+                                        </template>
+                                        <template if.bind="route.vehicle && !route.vehicle.name">
+                                            ${route.vehicle.model} - ${route.vehicle.make}
+                                        </template>
+                                    </a>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'status'">
+                                    <span class="text-truncate">
+                                        ${route.status.name}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'legacy-id'">
+                                    <span class="text-truncate">
+                                        <a target="_blank" href="https://admin.mover.dk/dk/da/user-area/trips/session/${route.legacyId}" if.bind="route.driver">
+                                            ${route.legacyId}
+                                        </a>
+
+                                        <a target="_blank" href="https://admin.mover.dk/dk/da/user-area/trips/request/${route.legacyId}" if.bind="!route.driver">
+                                            ${route.legacyId}
+                                        </a>
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'estimated-time-frame'">
+                                    <span class="text-truncate">
+                                        ${route.estimates.timeFrame | dateTimeRange: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'original-estimated-time-frame'">
+                                    <span class="text-truncate">
+                                        ${route.initialEstimates.timeFrame | dateTimeRange: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'planned-time-frame'">
+                                    <span class="text-truncate">
+                                        ${route.plannedTimeFrame | dateTimeRange: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'distance'">
+                                    <span if.bind="route.initialEstimates.distance" class="text-truncate">
+                                        ${route.initialEstimates.distance/1000 | number : undefined : 1 } km
+                                    </span>
+                                    <span if.bind="!route.initialEstimates.distance" class="text-truncate">
+                                        ${route.distance/1000 | number : undefined : 1 } km
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'planned-start-time-frame'">
+                                    <span class="text-truncate">
+                                        ${route.stops[0].arrivalTimeFrame | dateTimeRange: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'delayed-stops'">
+                                    <span class="text-truncate">
+                                        ${delayedStops(route)}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'team'" class="${updating.team ? 'opacity-faded' : ''}">
+                                    <a
+                                        class="text-truncate"
+                                        if-claims="edit-routes"
+                                        click.trigger="onAssignTeamClick(route, updating)"
+                                    >
+                                        <template if.bind="!route.teamId" translate>
+                                            Assign team
+                                        </template>
+                                        <template if.bind="route.teamId">
+                                            ${teamName(route.teamId)}
+                                        </template>
+                                    </a>
+                                    <span else empty-value>
+                                        ${teamName(route.teamId)}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'driving-list'" align="right">
+
+                                    <div class="icon-row">
+
+                                        <button appearance="none" accent="primary" click.trigger="onShowDriverLink(route)">
+                                            <icon name="document"></icon>
+                                        </button>
+
+                                    </div>
+
+                                </data-table-cell>
+
+                            </template>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <busy-indicator if.bind="routeResults == null && !failed" class="margin-largest"></busy-indicator>
+
+                <empty-indicator if.bind="routeResults.length == 0" class="margin-largest">
+                    <div slot="heading" translate>No results</div>
+                </empty-indicator>
+
+                <div class="flex-row">
+
+                    <data-table-pager
+                        if.bind="routeResults.length > 0"
+                        class="flex-push-right margin-top"
+                        value.bind="paging"
+                        list-size.bind="routeCount">
+                    </data-table-pager>
+
+                </div>
+
+            </page-section>
+
+        </page-content>
+
+    </page>
+
+</template>

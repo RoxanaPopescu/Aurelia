@@ -1,0 +1,9 @@
+@import "resources/index";
+
+page[name="routes"] page[name="assign-drivers"]
+{
+    data-table
+    {
+        --data-table-columns: 1fr 1fr 1fr 1fr min-content;
+    }
+}

@@ -121,7 +121,7 @@ export class RouteListColumn
         "driver-id":
         {
             name: listColumn.driverId,
-            columnSize: "1fr",
+            columnSize: "min-content",
             column: "visible"
         },
         "executor":
