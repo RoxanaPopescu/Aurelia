@@ -2,6 +2,7 @@ import { DateTime } from "luxon";
 import { AuthorizationError } from "../../../shared/types";
 import { AppContext } from "../../app-context";
 import { AppModule } from "../../app-module";
+import { IFakeResponse } from "../../middleware/fetch-middleware";
 
 /**
  * Represents a module exposing endpoints related to route details
@@ -297,11 +298,11 @@ export class RoutesModule extends AppModule
      * @param request The fake request object.
      * @returns The fake response object.
      */
-    private async tryFetch(context: AppContext, endpoint: string, request?: any): Promise<any>
+    private async tryFetch(context: AppContext, endpoint: string, request?: any): Promise<IFakeResponse | undefined>
     {
         try
         {
-            return context.fetch(endpoint, request);
+            return await context.fetch(endpoint, request);
         }
         catch (error)
         {
