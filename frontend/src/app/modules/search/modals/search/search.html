@@ -212,8 +212,8 @@
                                 visible-search-results-in-group.bind="searchResultsInGroup | take: showMoreSearchResults ? undefined : searchResultsLimit">
                             </let>
 
-                            <div class="font-medium margin-bottom ${$index > 0 ? 'margin-double-top' : ''}">
-                                ${searchResultsInGroup[0].type.group}
+                            <div class="margin-bottom ${$index > 0 ? 'margin-double-top' : ''}">
+                                <b>${searchResultsInGroup[0].type.group}</b>
                             </div>
 
                             <list-layout>
