@@ -4,6 +4,9 @@ import { AppContext } from "../../app-context";
 import { AppModule } from "../../app-module";
 import { IFakeResponse } from "../../middleware/fetch-middleware";
 
+// The default limit to use, if not specified in the query.
+const defaultQueryLimit = 10;
+
 /**
  * Represents a module exposing endpoints related to route details
  */
@@ -12,12 +15,16 @@ export class RoutesModule extends AppModule
     /**
      * Gets info about the entities matching the specified query text.
      * @param context.params.text The query text.
+     * @param context.params.limit The max number of results to return for each entity type, or undefined to use the default.
      * @returns
      * - 200: An array of objects representing info about the entities.
      */
     public "GET /v2/searches/query" = async (context: AppContext) =>
     {
         await context.authorize();
+
+        const queryLimit = context.query.limit ? parseInt(context.query.limit as string) : defaultQueryLimit;
+        const queryText = context.query.text as string;
 
         const
         [
@@ -43,7 +50,7 @@ export class RoutesModule extends AppModule
                 body:
                 {
                     page: 1,
-                    pageSize: 10,
+                    pageSize: queryLimit,
                     sorting: [{ field: 6, direction: 2 }],
                     filter: [context.query.text]
                 }
@@ -54,7 +61,7 @@ export class RoutesModule extends AppModule
                 body:
                 {
                     page: 1,
-                    pageSize: 10,
+                    pageSize: queryLimit,
                     sorting: { field: 4, direction: 2 },
                     searchQuery: context.query.text,
                     include: { owner: true },
@@ -71,7 +78,7 @@ export class RoutesModule extends AppModule
                 body:
                 {
                     page: 1,
-                    pageSize: 10,
+                    pageSize: queryLimit,
                     searchQuery: context.query.text
                 }
             }),
@@ -91,7 +98,7 @@ export class RoutesModule extends AppModule
                     paging:
                     {
                         page: 1,
-                        pageSize: 10
+                        pageSize: queryLimit
                     },
                     sorting:
                     {
@@ -142,7 +149,7 @@ export class RoutesModule extends AppModule
 
         context.response.body =
         [
-            ...(ordersResponse?.body?.orders ?? []).map((entity: any) =>
+            ...this.limit((ordersResponse?.body?.orders ?? []).map((entity: any) =>
             ({
                 type: "order",
                 id: entity.internalId,
@@ -150,8 +157,9 @@ export class RoutesModule extends AppModule
                 name: entity.publicId,
                 description: entity.relationalId
             })),
+            queryLimit),
 
-            ...(routesResponse?.body?.routes ?? []).map((entity: any) =>
+            ...this.limit((routesResponse?.body?.routes ?? []).map((entity: any) =>
             ({
                 type: "route",
                 id: entity.id,
@@ -165,6 +173,7 @@ export class RoutesModule extends AppModule
                     name: entity.owner.companyName ?? entity.owner.contactPerson
                 }
             })),
+            queryLimit),
 
             ...this.filter((routeTemplates?.body?.results ?? []).map((entity: any) =>
             ({
@@ -174,14 +183,15 @@ export class RoutesModule extends AppModule
                 name: entity.name,
                 description: entity.reference
             })),
-            context.query.text as string),
+            queryText, queryLimit),
 
-            ...(routePlansResponse?.body?.results ?? []).map((entity: any) =>
+            ...this.limit((routePlansResponse?.body?.results ?? []).map((entity: any) =>
             ({
                 type: "route-plan",
                 id: entity.id,
                 name: entity.name
             })),
+            queryLimit),
 
             ...this.filter((ruleSets?.body?.results ?? []).map((entity: any) =>
             ({
@@ -190,7 +200,7 @@ export class RoutesModule extends AppModule
                 slug: entity.slug,
                 name: entity.name
             })),
-            context.query.text as string),
+            queryText, queryLimit),
 
             ...this.filter((orderGroups?.body ?? []).map((entity: any) =>
             ({
@@ -198,7 +208,7 @@ export class RoutesModule extends AppModule
                 id: entity.id,
                 name: entity.name
             })),
-            context.query.text as string),
+            queryText, queryLimit),
 
             ...this.filter((distributionCenters?.body ?? []).map((entity: any) =>
             ({
@@ -207,7 +217,7 @@ export class RoutesModule extends AppModule
                 name: entity.name,
                 description: `${entity.location?.address?.primary ?? ""} ${entity.location?.address?.secondary ?? ""}`.trim() ?? undefined
             })),
-            context.query.text as string),
+            queryText, queryLimit),
 
             ...this.filter((communcationTriggers?.body ?? []).map((entity: any) =>
             ({
@@ -216,14 +226,15 @@ export class RoutesModule extends AppModule
                 slug: entity.slug,
                 name: entity.name
             })),
-            context.query.text as string),
+            queryText, queryLimit),
 
-            ...(drivers?.body?.results ?? []).map((result: any) =>
+            ...this.limit((drivers?.body?.results ?? []).map((result: any) =>
             ({
                 type: "driver",
                 id: result.driver.id,
                 name: `${result.driver.name?.first ?? ""} ${result.driver.name?.last ?? ""}`.trim() ?? result.driver.id
             })),
+            queryLimit),
 
             ...this.filter((vehicles?.body?.results ?? []).map((entity: any) =>
             ({
@@ -232,7 +243,7 @@ export class RoutesModule extends AppModule
                 name: entity.name || [entity.make, entity.model, entity.productionYear].filter(e => e).join(", "),
                 description: entity.licensePlate
             })),
-            context.query.text as string),
+            queryText, queryLimit),
 
             ...this.filter((users?.body ?? []).map((entity: any) =>
             ({
@@ -241,7 +252,7 @@ export class RoutesModule extends AppModule
                 name: entity.fullName,
                 description: entity.email
             })),
-            context.query.text as string),
+            queryText, queryLimit),
 
             ...this.filter((teams?.body ?? []).map((entity: any) =>
             ({
@@ -249,7 +260,7 @@ export class RoutesModule extends AppModule
                 id: entity.id,
                 name: entity.name
             })),
-            context.query.text as string),
+            queryText, queryLimit),
 
             ...this.filter((roles?.body ?? []).map((entity: any) =>
             ({
@@ -257,7 +268,7 @@ export class RoutesModule extends AppModule
                 id: entity.id,
                 name: entity.name
             })),
-            context.query.text as string),
+            queryText, queryLimit),
 
             ...this.filter((connections?.body ?? []).map((entity: any) =>
             ({
@@ -265,29 +276,44 @@ export class RoutesModule extends AppModule
                 id: entity.id,
                 name: entity.organization.name
             })),
-            context.query.text as string)
+            queryText, queryLimit)
         ];
 
         context.response.status = 200;
     }
 
     /**
-     * Filters the specified entity infos to include only those
+     * Limits the specified entity info array to the specified max length.
+     * @param entityInfos The array of entity infos to limit.
+     * @param limit The max number of entities to return.
+     * @returns The limited array of entity infos.
+     */
+    private limit(entityInfos: any[], limit: number): any[]
+    {
+        return entityInfos
+            .slice(0, limit);
+    }
+
+    /**
+     * Filters the specified array of entity infos to include only those
      * that contains the specified query text, ignoring case.
+     * This also limits the number of results to `queryLimit`.
      * @param entityInfos The entity infos to filter.
      * @param queryText The query text.
-     * @returns The filtered entity infos.
+     * @param limit The max number of entities to return.
+     * @returns The filtered array of entity infos.
      */
-    private filter(entityInfos: any[], queryText: string): any[]
+    private filter(entityInfos: any[], queryText: string, limit: number): any[]
     {
         const lowerCaseQueryText = queryText.toLowerCase();
 
-        return entityInfos.filter(entityInfo =>
-            entityInfo.id?.toLowerCase().includes(lowerCaseQueryText) ||
-            entityInfo.slug?.toLowerCase().includes(lowerCaseQueryText) ||
-            entityInfo.name?.toLowerCase().includes(lowerCaseQueryText) ||
-            entityInfo.description?.toLowerCase().includes(lowerCaseQueryText)
-        );
+        return entityInfos
+            .filter(entityInfo =>
+                entityInfo.id?.toLowerCase().includes(lowerCaseQueryText) ||
+                entityInfo.slug?.toLowerCase().includes(lowerCaseQueryText) ||
+                entityInfo.name?.toLowerCase().includes(lowerCaseQueryText) ||
+                entityInfo.description?.toLowerCase().includes(lowerCaseQueryText))
+            .slice(0, limit);
     }
 
     /**

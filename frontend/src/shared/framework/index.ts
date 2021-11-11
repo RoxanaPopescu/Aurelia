@@ -111,6 +111,7 @@ export function configure(use: FrameworkConfiguration): void
 
         // Converters
         PLATFORM.moduleName("./converters/filter/filter"),
+        PLATFORM.moduleName("./converters/group/group"),
         PLATFORM.moduleName("./converters/json/json"),
         PLATFORM.moduleName("./converters/keys/keys"),
         PLATFORM.moduleName("./converters/map/map"),
@@ -231,6 +232,7 @@ export * from "./components/validation/validators/unique-validator/unique-valida
 
 // Converters
 export * from "./converters/filter/filter";
+export * from "./converters/group/group";
 export * from "./converters/json/json";
 export * from "./converters/keys/keys";
 export * from "./converters/map/map";

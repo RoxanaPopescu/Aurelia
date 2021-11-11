@@ -12,7 +12,7 @@ export class MapValueConverter
      * @param key The key on each item from which to get the value.
      * @returns A new `Array` containing the values of the specified property on each item in the sequence.
      */
-    public toView(value: Iterable<MapObject>, key: string | ((item: any) => any), skipUndefined?: boolean): any[];
+    public toView(value: Iterable<MapObject>, key: string, skipUndefined?: boolean): any[];
 
     /**
      * Converts the value for use in the view.
@@ -20,7 +20,7 @@ export class MapValueConverter
      * @param func The function to call with each item to get the value.
      * @returns A new `Array` containing the values of the specified property on each item in the sequence.
      */
-    public toView(value: Iterable<MapObject>, func: string | ((item: any) => any), skipUndefined?: boolean): any[];
+    public toView(value: Iterable<MapObject>, func: ((item: any) => any), skipUndefined?: boolean): any[];
 
     public toView(value: Iterable<MapObject>, keyOrFunc: string | ((item: any) => any), skipUndefined = true): any[]
     {
