@@ -5,6 +5,8 @@ busy-indicator
     --busy-indicator-stroke-width: 10rem;
     --busy-indicator-color: currentColor;
     --busy-indicator-opacity: 0.05;
+    --busy-indicator-content-color: var(--busy-indicator-color);
+    --busy-indicator-content-opacity: var(--busy-indicator-opacity);
 
     // HACK:
     // The new `busy-indicator` needs slightly different settings,
@@ -38,12 +40,6 @@ busy-indicator
     max-width: var(--busy-indicator-max-width);
     max-height: var(--busy-indicator-max-height);
 
-    // Set the color.
-    color: var(--busy-indicator-color);
-
-    // Set the opacity.
-    opacity: var(--busy-indicator-opacity);
-
     // Prevent the line-height from affecting the height.
     line-height: 0;
 
@@ -58,6 +54,12 @@ busy-indicator
 
         // Allow overflow, as the stroke will otherwise be clipped.
         overflow: visible;
+
+        // Set the color.
+        color: var(--busy-indicator-color);
+
+        // Set the opacity.
+        opacity: var(--busy-indicator-opacity);
 
         // Animate the element, so it slowly rotates.
         animation: busy-indicator-svg-animation linear infinite;
@@ -81,7 +83,7 @@ busy-indicator
     {
         // Animate the element.
         animation: busy-indicator-circle-animation ease-in-out infinite both;
-        animation-duration: 1.4s;
+        animation-duration: 3s;
 
         // Remove the fill collor.
         fill: transparent;
@@ -138,5 +140,11 @@ busy-indicator
         display: flex;
         align-items: center;
         justify-content: center;
+
+        // Set the color.
+        color: var(--busy-indicator-content-color);
+
+        // Set the opacity.
+        opacity: var(--busy-indicator-content-opacity);
     }
 }

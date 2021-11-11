@@ -17,13 +17,8 @@ account
 
     busy-indicator
     {
-        opacity: 1;
-
+        --busy-indicator-opacity: var(--opacity-faded-more);
+        --busy-indicator-content-opacity: 1;
         --busy-indicator-stroke-width: 4rem;
-
-        svg
-        {
-            opacity: var(--busy-indicator-opacity);
-        }
     }
 }
