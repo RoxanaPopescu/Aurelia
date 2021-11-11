@@ -117,21 +117,18 @@ export class DistributionCenterModule extends AppModule
 
         console.log(allColliNOI.data, orderIdsResult);
 
-        // FIXME: Return collo by mocking
-        /*
-        this.getResponse(OrdersModule, "POST /v2/orders/list", context,
-        {
-            body:
-            {
-                page: 1,
-                pageSize: 10,
-                sorting: [{ field: 6, direction: 2 }],
-                filter: [context.query.text]
-            }
-        }),
-        */
 
-        context.response.status = 200;
+        const result = await context.fetch("POST /v2/distribution-centers/scan-collo", { body: body });
+
+        if (result.body.status === "not-found")
+        {
+            context.response.status = 404;
+        }
+        else
+        {
+            context.response.body = result.body;
+            context.response.status = 200;
+        }
     }
 
     /**
