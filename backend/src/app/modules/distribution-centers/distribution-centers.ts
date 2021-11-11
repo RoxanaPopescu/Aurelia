@@ -97,7 +97,7 @@ export class DistributionCenterModule extends AppModule
      */
     public "POST /v2/distribution-centers/add-collo" = async (context: AppContext) =>
     {
-        await context.authorize("view-distribution-centers");
+        await context.authorize("edit-distribution-centers");
 
         const body = context.request.body;
 
@@ -205,7 +205,7 @@ export class DistributionCenterModule extends AppModule
      */
     public "POST /v2/distribution-centers/scan-collo" = async (context: AppContext) =>
     {
-        await context.authorize("edit-distribution-centers");
+        await context.authorize("view-distribution-centers");
 
         const organizationIds = [context.user?.organizationId];
         const requestBody = context.request.body;
