@@ -113,10 +113,7 @@ export class DistributionCenterModule extends AppModule
             noi: true
         });
 
-        const [orderIdsResult, allColliNOI] = await Promise.all([addColloToOrderPromise, addColloToRoutePromise]);
-
-        console.log(allColliNOI.data, orderIdsResult);
-
+        await Promise.all([addColloToOrderPromise, addColloToRoutePromise]);
 
         const result = await context.fetch("POST /v2/distribution-centers/scan-collo", { body: body });
 
