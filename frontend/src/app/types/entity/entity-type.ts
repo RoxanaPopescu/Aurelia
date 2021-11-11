@@ -1,4 +1,5 @@
-import strings from "./resources/strings/entity-type.json";
+import entityTypeNames from "./resources/strings/entity-type-names.json";
+import entityTypeGroups from "./resources/strings/entity-type-groups.json";
 
 /**
  * Represents the slug identifying a `EntityType`.
@@ -42,82 +43,98 @@ export class EntityType
     {
         "unknown":
         {
-            name: strings.unknown,
+            name: entityTypeNames.unknown,
+            group: entityTypeGroups.unknown,
             icon: undefined
         },
         "organization":
         {
-            name: strings.organization,
+            name: entityTypeNames.organization,
+            group: entityTypeGroups.organization,
             icon: "md-domain"
         },
         "user":
         {
-            name: strings.user,
+            name: entityTypeNames.user,
+            group: entityTypeGroups.user,
             icon: "md-person"
         },
         "team":
         {
-            name: strings.team,
+            name: entityTypeNames.team,
+            group: entityTypeGroups.team,
             icon: "departments"
         },
         "role":
         {
-            name: strings.role,
+            name: entityTypeNames.role,
+            group: entityTypeGroups.role,
             icon: "md-rules"
         },
         "connection":
         {
-            name: strings.connection,
+            name: entityTypeNames.connection,
+            group: entityTypeGroups.connection,
             icon: "md-hub"
         },
         "driver":
         {
-            name: strings.driver,
+            name: entityTypeNames.driver,
+            group: entityTypeGroups.driver,
             icon: "fleet"
         },
         "vehicle":
         {
-            name: strings.vehicle,
+            name: entityTypeNames.vehicle,
+            group: entityTypeGroups.vehicle,
             icon: "vehicles"
         },
         "order":
         {
-            name: strings.order,
+            name: entityTypeNames.order,
+            group: entityTypeGroups.order,
             icon: "orders"
         },
         "route":
         {
-            name: strings.route,
+            name: entityTypeNames.route,
+            group: entityTypeGroups.route,
             icon: "routes"
         },
         "route-template":
         {
-            name: strings.routeTemplate,
+            name: entityTypeNames.routeTemplate,
+            group: entityTypeGroups.routeTemplate,
             icon: "templates"
         },
         "route-plan":
         {
-            name: strings.routePlan,
+            name: entityTypeNames.routePlan,
+            group: entityTypeGroups.routePlan,
             icon: "route-planning"
         },
         "rule-set":
         {
-            name: strings.ruleSet,
+            name: entityTypeNames.ruleSet,
+            group: entityTypeGroups.ruleSet,
             icon: "settings"
         },
         "order-group":
         {
-            name: strings.orderGroup,
+            name: entityTypeNames.orderGroup,
+            group: entityTypeGroups.orderGroup,
             icon: "order-groups"
         },
         "distribution-center":
         {
-            name: strings.distributionCenter,
+            name: entityTypeNames.distributionCenter,
+            group: entityTypeGroups.distributionCenter,
             icon: "depots"
         },
         "communication-trigger":
         {
-            name: strings.communicationTrigger,
+            name: entityTypeNames.communicationTrigger,
+            group: entityTypeGroups.communicationTrigger,
             icon: "communication"
         }
     };

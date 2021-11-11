@@ -1,0 +1,18 @@
+{
+    "unknown": "Unknown",
+    "organization": "Organizations",
+    "user": "Users",
+    "team": "Teams",
+    "role": "Roles",
+    "connection": "Connections",
+    "driver": "Drivers",
+    "vehicle": "Vehicles",
+    "order": "Orders",
+    "route": "Routes",
+    "routeTemplate": "Route templates",
+    "routePlan": "Route plans",
+    "ruleSet": "Rule sets",
+    "orderGroup": "Order groups",
+    "distributionCenter": "Distribution centers",
+    "communicationTrigger": "Communication triggers"
+}
