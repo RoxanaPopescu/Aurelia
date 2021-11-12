@@ -18,12 +18,10 @@ $__summary: comment;
 // Palettes define the standard values used within the theme.
 @import "./palettes/color";
 
-
 // Export the settings.
 // Settings define theme specific overrides to the base settings.
 @import "./settings/font-family";
 @import "./settings/font";
-
 
 // Export the themes.
 // Themes define the values to use within different areas of the app.
@@ -33,6 +31,8 @@ $__summary: comment;
 @import "./surfaces/primary";
 @import "./surfaces/website";
 
+
+// Override default styles.
 
 :root
 {
@@ -53,6 +53,11 @@ $__summary: comment;
     --legacy-card-surface-color: var(--palette-color-neutral-lightest);
     --legacy-card-surface-color--hover: var(--palette-color-neutral-lighter);
     --legacy-card-surface-box-surface-color: var(--palette-color-neutral-light);
+}
+
+page[name="account"]
+{
+    background: hsl(213, 90%, 12%) !important;
 }
 
 permissions

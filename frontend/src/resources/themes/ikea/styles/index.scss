@@ -22,7 +22,7 @@ $__summary: comment;
 // Surfaces define theme specific overrides to the base surfaces.
 @import "./surfaces/index";
 
-// HACK: Override default styles.
+// Override default styles.
 
 button[appearance="outline"]
 {

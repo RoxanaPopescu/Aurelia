@@ -25,16 +25,6 @@
         }
     },
     {
-        "slug": "ikea-light",
-        "name": "IKEA (Light)",
-        "preview":
-        {
-            "primary": "#ffffff"
-        },
-        "isHostSpecific": true,
-        "environments": ["development", "preview"]
-    },
-    {
         "slug": "mover",
         "name": "Mover (Old)",
         "preview":
@@ -44,12 +34,24 @@
         "isHostSpecific": true
     },
     {
+        "slug": "ikea-light",
+        "name": "IKEA (Light)",
+        "preview":
+        {
+            "primary": "#ffffff"
+        },
+        "hasAccountLogo": true,
+        "isHostSpecific": true,
+        "environments": ["development", "preview"]
+    },
+    {
         "slug": "ikea-dark",
         "name": "IKEA (Dark)",
         "preview":
         {
             "primary": "#252526"
         },
+        "hasAccountLogo": true,
         "isHostSpecific": true,
         "environments": ["development", "preview"]
     },
@@ -60,6 +62,7 @@
         {
             "primary": "#0058a3"
         },
+        "hasAccountLogo": true,
         "isHostSpecific": true,
         "environments": ["development", "preview"]
     },

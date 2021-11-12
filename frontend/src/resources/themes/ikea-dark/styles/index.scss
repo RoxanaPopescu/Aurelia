@@ -26,3 +26,9 @@ app-sidebar
         padding-bottom: 3rem !important;
     }
 }
+
+page[name="account"]
+{
+    color: var(--palette-color-neutral-lightest) !important;
+    background: var(--palette-color-neutral-darkest) !important;
+}

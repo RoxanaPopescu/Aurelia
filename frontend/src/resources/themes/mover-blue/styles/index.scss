@@ -24,13 +24,19 @@ $__summary: comment;
 @import "./settings/font-face";
 @import "./settings/font";
 
-// HACK: Override default styles.
+
+// Override default styles.
 
 [surface="base"],
 [surface$="/base"],
 [surface$="/neutral"],
 {
     --surface-separator-color: var(--palette-color-neutral);
+}
+
+page[name="account"]
+{
+    background: hsl(213, 90%, 12%) !important;
 }
 
 permissions
