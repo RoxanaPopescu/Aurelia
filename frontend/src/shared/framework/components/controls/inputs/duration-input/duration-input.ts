@@ -280,6 +280,7 @@ export class DurationInputCustomElement
         // Coerce the enterede decimal separator to match the decimal separator for the current locale.
         if (decimalSeparatorPattern.test(event.key))
         {
+            // tslint:disable-next-line:deprecation
             document.execCommand("insertText", false, this.numberFormat.decimalSeparator);
 
             return false;

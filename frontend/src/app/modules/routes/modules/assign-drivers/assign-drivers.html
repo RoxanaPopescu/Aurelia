@@ -372,7 +372,7 @@
                                 <let updating.bind="{ driver: false, vehicle: false, executor: false, team: false }"></let>
 
                                 <data-table-cell if.bind="column.slug === 'slug'">
-                                    <a href="/routes/details/${route.slug}" target="_blank" class="text-truncate">
+                                    <a tabindex="-1" href="/routes/details/${route.slug}" target="_blank" class="text-truncate">
                                         ${route.slug}
                                     </a>
                                 </data-table-cell>

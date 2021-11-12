@@ -199,6 +199,7 @@ export class DetailsPage
         {
             (this.messageInputElement.querySelector(".input-input") as HTMLElement).focus();
 
+            // tslint:disable-next-line:deprecation
             document.execCommand("insertText", false, placeholder);
         });
     }

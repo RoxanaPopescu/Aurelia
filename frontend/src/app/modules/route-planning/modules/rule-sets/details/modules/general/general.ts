@@ -77,6 +77,7 @@ export class General
         {
             (this.routeNameTempleteInputElement.querySelector(".input-input") as HTMLElement).focus();
 
+            // tslint:disable-next-line:deprecation
             document.execCommand("insertText", false, placeholder);
         });
     }
