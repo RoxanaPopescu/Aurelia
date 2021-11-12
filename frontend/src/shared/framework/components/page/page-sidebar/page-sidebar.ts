@@ -1,5 +1,8 @@
 import { bindable } from "aurelia-framework";
 
+// The expanded state associated with each `page-sidebar` name.
+const storedExpandedStates = new Map<string, boolean>();
+
 /**
  * Represents the sidebar area of a page.
  *
@@ -14,6 +17,25 @@ export class PageSidebarCustomElement
      */
     @bindable
     public expanded = true;
+
+    /**
+     * The name of the sidebar, used for storing its expanded state,
+     * or undefined to not store the state.
+     */
+    @bindable
+    public name: string | undefined;
+
+    /**
+     * Called by the framework when the component is binding.
+     * Sets the initial expanded state, if previously stored.
+     */
+    public bind(): void
+    {
+        if (this.name && storedExpandedStates.has(this.name))
+        {
+            this.expanded = storedExpandedStates.get(this.name)!;
+        }
+    }
 
     /**
      * Called when the edge of the sidebar is clicked.
@@ -35,5 +57,17 @@ export class PageSidebarCustomElement
         this.expanded = true;
 
         return true;
+    }
+
+    /**
+     * Called by the framework when the `expanded` property changes.
+     * Updates the stored the expanded state.
+     */
+    protected expandedChanged(): void
+    {
+        if (this.name)
+        {
+            storedExpandedStates.set(this.name, this.expanded);
+        }
     }
 }

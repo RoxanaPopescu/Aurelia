@@ -4,7 +4,7 @@
 
     <page name="route-plans-list">
 
-        <page-sidebar scroll>
+        <page-sidebar name="route-planning-plans-list-page-sidebar" scroll>
 
             <page-section>
 
@@ -188,7 +188,7 @@
                             href.bind="detailsLink(result)">
 
                             <data-table-cell>
-                                <span class="text-truncate">    
+                                <span class="text-truncate">
                                     ${result.name}
                                 </span>
                             </data-table-cell>
@@ -200,19 +200,19 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">    
+                                <span class="text-truncate">
                                     ${result.deliveryTime | dateTimeRange: 'narrow' : false}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">    
+                                <span class="text-truncate">
                                     ${result.timeCreated | dateTime: 'narrow' : false}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">    
+                                <span class="text-truncate">
                                     ${result.timeCompleted | dateTime: 'narrow' : false}
                                 </span>
                             </data-table-cell>
