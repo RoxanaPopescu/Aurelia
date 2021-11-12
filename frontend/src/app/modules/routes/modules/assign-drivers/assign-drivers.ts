@@ -15,6 +15,7 @@ import { Fulfiller } from "app/model/outfit";
 import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
 import { ConfirmAssignmentDialog } from "./confirm-assignment/confirm-assignment";
 import { DriverService } from "app/model/driver";
+import { ConfirmReassignmentDialog } from "./confirm-reassignment/confirm-reassignment";
 
 /**
  * Represents the page.
@@ -311,8 +312,7 @@ export class AssignDriversPage
         try
         {
             const driver = await this._driverService.get(route.driverId);
-            this.results.push(new RouteAssignDriver(route, driver));
-            route.driver = driver;
+            this.addResult(new RouteAssignDriver(route, driver));
         }
         catch
         {
@@ -426,8 +426,7 @@ export class AssignDriversPage
 
         if (driver != null)
         {
-            this.results.push(new RouteAssignDriver(route, driver));
-            route.driver = driver;
+            this.addResult(new RouteAssignDriver(route, driver));
         }
     }
 
@@ -462,6 +461,39 @@ export class AssignDriversPage
 
             updating.team = false;
         }
+    }
+
+    /**
+     * Updates the page by fetching the latest data.
+     */
+    protected async addResult(result: RouteAssignDriver): Promise<void>
+    {
+        const sameDriver = this.results.find(r => r.driver?.id === result.driver?.id);
+        const sameRoute = this.results.find(r => r.route.slug === result.route.slug);
+
+        if (sameDriver != null && sameRoute != null)
+        {
+            // Already added
+            return;
+        }
+
+        // One is the same, inform the user
+        if (sameDriver != null || sameRoute != null)
+        {
+            const confirmed = await this._modalService.open(ConfirmReassignmentDialog, { new: result, current: sameDriver ?? sameRoute! }).promise;
+
+            if (!confirmed)
+            {
+                return;
+            }
+            else
+            {
+                this.onRemoveClick(sameDriver ?? sameRoute!);
+            }
+        }
+
+        this.results.push(result);
+        result.route.driver = result.driver;
     }
 
     /**
