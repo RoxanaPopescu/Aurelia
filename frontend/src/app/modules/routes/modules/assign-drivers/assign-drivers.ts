@@ -282,7 +282,7 @@ export class AssignDriversPage
      * Called when the `Hide preview` button is clicked.
      * Will show and hide the preview.
      */
-    protected async onTogglePreviewClick(): Promise<void>
+    protected onTogglePreviewClick(): void
     {
         this.showPreview = !this.showPreview;
     }
@@ -291,7 +291,7 @@ export class AssignDriversPage
      * Called when the remove result button is clicked.
      * Will remove the driver to be assigned.
      */
-    protected async onRemoveClick(result: RouteAssignDriver): Promise<void>
+    protected onRemoveClick(result: RouteAssignDriver): void
     {
         const index = this.results.indexOf(result);
         this.results.splice(index, 1);
@@ -311,7 +311,6 @@ export class AssignDriversPage
         try
         {
             const driver = await this._driverService.get(route.driverId);
-            
             this.results.push(new RouteAssignDriver(route, driver));
             route.driver = driver;
         }
