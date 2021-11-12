@@ -40,9 +40,6 @@ busy-indicator
     max-width: var(--busy-indicator-max-width);
     max-height: var(--busy-indicator-max-height);
 
-    // Prevent the line-height from affecting the height.
-    line-height: 0;
-
     svg
     {
         // Fill the available space.
@@ -146,5 +143,11 @@ busy-indicator
 
         // Set the opacity.
         opacity: var(--busy-indicator-content-opacity);
+
+        &:empty
+        {
+            // Prevent the line-height from affecting the height.
+            line-height: 0;
+        }
     }
 }
