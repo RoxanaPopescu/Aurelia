@@ -6,15 +6,17 @@
 
         <div validation validation.ref="validation" keydown.delegate="onKeyDown($event)">
 
-            <text-input if.bind="!model.inviteId" value.bind="model.organizationName" autocomplete="organization" autofocus>
+            <!--
+            <text-input class="margin-bottom" if.bind="!model.inviteId" value.bind="model.organizationName" autocomplete="organization" autofocus>
 
                 <span slot="placeholder" translate>
                     Organization name
                 </span>
 
             </text-input>
+            -->
 
-            <text-input class="margin-top" value.bind="model.fullName" autocomplete="name">
+            <text-input value.bind="model.fullName" autocomplete="name">
 
                 <span slot="placeholder" translate>
                     Full name, e.g. John Doe
