@@ -28,7 +28,7 @@
 
             <div class="search-result-content-column">
 
-                <div class="text-truncate user-select-contain">
+                <div class="text-truncate">
                     ${model.name}
                 </div>
 
@@ -42,7 +42,7 @@
                         ${model.type.name}
                     </span>
 
-                    <span if.bind="ancestors.length > 0" class="search-result-path user-select-contain">
+                    <span if.bind="ancestors.length > 0" class="search-result-path">
 
                         <span
                             repeat.for="ancestor of ancestors"
