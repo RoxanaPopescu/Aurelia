@@ -23,7 +23,7 @@ export class ConfirmReassignmentDialog
      * Called by the framework when the modal is activated.
      * @param model The model to use.
      */
-    public activate(model: { new: RouteAssignDriver, current: RouteAssignDriver }): void
+    public activate(model: { new: RouteAssignDriver; current: RouteAssignDriver }): void
     {
         this.new = model.new;
         this.current = model.current;
