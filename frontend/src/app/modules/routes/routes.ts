@@ -118,24 +118,24 @@ export class RoutesModule
                 },
                 title: routeTitles.automaticDispatchJob
             },
+            {
+                name: "assign-drivers",
+                route: "assign-drivers",
+                moduleId: PLATFORM.moduleName("./modules/assign-drivers/assign-drivers"),
+                settings:
+                {
+                    claims:
+                    [
+                        "edit-routes"
+                    ]
+                },
+                title: routeTitles.assignDrivers,
+                nav: true,
+                icon: "routes"
+            },
             ...
             ENVIRONMENT.name !== "production" ?
             [
-                {
-                    name: "assign-drivers",
-                    route: "assign-drivers",
-                    moduleId: PLATFORM.moduleName("./modules/assign-drivers/assign-drivers"),
-                    settings:
-                    {
-                        claims:
-                        [
-                            "edit-routes"
-                        ]
-                    },
-                    title: routeTitles.assignDrivers,
-                    nav: true,
-                    icon: "routes"
-                },
                 {
                     name: "templates-list",
                     route: "templates",

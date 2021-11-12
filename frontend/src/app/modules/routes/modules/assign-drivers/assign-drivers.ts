@@ -14,6 +14,7 @@ import { TeamsFilterService } from "app/services/teams-filter";
 import { Fulfiller } from "app/model/outfit";
 import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
 import { ConfirmAssignmentDialog } from "./confirm-assignment/confirm-assignment";
+import { DriverService } from "app/model/driver";
 
 /**
  * Represents the page.
@@ -28,19 +29,22 @@ export class AssignDriversPage
      * @param routeAssignmentService The `RouteAssignmentService` instance.
      * @param organizationService The `OrganizationService` instance.
      * @param teamsFilterService The `TeamsFilterService` instance.
+     * @param driverService The `DriverService` instance.
      */
     public constructor(
         routeService: RouteService,
         routeAssignmentService: RouteAssignmentService,
         modalService: ModalService,
         organizationService: OrganizationService,
-        teamsFilterService: TeamsFilterService)
+        teamsFilterService: TeamsFilterService,
+        driverService: DriverService)
     {
         this._routeService = routeService;
         this._modalService = modalService;
         this._routeAssignmentService = routeAssignmentService;
         this._organizationService = organizationService;
         this.teamsFilterService = teamsFilterService;
+        this._driverService = driverService;
         this._constructed = true;
 
         const localData = localStorage.getItem("route-columns");
@@ -65,6 +69,7 @@ export class AssignDriversPage
     private readonly _modalService: ModalService;
     private readonly _organizationService: OrganizationService;
     private readonly _routeAssignmentService: RouteAssignmentService;
+    private readonly _driverService: DriverService;
     private readonly _constructed;
 
     /**
@@ -102,7 +107,7 @@ export class AssignDriversPage
      * The custom grid column widths calculated from the columns
      */
     @computedFrom("columns")
-    protected get tableStyle(): any
+    protected get tableStyleRoutes(): any
     {
         let size = "";
 
@@ -115,6 +120,25 @@ export class AssignDriversPage
         }
 
         return { "grid-template-columns": `${size} min-content` };
+    }
+
+    /**
+     * The custom grid column widths calculated from the columns
+     */
+    @computedFrom("columns")
+    protected get tableStyle(): any
+    {
+        let size = "";
+
+        for (const column of this.columns)
+        {
+            if (column.column !== "not-added")
+            {
+                size += `${column.columnSize} `;
+            }
+        }
+
+        return { "grid-template-columns": `${size} min-content min-content` };
     }
 
     /**
@@ -229,6 +253,19 @@ export class AssignDriversPage
     }
 
     /**
+     * Called from the table when team is being represented
+     */
+    public teamName(teamId?: string): string | undefined
+    {
+        if (teamId == null)
+        {
+            return undefined;
+        }
+
+        return this.teams.find(t => t.id === teamId)?.name;
+    }
+
+    /**
      * Called from the table when delayed stops are being represented
      */
     public delayedStops(route: RouteInfo): string | undefined
@@ -251,6 +288,41 @@ export class AssignDriversPage
     }
 
     /**
+     * Called when the remove result button is clicked.
+     * Will remove the driver to be assigned.
+     */
+    protected async onRemoveClick(result: RouteAssignDriver): Promise<void>
+    {
+        const index = this.results.indexOf(result);
+        this.results.splice(index, 1);
+    }
+
+    /**
+     * Called when the driver id input has changes.
+     * Fetches the driver and will add him to the preview
+     */
+    protected async onDriverIdChanged(route: any): Promise<void>
+    {
+        if (route.driverId == null || route.driverId.length <= 0)
+        {
+            return;
+        }
+
+        try
+        {
+            const driver = await this._driverService.get(route.driverId);
+            
+            this.results.push(new RouteAssignDriver(route, driver));
+            route.driver = driver;
+        }
+        catch
+        {
+            Log.error(`Could not find a driver with id ${route.driverId}`);
+            route.driverId = undefined;
+        }
+    }
+
+    /**
      * Called when the `Assign drivers` button is clicked.
      * Opens the panel for validation for assigning drivers.
      */
@@ -263,7 +335,21 @@ export class AssignDriversPage
             return;
         }
 
-        // FIXME: Call network!
+        this.assigningDrivers = true;
+
+        try
+        {
+            await this._routeAssignmentService.assignDrivers(this.results);
+
+            this.results = [];
+            this.update();
+        }
+        catch
+        {
+            Log.error("Could not assign drivers");
+        }
+
+        this.assigningDrivers = false;
     }
 
     /**
@@ -342,6 +428,7 @@ export class AssignDriversPage
         if (driver != null)
         {
             this.results.push(new RouteAssignDriver(route, driver));
+            route.driver = driver;
         }
     }
 

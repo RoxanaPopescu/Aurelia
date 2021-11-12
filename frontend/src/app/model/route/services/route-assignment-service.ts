@@ -6,6 +6,7 @@ import { Vehicle } from "app/model/vehicle";
 import { RouteBase } from "../entities/route-base";
 import { IdentityService } from "app/services/identity";
 import { OrganizationConnection, OrganizationTeam } from "app/model/organization";
+import { RouteAssignDriver } from "..";
 
 /**
  * Represents a service assigns routes to fulfillers or drivers.
@@ -49,6 +50,28 @@ export class RouteAssignmentService
         });
 
         route.driver = driver;
+    }
+
+    /**
+     * Assigns drivers to multiple routes.
+     * @param assignments The assignments.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+     public async assignDrivers(assignments: RouteAssignDriver[]): Promise<void>
+    {
+        await this._apiClient.post("dispatch/route/assign-multiple-drivers",
+        {
+            body:
+            {
+                routeIds: assignments.map(a => a.route.id),
+                driverIds: assignments.map(a => a.driver!.id)
+            }
+        });
+
+        for (const assignment of assignments)
+        {
+            assignment.route.driver = assignment.driver;
+        }
     }
 
     /**
