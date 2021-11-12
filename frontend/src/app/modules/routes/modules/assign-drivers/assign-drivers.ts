@@ -312,7 +312,7 @@ export class AssignDriversPage
         try
         {
             const driver = await this._driverService.get(route.driverId);
-            this.addResult(new RouteAssignDriver(route, driver));
+            await this.addResult(new RouteAssignDriver(route, driver));
         }
         catch
         {
@@ -426,7 +426,7 @@ export class AssignDriversPage
 
         if (driver != null)
         {
-            this.addResult(new RouteAssignDriver(route, driver));
+            await this.addResult(new RouteAssignDriver(route, driver));
         }
     }
 
@@ -486,10 +486,8 @@ export class AssignDriversPage
             {
                 return;
             }
-            else
-            {
-                this.onRemoveClick(sameDriver ?? sameRoute!);
-            }
+
+            this.onRemoveClick(sameDriver ?? sameRoute!);
         }
 
         this.results.push(result);

@@ -1383,7 +1383,7 @@
   "./app/modules/routes/modules/templates/details/resources/strings/toast:heading-created": "Template oprettet",
   "./app/modules/routes/modules/templates/details/resources/strings/toast:heading-updated": "Template opdateret",
   "./app/modules/routes/resources/strings/route-titles:list": "Alle ruter",
-  "./app/modules/routes/resources/strings/route-titles:assignDrivers": "Tildeling",
+  "./app/modules/routes/resources/strings/route-titles:assignDrivers": "Tildel chauffører",
   "./app/modules/routes/resources/strings/route-titles:liveTracking": "Live tracking",
   "./app/modules/routes/resources/strings/route-titles:templates": "Skabeloner",
   "./app/modules/routes/resources/strings/route-titles:test": "Generer testruter",
