@@ -18,6 +18,14 @@
   .gm-style-iw + button {
     display: none !important;
   }
+
+  // Hide unwanted map content.
+
+  .gm-style-cc,
+  a[href^="https://maps.google.com"]
+  {
+      display: none !important;
+  }
 }
 
 .c-routePlanning-routes-list {
@@ -28,22 +36,35 @@
 }
 
 .c-routePlanning-routes-infoBar {
-  box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.2);
   height: 49px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 32px;
+  padding-right: 32px;
+  border-top: 1px solid var(--surface-separator-color);
   border-bottom: 1px solid var(--surface-separator-color);
 }
 
 .c-routePlanning-routes-infoBar-left {
+  position: relative;
+  padding-left: 32px;
   height: 49px;
   overflow-x: scroll;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+
+  &::after {
+    content: "";
+    display: block;
+    position: sticky;
+    height: calc(100% - 2px);
+    min-width: 30px;
+    right: 0;
+    top: 0;
+    background: linear-gradient(to left, var(--surface-color), transparent);
+  }
 }
 
 .c-routePlanning-routes-infoBar-right {
@@ -76,12 +97,12 @@
   width: 100%;
   flex: 1;
   position: relative;
-  background-color: white;
+  background-color: var(--surface-color);
   overflow: hidden;
 }
 
 .c-routePlanning-routes-list-mainContainer {
-  background-color: white;
+  background-color: var(--surface-color);
   height: 100%;
   width: 100%;
   display: flex;
@@ -94,8 +115,8 @@
   display: grid;
   left: 0;
   z-index: 4000;
-  max-width: 150px;
-  width: 150px;
+  max-width: 350px;
+  width: 350px;
   position: sticky;
 }
 
@@ -104,6 +125,7 @@
 }
 
 .c-routePlanning-routes-routeInfoContainer {
+  margin-right: 40px;
   .c-routePlanning-routes-route-content {
     white-space: nowrap;
   }
@@ -121,6 +143,7 @@
   justify-content: space-between;
   background-color: var(--surface-neutral-surface-color);
   height: 28px;
+  width: calc(100% + 30px);
   position: sticky;
   top: 0;
   left: 0;
@@ -128,7 +151,7 @@
 
   .c-routePlanning-routes-list-headerInfo-fade {
     height: 100%;
-    width: 50px;
+    width: 30px;
     position: absolute;
     left: 100%;
     top: 0;
@@ -137,19 +160,24 @@
 }
 
 .c-routePlanning-routes-list-bottomBar {
-  box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  height: 48px;
+  height: 49px;
   width: 100%;
   padding: 0 40px;
   z-index: 4999;
+  border-top: 1px solid var(--surface-separator-color);
 
   > * {
     &:not(:first-child) {
       margin-left: 8px;
     }
+  }
+
+  .moverButton
+  {
+    min-height: 36px;
   }
 }
 
@@ -190,7 +218,7 @@
   align-items: center;
 
   > * {
-    color: white;
+    color: var(--surface-color);
   }
 }
 

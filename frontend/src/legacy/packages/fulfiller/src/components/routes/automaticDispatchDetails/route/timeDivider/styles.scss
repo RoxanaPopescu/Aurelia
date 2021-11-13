@@ -3,11 +3,11 @@
   top: 0;
   width: 0;
   height: 100%;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  border-right: 1px solid var(--surface-separator-color, rgba(0, 0, 0, 0.1));
 }
 
 .c-routePlanning-routes-dividerHorizontal {
   position: absolute;
   height: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid var(--surface-separator-color, rgba(0, 0, 0, 0.1));
 }

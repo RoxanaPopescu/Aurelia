@@ -9,6 +9,7 @@
   align-items: center;
   z-index: 1;
   cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.03);
 
   &:hover {
     opacity: 0.5;
@@ -16,10 +17,10 @@
 }
 
 .c-routePlanning-routes-route-stop-selected {
-  background-color: white !important;
+  background-color: var(--surface-color) !important;
 
   .c-routePlanning-routes-route-stop-number {
-    color: black;
+    color: var(--surface-text-color) !important;
   }
 
   &:hover {

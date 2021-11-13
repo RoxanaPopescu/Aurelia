@@ -31,7 +31,7 @@ export default class RoutePlanningTimeDividerComponent extends React.Component<
       minutes += 30;
     }
 
-    for (let i = 1; i <= this.props.store.plan.routes.length; i++) {
+    for (let i = 1; i <= this.props.store.plan.routes.length - 1; i++) {
       lines.push(
         <div
           key={"timeDividerHorizontal_" + minutes * i}

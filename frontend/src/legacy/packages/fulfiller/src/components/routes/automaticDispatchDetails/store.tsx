@@ -308,7 +308,7 @@ export class RoutePlanningStore {
   }
 
   get minimumHeight(): number {
-    return 85;
+    return 98;
   }
 
   setMapViewport() {

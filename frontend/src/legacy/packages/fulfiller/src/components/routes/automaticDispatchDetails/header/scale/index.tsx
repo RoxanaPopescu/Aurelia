@@ -40,7 +40,7 @@ export default class RoutePlanningScaleComponent extends React.Component<
           className="c-routePlanning-routes-action"
           onClick={() => (this.props.store.timeScale = 1)}
         >
-          nulstil
+          Reset
         </div>
       </div>
     );
