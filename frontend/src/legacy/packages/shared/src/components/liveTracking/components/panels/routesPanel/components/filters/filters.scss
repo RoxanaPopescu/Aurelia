@@ -19,9 +19,26 @@
   border-radius: 12px;
   line-height: 1.33;
   font-size: 12px;
+  font-weight: 600;
   text-align: center;
-  background: var(--legacy-card-surface-box-surface-color, var(--colorNeutralRegular));
+  background-color: var(--surface-neutral-surface-color);
   color: white;
+  border: 1px solid hsla(0, 0, 50%, 0.05);
+
+  &.--negative
+  {
+    color: var(--surface-negative-text-color);
+  }
+
+  &.--attention
+  {
+    color: var(--surface-attention-text-color);
+  }
+
+  &.--neutral
+  {
+    color: var(--surface-neutral-surface-text-color);
+  }
 }
 
 .c-livetracking-filter {

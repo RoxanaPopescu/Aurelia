@@ -58,13 +58,13 @@ export class Filters extends React.Component<RoutesLayerProps> {
          className="c-liveTracking-routesPanel-filters-info c-liveTracking-box-clickable
         ">
           <span className="c-liveTracking-routesPanel-filters-criticality">
-            <span className={"c-liveTracking-routesPanel-filters-badge c-liveTracking-box-negative"}>
+            <span className={"c-liveTracking-routesPanel-filters-badge --negative"}>
               {highCriticalityCount}
             </span>
-            <span className={"c-liveTracking-routesPanel-filters-badge c-liveTracking-box-warning"}>
+            <span className={"c-liveTracking-routesPanel-filters-badge --attention"}>
               {mediumCriticalityCount}
             </span>
-            <span className={"c-liveTracking-routesPanel-filters-badge c-liveTracking-box-gray"}>
+            <span className={"c-liveTracking-routesPanel-filters-badge --neutral"}>
               {lowCriticalityCount}
             </span>
           </span>
@@ -80,7 +80,7 @@ export class Filters extends React.Component<RoutesLayerProps> {
                 .replace("{total_count}", this.props.service.routes.length.toString())}
               </span>
             </div>
-            <Icon className="c-livetracking-filter" name={this.expanded ? "clear" : "live-tracking-filter"}/>
+            <Icon className="c-livetracking-filter" name={this.expanded ? "clear" : "md-filter"}/>
           </span>
         </div>
         <Input
