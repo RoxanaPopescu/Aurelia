@@ -1,4 +1,11 @@
 modal-panel[name="stop-details"]
 {
     --modal-panel-min-width: 760rem;
+
+    .route-template-stop-driver-task
+    {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        row-gap: var(--font-current-margin-bottom);
+    }
 }

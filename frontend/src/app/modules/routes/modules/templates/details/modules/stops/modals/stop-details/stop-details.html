@@ -204,9 +204,10 @@
                 Driver tasks
             </div>
 
-            <div repeat.for="task of tasks" class="control-row margin-large-bottom">
+            <div class="route-template-stop-driver-task margin-large-bottom">
 
                 <check-toggle
+                    repeat.for="task of tasks"
                     label="after"
                     value.bind="task.enabled"
                     tri-state.bind="true"
