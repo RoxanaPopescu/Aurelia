@@ -7,12 +7,22 @@
   position: sticky;
   top: 0;
   z-index: 2000;
-  background-color: var(--colorNeutralExtraLight);
+  background-color: var(--surface-neutral-surface-color);
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: -40px;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    background-color: var(--surface-neutral-surface-color);
+  }
 }
 
 .c-routePlanning-routes-list-headerContent-background {
   position: absolute;
-  background-color: var(--colorNeutralExtraLight);
+  background-color: var(--surface-neutral-surface-color);
   left: 0;
   top: 0;
   width: 100%;
@@ -24,7 +34,7 @@
   align-items: center;
   height: 100%;
   padding: 0;
-  background-color: var(--colorNeutralExtraLight);
+  background-color: var(--surface-neutral-surface-color);
 }
 
 .c-routePlanning-routes-list-headerContentTime {

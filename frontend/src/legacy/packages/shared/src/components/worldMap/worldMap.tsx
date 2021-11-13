@@ -47,7 +47,8 @@ export class WorldMapComponent extends React.Component<WorldMapComponentProps> {
           clickableIcons: false,
           styles: getMapStyles(),
           scrollwheel: false,
-          ...this.props.options
+          ...this.props.options,
+          backgroundColor: "none",
         }}
         ref={map => {
           if (!this.isReady && this.props.onMapReady && map !== null) {

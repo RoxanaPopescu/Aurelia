@@ -7,7 +7,18 @@ div[class$="mapContainer"] {
         background-color: transparent !important;
         border: 0 !important;
         box-shadow: none !important;
+
+        // Apply the surface color to show, while tiles are loading.
+
+        &[aria-roledescription="map"]
+        {
+          background-color: var(--google-map-surface-color, var(--surface-neutral-surface-color)) !important;
+        }
       }
+    }
+
+    .gm-style-iw-t::after {
+      background: linear-gradient(45deg,var(--surface-color) 50%,rgba(255,255,255,0) 51%,rgba(255,255,255,0) 100%) !important;
     }
 
     .gm-style-iw {
@@ -17,8 +28,9 @@ div[class$="mapContainer"] {
       bottom: auto !important;
       left: 0px !important;
       overflow: initial;
-      background-color: white;
-      border-radius: $borderRadius;
+      background-color: var(--surface-color);
+      color: var(--surface-text-color);
+      border-radius: var(--border-radius-medium);
       box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.4);
 
       &:after {
@@ -30,7 +42,7 @@ div[class$="mapContainer"] {
         height: 0;
         border-style: solid;
         border-width: 6px 6px 0 6px;
-        border-color: white transparent transparent transparent;
+        border-color: var(--surface-color) transparent transparent transparent;
       }
       // Remove default elements
       + div {
@@ -54,11 +66,11 @@ div[class$="mapContainer"] {
           height: 28px;
           line-height: 28px;
           padding: 0 12px;
-          color: white;
-          border-top-left-radius: $borderRadius;
-          border-top-right-radius: $borderRadius;
+          border-top-left-radius: var(--border-radius-medium);
+          border-top-right-radius: var(--border-radius-medium);
           margin-bottom: 8px;
-          background-color: var(--colorInteractivePrimary);
+          background-color: var(--surface-neutral-surface-color);
+          color: var(--surface-neutral-surface-text-color);
         }
 
         .c-infoBox-children {
@@ -85,7 +97,7 @@ div[class$="mapContainer"] {
         .c-infoBox-actionLink {
           padding: 0 12px;
           text-align: right;
-          color: var(--colorInteractivePrimary);
+          color: var(--surface-primary-text-color);
           margin-top: 16px;
           margin-bottom: 4px;
           cursor: pointer;

@@ -6,7 +6,7 @@
 
 .c-routePlanning-headerItem-title {
   margin-right: 4px;
-  opacity: 0.5;
+  opacity: var(--opacity-faded);
   white-space: nowrap;
   text-overflow: ellipsis;
 }
