@@ -198,9 +198,17 @@ react-module
         font: inherit;
     }
 
-    .radioGroup .radioLabel .radioButton
+    .radioGroup .radioLabel
     {
-        border-color: var(--surface-toggle-surface-indicator-color--focus);
+        .radioButton
+        {
+            border-color: var(--surface-toggle-surface-indicator-color--focus);
+        }
+
+        &.checked .radioButton
+        {
+            border-color: var(--surface-toggle-surface-indicator-color--active);
+        }
     }
 
     .c-orderDetails-meta,

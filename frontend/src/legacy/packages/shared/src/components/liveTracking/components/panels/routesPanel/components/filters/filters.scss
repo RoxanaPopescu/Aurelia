@@ -38,6 +38,11 @@
   &.--neutral
   {
     color: var(--surface-neutral-surface-text-color);
+
+    > span
+    {
+      opacity: var(--opacity-faded);
+    }
   }
 }
 
@@ -74,7 +79,11 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding-bottom: 14px;
+
+  &:not(.--expanded)
+  {
+    padding-bottom: 14px;
+  }
 }
 
 .c-liveTracking-routesPanel-filters-criticality {
@@ -126,4 +135,24 @@
   > div:not(:last-child) {
     margin-bottom: 20px;
   }
+}
+
+// .c-liveTracking-routesPanel-filters-matchCount
+// {
+//   display: inline-block;
+//   background-color: var(--surface-neutral-surface-color);
+//   margin-left: var(--size-inline-spacing);
+//   padding: 0 4px;
+//   border-radius: 50%;
+//   min-width: 22px;
+//   text-align: center;
+//   font-weight: 600;
+//   font-size: 12px;
+//   border: 1px solid rgba(128, 128, 128, 0.05);
+//   color: var(--surface-neutral-surface-text-color);
+// }
+
+.c-liveTracking-routesPanel-filters-matchCount::before
+{
+  content: " - "
 }
