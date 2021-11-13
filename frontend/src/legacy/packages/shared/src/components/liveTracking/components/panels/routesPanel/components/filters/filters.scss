@@ -56,11 +56,11 @@
 .c-liveTracking-routesPanel-filters-count {
   margin-top: -3px;
   text-align: right;
-  color: var(--surface-primary-text-color);
+  opacity: var(--opacity-faded);
 }
 
 .c-liveTracking-routesPanel-filters-enabledCount {
-  color: var(--surface-primary-text-color);
+  opacity: var(--opacity-faded);
   margin-right: 18px;
 }
 
