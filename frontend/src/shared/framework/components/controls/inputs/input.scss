@@ -480,7 +480,8 @@ body
     }
 
     &:not(.--disabled):not(.--readonly).--required,
-    .input:not(.--disabled):not(.--readonly) &.--required
+    .input:not(.--disabled):not(.--readonly) &.--required,
+    .input-container:not(.--disabled):not(.--readonly) &.--required,
     {
         > .input-label > .input-heading > [slot]::after
         {
