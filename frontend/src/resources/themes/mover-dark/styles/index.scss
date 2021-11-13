@@ -172,3 +172,8 @@ info-icon .info-icon-container:not(:hover) icon
 {
     opacity: var(--opacity-faded) !important;
 }
+
+.c-routePlanning-routes-action img
+{
+    filter: invert(1);
+}
