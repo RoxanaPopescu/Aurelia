@@ -47,6 +47,8 @@ export class WorldMapComponent extends React.Component<WorldMapComponentProps> {
           clickableIcons: false,
           styles: getMapStyles(),
           scrollwheel: false,
+          minZoom: 2,
+          maxZoom: 20,
           ...this.props.options,
           backgroundColor: "none",
         }}

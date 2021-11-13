@@ -32,7 +32,9 @@ class Map extends React.Component<Props> {
         options={{
           disableDefaultUI: true,
           clickableIcons: false,
-          styles: getMapStyles()
+          styles: getMapStyles(),
+          minZoom: 2,
+          maxZoom: 20,
         }}
         onDragEnd={() => this.props.store.checkBounds()}
         onZoomChanged={() => this.props.store.checkBounds()}
