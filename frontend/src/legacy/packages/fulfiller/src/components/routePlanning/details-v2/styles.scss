@@ -47,12 +47,24 @@
 }
 
 .c-routePlanning-routes-infoBar-left {
+  position: relative;
   padding-left: 32px;
   height: 49px;
   overflow-x: scroll;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+
+  &::after {
+    content: "";
+    display: block;
+    position: sticky;
+    height: calc(100% - 2px);
+    min-width: 30px;
+    right: 0;
+    top: 0;
+    background: linear-gradient(to left, var(--surface-color), transparent);
+  }
 }
 
 .c-routePlanning-routes-infoBar-right {

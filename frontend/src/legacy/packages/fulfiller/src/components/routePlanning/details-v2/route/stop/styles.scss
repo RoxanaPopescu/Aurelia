@@ -17,10 +17,10 @@
 }
 
 .c-routePlanning-routes-route-stop-selected {
-  background-color: white !important;
+  background-color: var(--surface-color) !important;
 
   .c-routePlanning-routes-route-stop-number {
-    color: black;
+    color: var(--surface-text-color) !important;
   }
 
   &:hover {

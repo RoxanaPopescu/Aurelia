@@ -40,9 +40,9 @@ export default class RoutePlanningUnscheduledStopsComponent extends React.Compon
     return (
       <div className={classNames}>
         <div className="c-routePlanning-routes-unscheduledTasksBar-title font-small">
-          {Localization.operationsValue(
-            "RoutePlanning_RoutePlan_UnplannedTasks"
-          )}
+          <span>
+            {Localization.operationsValue("RoutePlanning_RoutePlan_UnplannedTasks")}
+          </span>
         </div>
         {this.renderStops()}
       </div>
