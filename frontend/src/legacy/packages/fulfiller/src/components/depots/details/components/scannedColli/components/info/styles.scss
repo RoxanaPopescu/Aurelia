@@ -1,26 +1,30 @@
 .c-depots-scannedColli-infoContainer {
   width: 150px;
   height: 101px;
-  border: 1px solid var(--colorNeutralRegular);
+  border: 1px solid var(--surface-neutral-border-color);
+  border-radius: var(--border-radius-medium);
+  background-color: var(--surface-neutral-surface-color);
+  color: var(--surface-neutral-surface-text-color);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
 .c-depots-scannedColli-infoTitle {
   width: 100%;
-  height: 30px;
+  height: 42px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-items: center;
   justify-content: center;
-  background-color: var(--colorNeutralExtraLight);
 }
 
 .c-depots-scannedColli-infoDescription {
   width: 100%;
   flex: 1;
   display: flex;
-  align-items: center;
+  margin-top: 6px;
+  align-items: flex-start;
   justify-items: center;
   justify-content: center;
 }

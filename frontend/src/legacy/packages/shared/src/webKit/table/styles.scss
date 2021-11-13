@@ -156,7 +156,7 @@
       position: relative;
       display: flex;
       align-items: center;
-      background-color: var(--colorNeutralExtraLight);
+      background-color: var(--legacy-card-surface-color);
       text-align: left;
       padding: 8rem 20rem;
       transition: background-color 100ms;
@@ -191,8 +191,8 @@
       }
 
       &.hovered {
-        background-color: var(--colorNeutralExtraLightDarken);
-        border-color: var(--colorNeutralExtraLightDarken);
+        background-color: var(--legacy-card-surface-color--hover);
+        border-color: var(--legacy-card-surface-color--hover);
 
         &.c-gridTable-firstColumn:before {
           content: "";
@@ -501,14 +501,14 @@
 }
 @keyframes animation-table-skeleton {
   0% {
-    background-color: var(--colorNeutralExtraLight);
+    background-color: hsla(0, 0, 50%, 0.1);
   }
 
   50% {
-    background-color: rgba(var(--colorNeutralExtraLight), 0.7);
+    background-color: hsla(0, 0, 50%, 0.01);
   }
 
   100% {
-    background-color: var(--colorNeutralExtraLight);
+    background-color: hsla(0, 0, 50%, 0.1);
   }
 }

@@ -173,7 +173,14 @@ info-icon .info-icon-container:not(:hover) icon
     opacity: var(--opacity-faded) !important;
 }
 
+// Override legacy styles.
+
 .c-routePlanning-routes-action img
 {
     filter: invert(1);
+}
+
+.pageHeader
+{
+    border-bottom-color: var(--palette-color-neutral-lit) !important;
 }

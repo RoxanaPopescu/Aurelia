@@ -286,6 +286,7 @@ react-module
     .gridTable-container-old .c-gridTable .c-gridTable-header
     {
         background-color: var(--surface-color) !important;
+        color: var(--surface-text-color) !important;
     }
 
     .multiSelectContainer.selectContainer .selectWrapper .react-selectize .react-selectize-control
@@ -294,21 +295,59 @@ react-module
         background-color: var(--surface-input-surface-tag-surface-color) !important;
     }
 
-    .c-dialog-content
+    .c-dialog
     {
-        background-color: var(--surface-color, white) !important;
+        > :first-child
+        {
+            border-top-left-radius: var(--border-radius-medium);
+            border-top-right-radius: var(--border-radius-medium);
+        }
+
+        > :last-child
+        {
+            border-bottom-left-radius: var(--border-radius-medium);
+            border-bottom-right-radius: var(--border-radius-medium);
+        }
     }
 
-    .c-dialog-header,
-    .c-depots-scannedColli-infoTitle
+    .c-dialog-content
     {
-        background-color: var(--legacy-card-surface-color, var(--colorNeutralExtraLight)) !important;
+        background-color: var(--surface-color) !important;
+        padding: 28px;
+    }
+
+    .c-dialog-header
+    {
+        background-color: var(--surface-color) !important;
+        border-bottom: none !important;
+        padding: 28px;
+
+        .font-large
+        {
+            line-height: var(--font-larger-line-height);
+            font-size: var(--font-larger-font-size);
+            font-weight: var(--font-larger-font-weight);
+            text-rendering: geometricPrecision;
+        }
+    }
+
+    .c-dialog-header + .c-dialog-content
+    {
+        padding-top: 4px;
     }
 
     .gridTable-container-old .c-gridTable .c-gridTable-header.font-heading
     {
         font-size: var(--font-base-font-size);
         font-weight: 500;
+        line-height: var(--font-base-line-height);
+        color: inherit;
+    }
+
+    .font-heading
+    {
+        font-size: var(--font-base-font-size);
+        font-weight: var(--font-base-font-weight);
         line-height: var(--font-base-line-height);
         color: inherit;
     }
