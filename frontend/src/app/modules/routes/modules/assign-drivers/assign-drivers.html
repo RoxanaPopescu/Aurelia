@@ -196,6 +196,12 @@
                                     </span>
                                 </data-table-cell>
 
+                                <data-table-cell if.bind="column.slug === 'colli-count'">
+                                    <span class="text-truncate">
+                                        ${result.route.totalColliCount | number}
+                                    </span>
+                                </data-table-cell>
+
                                 <data-table-cell if.bind="column.slug === 'driver'" class="${updating.driver ? 'opacity-faded' : ''}">
                                     <span>
                                         ${result.driver.name}
@@ -472,6 +478,12 @@
                                         <template if.bind="route.driver">
                                             ${route.driver.name}
                                         </template>
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'colli-count'">
+                                    <span class="text-truncate">
+                                        ${route.totalColliCount | number}
                                     </span>
                                 </data-table-cell>
 

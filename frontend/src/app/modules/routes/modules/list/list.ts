@@ -654,7 +654,8 @@ export class ListPage
                         criticality: columnSlugs.includes("criticality"),
                         estimates: columnSlugs.includes("estimated-time-frame"),
                         delayedStops: columnSlugs.includes("delayed-stops"),
-                        stops: columnSlugs.includes("distance") || columnSlugs.includes("planned-start-time-frame")
+                        stops: columnSlugs.includes("distance") || columnSlugs.includes("planned-start-time-frame"),
+                        colli: columnSlugs.includes("colli-count")
                     },
                     this.sorting,
                     this.paging,

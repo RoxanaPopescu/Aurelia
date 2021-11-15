@@ -29,6 +29,7 @@
     "plannedStartTimeShort": "Starttime",
     "criticality": "Criticality",
     "distance": "Distance",
-    "team": "Team"
-
+    "team": "Team",
+    "colliCount": "Colli count",
+    "colliCountShort": "Colli"
 }

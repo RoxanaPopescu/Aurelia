@@ -2,8 +2,6 @@ import { getStrings } from "../../../shared/localization";
 import { AppModule } from "../../app-module";
 import { AppContext } from "../../app-context";
 
-// TODO: Add permission checks
-
 /**
  * Represents a module exposing endpoints related to roles within an organization.
  */

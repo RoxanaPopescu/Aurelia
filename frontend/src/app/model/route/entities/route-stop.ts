@@ -1,7 +1,5 @@
 import { Signature, Photo } from "app/model/shared";
 import { RouteStopBase } from "./route-stop-base";
-import { Pickup } from "./pickup";
-import { Delivery } from "./delivery";
 import { RouteStopDeviation } from "./route-stop-deviation";
 import { RouteStopActions } from "./route-stop-actions";
 import clone from "clone";
@@ -25,8 +23,6 @@ export class RouteStop extends RouteStopBase
         {
             super(data, stopNumber, route);
 
-            this.pickups = data.pickups?.map(p => new Pickup(p)) ?? [];
-            this.deliveries = data.deliveries?.map(d => new Delivery(d)) ?? [];
             this.actions = new RouteStopActions(data.actions);
             this.deviations = data.deviations?.map(p => new RouteStopDeviation(p)) ?? [];
             this.selfies = data.selfies?.map(p => new Photo(p)) ?? [];
@@ -61,22 +57,10 @@ export class RouteStop extends RouteStopBase
         {
             super(undefined, stopNumber, route);
 
-            this.pickups = [];
-            this.deliveries = [];
             this.orderIds = [];
             this.actions = new RouteStopActions();
         }
     }
-
-    /**
-     * The pickups to be completed at this stop.
-     */
-    public readonly pickups: Pickup[];
-
-    /**
-     * The deliveries to be completed at this stop.
-     */
-    public readonly deliveries: Delivery[];
 
     /**
      * The actions that are required to complete the stop.

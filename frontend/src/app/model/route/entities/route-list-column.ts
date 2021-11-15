@@ -207,6 +207,13 @@ export class RouteListColumn
             name: listColumn.team,
             columnSize: "min-content",
             column: "visible"
+        },
+        "colli-count":
+        {
+            name: listColumn.colliCount,
+            columnName: listColumn.colliCountShort,
+            columnSize: "min-content",
+            column: "visible"
         }
     };
 }

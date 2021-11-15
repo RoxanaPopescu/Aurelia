@@ -5,7 +5,7 @@ import { Outfit } from "app/model/outfit";
 import { RouteStopStatus } from "./route-stop-status";
 import { RouteStopInfo } from "./route-stop-info";
 import { RouteEstimates } from "./route-estimates";
-import { IRouteReference, RouteStopAuthorityToLeave } from "..";
+import { Delivery, IRouteReference, Pickup, RouteStopAuthorityToLeave } from "..";
 
 /**
  * Represents a single location, where a driver must either pick up or deliver colli.
@@ -22,6 +22,9 @@ export abstract class RouteStopBase extends RouteStopInfo
 
         if (data != null)
         {
+            this.pickups = data.pickups?.map(p => new Pickup(p)) ?? [];
+            this.deliveries = data.deliveries?.map(d => new Delivery(d)) ?? [];
+
             this.port = data.port;
             this.driverInstructions = data.driverInstructions;
 
@@ -67,12 +70,27 @@ export abstract class RouteStopBase extends RouteStopInfo
                 this.waitingTime = Duration.fromObject({ seconds: data.waitingTime });
             }
         }
+        else
+        {
+            this.pickups = [];
+            this.deliveries = [];
+        }
     }
 
     /**
      * The status of this route stop.
      */
     public status: RouteStopStatus;
+
+    /**
+     * The pickups to be completed at this stop.
+     */
+    public readonly pickups: Pickup[];
+
+    /**
+     * The deliveries to be completed at this stop.
+     */
+    public readonly deliveries: Delivery[];
 
     /**
      * The consignee/consignor at this stop.

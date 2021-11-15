@@ -68,16 +68,6 @@ export class Route extends AbstractRoute<RouteStop>
     public supportNote?: string;
 
     /**
-     * The total number colli associated with pickups on non-cancelled stops on the route.
-     */
-    public get totalColliCount(): number
-    {
-        return this.stops
-            .filter(s => s instanceof RouteStop && s.status.slug !== "cancelled")
-            .reduce((total, s: RouteStop) => total + s.pickups.reduce((t, p) => t + p.colli.length, 0), 0);
-    }
-
-    /**
      * The total weight of all pickup colli for this route, can be undefined if no colli has weight.
      * In the future all colli should have a weight and dimension!
      */

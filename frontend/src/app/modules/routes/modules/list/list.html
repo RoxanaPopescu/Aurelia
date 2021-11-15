@@ -418,6 +418,12 @@
                                     </span>
                                 </data-table-cell>
 
+                                <data-table-cell if.bind="column.slug === 'colli-count'">
+                                    <span class="text-truncate">
+                                        ${route.totalColliCount | number}
+                                    </span>
+                                </data-table-cell>
+
                                 <data-table-cell if.bind="column.slug === 'driver-id'">
                                     <a
                                         class="text-truncate"
