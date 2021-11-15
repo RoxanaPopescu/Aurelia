@@ -32,7 +32,7 @@
 
                 <toggle-group class="flex-column" value.bind="eventTypeFilter">
 
-                    <check-toggle repeat.for="eventType of availableTriggerEvents" label="after" model.bind="eventType.slug" value.one-time="false">
+                    <check-toggle repeat.for="eventType of availableTriggerEvents" label="after" model.bind="eventType.slug">
 
                         <div slot="heading" translate>
                             ${eventType.name}
@@ -52,7 +52,7 @@
 
                 <toggle-group class="flex-column" value.bind="messageTypeFilter">
 
-                    <check-toggle repeat.for="messageType of availableMessageTypes" label="after" model.bind="messageType.slug" value.one-time="false">
+                    <check-toggle repeat.for="messageType of availableMessageTypes" label="after" model.bind="messageType.slug">
 
                         <div slot="heading" translate>
                             ${messageType.name}
@@ -72,7 +72,7 @@
 
                 <toggle-group class="flex-column" value.bind="recipientFilter">
 
-                    <check-toggle repeat.for="recipient of availableRecipients" label="after" model.bind="recipient.slug" value.one-time="false">
+                    <check-toggle repeat.for="recipient of availableRecipients" label="after" model.bind="recipient.slug">
 
                         <div slot="heading" translate>
                             ${recipient.name}

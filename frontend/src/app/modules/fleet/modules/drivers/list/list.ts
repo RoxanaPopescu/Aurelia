@@ -17,7 +17,8 @@ interface IRouteParams
     pageSize?: number;
     sortProperty?: string;
     sortDirection?: SortingDirection;
-    searchQuery?: string;
+    textFilter?: string;
+    statusFilter?: string;
 }
 
 /**
@@ -79,7 +80,7 @@ export class ListPage
      * The text in the search text input.
      */
     @observable({ changeHandler: "update" })
-    protected searchQuery: string | undefined;
+    protected textFilter: string | undefined;
 
     /**
      * The name identifying the selected status tab.
@@ -107,6 +108,8 @@ export class ListPage
         this.paging.pageSize = params.pageSize || this.paging.pageSize;
         this.sorting.property = params.sortProperty || this.sorting.property;
         this.sorting.direction = params.sortDirection || this.sorting.direction;
+        this.textFilter = params.textFilter || this.textFilter;
+        this.statusFilter = params.statusFilter ? params.statusFilter.split(",") as any : this.statusFilter;
 
         this.update();
     }
@@ -189,7 +192,7 @@ export class ListPage
                     this.sorting,
                     this.paging,
                     {
-                        searchQuery: this.searchQuery,
+                        searchQuery: this.textFilter,
                         statuses: this.statusFilter
                      },
                     signal);
@@ -213,6 +216,8 @@ export class ListPage
                     state.params.pageSize = this.paging.pageSize;
                     state.params.sortProperty = this.sorting ? this.sorting.property : undefined;
                     state.params.sortDirection = this.sorting ? this.sorting.direction : undefined;
+                    state.params.textFilter = this.textFilter || undefined;
+                    state.params.statusFilter = this.statusFilter?.join(",") || undefined;
                 },
                 { trigger: false, replace: true });
             }

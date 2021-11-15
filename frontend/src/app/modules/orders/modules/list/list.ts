@@ -22,8 +22,8 @@ interface IRouteParams
     pageSize?: number;
     sortProperty?: string;
     sortDirection?: SortingDirection;
-    statusFilter?: string;
     textFilter?: string;
+    statusFilter?: string;
     consignorFilter?: string;
     orderTagsFilter?: string;
     fromDateFilter?: string;
@@ -209,8 +209,8 @@ export class ListPage
         this.paging.pageSize = params.pageSize || this.paging.pageSize;
         this.sorting.property = params.sortProperty || this.sorting.property;
         this.sorting.direction = params.sortDirection || this.sorting.direction;
-        this.statusFilter = params.statusFilter ? params.statusFilter.split(",") as any : this.statusFilter;
         this.textFilter = params.textFilter || this.textFilter;
+        this.statusFilter = params.statusFilter ? params.statusFilter.split(",") as any : this.statusFilter;
         this.orderTagsFilter = params.orderTagsFilter?.split(",") || this.orderTagsFilter;
         this.fromDateFilter = params.fromDateFilter ? DateTime.fromISO(params.fromDateFilter, { setZone: true }) : undefined;
         this.toDateFilter = params.toDateFilter ? DateTime.fromISO(params.toDateFilter, { setZone: true }) : undefined;
@@ -444,8 +444,8 @@ export class ListPage
                     state.params.pageSize = this.paging.pageSize;
                     state.params.sortProperty = this.sorting?.property;
                     state.params.sortDirection = this.sorting?.direction;
-                    state.params.statusFilter = this.statusFilter?.join(",") || undefined;
                     state.params.textFilter = this.textFilter || undefined;
+                    state.params.statusFilter = this.statusFilter?.join(",") || undefined;
                     state.params.consignorFilter = this.consignorFilter?.map(o => o.id).join(",") || undefined;
                     state.params.orderTagsFilter = this.orderTagsFilter?.join(",") || undefined;
                     state.params.fromDateFilter = this.fromDateFilter?.toISO();
