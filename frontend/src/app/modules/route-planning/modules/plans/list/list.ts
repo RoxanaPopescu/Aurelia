@@ -16,6 +16,9 @@ interface IRouteParams
     sortProperty?: string;
     sortDirection?: SortingDirection;
     textFilter?: string;
+    statusFilter?: string;
+    fromDateFilter?: string;
+    toDateFilter?: string;
 }
 
 /**
@@ -115,6 +118,9 @@ export class ListPage
         this.sorting.property = params.sortProperty || this.sorting.property;
         this.sorting.direction = params.sortDirection || this.sorting.direction;
         this.textFilter = params.textFilter || this.textFilter;
+        this.statusFilter = params.statusFilter ? params.statusFilter.split(",") as any : this.statusFilter;
+        this.createdDateFromFilter = params.fromDateFilter ? DateTime.fromISO(params.fromDateFilter, { setZone: true }) : undefined;
+        this.createdDateToFilter = params.toDateFilter ? DateTime.fromISO(params.toDateFilter, { setZone: true }) : undefined;
 
         this.update();
     }
@@ -226,6 +232,9 @@ export class ListPage
                     state.params.sortProperty = this.sorting.property;
                     state.params.sortDirection = this.sorting.direction;
                     state.params.textFilter = this.textFilter;
+                    state.params.statusFilter = this.statusFilter?.join(",") || undefined;
+                    state.params.fromDateFilter = this.createdDateFromFilter?.toISO();
+                    state.params.toDateFilter = this.createdDateToFilter?.toISO();
                 },
                 { trigger: false, replace: true });
             }

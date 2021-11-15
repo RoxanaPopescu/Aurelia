@@ -27,19 +27,20 @@ interface IRouteParams
     pageSize?: number;
     sortProperty?: string;
     sortDirection?: SortingDirection;
-    searchQuery?: string;
+    textFilter?: string;
     statusFilter?: RouteStatusSlug;
-    tagsFilter?: string;
     assignedDriver?: boolean;
     notAssignedDriver?: boolean;
     assignedVehicle?: boolean;
     notAssignedVehicle?: boolean;
     startTimeFromFilter?: string;
     startTimeToFilter?: string;
+    teams?: string;
+    tagsFilter?: string;
+    // TODO: Add "Pickup nearby" filter
+    owners?: string;
     createdTimeFromFilter?: string;
     createdTimeToFilter?: string;
-    owners?: string;
-    teams?: string;
 }
 
 /**
@@ -214,7 +215,7 @@ export class ListPage
      * The text in the search text input.
      */
     @observable({ changeHandler: "update" })
-    protected searchQuery: string | undefined;
+    protected textFilter: string | undefined;
 
     /**
      * Ff the driver is assigned
@@ -329,18 +330,19 @@ export class ListPage
         this.paging.pageSize = params.pageSize || this.paging.pageSize;
         this.sorting.property = params.sortProperty || this.sorting.property;
         this.sorting.direction = params.sortDirection || this.sorting.direction;
+        this.textFilter = params.textFilter || this.textFilter;
         this.statusFilter = params.statusFilter ? params.statusFilter.split(",") as any : this.statusFilter;
-        this.searchQuery = params.searchQuery || this.searchQuery;
-        this.tagsFilter = params.tagsFilter?.split(",") || this.tagsFilter;
         this.assignedDriver = params.assignedDriver != null ? Boolean(params.assignedDriver) : this.assignedDriver;
         this.notAssignedDriver = params.notAssignedDriver != null ? Boolean(params.notAssignedDriver) : this.notAssignedDriver;
         this.assignedVehicle = params.assignedVehicle != null ? Boolean(params.assignedVehicle) : this.assignedVehicle;
         this.notAssignedVehicle = params.notAssignedVehicle != null ? Boolean(params.notAssignedVehicle) : this.notAssignedVehicle;
         this.startTimeFromFilter = params.startTimeFromFilter ? DateTime.fromISO(params.startTimeFromFilter, { setZone: true }) : undefined;
         this.startTimeToFilter = params.startTimeToFilter ? DateTime.fromISO(params.startTimeToFilter, { setZone: true }) : undefined;
+        this.tagsFilter = params.tagsFilter?.split(",") || this.tagsFilter;
+        // TODO: Add "Pickup nearby" filter
+        this.legacyOwnerIdsFilter = params.owners?.split(",");
         this.createdTimeFromFilter = params.createdTimeFromFilter ? DateTime.fromISO(params.createdTimeFromFilter, { setZone: true }) : undefined;
         this.createdTimeToFilter = params.createdTimeToFilter ? DateTime.fromISO(params.createdTimeToFilter, { setZone: true }) : undefined;
-        this.legacyOwnerIdsFilter = params.owners?.split(",");
 
         if (params.teams)
         {
@@ -633,7 +635,7 @@ export class ListPage
                 const result = await this._routeService.getAll(
                     {
                         statuses: this.statusFilter,
-                        searchQuery: this.searchQuery,
+                        searchQuery: this.textFilter,
                         tagsAllMatching: this.tagsFilter,
                         startTimeFrom: this.startTimeFromFilter,
                         startTimeTo: this.startTimeToFilter?.endOf("day"),
@@ -681,19 +683,20 @@ export class ListPage
                     state.params.pageSize = this.paging.pageSize;
                     state.params.sortProperty = this.sorting?.property;
                     state.params.sortDirection = this.sorting?.direction;
+                    state.params.textFilter = this.textFilter || undefined;
                     state.params.statusFilter = this.statusFilter?.join(",") || undefined;
-                    state.params.searchQuery = this.searchQuery || undefined;
-                    state.params.tagsFilter = this.tagsFilter?.join(",") || undefined;
                     state.params.assignedDriver = this.assignedDriver ? true : undefined;
                     state.params.notAssignedDriver = this.notAssignedDriver ? true : undefined;
                     state.params.assignedVehicle = this.assignedVehicle ? true : undefined;
                     state.params.notAssignedVehicle = this.notAssignedVehicle ? true : undefined;
                     state.params.startTimeFromFilter = this.startTimeFromFilter?.toISO();
                     state.params.startTimeToFilter = this.startTimeToFilter?.toISO();
+                    state.params.teams = this.teamsFilterService.selectedTeamIds;
+                    state.params.tagsFilter = this.tagsFilter?.join(",") || undefined;
+                    // TODO: Add "Pickup nearby" filter
+                    state.params.owners = this.legacyOwnerIdsFilter?.join(",");
                     state.params.createdTimeFromFilter = this.createdTimeFromFilter?.toISO();
                     state.params.createdTimeToFilter = this.createdTimeToFilter?.toISO();
-                    state.params.owners = this.legacyOwnerIdsFilter?.join(",");
-                    state.params.teams = this.teamsFilterService.selectedTeamIds;
                 },
                 { trigger: false, replace: true });
             }
