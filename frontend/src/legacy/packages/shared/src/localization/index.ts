@@ -2,7 +2,11 @@ import { DateTime, Settings, Duration } from "luxon";
 import humanizeDuration from "humanize-duration";
 import { DateTimeRange } from "shared/src/model/general/dateTimeRange";
 
-const locale = ENVIRONMENT.locale.includes("da") ? "da" : ENVIRONMENT.locale.includes("it") ? "it" : "en";
+const locale = ENVIRONMENT.locale.includes("da") ? "da" :
+               ENVIRONMENT.locale.includes("it") ? "it" :
+               ENVIRONMENT.locale.includes("de") ? "de" :
+               ENVIRONMENT.locale.includes("fr") ? "fr" : "en";
+
 const formatLocale = "da";
 
 var I18n = require("i18n-js");
@@ -33,13 +37,17 @@ namespace Area {
         return {
           da: require("./operations/da.json"),
           en: require("./operations/en.json"),
-          it: require("./operations/it.json")
+          it: require("./operations/it.json"),
+          de: require("./operations/de.json"),
+          fr: require("./operations/fr.json")
         };
       case Area.Shared:
         return {
           da: require("./shared/da.json"),
           en: require("./shared/en.json"),
-          it: require("./shared/it.json")
+          it: require("./shared/it.json"),
+          de: require("./shared/de.json"),
+          fr: require("./shared/fr.json")
         };
     }
   }

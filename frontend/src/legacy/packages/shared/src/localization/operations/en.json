@@ -54,6 +54,7 @@
   "Depots_Gates_Add:Button": "+ Add gates",
   "Depots_Gates_Create_Title": "Create gates",
   "Depots_Gates_DaysOfWeek": "In {daysOfWeek}",
+  "Depots_Gates_Edit_Title": "Edit gates",
   "Depots_Gates_OpeningHours": "Open from {timeFrom} to {timeTo}",
   "Depots_Gates_Title": "Gates",
   "Depots_Gates_Update_NumberOfGates": "Number of gates",

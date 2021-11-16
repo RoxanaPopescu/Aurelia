@@ -54,6 +54,7 @@
   "Depots_Gates_Add:Button": "+ Tilføj porte",
   "Depots_Gates_Create_Title": "Opret porte",
   "Depots_Gates_DaysOfWeek": "I dagene {daysOfWeek}",
+  "Depots_Gates_Edit_Title": "Rediger porte",
   "Depots_Gates_OpeningHours": "Åben fra {timeFrom} til {timeTo}",
   "Depots_Gates_Title": "Porte",
   "Depots_Gates_Update_NumberOfGates": "Antal porte",
