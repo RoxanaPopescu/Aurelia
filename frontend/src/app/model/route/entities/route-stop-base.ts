@@ -40,6 +40,11 @@ export abstract class RouteStopBase extends RouteStopInfo
                 this.estimates = new RouteEstimates(data.estimates);
             }
 
+            if (data.initialEstimates != null)
+            {
+                this.initialEstimates = new RouteEstimates(data.initialEstimates);
+            }
+
             if (data.arrivedTime != null)
             {
                 this.arrivedTime = DateTime.fromISO(data.arrivedTime, { setZone: true });
@@ -106,6 +111,11 @@ export abstract class RouteStopBase extends RouteStopInfo
      * The estimates for this stop.
      */
     public estimates?: RouteEstimates;
+
+    /**
+     * The initial estimates for this stop.
+     */
+    public initialEstimates?: RouteEstimates;
 
     /**
      * The estimates for this stop.
