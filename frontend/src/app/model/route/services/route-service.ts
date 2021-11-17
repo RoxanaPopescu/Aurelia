@@ -69,7 +69,7 @@ export class RouteService
             estimates?: boolean;
             delayedStops?: boolean;
             stops?: boolean;
-            colli?: boolean
+            colli?: boolean;
         },
         sorting?: ISorting,
         paging?: IPaging,
