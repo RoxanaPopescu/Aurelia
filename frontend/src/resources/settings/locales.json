@@ -19,5 +19,15 @@
       "code": "it",
       "unicodeExtension": "u-ca-iso8601-nu-latn",
       "name": "Italiano"
+  },
+  {
+      "code": "de",
+      "unicodeExtension": "u-ca-iso8601-nu-latn",
+      "name": "Deutsch"
+  },
+  {
+      "code": "fr",
+      "unicodeExtension": "u-ca-iso8601-nu-latn",
+      "name": "Français"
   }
 ]
