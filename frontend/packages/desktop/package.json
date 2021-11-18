@@ -11,8 +11,8 @@
     "url": "https://thomas_darling@bitbucket.org/moversystems/platform.git"
   },
   "engines": {
-    "node": ">=14.0.0 <15.0.0",
-    "npm": ">=6.7.0 <7.0.0"
+    "node": ">=16.0.0 <17.0.0",
+    "npm": ">=8.0.0 <9.0.0"
   },
   "main": "artifacts/build/index.js",
   "scripts": {
@@ -24,19 +24,19 @@
   },
   "dependencies": {
     "electron-pdf-window": "^1.0.12",
-    "tslib": "^2.0.3"
+    "tslib": "^2.3.1"
   },
   "peerDependencies": {},
   "devDependencies": {
-    "@types/node": "^14.14.7",
-    "cpx2": "^3.0.0",
+    "@types/node": "^16.11.7",
+    "cpx2": "^4.0.0",
     "electron": "^10.1.5",
     "electron-builder": "^22.9.1",
     "electron-pdf-window": "^1.0.12",
-    "nodemon": "^2.0.6",
+    "nodemon": "^2.0.15",
     "rimraf": "^3.0.2",
-    "ts-node": "^9.0.0",
+    "ts-node": "^10.4.0",
     "tslint": "^6.1.3",
-    "typescript": "^4.0.5"
+    "typescript": "^4.4.4"
   }
 }

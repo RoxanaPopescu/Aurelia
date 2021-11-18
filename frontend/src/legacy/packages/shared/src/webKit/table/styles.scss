@@ -501,14 +501,14 @@
 }
 @keyframes animation-table-skeleton {
   0% {
-    background-color: hsla(0, 0, 50%, 0.1);
+    background-color: hsla(0, 0%, 50%, 0.1);
   }
 
   50% {
-    background-color: hsla(0, 0, 50%, 0.01);
+    background-color: hsla(0, 0%, 50%, 0.01);
   }
 
   100% {
-    background-color: hsla(0, 0, 50%, 0.1);
+    background-color: hsla(0, 0%, 50%, 0.1);
   }
 }

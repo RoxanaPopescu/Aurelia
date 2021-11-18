@@ -309,7 +309,7 @@ input[type="search"]::-webkit-search-decoration
     input[type="checkbox"]
     {
         $size: 1.5em;
-        $offset: ($size - 1em) / 2;
+        $offset: calc(($size - 1em) / 2);
 
         // Remove the default browser styling.
         appearance: none;
@@ -405,7 +405,7 @@ input[type="search"]::-webkit-search-decoration
     input[type="radio"]
     {
         $size: 1.5em;
-        $offset: ($size - 1em) / 2;
+        $offset: calc(($size - 1em) / 2);
 
         // Remove the default browser styling.
         appearance: none;

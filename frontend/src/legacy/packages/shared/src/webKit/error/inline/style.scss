@@ -26,7 +26,7 @@
 
 .backOfficeContainer {
   .error-component {
-    margin-left: $backofficeMenuBig/2;
+    margin-left: calc($backofficeMenuBig / 2);
   }
 }
 @media (max-width: $mediaIpadH) {

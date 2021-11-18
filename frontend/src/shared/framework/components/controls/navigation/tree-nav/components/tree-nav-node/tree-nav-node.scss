@@ -208,8 +208,8 @@ tree-nav-node
 
     .tree-nav-node-icon
     {
-        margin-right: calc(#{($icon-size-folder - $icon-size-file) / 2} + #{$icon-size-folder / $icon-size-file} * var(--size-inline-spacing));
-        margin-left: ($icon-size-folder - $icon-size-file) / 2;
+        margin-right: calc(($icon-size-folder - $icon-size-file) / 2 + ($icon-size-folder / $icon-size-file) * var(--size-inline-spacing));
+        margin-left: calc(($icon-size-folder - $icon-size-file) / 2);
         font-size: $icon-size-file;
         vertical-align: middle;
         font-weight: 700;
