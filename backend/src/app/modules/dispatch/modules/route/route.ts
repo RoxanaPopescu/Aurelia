@@ -41,6 +41,7 @@ export class DispatchRouteModule extends AppModule
         body.organizationId = context.user?.organizationId;
         body.updatedBy = context.user?.id;
 
+        // tslint:disable-next-line: no-floating-promises
         this.apiClient.post("logistics-platform/routes/v4/assign-multiple-drivers",
         {
             noi: true,
