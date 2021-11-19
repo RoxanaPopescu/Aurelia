@@ -41,13 +41,12 @@ export class DispatchRouteModule extends AppModule
         body.organizationId = context.user?.organizationId;
         body.updatedBy = context.user?.id;
 
-        const result = await this.apiClient.post("logistics-platform/routes/v4/assign-multiple-drivers",
+        this.apiClient.post("logistics-platform/routes/v4/assign-multiple-drivers",
         {
             noi: true,
             body: body
         });
 
-        context.response.body = result.data;
         context.response.status = 200;
     }
 
