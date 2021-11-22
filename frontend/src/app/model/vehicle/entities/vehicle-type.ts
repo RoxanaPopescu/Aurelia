@@ -25,7 +25,8 @@ export class VehicleType
         const localeCode = localeService.locale.code.substring(0, 2);
         if (data.name[localeCode] == null)
         {
-            this.name = data.name["en"];
+            const en = "en";
+            this.name = data.name[en];
         }
         else
         {
