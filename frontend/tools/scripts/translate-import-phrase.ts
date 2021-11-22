@@ -53,7 +53,7 @@ function importXliffToJson(xliff: any): string
     const json: any = { "./": {} };
 
     const unitRegexp = /<trans-unit id="([^"]*?)">([\s\S]*?)<\/trans-unit>/g;
-    const targetRegexp = /<target xml:lang="it">([\s\S]*)<\/target>|$/;
+    const targetRegexp = /<target xml:lang="fr">([\s\S]*)<\/target>|$/;
 
     let unitMatch;
 
