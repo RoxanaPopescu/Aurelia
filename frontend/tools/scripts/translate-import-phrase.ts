@@ -32,7 +32,7 @@ function readAndWriteXliff(type: "shared" | "app"): void
             // Rename the destination file.
             .pipe(rename(
             {
-                extname: ".json-test"
+                extname: ".json"
             }))
 
             // Write the destination file.
@@ -50,10 +50,10 @@ function readAndWriteXliff(type: "shared" | "app"): void
 function importXliffToJson(xliff: any): string
 {
 
-    const json: any = { "./": {} };
+    const json: any = { };
 
     const unitRegexp = /<trans-unit id="([^"]*?)">([\s\S]*?)<\/trans-unit>/g;
-    const targetRegexp = /<target xml:lang="fr">([\s\S]*)<\/target>|$/;
+    const targetRegexp = /<target xml:lang="de">([\s\S]*)<\/target>|$/;
 
     let unitMatch;
 
@@ -62,7 +62,7 @@ function importXliffToJson(xliff: any): string
         const result = targetRegexp.exec(unitMatch[2]);
 
         if (result != null && result[1] != null) {
-            json["./"][decodeXmlEntities(unitMatch[1], true)] = decodeXmlEntities(result[1], false);
+            json[decodeXmlEntities(unitMatch[1], true)] = decodeXmlEntities(result[1], false);
         }
     }
 
