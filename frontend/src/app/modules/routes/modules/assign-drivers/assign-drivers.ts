@@ -484,7 +484,15 @@ export class AssignDriversPage
 
             if (!confirmed)
             {
+                (result.route as any).driverId = undefined;
                 return;
+            }
+
+            // Remove driver from previous route
+            if (sameDriver != null)
+            {
+                (sameDriver.route as any).driverId = undefined;
+                sameDriver.route.driver = undefined;
             }
 
             this.onRemoveClick(sameDriver ?? sameRoute!);
@@ -492,6 +500,7 @@ export class AssignDriversPage
 
         this.results.push(result);
         result.route.driver = result.driver;
+        (result.route as any).driverId = result.driver?.id;
     }
 
     /**
