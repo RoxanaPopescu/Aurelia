@@ -312,11 +312,20 @@ export class AssignDriversPage
         try
         {
             const driver = await this._driverService.get(route.driverId);
-            await this.addResult(new RouteAssignDriver(route, driver));
+
+            if (driver.status.slug === "approved")
+            {
+                await this.addResult(new RouteAssignDriver(route, driver));
+            }
+            else
+            {
+                Log.error(`The driver with id '${route.driverId}'' is not approved`);
+                route.driverId = undefined;
+            }
         }
         catch
         {
-            Log.error(`Could not find a driver with id ${route.driverId}`);
+            Log.error(`Could not find a driver with id '${route.driverId}'`);
             route.driverId = undefined;
         }
     }
