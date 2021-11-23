@@ -485,6 +485,7 @@ export class AssignDriversPage
             if (!confirmed)
             {
                 (result.route as any).driverId = undefined;
+
                 return;
             }
 
