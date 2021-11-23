@@ -74,5 +74,5 @@
   "./app/modules/organization/resources/strings/permission-names:delete-teams": "Supprimer des équipes",
   "./app/modules/organization/resources/strings/permission-names:edit-vehicles": "Modifier les véhicules",
   "./app/modules/organization/resources/strings/permission-names:create-roles": "Créer des rôles",
-  "./app/modules/organization/resources/strings/permission-names:create-teams": "Créer des équipes"
+  "./app/modules/organization/resources/strings/permission-names:create-teams": "Créer des teams"
 }
