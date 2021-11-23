@@ -420,7 +420,7 @@
                             class="flex-basis-1-of-1">
 
                             <div slot="heading" translate>
-                                Name of the sender, as seen by the recipient
+                                Name of the sender
                             </div>
 
                             <div slot="validation">
@@ -435,7 +435,7 @@
 
                     </div>
 
-                    <div if.bind="model.messageType === 'email'" class="control-row margin-large-bottom">
+                    <div if.bind="model.messageType.slug === 'email'" class="control-row margin-large-bottom">
 
                         <email-input
                             label="above"
@@ -443,7 +443,7 @@
                             class="flex-basis-1-of-1">
 
                             <div slot="heading" translate>
-                                Email address of the sender, as seen by the recipient
+                                Email address of the sender
                             </div>
 
                             <div slot="validation">

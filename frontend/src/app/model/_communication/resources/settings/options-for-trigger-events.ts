@@ -18,14 +18,17 @@ export default
         placeholders: getPlaceholders(
         [
             "OrderId",
-            "DeliveryCustomerName",
             "PickupLocationAddress",
             "DeliveryLocationAddress",
+            "DeliveryCustomerName",
+            "DeliveryCustomerPhone",
+            "DeliveryCustomerEmail",
             "DeliveryTimeFrame",
-            "DriverPhone",
-            "DriverName",
             "DeliveryEtaDate",
-            "DeliveryEtaTime"
+            "DeliveryEtaTime",
+            "DriverName",
+            "DriverPhone",
+            "TrackingId"
         ])
     },
     "order-delivery-arrived":
@@ -44,11 +47,13 @@ export default
         placeholders: getPlaceholders(
         [
             "OrderId",
-            "DeliveryCustomerName",
             "DeliveryLocationAddress",
-            "DeliveryTimeFrame",
+            "DeliveryCustomerName",
+            "DeliveryCustomerPhone",
+            "DeliveryCustomerEmail",
+            "DriverName",
             "DriverPhone",
-            "DriverName"
+            "TrackingId"
         ])
     },
     "order-delivery-completed":
@@ -67,14 +72,13 @@ export default
         placeholders: getPlaceholders(
         [
             "OrderId",
-            "DeliveryCustomerName",
-            "DeliveryCompanyName",
             "DeliveryLocationAddress",
-            "DriverName",
-            "DriverPhone",
+            "DeliveryCompanyName",
+            "DeliveryCustomerName",
             "DeliveryCustomerPhone",
-            "DeliveryCustomerEmail"
-
+            "DeliveryCustomerEmail",
+            "DriverName",
+            "DriverPhone"
         ])
     },
     "order-delivery-failed":
@@ -93,12 +97,12 @@ export default
         placeholders: getPlaceholders(
         [
             "OrderId",
-            "DeliveryCustomerName",
             "DeliveryLocationAddress",
-            "DriverName",
-            "DriverPhone",
+            "DeliveryCustomerName",
             "DeliveryCustomerPhone",
-            "DeliveryCustomerEmail"
+            "DeliveryCustomerEmail",
+            "DriverName",
+            "DriverPhone"
 
         ])
     },
@@ -118,12 +122,16 @@ export default
         placeholders: getPlaceholders(
         [
             "OrderId",
-            "DeliveryCustomerName",
             "DeliveryLocationAddress",
+            "DeliveryCustomerName",
+            "DeliveryCustomerPhone",
+            "DeliveryCustomerEmail",
+            "DeliveryTimeFrame",
+            "DeliveryEtaDate",
+            "DeliveryEtaTime",
             "DriverName",
             "DriverPhone",
-            "DeliveryCustomerPhone",
-            "DeliveryCustomerEmail"
+            "TrackingId"
         ])
     },
     "order-delivery-eta-provided":
@@ -142,13 +150,16 @@ export default
         placeholders: getPlaceholders(
         [
             "OrderId",
-            "DeliveryCustomerName",
             "DeliveryLocationAddress",
+            "DeliveryCustomerName",
+            "DeliveryCustomerPhone",
+            "DeliveryCustomerEmail",
             "DeliveryTimeFrame",
             "DeliveryEtaDate",
             "DeliveryEtaTime",
+            "DriverName",
             "DriverPhone",
-            "DriverName"
+            "TrackingId"
         ])
     },
     "order-pickup-eta-provided":
@@ -166,13 +177,15 @@ export default
         placeholders: getPlaceholders(
         [
             "OrderId",
-            "PickupCustomerName",
             "PickupLocationAddress",
+            "PickupCustomerName",
+            "PickupCustomerPhone",
+            "PickupCustomerEmail",
             "PickupTimeFrame",
             "PickupEtaDate",
             "PickupEtaTime",
-            "DriverPhone",
-            "DriverName"
+            "DriverName",
+            "DriverPhone"
         ])
     },
     "order-schedule-triggered":
@@ -193,15 +206,52 @@ export default
             "OrderId",
             "TrackingId",
             "RelationalId",
-            "DeliveryCustomerName",
             "DeliveryLocationAddress",
+            "DeliveryLocationLatitude",
+            "DeliveryLocationLongitude",
+            "DeliveryCustomerName",
             "DeliveryCustomerPhone",
             "DeliveryCustomerEmail",
             "DeliveryTimeFrame",
-            "DeliveryEtaTime",
             "DeliveryEtaDate",
+            "DeliveryEtaTime",
             "DeliveryWeekday",
-            "DeliveryDate"
+            "DeliveryDate",
+            "PickupLocationAddress",
+            "PickupCustomerName",
+            "PickupCustomerPhone",
+            "PickupCustomerEmail",
+            "PickupTimeFrame",
+            "PickupEtaDate",
+            "PickupEtaTime",
+            "PickupWeekday",
+            "PickupDate"
+        ])
+    },
+    "specific-time":
+    {
+        recipientTypes:
+        [
+            "delivery-customer",
+            "pickup-customer",
+            "custom-email"
+        ],
+        messageTypes:
+        [
+            "sms",
+            "email"
+        ],
+        placeholders: getPlaceholders(
+        [
+            "OrderId",
+            "DeliveryLocationAddress",
+            "DeliveryCustomerName",
+            "DeliveryCustomerPhone",
+            "DeliveryCustomerEmail",
+            "DeliveryTimeFrame",
+            "DeliveryEtaDate",
+            "DeliveryEtaTime",
+            "TrackingId"
         ])
     }
 };
