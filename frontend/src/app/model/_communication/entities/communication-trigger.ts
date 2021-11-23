@@ -118,7 +118,7 @@ export class CommunicationTrigger
     /**
      * The email of the sender, as seen by the recipient when the message is received.
      */
-    public readonly fromEmail: string;
+    public fromEmail: string;
 
     /**
      * The type of message to send.
