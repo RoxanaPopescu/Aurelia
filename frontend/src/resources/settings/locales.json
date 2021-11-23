@@ -24,5 +24,15 @@
       "code": "it",
       "unicodeExtension": "u-ca-iso8601-nu-latn",
       "name": "Italiana"
+  },
+  {
+      "code": "de",
+      "unicodeExtension": "u-ca-iso8601-nu-latn",
+      "name": "Deutsch"
+  },
+  {
+      "code": "fr",
+      "unicodeExtension": "u-ca-iso8601-nu-latn",
+      "name": "Français"
   }
 ]
