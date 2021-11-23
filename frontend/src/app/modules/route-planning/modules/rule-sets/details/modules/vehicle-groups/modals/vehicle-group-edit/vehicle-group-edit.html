@@ -764,6 +764,139 @@
 
         </modal-section>
 
+        <modal-section class="--line-above">
+
+            <div slot="header" translate>
+                Breaks
+            </div>
+
+            <h1 class="margin-large-bottom" translate>
+                Here you can specify the break rules to use.
+            </h1>
+
+            <select-input
+                label="above"
+                value.bind="selectedBreakType"
+                display-value.bind="selectedBreakType.name"
+                none.bind="true">
+
+                <div slot="heading" translate>
+                    Break type
+                </div>
+
+                <item repeat.for="breakType of availableBreakTypes" model.bind="breakType">
+                    ${breakType.name}
+                </item>
+
+            </select-input>
+
+            <check-toggle
+                if.bind="selectedBreakType.slug === 'max-work-time'"
+                label="after"
+                value.bind="model.breaks.includeStartLocationTaskTime"
+                class="margin-large-top">
+
+                <div slot="heading" translate>
+                    Include start location task time
+                </div>
+
+            </check-toggle>
+
+            <div if.bind="selectedBreakType != null" class="margin-large-top">
+
+                <div class="input-heading margin-large-bottom" translate>
+                    Break rules, in decending order of precedence
+                </div>
+
+                <invalid-validator if.bind="model.breaks.rules.length == 0">
+
+                    <template replace-part="invalid" translate>
+                        Please specify at least one break rule
+                    </template>
+
+                </invalid-validator>
+
+                <div if.bind="selectedBreakType.slug === 'max-work-time'">
+
+                    <card repeat.for="breakRule of model.breaks.rules" accent="neutral" class="margin-large-top --non-clickable">
+
+                        <div slot="actions">
+
+                            <button
+                                title.translate="Delete"
+                                appearance="none"
+                                click.trigger="deleteBreakRuleClick($index) && false">
+                                <icon name="md-remove"></icon>
+                            </button>
+
+                        </div>
+
+                        <number-input
+                            label="above"
+                            value.bind="breakRule.workTimeSinceLastBreak | scale: 1/60"
+                            min.bind="0">
+
+                            <div slot="heading" translate>
+                                Max work time since the last break.
+                            </div>
+
+                            <span slot="after" class="opacity-faded" translate>
+                                min
+                            </span>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="breakRule.workTimeSinceLastBreak">
+                                </required-validator>
+
+                            </div>
+
+                        </number-input>
+
+                        <number-input
+                            class="margin-large-top"
+                            label="above"
+                            value.bind="breakRule.duration | scale: 1/60"
+                            min.bind="0">
+
+                            <div slot="heading" translate>
+                                Break duration
+                            </div>
+
+                            <span slot="after" class="opacity-faded" translate>
+                                min
+                            </span>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="breakRule.duration">
+                                </required-validator>
+
+                            </div>
+
+                        </number-input>
+
+                    </card>
+
+                </div>
+
+                <div class="button-container margin-large-top">
+
+                    <button appearance="outline" accent="primary" click.trigger="addBreakRuleClick()" class="flex-row">
+                        <icon name="add" class="font-larger margin-right"></icon>
+                        <div translate>
+                            Add break rule
+                        </div>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </modal-section>
+
         <div if.bind="isNew" class="button-container margin-larger-top">
 
             <button appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>

@@ -22,5 +22,7 @@ export * from "./entities/vehicle-group-distribution-center-en-route";
 export * from "./entities/vehicle-group-cost";
 export * from "./entities/vehicle-group-limits";
 export * from "./entities/vehicle-group-location";
+export * from "./entities/vehicle-group-break";
+export * from "./entities/vehicle-group-break-type";
 export * from "./entities/vehicle-group";
 export * from "./services/route-planning-settings-service";

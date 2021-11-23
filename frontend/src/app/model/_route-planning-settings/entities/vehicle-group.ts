@@ -4,6 +4,7 @@ import { VehicleGroupLimits } from "./vehicle-group-limits";
 import { VehicleGroupLocation } from "./vehicle-group-location";
 import clone from "clone";
 import { VehicleGroupDistributionCenterEnRoute } from "./vehicle-group-distribution-center-en-route";
+import { VehicleGroupBreak } from "./vehicle-group-break";
 
 /**
  * Represents settings associated with a vehicle group.
@@ -30,6 +31,7 @@ export class VehicleGroup
             this.endLocation = new VehicleGroupLocation(data.endLocation);
             this.routeTags = data.routeTags;
             this.handlesCollectionPoint = data.handlesCollectionPoint;
+            this.breaks = data.break;
         }
         else
         {
@@ -104,6 +106,11 @@ export class VehicleGroup
      * True if the vehicle can function as a collection point, otherwise false.
      */
     public handlesCollectionPoint: boolean;
+
+    /**
+     * The break model to use, if any.
+     */
+    public breaks: VehicleGroupBreak | undefined;
 
     /**
      * Gets a clone of this instance, suitable for editing.
