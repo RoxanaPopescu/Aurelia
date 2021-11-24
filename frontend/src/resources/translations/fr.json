@@ -9,7 +9,7 @@
   "678695040": "Le conducteur doit demander la signature du réceptionnaire à l'arrêt et ce, à des fins de documentation.",
   "788917573": "Sécurité du compte",
   "916068350": "Supprimer la réservation",
-  "937067502": "${model.starred ? ${model.starred ?'Supprimer du classement étoilé' : 'Ajouter au classement étoilé'}",
+  "937067502": "${model.starred ? 'Supprimer du classement étoilé' : 'Ajouter au classement étoilé'}",
   "952143633": "Saisir une adresse...",
   "ff000b55c": "Panneau de configuration",
   "d959bd603": "Récents et étoilés",
