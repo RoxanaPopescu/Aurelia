@@ -31,5 +31,7 @@
     "distance": "Distance",
     "team": "Team",
     "colliCount": "Colli count",
-    "colliCountShort": "Colli"
+    "colliCountShort": "Colli",
+    "estimatedColliCount": "Estimated colli count",
+    "estimatedColliCountShort": "Est. colli"
 }

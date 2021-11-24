@@ -202,6 +202,12 @@
                                     </span>
                                 </data-table-cell>
 
+                                <data-table-cell if.bind="column.slug === 'estimated-colli-count'">
+                                    <span class="text-truncate">
+                                        ${result.route.totalEstimatedColliCount | number}
+                                    </span>
+                                </data-table-cell>
+
                                 <data-table-cell if.bind="column.slug === 'driver'" class="${updating.driver ? 'opacity-faded' : ''}">
                                     <span>
                                         ${result.driver.name}
@@ -484,6 +490,12 @@
                                 <data-table-cell if.bind="column.slug === 'colli-count'">
                                     <span class="text-truncate">
                                         ${route.totalColliCount | number}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'estimated-colli-count'">
+                                    <span class="text-truncate">
+                                        ${route.totalEstimatedColliCount | number}
                                     </span>
                                 </data-table-cell>
 

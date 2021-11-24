@@ -27,6 +27,7 @@ export abstract class RouteStopBase extends RouteStopInfo
 
             this.port = data.port;
             this.driverInstructions = data.driverInstructions;
+            this.estimatedColliCount = data.estimatedColliCount;
 
             this.arrivalTimeFrame = new DateTimeRange(data.arrivalTimeFrame, { setZone: true });
 
@@ -111,6 +112,11 @@ export abstract class RouteStopBase extends RouteStopInfo
      * The estimates for this stop.
      */
     public estimates?: RouteEstimates;
+
+    /**
+     * The estimate colli count for this stop.
+     */
+    public estimatedColliCount?: number;
 
     /**
      * The initial estimates for this stop.

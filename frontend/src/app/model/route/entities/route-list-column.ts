@@ -214,6 +214,13 @@ export class RouteListColumn
             columnName: listColumn.colliCountShort,
             columnSize: "min-content",
             column: "visible"
+        },
+        "estimated-colli-count":
+        {
+            name: listColumn.estimatedColliCount,
+            columnName: listColumn.estimatedColliCountShort,
+            columnSize: "min-content",
+            column: "visible"
         }
     };
 }

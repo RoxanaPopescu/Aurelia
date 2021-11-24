@@ -239,6 +239,16 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     }
 
     /**
+     * The total number estimated colli associated with pickups on non-cancelled stops on the route.
+     */
+    public get totalEstimatedColliCount(): number
+    {
+        return this.stops
+            .filter(s => s instanceof RouteStopBase && s.status.slug !== "cancelled" && s.type.slug !== "pickup")
+            .reduce((total, s: RouteStopBase) => total + (s.estimatedColliCount ?? 0), 0);
+    }
+
+    /**
      * The total number of non-cancelled stops on the route,
      * excluding stops the user is not allowed to see.
      */
