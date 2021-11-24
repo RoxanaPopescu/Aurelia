@@ -1289,6 +1289,8 @@
   "./app/model/route/resources/strings/route-list-columns:team": "Team",
   "./app/model/route/resources/strings/route-list-columns:colliCount": "Kolli mængde",
   "./app/model/route/resources/strings/route-list-columns:colliCountShort": "Kolli",
+  "./app/model/route/resources/strings/route-list-columns:estimatedColliCount": "Estimeret kolli-antal",
+  "./app/model/route/resources/strings/route-list-columns:estimatedColliCountShort": "Est. kolli",
   "./app/model/route/resources/strings/route-status:notStarted": "Ikke startet",
   "./app/model/route/resources/strings/route-status:InProgress": "I gang",
   "./app/model/route/resources/strings/route-status:notApproved": "Ikke godkendt",
