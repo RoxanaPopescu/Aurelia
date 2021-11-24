@@ -398,7 +398,6 @@ export class ListPage
                 {
                     const location = await this._addressService.getLocation(this.pickupNearbyAddress!);
                     this.pickupNearbyPosition = location.position;
-
                     this.update();
                 }
                 catch (error)
