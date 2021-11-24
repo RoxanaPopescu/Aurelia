@@ -20,7 +20,7 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button click.trigger="onTogglePreviewClick()" appearance="outline" accent="primary" class="flex-row flex-push-right">
+                    <button click.trigger="onTogglePreviewClick()" disabled.bind="assigningDrivers" appearance="outline" accent="primary" class="flex-row flex-push-right">
 
                         <span translate if.bind="showPreview">
                             Hide preview
@@ -32,7 +32,7 @@
 
                     </button>
 
-                    <button click.trigger="onAssignDriversClick()" appearance="outline" accent="primary" class="flex-row flex-push-right">
+                    <button click.trigger="onAssignDriversClick()" disabled.bind="assigningDrivers" appearance="outline" accent="primary" class="flex-row flex-push-right">
 
                         <icon name="add" class="font-larger margin-right"></icon>
 
@@ -219,7 +219,7 @@
                                     <a
                                         class="text-truncate"
                                         target="_blank"
-                                        href="/fleet-management/drivers/details/${route.driver.id}"
+                                        href="/fleet-management/drivers/details/${result.driver.id}"
                                     >
                                         ${result.driver.id}
                                     </a>
@@ -476,9 +476,9 @@
                                         <template if.bind="!route.driver" translate>
                                             Assign driver
                                         </template>
-                                        <template if.bind="route.driver">
+                                        <span accent="positive" if.bind="route.driver">
                                             ${route.driver.name}
-                                        </template>
+                                        </span>
                                     </a>
                                     <span else empty-value>
                                         <template if.bind="route.driver">
@@ -501,7 +501,7 @@
 
                                 <data-table-cell if.bind="column.slug === 'driver-id'">
 
-                                    <text-input value.bind="route.driverId" focusout.trigger="onDriverIdChanged(route)">
+                                    <text-input value.bind="route.driverId" disabled.bind="assigningDrivers" focusout.trigger="onDriverIdChanged(route)">
 
                                     </text-input>
 

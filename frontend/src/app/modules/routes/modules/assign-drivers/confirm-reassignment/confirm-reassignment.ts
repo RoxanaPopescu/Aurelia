@@ -2,6 +2,8 @@ import { autoinject } from "aurelia-framework";
 import { Modal } from "shared/framework/services/modal";
 import { RouteAssignDriver } from "app/model/route";
 
+type ConfirmAssignment = "cancel" | "re-assign" | "assign-again";
+
 @autoinject
 export class ConfirmReassignmentDialog
 {
@@ -15,7 +17,7 @@ export class ConfirmReassignmentDialog
     }
 
     private readonly _modal: Modal;
-    private _result = false;
+    private _result: ConfirmAssignment = "cancel";
     protected current: RouteAssignDriver;
     protected new: RouteAssignDriver;
 
@@ -31,9 +33,9 @@ export class ConfirmReassignmentDialog
 
     /**
      * Called by the framework when the modal is deactivated.
-     * @returns True if the stop should be cancelled, otherwise false.
+     * @returns Assignment type.
      */
-    public deactivate(): boolean
+    public deactivate(): ConfirmAssignment
     {
         return this._result;
     }
@@ -41,7 +43,7 @@ export class ConfirmReassignmentDialog
     /**
      * Called when one of the buttons are clicked.
      */
-    protected async onButtonClick(result: boolean): Promise<void>
+    protected async onButtonClick(result: ConfirmAssignment): Promise<void>
     {
         this._result = result;
 

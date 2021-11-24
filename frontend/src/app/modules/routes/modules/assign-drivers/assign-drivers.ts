@@ -302,16 +302,26 @@ export class AssignDriversPage
      * Called when the driver id input has changes.
      * Fetches the driver and will add him to the preview
      */
-    protected async onDriverIdChanged(route: any): Promise<void>
+    protected async onDriverIdChanged(route: RouteInfo): Promise<void>
     {
-        if (route.driverId == null || route.driverId.length <= 0)
+        const driverId = (route as any).driverId;
+
+        if (driverId == null || driverId.length <= 0)
         {
+            // Remove current if found
+            const index = this.results.findIndex(r => r.route.id === route.id);
+
+            if (index !== -1)
+            {
+                this.results.splice(index, 1);
+            }
+
             return;
         }
 
         try
         {
-            const driver = await this._driverService.get(route.driverId);
+            const driver = await this._driverService.get(driverId);
 
             if (driver.status.slug === "approved")
             {
@@ -319,14 +329,14 @@ export class AssignDriversPage
             }
             else
             {
-                Log.error(`The driver with id '${route.driverId}'' is not approved`);
-                route.driverId = undefined;
+                Log.error(`The driver with id '${driverId}'' is not approved`);
+                (route as any).driverId = undefined;
             }
         }
         catch
         {
-            Log.error(`Could not find a driver with id '${route.driverId}'`);
-            route.driverId = undefined;
+            Log.error(`Could not find a driver with id '${driverId}'`);
+            (route as any).driverId = undefined;
         }
     }
 
@@ -477,6 +487,12 @@ export class AssignDriversPage
      */
     protected async addResult(result: RouteAssignDriver): Promise<void>
     {
+        if (this.assigningDrivers)
+        {
+
+            return;
+        }
+
         const sameDriver = this.results.find(r => r.driver?.id === result.driver?.id);
         const sameRoute = this.results.find(r => r.route.slug === result.route.slug);
 
@@ -489,23 +505,26 @@ export class AssignDriversPage
         // One is the same, inform the user
         if (sameDriver != null || sameRoute != null)
         {
-            const confirmed = await this._modalService.open(ConfirmReassignmentDialog, { new: result, current: sameDriver ?? sameRoute! }).promise;
+            const assignment = await this._modalService.open(ConfirmReassignmentDialog, { new: result, current: sameDriver ?? sameRoute! }).promise;
 
-            if (!confirmed)
+            if (assignment === "cancel")
             {
                 (result.route as any).driverId = undefined;
 
                 return;
             }
 
-            // Remove driver from previous route
-            if (sameDriver != null)
+            if (assignment === "re-assign")
             {
-                (sameDriver.route as any).driverId = undefined;
-                sameDriver.route.driver = undefined;
-            }
+                // Remove driver from previous route if re assiging
+                if (sameDriver != null)
+                {
+                    (sameDriver.route as any).driverId = undefined;
+                    sameDriver.route.driver = undefined;
+                }
 
-            this.onRemoveClick(sameDriver ?? sameRoute!);
+                this.onRemoveClick(sameDriver ?? sameRoute!);
+            }
         }
 
         this.results.push(result);
