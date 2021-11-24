@@ -71,6 +71,8 @@ RUN npm run translate-export
 RUN npm run translate-pseudo
 RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=da --commit=${COMMIT}
 RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=it --commit=${COMMIT}
+RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=de --commit=${COMMIT}
+RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=fr --commit=${COMMIT}
 RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=en-US --commit=${COMMIT}
 RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=en-US-x-pseudo --commit=${COMMIT}
 
