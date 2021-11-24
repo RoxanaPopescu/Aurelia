@@ -20,7 +20,12 @@ export class RouteAssignDriver
     public readonly route: RouteInfo;
 
     /**
-     * The location at which the route is planned to end.
+     * The driver to be assigned.
      */
     public readonly driver?: Driver;
+
+    /**
+     * If the driver is being assigned.
+     */
+    public assigning: boolean = false;
 }

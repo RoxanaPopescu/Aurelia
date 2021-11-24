@@ -310,6 +310,7 @@ export class AssignDriversPage
         {
             // Remove current if found
             const index = this.results.findIndex(r => r.route.id === route.id);
+            route.driver = undefined;
 
             if (index !== -1)
             {
@@ -357,17 +358,29 @@ export class AssignDriversPage
 
         try
         {
-            await this._routeAssignmentService.assignDrivers(this.results);
+            const currentResults = [...this.results];
 
-            this.results = [];
-            this.update();
+            for (const result of currentResults)
+            {
+                result.assigning = true;
+                await this._routeAssignmentService.assignDriver(result.route, result.driver!);
+                this.onRemoveClick(result);
+            }
         }
         catch
         {
-            Log.error("Could not assign drivers");
+            Log.error("Could not assign the driver");
         }
+        finally
+        {
+            for (const result of this.results)
+            {
+                result.assigning = false;
+            }
 
-        this.assigningDrivers = false;
+            this.assigningDrivers = false;
+            this.update();
+        }
     }
 
     /**
