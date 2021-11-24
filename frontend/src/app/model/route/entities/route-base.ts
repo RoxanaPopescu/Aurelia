@@ -36,7 +36,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
         this.status = new RouteStatus(data.status ?? "not-started");
         this.executor = new Fulfiller(data.fulfiller);
         this.driverOnline = data.driverOnline;
-        this.driverListUrl = data.driverListUrl;
+        this.driverListUrl = `${data.driverListUrl}&locale=${ENVIRONMENT.locale}`;
         this.stops = stops;
         this.vehicleType = VehicleType.get(data.vehicleType);
         this.isPrimaryFulfiller = data.isPrimaryFulfiller;

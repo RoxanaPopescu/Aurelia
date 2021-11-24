@@ -18,7 +18,7 @@ export class Route extends RouteBase<RouteStop> {
     super(data, stops);
 
     this.overallRating = data.overallRating;
-    this.driverListUrl = data.driverListUrl;
+    this.driverListUrl = `${data.driverListUrl}&locale=${ENVIRONMENT.locale}`;
     this.allowAssignment = data.allowAssignment;
 
     if (data.totalWeightRange) {
