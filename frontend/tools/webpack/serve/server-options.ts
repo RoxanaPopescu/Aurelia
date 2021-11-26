@@ -6,14 +6,14 @@ import { ProxyConfigMap, ProxyConfigArray } from "webpack-dev-server";
 export interface IServerOptions
 {
     /**
-     * The port on whihc the server should listen.
+     * The port on which the server should listen.
      */
     port: number;
 
     /**
      * True to enable hot module reload, otherwise false.
      */
-    hmr: boolean;
+    hot: boolean;
 
     /**
      * True to open the browser, otherwise false.

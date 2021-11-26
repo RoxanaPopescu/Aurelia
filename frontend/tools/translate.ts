@@ -33,7 +33,7 @@ export const translateConfig: TranslateOptions =
     normalizeContent: true,
 
     // Import options.
-    importFilePath: paths.translationFile,
+    importFilePath: paths.translationImportFile,
     missingContentHandling: "warn",
 
     // File paths.

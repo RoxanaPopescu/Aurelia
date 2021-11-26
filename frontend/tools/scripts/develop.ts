@@ -1,8 +1,10 @@
-import commander from "commander";
+import { program } from "commander";
 import { ICompilerOptions } from "../webpack/compile";
 import { IServerOptions, serve } from "../webpack/serve";
 
-commander
+const options = program
+
+    .allowExcessArguments(false)
 
     .option("--environment [development, preview, production]",
         "The target environment",
@@ -25,7 +27,7 @@ commander
         "Allow connections from any host and any device on the network, despite security risks",
         false)
 
-    .parse(process.argv);
+    .parse(process.argv).opts();
 
 const compilerOptions: ICompilerOptions =
 {
@@ -35,9 +37,9 @@ const compilerOptions: ICompilerOptions =
     {
         commit: undefined,
 
-        name: commander.environment,
+        name: options.environment,
         platform: "cloud",
-        locale: commander.locale,
+        locale: options.locale,
         stubs: true,
         debug: true,
         optimize: false,
@@ -64,20 +66,20 @@ const compilerOptions: ICompilerOptions =
 
 const serverOptions: IServerOptions =
 {
-    port: commander.port,
+    port: options.port,
     open: false,
-    hmr: true,
+    hot: true,
     proxy:
     {
         "/api/":
         {
             pathRewrite: { "^/api/": "" },
             changeOrigin: true,
-            target: commander.api,
+            target: options.api,
             secure: false
         }
     },
-    public: commander.public
+    public: options.public
 };
 
 // tslint:disable-next-line: no-floating-promises

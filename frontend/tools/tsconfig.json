@@ -12,7 +12,8 @@
     "baseUrl": ".",
     "paths": {
       "aurelia-webpack-plugin": ["typings/modules/aurelia-webpack-plugin"],
-      "preload-webpack-plugin": ["typings/modules/preload-webpack-plugin"]
+      "@vue/preload-webpack-plugin": ["typings/modules/preload-webpack-plugin"],
+      "@cerner/duplicate-package-checker-webpack-plugin": ["typings/modules/duplicate-package-checker-webpack-plugin"]
     }
   },
   "exclude": [

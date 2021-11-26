@@ -9,6 +9,9 @@ export type TaskEnvironmentName = "development" | "build";
  */
 export class TaskEnvironment
 {
+    /**
+     * Creates a new instance of the type.
+     */
     public constructor()
     {
         // The default environment to use if `NODE_ENV` is undefined.

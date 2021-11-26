@@ -12,7 +12,7 @@ const exportFilePath = paths.artifacts.translationExportFile;
 const exportFileContents = JSON.parse(fs.readFileSync(exportFilePath).toString());
 
 // Get the input file paths.
-const importFilePaths = globs.sync(paths.translationFile.replace(/\{locale\}/g, "!(*[^.]-x-pseudo?(-*|.*))"),
+const importFilePaths = globs.sync(paths.translationImportFile.replace(/\{locale\}/g, "!(*[^.]-x-pseudo?(-*|.*))"),
 {
     ignore: excludedFileGlobs,
     dot: true

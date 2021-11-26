@@ -23,26 +23,23 @@ export async function serve(compilerOptions: ICompilerOptions, serverOptions: IS
         // Get the Webpack compiler config.
         const compilerConfig = getCompilerConfig(compilerOptions);
 
-        // Get the Webpack server config.
-        const serverConfig = getServerConfig(compilerConfig, serverOptions);
-
-        // Add entry points for client modules needed to support hot module replacement.
-        WebpackDevServer.addDevServerEntrypoints(compilerConfig, serverConfig);
-
         // Create the Webpack compiler.
         const compiler = webpack(compilerConfig);
 
         // Log the start of each compilation.
-        compiler.hooks.compile.tap("compile", () => console.info("\nBuilding..."));
+        compiler.hooks.compile.tap("compile", () => console.info("\nBuilding...\n"));
 
         // Log the result of each compilation.
-        compiler.hooks.done.tap("done", stats => compilerCallback(compilerOptions, stats));
+        compiler.hooks.done.tap("done", stats => compilerCallback(compilerOptions, stats, []));
+
+        // Get the Webpack server config.
+        const serverConfig = getServerConfig(compilerOptions, serverOptions);
 
         // Create the Webpack server.
-        const server = new WebpackDevServer(compiler, serverConfig);
+        const server = new WebpackDevServer(serverConfig, compiler);
 
         // Start the server.
-        server.listen(serverConfig.port!, serverConfig.host!, (error?: Error) =>
+        server.startCallback((error?: Error) =>
         {
             // Log server info to console, and if enabled, open the browser.
             serverCallback(serverConfig, error);

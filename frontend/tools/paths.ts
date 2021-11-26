@@ -74,6 +74,7 @@ export const paths =
          */
         includedFileGlobs:
         [
+            resolve("src/worker.js"),
             resolve("src/**/resources/fonts/**"),
             resolve("src/**/resources/images/**"),
             resolve("src/resources/themes/*/images/**"),
@@ -119,7 +120,7 @@ export const paths =
      * The path for the file that contains the translated strings,
      * where `{locale}` is a placeholder for the locale code.
      */
-    translationFile: resolve("src/resources/translations/{locale}.json"),
+    translationImportFile: resolve("src/resources/translations/{locale}.json"),
 
     /**
      * The artifacts that may be produced.

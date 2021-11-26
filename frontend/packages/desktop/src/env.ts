@@ -9,6 +9,9 @@ export type DesktopEnvironmentName = "development" | "preview" | "production";
  */
 export class DesktopEnvironment
 {
+    /**
+     * Creates a new instance of the type.
+     */
     public constructor()
     {
         // The default environment to use if `NODE_ENV` is undefined.

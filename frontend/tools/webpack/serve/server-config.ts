@@ -1,17 +1,17 @@
 import path from "path";
-import webpack from "webpack";
 import WebpackDevServer from "webpack-dev-server";
-import { IServerOptions } from "./server-options";
 import { paths } from "../../paths";
 import { Format } from "../helpers";
+import { ICompilerOptions } from "../compile";
+import { IServerOptions } from "./server-options";
 
 /**
  * Creates a Webpack server config based on the specified options.
- * @param compilerConfig The compiler config.
+ * @param compilerOptions The compiler options.
  * @param serverOptions The server options.
  * @returns The server config.
  */
-export function getServerConfig(compilerConfig: webpack.Configuration, serverOptions: IServerOptions): WebpackDevServer.Configuration
+export function getServerConfig(compilerOptions: ICompilerOptions, serverOptions: IServerOptions): WebpackDevServer.Configuration
 {
     const config: WebpackDevServer.Configuration =
     {
@@ -19,54 +19,98 @@ export function getServerConfig(compilerConfig: webpack.Configuration, serverOpt
         ...
         serverOptions.public ?
         {
-            host: "0.0.0.0",
-            disableHostCheck: true
+            allowedHosts: "all",
+            host: "0.0.0.0"
         }
         :
         {
+            allowedHosts: "auto",
             host: "localhost"
         },
 
-        // Configure server.
+        // Configure server options.
         port: serverOptions.port,
-        hot: serverOptions.hmr,
+        hot: serverOptions.hot,
         open: serverOptions.open,
         proxy: serverOptions.proxy,
-        publicPath: compilerConfig.output!.publicPath,
-        contentBasePublicPath: compilerConfig.output!.publicPath,
+
+        // Configure custom middleware.
+        onBeforeSetupMiddleware: (devServer: any) =>
+        {
+            // HACK: Prevent unwanted redirects.
+            devServer.app.use(preventDirectoryRedirect);
+        },
+
+        // Configure dev middleware.
+        devMiddleware:
+        {
+            publicPath: compilerOptions.environment.publicPath,
+            stats:
+            {
+                all: false,
+                errors: true,
+                warnings: true,
+                logging: "warn",
+                colors: Format.supportsColor
+            }
+        },
+
+        // Configure static middleware.
+        static:
+        [
+            {
+                directory: paths.srcFolder,
+                publicPath: compilerOptions.environment.publicPath,
+                serveIndex: false,
+                watch: false
+            },
+            {
+                directory: paths.staticFolder,
+                publicPath: compilerOptions.environment.publicPath,
+                serveIndex: false,
+                watch: false
+            }
+        ],
+
+        // Configure fallback middleware.
         historyApiFallback:
         {
-            index: path.resolve(compilerConfig.output!.publicPath!, "index.html")
+            index: path.resolve(compilerOptions.environment.publicPath, "index.html")
         },
-        compress: true,
-        contentBase:
-        [
-            // HACK: Disabled because it would break hot module replacement.
-            // Once we remove of the legacy folder, we can disable `watchContentBase` and re-enable this.
-            // paths.srcFolder,
 
-            paths.staticFolder,
-            paths.legacyFolder
-        ],
-        watchContentBase: true,
-
-        // Configure logging.
-        clientLogLevel: "none",
-        overlay: true,
-        noInfo: true,
-        stats:
+        // Configure client integration.
+        client:
         {
-            version: false,
-            timings: false,
-            hash: false,
-            assets: false,
-            entrypoints: false,
-            modules: false,
-            children: false,
+            logging: "warn",
+            overlay: { errors: true, warnings: false },
+        },
 
-            colors: Format.supportsColor
-        }
-    };
+    } as any;
 
     return config;
+}
+
+/**
+ * Ensures a trailing slash is added to `request.url`, thereby preventing the
+ * static files middleware from returning an unwanted permanent redirect.
+ */
+function preventDirectoryRedirect(req: any, res: any, next: any): any
+{
+    // The URL already ends with a `/`.
+    if (req.url.endsWith("/"))
+    {
+        return next();
+    }
+
+    // The URL appears to reference a file.
+    if (/.+\..+$/.test(req.url))
+    {
+        return next();
+    }
+
+    // The URL appears to reference a directory, so we append a `/`.
+    req.originalUrl += "/";
+    req.url += "/";
+
+    return next();
 }

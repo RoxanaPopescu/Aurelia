@@ -2,10 +2,10 @@ import path from "path";
 import autoprefixer from "autoprefixer";
 import htmlMinifierTerser from "html-minifier-terser";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import PreloadWebpackPlugin from "preload-webpack-plugin";
+import PreloadWebpackPlugin from "@vue/preload-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
-import DuplicatePackageCheckerPlugin from "duplicate-package-checker-webpack-plugin";
-import { AureliaPlugin, ModuleDependenciesPlugin } from "aurelia-webpack-plugin";
+import DuplicatePackageCheckerPlugin from "@cerner/duplicate-package-checker-webpack-plugin";
+import { AureliaPlugin } from "aurelia-webpack-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import { Configuration, DefinePlugin } from "webpack";
 import { ICompilerOptions } from "./compiler-options";
@@ -78,7 +78,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
             // Ignore Auralia string interpolations, i.e. `${...}`.
             new RegExp(`\\$\\{${"[^{]*?(\\{[^{]*?".repeat(5)}${"\\}[^{]*?)*".repeat(5)}\\}`, "s"),
 
-            // Ignore Auralia binding commands, i.e. `something.command="..."`.
+            // Ignore Auralia binding commands, i.e. `attribute.command="..."`.
             /[\w-]+\.([\w-]+)\s*=\s*("[^"]*"|'[^']*'|`[^`]*`)/s
         ]
     };
@@ -93,6 +93,10 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
 
     const config: Configuration =
     {
+        infrastructureLogging:
+        {
+            level: "warn"
+        },
         mode: compilerOptions.environment.optimize ? "production" : "development",
         resolve:
         {
@@ -279,6 +283,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 {
                     test: /\.(svg|png|jpg|gif|cur|mp4)$/i,
                     exclude: paths.iconFolders,
+                    type: "javascript/auto",
                     use:
                     {
                         loader: "url-loader",
@@ -287,6 +292,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 },
                 {
                     test: /\.(woff|woff2)$/i,
+                    type: "javascript/auto",
                     use:
                     {
                         loader: "url-loader",
@@ -297,6 +303,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                 // Loader for files that should be fetched separately.
                 {
                     test: /\.(ttf|eot|otf)$/i,
+                    type: "javascript/auto",
                     use:
                     {
                         loader: "file-loader",
@@ -320,11 +327,6 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
             {
                 "ENVIRONMENT": JSON.stringify(compilerOptions.environment)
             })),
-
-            new ModuleDependenciesPlugin(
-            {
-                "aurelia-testing": ["./compile-spy", "./view-spy"]
-            }),
 
             new HtmlWebpackPlugin(
             {

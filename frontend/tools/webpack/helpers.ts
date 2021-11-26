@@ -3,6 +3,11 @@ import { environment } from "../env";
 import { ICompilerOptions } from "./compile/compiler-options";
 
 /**
+ * Represents an error that may contain additional details.
+ */
+export type ErrorWithDetails = Error & { details?: any };
+
+/**
  * Logs info about the build task to the console.
  * @param compilerConfig The compiler options.
  */

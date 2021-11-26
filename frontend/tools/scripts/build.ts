@@ -1,7 +1,7 @@
-import commander from "commander";
+import { program } from "commander";
 import { ICompilerOptions, compile } from "../webpack/compile";
 
-commander
+const options = program
 
     .option("--environment [development, preview, production]",
         "The target environment",
@@ -11,7 +11,7 @@ commander
         "The target platform",
         "cloud")
 
-    .option("--locale [en-US, en-US-x-pseudo]",
+    .option("--locale [en-US, en-US-x-pseudo, ...]",
         "The target locale",
         "en-US")
 
@@ -21,7 +21,7 @@ commander
     .option("--commit <sha>",
         "The SHA identifying the commit being built")
 
-    .parse(process.argv);
+    .parse(process.argv).opts();
 
 const compilerOptions: ICompilerOptions =
 {
@@ -29,29 +29,29 @@ const compilerOptions: ICompilerOptions =
     analyze: true,
     environment:
     {
-        commit: commander.commit,
+        commit: options.commit,
 
-        name: commander.environment,
-        platform: commander.platform,
-        locale: commander.locale,
+        name: options.environment,
+        platform: options.platform,
+        locale: options.locale,
 
         // Platform-specific configuration.
 
         ...
-        commander.platform === "cloud" ?
+        options.platform === "cloud" ?
         {
             publicPath: "/",
             appBaseUrl: "/",
-            apiBaseUrl: commander.api || "/api/",
+            apiBaseUrl: options.api || "/api/",
             pushState: true
         }
         :
-        commander.platform === "desktop" ?
+        options.platform === "desktop" ?
         {
             publicPath: "/",
             appBaseUrl: "/",
-            apiBaseUrl: commander.api || "http://localhost:8008/",
-            pushState: true
+            apiBaseUrl: options.api || "http://localhost:8008/api/",
+            pushState: false
         }
         :
         {} as never,
@@ -59,7 +59,7 @@ const compilerOptions: ICompilerOptions =
         // Environment-specific configuration.
 
         ...
-        commander.environment === "development" ?
+        options.environment === "development" ?
         {
             debug: true,
             stubs: true,
@@ -74,7 +74,7 @@ const compilerOptions: ICompilerOptions =
             }
         }
         :
-        commander.environment === "preview" ?
+        options.environment === "preview" ?
         {
             debug: false,
             stubs: false,
@@ -95,7 +95,7 @@ const compilerOptions: ICompilerOptions =
             }
         }
         :
-        commander.environment === "production" ?
+        options.environment === "production" ?
         {
             debug: false,
             stubs: false,

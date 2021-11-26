@@ -1,1 +1,1 @@
-declare module "preload-webpack-plugin";
+declare module "@vue/preload-webpack-plugin";

@@ -1,8 +1,8 @@
 import path from "path";
 import webpack from "webpack";
-import { Format } from "../helpers";
-import { ICompilerOptions } from "./compiler-options";
 import { paths } from "../../paths";
+import { ErrorWithDetails, Format } from "../helpers";
+import { ICompilerOptions } from "./compiler-options";
 
 /**
  * Called every time a compilation ends.
@@ -10,25 +10,28 @@ import { paths } from "../../paths";
  * errors occurred, or if compilation failed.
  * @param compilerOptions The compiler options.
  * @param stats The compilation stats, if the compilation succeeded.
- * @param error The error that occurred, if the compilation failed.
+ * @param errors The errors that occurred, if the compilation failed or the compiler failed to close.
  */
-export function compilerCallback(compilerOptions: ICompilerOptions, stats: webpack.Stats, error?: Error & { details?: any }): void
+export function compilerCallback(compilerOptions: ICompilerOptions, stats: webpack.Stats, errors: ErrorWithDetails[]): void
 {
     // Note: In watch mode, the development server is responsible for logging errors.
 
     // Are we building for deployment?
     if (!compilerOptions.watch)
     {
-        // Did the build crash?
-        if (error)
+        // Did any errors occur?
+        if (errors.length > 0)
         {
-            // Log the error.
-            console.error(error);
-
-            // Log error details, if available.
-            if (error.details)
+            for (const error of errors)
             {
-                console.error(error.details);
+                // Log the error.
+                console.error(error);
+
+                // Log error details, if available.
+                if (error.details)
+                {
+                    console.error(error.details);
+                }
             }
 
             // Indicate that the process failed.
@@ -39,12 +42,16 @@ export function compilerCallback(compilerOptions: ICompilerOptions, stats: webpa
             // Log the compilation stats.
             console.log(`${stats.toString(
             {
-                entrypoints: false,
-                modules: false,
-                children: false,
-
+                all: false,
+                version: true,
+                errorsCount: true,
+                warnings: true,
+                errors: true,
+                warningsCount: true,
+                logging: "info",
                 colors: Format.supportsColor
-            })}\n`);
+            }
+            )}\n`);
 
             // Did the build fail?
             if (stats.hasErrors())
@@ -56,7 +63,7 @@ export function compilerCallback(compilerOptions: ICompilerOptions, stats: webpa
     }
 
     // Log the build status, making sure it appears after any other build messages.
-    if (!error && !stats.hasErrors())
+    if (errors.length === 0 && !stats.hasErrors())
     {
         setTimeout(() =>
         {
@@ -77,6 +84,6 @@ export function compilerCallback(compilerOptions: ICompilerOptions, stats: webpa
     }
     else
     {
-        setTimeout(() => console.error(`\n${Format.negative("Build failed")}`), 0);
+        setTimeout(() => console.error(`${Format.negative("Build failed")}`), 0);
     }
 }

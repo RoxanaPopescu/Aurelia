@@ -1,9 +1,6 @@
 import os from "os";
 import WebpackDevServer from "webpack-dev-server";
-import { Format } from "../helpers";
-
-// tslint:disable:no-require-imports no-var-requires
-const open = require("open");
+import { ErrorWithDetails, Format } from "../helpers";
 
 /**
  * Called when the server is ready, logging server info to the console, and optionally opening the browser.
@@ -11,14 +8,14 @@ const open = require("open");
  * @param serverConfig The config used for the compilation.
  * @param error The error that occurred, if the server failed.
  */
-export function serverCallback(serverConfig: WebpackDevServer.Configuration, error?: Error): void
+export function serverCallback(serverConfig: WebpackDevServer.Configuration, error?: ErrorWithDetails): void
 {
     if (error == null)
     {
         const protocol = serverConfig.https ? "https" : "http";
         const localUrl = `${protocol}://localhost:${serverConfig.port}`;
 
-        if (serverConfig.disableHostCheck)
+        if ((serverConfig as any).allowedHosts === "all")
         {
             const publicUrl = `${protocol}://${os.hostname().toLowerCase()}:${serverConfig.port}`;
 
@@ -30,20 +27,18 @@ export function serverCallback(serverConfig: WebpackDevServer.Configuration, err
             // Log the host at which the server can be accessed.
             console.log(`${Format.info("i")} Server listening on ${Format.info(localUrl)}`);
         }
-
-        // Open the browser, if enabled.
-        if (serverConfig.open)
-        {
-            open(localUrl).catch(() =>
-            {
-                console.warn(`\n${Format.attention("warn")} Unable to open browser`);
-            });
-        }
     }
     else
     {
         // Log the error.
         console.error(error);
+
+        // Log error details, if available.
+        if (error.details)
+        {
+            console.error(error.details);
+        }
+
         console.error(`\n${Format.negative("Server failed")}`);
 
         // Indicate that the process failed.

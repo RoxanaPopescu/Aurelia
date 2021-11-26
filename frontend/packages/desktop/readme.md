@@ -30,10 +30,6 @@
 
    > Note that you cannot use the `develop` task here, as that does not persist the artifacts.
 
-   > Note that stubs probably won't work. As a workaround, you can start the development server for the `frontend` package,
-   > using the command `npm run develop`, and specify the option `--api=http://localhost:8080/api/` when building the
-   > `frontend` package for the `desktop` platform. That way, the development server will be serving the stubs.
-
 2. **Build this package**
 
    > Note that this automatically removes any existing `build` artifacts.
@@ -52,7 +48,8 @@
 
 4. **The app should now be running**
 
-   Use the development tools in the app window, which is essentially a `Chromium` browser, to test and debug the app.
+   Use the development tools in the app window, which is essentially a `Chromium` browser, to test and debug the frontend,
+   and `Visual Studio Code` to debug the host.
 
    >  Note that on `macOS`, the shortcut to open the development tools is `Command + Option + I`.
 
