@@ -197,6 +197,7 @@ export class AutomaticDispatchModule extends AppModule
 
                 shipments.push({
                     id: route.id,
+                    slug: route.slug,
                     pickup: {
                         id: pickupStop.id,
                         arrivalTimeFrame: pickupStop.arrivalTimeFrame,
@@ -244,7 +245,9 @@ export class AutomaticDispatchModule extends AppModule
 
             routes.push({
                 driverId: `${route.driver.id}`,
+                driverName: route.driver.name.first,
                 id: route.id,
+                slug: route.slug,
                 vehicleType: route.vehicleType,
                 availability: availability,
                 driverPosition: route.driverPosition,
