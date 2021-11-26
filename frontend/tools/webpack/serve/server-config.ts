@@ -85,7 +85,7 @@ export function getServerConfig(compilerOptions: ICompilerOptions, serverOptions
             overlay: { errors: true, warnings: false },
         },
 
-    } as any;
+    };
 
     return config;
 }

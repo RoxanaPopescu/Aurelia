@@ -41,7 +41,7 @@ export default
              */
             artifact:
             {
-                "production": Duration.fromISO("P30D"),
+                "production": Duration.fromISO("P7D"),
                 "preview": Duration.fromISO("PT5M"),
                 "development": Duration.fromISO("PT0S")
 
@@ -65,7 +65,11 @@ export default
      * Settings for the `prerender-node` middleware.
      * See: https://prerender.io/documentation
      */
-    prerender: undefined,
+    prerender:
+    {
+        serviceToken: undefined,
+        serviceUrl: undefined
+    },
 
     /**
      * The settings for the hostnames supported by the app.

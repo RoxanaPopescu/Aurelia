@@ -15,7 +15,7 @@ export function serverCallback(serverConfig: WebpackDevServer.Configuration, err
         const protocol = serverConfig.https ? "https" : "http";
         const localUrl = `${protocol}://localhost:${serverConfig.port}`;
 
-        if ((serverConfig as any).allowedHosts === "all")
+        if (serverConfig.allowedHosts === "all")
         {
             const publicUrl = `${protocol}://${os.hostname().toLowerCase()}:${serverConfig.port}`;
 

@@ -320,7 +320,7 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
 
             new DefinePlugin(Object.keys(compilerOptions.environment).reduce((e: any, key: string) =>
             {
-                e[`ENVIRONMENT.${key}`] = JSON.stringify((compilerOptions.environment as any)[key]);
+                e[`ENVIRONMENT.${key}`] = JSON.stringify(compilerOptions.environment[key]);
 
                 return e;
             },
