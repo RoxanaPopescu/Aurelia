@@ -48,4 +48,4 @@ function requireAll(r: any) {
 }
 
 // tslint:disable-next-line:no-any
-requireAll((require as any).context("shared/src/assets/icons/", true, /\.svg$/));
+requireAll((require as any).context("../../assets/icons/", true, /\.\/.*\.svg$/));

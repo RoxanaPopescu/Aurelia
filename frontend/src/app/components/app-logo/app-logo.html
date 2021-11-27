@@ -13,7 +13,7 @@
             logo.bind="account && theme.hasAccountLogo ? `logo-${size}-account` : `logo-${size}`">
         </let>
 
-        <img if.bind="logo" src="/resources/themes/${theme.slug}/images/${logo}.svg">
+        <img if.bind="logo" src.bind="historyHelper.routeBasePath + 'resources/themes/' + theme.slug + '/images/' + logo + '.svg'">
 
     </a>
 

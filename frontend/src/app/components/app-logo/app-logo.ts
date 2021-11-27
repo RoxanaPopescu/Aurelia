@@ -1,4 +1,5 @@
 import { autoinject, bindable } from "aurelia-framework";
+import { HistoryHelper } from "shared/infrastructure";
 import { ModalService, ThemeService } from "shared/framework";
 
 /**
@@ -11,11 +12,13 @@ export class AppLogoCustomElement
      * Creates a new instance of the type.
      * @param modalService The `ModalService` instance.
      * @param themeService The `ThemeService` instance.
+     * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(modalService: ModalService, themeService: ThemeService)
+    public constructor(modalService: ModalService, themeService: ThemeService, historyHelper: HistoryHelper)
     {
         this._modalService = modalService;
         this.themeService = themeService;
+        this.historyHelper = historyHelper;
     }
 
     private readonly _modalService: ModalService;
@@ -24,6 +27,11 @@ export class AppLogoCustomElement
      * The `ThemeService` instance.
      */
     protected readonly themeService: ThemeService;
+
+    /**
+     * The `HistoryHelper` instance.
+     */
+    protected readonly historyHelper: HistoryHelper;
 
     /**
      * True if the logo is used on the account pages, otherwise false.

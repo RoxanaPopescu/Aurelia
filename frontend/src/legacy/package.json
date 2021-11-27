@@ -8,7 +8,6 @@
     "mobx-react": "5.4.x",
     "moment": "2.24.x",
     "mousetrap": "1.6.x",
-    "njwt": "^0.4.0",
     "node-jose": "^1.1.0",
     "patch-package": "5.1.x",
     "query-string": "6.2.x",

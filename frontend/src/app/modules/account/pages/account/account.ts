@@ -1,5 +1,6 @@
 import { autoinject, PLATFORM } from "aurelia-framework";
 import { Router, RouterConfiguration } from "aurelia-router";
+import { HistoryHelper } from "shared/infrastructure";
 import { ThemeService } from "shared/framework";
 import { Locale, LocaleService } from "shared/localization";
 import routeTitles from "./resources/strings/route-titles.json";
@@ -15,11 +16,13 @@ export class AccountPage
      * Creates a new instance of the type.
      * @param themeService The `ThemeService` instance.
      * @param localeService The `LocaleService` instance.
+     * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(themeService: ThemeService, localeService: LocaleService)
+    public constructor(themeService: ThemeService, localeService: LocaleService, historyHelper: HistoryHelper)
     {
         this.showPoweredBy = !/^mover(-|$)/.test(themeService.theme.slug);
         this.localeService = localeService;
+        this.historyHelper = historyHelper;
 
         // Get the available locales.
         this.locales = this.localeService.locales.filter(t => !/^x-|-x-/.test(t.code));
@@ -29,6 +32,11 @@ export class AccountPage
      * The `LocaleService` instance.
      */
     protected readonly localeService: LocaleService;
+
+    /**
+     * The `HistoryHelper` instance.
+     */
+    protected readonly historyHelper: HistoryHelper;
 
     /**
      * True to show the `Powered by Mover`, otherwise false.

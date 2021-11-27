@@ -1,4 +1,4 @@
-import njwt from "njwt";
+import jwtDecode from "jwt-decode";
 import { DateTime } from "luxon";
 
 /**
@@ -37,7 +37,7 @@ export class IdentityTokens
         this.accessToken = data.accessToken;
         this.remember = data.remember;
 
-        const accessJwt = this.parseJwt(this.accessToken);
+        const accessJwt = jwtDecode<any>(this.accessToken);
 
         if (accessJwt.exp != null)
         {
@@ -78,33 +78,4 @@ export class IdentityTokens
      * True if the tokens should be stored on the device, otherwise false.
      */
     public readonly remember: boolean;
-
-    /**
-     * Parses the specified access token.
-     * @param accessToken The access token to parse.
-     * @returns The object representing the specified access token.
-     */
-    private parseJwt(accessToken: string): any
-    {
-        try
-        {
-            const jwt = njwt.verify(accessToken, "irrelevant, as we don't care about verification here", "HS256");
-
-            if (jwt == null)
-            {
-                throw new Error("Could not parse the JWT token.");
-            }
-
-            return jwt.body.toJSON();
-        }
-        catch (error)
-        {
-            if (error.parsedBody == null)
-            {
-                throw new Error(`Could not parse the JWT token. ${error.message}`);
-            }
-
-            return error.parsedBody;
-        }
-    }
 }

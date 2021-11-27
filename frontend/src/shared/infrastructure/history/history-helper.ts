@@ -222,7 +222,7 @@ export class HistoryHelper
     public get routeBasePath(): string
     {
         return ENVIRONMENT.pushState
-            ? `${ENVIRONMENT.appBaseUrl.slice(0, -1)}${(this._basePath)}`
+            ? `${ENVIRONMENT.appBasePath.slice(0, -1)}${(this._basePath)}`
             : this._basePath;
     }
 
@@ -346,7 +346,7 @@ export class HistoryHelper
             else
             {
                 // Prepend the base URL and the new base path.
-                resolvedUrl = `${ENVIRONMENT.appBaseUrl.slice(0, -1)}${(basePath ?? this._basePath).slice(0, -1)}${url}`;
+                resolvedUrl = `${ENVIRONMENT.appBasePath.slice(0, -1)}${(basePath ?? this._basePath).slice(0, -1)}${url}`;
             }
         }
 
@@ -366,9 +366,9 @@ export class HistoryHelper
             : this.trimTrailingSlash(location.hash).substring(1);
 
         // Remove the base URL.
-        if (ENVIRONMENT.pushState && url.startsWith(ENVIRONMENT.appBaseUrl))
+        if (ENVIRONMENT.pushState && url.startsWith(ENVIRONMENT.appBasePath))
         {
-            url = url.substring(ENVIRONMENT.appBaseUrl.length - 1);
+            url = url.substring(ENVIRONMENT.appBasePath.length - 1);
         }
 
         // Remove the base path matching the base path pattern.
@@ -399,9 +399,9 @@ export class HistoryHelper
             path = path.replace(/([^/])$/, "$1/");
 
             // Remove the base URL.
-            if (ENVIRONMENT.pushState && path.startsWith(ENVIRONMENT.appBaseUrl))
+            if (ENVIRONMENT.pushState && path.startsWith(ENVIRONMENT.appBasePath))
             {
-                path = path.substring(ENVIRONMENT.appBaseUrl.length - 1);
+                path = path.substring(ENVIRONMENT.appBasePath.length - 1);
             }
 
             // Remove the base path matching the base path pattern.
@@ -413,7 +413,7 @@ export class HistoryHelper
             if (ENVIRONMENT.pushState)
             {
                 // Prepend the base URL, and set the path.
-                url.pathname = `${ENVIRONMENT.appBaseUrl.slice(0, -1)}${path}`;
+                url.pathname = `${ENVIRONMENT.appBasePath.slice(0, -1)}${path}`;
             }
             else
             {
@@ -730,9 +730,9 @@ export class HistoryHelper
         let remainder = path;
 
         // Remove the base URL.
-        if (remainder.startsWith(ENVIRONMENT.appBaseUrl))
+        if (remainder.startsWith(ENVIRONMENT.appBasePath))
         {
-            remainder = remainder.substring(ENVIRONMENT.appBaseUrl.length - 1);
+            remainder = remainder.substring(ENVIRONMENT.appBasePath.length - 1);
         }
 
         // Remove the base path matching the base path pattern.

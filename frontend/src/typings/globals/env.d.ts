@@ -96,11 +96,11 @@ declare interface IClientEnvironment
      * path on which the app will be hosted, and must end with a `/`.
      * When building for the `frontend-desktop` package, this should be `/`.
      */
-    appBaseUrl: string;
+    appBasePath: string;
 
     /**
      * The base URL for the API.
-     * Note that this is independent of the `appBaseUrl` and must end with a `/`.
+     * Note that this is independent of the `appBasePath` and must end with a `/`.
      */
     apiBaseUrl: string;
 

@@ -1,4 +1,4 @@
-import njwt from "njwt";
+import jwtDecode from "jwt-decode";
 import { DateTime, Duration } from "luxon";
 
 /**
@@ -17,23 +17,11 @@ export function getUserClaims(tokens?: { access: string; refresh: string; }): st
 
     try
     {
-        const jwt = njwt.verify(tokens.access);
-
-        if (jwt == null)
-        {
-            throw new Error("Could not parse the JWT token.");
-        }
-
-        parsedBody = jwt?.body.toJSON();
+        parsedBody = jwtDecode<any>(tokens.access);
     }
     catch(error)
     {
-        if (error.parsedBody == null)
-        {
-            throw new Error(`Could not parse the JWT token. ${error.message}`);
-        }
-
-        parsedBody = error.parsedBody;
+        throw new Error(`Could not parse the JWT token. ${error.message}`);
     }
 
     return Object.keys(parsedBody)
@@ -50,23 +38,11 @@ export function getAccessTokenExpireDuration(accessToken: string): Duration
 
     try
     {
-        const jwt = njwt.verify(accessToken);
-
-        if (jwt == null)
-        {
-            throw new Error("Could not parse the JWT token.");
-        }
-
-        exp = jwt.body.toJSON().exp as number;
+        exp = jwtDecode<any>(accessToken).exp;
     }
     catch(error)
     {
-        if (error.parsedBody == null)
-        {
-            throw new Error(`Could not parse the JWT token. ${error.message}`);
-        }
-
-        exp = error.parsedBody.exp;
+        throw new Error(`Could not parse the JWT token. ${error.message}`);
     }
 
     const expireDateTime = DateTime.fromSeconds(exp);

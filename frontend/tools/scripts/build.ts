@@ -41,7 +41,7 @@ const compilerOptions: ICompilerOptions =
         options.platform === "cloud" ?
         {
             publicPath: "/",
-            appBaseUrl: "/",
+            appBasePath: "/",
             apiBaseUrl: options.api || "/api/",
             pushState: true
         }
@@ -49,7 +49,7 @@ const compilerOptions: ICompilerOptions =
         options.platform === "desktop" ?
         {
             publicPath: "/",
-            appBaseUrl: "/",
+            appBasePath: "/",
             apiBaseUrl: options.api || "http://localhost:8008/api/",
             pushState: false
         }

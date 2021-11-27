@@ -8,7 +8,7 @@ import { FulfillerNavigationPage } from "./page";
 import { NavigationPage, SubPage } from "shared/src/utillity/page";
 import { Session } from "shared/src/model/session";
 import { Profile } from "../../../../shared/src/model/profile/index";
-import njwt from "njwt";
+import jwtDecode from "jwt-decode";
 import { observe, Lambda } from "mobx";
 
 interface Props {
@@ -47,27 +47,15 @@ export default class Main extends React.Component<Props, State> {
 
     if (Profile.tokens) {
       // tslint:disable-next-line:no-any
-        try
-        {
-            const jwt = njwt.verify(Profile.tokens.access, "irrelevant, as we don't care about verification here", "HS256");
-
-            if (jwt == null)
-            {
-                throw new Error("Could not parse the JWT token.");
-            }
-
-            claims = jwt.body.toJSON();
-        }
-        catch (error)
-        {
-            if (error.parsedBody == null)
-            {
-                throw new Error(`Could not parse the JWT token. ${error.message}`);
-            }
-
-            claims = error.parsedBody;
-        }
-        this.setState({ claims });
+      try
+      {
+          claims = jwtDecode<any>(Profile.tokens.access);
+      }
+      catch(error)
+      {
+          throw new Error(`Could not parse the JWT token. ${error.message}`);
+      }
+      this.setState({ claims });
     } else {
       this.setState({ claims: undefined });
     }

@@ -13,7 +13,7 @@
         <!-- Technical metadata -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
-        <base href="<%- environment.appBaseUrl %>">
+        <base href="<%- environment.appBasePath %>">
 
         <!-- Crawler metadata -->
         <meta name="robots" content="noindex,nofollow">
@@ -26,7 +26,7 @@
         <!-- Determine the preferred color scheme, and set a cookie so the server knows which resources to serve -->
         <script>
             const preferredColorScheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-            document.cookie = `prefers-color-scheme=${preferredColorScheme};path=<%- environment.appBaseUrl %>;`
+            document.cookie = `prefers-color-scheme=${preferredColorScheme};path=<%- environment.appBasePath %>;`
         </script>
 
         <!-- Standard integration metadata -->
