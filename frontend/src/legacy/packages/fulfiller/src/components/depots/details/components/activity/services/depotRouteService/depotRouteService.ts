@@ -26,14 +26,15 @@ export class DepotRouteService {
 
     this.stopPolling();
 
+    this.paused = false;
     this.routes = undefined;
     this.depotId = depotId;
     this.date = date;
 
     try {
       this.fetchRoutes(this.depotId, this.date);
-    } catch {
-      // Do nothing
+    } catch (error) {
+      console.error(error);
     }
   }
 
