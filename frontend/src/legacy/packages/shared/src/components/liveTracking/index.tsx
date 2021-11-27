@@ -58,9 +58,7 @@ export default class LiveTrackingComponent extends React.Component<ILiveTracking
 
   public componentDidMount() {
     window.addEventListener("popstate", this.onPopState);
-
-    window.addEventListener("focus", this.onFocus);
-    window.addEventListener("blur", this.onBlur);
+    document.addEventListener("visibilitychange", this.onVisibilityChange, false);
 
     this.reactionDisposers.push(
       reaction(
@@ -84,18 +82,18 @@ export default class LiveTrackingComponent extends React.Component<ILiveTracking
     this.reactionDisposers.forEach(dispose => dispose());
     this.reactionDisposers = [];
     window.removeEventListener("popstate", this.onPopState);
-    window.removeEventListener("focus", this.onFocus);
-    window.removeEventListener("blur", this.onBlur);
+    document.removeEventListener("visibilitychange", this.onVisibilityChange, false);
 
     this.service.stopPolling();
   }
 
-  onBlur = () => {
-    this.service.setNotInFocus();
-  }
-
-  onFocus = () => {
-    this.service.setInFocus();
+  onVisibilityChange = () =>
+  {
+    if (document.visibilityState === "hidden") {
+      this.service.setNotInFocus();
+    } else  {
+      this.service.setInFocus();
+    }
   }
 
   public render() {
