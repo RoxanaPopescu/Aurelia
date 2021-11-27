@@ -4,7 +4,7 @@ import { IValidation, Modal, ToastService } from "shared/framework";
 import { OrganizationService } from "app/model/organization";
 import { Outfit } from "app/model/outfit";
 import { IdentityService } from "app/services/identity";
-import { Log } from "shared/infrastructure";
+import { ApiError, Log } from "shared/infrastructure";
 import { VehicleService, VehicleType } from "app/model/vehicle";
 import startedAutomaticDispatchToast from "./resources/strings/manual-started-automatic-dispatch-toast.json";
 
@@ -68,9 +68,16 @@ export class StartManualPanel
         // tslint:disable-next-line: no-floating-promises
         (async () =>
         {
-            const connections = await this._organizationService.getConnections();
-            this.organizations = connections.map(c => new Outfit({ id: c.organization.id, companyName: c.organization.name }));
-            this.organizations.push(this._identityService.identity!.organization!);
+            try
+            {
+                const connections = await this._organizationService.getConnections();
+                this.organizations = connections.map(c => new Outfit({ id: c.organization.id, companyName: c.organization.name }));
+                this.organizations.push(this._identityService.identity!.organization!);
+            }
+            catch
+            {
+                this.organizations = [this._identityService.identity!.organization!];
+            }
         })();
     }
 
@@ -127,7 +134,20 @@ export class StartManualPanel
         }
         catch (error)
         {
-            Log.error("Could not save the order", error);
+            if (error instanceof ApiError && error.response?.status === 404)
+            {
+                const toastModel =
+                {
+                    heading: "No results",
+                    body: "There are no routes currently active or no requests in the status 'to-be-express-dispatched'"
+                };
+
+                this._toastService.open("warning", toastModel);
+            }
+            else
+            {
+                Log.error("Could not save the order", error);
+            }
         }
         finally
         {
