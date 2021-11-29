@@ -2,13 +2,14 @@
 // tslint:disable: no-submodule-imports file-name-casing
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Rule = void 0;
-const tslib_1 = require("tslib");
-// HACK: Pretend this module lives in the same `node_modules` folder as the running `tslint` instance.
-if (module.parent) {
-    module.paths.unshift(...module.parent.paths);
+// HACK: Resolve imports from the same `node_modules` folder as the running `tslint` instance.
+if (require.main) {
+    module.paths.unshift(...require.main.paths);
 }
-const ts = tslib_1.__importStar(require("typescript"));
-const tslint = tslib_1.__importStar(require("tslint/lib"));
+// tslint:disable: no-require-imports
+const ts = require("typescript");
+const tslint = require("tslint/lib");
+// tslint:enable
 const OPTION_ALLOW_SINGLE_LINE_BLOCKS = "allow-single-line-blocks";
 /**
  * Represents a custom TSLint rule for validating that braces are placed on separate lines.
@@ -48,8 +49,7 @@ class OneLineWalker extends tslint.RuleWalker {
             const thenStatementEndLine = sourceFile.getLineAndCharacterOfPosition(thenStatement.getEnd()).line;
             const elseKeywordLine = sourceFile.getLineAndCharacterOfPosition(elseKeyword.getStart()).line;
             if (thenStatementEndLine === elseKeywordLine) {
-                const failure = this.createFailure(elseKeyword.getStart(), elseKeyword.getWidth(), Rule.ELSE_FAILURE_STRING);
-                this.addFailure(failure);
+                this.addFailureAt(elseKeyword.getStart(), elseKeyword.getWidth(), Rule.ELSE_FAILURE_STRING);
             }
         }
         super.visitIfStatement(node);
@@ -80,8 +80,7 @@ class OneLineWalker extends tslint.RuleWalker {
             const catchKeyword = catchClause.getChildAt(0);
             const catchKeywordLine = sourceFile.getLineAndCharacterOfPosition(catchKeyword.getStart()).line;
             if (tryClosingBraceLine === catchKeywordLine) {
-                const failure = this.createFailure(catchKeyword.getStart(), catchKeyword.getWidth(), Rule.CATCH_FAILURE_STRING);
-                this.addFailure(failure);
+                this.addFailureAt(catchKeyword.getStart(), catchKeyword.getWidth(), Rule.CATCH_FAILURE_STRING);
             }
         }
         if (finallyBlock != null) {
@@ -90,16 +89,14 @@ class OneLineWalker extends tslint.RuleWalker {
             const finallyKeyword = ts.findChildOfKind(node, ts.SyntaxKind.FinallyKeyword, sourceFile);
             const finallyKeywordLine = sourceFile.getLineAndCharacterOfPosition(finallyKeyword.getStart()).line;
             if (tryClosingBraceLine === finallyKeywordLine) {
-                const failure = this.createFailure(finallyKeyword.getStart(), finallyKeyword.getWidth(), Rule.FINALLY_FAILURE_STRING);
-                this.addFailure(failure);
+                this.addFailureAt(finallyKeyword.getStart(), finallyKeyword.getWidth(), Rule.FINALLY_FAILURE_STRING);
             }
             if (catchClause != null) {
                 const catchBlock = catchClause.block;
                 const catchClosingBrace = catchBlock.getChildAt(tryBlock.getChildCount() - 1);
                 const catchClosingBraceLine = sourceFile.getLineAndCharacterOfPosition(catchClosingBrace.getEnd()).line;
                 if (catchClosingBraceLine === finallyKeywordLine) {
-                    const failure = this.createFailure(finallyKeyword.getStart(), finallyKeyword.getWidth(), Rule.FINALLY_FAILURE_STRING);
-                    this.addFailure(failure);
+                    this.addFailureAt(finallyKeyword.getStart(), finallyKeyword.getWidth(), Rule.FINALLY_FAILURE_STRING);
                 }
             }
             // HACK: There's currently no 'visitFinallyClause' method in TSLint, so for now, we have to explicitly call a custom method.
@@ -253,16 +250,14 @@ class OneLineWalker extends tslint.RuleWalker {
         const openBraceLine = sourceFile.getLineAndCharacterOfPosition(openBraceToken.getStart()).line;
         const closeBraceLine = sourceFile.getLineAndCharacterOfPosition(closeBraceToken.getStart()).line;
         if (previousNodeLine === openBraceLine && (!this.hasOption(OPTION_ALLOW_SINGLE_LINE_BLOCKS) || openBraceLine !== closeBraceLine)) {
-            const failure = this.createFailure(openBraceToken.getStart(), openBraceToken.getWidth(), Rule.OPEN_BRACE_FAILURE_STRING);
-            this.addFailure(failure);
+            this.addFailureAt(openBraceToken.getStart(), openBraceToken.getWidth(), Rule.OPEN_BRACE_FAILURE_STRING);
         }
         if (openBraceLine !== closeBraceLine) {
             const closeBraceLineStart = sourceFile.getPositionOfLineAndCharacter(closeBraceLine, 0);
             const textBeforeCloseBrace = sourceFile.text.substring(closeBraceLineStart, closeBraceToken.getStart());
             const failureMatch = textBeforeCloseBrace.match(/[^\s]/);
             if (failureMatch) {
-                const failure = this.createFailure(closeBraceToken.getStart(), closeBraceToken.getWidth(), Rule.CLOSE_BRACE_FAILURE_STRING);
-                this.addFailure(failure);
+                this.addFailureAt(closeBraceToken.getStart(), closeBraceToken.getWidth(), Rule.CLOSE_BRACE_FAILURE_STRING);
             }
         }
     }
@@ -280,8 +275,7 @@ class OneLineWalker extends tslint.RuleWalker {
             if (failureMatch) {
                 const failureStart = closeBraceToken.getStart() + failureMatch[1].length + 1;
                 const failureWidth = closeBraceToken.getWidth() + failureMatch[1].length + 1;
-                const failure = this.createFailure(failureStart, failureWidth, Rule.WHILE_FAILURE_STRING);
-                this.addFailure(failure);
+                this.addFailureAt(failureStart, failureWidth, Rule.WHILE_FAILURE_STRING);
             }
         }
     }

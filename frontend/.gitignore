@@ -10,5 +10,5 @@
 # Because this contains build artifacts.
 /artifacts/
 
-# Because it is generated when building the docker image.
+# Because this is a file that may be generated during build.
 /src/resources/translations/en-US-x-pseudo.json

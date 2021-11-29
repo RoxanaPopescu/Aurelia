@@ -1,13 +1,15 @@
 // tslint:disable: no-submodule-imports file-name-casing
 
-// HACK: Pretend this module lives in the same `node_modules` folder as the running `tslint` instance.
-if (module.parent)
+// HACK: Resolve imports from the same `node_modules` folder as the running `tslint` instance.
+if (require.main)
 {
-    module.paths.unshift(...module.parent.paths);
+    module.paths.unshift(...require.main.paths);
 }
 
-import * as ts from "typescript";
-import * as tslint from "tslint/lib";
+// tslint:disable: no-require-imports
+import ts = require("typescript");
+import tslint = require("tslint/lib");
+// tslint:enable
 
 const OPTION_ALLOW_SINGLE_LINE_BLOCKS = "allow-single-line-blocks";
 
@@ -65,8 +67,7 @@ class OneLineWalker extends tslint.RuleWalker
 
             if (thenStatementEndLine === elseKeywordLine)
             {
-                const failure = this.createFailure(elseKeyword.getStart(), elseKeyword.getWidth(), Rule.ELSE_FAILURE_STRING);
-                this.addFailure(failure);
+                this.addFailureAt(elseKeyword.getStart(), elseKeyword.getWidth(), Rule.ELSE_FAILURE_STRING);
             }
         }
 
@@ -109,8 +110,7 @@ class OneLineWalker extends tslint.RuleWalker
 
             if (tryClosingBraceLine === catchKeywordLine)
             {
-                const failure = this.createFailure(catchKeyword.getStart(), catchKeyword.getWidth(), Rule.CATCH_FAILURE_STRING);
-                this.addFailure(failure);
+                this.addFailureAt(catchKeyword.getStart(), catchKeyword.getWidth(), Rule.CATCH_FAILURE_STRING);
             }
         }
 
@@ -123,8 +123,7 @@ class OneLineWalker extends tslint.RuleWalker
 
             if (tryClosingBraceLine === finallyKeywordLine)
             {
-                const failure = this.createFailure(finallyKeyword.getStart(), finallyKeyword.getWidth(), Rule.FINALLY_FAILURE_STRING);
-                this.addFailure(failure);
+                this.addFailureAt(finallyKeyword.getStart(), finallyKeyword.getWidth(), Rule.FINALLY_FAILURE_STRING);
             }
 
             if (catchClause != null)
@@ -135,8 +134,7 @@ class OneLineWalker extends tslint.RuleWalker
 
                 if (catchClosingBraceLine === finallyKeywordLine)
                 {
-                    const failure = this.createFailure(finallyKeyword.getStart(), finallyKeyword.getWidth(), Rule.FINALLY_FAILURE_STRING);
-                    this.addFailure(failure);
+                    this.addFailureAt(finallyKeyword.getStart(), finallyKeyword.getWidth(), Rule.FINALLY_FAILURE_STRING);
                 }
             }
 
@@ -362,8 +360,7 @@ class OneLineWalker extends tslint.RuleWalker
 
         if (previousNodeLine === openBraceLine && (!this.hasOption(OPTION_ALLOW_SINGLE_LINE_BLOCKS) || openBraceLine !== closeBraceLine))
         {
-            const failure = this.createFailure(openBraceToken.getStart(), openBraceToken.getWidth(), Rule.OPEN_BRACE_FAILURE_STRING);
-            this.addFailure(failure);
+            this.addFailureAt(openBraceToken.getStart(), openBraceToken.getWidth(), Rule.OPEN_BRACE_FAILURE_STRING);
         }
 
         if (openBraceLine !== closeBraceLine)
@@ -375,8 +372,7 @@ class OneLineWalker extends tslint.RuleWalker
 
             if (failureMatch)
             {
-                const failure = this.createFailure(closeBraceToken.getStart(), closeBraceToken.getWidth(), Rule.CLOSE_BRACE_FAILURE_STRING);
-                this.addFailure(failure);
+                this.addFailureAt(closeBraceToken.getStart(), closeBraceToken.getWidth(), Rule.CLOSE_BRACE_FAILURE_STRING);
             }
         }
     }
@@ -403,8 +399,7 @@ class OneLineWalker extends tslint.RuleWalker
             {
                 const failureStart = closeBraceToken.getStart() + failureMatch[1].length + 1;
                 const failureWidth = closeBraceToken.getWidth() + failureMatch[1].length + 1;
-                const failure = this.createFailure(failureStart, failureWidth, Rule.WHILE_FAILURE_STRING);
-                this.addFailure(failure);
+                this.addFailureAt(failureStart, failureWidth, Rule.WHILE_FAILURE_STRING);
             }
         }
     }

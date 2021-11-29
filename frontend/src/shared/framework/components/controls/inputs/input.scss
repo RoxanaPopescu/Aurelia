@@ -481,7 +481,7 @@ body
 
     &:not(.--disabled):not(.--readonly).--required,
     .input:not(.--disabled):not(.--readonly) &.--required,
-    .input-container:not(.--disabled):not(.--readonly) &.--required,
+    .input-container:not(.--disabled):not(.--readonly) &.--required
     {
         > .input-label > .input-heading > [slot]::after
         {
@@ -581,7 +581,7 @@ body
 
         icon[tabindex]:hover,
         dropdown-icon:hover,
-        button[appearance="none"]:hover > icon,
+        button[appearance="none"]:hover > icon
         {
             color: var(--input-surface-icon-color--hover);
             cursor: pointer;
@@ -589,7 +589,7 @@ body
 
         .focus-visible & icon[tabindex]:focus,
         .focus-visible & dropdown-icon:focus,
-        .focus-visible & button[appearance="none"]:hover > icon,
+        .focus-visible & button[appearance="none"]:hover > icon
         {
             color: var(--input-surface-icon-color--focus);
         }

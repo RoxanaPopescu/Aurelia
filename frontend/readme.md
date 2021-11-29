@@ -147,11 +147,14 @@
   * `{environment}` should be replaced with either `development`, `preview` or `production`.<br>
     The default is `development`.
 
+  * `{platform}` should be replaced with either `cloud`, `desktop` or `mobile`.
+    The default is `cloud`.
+
   * `{locale}` should be replaced with the locale code for which to build.<br>
     The default is `en-US`.
 
   * `{api}` should be replaced with the URL to which API requests should be sent, including a trailing `/`.<br>
-    The default is `/api/` for the `cloud` platform, and `http://localhost:8008/` for the `desktop` platform.
+    The default is `/api/` for the `cloud` platform, and `http://localhost:8008/` for the `desktop` or `mobile` platform.
 
   * `{commit}` should be replaced with the SHA identifying the commit being built.<br>
     Note that this argument should only be specified for production builds.
