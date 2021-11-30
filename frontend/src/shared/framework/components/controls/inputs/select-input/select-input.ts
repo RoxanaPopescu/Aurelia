@@ -1,4 +1,5 @@
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
+import { Placement } from "popper.js";
 import { LabelPosition, shouldFocusInput } from "../../control";
 import { AutocompleteHint, EnterKeyHint } from "../input";
 import { ItemPickerCustomElement } from "../../pickers/item-picker/item-picker";
@@ -168,6 +169,12 @@ export class SelectInputCustomElement
      */
     @bindable({ defaultValue: false })
     public fixed: boolean;
+
+    /**
+     * The placement of the dropdown, relative to its owner.
+     */
+    @bindable({ defaultValue: "bottom-start" })
+    public placement: Placement;
 
     /**
      * Opens the dropdown and optionally focuses the input element.
