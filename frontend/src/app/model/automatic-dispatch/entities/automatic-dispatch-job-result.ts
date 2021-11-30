@@ -9,12 +9,13 @@ export class AutomaticDispatchJobResult
      */
     public constructor(data: any)
     {
-        this.routes = data.routes.map((r: any) => {
-
+        this.routes = data.routes.map((r: any) =>
+        {
             r.driver = { id: r.driverId, status: "approved", name: { first: r.driverName } };
 
             return new Route(r);
         });
+
         this.unscheduledShipments = data.unscheduledShipments.map((s: any) =>
         {
             return { shipment: new Shipment(s.shipment), reasons: s.reasons };
