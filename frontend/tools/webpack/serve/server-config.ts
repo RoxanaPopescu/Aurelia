@@ -91,7 +91,7 @@ export function getServerConfig(compilerOptions: ICompilerOptions, serverOptions
 }
 
 /**
- * Ensures a trailing slash is added to `request.url` and `request.originalUrl`, thereby
+ * Ensures a trailing slash is added to `request.originalUrl` and `request.url`, thereby
  * preventing the static files middleware from returning an unwanted permanent redirect.
  */
 function preventDirectoryRedirect(request: any, response: any, next: any): any
@@ -114,4 +114,3 @@ function preventDirectoryRedirect(request: any, response: any, next: any): any
 
     return next();
 }
-
