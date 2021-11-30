@@ -35,7 +35,7 @@ export function getServerConfig(compilerOptions: ICompilerOptions, serverOptions
         proxy: serverOptions.proxy,
 
         // Configure custom middleware.
-        onBeforeSetupMiddleware: (devServer: any) =>
+        onBeforeSetupMiddleware: devServer =>
         {
             // HACK: Prevent unwanted redirects.
             devServer.app.use(preventDirectoryRedirect);
@@ -91,26 +91,27 @@ export function getServerConfig(compilerOptions: ICompilerOptions, serverOptions
 }
 
 /**
- * Ensures a trailing slash is added to `request.url`, thereby preventing the
- * static files middleware from returning an unwanted permanent redirect.
+ * Ensures a trailing slash is added to `request.url` and `request.originalUrl`, thereby
+ * preventing the static files middleware from returning an unwanted permanent redirect.
  */
-function preventDirectoryRedirect(req: any, res: any, next: any): any
+function preventDirectoryRedirect(request: any, response: any, next: any): any
 {
     // The URL already ends with a `/`.
-    if (req.url.endsWith("/"))
+    if (request.path.endsWith("/"))
     {
         return next();
     }
 
     // The URL appears to reference a file.
-    if (/.+\..+$/.test(req.url))
+    if (/.+\..+$/.test(request.path))
     {
         return next();
     }
 
     // The URL appears to reference a directory, so we append a `/`.
-    req.originalUrl += "/";
-    req.url += "/";
+    request.originalUrl = request.originalUrl.replace(/(\?|$)/, "/$1");
+    request.url = request.url.replace(/(\?|$)/, "/$1");
 
     return next();
 }
+
