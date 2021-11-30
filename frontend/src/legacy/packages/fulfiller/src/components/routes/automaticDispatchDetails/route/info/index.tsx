@@ -22,7 +22,9 @@ export default class RoutePlanningRouteInfoComponent extends React.Component<
       >
         <div className="c-routePlanning-routes-route-infoContent">
           <div className="c-routePlanning-routes-route-id">
-            {this.props.index + 1}
+            <a href={`/routes/details/${this.props.route.slug}`} target="_blank">
+              {this.props.index + 1}
+            </a>
           </div>
         </div>
       </div>

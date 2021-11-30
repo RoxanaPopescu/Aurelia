@@ -665,6 +665,10 @@ export class RoutePlanningStore {
 
     return [
       {
+        headline: Localization.operationsValue("Dispatch_Driver"),
+        value: (route.driver?.name.toString() ?? "") + " (" + (route.driver?.id ?? "") + ")"
+      },
+      {
         headline: Localization.sharedValue("Expected_DrivingTime"),
         value: Localization.formatDuration(Duration.fromObject({ seconds: drivingTime }))
       },
