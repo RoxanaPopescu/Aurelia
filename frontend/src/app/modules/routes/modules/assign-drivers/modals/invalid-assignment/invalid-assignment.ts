@@ -14,7 +14,7 @@ export class InvalidAssignmentDialog
     }
 
     private readonly _modal: Modal;
-    private _result = false;
+    private readonly _result = false;
     protected issue: string;
 
     /**
