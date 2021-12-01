@@ -336,7 +336,7 @@ export class AssignDriversPage
                 this._modalService.open(
                     InvalidAssignmentDialog,
                     `The driver with id '${driverId}' is not approved`
-                )
+                );
             }
         }
         catch
