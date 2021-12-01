@@ -13,9 +13,10 @@ import { OrganizationService, OrganizationTeam } from "app/model/organization";
 import { TeamsFilterService } from "app/services/teams-filter";
 import { Fulfiller } from "app/model/outfit";
 import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
-import { ConfirmAssignmentDialog } from "./confirm-assignment/confirm-assignment";
+import { ConfirmAssignmentDialog } from "./modals/confirm-assignment/confirm-assignment";
+import { ConfirmReassignmentDialog } from "./modals/confirm-reassignment/confirm-reassignment";
 import { DriverService } from "app/model/driver";
-import { ConfirmReassignmentDialog } from "./confirm-reassignment/confirm-reassignment";
+import { InvalidAssignmentDialog } from "./modals/invalid-assignment/invalid-assignment";
 
 /**
  * Represents the page.
@@ -330,8 +331,12 @@ export class AssignDriversPage
             }
             else
             {
-                Log.error(`The driver with id '${driverId}'' is not approved`);
                 (route as any).driverId = undefined;
+
+                this._modalService.open(
+                    InvalidAssignmentDialog,
+                    `The driver with id '${driverId}' is not approved`
+                )
             }
         }
         catch
