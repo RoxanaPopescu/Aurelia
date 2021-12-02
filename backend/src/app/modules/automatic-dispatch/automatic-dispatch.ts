@@ -134,7 +134,7 @@ export class AutomaticDispatchModule extends AppModule
         const addRouteIds: string[] = context.request.body.addRouteIds;
 
         // 1. Fetch the routes dependent on the routeIds
-        const routeResult = await this.apiClient.post("logistics-platform/routes/v4/list",
+        const routeResult = await this.apiClient.post("logistics-platform/routes/v5/list",
         {
             noi: true,
             body: {
