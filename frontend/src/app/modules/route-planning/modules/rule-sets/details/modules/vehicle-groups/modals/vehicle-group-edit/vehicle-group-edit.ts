@@ -61,18 +61,6 @@ export class VehicleGroupPanel
     protected availableBreakTypes = Object.keys(VehicleGroupBreakType.values).map(slug => new VehicleGroupBreakType(slug as any));
 
     /**
-     * The selected break type.
-     */
-    protected get selectedBreakType(): VehicleGroupBreakType | undefined
-    {
-        return this.model.breaks?.type;
-    }
-    protected set selectedBreakType(value: VehicleGroupBreakType | undefined)
-    {
-        this.model.breaks = value ? new VehicleGroupBreak({ type: value.slug }) : undefined;
-    }
-
-    /**
      * Called by the framework when the modal is activated.
      * @param model The route and the stop to edit or create.
      */
@@ -117,7 +105,7 @@ export class VehicleGroupPanel
      */
     protected addBreakRuleClick(): void
     {
-        this.model.breaks!.rules.push({} as any);
+        this.model.breaks!.push(new VehicleGroupBreak());
     }
 
     /**
@@ -126,7 +114,7 @@ export class VehicleGroupPanel
      */
     protected deleteBreakRuleClick(index: number): void
     {
-        this.model.breaks!.rules.splice(index, 1);
+        this.model.breaks!.splice(index, 1);
     }
 
     /**

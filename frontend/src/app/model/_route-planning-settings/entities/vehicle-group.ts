@@ -31,7 +31,7 @@ export class VehicleGroup
             this.endLocation = new VehicleGroupLocation(data.endLocation);
             this.routeTags = data.routeTags;
             this.handlesCollectionPoint = data.handlesCollectionPoint;
-            this.breaks = data.break;
+            this.breaks = data.breaks?.map(b => new VehicleGroupBreak(b)) ?? [];
         }
         else
         {
@@ -43,6 +43,7 @@ export class VehicleGroup
             this.startLocation = new VehicleGroupLocation();
             this.endLocation = new VehicleGroupLocation();
             this.routeTags = [];
+            this.breaks = [];
             this.handlesCollectionPoint = false;
         }
     }
@@ -108,9 +109,9 @@ export class VehicleGroup
     public handlesCollectionPoint: boolean;
 
     /**
-     * The break model to use, if any.
+     * The breaks for this vehicle group.
      */
-    public breaks: VehicleGroupBreak | undefined;
+    public breaks: VehicleGroupBreak[] = [];
 
     /**
      * Gets a clone of this instance, suitable for editing.
@@ -147,6 +148,11 @@ export class VehicleGroup
 
         delete data.vehicleType;
         data.vehicleTypeId = this.vehicleType.id;
+
+        // Add precedence dependent on index
+        data.breaks.forEach((value, index) => {
+            value.precedence = index + 1;
+        });
 
         return data;
     }

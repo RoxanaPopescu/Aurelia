@@ -34,6 +34,23 @@ export default class RoutePlanningRoutesStopComponent extends React.Component<
       classNames += " c-routePlanning-routes-route-stop-selected";
     }
 
+    let title: string;
+    const duration = Localization.formatDuration(stop.estimates.taskTime);
+
+    if (stop.type.slug === "break")
+    {
+      title = `${duration} ${Localization.sharedValue("Expected_BreakTime").toLowerCase()}`;
+    }
+    else
+    {
+      title = Localization.operationsValue(
+        "RoutePlanning_RoutePlan_Route_Stop_TaskTime"
+      ).replace(
+        "{time}",
+        duration
+      )
+    }
+
     return (
       <div
         className={classNames}
@@ -43,12 +60,7 @@ export default class RoutePlanningRoutesStopComponent extends React.Component<
           borderColor: stop.route.color,
           width: width + "px"
         }}
-        title={Localization.operationsValue(
-          "RoutePlanning_RoutePlan_Route_Stop_TaskTime"
-        ).replace(
-          "{time}",
-          Localization.formatDuration(stop.estimates.taskTime)
-        )}
+        title={title}
       >
         <div className="font-small c-routePlanning-routes-route-stop-number">
           {((this.props.stop.stopNumber < 10 && width > 8) || width > 16) &&

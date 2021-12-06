@@ -71,6 +71,7 @@
   "EstimatedTime_Arrival": "Estimated arrival",
   "EstimatedTime_Departure": "Estimated departure",
   "Expected_Arrival": "Expected arrival",
+  "Expected_BreakTime": "Break time",
   "Expected_DrivingTime": "Expected driving time",
   "Expected_LoadingTime": "Expected loading time",
   "Expected_TaskTime": "Expected task time",
