@@ -105,7 +105,7 @@ export class VehicleGroupPanel
      */
     protected addBreakRuleClick(): void
     {
-        this.model.breaks!.push(new VehicleGroupBreak());
+        this.model.breaks.push(new VehicleGroupBreak());
     }
 
     /**
@@ -114,7 +114,7 @@ export class VehicleGroupPanel
      */
     protected deleteBreakRuleClick(index: number): void
     {
-        this.model.breaks!.splice(index, 1);
+        this.model.breaks.splice(index, 1);
     }
 
     /**
