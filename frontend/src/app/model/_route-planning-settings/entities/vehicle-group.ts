@@ -150,7 +150,7 @@ export class VehicleGroup
         data.vehicleTypeId = this.vehicleType.id;
 
         // Add precedence dependent on index
-        data.breaks.forEach((value, index: number) => { value.precedence = index + 1 });
+        data.breaks.forEach((value, index: number) => { value.precedence = index + 1; });
 
         return data;
     }
