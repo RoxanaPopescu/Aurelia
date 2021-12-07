@@ -537,10 +537,22 @@ export class RoutePlanningStore {
         headline: Localization.sharedValue("Expected_DrivingTime"),
         value: Localization.formatDuration(stop.estimates.drivingTime)
       });
-      rows.push({
-        headline: Localization.sharedValue("Expected_TaskTime"),
-        value: Localization.formatDuration(stop.estimates.taskTime)
-      });
+
+      if (stop.type.slug === "break")
+      {
+        rows.push({
+          headline: Localization.sharedValue("Expected_BreakTime"),
+          value: Localization.formatDuration(stop.estimates.taskTime)
+        });
+      }
+      else
+      {
+        rows.push({
+          headline: Localization.sharedValue("Expected_TaskTime"),
+          value: Localization.formatDuration(stop.estimates.taskTime)
+        });
+      }
+
       rows.push({
         headline: Localization.sharedValue("Expected_WaitingTime"),
         value: Localization.formatDuration(stop.estimates.waitingTime)

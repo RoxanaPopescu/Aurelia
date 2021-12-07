@@ -7,6 +7,11 @@ modal-panel[name="vehicle-group-edit"]
         button
         {
             width: 100%;
+
+            &.flex-row
+            {
+                justify-content: center;
+            }
         }
     }
 }

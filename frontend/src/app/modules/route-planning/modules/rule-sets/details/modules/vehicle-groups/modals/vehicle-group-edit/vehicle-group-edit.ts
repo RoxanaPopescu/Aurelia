@@ -1,7 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { IValidation, Modal } from "shared/framework";
 import { Log } from "shared/infrastructure";
-import { VehicleGroup, VehicleGroupLocation } from "app/model/_route-planning-settings";
+import { VehicleGroup, VehicleGroupBreak, VehicleGroupBreakType, VehicleGroupLocation } from "app/model/_route-planning-settings";
 import { VehicleType } from "app/model/vehicle";
 import { AddressService } from "app/components/address-input/services/address-service/address-service";
 import { Uuid } from "shared/utilities/id/uuid";
@@ -56,6 +56,11 @@ export class VehicleGroupPanel
     protected selectedLatestDeparture: Duration | undefined;
 
     /**
+     * The available break types.
+     */
+    protected availableBreakTypes = Object.keys(VehicleGroupBreakType.values).map(slug => new VehicleGroupBreakType(slug as any));
+
+    /**
      * Called by the framework when the modal is activated.
      * @param model The route and the stop to edit or create.
      */
@@ -87,11 +92,29 @@ export class VehicleGroupPanel
 
     /**
      * Called by the framework when the modal is deactivated.
-     * @returns The new or edited stop, or undefined if cancelled.
+     * @returns The new or edited vehicle group, or undefined if cancelled.
      */
     public async deactivate(): Promise<VehicleGroup | undefined>
     {
         return this._result;
+    }
+
+    /**
+     * Called when the `Add break rule` button is clicked.
+     * Appends a new rule to the current list of break rules.
+     */
+    protected addBreakRuleClick(): void
+    {
+        this.model.breaks.push(new VehicleGroupBreak());
+    }
+
+    /**
+     * Called when the `Add break rule` button is clicked.
+     * Appends a new rule to the current list of break rules.
+     */
+    protected deleteBreakRuleClick(index: number): void
+    {
+        this.model.breaks.splice(index, 1);
     }
 
     /**

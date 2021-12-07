@@ -4,6 +4,7 @@ import { VehicleGroupLimits } from "./vehicle-group-limits";
 import { VehicleGroupLocation } from "./vehicle-group-location";
 import clone from "clone";
 import { VehicleGroupDistributionCenterEnRoute } from "./vehicle-group-distribution-center-en-route";
+import { VehicleGroupBreak } from "./vehicle-group-break";
 
 /**
  * Represents settings associated with a vehicle group.
@@ -30,6 +31,7 @@ export class VehicleGroup
             this.endLocation = new VehicleGroupLocation(data.endLocation);
             this.routeTags = data.routeTags;
             this.handlesCollectionPoint = data.handlesCollectionPoint;
+            this.breaks = data.breaks?.map(b => new VehicleGroupBreak(b)) ?? [];
         }
         else
         {
@@ -41,6 +43,7 @@ export class VehicleGroup
             this.startLocation = new VehicleGroupLocation();
             this.endLocation = new VehicleGroupLocation();
             this.routeTags = [];
+            this.breaks = [];
             this.handlesCollectionPoint = false;
         }
     }
@@ -106,6 +109,11 @@ export class VehicleGroup
     public handlesCollectionPoint: boolean;
 
     /**
+     * The breaks for this vehicle group.
+     */
+    public breaks: VehicleGroupBreak[] = [];
+
+    /**
      * Gets a clone of this instance, suitable for editing.
      */
     public clone(): any
@@ -140,6 +148,9 @@ export class VehicleGroup
 
         delete data.vehicleType;
         data.vehicleTypeId = this.vehicleType.id;
+
+        // Add precedence dependent on index
+        data.breaks.forEach((value, index: number) => { value.precedence = index + 1; });
 
         return data;
     }

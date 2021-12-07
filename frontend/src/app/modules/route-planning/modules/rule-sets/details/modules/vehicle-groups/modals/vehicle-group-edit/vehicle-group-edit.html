@@ -764,6 +764,122 @@
 
         </modal-section>
 
+        <modal-section class="--line-above">
+
+            <div slot="header" translate>
+                Breaks
+            </div>
+
+            <h1 class="margin-large-bottom" translate>
+                Here you can specify the break rules to use.
+            </h1>
+
+            <div class="button-container margin-large-top">
+
+                <button appearance="outline" accent="primary" click.trigger="addBreakRuleClick()" class="flex-row">
+                    <icon name="add" class="font-larger margin-right"></icon>
+                    <div translate>
+                        Add break rule
+                    </div>
+                </button>
+
+            </div>
+
+            <div class="input-heading margin-larger-top" if.bind="model.breaks.length > 0" translate>
+                Break rules, in decending order of precedence
+            </div>
+
+            <card repeat.for="breakRule of model.breaks" accent="neutral" class="margin-large-top --non-clickable">
+
+                <div slot="actions">
+
+                    <button
+                        title.translate="Delete"
+                        appearance="none"
+                        click.trigger="deleteBreakRuleClick($index) && false">
+                        <icon name="md-remove"></icon>
+                    </button>
+
+                </div>
+
+                <select-input
+                    label="above"
+                    value.bind="breakRule.type"
+                    display-value.bind="breakRule.type.name">
+
+                    <div slot="heading" translate>
+                        Break type
+                    </div>
+
+                    <item repeat.for="breakType of availableBreakTypes" model.bind="breakType">
+                        ${breakType.name}
+                    </item>
+
+                </select-input>
+
+                <number-input
+                    class="margin-large-top"
+                    label="above"
+                    value.bind="breakRule.definition.workTimeSinceLastBreak | scale: 1/60"
+                    min.bind="0">
+
+                    <div slot="heading" translate>
+                        Max work time since the last break.
+                    </div>
+
+                    <span slot="after" class="opacity-faded" translate>
+                        min
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="breakRule.definition.workTimeSinceLastBreak">
+                        </required-validator>
+
+                    </div>
+
+                </number-input>
+
+                <number-input
+                    class="margin-large-top"
+                    label="above"
+                    value.bind="breakRule.definition.duration | scale: 1/60"
+                    min.bind="0">
+
+                    <div slot="heading" translate>
+                        Break duration
+                    </div>
+
+                    <span slot="after" class="opacity-faded" translate>
+                        min
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="breakRule.definition.duration">
+                        </required-validator>
+
+                    </div>
+
+                </number-input>
+
+                <check-toggle
+                    label="above"
+                    value.bind="breakRule.definition.includeStartLocationTaskTime"
+                    class="margin-large-top">
+
+                    <div slot="heading" translate>
+                        Include start location task time
+                    </div>
+
+                </check-toggle>
+
+            </card>
+
+        </modal-section>
+
         <div if.bind="isNew" class="button-container margin-larger-top">
 
             <button appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
