@@ -101,6 +101,26 @@ export class DriverService
     }
 
     /**
+     * Returns online drivers.
+     * @param northEast The northeast coordinate used for filtering.
+     * @param southWest The southWest coordinate used for filtering.
+     * @returns A promise that will be resolved with the found drivers.
+     */
+    public async onlineDrivers(northEast: google.maps.LatLng, southWest: google.maps.LatLng, vehicleTypes?: string[]): Promise<Driver[]>
+    {
+        const result = await this._apiClient.post("drivers/online-in-area",
+        {
+            body: {
+                "northEastPosition": { "latitude": northEast.lat(), "longitude": northEast.lng() },
+                "southWestPosition": { "latitude": southWest.lat(), "longitude": southWest.lng() },
+                "vehicleTypes": vehicleTypes
+            }
+        });
+
+        return result.data.map(d => new Driver(d));
+    }
+
+    /**
      * Creates a new driver, associated with the specified driver.
      * @param driver The driver to create.
      * @returns A promise that will be resolved with the new driver.

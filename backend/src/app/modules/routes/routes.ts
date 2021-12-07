@@ -32,6 +32,28 @@ export class RoutesModule extends AppModule
     }
 
     /**
+     * Returns drivers near the route
+     * @returns The drivers available near the route
+     */
+    public "POST /v2/routes/drivers-available-nearby" = async (context: AppContext) =>
+    {
+        await context.authorize("view-routes");
+
+        const result = await this.apiClient.post("logistics-platform/routes/v4/drivers-available-near-route",
+        {
+            noi: true,
+            body: {
+                ...context.request.body,
+                fulfillerIds: [context.user?.organizationId],
+                CurrentOutfit: context.user?.organizationId
+            }
+        });
+
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
      * Will add a support note to the route
      * @returns 200 OK if support note is saved
      */

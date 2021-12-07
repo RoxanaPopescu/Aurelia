@@ -504,7 +504,7 @@ export class LiveTrackingService {
    * @returns A promise that will be resolved with the routes.
    */
   public async pushToDrivers(drivers: Driver[], route: Route, message: string | undefined): Promise<void> {
-    var url = "dispatch/route/pushDrivers";
+    var url = "dispatch/route/push-drivers";
 
     const response = await fetch(
       BaseService.url(url),
@@ -527,7 +527,7 @@ export class LiveTrackingService {
    * @returns A promise that will be resolved with the routes.
    */
   public async fetchDriversNearby(route: Route): Promise<Driver[]> {
-    var url = "routes/v2/DriversAvailableNearby";
+    var url = "routes/drivers-available-nearby";
 
     const response = await fetch(
       BaseService.url(url),
