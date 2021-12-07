@@ -16,6 +16,7 @@ export * from "./entities/task-times-criteria";
 export * from "./entities/task-times-round-definition";
 export * from "./entities/task-times-scenario";
 export * from "./entities/task-times";
+export * from "./entities/vehicle-group-break";
 export * from "./entities/time-window-adjustment";
 export * from "./entities/uturn-strategy";
 export * from "./entities/vehicle-group-distribution-center-en-route";

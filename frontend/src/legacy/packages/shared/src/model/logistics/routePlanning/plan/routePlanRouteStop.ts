@@ -2,6 +2,7 @@ import { RoutePlanRoute } from "./routePlanRoute";
 import { RoutePlanStopBase } from "./routePlanStopBase";
 import { RoutePlanRouteStopEstimates } from "./routePlanRouteStopEstimates";
 import { Consignor } from "shared/src/model/logistics/consignor";
+import { RouteStopType } from "app/model/route";
 
 /**
  * Represents one stop for a route plan route
@@ -20,7 +21,7 @@ export class RoutePlanRouteStop extends RoutePlanStopBase {
     this.colliCount = data.colliCount;
     this.consignors = data.consignorIndexes.map(s => consignors[s as number]);
     this.route = route;
-
+    this.type = new RouteStopType(data.type);
   }
 
   /**
@@ -47,4 +48,9 @@ export class RoutePlanRouteStop extends RoutePlanStopBase {
    * The specific route for this stop
    */
   public route: RoutePlanRoute;
+
+  /**
+   * The type of stop
+   */
+   public type: RouteStopType;
 }
