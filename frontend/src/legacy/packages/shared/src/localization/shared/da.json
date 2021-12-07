@@ -71,6 +71,7 @@
   "EstimatedTime_Arrival": "Estimeret ankomst",
   "EstimatedTime_Departure": "Estimeret afgang",
   "Expected_Arrival": "Forventet ankomst",
+  "Expected_BreakTime": "Pausetid",
   "Expected_DrivingTime": "Forventet køretid",
   "Expected_LoadingTime": "Forventet læssetid",
   "Expected_TaskTime": "Forventet opgavetid",

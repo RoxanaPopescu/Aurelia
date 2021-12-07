@@ -71,6 +71,7 @@
   "EstimatedTime_Arrival": "Arrivato stimato",
   "EstimatedTime_Departure": "Partenza stimata",
   "Expected_Arrival": "Arrivo stimato",
+  "Expected_BreakTime": "Pausa",
   "Expected_DrivingTime": "Tempo di guida stimato",
   "Expected_LoadingTime": "Tempo di carico stimato",
   "Expected_TaskTime": "Tempo della missione previsto",
