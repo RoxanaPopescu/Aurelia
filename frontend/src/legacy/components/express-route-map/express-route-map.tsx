@@ -322,11 +322,11 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
 
             if (type === "assign")
             {
-                await service.assignDriver(this.props.expressRoutes![0].id, driver);
+                await service.assignDriver(selectedRoute.id, driver);
             }
             else
             {
-                await service.pushToDrivers(this.props.expressRoutes![0].id, [driver]);
+                await service.pushToDrivers(selectedRoute.id, [driver]);
             }
         }
         catch
