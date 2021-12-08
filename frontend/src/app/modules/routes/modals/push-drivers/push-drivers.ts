@@ -117,7 +117,7 @@ export class PushDriversPanel
         {
 
             this._modal.busy = true;
-            await this._routeAssignmentService.pushToDrivers(this.route, this.selected, this.message);
+            await this._routeAssignmentService.pushToDrivers(this.route.id, this.selected, this.message);
             await this._modal.close();
         }
         catch (error)

@@ -17,6 +17,7 @@ import { observable } from "mobx";
 import { DriverMarker } from "./components/features/driver-marker/driver-marker";
 import { DriverMarkerAvailable } from "./components/features/driver-marker-available/driver-marker-available";
 import { Driver, DriverService } from "app/model/driver";
+import { RouteAssignmentService } from "app/model/route";
 
 export interface IExpressRouteMapProps
 {
@@ -69,7 +70,7 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
     private showAllDrivers = false;
 
     @observable
-    private showAllRoutes = true;
+    private showAllRoutes = false;
 
     public render()
     {
@@ -125,7 +126,7 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
                         disabled={this.isFetchingDriversNotOnRoute}
                         onClick={() => this.fetchAvailableDriversNotOnRoute()}>
 
-                            { this.availableDriversNotOnRoute == null ? "Show drivers not on route" : `Hide ${this.availableDriversNotOnRoute.length} drivers` }
+                            { this.availableDriversNotOnRoute == null ? "Show online ad-hoc drivers" : `Hide ${this.availableDriversNotOnRoute.length} drivers` }
 
                     </Button>
 
@@ -229,10 +230,7 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
                             key={`DriverMarkerAvailable-${d.id}`}
                             driver={d}
                             faded={false}
-                            onClick={() =>
-                            {
-                                // FIXME: DO IT!
-                            }}
+                            onClick={(driver, type) => this.pushOrAssignToDriver(driver, type)}
                         />
                     )}
 
@@ -291,6 +289,49 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
         finally
         {
             this.isFetchingDriversNotOnRoute = false;
+        }
+    }
+
+    private async pushOrAssignToDriver(driver: Driver, type: "push" | "assign"): Promise<void>
+    {
+        const selectedRoutes = this.props.expressRoutes?.filter(r => r.selected);
+        let selectedRoute: ExpressRoute | undefined;
+        if (selectedRoutes != null)
+        {
+            if (selectedRoutes.length === 1)
+            {
+                selectedRoute = selectedRoutes[0];
+            }
+        }
+
+        if (selectedRoute == null)
+        {
+            alert("This feature only works if one route is selected");
+            return;
+        }
+
+        const confirmed = confirm(`Sure you want to ${type} to ${driver.name.toString()}`);
+        if (!confirmed)
+        {
+            return;
+        }
+
+        try
+        {
+            const service = Container.instance.get(RouteAssignmentService);
+
+            if (type === "assign")
+            {
+                await service.assignDriver(this.props.expressRoutes![0].id, driver);
+            }
+            else
+            {
+                await service.pushToDrivers(this.props.expressRoutes![0].id, [driver]);
+            }
+        }
+        catch
+        {
+            // Do nothing
         }
     }
 

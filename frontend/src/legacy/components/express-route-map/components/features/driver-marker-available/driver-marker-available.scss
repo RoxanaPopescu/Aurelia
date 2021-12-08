@@ -20,7 +20,7 @@
   text-align: center;
   color: white;
   background: "gray";
-  background: var(--colorNeutralLight);
+  background: rgb(79, 79, 79);
 
   &.expressRoutes-driverMarkerAvailable--completed {
     opacity: .3;

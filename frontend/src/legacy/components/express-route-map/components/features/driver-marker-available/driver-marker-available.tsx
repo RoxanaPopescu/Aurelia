@@ -8,7 +8,7 @@ import { Driver } from "app/model/driver";
 
 export interface DriverMarkerAvailableProps {
   driver: Driver;
-  onClick?: (driver: Driver) => void;
+  onClick: (driver: Driver, type: "push" | "assign") => void;
   faded?: boolean;
 }
 
@@ -27,10 +27,9 @@ export class DriverMarkerAvailable extends Marker<DriverMarkerAvailableProps> {
         icon=" "
         labelAnchor={new google.maps.Point(26, 17)}
         position={position}
-        zIndex={4}
+        zIndex={12}
         onMouseOver={() => this.showPopup()}
         onMouseOut={() => this.hidePopup()}
-        onClick={() => this.props.onClick && this.props.onClick(this.props.driver)}
       >
 
         <React.Fragment>
@@ -88,6 +87,16 @@ export class DriverMarkerAvailable extends Marker<DriverMarkerAvailableProps> {
         <div className="c-worldMap-popup-title">{this.props.driver!.name.toString()}</div>
 
         <div className="c-worldMap-popup-section">
+
+        <div className="c-worldMap-popup-section-row">
+            <div>Assign to driver</div>
+            <div>{<a onClick={() => this.props.onClick(this.props.driver, "assign")}>Assign</a>}</div>
+          </div>
+
+        <div className="c-worldMap-popup-section-row">
+            <div>Push to driver</div>
+            <div>{<a onClick={() => this.props.onClick(this.props.driver, "push")}>Push</a>}</div>
+          </div>
 
           <div className="c-worldMap-popup-section-row">
             <div>{Localization.sharedValue("RouteDetails_Map_RouteDriverMarker_Driver_DriverId")}</div>
