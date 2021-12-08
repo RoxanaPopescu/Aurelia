@@ -251,6 +251,7 @@ export class AutomaticDispatchModule extends AppModule
                 vehicleType: route.vehicleType,
                 availability: availability,
                 driverPosition: route.driverPosition,
+                timeZone: route.timeZone,
                 stops: stops
             });
         }
