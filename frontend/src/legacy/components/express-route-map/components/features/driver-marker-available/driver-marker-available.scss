@@ -1,0 +1,44 @@
+@import "shared/src/webKit/constants.scss";
+
+.expressRoutes-driverMarkerAvailable {
+  padding: 0 10px;
+  pointer-events: none;
+
+  &.--faded {
+    opacity: 0.4;
+  }
+}
+
+.expressRoutes-driverMarkerAvailable-shape {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  line-height: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  color: white;
+  background: "gray";
+  background: var(--colorNeutralLight);
+
+  &.expressRoutes-driverMarkerAvailable--completed {
+    opacity: .3;
+  }
+
+  &.expressRoutes-driverMarkerAvailable--cancelled {
+    opacity: .3;
+  }
+}
+
+.expressRoutes-driverMarkerAvailable-warning,
+.expressRoutes-driverMarkerAvailable-alert {
+  position: absolute;
+  bottom: 0;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  box-shadow: 0 0 0 1px white;
+  border-radius: 4px;
+}
+

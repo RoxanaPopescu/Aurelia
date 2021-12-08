@@ -117,7 +117,7 @@ export class DriverService
             }
         });
 
-        return result.data.map(d => new Driver(d));
+        return result.data.results.map(d => new Driver(d));
     }
 
     /**

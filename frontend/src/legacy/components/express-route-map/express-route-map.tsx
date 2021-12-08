@@ -6,6 +6,7 @@ import { DriverRouteLayer } from "./components/layers/driver-route-layer/driver-
 import { ExpressRoute } from "app/model/express-route";
 import { ExpressRouteLayer } from "./components/layers/express-route-layer/express-route-layer";
 import "./express-route-map.scss";
+import { Container } from "aurelia-framework";
 import { DriverRouteStopMarker } from "./components/features/driver-route-stop-marker/driver-route-stop-marker";
 import { ExpressRouteStopMarker } from "./components/features/express-route-stop-marker/express-route-stop-marker";
 import { DriverRouteSegmentLine } from "./components/features/driver-route-segment-line/driver-route-segment-line";
@@ -14,6 +15,8 @@ import { GoogleMap } from "react-google-maps";
 import { Button, ButtonType } from "shared/src/webKit";
 import { observable } from "mobx";
 import { DriverMarker } from "./components/features/driver-marker/driver-marker";
+import { DriverMarkerAvailable } from "./components/features/driver-marker-available/driver-marker-available";
+import { Driver, DriverService } from "app/model/driver";
 
 export interface IExpressRouteMapProps
 {
@@ -52,6 +55,12 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
 
     @observable
     private isConnecting = false;
+
+    @observable
+    private isFetchingDriversNotOnRoute = false;
+
+    @observable
+    private availableDriversNotOnRoute: Driver[] | undefined;
 
     @observable
     private showAvailableDrivers = true;
@@ -105,6 +114,20 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
                         onClick={() => this.showAllDrivers = !this.showAllDrivers}>
                         Show all drivers
                     </Button>}
+
+                </div>
+
+                <div className="express-route-map-buttons-bottom">
+
+                    <Button
+                        className="express-route-map-fit-button"
+                        type={ButtonType.Light}
+                        disabled={this.isFetchingDriversNotOnRoute}
+                        onClick={() => this.fetchAvailableDriversNotOnRoute()}>
+
+                            { this.availableDriversNotOnRoute == null ? "Show drivers not on route" : `Hide ${this.availableDriversNotOnRoute.length} drivers` }
+
+                    </Button>
 
                 </div>
 
@@ -201,6 +224,18 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
                         )
                     )}
 
+                    {!this.props.isMerging && this.availableDriversNotOnRoute != null && this.availableDriversNotOnRoute.map(d =>
+                        <DriverMarkerAvailable
+                            key={`DriverMarkerAvailable-${d.id}`}
+                            driver={d}
+                            faded={false}
+                            onClick={() =>
+                            {
+                                // FIXME: DO IT!
+                            }}
+                        />
+                    )}
+
                     {this.props.isMerging && this.props.driverRoutes![0].driverPosition && this.props.newDriverStops &&
                         <DriverMarker
                             key={`DriverMarker-${this.props.driverRoutes![0].driver.id}`}
@@ -226,6 +261,37 @@ export class ExpressRouteMapComponent extends React.Component<IExpressRouteMapPr
     {
         this.isConnecting = false;
         this.props.onMapClick();
+    }
+
+    private async fetchAvailableDriversNotOnRoute(): Promise<void>
+    {
+        if (this.map == null)
+        {
+            return;
+        }
+
+        if (this.availableDriversNotOnRoute != null)
+        {
+            this.availableDriversNotOnRoute = undefined;
+
+            return;
+        }
+
+        this.isFetchingDriversNotOnRoute = true;
+
+        try
+        {
+            const service = Container.instance.get(DriverService);
+            this.availableDriversNotOnRoute = await service.onlineDrivers(this.map.getBounds().getNorthEast(), this.map.getBounds().getSouthWest());
+        }
+        catch
+        {
+            // Do nothing
+        }
+        finally
+        {
+            this.isFetchingDriversNotOnRoute = false;
+        }
     }
 
     private fitBoundsOnLoad(): void
