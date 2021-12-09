@@ -25,7 +25,7 @@ export class AppsModule extends AppModule
 
         if (minimumVersion.localeCompare(version, undefined, { numeric: true, sensitivity: "base" }))
         {
-            context.response.status = 426;
+            context.response.status = 200;
         }
         else
         {
