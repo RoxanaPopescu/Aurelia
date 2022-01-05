@@ -20,7 +20,12 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button click.trigger="onTogglePreviewClick()" disabled.bind="assigningDrivers" appearance="outline" accent="primary" class="flex-row flex-push-right">
+                    <button
+                        click.trigger="onTogglePreviewClick()"
+                        disabled.bind="results == null || results.length == 0 || assigningDrivers"
+                        appearance="outline"
+                        accent="primary"
+                        class="flex-row flex-push-right">
 
                         <span translate if.bind="showPreview">
                             Hide preview
@@ -32,9 +37,12 @@
 
                     </button>
 
-                    <button click.trigger="onAssignDriversClick()" disabled.bind="assigningDrivers" appearance="outline" accent="primary" class="flex-row flex-push-right">
-
-                        <icon name="add" class="font-larger margin-right"></icon>
+                    <button
+                        click.trigger="onAssignDriversClick()"
+                        disabled.bind="results == null || results.length == 0 || assigningDrivers"
+                        appearance="outline"
+                        accent="primary"
+                        class="flex-row flex-push-right">
 
                         <span translate>
                             Assign drivers
