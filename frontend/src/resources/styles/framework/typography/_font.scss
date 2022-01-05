@@ -79,6 +79,10 @@ $__summary: comment;
 /// Use for tertiary headings, such as subsection and collection headings.
 @include define-font("large");
 
+/// Text style for the medium text.
+/// Use for quaternary headings.
+@include define-font("medium");
+
 /// Text style for the base text.
 /// Use to restore the text style to match the base document style.
 @include define-font("base");

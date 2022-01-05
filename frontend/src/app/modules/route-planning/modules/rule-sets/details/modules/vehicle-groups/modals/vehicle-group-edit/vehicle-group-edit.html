@@ -86,9 +86,9 @@
                 Cost
             </div>
 
-            <h1 class="margin-large-bottom" translate>
+            <div class="margin-large-bottom" translate>
                 Here you can specify the costs associated with the vehicle group. The costs are stated in an arbitrary size and the route calculation itself tries to minimize this cost. Therefore, the ratio of the different costs of each vehicle group is what determines which vehicle groups are most appropriate to use.
-            </h1>
+            </div>
 
             <div class="control-row margin-larger-bottom">
 
@@ -104,7 +104,7 @@
                         </span>
                         <info-icon position="right">
                             <div slot="body" translate>
-                                This is used, among other things. To adjust how many vehicles one will have in relation to how much time saved by inserting a new vehicle, the higher the value, the fewer routes will be generated at the expense of less efficient routes
+                                This is used, among other things, to adjust how many vehicles one will have in relation to how much time is saved by inserting a new vehicle. The higher the value, the fewer routes will be generated at the expense of less efficient routes.
                             </div>
                         </info-icon>
                     </div>
@@ -218,9 +218,9 @@
                 Limitations
             </div>
 
-            <h1 class="margin-large-bottom" translate>
-                Here you can specify the limitations of the vehicle group.
-            </h1>
+            <div class="margin-large-bottom" translate>
+                Here you can specify the limitations of the vehicles in the group.
+            </div>
 
             <div class="control-row margin-larger-bottom">
 
@@ -453,9 +453,9 @@
                 Locations
             </div>
 
-            <h1 class="margin-large-bottom" translate>
+            <div class="margin-large-bottom" translate>
                 Here you can specify the location at which the vehicle must be picked up and returned.
-            </h1>
+            </div>
 
             <div class="control-row margin-medium-bottom">
 
@@ -559,9 +559,9 @@
                 Distribution center en route
             </div>
 
-            <h1 class="margin-large-bottom" translate>
+            <div class="margin-large-bottom" translate>
                Specify the distribution center to visit while the route is active.
-            </h1>
+            </div>
 
             <div class="control-row margin-medium-bottom">
 
@@ -698,9 +698,9 @@
                 Order tags
             </div>
 
-            <h1 class="margin-large-bottom" translate>
+            <div class="margin-large-bottom" translate>
                 Here you can specify the order tags that this vehicle group can handle. If no one is specified, this can handle all orders.
-            </h1>
+            </div>
 
             <tags-input
                 class="margin-large-bottom"
@@ -747,9 +747,9 @@
                 Route tags
             </div>
 
-            <h1 class="margin-large-bottom" translate>
+            <div class="margin-large-bottom" translate>
                 Here you can specify the tags that should be assigned to routes using this vehicle group.
-            </h1>
+            </div>
 
             <tags-input
                 label="above"
@@ -767,29 +767,18 @@
         <modal-section class="--line-above">
 
             <div slot="header" translate>
-                Breaks
+                Break rules
             </div>
 
-            <h1 class="margin-large-bottom" translate>
-                Here you can specify the break rules to use.
-            </h1>
-
-            <div class="button-container margin-large-top">
-
-                <button appearance="outline" accent="primary" click.trigger="addBreakRuleClick()" class="flex-row">
-                    <icon name="add" class="font-larger margin-right"></icon>
-                    <div translate>
-                        Add break rule
-                    </div>
-                </button>
-
-            </div>
-
-            <div class="input-heading margin-larger-top" if.bind="model.breaks.length > 0" translate>
-                Break rules, in decending order of precedence
+            <div translate>
+                Here you can specify the break rules to use, in decending order of precedence.
             </div>
 
             <card repeat.for="breakRule of model.breaks" accent="neutral" class="margin-large-top --non-clickable">
+
+                <div class="font-medium margin-large-bottom" translate>
+                    Break rule
+                </div>
 
                 <div slot="actions">
 
@@ -797,7 +786,7 @@
                         title.translate="Delete"
                         appearance="none"
                         click.trigger="deleteBreakRuleClick($index) && false">
-                        <icon name="md-remove"></icon>
+                        <icon name="md-delete"></icon>
                     </button>
 
                 </div>
@@ -805,10 +794,11 @@
                 <select-input
                     label="above"
                     value.bind="breakRule.type"
-                    display-value.bind="breakRule.type.name">
+                    display-value.bind="breakRule.type.name"
+                    none.bind="false">
 
                     <div slot="heading" translate>
-                        Break type
+                        Rule type
                     </div>
 
                     <item repeat.for="breakType of availableBreakTypes" model.bind="breakType">
@@ -820,11 +810,11 @@
                 <number-input
                     class="margin-large-top"
                     label="above"
-                    value.bind="breakRule.definition.workTimeSinceLastBreak | scale: 1/60"
+                    value.bind="breakRule.definition.workTimeSinceLastBreak | scale: 1/60"
                     min.bind="0">
 
                     <div slot="heading" translate>
-                        Max work time since the last break.
+                        Max work time since the last break
                     </div>
 
                     <span slot="after" class="opacity-faded" translate>
@@ -844,7 +834,7 @@
                 <number-input
                     class="margin-large-top"
                     label="above"
-                    value.bind="breakRule.definition.duration | scale: 1/60"
+                    value.bind="breakRule.definition.duration | scale: 1/60"
                     min.bind="0">
 
                     <div slot="heading" translate>
@@ -866,7 +856,7 @@
                 </number-input>
 
                 <check-toggle
-                    label="above"
+                    label="after"
                     value.bind="breakRule.definition.includeStartLocationTaskTime"
                     class="margin-large-top">
 
@@ -877,6 +867,17 @@
                 </check-toggle>
 
             </card>
+
+            <div class="button-container margin-large-top">
+
+                <button appearance="outline" accent="primary" click.trigger="addBreakRuleClick()" class="flex-row">
+                    <icon name="add" class="font-larger margin-right"></icon>
+                    <div translate>
+                        Add break rule
+                    </div>
+                </button>
+
+            </div>
 
         </modal-section>
 
