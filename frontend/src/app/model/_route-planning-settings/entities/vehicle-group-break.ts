@@ -23,7 +23,7 @@ export class VehicleGroupBreak
         {
             this.id = Uuid.v1();
             this.type = new VehicleGroupBreakType("max-work-time");
-            this.definition = ({ includeStartLocationTaskTime: false } as any);
+            this.definition = {} as any;
         }
     }
 
@@ -65,10 +65,4 @@ export interface IBreakDefinition
      * The max work time since the last break.
      */
     workTimeSinceLastBreak: number;
-
-    /**
-     * True to include task time for the start location, otherwise false.
-     * Note that this is only relevant if the break has type `max-work-time`.
-     */
-    includeStartLocationTaskTime: boolean | undefined;
 }
