@@ -2,6 +2,7 @@
     "kpi": "KPI",
     "orders": "Orders",
     "routes": "Routes",
+    "dispatch": "Dispatch",
     "routePlanning": "Route planning",
     "distributionCenters": "Distribution centers",
     "fleet": "Fleet",

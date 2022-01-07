@@ -75,64 +75,6 @@ export class RoutesModule
                 nav: true,
                 icon: "auto-dispatch"
             },
-            {
-                name: "express-dispatch",
-                route: "express-dispatch",
-                moduleId: PLATFORM.moduleName("./modules/express-dispatch/express-dispatch"),
-                settings:
-                {
-                    claims:
-                    [
-                        "edit-routes"
-                    ]
-                },
-                title: routeTitles.dispatch,
-                nav: true,
-                icon: "express-dispatch"
-            },
-            {
-                name: "automatic-dispatch",
-                route: "automatic-dispatch",
-                moduleId: PLATFORM.moduleName("./modules/automatic-dispatch-list/automatic-dispatch-list"),
-                settings:
-                {
-                    claims:
-                    [
-                        "view-routes"
-                    ]
-                },
-                title: routeTitles.automaticDispatch,
-                nav: true,
-                icon: "auto-dispatch"
-            },
-            {
-                name: "automatic-dispatch-details",
-                route: "automatic-dispatch/:id",
-                moduleId: PLATFORM.moduleName("./modules/automatic-dispatch-job/automatic-dispatch-job"),
-                settings:
-                {
-                    claims:
-                    [
-                        "view-routes"
-                    ]
-                },
-                title: routeTitles.automaticDispatchJob
-            },
-            {
-                name: "assign-drivers",
-                route: "assign-drivers",
-                moduleId: PLATFORM.moduleName("./modules/assign-drivers/assign-drivers"),
-                settings:
-                {
-                    claims:
-                    [
-                        "edit-routes"
-                    ]
-                },
-                title: routeTitles.assignDrivers,
-                nav: true,
-                icon: "routes"
-            },
             ...
             ENVIRONMENT.name !== "production" ?
             [

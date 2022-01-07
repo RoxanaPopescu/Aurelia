@@ -1,14 +1,9 @@
 {
     "list": "All routes",
-    "assignDrivers": "Assign drivers",
     "liveTracking": "Live tracking",
     "templates": "Templates",
     "test": "Generate test routes",
     "newTemplate": "New template",
     "templateDetails": "Details — Templates",
-    "autoDispatch": "Auto dispatch",
-    "autoContractorAssignment": "Auto contractor assignment",
-    "automaticDispatch": "Automatic dispatch",
-    "automaticDispatchJob": "Automatic dispatch job",
-    "dispatch": "Express dispatch"
+    "autoContractorAssignment": "Auto assignment"
 }

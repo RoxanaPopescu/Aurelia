@@ -190,6 +190,22 @@ export class AppModule
                 icon: "routes"
             },
             {
+                name: "dispatch",
+                route: "dispatch",
+                moduleId: PLATFORM.moduleName("./modules/dispatch/dispatch"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-routes"
+                    ]
+                },
+                title: routeTitles.dispatch,
+                nav: true,
+                href: "/dispatch",
+                icon: "dispatch"
+            },
+            {
                 name: "collection-points",
                 route: "collection-points",
                 moduleId: PLATFORM.moduleName("./modules/collection-points/collection-points"),

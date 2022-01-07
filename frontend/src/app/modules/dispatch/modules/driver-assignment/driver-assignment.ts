@@ -5,14 +5,14 @@ import { Log } from "shared/infrastructure";
 import { IScroll, ModalService } from "shared/framework";
 import { RouteService, RouteInfo, RouteAssignmentService, RouteAssignDriver } from "app/model/route";
 import { DateTime } from "luxon";
+import { AssignDriverPanel } from "../../../routes/modals/assign-driver/assign-driver";
+import { AssignVehiclePanel } from "../../../routes/modals/assign-vehicle/assign-vehicle";
+import { AssignTeamPanel } from "../../../routes/modals/assign-team/assign-team";
+import { AssignOrganizationPanel } from "../../../routes/modals/assign-organization/assign-organization";
 import { RouteListColumn } from "app/model/route/entities/route-list-column";
-import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
-import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
-import { AssignOrganizationPanel } from "../../modals/assign-organization/assign-organization";
 import { OrganizationService, OrganizationTeam } from "app/model/organization";
 import { TeamsFilterService } from "app/services/teams-filter";
 import { Fulfiller } from "app/model/outfit";
-import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
 import { ConfirmAssignmentDialog } from "./modals/confirm-assignment/confirm-assignment";
 import { ConfirmReassignmentDialog } from "./modals/confirm-reassignment/confirm-reassignment";
 import { DriverService } from "app/model/driver";
@@ -22,7 +22,7 @@ import { InvalidAssignmentDialog } from "./modals/invalid-assignment/invalid-ass
  * Represents the page.
  */
 @autoinject
-export class AssignDriversPage
+export class DriverAssignmentPage
 {
     /**
      * Creates a new instance of the class.
