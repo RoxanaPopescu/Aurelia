@@ -17,7 +17,7 @@ const settings =
         "tags": [],
         "pickupLeadTime": 60
     }
-}
+};
 
 export default
 {

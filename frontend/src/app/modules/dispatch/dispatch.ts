@@ -45,7 +45,7 @@ export class DispatchModule
                 },
                 title: routeTitles.automaticDispatch
             },
-            ...ENVIRONMENT.name != "production" ?
+            ...ENVIRONMENT.name !== "production" ?
             [
                 {
                     name: "automatic-dispatch-settings-list",
