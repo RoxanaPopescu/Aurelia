@@ -1,5 +1,5 @@
-import { RouteInfo } from "..";
 import { Driver } from "app/model/driver";
+import { RouteInfo } from "./route-info";
 
 export class RouteAssignDriver
 {

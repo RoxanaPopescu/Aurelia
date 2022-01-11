@@ -1,6 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
-import { CollectionPoint, Order } from "..";
+import { CollectionPoint } from "../entities/collection-point";
+import { Order } from "../entities/order";
 
 /**
  * Represents a service that manages collection points.

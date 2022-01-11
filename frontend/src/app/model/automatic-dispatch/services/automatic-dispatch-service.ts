@@ -2,7 +2,11 @@ import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
 import { DateTime } from "luxon";
 import { IPaging } from "shared/types";
-import { AutomaticDispatchConfiguration, AutomaticDispatchJob, AutomaticDispatchJobStatusSlug, AutomaticDispatchRoutePlanInfo, AutomaticDispatchStartManual } from "..";
+import { AutomaticDispatchJobStatusSlug } from "../entities/automatic-dispatch-job-status";
+import { AutomaticDispatchRoutePlanInfo } from "../entities/automatic-dispatch-route-plan-info";
+import { AutomaticDispatchJob } from "../entities/automatic-dispatch-job";
+import { AutomaticDispatchStartManual } from "../entities/automatic-dispatch-start-manual";
+import { AutomaticDispatchConfiguration } from "../entities/automatic-dispatch-configuration";
 
 /**
  * Represents a service that manages dispatching of express routes.

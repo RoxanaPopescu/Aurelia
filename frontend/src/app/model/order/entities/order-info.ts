@@ -2,7 +2,7 @@ import { DateTime } from "luxon";
 import { TimeOfDay } from "shared/types";
 import { Location } from "app/model/shared";
 import { OrderStatus } from "./order-status";
-import { OrderColliInfo } from "..";
+import { OrderColliInfo } from "./order-colli-info";
 
 export class OrderInfo
 {

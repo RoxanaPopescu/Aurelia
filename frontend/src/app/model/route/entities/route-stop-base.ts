@@ -5,7 +5,10 @@ import { Outfit } from "app/model/outfit";
 import { RouteStopStatus } from "./route-stop-status";
 import { RouteStopInfo } from "./route-stop-info";
 import { RouteEstimates } from "./route-estimates";
-import { Delivery, IRouteReference, Pickup, RouteStopAuthorityToLeave } from "..";
+import { IRouteReference } from "./route-reference";
+import { Pickup } from "./pickup";
+import { Delivery } from "./delivery";
+import { RouteStopAuthorityToLeave } from "./route-stop-authority-to-leave";
 
 /**
  * Represents a single location, where a driver must either pick up or deliver colli.

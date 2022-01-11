@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { AutomaticDispatchJobStatus } from "..";
+import { AutomaticDispatchJobStatus } from "../entities/automatic-dispatch-job-status";
 
 /**
  * Represents info about a automatic dispatch route plan.

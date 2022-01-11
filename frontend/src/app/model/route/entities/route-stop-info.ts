@@ -1,5 +1,5 @@
 import { Location } from "app/model/shared";
-import { IRouteReference } from "..";
+import { IRouteReference } from "./route-reference";
 import { RouteStopDeliveryMethod } from "./route-stop-delivery-method";
 import { RouteStopStatus } from "./route-stop-status";
 import { RouteStopType } from "./route-stop-type";

@@ -1,5 +1,5 @@
 import { RouteStopBase, RouteCriticality, RouteStopType } from "app/model/route";
-import { ExpressRoute } from "..";
+import { ExpressRoute } from "./express-route";
 
 /**
  * Represents a single location, where a driver must either pick up or deliver colli.

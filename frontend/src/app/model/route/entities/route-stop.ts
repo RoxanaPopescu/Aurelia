@@ -6,7 +6,7 @@ import clone from "clone";
 import { Duration } from "luxon";
 import { RouteStopIdentity } from "./route-stop-identity";
 import { ColloScanMethod, ColloStatus } from "app/model/collo";
-import { IRouteReference } from "..";
+import { IRouteReference } from "./route-reference";
 
 /**
  * Represents a single location, where a driver must either pick up or deliver colli.

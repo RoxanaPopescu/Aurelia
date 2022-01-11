@@ -45,21 +45,21 @@ export class DispatchModule
                 },
                 title: routeTitles.automaticDispatch
             },
-            // {
-            //     name: "automatic-dispatch-settings",
-            //     route: "automatic-dispatch-settings",
-            //     moduleId: PLATFORM.moduleName("./modules/automatic-dispatch-settings/automatic-dispatch-settings"),
-            //     settings:
-            //     {
-            //         claims:
-            //         [
-            //             "edit-routes"
-            //         ]
-            //     },
-            //     title: routeTitles.automaticDispatchSettings,
-            //     nav: true,
-            //     icon: "settings"
-            // },
+            {
+                name: "automatic-dispatch-settings",
+                route: "automatic-dispatch-settings",
+                moduleId: PLATFORM.moduleName("./modules/automatic-dispatch-settings/automatic-dispatch-settings"),
+                settings:
+                {
+                    claims:
+                    [
+                        "edit-routes"
+                    ]
+                },
+                title: routeTitles.automaticDispatchSettings,
+                nav: true,
+                icon: "settings"
+            },
             {
                 name: "express-dispatch",
                 route: "express-dispatch",

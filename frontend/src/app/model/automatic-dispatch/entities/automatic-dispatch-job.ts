@@ -1,4 +1,5 @@
-import { AutomaticDispatchJobResult, AutomaticDispatchJobStatus } from "..";
+import { AutomaticDispatchJobResult } from "./automatic-dispatch-job-result";
+import { AutomaticDispatchJobStatus } from "./automatic-dispatch-job-status";
 
 export class AutomaticDispatchJob
 {

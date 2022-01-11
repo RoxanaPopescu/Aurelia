@@ -6,7 +6,7 @@ import { Vehicle } from "app/model/vehicle";
 import { RouteBase } from "../entities/route-base";
 import { IdentityService } from "app/services/identity";
 import { OrganizationConnection, OrganizationTeam } from "app/model/organization";
-import { RouteAssignDriver } from "..";
+import { RouteAssignDriver } from "../entities/route-assign-driver";
 
 /**
  * Represents a service assigns routes to fulfillers or drivers.

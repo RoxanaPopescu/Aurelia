@@ -1,7 +1,7 @@
 import { DateTime, Duration } from "luxon";
 import { DateTimeRange } from "shared/types";
 import { Location } from "app/model/shared";
-import { Order } from "..";
+import { Order } from "../entities/order";
 
 /**
  * Represents a collection point with 1...x orders

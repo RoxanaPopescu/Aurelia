@@ -1,7 +1,9 @@
 import { PhoneNumber } from "app/model/shared";
 import { DateTimeRange } from "shared/types";
-import { CollectionPoint, Collo, OrderStatus } from "..";
 import clone from "clone";
+import { CollectionPoint } from "./collection-point";
+import { OrderStatus } from "./order-status";
+import { Collo } from "./collo";
 
 /**
  * Represents order of a collection point
