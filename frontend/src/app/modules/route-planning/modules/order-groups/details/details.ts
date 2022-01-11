@@ -150,7 +150,7 @@ export class DetailsPage
         }
         catch (error)
         {
-            Log.error("Could not create order group", error);
+            Log.error("Could not create the order group", error);
         }
     }
 
@@ -174,7 +174,7 @@ export class DetailsPage
         }
         catch (error)
         {
-            Log.error("Could not save order group", error);
+            Log.error("Could not save the order group", error);
         }
     }
 
@@ -313,7 +313,7 @@ export class DetailsPage
         }
         catch (error)
         {
-            Log.error("Could not pause order group", error);
+            Log.error("Could not pause the order group", error);
         }
     }
 
@@ -332,7 +332,7 @@ export class DetailsPage
         }
         catch (error)
         {
-            Log.error("Could not unpause order group", error);
+            Log.error("Could not unpause the order group", error);
         }
     }
 }

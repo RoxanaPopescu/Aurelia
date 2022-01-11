@@ -25,6 +25,7 @@ import entitiesRecent from "./responses/entities-recent";
 // import searchesSaved from "./responses/searches-saved";
 // import searchesRecent from "./responses/searches-recent";
 // import searchesQuery from "./responses/searches-query";
+import automaticDispatchSettings from "./responses/automatic-dispatch-settings";
 
 /**
  * Here you can stub HTTP responses e.g. if the API is not yet available.
@@ -58,8 +59,9 @@ export const stubs: IResponseStubs =
     // ...organizations,
     // ...account
     ...entitiesStarred,
-    ...entitiesRecent
+    ...entitiesRecent,
     // ...searchesSaved,
     // ...searchesRecent,
     // ...searchesQuery
+    ...automaticDispatchSettings
 };

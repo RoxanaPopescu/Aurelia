@@ -195,7 +195,7 @@ export class RoutesModule extends AppModule
 
             ...this.filter((ruleSets?.body?.results ?? []).map((entity: any) =>
             ({
-                type: "rule-set",
+                type: "route-planning-rule-set",
                 id: entity.id,
                 slug: entity.slug,
                 name: entity.name

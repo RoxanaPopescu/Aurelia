@@ -1,0 +1,140 @@
+<template>
+
+    <require from="app/components/name-value-pair/name-value-pair"></require>
+    <require from="app/components/name-value-list/name-value-list"></require>
+    <require from="app/components/star-icon/star-icon"></require>
+
+    <require from="./automatic-dispatch-settings-details.scss"></require>
+
+    <page name="automatic-dispatch-settings-details">
+
+        <page-content class="${tab === 'geographic-areas' ? 'page-content-stretch' : ''}" scroll scroll.ref="scroll" validation validation.ref="validation">
+
+            <page-header scroll-fade class="flex-row">
+
+                <h1 class="font-largest margin-bottom">
+                    <path-nav>
+
+                        <a accent="inherit" href="/dispatch" translate>
+                            Dispatch
+                        </a>
+
+                        <a accent="inherit" href="/dispatch/rule-sets" translate>
+                            Rule sets
+                        </a>
+
+                        <span>
+
+                            <template if.bind="!isNew">
+                                ${settings.name}
+                                <star-icon entity.bind="settings"></star-icon>
+                            </template>
+
+                            <template if.bind="isNew" translate>
+                                New rule set
+                            </template>
+
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar class="flex-push-right">
+
+                    <template if-claims="edit-routes">
+
+                        <button if.bind="!isNew && !setings.paused" appearance="outline" accent="primary" click.trigger="onPauseClick()" translate>
+                            Pause
+                        </button>
+
+                        <button if.bind="!isNew && setings.paused" appearance="outline" accent="primary" click.trigger="onUnpauseClick()" translate>
+                            Unpause
+                        </button>
+
+                        <button if.bind="isNew" appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
+                            Create
+                        </button>
+
+                        <button if.bind="!isNew" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                            Save changes
+                        </button>
+
+                    </template>
+
+                </toolbar>
+
+            </page-header>
+
+            <status-message if.bind="settings.paused">
+                <span translate>
+                    This rule set is currently paused.
+                </span>
+            </status-message>
+
+            <page-section if-claims="edit-routes">
+
+                <div class="control-row margin-large-bottom">
+
+                    <text-input label="above" value.bind="settings.name" class="flex-basis-1-of-4" autofocus>
+
+                        <div slot="heading" translate>
+                            Rule set name
+                        </div>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="settings.name">
+                            </required-validator>
+
+                        </div>
+
+                    </text-input>
+
+                </div>
+
+            </page-section>
+
+            <hr class="hr-line margin-larger" if-claims="edit-routes">
+
+            <page-section class="margin-top">
+
+                <div class="flex-row">
+
+                    <div class="flex-basis-1-of-2 margin-large-right">
+
+                        <h2 class="font-larger margin-bottom" translate>
+                            Route filter
+                        </h2>
+
+                        <p class="opacity-faded" translate>
+                            These are the criteria a route must fulfill, for this rule set to apply.
+                        </p>
+
+                        TODO
+
+                    </div>
+
+                    <div class="flex-basis-1-of-2 margin-large-right">
+
+                        <h2 class="font-larger margin-bottom" translate>
+                            Shipment filter
+                        </h2>
+
+                        <p class="opacity-faded" translate>
+                            These are the criteria a shipment must fulfill, for this rule set to apply.
+                        </p>
+
+                        TODO
+
+                    </div>
+
+                </div>
+
+            </page-section>
+
+        </page-content>
+
+    </page>
+
+</template>

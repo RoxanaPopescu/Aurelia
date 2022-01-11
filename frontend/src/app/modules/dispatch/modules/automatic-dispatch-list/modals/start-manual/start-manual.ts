@@ -125,7 +125,7 @@ export class StartManualPanel
             {
                 heading: startedAutomaticDispatchToast.heading,
                 body: startedAutomaticDispatchToast.body,
-                url: `/routes/automatic-dispatch/${id}`
+                url: `/dispatch/jobs/details/${id}`
             };
 
             this._toastService.open("success", toastModel);

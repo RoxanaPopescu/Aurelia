@@ -108,7 +108,7 @@ export class AutomaticDispatchListPage
      */
     public detailsLink(plan: AutomaticDispatchRoutePlanInfo): string
     {
-        return `/routes/automatic-dispatch/${plan.id}`;
+        return `/dispatch/jobs/details/${plan.id}`;
     }
 
     /**

@@ -94,7 +94,7 @@ const result =
         },
         {
             id: "ef577a81-c2ec-47f4-8893-56279897ec40",
-            type: "rule-set",
+            type: "route-planning-rule-set",
             slug: "rule-set-1-slug",
             name: "Rule set 1",
             starred: false,

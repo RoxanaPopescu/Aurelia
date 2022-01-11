@@ -3,7 +3,7 @@ import { Operation } from "shared/utilities";
 import { IScroll, ModalService } from "shared/framework";
 import { RoutePlanningSettingsService, RoutePlanningSettingsInfo } from "app/model/_route-planning-settings";
 import { Log } from "shared/infrastructure";
-import { DeleteRoutePlanRuleDialog } from "./modals/confirm-delete/confirm-delete";
+import { ConfirmDeleteRoutePlanningRuleSetDialog } from "./modals/confirm-delete/confirm-delete";
 
 /**
  * Represents the page.
@@ -68,11 +68,11 @@ export class ListPage
     /**
      * Called when the "Delete" button is clicked on a route planning settings item.
      * Deletes the route planning settings.
-     * @param rule The route planning settings to delete.
+     * @param ruleSet The route planning settings to delete.
      */
-    protected async onDeleteSettingsClick(rule: RoutePlanningSettingsInfo): Promise<void>
+    protected async onDeleteSettingsClick(ruleSet: RoutePlanningSettingsInfo): Promise<void>
     {
-        const confirmed = await this._modalService.open(DeleteRoutePlanRuleDialog, rule).promise;
+        const confirmed = await this._modalService.open(ConfirmDeleteRoutePlanningRuleSetDialog, ruleSet).promise;
 
         if (!confirmed)
         {
@@ -81,13 +81,13 @@ export class ListPage
 
         try
         {
-            await this._routePlanningSettingsService.delete(rule.id);
+            await this._routePlanningSettingsService.delete(ruleSet.id);
 
-            this.items.splice(this.items.indexOf(rule), 1);
+            this.items.splice(this.items.indexOf(ruleSet), 1);
         }
         catch (error)
         {
-            Log.error("Could not delete the route planning settings", error);
+            Log.error("Could not delete the route planning rule set", error);
         }
     }
 }

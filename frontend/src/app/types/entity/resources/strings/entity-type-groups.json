@@ -11,8 +11,9 @@
     "route": "Routes",
     "routeTemplate": "Route templates",
     "routePlan": "Route plans",
-    "ruleSet": "Rule sets",
+    "routePlanningRuleSet": "Route planning rule sets",
     "orderGroup": "Order groups",
+    "automaticDispatchRuleSet": "Automatic dispatch rule sets",
     "distributionCenter": "Distribution centers",
     "communicationTrigger": "Communication triggers"
 }

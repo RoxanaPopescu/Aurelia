@@ -34,7 +34,7 @@ export class DispatchModule
             },
             {
                 name: "automatic-dispatch-details",
-                route: "automatic-dispatch/:id",
+                route: "jobs/details/:id",
                 moduleId: PLATFORM.moduleName("./modules/automatic-dispatch-job/automatic-dispatch-job"),
                 settings:
                 {
@@ -45,21 +45,50 @@ export class DispatchModule
                 },
                 title: routeTitles.automaticDispatch
             },
-            {
-                name: "automatic-dispatch-settings",
-                route: "automatic-dispatch-settings",
-                moduleId: PLATFORM.moduleName("./modules/automatic-dispatch-settings/automatic-dispatch-settings"),
-                settings:
+            ...ENVIRONMENT.name != "production" ?
+            [
                 {
-                    claims:
-                    [
-                        "edit-routes"
-                    ]
+                    name: "automatic-dispatch-settings-list",
+                    route: "rule-sets",
+                    moduleId: PLATFORM.moduleName("./modules/automatic-dispatch-settings-list/automatic-dispatch-settings-list"),
+                    settings:
+                    {
+                        claims:
+                        [
+                            "edit-routes"
+                        ]
+                    },
+                    title: routeTitles.automaticDispatchSettings,
+                    nav: true,
+                    icon: "settings"
                 },
-                title: routeTitles.automaticDispatchSettings,
-                nav: true,
-                icon: "settings"
-            },
+                {
+                    name: "automatic-dispatch-settings-create",
+                    route: "rule-sets/create",
+                    moduleId: PLATFORM.moduleName("./modules/automatic-dispatch-settings-details/automatic-dispatch-settings-details"),
+                    settings:
+                    {
+                        claims:
+                        [
+                            "edit-routes"
+                        ]
+                    },
+                    title: routeTitles.automaticDispatchSettings
+                },
+                {
+                    name: "automatic-dispatch-settings-details",
+                    route: "rule-sets/details/:id",
+                    moduleId: PLATFORM.moduleName("./modules/automatic-dispatch-settings-details/automatic-dispatch-settings-details"),
+                    settings:
+                    {
+                        claims:
+                        [
+                            "edit-routes"
+                        ]
+                    },
+                    title: routeTitles.automaticDispatchSettings
+                }
+            ] : [],
             {
                 name: "express-dispatch",
                 route: "express-dispatch",

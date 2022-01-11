@@ -276,7 +276,7 @@ export class DriversColumnCustomElement
             {
                 heading: startedAutomaticDispatchToast.heading,
                 body: startedAutomaticDispatchToast.body,
-                url: `/routes/automatic-dispatch/${id}`
+                url: `/dispatch/jobs/details/${id}`
             };
 
             this.toastService.open("success", toastModel);

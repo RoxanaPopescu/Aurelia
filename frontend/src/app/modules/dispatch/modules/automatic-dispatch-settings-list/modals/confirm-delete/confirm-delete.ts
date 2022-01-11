@@ -1,9 +1,9 @@
 import { autoinject } from "aurelia-framework";
 import { Modal } from "shared/framework/services/modal";
-import { RoutePlanningSettingsInfo } from "app/model/_route-planning-settings";
+import { AutomaticDispatchSettings } from "app/model/automatic-dispatch";
 
 @autoinject
-export class ConfirmDeleteRoutePlanningRuleSetDialog
+export class DeleteAutomaticDispatchSettingsDialog
 {
     /**
      * Creates a new instance of the type.
@@ -17,13 +17,13 @@ export class ConfirmDeleteRoutePlanningRuleSetDialog
     private readonly _modal: Modal;
     private _result = false;
 
-    protected model: RoutePlanningSettingsInfo;
+    protected model: AutomaticDispatchSettings;
 
     /**
      * Called by the framework when the modal is activated.
      * @param model The model to use.
      */
-    public activate(model: RoutePlanningSettingsInfo): void
+    public activate(model: AutomaticDispatchSettings): void
     {
         this.model = model;
     }

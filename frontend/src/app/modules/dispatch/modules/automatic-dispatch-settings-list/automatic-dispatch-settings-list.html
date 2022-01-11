@@ -1,0 +1,123 @@
+<template>
+
+    <require from="./automatic-dispatch-settings-list.scss"></require>
+
+    <page name="automatic-dispatch-settings-list">
+
+        <page-content scroll>
+
+            <page-header scroll-fade class="flex-row">
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <a accent="inherit" href="/dispatch">
+                            Dispatch
+                        </a>
+
+                        <span translate>
+                            Rule sets
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar class="flex-push-right">
+
+                    <button if-claims="edit-routes" appearance="outline" accent="primary" class="flex-row flex-push-right" page-href="path: /dispatch/rule-sets/create">
+
+                        <icon name="add" class="font-larger margin-right"></icon>
+
+                        <span translate>
+                            New rule set
+                        </span>
+
+                    </button>
+
+                </toolbar>
+
+            </page-header>
+
+            <page-section>
+
+                <data-table
+                    appearance="rows"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell translate>
+                            Name
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Last modified
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell DISABLED-name="status">
+                            <span class="text-truncate" translate>
+                                Status
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+                            <!-- Icons -->
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="item of items">
+
+                        <data-table-row
+                            href="/dispatch/rule-sets/details/${item.id}">
+
+                            <data-table-cell>
+                                ${item.name}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                ${item.updated | dateTime: 'narrow' : false}
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span if.bind="item.paused" translate>
+                                    Paused
+                                </span>
+                                <span if.bind="!item.paused" translate>
+                                    Active
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+
+                                <div class="icon-row">
+
+                                    <button if-claims="edit-routes" appearance="none" accent="primary" click.trigger="onDeleteSettingsClick(item)">
+                                        <icon name="delete-small"></icon>
+                                    </button>
+
+                                </div>
+
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <busy-indicator if.bind="items == null" class="margin-largest"></busy-indicator>
+
+                <empty-indicator if.bind="items.length == 0" class="margin-largest">
+                    <div slot="heading" translate>No results</div>
+                </empty-indicator>
+
+            </page-section>
+
+        </page-content>
+
+    </page>
+
+</template>

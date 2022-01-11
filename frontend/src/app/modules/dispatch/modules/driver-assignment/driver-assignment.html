@@ -11,6 +11,10 @@
                 <h1 class="font-largest">
                     <path-nav>
 
+                        <a accent="inherit" href="/dispatch" translate>
+                            Dispatch
+                        </a>
+
                         <span translate>
                             Driver assignment
                         </span>
@@ -24,8 +28,7 @@
                         click.trigger="onTogglePreviewClick()"
                         disabled.bind="results == null || results.length == 0 || assigningDrivers"
                         appearance="outline"
-                        accent="primary"
-                        class="flex-row flex-push-right">
+                        accent="primary">
 
                         <span translate if.bind="showPreview">
                             Hide preview
@@ -41,8 +44,7 @@
                         click.trigger="onAssignDriversClick()"
                         disabled.bind="results == null || results.length == 0 || assigningDrivers"
                         appearance="outline"
-                        accent="primary"
-                        class="flex-row flex-push-right">
+                        accent="primary">
 
                         <span translate>
                             Assign drivers
@@ -81,7 +83,7 @@
 
                 </div>
 
-                <h2 class="font-larger margin-top" if.bind="showPreview && results.length > 0">
+                <h2 class="font-larger margin" if.bind="showPreview && results.length > 0" translate>
                     Assigned drivers preview
                 </h2>
 
@@ -206,13 +208,13 @@
 
                                 <data-table-cell if.bind="column.slug === 'colli-count'">
                                     <span class="text-truncate">
-                                        ${result.route.totalColliCount | number}
+                                        ${result.route.totalColliCount | number}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'estimated-colli-count'">
                                     <span class="text-truncate">
-                                        ${result.route.totalEstimatedColliCount | number}
+                                        ${result.route.totalEstimatedColliCount | number}
                                     </span>
                                 </data-table-cell>
 
@@ -358,7 +360,9 @@
 
                 </data-table>
 
-                <h2 class="font-larger margin-top">Routes to be assigned</h2>
+                <h2 class="font-larger margin" translate>
+                    Routes to be assigned
+                </h2>
 
                 <data-table
                     appearance="rows"
@@ -497,13 +501,13 @@
 
                                 <data-table-cell if.bind="column.slug === 'colli-count'">
                                     <span class="text-truncate">
-                                        ${route.totalColliCount | number}
+                                        ${route.totalColliCount | number}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'estimated-colli-count'">
                                     <span class="text-truncate">
-                                        ${route.totalEstimatedColliCount | number}
+                                        ${route.totalEstimatedColliCount | number}
                                     </span>
                                 </data-table-cell>
 
@@ -518,8 +522,7 @@
                                 <data-table-cell if.bind="column.slug === 'vehicle'" class="${updating.vehicle ? 'opacity-faded' : ''}">
                                     <a
                                         class="text-truncate"
-                                        click.trigger="onAssignVehicleClick(route, updating)"
-                                    >
+                                        click.trigger="onAssignVehicleClick(route, updating)">
                                         <template if.bind="!route.vehicle" translate>
                                             Assign Vehicle
                                         </template>
@@ -593,8 +596,7 @@
                                     <a
                                         class="text-truncate"
                                         if-claims="edit-routes"
-                                        click.trigger="onAssignTeamClick(route, updating)"
-                                    >
+                                        click.trigger="onAssignTeamClick(route, updating)">
                                         <template if.bind="!route.teamId" translate>
                                             Assign team
                                         </template>

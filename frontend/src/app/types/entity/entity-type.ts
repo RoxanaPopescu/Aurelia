@@ -113,10 +113,10 @@ export class EntityType
             group: entityTypeGroups.routePlan,
             icon: "route-planning"
         },
-        "rule-set":
+        "route-planning-rule-set":
         {
-            name: entityTypeNames.ruleSet,
-            group: entityTypeGroups.ruleSet,
+            name: entityTypeNames.routePlanningRuleSet,
+            group: entityTypeGroups.routePlanningRuleSet,
             icon: "settings"
         },
         "order-group":
@@ -124,6 +124,12 @@ export class EntityType
             name: entityTypeNames.orderGroup,
             group: entityTypeGroups.orderGroup,
             icon: "order-groups"
+        },
+        "automatic-dispatch-settings":
+        {
+            name: entityTypeNames.automaticDispatchRuleSet,
+            group: entityTypeGroups.automaticDispatchRuleSet,
+            icon: "settings"
         },
         "distribution-center":
         {

@@ -1,12 +1,12 @@
 import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
-import { AutomaticDispatchFilter } from "../entities/automatic-dispatch-filter";
+import { AutomaticDispatchSettings } from "../entities/automatic-dispatch-settings";
 
 /**
- * Represents a service that manages automatic dispatch filters.
+ * Represents a service that manages automatic dispatch settings.
  */
 @autoinject
-export class AutomaticDispatchFilterService
+export class AutomaticDispatchSettingsService
 {
     /**
      * Creates a new instance of the type.
@@ -20,18 +20,18 @@ export class AutomaticDispatchFilterService
     private readonly _apiClient: ApiClient;
 
     /**
-     * Gets all automatic dispatch filters.
+     * Gets all automatic dispatch settings.
      * @param signal The abort signal to use, or undefined to use no abort signal.
-     * @returns A promise that will be resolved with the automatic dispatch filters.
+     * @returns A promise that will be resolved with the automatic dispatch settings.
      */
-    public async getAll(signal?: AbortSignal): Promise<AutomaticDispatchFilter[]>
+    public async getAll(signal?: AbortSignal): Promise<AutomaticDispatchSettings[]>
     {
-        const result = await this._apiClient.get("automatic-dispatch/filters",
+        const result = await this._apiClient.get("automatic-dispatch/settings",
         {
             signal
         });
 
-        return result.data.map((data: any) => new AutomaticDispatchFilter(data));
+        return result.data.map((data: any) => new AutomaticDispatchSettings(data));
     }
 
     /**
@@ -40,14 +40,14 @@ export class AutomaticDispatchFilterService
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the automatic dispatch filter.
      */
-    public async get(id: string, signal?: AbortSignal): Promise<AutomaticDispatchFilter>
+    public async get(id: string, signal?: AbortSignal): Promise<AutomaticDispatchSettings>
     {
-        const result = await this._apiClient.get(`automatic-dispatch/filters/${id}`,
+        const result = await this._apiClient.get(`automatic-dispatch/settings/${id}`,
         {
             signal
         });
 
-        return new AutomaticDispatchFilter(result.data);
+        return new AutomaticDispatchSettings(result.data);
     }
 
     /**
@@ -55,14 +55,14 @@ export class AutomaticDispatchFilterService
      * @param filter The automatic dispatch filter to create.
      * @returns A promise that will be resolved with the automatic dispatch filter.
      */
-    public async create(filter: AutomaticDispatchFilter): Promise<AutomaticDispatchFilter>
+    public async create(filter: AutomaticDispatchSettings): Promise<AutomaticDispatchSettings>
     {
-        const result = await this._apiClient.post(`automatic-dispatch/filters/${filter.id}`,
+        const result = await this._apiClient.post(`automatic-dispatch/settings/${filter.id}`,
         {
             body: filter
         });
 
-        return new AutomaticDispatchFilter(result.data);
+        return new AutomaticDispatchSettings(result.data);
     }
 
     /**
@@ -70,14 +70,14 @@ export class AutomaticDispatchFilterService
      * @param filter The automatic dispatch filter to update.
      * @returns A promise that will be resolved with the automatic dispatch filter.
      */
-    public async update(filter: AutomaticDispatchFilter): Promise<AutomaticDispatchFilter>
+    public async update(filter: AutomaticDispatchSettings): Promise<AutomaticDispatchSettings>
     {
-        const result = await this._apiClient.post(`automatic-dispatch/filters/${filter.id}`,
+        const result = await this._apiClient.post(`automatic-dispatch/settings/${filter.id}`,
         {
             body: filter
         });
 
-        return new AutomaticDispatchFilter(result.data);
+        return new AutomaticDispatchSettings(result.data);
     }
 
     /**
@@ -87,7 +87,7 @@ export class AutomaticDispatchFilterService
      */
     public async delete(id: string): Promise<void>
     {
-        await this._apiClient.delete(`automatic-dispatch/filters/${id}`);
+        await this._apiClient.delete(`automatic-dispatch/settings/${id}`);
     }
 
     /**
@@ -95,11 +95,11 @@ export class AutomaticDispatchFilterService
      * @param id The id identifying the automatic dispatch filter.
      * @returns A promise that will be resolved with the automatic dispatch filter.
      */
-    public async pause(id: string): Promise<AutomaticDispatchFilter>
+    public async pause(id: string): Promise<AutomaticDispatchSettings>
     {
-        const result = await this._apiClient.post(`automatic-dispatch/filters/${id}/pause`);
+        const result = await this._apiClient.post(`automatic-dispatch/settings/${id}/pause`);
 
-        return new AutomaticDispatchFilter(result.data);
+        return new AutomaticDispatchSettings(result.data);
     }
 
     /**
@@ -107,10 +107,10 @@ export class AutomaticDispatchFilterService
      * @param id The id identifying the automatic dispatch filter.
      * @returns A promise that will be resolved with the automatic dispatch filter.
      */
-     public async unpause(id: string): Promise<AutomaticDispatchFilter>
+     public async unpause(id: string): Promise<AutomaticDispatchSettings>
      {
-         const result = await this._apiClient.post(`automatic-dispatch/filters/${id}/unpause`);
+         const result = await this._apiClient.post(`automatic-dispatch/settings/${id}/unpause`);
 
-         return new AutomaticDispatchFilter(result.data);
+         return new AutomaticDispatchSettings(result.data);
      }
 }

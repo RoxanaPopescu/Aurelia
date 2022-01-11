@@ -10,11 +10,14 @@ export class AutomaticDispatchRouteFilter
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data: any)
+    public constructor(data?: any)
     {
-        this.organizations = data.organization.map(o => new OrganizationInfo(o));
-        this.tags = data.tags;
-        this.maxTimeBeforePickup = Duration.fromObject({ seconds: data.maxTimeBeforePickup });
+        if (data != null)
+        {
+            this.organizations = data.organizations.map(o => new OrganizationInfo(o));
+            this.tags = data.tags;
+            this.pickupLeadTime = Duration.fromObject({ seconds: data.pickupLeadTime });
+        }
     }
 
     /**
@@ -30,7 +33,7 @@ export class AutomaticDispatchRouteFilter
     /**
      * The max time before before the pickup time, at which a route may match.
      */
-    public maxTimeBeforePickup: Duration;
+    public pickupLeadTime: Duration;
 
     /**
      * Gets the data representing this instance.
@@ -41,7 +44,7 @@ export class AutomaticDispatchRouteFilter
         {
             organizationIds: this.organizations.map(o => o.id),
             tags: this.tags,
-            maxTimeBeforePickup: this.maxTimeBeforePickup?.as("seconds")
+            pickupLeadTime: this.pickupLeadTime?.as("seconds")
         };
 
         return data;

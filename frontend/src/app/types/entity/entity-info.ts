@@ -147,11 +147,14 @@ export class EntityInfo
             case "route-plan":
                 return `/route-planning/plans/details/${this.slug}`;
 
-            case "rule-set":
+            case "route-planning-rule-set":
                 return `/route-planning/rule-sets/details/${this.slug}`;
 
             case "order-group":
                 return `/route-planning/order-groups/details/${this.id}`;
+
+            case "automatic-dispatch-settings":
+                return `/dispatch/rule-sets/details/${this.id}`;
 
             case "distribution-center":
                 return `/distribution-centers/details/${this.id}`;

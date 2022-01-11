@@ -107,7 +107,7 @@ export class RoutePlanningSettings
     {
         return new EntityInfo(
         {
-            type: "rule-set",
+            type: "route-planning-rule-set",
             id: this.id,
             slug: this.slug,
             name: this.name
