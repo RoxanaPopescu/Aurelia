@@ -68,6 +68,10 @@ export class CommunicationTriggerEvent
         "order-schedule-triggered":
         {
             name: triggerEvents.orderScheduleTriggered
+        },
+        "route-optimization-unscheduled-task":
+        {
+            name: triggerEvents.routeOptimizationUnscheduledTask
         }
     };
 }

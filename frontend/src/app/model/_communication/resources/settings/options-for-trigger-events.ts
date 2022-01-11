@@ -253,6 +253,22 @@ export default
             "DeliveryEtaTime",
             "TrackingId"
         ])
+    },
+    "route-optimization-unscheduled-task":
+    {
+        recipientTypes:
+        [
+            "custom-email"
+        ],
+        messageTypes:
+        [
+            "email"
+        ],
+        placeholders: getPlaceholders(
+        [
+            "OrderId",
+            "RelationalId"
+        ])
     }
 };
 

@@ -7,5 +7,6 @@
     "orderPickupETAProvided": "Order pickup ETA provided",
     "orderDeliveryDelayedETAProvided": "Order delivery delayed ETA provided",
     "orderDeliveryETAProvided": "Order delivery ETA provided",
-    "orderScheduleTriggered": "Order schedule triggered"
+    "orderScheduleTriggered": "Order schedule triggered",
+    "routeOptimizationUnscheduledTask": "Route optimization unscheduled task"
 }
