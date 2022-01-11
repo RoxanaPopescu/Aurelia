@@ -125,7 +125,7 @@ export class EntityType
             group: entityTypeGroups.orderGroup,
             icon: "order-groups"
         },
-        "automatic-dispatch-settings":
+        "automatic-dispatch-rule-set":
         {
             name: entityTypeNames.automaticDispatchRuleSet,
             group: entityTypeGroups.automaticDispatchRuleSet,

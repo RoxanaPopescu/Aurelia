@@ -74,7 +74,7 @@ export class AutomaticDispatchSettings
     {
         return new EntityInfo(
         {
-            type: "distribution-center",
+            type: "automatic-dispatch-rule-set",
             id: this.id,
             name: this.name
         });

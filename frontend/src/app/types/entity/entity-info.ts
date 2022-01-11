@@ -153,7 +153,7 @@ export class EntityInfo
             case "order-group":
                 return `/route-planning/order-groups/details/${this.id}`;
 
-            case "automatic-dispatch-settings":
+            case "automatic-dispatch-rule-set":
                 return `/dispatch/rule-sets/details/${this.id}`;
 
             case "distribution-center":
