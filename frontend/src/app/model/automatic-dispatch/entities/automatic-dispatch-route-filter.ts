@@ -1,4 +1,3 @@
-import { Duration } from "luxon";
 import { OrganizationInfo } from "app/model/organization";
 
 /**
@@ -16,7 +15,6 @@ export class AutomaticDispatchRouteFilter
         {
             this.organizations = data.organizations.map(o => new OrganizationInfo(o));
             this.tags = data.tags;
-            this.pickupLeadTime = Duration.fromObject({ seconds: data.pickupLeadTime });
         }
     }
 
@@ -31,11 +29,6 @@ export class AutomaticDispatchRouteFilter
     public tags: string[];
 
     /**
-     * The max time before before the pickup time, at which a route may match.
-     */
-    public pickupLeadTime: Duration;
-
-    /**
      * Gets the data representing this instance.
      */
     public toJSON(): any
@@ -43,8 +36,7 @@ export class AutomaticDispatchRouteFilter
         const data =
         {
             organizationIds: this.organizations.map(o => o.id),
-            tags: this.tags,
-            pickupLeadTime: this.pickupLeadTime?.as("seconds")
+            tags: this.tags
         };
 
         return data;

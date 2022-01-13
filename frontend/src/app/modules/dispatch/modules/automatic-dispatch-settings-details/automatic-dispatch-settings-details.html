@@ -3,6 +3,7 @@
     <require from="app/components/name-value-pair/name-value-pair"></require>
     <require from="app/components/name-value-list/name-value-list"></require>
     <require from="app/components/star-icon/star-icon"></require>
+    <require from="app/components/status-message/status-message"></require>
 
     <require from="./automatic-dispatch-settings-details.scss"></require>
 
@@ -12,7 +13,7 @@
 
             <page-header scroll-fade class="flex-row">
 
-                <h1 class="font-largest margin-bottom">
+                <h1 class="font-largest">
                     <path-nav>
 
                         <a accent="inherit" href="/dispatch" translate>
@@ -26,7 +27,7 @@
                         <span>
 
                             <template if.bind="!isNew">
-                                ${settings.name}
+                                ${ruleSetName}
                                 <star-icon entity.bind="settings"></star-icon>
                             </template>
 
@@ -43,21 +44,29 @@
 
                     <template if-claims="edit-routes">
 
-                        <button if.bind="!isNew && !setings.paused" appearance="outline" accent="primary" click.trigger="onPauseClick()" translate>
-                            Pause
-                        </button>
+                        <div>
 
-                        <button if.bind="!isNew && setings.paused" appearance="outline" accent="primary" click.trigger="onUnpauseClick()" translate>
-                            Unpause
-                        </button>
+                            <button if.bind="!isNew && !settings.paused" appearance="outline" accent="primary" click.trigger="onPauseClick()" translate>
+                                Pause
+                            </button>
 
-                        <button if.bind="isNew" appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
-                            Create
-                        </button>
+                            <button if.bind="!isNew && settings.paused" appearance="outline" accent="primary" click.trigger="onUnpauseClick()" translate>
+                                Unpause
+                            </button>
 
-                        <button if.bind="!isNew" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
-                            Save changes
-                        </button>
+                        </div>
+
+                        <div>
+
+                            <button if.bind="isNew" appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
+                                Create
+                            </button>
+
+                            <button if.bind="!isNew" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                                Save changes
+                            </button>
+
+                        </div>
 
                     </template>
 
@@ -73,7 +82,7 @@
 
             <page-section if-claims="edit-routes">
 
-                <div class="control-row margin-large-bottom">
+                <div class="control-row">
 
                     <text-input label="above" value.bind="settings.name" class="flex-basis-1-of-4" autofocus>
 
@@ -104,28 +113,218 @@
                     <div class="flex-basis-1-of-2 margin-large-right">
 
                         <h2 class="font-larger margin-bottom" translate>
-                            Route filter
-                        </h2>
-
-                        <p class="opacity-faded" translate>
-                            These are the criteria a route must fulfill, for this rule set to apply.
-                        </p>
-
-                        TODO
-
-                    </div>
-
-                    <div class="flex-basis-1-of-2 margin-large-right">
-
-                        <h2 class="font-larger margin-bottom" translate>
                             Shipment filter
                         </h2>
 
                         <p class="opacity-faded" translate>
-                            These are the criteria a shipment must fulfill, for this rule set to apply.
+                            This filter selects the orders that should be automatically dispatched.
                         </p>
 
-                        TODO
+                        <tags-input
+                            value.bind="settings.shipmentFilter.organizations"
+                            label="above"
+                            filter="auto"
+                            fixed.bind="true"
+                            class="margin-large-bottom">
+
+                            <div slot="heading" translate>
+                                For orders from one of these creators…
+                            </div>
+
+                            <span slot="placeholder" translate>
+                                Choose creators
+                            </span>
+
+                            <div slot="value">
+                                <tag repeat.for="organization of settings.shipmentFilter.organizations">
+                                    ${organization.primaryName}
+                                </tag>
+                            </div>
+
+                            <item repeat.for="organization of availableConsignors" model.bind="organization">
+                                ${organization.primaryName}
+                            </item>
+
+                            <div slot="validation">
+
+                                <dependent-validator
+                                    set-validity.one-time="true"
+                                    validators.bind="shipmentDependentValidator">
+                                </dependent-validator>
+
+                            </div>
+
+                        </tags-input>
+
+                        <tags-input
+                            value.bind="settings.shipmentFilter.tags"
+                            new.bind="true"
+                            label="above"
+                            fixed.bind="true"
+                            class="margin-large-bottom">
+
+                            <div slot="heading" translate>
+                                Match if the order has all the tags…
+                            </div>
+
+                            <span slot="placeholder" translate>
+                                Choose tags
+                            </span>
+
+                            <div slot="value">
+                                <tag model.bind="tag" repeat.for="tag of settings.shipmentFilter.tags">
+                                    ${tag}
+                                </tag>
+                            </div>
+
+                            <div slot="validation">
+
+                                <dependent-validator
+                                    set-validity.one-time="true"
+                                    validators.bind="shipmentDependentValidator">
+                                </dependent-validator>
+
+                            </div>
+
+                        </tags-input>
+
+                        <div class="font-small ${shipmentDependentValidator.invalid ? 'margin-large-bottom' : ''}">
+
+                            <custom-validator
+                                view-model.ref="shipmentDependentValidator"
+                                valid.bind="model.shipmentFilter.organizations.length > 0 || model.shipmentFilter.tags.length > 0">
+
+                                <template replace-part="invalid" translate>
+                                    Please choose at least one creator or tag.
+                                </template>
+
+                            </custom-validator>
+
+                        </div>
+
+                        <duration-input
+                            label="above"
+                            value.bind="settings.shipmentFilter.pickupLeadTime"
+                            min.bind="0"
+                            class="margin-large-bottom">
+
+                            <div slot="heading" translate>
+                                And pickup should occur within the next…
+                            </div>
+
+                            <span slot="after" class="opacity-faded" translate>
+                                min
+                            </span>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="settings.shipmentFilter.pickupLeadTime">
+                                </required-validator>
+
+                                <range-validator
+                                    active.bind="true"
+                                    value.bind="settings.shipmentFilter.pickupLeadTime"
+                                    min.bind="0">
+                                </range-validator>
+
+                            </div>
+
+                        </duration-input>
+
+                    </div>
+
+                    <div class="flex-basis-1-of-2 margin-large-left">
+
+                        <h2 class="font-larger margin-bottom" translate>
+                            Route filter
+                        </h2>
+
+                        <p class="opacity-faded" translate>
+                            This filter selects the routes into which orders may be automatically dispatched.
+                        </p>
+
+                        <tags-input
+                            value.bind="settings.routeFilter.organizations"
+                            label="above"
+                            filter="auto"
+                            fixed.bind="true"
+                            class="margin-large-bottom">
+
+                            <div slot="heading" translate>
+                                For routes owned by one of these contractors…
+                            </div>
+
+                            <span slot="placeholder" translate>
+                                Choose contractors
+                            </span>
+
+                            <div slot="value">
+                                <tag repeat.for="organization of settings.routeFilter.organizations">
+                                    ${organization.primaryName}
+                                </tag>
+                            </div>
+
+                            <item repeat.for="organization of availableContractors" model.bind="organization">
+                                ${organization.primaryName}
+                            </item>
+
+                            <div slot="validation">
+
+                                <dependent-validator
+                                    set-validity.one-time="true"
+                                    validators.bind="routeDependentValidator">
+                                </dependent-validator>
+
+                            </div>
+
+                        </tags-input>
+
+                        <tags-input
+                            value.bind="settings.routeFilter.tags"
+                            new.bind="true"
+                            label="above"
+                            fixed.bind="true"
+                            class="margin-large-bottom">
+
+                            <div slot="heading" translate>
+                                Match if the route has all the tags…
+                            </div>
+
+                            <span slot="placeholder" translate>
+                                Choose tags
+                            </span>
+
+                            <div slot="value">
+                                <tag model.bind="tag" repeat.for="tag of settings.routeFilter.tags">
+                                    ${tag}
+                                </tag>
+                            </div>
+
+                            <div slot="validation">
+
+                                <dependent-validator
+                                    set-validity.one-time="true"
+                                    validators.bind="routeDependentValidator">
+                                </dependent-validator>
+
+                            </div>
+
+                        </tags-input>
+
+                        <div class="font-small ${routeDependentValidator.invalid ? 'margin-large-bottom' : ''}">
+
+                            <custom-validator
+                                view-model.ref="routeDependentValidator"
+                                valid.bind="model.routeFilter.organizations.length > 0 || model.routeFilter.tags.length > 0">
+
+                                <template replace-part="invalid" translate>
+                                    Please choose at least one contractor or tag.
+                                </template>
+
+                            </custom-validator>
+
+                        </div>
 
                     </div>
 

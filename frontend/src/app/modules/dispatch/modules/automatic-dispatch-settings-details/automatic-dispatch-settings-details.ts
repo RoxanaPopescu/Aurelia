@@ -5,7 +5,7 @@ import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 import { AutomaticDispatchSettings, AutomaticDispatchSettingsService } from "app/model/automatic-dispatch";
 import { OrganizationService } from "app/model/organization";
 import { IdentityService } from "app/services/identity";
-import { Consignor } from "app/model/outfit";
+import { Consignor, Fulfiller } from "app/model/outfit";
 
 /**
  * Represents the route parameters for the page.
@@ -41,7 +41,15 @@ export class AutomaticDispatchSettingsDetailsPage
     private readonly _organizationService: OrganizationService;
     private readonly _identityService: IdentityService;
 
-    private availableConsignors: Consignor[];
+    /**
+     * The creators connected to the current organization.
+     */
+    protected availableCreators: Consignor[];
+
+    /**
+     * The contractors connected to the current organization.
+     */
+    protected availableContractors: Fulfiller[];
 
     /**
      * The validation for the modal.
@@ -52,6 +60,11 @@ export class AutomaticDispatchSettingsDetailsPage
      * The automatic dispatch rule set.
      */
     protected settings: AutomaticDispatchSettings;
+
+    /**
+     * The current name of the dispatch rule set.
+     */
+    protected ruleSetName: string;
 
     /**
      * True if the automatic dispatch rule set is new, otherwise false.
@@ -75,6 +88,7 @@ export class AutomaticDispatchSettingsDetailsPage
         if (!this.isNew)
         {
             this.settings = await this._automaticDispatchSettingsService.get(params.id!);
+            this.ruleSetName = this.settings.name;
 
             addToRecentEntities(this.settings.toEntityInfo());
         }
@@ -89,8 +103,12 @@ export class AutomaticDispatchSettingsDetailsPage
         (async () =>
         {
             const connections = await this._organizationService.getConnections();
-            this.availableConsignors = connections.map(c => new Consignor({ id: c.organization.id, companyName: c.organization.name }));
-            this.availableConsignors.push(this._identityService.identity!.organization!);
+
+            this.availableCreators = connections.map(c => new Consignor({ id: c.organization.id, companyName: c.organization.name }));
+            this.availableCreators.push(this._identityService.identity!.organization!);
+
+            this.availableContractors = connections.map(c => new Fulfiller({ id: c.organization.id, companyName: c.organization.name }));
+            this.availableContractors.push(this._identityService.identity!.organization!);
         })();
     }
 
@@ -115,14 +133,16 @@ export class AutomaticDispatchSettingsDetailsPage
         {
             if (this.isNew)
             {
-                await this._automaticDispatchSettingsService.create(this.settings);
+                this.settings = await this._automaticDispatchSettingsService.create(this.settings);
 
                 this.isNew = false;
             }
             else
             {
-                await this._automaticDispatchSettingsService.update(this.settings);
+                this.settings = await this._automaticDispatchSettingsService.update(this.settings);
             }
+
+            this.ruleSetName = this.settings.name;
         }
         catch (error)
         {
@@ -144,9 +164,7 @@ export class AutomaticDispatchSettingsDetailsPage
 
         try
         {
-            await this._automaticDispatchSettingsService.pause(this.settings.id);
-
-            this.settings.paused = true;
+            this.settings = await this._automaticDispatchSettingsService.pause(this.settings.id);
         }
         catch (error)
         {
@@ -168,9 +186,7 @@ export class AutomaticDispatchSettingsDetailsPage
 
         try
         {
-            await this._automaticDispatchSettingsService.unpause(this.settings.id);
-
-            this.settings.paused = false;
+            this.settings = await this._automaticDispatchSettingsService.unpause(this.settings.id);
         }
         catch (error)
         {
