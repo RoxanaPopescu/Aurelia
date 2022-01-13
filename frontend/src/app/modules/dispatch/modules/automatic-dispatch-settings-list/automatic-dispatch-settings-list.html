@@ -71,7 +71,9 @@
                     <template repeat.for="item of items">
 
                         <data-table-row
-                            href="/dispatch/rule-sets/details/${item.id}">
+                            href="/dispatch/rule-sets/details/${item.id}"
+                            faded.bind="item.paused"
+                            accent.bind="item.paused ? 'neutral' : 'positive'">
 
                             <data-table-cell>
                                 ${item.name}
