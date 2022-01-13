@@ -20,8 +20,8 @@ import { IResponseStubs } from "shared/infrastructure";
 // import identity from "./responses/identity";
 // import organizations from "./responses/organizations";
 // import account from "./responses/account";
-import entitiesStarred from "./responses/entities-starred";
-import entitiesRecent from "./responses/entities-recent";
+// import entitiesStarred from "./responses/entities-starred";
+// import entitiesRecent from "./responses/entities-recent";
 // import searchesSaved from "./responses/searches-saved";
 // import searchesRecent from "./responses/searches-recent";
 // import searchesQuery from "./responses/searches-query";
@@ -58,8 +58,8 @@ export const stubs: IResponseStubs =
     // ...identity,
     // ...organizations,
     // ...account
-    ...entitiesStarred,
-    ...entitiesRecent,
+    // ...entitiesStarred,
+    // ...entitiesRecent,
     // ...searchesSaved,
     // ...searchesRecent,
     // ...searchesQuery

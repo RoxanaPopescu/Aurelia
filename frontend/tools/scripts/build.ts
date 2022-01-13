@@ -77,7 +77,7 @@ const compilerOptions: ICompilerOptions =
         options.environment === "preview" ?
         {
             debug: false,
-            stubs: false,
+            stubs: true,
             optimize: true,
             obfuscate: false,
             integrations:
