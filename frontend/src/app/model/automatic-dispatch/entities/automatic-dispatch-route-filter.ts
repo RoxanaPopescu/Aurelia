@@ -13,20 +13,20 @@ export class AutomaticDispatchRouteFilter
     {
         if (data != null)
         {
-            this.organizations = data.organizations.map(o => new OrganizationInfo(o));
+            this.organizations = data.organizations?.map(o => new OrganizationInfo(o));
             this.tags = data.tags;
         }
     }
 
     /**
-     * The organizations to match.
+     * The organizations to match, if any.
      */
-    public organizations: OrganizationInfo[];
+    public organizations: OrganizationInfo[] | undefined;
 
     /**
-     * The tags to match.
+     * The tags to match, if any.
      */
-    public tags: string[];
+    public tags: string[] | undefined;
 
     /**
      * Gets the data representing this instance.
@@ -35,7 +35,7 @@ export class AutomaticDispatchRouteFilter
     {
         const data =
         {
-            organizationIds: this.organizations.map(o => o.id),
+            organizationIds: this.organizations?.map(o => o.id),
             tags: this.tags
         };
 

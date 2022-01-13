@@ -58,7 +58,7 @@
 
                         <div>
 
-                            <button if.bind="isNew" appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
+                            <button if.bind="isNew" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
                                 Create
                             </button>
 
@@ -196,7 +196,7 @@
 
                             <custom-validator
                                 view-model.ref="shipmentDependentValidator"
-                                valid.bind="model.shipmentFilter.organizations.length > 0 || model.shipmentFilter.vehicleTypes.length > 0">
+                                valid.bind="settings.shipmentFilter.organizations.length > 0 || settings.shipmentFilter.vehicleTypes.length > 0">
 
                                 <template replace-part="invalid" translate>
                                     Please choose at least one creator or vehicle type.
@@ -320,7 +320,7 @@
 
                             <custom-validator
                                 view-model.ref="routeDependentValidator"
-                                valid.bind="model.routeFilter.organizations.length > 0 || model.routeFilter.tags.length > 0">
+                                valid.bind="settings.routeFilter.organizations.length > 0 || settings.routeFilter.tags.length > 0">
 
                                 <template replace-part="invalid" translate>
                                     Please choose at least one contractor or tag.

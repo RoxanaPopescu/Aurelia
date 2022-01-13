@@ -15,21 +15,21 @@ export class AutomaticDispatchShipmentFilter
     {
         if (data != null)
         {
-            this.organizations = data.organizations.map(o => new OrganizationInfo(o));
-            this.vehicleTypes = data.vehicleTypes.map(id => VehicleType.get(id));
+            this.organizations = data.organizations?.map(o => new OrganizationInfo(o));
+            this.vehicleTypes = data.vehicleTypes?.map(id => VehicleType.get(id));
             this.pickupLeadTime = Duration.fromObject({ seconds: data.pickupLeadTime });
         }
     }
 
     /**
-     * The organizations to match.
+     * The organizations to match, if any.
      */
-    public organizations: OrganizationInfo[];
+    public organizations: OrganizationInfo[] | undefined;
 
     /**
-     * The vehicle types to match.
+     * The vehicle types to match, if any.
      */
-    public vehicleTypes: VehicleType[];
+    public vehicleTypes: VehicleType[] | undefined;
 
     /**
      * The max time before before the pickup time, at which a route may match.
@@ -43,8 +43,8 @@ export class AutomaticDispatchShipmentFilter
     {
         const data =
         {
-            organizationIds: this.organizations.map(o => o.id),
-            vehicleTypeIds: this.vehicleTypes.map(vt => vt.id),
+            organizationIds: this.organizations?.map(o => o.id),
+            vehicleTypeIds: this.vehicleTypes?.map(vt => vt.id),
             pickupLeadTime: this.pickupLeadTime?.as("seconds")
         };
 

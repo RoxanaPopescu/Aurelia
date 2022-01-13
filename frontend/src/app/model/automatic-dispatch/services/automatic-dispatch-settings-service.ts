@@ -51,13 +51,13 @@ export class AutomaticDispatchSettingsService
     }
 
     /**
-     * Gets the specified automatic dispatch filter.
+     * Creates the specified automatic dispatch filter.
      * @param filter The automatic dispatch filter to create.
      * @returns A promise that will be resolved with the automatic dispatch filter.
      */
     public async create(filter: AutomaticDispatchSettings): Promise<AutomaticDispatchSettings>
     {
-        const result = await this._apiClient.post(`automatic-dispatch/settings/${filter.id}`,
+        const result = await this._apiClient.post(`automatic-dispatch/settings/create`,
         {
             body: filter
         });
@@ -66,13 +66,13 @@ export class AutomaticDispatchSettingsService
     }
 
     /**
-     * Gets the specified automatic dispatch filter.
+     * Updates the specified automatic dispatch filter.
      * @param filter The automatic dispatch filter to update.
      * @returns A promise that will be resolved with the automatic dispatch filter.
      */
     public async update(filter: AutomaticDispatchSettings): Promise<AutomaticDispatchSettings>
     {
-        const result = await this._apiClient.post(`automatic-dispatch/settings/${filter.id}`,
+        const result = await this._apiClient.post(`automatic-dispatch/settings/${filter.id}/update`,
         {
             body: filter
         });
@@ -81,13 +81,13 @@ export class AutomaticDispatchSettingsService
     }
 
     /**
-     * Gets the specified automatic dispatch filter.
+     * Deletes the specified automatic dispatch filter.
      * @param id The id identifying the automatic dispatch filter.
      * @returns A promise that will be resolved when the operation succeeds.
      */
     public async delete(id: string): Promise<void>
     {
-        await this._apiClient.delete(`automatic-dispatch/settings/${id}`);
+        await this._apiClient.post(`automatic-dispatch/settings/${id}/delete`);
     }
 
     /**
