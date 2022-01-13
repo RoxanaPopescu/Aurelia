@@ -157,25 +157,29 @@
                         </tags-input>
 
                         <tags-input
-                            value.bind="settings.shipmentFilter.tags"
+                            value.bind="settings.shipmentFilter.vehicleTypes"
                             new.bind="true"
                             label="above"
                             fixed.bind="true"
                             class="margin-large-bottom">
 
                             <div slot="heading" translate>
-                                Match if the order has all the tags…
+                                Match if the order has one of these vehicle types…
                             </div>
 
                             <span slot="placeholder" translate>
-                                Choose tags
+                                Choose vehicle type
                             </span>
 
                             <div slot="value">
-                                <tag model.bind="tag" repeat.for="tag of settings.shipmentFilter.tags">
-                                    ${tag}
+                                <tag model.bind="vehicleType" repeat.for="vehicleType of settings.shipmentFilter.vehicleTypes">
+                                    ${vehicleType.name}
                                 </tag>
                             </div>
+
+                            <item repeat.for="vehicleType of availableVehicleTypes" model.bind="vehicleType">
+                                ${vehicleType.name}
+                            </item>
 
                             <div slot="validation">
 
@@ -192,10 +196,10 @@
 
                             <custom-validator
                                 view-model.ref="shipmentDependentValidator"
-                                valid.bind="model.shipmentFilter.organizations.length > 0 || model.shipmentFilter.tags.length > 0">
+                                valid.bind="model.shipmentFilter.organizations.length > 0 || model.shipmentFilter.vehicleTypes.length > 0">
 
                                 <template replace-part="invalid" translate>
-                                    Please choose at least one creator or tag.
+                                    Please choose at least one creator or vehicle type.
                                 </template>
 
                             </custom-validator>

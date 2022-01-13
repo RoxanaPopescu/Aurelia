@@ -6,6 +6,7 @@ import { AutomaticDispatchSettings, AutomaticDispatchSettingsService } from "app
 import { OrganizationService } from "app/model/organization";
 import { IdentityService } from "app/services/identity";
 import { Consignor, Fulfiller } from "app/model/outfit";
+import { VehicleType } from "app/model/vehicle";
 
 /**
  * Represents the route parameters for the page.
@@ -45,6 +46,11 @@ export class AutomaticDispatchSettingsDetailsPage
      * The creators connected to the current organization.
      */
     protected availableCreators: Consignor[];
+
+    /**
+     * The available vehicle types.
+     */
+    protected availableVehicleTypes: VehicleType[];
 
     /**
      * The contractors connected to the current organization.
@@ -102,6 +108,8 @@ export class AutomaticDispatchSettingsDetailsPage
         // tslint:disable-next-line: no-floating-promises
         (async () =>
         {
+            this.availableVehicleTypes = VehicleType.getAll();
+
             const connections = await this._organizationService.getConnections();
 
             this.availableCreators = connections.map(c => new Consignor({ id: c.organization.id, companyName: c.organization.name }));
