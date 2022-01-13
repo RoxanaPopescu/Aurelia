@@ -1,6 +1,7 @@
 {
     "automaticDispatch": "Automatic dispatch",
     "automaticDispatchSettings": "Rule sets",
+    "newAutomaticDispatchSettings": "New rule set",
     "dispatch": "Express dispatch",
     "driverAssignment": "Driver assignment"
 }

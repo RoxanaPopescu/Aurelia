@@ -25,16 +25,8 @@
                         </a>
 
                         <span>
-
-                            <template if.bind="!isNew">
-                                ${ruleSetName}
-                                <star-icon entity.bind="settings"></star-icon>
-                            </template>
-
-                            <template if.bind="isNew" translate>
-                                New rule set
-                            </template>
-
+                            ${ruleSetName}
+                            <star-icon if.bind="!isNew" entity.bind="settings"></star-icon>
                         </span>
 
                     </path-nav>

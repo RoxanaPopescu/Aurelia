@@ -7,6 +7,7 @@ import { OrganizationService } from "app/model/organization";
 import { IdentityService } from "app/services/identity";
 import { Consignor, Fulfiller } from "app/model/outfit";
 import { VehicleType } from "app/model/vehicle";
+import routeTitles from "../../resources/strings/route-titles.json";
 
 /**
  * Represents the route parameters for the page.
@@ -108,7 +109,10 @@ export class AutomaticDispatchSettingsDetailsPage
         else
         {
             this.settings = new AutomaticDispatchSettings();
+            this.ruleSetName = routeTitles.newAutomaticDispatchSettings;
         }
+
+        setTimeout(() => this._historyHelper.setTitle(`${this.ruleSetName}${this._historyHelper.titleSeparator}${document.title}`));
 
         // Execute tasks that should not block rendering.
 
@@ -164,6 +168,7 @@ export class AutomaticDispatchSettingsDetailsPage
             return;
         }
 
+        this._historyHelper.setTitle(`${this.settings.name}${document.title.substring(this.ruleSetName.length)}`);
         this.ruleSetName = this.settings.name;
         this.isNew = false;
 

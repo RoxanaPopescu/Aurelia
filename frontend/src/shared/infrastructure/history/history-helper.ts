@@ -245,6 +245,19 @@ export class HistoryHelper
     }
 
     /**
+     * The default title separator.
+     */
+    @computedFrom("_router.titleSeparator")
+    public get titleSeparator(): string
+    {
+        return this._router.titleSeparator ?? "";
+    }
+    public set titleSeparator(value: string)
+    {
+        this._router.titleSeparator = value;
+    }
+
+    /**
      * Configures the instance.
      * @param basePathPattern The pattern used when matching the base path in the current URL,
      * with a leading and trailing `/`. This should match the path between the `appBasePath`,
@@ -524,10 +537,10 @@ export class HistoryHelper
             const url = this.getRouteUrl(args[0]);
 
             // Get the options specified in the arguments.
-            const options: IHistoryOptions = args[1];
+            const options: IHistoryOptions = { trigger: true, replace: false, ...args[1] };
 
             // Indicate that navigation has started.
-            this._navigating = (options?.trigger ?? true) ? "new" : undefined;
+            this._navigating = options.trigger ? "new" : undefined;
 
             // Navigate and get the result.
             // tslint:disable-next-line: no-boolean-literal-compare
@@ -543,7 +556,7 @@ export class HistoryHelper
             const stateFunc = args[0];
 
             // Get the specified options.
-            const options: IHistoryOptions = args[1];
+            const options: IHistoryOptions = { trigger: true, replace: false, ...args[1] };
 
             // Clone the current state to get a new, mutable history state.
             let state = { ...this.state };
@@ -563,7 +576,7 @@ export class HistoryHelper
             const state: IHistoryState = args[0];
 
             // Get the specified options.
-            const options: IHistoryOptions = args[1];
+            const options: IHistoryOptions = { trigger: true, replace: false, ...args[1] };
 
             // Get the URL pattern and params to use.
             const urlPattern = state.path || this.state!.path;
@@ -609,11 +622,11 @@ export class HistoryHelper
             }
 
             // Indicate that navigation has started.
-            this._navigating = (options?.trigger ?? true) ? "new" : undefined;
+            this._navigating = options.trigger ? "new" : undefined;
 
             // Navigate and get the result.
             // tslint:disable-next-line: no-boolean-literal-compare
-            const success = this._router.navigate(this.getRouteUrl(url, options?.basePath), options) !== false;
+            const success = this._router.navigate(this.getRouteUrl(url, options.basePath), options) !== false;
 
             if (success)
             {
@@ -621,7 +634,7 @@ export class HistoryHelper
                 this._history.setState("data", state.data);
 
                 // If not triggering navigation, update the current state immediately.
-                if (options?.trigger === false)
+                if (options.trigger === false)
                 {
                     this._state = this.getHistoryState(state.params);
                 }
@@ -645,10 +658,10 @@ export class HistoryHelper
         {
             document.title =
             [
-                title.join(separator ?? this._router.titleSeparator),
+                title.join(separator ?? this.titleSeparator),
                 this._router.title
             ]
-            .join(this._router.titleSeparator);
+            .join(this.titleSeparator);
         }
         else if (title != null)
         {
