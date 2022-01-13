@@ -100,7 +100,7 @@ export class DispatchModule
                         "edit-routes"
                     ]
                 },
-                title: routeTitles.dispatch,
+                title: routeTitles.expressDispatch,
                 nav: true,
                 icon: "express-dispatch"
             },
