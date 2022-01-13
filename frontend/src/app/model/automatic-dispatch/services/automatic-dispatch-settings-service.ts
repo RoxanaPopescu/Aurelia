@@ -57,7 +57,7 @@ export class AutomaticDispatchSettingsService
      */
     public async create(filter: AutomaticDispatchSettings): Promise<AutomaticDispatchSettings>
     {
-        const result = await this._apiClient.post(`automatic-dispatch/settings/create`,
+        const result = await this._apiClient.post("automatic-dispatch/settings/create",
         {
             body: filter
         });
