@@ -167,11 +167,11 @@ export class AutomaticDispatchSettingsDetailsPage
         this.ruleSetName = this.settings.name;
         this.isNew = false;
 
-        this._historyHelper.navigate(state =>
+        await this._historyHelper.navigate(state =>
         {
             state.path = state.path.replace(/create$/, `details/${this.settings.id}`);
         },
-        { trigger: false, replace: true })
+        { trigger: false, replace: true });
 
         this.busy = false;
     }
