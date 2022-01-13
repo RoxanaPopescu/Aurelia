@@ -524,7 +524,7 @@ export class HistoryHelper
             const url = this.getRouteUrl(args[0]);
 
             // Get the options specified in the arguments.
-            const options = args[1] as IHistoryOptions;
+            const options: IHistoryOptions = args[1];
 
             // Indicate that navigation has started.
             this._navigating = (options?.trigger ?? true) ? "new" : undefined;
@@ -543,11 +543,11 @@ export class HistoryHelper
             const stateFunc = args[0];
 
             // Get the specified options.
-            const options = args[1] as IHistoryOptions;
+            const options: IHistoryOptions = args[1];
 
             // Clone the current state to get a new, mutable history state.
             let state = { ...this.state };
-            delete (state as any).url;
+            delete state.url;
 
             // Call the function specified in the arguments to mutate the state.
             state = stateFunc(state) || state;
@@ -560,10 +560,10 @@ export class HistoryHelper
         else
         {
             // Get the specified state object.
-            const state = args[0] as IHistoryState;
+            const state: IHistoryState = args[0];
 
             // Get the specified options.
-            const options = args[1] as IHistoryOptions;
+            const options: IHistoryOptions = args[1];
 
             // Get the URL pattern and params to use.
             const urlPattern = state.path || this.state!.path;
@@ -609,11 +609,11 @@ export class HistoryHelper
             }
 
             // Indicate that navigation has started.
-            this._navigating = (options.trigger ?? true) ? "new" : undefined;
+            this._navigating = (options?.trigger ?? true) ? "new" : undefined;
 
             // Navigate and get the result.
             // tslint:disable-next-line: no-boolean-literal-compare
-            const success = this._router.navigate(this.getRouteUrl(url, options.basePath), options) !== false;
+            const success = this._router.navigate(this.getRouteUrl(url, options?.basePath), options) !== false;
 
             if (success)
             {
@@ -621,7 +621,7 @@ export class HistoryHelper
                 this._history.setState("data", state.data);
 
                 // If not triggering navigation, update the current state immediately.
-                if (!options.trigger)
+                if (options?.trigger === false)
                 {
                     this._state = this.getHistoryState(state.params);
                 }

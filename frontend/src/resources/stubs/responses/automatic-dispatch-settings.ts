@@ -8,13 +8,13 @@ const settings =
     "shipmentFilter":
     {
         "organizations": [],
-        "vehicleTypes": [],
+        "vehicleTypes": ["2321cbd7-5bed-4035-a827-2bfea31bb8e8"],
         "pickupLeadTime": 3600
     },
     "routeFilter":
     {
         "organizations": [],
-        "tags": []
+        "tags": ["Foo"]
     }
 };
 

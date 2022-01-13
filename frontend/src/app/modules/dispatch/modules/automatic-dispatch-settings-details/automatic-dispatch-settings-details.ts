@@ -1,5 +1,5 @@
 import { autoinject } from "aurelia-framework";
-import { Log } from "shared/infrastructure";
+import { HistoryHelper, Log } from "shared/infrastructure";
 import { IValidation } from "shared/framework";
 import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 import { AutomaticDispatchSettings, AutomaticDispatchSettingsService } from "app/model/automatic-dispatch";
@@ -30,17 +30,24 @@ export class AutomaticDispatchSettingsDetailsPage
      * @param automaticDispatchSettingsService The `AutomaticDispatchSettingsService` instance.
      * @param organizationService The `OrganizationService` instance.
      * @param identityService The `IdentityService` instance.
+     * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(automaticDispatchSettingsService: AutomaticDispatchSettingsService, organizationService: OrganizationService, identityService: IdentityService)
+    public constructor(
+        automaticDispatchSettingsService: AutomaticDispatchSettingsService,
+        organizationService: OrganizationService,
+        identityService: IdentityService,
+        historyHelper: HistoryHelper)
     {
         this._automaticDispatchSettingsService = automaticDispatchSettingsService;
         this._organizationService = organizationService;
         this._identityService = identityService;
+        this._historyHelper = historyHelper;
     }
 
     private readonly _automaticDispatchSettingsService: AutomaticDispatchSettingsService;
     private readonly _organizationService: OrganizationService;
     private readonly _identityService: IdentityService;
+    private readonly _historyHelper: HistoryHelper;
 
     /**
      * The creators connected to the current organization.
@@ -142,24 +149,31 @@ export class AutomaticDispatchSettingsDetailsPage
             if (this.isNew)
             {
                 this.settings = await this._automaticDispatchSettingsService.create(this.settings);
-
-                this.isNew = false;
             }
             else
             {
                 this.settings = await this._automaticDispatchSettingsService.update(this.settings);
             }
-
-            this.ruleSetName = this.settings.name;
         }
         catch (error)
         {
             Log.error("Could not save the rule set", error);
-        }
-        finally
-        {
+
             this.busy = false;
+
+            return;
         }
+
+        this.ruleSetName = this.settings.name;
+        this.isNew = false;
+
+        this._historyHelper.navigate(state =>
+        {
+            state.path = state.path.replace(/create$/, `details/${this.settings.id}`);
+        },
+        { trigger: false, replace: true })
+
+        this.busy = false;
     }
 
     /**
