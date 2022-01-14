@@ -75,6 +75,11 @@ export default
         body: { ...settings[0], paused: false }
     },
 
+    "POST /api/v2/automatic-dispatch/settings/rule-set-1-id/run-now":
+    {
+        status: 201
+    },
+
     "GET /api/v2/automatic-dispatch/settings/rule-set-2-id":
     {
         body: settings[0]
@@ -98,5 +103,10 @@ export default
     "POST /api/v2/automatic-dispatch/settings/rule-set-2-id/unpause":
     {
         body: { ...settings[0], paused: false }
+    },
+
+    "POST /api/v2/automatic-dispatch/settings/rule-set-2-id/run-now":
+    {
+        status: 201
     }
 };
