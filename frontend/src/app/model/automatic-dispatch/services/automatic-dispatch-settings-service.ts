@@ -114,8 +114,6 @@ export class AutomaticDispatchSettingsService
         return new AutomaticDispatchSettings(result.data);
     }
 
-
-
     /**
      * Starts a new dispatch job immediately, using the specified automatic dispatch settings.
      * @param id The id identifying the automatic dispatch settings.

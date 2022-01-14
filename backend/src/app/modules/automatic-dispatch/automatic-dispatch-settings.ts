@@ -50,7 +50,7 @@ export class AutomaticDispatchSettingsModule extends AppModule
     {
         await context.authorize("edit-routes");
 
-        const result = await this.apiClient.post(`automatic-dispatch-settings/create`,
+        const result = await this.apiClient.post("automatic-dispatch-settings/create",
         {
             headers: { "ownerId": context.user?.organizationId },
             body: context.request.body
