@@ -15,7 +15,8 @@ const settings =
         "routeFilter":
         {
             "organizations": [],
-            "tags": ["Foo"]
+            "tags": ["Foo"],
+            "startLeadTime": 3600
         }
     },
     {
@@ -33,7 +34,8 @@ const settings =
         "routeFilter":
         {
             "organizations": [],
-            "tags": ["Foo"]
+            "tags": ["Foo"],
+            "startLeadTime": 3600
         }
     }
 ];

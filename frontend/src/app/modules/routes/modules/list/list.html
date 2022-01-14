@@ -382,8 +382,7 @@
                                     <a
                                         class="text-truncate"
                                         if-claims="assign-organization-route"
-                                        click.trigger="onAssignExecutorClick(route, updating)"
-                                    >
+                                        click.trigger="onAssignExecutorClick(route, updating)">
                                         <template if.bind="route.executor.companyName">
                                             ${route.executor.companyName}
                                         </template>
@@ -402,8 +401,7 @@
                                     <a
                                         class="text-truncate"
                                         if-claims="assign-driver-route"
-                                        click.trigger="onAssignDriverClick(route, updating)"
-                                    >
+                                        click.trigger="onAssignDriverClick(route, updating)">
                                         <template if.bind="!route.driver" translate>
                                             Assign driver
                                         </template>
@@ -434,8 +432,7 @@
                                     <a
                                         class="text-truncate"
                                         target="_blank"
-                                        href="/fleet-management/drivers/details/${route.driver.id}"
-                                    >
+                                        href="/fleet-management/drivers/details/${route.driver.id}">
                                         ${route.driver.id}
                                     </a>
                                 </data-table-cell>
@@ -443,8 +440,7 @@
                                 <data-table-cell if.bind="column.slug === 'vehicle'" class="${updating.vehicle ? 'opacity-faded' : ''}">
                                     <a
                                         class="text-truncate"
-                                        click.trigger="onAssignVehicleClick(route, updating)"
-                                    >
+                                        click.trigger="onAssignVehicleClick(route, updating)">
                                         <template if.bind="!route.vehicle" translate>
                                             Assign Vehicle
                                         </template>
@@ -518,8 +514,7 @@
                                     <a
                                         class="text-truncate"
                                         if-claims="edit-routes"
-                                        click.trigger="onAssignTeamClick(route, updating)"
-                                    >
+                                        click.trigger="onAssignTeamClick(route, updating)">
                                         <template if.bind="!route.teamId" translate>
                                             Assign team
                                         </template>

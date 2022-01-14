@@ -208,9 +208,11 @@
                         </a>
                     </div>
 
-                    <div if.bind="result.driver.id" translate>
-                         Created
-                         <a target="_blank" href="/fleet-management/drivers/details/${result.driver.id}">
+                    <div if.bind="result.driver.id">
+                        <span translate>
+                            Created
+                        </span>
+                        <a target="_blank" href="/fleet-management/drivers/details/${result.driver.id}">
                             ${result.driver.name} (${result.driver.id})
                         </a>
                     </div>

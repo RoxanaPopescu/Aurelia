@@ -32,7 +32,7 @@ export class AutomaticDispatchShipmentFilter
     public vehicleTypes: VehicleType[] | undefined;
 
     /**
-     * The max time before before the pickup time, at which a route may match.
+     * The max time before the pickup time, at which a shipment may match.
      */
     public pickupLeadTime: Duration;
 

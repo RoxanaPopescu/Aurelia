@@ -33,8 +33,7 @@
     <file-dropzone
         dropzone.bind="dropzone"
         options.bind="dropzoneOptions"
-        class="${dropzoneError == 'type' ? '--error-filetype' : ''}"
-    >
+        class="${dropzoneError == 'type' ? '--error-filetype' : ''}">
 
         <div if.bind="!uploadComplete" class="upload-text">
             <span translate>

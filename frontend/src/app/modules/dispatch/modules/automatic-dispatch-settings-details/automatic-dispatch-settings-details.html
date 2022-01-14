@@ -330,6 +330,30 @@
 
                         </div>
 
+                        <duration-input
+                            label="above"
+                            value.bind="settings.routeFilter.startLeadTime"
+                            min.bind="0"
+                            class="margin-large-bottom">
+
+                            <div slot="heading" translate>
+                                And is started, or starts within the next...
+                            </div>
+
+                            <span slot="after" class="opacity-faded" translate>
+                                min
+                            </span>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="settings.routeFilter.startLeadTime">
+                                </required-validator>
+
+                            </div>
+
+                        </duration-input>
+
                     </div>
 
                 </div>
