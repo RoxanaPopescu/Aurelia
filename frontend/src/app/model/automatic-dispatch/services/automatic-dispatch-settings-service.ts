@@ -35,10 +35,10 @@ export class AutomaticDispatchSettingsService
     }
 
     /**
-     * Gets the specified automatic dispatch filter.
-     * @param id The id identifying the automatic dispatch filter.
+     * Gets the specified automatic dispatch settings.
+     * @param id The id identifying the automatic dispatch settings.
      * @param signal The abort signal to use, or undefined to use no abort signal.
-     * @returns A promise that will be resolved with the automatic dispatch filter.
+     * @returns A promise that will be resolved with the automatic dispatch settings.
      */
     public async get(id: string, signal?: AbortSignal): Promise<AutomaticDispatchSettings>
     {
@@ -51,38 +51,38 @@ export class AutomaticDispatchSettingsService
     }
 
     /**
-     * Creates the specified automatic dispatch filter.
-     * @param filter The automatic dispatch filter to create.
-     * @returns A promise that will be resolved with the automatic dispatch filter.
+     * Creates the specified automatic dispatch settings.
+     * @param settings The automatic dispatch settings to create.
+     * @returns A promise that will be resolved with the automatic dispatch settings.
      */
-    public async create(filter: AutomaticDispatchSettings): Promise<AutomaticDispatchSettings>
+    public async create(settings: AutomaticDispatchSettings): Promise<AutomaticDispatchSettings>
     {
         const result = await this._apiClient.post("automatic-dispatch/settings/create",
         {
-            body: filter
+            body: settings
         });
 
         return new AutomaticDispatchSettings(result.data);
     }
 
     /**
-     * Updates the specified automatic dispatch filter.
-     * @param filter The automatic dispatch filter to update.
-     * @returns A promise that will be resolved with the automatic dispatch filter.
+     * Updates the specified automatic dispatch settings.
+     * @param settings The automatic dispatch settings to update.
+     * @returns A promise that will be resolved with the automatic dispatch settings.
      */
-    public async update(filter: AutomaticDispatchSettings): Promise<AutomaticDispatchSettings>
+    public async update(settings: AutomaticDispatchSettings): Promise<AutomaticDispatchSettings>
     {
-        const result = await this._apiClient.post(`automatic-dispatch/settings/${filter.id}/update`,
+        const result = await this._apiClient.post(`automatic-dispatch/settings/${settings.id}/update`,
         {
-            body: filter
+            body: settings
         });
 
         return new AutomaticDispatchSettings(result.data);
     }
 
     /**
-     * Deletes the specified automatic dispatch filter.
-     * @param id The id identifying the automatic dispatch filter.
+     * Deletes the specified automatic dispatch settings.
+     * @param id The id identifying the automatic dispatch settings.
      * @returns A promise that will be resolved when the operation succeeds.
      */
     public async delete(id: string): Promise<void>
@@ -91,9 +91,9 @@ export class AutomaticDispatchSettingsService
     }
 
     /**
-     * Pauses the specified automatic dispatch filter.
-     * @param id The id identifying the automatic dispatch filter.
-     * @returns A promise that will be resolved with the automatic dispatch filter.
+     * Pauses the specified automatic dispatch settings.
+     * @param id The id identifying the automatic dispatch settings.
+     * @returns A promise that will be resolved with the automatic dispatch settings.
      */
     public async pause(id: string): Promise<AutomaticDispatchSettings>
     {
@@ -103,9 +103,9 @@ export class AutomaticDispatchSettingsService
     }
 
     /**
-     * Unpauses the specified automatic dispatch filter.
-     * @param id The id identifying the automatic dispatch filter.
-     * @returns A promise that will be resolved with the automatic dispatch filter.
+     * Unpauses the specified automatic dispatch settings.
+     * @param id The id identifying the automatic dispatch settings.
+     * @returns A promise that will be resolved with the automatic dispatch settings.
      */
      public async unpause(id: string): Promise<AutomaticDispatchSettings>
      {
