@@ -107,10 +107,22 @@ export class AutomaticDispatchSettingsService
      * @param id The id identifying the automatic dispatch settings.
      * @returns A promise that will be resolved with the automatic dispatch settings.
      */
-     public async unpause(id: string): Promise<AutomaticDispatchSettings>
-     {
-         const result = await this._apiClient.post(`automatic-dispatch/settings/${id}/unpause`);
+    public async unpause(id: string): Promise<AutomaticDispatchSettings>
+    {
+        const result = await this._apiClient.post(`automatic-dispatch/settings/${id}/unpause`);
 
-         return new AutomaticDispatchSettings(result.data);
-     }
+        return new AutomaticDispatchSettings(result.data);
+    }
+
+
+
+    /**
+     * Starts a new dispatch job immediately, using the specified automatic dispatch settings.
+     * @param id The id identifying the automatic dispatch settings.
+     * @returns A promise that will be resolved when the operation succeeds.
+     */
+    public async runNow(id: string): Promise<void>
+    {
+        await this._apiClient.post(`automatic-dispatch/settings/${id}/run-now`);
+    }
 }

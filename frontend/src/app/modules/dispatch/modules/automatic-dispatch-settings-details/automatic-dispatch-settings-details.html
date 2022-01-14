@@ -38,6 +38,14 @@
 
                         <div>
 
+                            <button if.bind="!isNew" appearance="outline" accent="primary" click.trigger="onRunNowClick()" translate>
+                                Run now
+                            </button>
+
+                        </div>
+
+                        <div>
+
                             <button if.bind="!isNew && !settings.paused" appearance="outline" accent="primary" click.trigger="onPauseClick()" translate>
                                 Pause
                             </button>

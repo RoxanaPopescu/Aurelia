@@ -1,12 +1,13 @@
 import { autoinject } from "aurelia-framework";
 import { HistoryHelper, Log } from "shared/infrastructure";
-import { IValidation } from "shared/framework";
+import { IValidation, ModalService } from "shared/framework";
 import { addToRecentEntities } from "app/modules/starred/services/recent-item";
-import { AutomaticDispatchSettings, AutomaticDispatchSettingsService } from "app/model/automatic-dispatch";
-import { OrganizationService } from "app/model/organization";
 import { IdentityService } from "app/services/identity";
+import { OrganizationService } from "app/model/organization";
 import { Consignor, Fulfiller } from "app/model/outfit";
 import { VehicleType } from "app/model/vehicle";
+import { AutomaticDispatchSettings, AutomaticDispatchSettingsService } from "app/model/automatic-dispatch";
+import { RunAutomaticDispatchSettingsDialog } from "./modals/confirm-run/confirm-run";
 import routeTitles from "../../resources/strings/route-titles.json";
 
 /**
@@ -32,23 +33,27 @@ export class AutomaticDispatchSettingsDetailsPage
      * @param organizationService The `OrganizationService` instance.
      * @param identityService The `IdentityService` instance.
      * @param historyHelper The `HistoryHelper` instance.
+     * @param modalService The `ModalService` instance.
      */
     public constructor(
         automaticDispatchSettingsService: AutomaticDispatchSettingsService,
         organizationService: OrganizationService,
         identityService: IdentityService,
-        historyHelper: HistoryHelper)
+        historyHelper: HistoryHelper,
+        modalService: ModalService)
     {
         this._automaticDispatchSettingsService = automaticDispatchSettingsService;
         this._organizationService = organizationService;
         this._identityService = identityService;
         this._historyHelper = historyHelper;
+        this._modalService = modalService;
     }
 
     private readonly _automaticDispatchSettingsService: AutomaticDispatchSettingsService;
     private readonly _organizationService: OrganizationService;
     private readonly _identityService: IdentityService;
     private readonly _historyHelper: HistoryHelper;
+    private readonly _modalService: ModalService;
 
     /**
      * The creators connected to the current organization.
@@ -182,7 +187,7 @@ export class AutomaticDispatchSettingsDetailsPage
     }
 
     /**
-     * Called when the pause button is clicked.
+     * Called when the `Pause` button is clicked.
      * Pauses the rule set.
      */
     protected async onPauseClick(): Promise<void>
@@ -204,7 +209,7 @@ export class AutomaticDispatchSettingsDetailsPage
     }
 
     /**
-     * Called when the unpause button is clicked.
+     * Called when the `Unpause` button is clicked.
      * Unpauses the rule set.
      */
     protected async onUnpauseClick(): Promise<void>
@@ -218,6 +223,35 @@ export class AutomaticDispatchSettingsDetailsPage
         catch (error)
         {
             Log.error("Could not unpause the rule set", error);
+        }
+        finally
+        {
+            this.busy = false;
+        }
+    }
+
+    /**
+     * Called when the `Run now` button is clicked.
+     * Schedules the rule set to run immediately.
+     */
+    protected async onRunNowClick(): Promise<void>
+    {
+        const confirmed = await this._modalService.open(RunAutomaticDispatchSettingsDialog, this.settings).promise;
+
+        if (!confirmed)
+        {
+            return;
+        }
+
+        this.busy = true;
+
+        try
+        {
+            await this._automaticDispatchSettingsService.runNow(this.settings.id);
+        }
+        catch (error)
+        {
+            Log.error("Could not run the rule set", error);
         }
         finally
         {
