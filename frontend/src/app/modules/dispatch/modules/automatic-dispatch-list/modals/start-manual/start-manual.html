@@ -8,21 +8,23 @@
 
         <modal-header scroll-fade>
 
-            <h1 class="font-largest margin-bottom flex-row">
-                <div translate>
-                    Start manual
-                </div>
+            <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false" translate>
+                New dispatch job
             </h1>
 
         </modal-header>
 
-        <modal-section if.bind="true" class="">
+        <modal-section class="margin-larger-bottom">
 
-            <div slot="header" translate>
-                Shipment filters
+            <h2 class="font-larger margin-bottom" translate>
+                Order filter
+            </h2>
+
+            <div class="opacity-faded margin-large-bottom" translate>
+                This filter selects the orders that should be automatically dispatched.
             </div>
 
-            <div class="control-row margin-bottom">
+            <div class="control-row margin-large-bottom">
 
                 <tags-input
                     label="above"
@@ -30,7 +32,7 @@
                     class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
-                        Organizations
+                        For orders from one of these creators…
                     </div>
 
                     <div slot="value">
@@ -45,9 +47,10 @@
 
                     <div slot="validation">
 
-                        <required-validator
-                            value.bind="model.filters.shipments.organizationIds.length > 0 ? true : undefined">
-                        </required-validator>
+                        <dependent-validator
+                            set-validity.one-time="true"
+                            validators.bind="shipmentDependentValidator">
+                        </dependent-validator>
 
                     </div>
 
@@ -55,7 +58,7 @@
 
             </div>
 
-            <div class="control-row margin-bottom">
+            <div class="control-row margin-large-bottom">
 
                 <tags-input
                     label="above"
@@ -63,7 +66,7 @@
                     class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
-                        Vehicle types
+                        Match if the order has one of these vehicle types…
                     </div>
 
                     <div slot="value">
@@ -76,7 +79,30 @@
                         ${vehicleType.name}
                     </item>
 
+                    <div slot="validation">
+
+                        <dependent-validator
+                            set-validity.one-time="true"
+                            validators.bind="shipmentDependentValidator">
+                        </dependent-validator>
+
+                    </div>
+
                 </tags-input>
+
+            </div>
+
+            <div class="font-small ${shipmentDependentValidator.invalid ? 'margin-large-bottom' : ''}">
+
+                <custom-validator
+                    view-model.ref="shipmentDependentValidator"
+                    valid.bind="model.filters.shipments.organizationIds.length > 0 || model.filters.shipments.vehicleTypes.length > 0">
+
+                    <template replace-part="invalid" translate>
+                        Please choose at least one creator or vehicle type.
+                    </template>
+
+                </custom-validator>
 
             </div>
 
@@ -84,13 +110,11 @@
 
                 <duration-input
                     label="above"
-                    none.bind="false"
                     value.bind="model.filters.shipments.pickupTime"
-                    class="margin-large-bottom"
                     min.bind="0">
 
                     <div slot="heading" translate>
-                        Pickup time (from now)
+                        And pickup should occur within the next…
                     </div>
 
                     <span slot="after" class="opacity-faded" translate>
@@ -111,13 +135,17 @@
 
         </modal-section>
 
-        <modal-section if.bind="true" class="--line-above" >
+        <modal-section class="margin-bottom">
 
-            <div slot="header" translate>
-                Route filters
+            <h2 class="font-larger margin-bottom" translate>
+                Route filter
+            </h2>
+
+            <div class="opacity-faded margin-large-bottom" translate>
+                This filter selects the routes into which orders may be automatically dispatched.
             </div>
 
-            <div class="control-row margin-bottom">
+            <div class="control-row margin-large-bottom">
 
                 <tags-input
                     label="above"
@@ -125,7 +153,7 @@
                     class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
-                        Organizations
+                        For routes assigned to one of these contractors…
                     </div>
 
                     <div slot="value">
@@ -140,9 +168,14 @@
 
                     <div slot="validation">
 
-                        <required-validator
-                            value.bind="model.filters.routes.organizationIds.length > 0 ? true : undefined">
-                        </required-validator>
+                        <div slot="validation">
+
+                            <dependent-validator
+                                set-validity.one-time="true"
+                                validators.bind="routeDependentValidator">
+                            </dependent-validator>
+
+                        </div>
 
                     </div>
 
@@ -150,7 +183,7 @@
 
             </div>
 
-            <div class="control-row margin-bottom">
+            <div class="control-row margin-large-bottom">
 
                 <tags-input
                     label="above"
@@ -159,7 +192,7 @@
                     class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
-                        Tags
+                        Match if the route has all the tags…
                     </div>
 
                     <div slot="value">
@@ -168,7 +201,30 @@
                         </tag>
                     </div>
 
+                    <div slot="validation">
+
+                        <dependent-validator
+                            set-validity.one-time="true"
+                            validators.bind="routeDependentValidator">
+                        </dependent-validator>
+
+                    </div>
+
                 </tags-input>
+
+            </div>
+
+            <div class="font-small ${routeDependentValidator.invalid ? 'margin-large-bottom' : ''}">
+
+                <custom-validator
+                    view-model.ref="routeDependentValidator"
+                    valid.bind="model.filters.routes.organizationIds.length > 0 || model.filters.routes.tags.length > 0">
+
+                    <template replace-part="invalid" translate>
+                        Please choose at least one contractor or tag.
+                    </template>
+
+                </custom-validator>
 
             </div>
 
@@ -178,7 +234,6 @@
                     label="above"
                     none.bind="false"
                     value.bind="model.filters.routes.pickupTime"
-                    class="margin-bottom"
                     min.bind="0">
 
                     <div slot="heading" translate>
@@ -201,13 +256,9 @@
 
         </modal-section>
 
-        <div class="button-container margin-larger-top">
-
-            <button appearance="solid" accent="primary" click.trigger="onStartClick()" translate>
-                Start
-            </button>
-
-        </div>
+        <button appearance="solid" accent="primary" click.trigger="onStartClick()" class="margin-large-top" translate>
+            Run now
+        </button>
 
     </modal-panel>
 
