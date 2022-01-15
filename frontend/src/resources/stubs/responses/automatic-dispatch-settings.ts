@@ -64,7 +64,7 @@ export default
 
     "POST /api/v2/automatic-dispatch/settings/rule-set-1-id/delete":
     {
-        status: 201
+        status: 204
     },
 
     "POST /api/v2/automatic-dispatch/settings/rule-set-1-id/pause":
@@ -79,7 +79,7 @@ export default
 
     "POST /api/v2/automatic-dispatch/settings/rule-set-1-id/run-now":
     {
-        status: 201
+        status: 204
     },
 
     "GET /api/v2/automatic-dispatch/settings/rule-set-2-id":
@@ -94,7 +94,7 @@ export default
 
     "POST /api/v2/automatic-dispatch/settings/rule-set-2-id/delete":
     {
-        status: 201
+        status: 204
     },
 
     "POST /api/v2/automatic-dispatch/settings/rule-set-2-id/pause":
@@ -109,6 +109,6 @@ export default
 
     "POST /api/v2/automatic-dispatch/settings/rule-set-2-id/run-now":
     {
-        status: 201
+        status: 204
     }
 };

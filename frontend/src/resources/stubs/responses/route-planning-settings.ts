@@ -440,6 +440,6 @@ export default
 
     "POST /api/v1/routeplanning/settingsv2/delete":
     {
-        status: 201
+        status: 204
     }
 };

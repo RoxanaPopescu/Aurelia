@@ -82,6 +82,6 @@ export default
 
     "POST /api/v1/communication/triggers/delete":
     {
-      status: 201
+      status: 204
     }
 }

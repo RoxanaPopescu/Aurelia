@@ -71,11 +71,11 @@ export default
 
     "POST /api/v1/ordergroups/pause":
     {
-        status: 201
+        status: 204
     },
 
     "POST /api/v1/ordergroups/unpause":
     {
-        status: 201
+        status: 204
     }
 };

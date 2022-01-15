@@ -1,4 +1,5 @@
 import { OrganizationInfo } from "app/model/organization";
+import { Duration } from "luxon";
 
 /**
  * Represents a route filter to use for automatic dispatch.
@@ -15,6 +16,7 @@ export class AutomaticDispatchRouteFilter
         {
             this.organizations = data.organizations?.map(o => new OrganizationInfo(o));
             this.tags = data.tags;
+            this.startLeadTime = Duration.fromObject({ seconds: data.startLeadTime });
         }
     }
 
@@ -27,6 +29,11 @@ export class AutomaticDispatchRouteFilter
      * The tags to match, if any.
      */
     public tags: string[] | undefined;
+
+    /**
+     * The max time before the route start time, at which a route may match.
+     */
+    public startLeadTime: Duration;
 
     /**
      * Gets the data representing this instance.
