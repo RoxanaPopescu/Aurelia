@@ -82,7 +82,7 @@
 
             <page-section if-claims="edit-routes">
 
-                <div class="control-row">
+                <div class="control-row margin-large-bottom">
 
                     <text-input label="above" value.bind="settings.name" class="flex-basis-1-of-4" autofocus>
 
@@ -99,6 +99,20 @@
                         </div>
 
                     </text-input>
+
+                </div>
+
+                <div class="control-row">
+
+                    <check-toggle
+                        label="after"
+                        value.bind="settings.autoApprove">
+
+                        <div slot="heading" translate>
+                            Automatically approve dispatch jobs
+                        </div>
+
+                    </check-toggle>
 
                 </div>
 

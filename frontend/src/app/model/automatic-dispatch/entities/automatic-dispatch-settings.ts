@@ -18,6 +18,7 @@ export class AutomaticDispatchSettings
         {
             this.id = data.id;
             this.name = data.name;
+            this.autoApprove = data.autoApprove;
             this.paused = data.paused;
             this.created = DateTime.fromISO(data.createdAt, { setZone: true });
             this.updated = DateTime.fromISO(data.updatedAt, { setZone: true });
@@ -26,6 +27,7 @@ export class AutomaticDispatchSettings
         }
         else
         {
+            this.autoApprove = false;
             this.paused = false;
             this.shipmentFilter = new AutomaticDispatchShipmentFilter();
             this.routeFilter = new AutomaticDispatchRouteFilter();
@@ -33,27 +35,33 @@ export class AutomaticDispatchSettings
     }
 
     /**
-     * The ID identifying the filter.
+     * The ID identifying the settings.
      */
     public readonly id: string;
 
     /**
-     * The name of the filter.
+     * The name of the settings.
      */
     public readonly name: string;
 
     /**
-     * True if the filter is paused, otherwise false.
+     * True if jobs generated based on the settings should be
+     * automatically approved, otherwise false.
+     */
+    public autoApprove: boolean;
+
+    /**
+     * True if the settings is paused, otherwise false.
      */
     public paused: boolean;
 
     /**
-     * The date and time at which the filter was created.
+     * The date and time at which the settings was created.
      */
     public created: DateTime;
 
     /**
-     * The date and time at which the filter was last updated.
+     * The date and time at which the settings was last updated.
      */
     public updated: DateTime;
 
