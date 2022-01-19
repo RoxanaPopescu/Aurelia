@@ -14,9 +14,9 @@ export class AutomaticDispatchSettingsModule extends AppModule
     {
         await context.authorize("view-routes");
 
-        const result = await this.apiClient.get("automatic-dispatch-settings",
+        const result = await this.apiClient.get("automatic-dispatch-settings/settings",
         {
-            headers: { "ownerId": context.user?.organizationId }
+            headers: { "ownerId": context.user!.organizationId }
         });
 
         context.response.body = result.data;
@@ -32,12 +32,14 @@ export class AutomaticDispatchSettingsModule extends AppModule
     {
         await context.authorize("view-routes");
 
-        const result = await this.apiClient.get(`automatic-dispatch-settings/${context.params.id}`,
+        await this.apiClient.get(`automatic-dispatch-settings/settings/${context.params.id}`,
         {
-            headers: { "ownerId": context.user?.organizationId }
+            headers: { "ownerId": context.user!.organizationId }
         });
 
-        context.response.body = result.data;
+        const settings = await this.getDetails(context.user!.organizationId, context.params.id);
+
+        context.response.body = settings;
         context.response.status = 200;
     }
 
@@ -50,13 +52,15 @@ export class AutomaticDispatchSettingsModule extends AppModule
     {
         await context.authorize("edit-routes");
 
-        const result = await this.apiClient.post("automatic-dispatch-settings/create",
+        const result = await this.apiClient.post("automatic-dispatch-settings/settings/create",
         {
-            headers: { "ownerId": context.user?.organizationId },
+            headers: { "ownerId": context.user!.organizationId },
             body: context.request.body
         });
 
-        context.response.body = result.data;
+        const settings = await this.getDetails(context.user!.organizationId, result.data.id);
+
+        context.response.body = settings;
         context.response.status = 200;
     }
 
@@ -70,13 +74,15 @@ export class AutomaticDispatchSettingsModule extends AppModule
     {
         await context.authorize("edit-routes");
 
-        const result = await this.apiClient.post(`automatic-dispatch-settings/${context.params.id}/update`,
+        await this.apiClient.post(`automatic-dispatch-settings/settings/${context.params.id}/update`,
         {
-            headers: { "ownerId": context.user?.organizationId },
+            headers: { "ownerId": context.user!.organizationId },
             body: context.request.body
         });
 
-        context.response.body = result.data;
+        const settings = await this.getDetails(context.user!.organizationId, context.params.id);
+
+        context.response.body = settings;
         context.response.status = 200;
     }
 
@@ -88,9 +94,9 @@ export class AutomaticDispatchSettingsModule extends AppModule
     {
         await context.authorize("edit-routes");
 
-        await this.apiClient.post(`automatic-dispatch-settings/${context.params.id}/delete`,
+        await this.apiClient.post(`automatic-dispatch-settings/settings/${context.params.id}/delete`,
         {
-            headers: { "ownerId": context.user?.organizationId }
+            headers: { "ownerId": context.user!.organizationId }
         });
 
         context.response.status = 201;
@@ -105,12 +111,14 @@ export class AutomaticDispatchSettingsModule extends AppModule
     {
         await context.authorize("edit-routes");
 
-        const result = await this.apiClient.post(`automatic-dispatch-settings/${context.params.id}/pause`,
+        await this.apiClient.post(`automatic-dispatch-settings/settings/${context.params.id}/pause`,
         {
-            headers: { "ownerId": context.user?.organizationId }
+            headers: { "ownerId": context.user!.organizationId }
         });
 
-        context.response.body = result.data;
+        const settings = await this.getDetails(context.user!.organizationId, context.params.id);
+
+        context.response.body = settings;
         context.response.status = 200;
     }
 
@@ -123,12 +131,14 @@ export class AutomaticDispatchSettingsModule extends AppModule
     {
         await context.authorize("edit-routes");
 
-        const result = await this.apiClient.post(`automatic-dispatch-settings/${context.params.id}/unpause`,
+        await this.apiClient.post(`automatic-dispatch-settings/settings/${context.params.id}/unpause`,
         {
-            headers: { "ownerId": context.user?.organizationId }
+            headers: { "ownerId": context.user!.organizationId }
         });
 
-        context.response.body = result.data;
+        const settings = await this.getDetails(context.user!.organizationId, context.params.id);
+
+        context.response.body = settings;
         context.response.status = 200;
     }
 
@@ -140,11 +150,27 @@ export class AutomaticDispatchSettingsModule extends AppModule
     {
         await context.authorize("edit-routes");
 
-        await this.apiClient.post(`automatic-dispatch-settings/${context.params.id}/run-now`,
+        await this.apiClient.post(`automatic-dispatch-settings/settings/${context.params.id}/run-now`,
         {
-            headers: { "ownerId": context.user?.organizationId }
+            headers: { "ownerId": context.user!.organizationId }
         });
 
         context.response.status = 201;
+    }
+
+    /**
+     * Gets the specified automatic dispatch settings.
+     * @param organizationId The ID of the organization owning the automatic dispatch settings.
+     * @param settingsId The ID of the automatic dispatch settings to get.
+     * @returns The automatic dispatch settings.
+     */
+    private async getDetails(organizationId: string, settingsId: string): Promise<any>
+    {
+        const result = await this.apiClient.get("automatic-dispatch-settings/settings",
+        {
+            headers: { "ownerId": organizationId }
+        });
+
+        return result.data;
     }
 }
