@@ -99,7 +99,7 @@ export class AutomaticDispatchSettingsModule extends AppModule
             headers: { "ownerId": context.user!.organizationId }
         });
 
-        context.response.status = 201;
+        context.response.status = 204;
     }
 
     /**
@@ -150,12 +150,34 @@ export class AutomaticDispatchSettingsModule extends AppModule
     {
         await context.authorize("edit-routes");
 
-        await this.apiClient.post(`automatic-dispatch-settings/settings/${context.params.id}/run-now`,
+        // HACK: We do not currently have an endpoint to run a rule set, so we abuse the old start manual instead.
+
+        const settings = await this.getDetails(context.user!.organizationId, context.params.id);
+
+        await this.apiClient.post("automatic-dispatch-orchestrator/jobs",
         {
-            headers: { "ownerId": context.user!.organizationId }
+            headers: { "ownerId": context.user?.organizationId },
+            body:
+            {
+                filters:
+                {
+                    shipments: settings.shipmentFilter == null ? undefined :
+                    {
+                        organizationIds: settings.shipmentFilter.organizationIds,
+                        vehicleTypes: settings.shipmentFilter.vehicleTypeIds,
+                        pickupTime: settings.shipmentFilter.pickupLeadTime
+                    },
+                    routes: settings.routeFilter == null ? undefined :
+                    {
+                        organizationIds: settings.routeFilter.organizationIds,
+                        tags: settings.routeFilter.tags,
+                        pickupTime: settings.routeFilter.startLeadTime
+                    }
+                }
+            }
         });
 
-        context.response.status = 201;
+        context.response.status = 204;
     }
 
     /**
