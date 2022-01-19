@@ -1,9 +1,9 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, computedFrom } from "aurelia-framework";
 import { HistoryHelper, Log } from "shared/infrastructure";
 import { IValidation, ModalService } from "shared/framework";
 import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 import { IdentityService } from "app/services/identity";
-import { OrganizationService } from "app/model/organization";
+import { OrganizationConnection, OrganizationService } from "app/model/organization";
 import { Consignor, Fulfiller } from "app/model/outfit";
 import { VehicleType } from "app/model/vehicle";
 import { AutomaticDispatchSettings, AutomaticDispatchSettingsService } from "app/model/automatic-dispatch";
@@ -96,6 +96,24 @@ export class AutomaticDispatchSettingsDetailsPage
     protected busy: boolean = false;
 
     /**
+     * Gets the names of the selected creators, if any.
+     */
+    @computedFrom("availableCreators.length", "settings.shipmentFilter.organizationIds.length")
+    protected get selectedCreatorNames(): string[] | undefined
+    {
+        return this.availableCreators == null ? undefined : this.settings.shipmentFilter.organizationIds?.map(id => this.availableCreators.find(o => o.id === id)?.primaryName ?? id);
+    }
+
+    /**
+     * Gets the names of the selected contractor, if any.
+     */
+    @computedFrom("availableContractors.length", "settings.routeFilter.organizationIds.length")
+    protected get selectedContractorNames(): string[] | undefined
+    {
+        return this.availableContractors == null ? undefined : this.settings.routeFilter.organizationIds?.map(id => this.availableContractors.find(o => o.id === id)?.primaryName ?? id);
+    }
+
+    /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
      * @returns A promise that will be resolved when the module is activated.
@@ -104,15 +122,23 @@ export class AutomaticDispatchSettingsDetailsPage
     {
         this.isNew = params.id == null;
 
+        let connections: OrganizationConnection[];
+
         if (!this.isNew)
         {
-            this.settings = await this._automaticDispatchSettingsService.get(params.id!);
+            [this.settings, connections] = await Promise.all([
+                this._automaticDispatchSettingsService.get(params.id!),
+                this._organizationService.getConnections()
+            ]);
+
             this.ruleSetName = this.settings.name;
 
             addToRecentEntities(this.settings.toEntityInfo());
         }
         else
         {
+            connections = await this._organizationService.getConnections();
+
             this.settings = new AutomaticDispatchSettings();
             this.ruleSetName = routeTitles.newAutomaticDispatchSettings;
         }
@@ -125,8 +151,6 @@ export class AutomaticDispatchSettingsDetailsPage
         (async () =>
         {
             this.availableVehicleTypes = VehicleType.getAll();
-
-            const connections = await this._organizationService.getConnections();
 
             this.availableCreators = connections.map(c => new Consignor({ id: c.organization.id, companyName: c.organization.name }));
             this.availableCreators.push(this._identityService.identity!.organization!);

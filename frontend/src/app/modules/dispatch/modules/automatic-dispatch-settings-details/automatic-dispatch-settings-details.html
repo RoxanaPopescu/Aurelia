@@ -150,8 +150,8 @@
                             </span>
 
                             <div slot="value">
-                                <tag repeat.for="organization of settings.shipmentFilter.organizations">
-                                    ${organization.primaryName}
+                                <tag repeat.for="creatorName of selectedCreatorNames">
+                                    ${creatorName}
                                 </tag>
                             </div>
 
@@ -278,8 +278,8 @@
                             </span>
 
                             <div slot="value">
-                                <tag repeat.for="organization of settings.routeFilter.organizations">
-                                    ${organization.primaryName}
+                                <tag repeat.for="contractorName of selectedContractorNames">
+                                    ${contractorName}
                                 </tag>
                             </div>
 

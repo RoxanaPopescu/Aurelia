@@ -1,5 +1,5 @@
-import { AppContext } from "../../app-context";
-import { AppModule } from "../../app-module";
+import { AppContext } from "../../../../app-context";
+import { AppModule } from "../../../../app-module";
 
 /**
  * Represents a module exposing endpoints related to automatic dispatch settings.
@@ -19,7 +19,7 @@ export class AutomaticDispatchSettingsModule extends AppModule
             headers: { "ownerId": context.user!.organizationId }
         });
 
-        context.response.body = result.data;
+        context.response.body = result.data.settings;
         context.response.status = 200;
     }
 
@@ -166,7 +166,7 @@ export class AutomaticDispatchSettingsModule extends AppModule
      */
     private async getDetails(organizationId: string, settingsId: string): Promise<any>
     {
-        const result = await this.apiClient.get("automatic-dispatch-settings/settings",
+        const result = await this.apiClient.get(`automatic-dispatch-settings/settings/${settingsId}`,
         {
             headers: { "ownerId": organizationId }
         });

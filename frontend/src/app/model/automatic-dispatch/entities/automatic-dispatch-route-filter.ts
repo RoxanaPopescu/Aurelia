@@ -1,4 +1,3 @@
-import { OrganizationInfo } from "app/model/organization";
 import { Duration } from "luxon";
 
 /**
@@ -14,16 +13,16 @@ export class AutomaticDispatchRouteFilter
     {
         if (data != null)
         {
-            this.organizations = data.organizations?.map(o => new OrganizationInfo(o));
+            this.organizationIds = data.organizationIds;
             this.tags = data.tags;
             this.startLeadTime = Duration.fromObject({ seconds: data.startLeadTime });
         }
     }
 
     /**
-     * The organizations to match, if any.
+     * The organization IDs to match, if any.
      */
-    public organizations: OrganizationInfo[] | undefined;
+    public organizationIds: string[] | undefined;
 
     /**
      * The tags to match, if any.
@@ -42,8 +41,9 @@ export class AutomaticDispatchRouteFilter
     {
         const data =
         {
-            organizationIds: this.organizations?.map(o => o.id),
-            tags: this.tags
+            organizationIds: this.organizationIds,
+            tags: this.tags,
+            startLeadTime: this.startLeadTime?.as("seconds")
         };
 
         return data;

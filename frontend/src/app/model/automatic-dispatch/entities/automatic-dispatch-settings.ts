@@ -97,6 +97,7 @@ export class AutomaticDispatchSettings
         {
             id: this.id,
             name: this.name,
+            autoApprove: this.autoApprove,
             shipmentFilter: this.shipmentFilter,
             routeFilter: this.routeFilter
         };

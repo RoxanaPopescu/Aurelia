@@ -1,6 +1,5 @@
 import { Duration } from "luxon";
 import { VehicleType } from "app/model/vehicle";
-import { OrganizationInfo } from "app/model/organization";
 
 /**
  * Represents a shipment filter to use for automatic dispatch.
@@ -15,16 +14,16 @@ export class AutomaticDispatchShipmentFilter
     {
         if (data != null)
         {
-            this.organizations = data.organizations?.map(o => new OrganizationInfo(o));
-            this.vehicleTypes = data.vehicleTypes?.map(id => VehicleType.get(id));
+            this.organizationIds = data.organizationIds;
+            this.vehicleTypes = data.vehicleTypeIds?.map(id => VehicleType.get(id));
             this.pickupLeadTime = Duration.fromObject({ seconds: data.pickupLeadTime });
         }
     }
 
     /**
-     * The organizations to match, if any.
+     * The organization IDs to match, if any.
      */
-    public organizations: OrganizationInfo[] | undefined;
+    public organizationIds: string[] | undefined;
 
     /**
      * The vehicle types to match, if any.
@@ -43,7 +42,7 @@ export class AutomaticDispatchShipmentFilter
     {
         const data =
         {
-            organizationIds: this.organizations?.map(o => o.id),
+            organizationIds: this.organizationIds,
             vehicleTypeIds: this.vehicleTypes?.map(vt => vt.id),
             pickupLeadTime: this.pickupLeadTime?.as("seconds")
         };

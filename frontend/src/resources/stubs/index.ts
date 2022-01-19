@@ -25,7 +25,7 @@ import { IResponseStubs } from "shared/infrastructure";
 // import searchesSaved from "./responses/searches-saved";
 // import searchesRecent from "./responses/searches-recent";
 // import searchesQuery from "./responses/searches-query";
-import automaticDispatchSettings from "./responses/automatic-dispatch-settings";
+// import automaticDispatchSettings from "./responses/automatic-dispatch-settings";
 
 /**
  * Here you can stub HTTP responses e.g. if the API is not yet available.
@@ -63,5 +63,5 @@ export const stubs: IResponseStubs =
     // ...searchesSaved,
     // ...searchesRecent,
     // ...searchesQuery
-    ...automaticDispatchSettings
+    // ...automaticDispatchSettings
 };
