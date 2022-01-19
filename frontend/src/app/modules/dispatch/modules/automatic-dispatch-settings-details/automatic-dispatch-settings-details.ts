@@ -149,19 +149,13 @@ export class AutomaticDispatchSettingsDetailsPage
 
         setTimeout(() => this._historyHelper.setTitle(`${this.ruleSetName}${this._historyHelper.titleSeparator}${document.title}`));
 
-        // Execute tasks that should not block rendering.
+        this.availableVehicleTypes = VehicleType.getAll();
 
-        // tslint:disable-next-line: no-floating-promises
-        (async () =>
-        {
-            this.availableVehicleTypes = VehicleType.getAll();
+        this.availableCreators = connections.map(c => new Consignor({ id: c.organization.id, companyName: c.organization.name }));
+        this.availableCreators.push(this._identityService.identity!.organization!);
 
-            this.availableCreators = connections.map(c => new Consignor({ id: c.organization.id, companyName: c.organization.name }));
-            this.availableCreators.push(this._identityService.identity!.organization!);
-
-            this.availableContractors = connections.map(c => new Fulfiller({ id: c.organization.id, companyName: c.organization.name }));
-            this.availableContractors.push(this._identityService.identity!.organization!);
-        })();
+        this.availableContractors = connections.map(c => new Fulfiller({ id: c.organization.id, companyName: c.organization.name }));
+        this.availableContractors.push(this._identityService.identity!.organization!);
     }
 
     /**
