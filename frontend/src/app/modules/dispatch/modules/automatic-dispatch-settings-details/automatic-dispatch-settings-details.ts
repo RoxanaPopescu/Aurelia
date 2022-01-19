@@ -101,7 +101,9 @@ export class AutomaticDispatchSettingsDetailsPage
     @computedFrom("availableCreators.length", "settings.shipmentFilter.organizationIds.length")
     protected get selectedCreatorNames(): string[] | undefined
     {
-        return this.availableCreators == null ? undefined : this.settings.shipmentFilter.organizationIds?.map(id => this.availableCreators.find(o => o.id === id)?.primaryName ?? id);
+        return this.availableCreators != null
+            ? this.settings.shipmentFilter.organizationIds?.map(id => this.availableCreators.find(o => o.id === id)?.primaryName ?? id)
+            : undefined;
     }
 
     /**
@@ -110,7 +112,9 @@ export class AutomaticDispatchSettingsDetailsPage
     @computedFrom("availableContractors.length", "settings.routeFilter.organizationIds.length")
     protected get selectedContractorNames(): string[] | undefined
     {
-        return this.availableContractors == null ? undefined : this.settings.routeFilter.organizationIds?.map(id => this.availableContractors.find(o => o.id === id)?.primaryName ?? id);
+        return this.availableContractors != null
+            ? this.settings.routeFilter.organizationIds?.map(id => this.availableContractors.find(o => o.id === id)?.primaryName ?? id)
+            : undefined;
     }
 
     /**

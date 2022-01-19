@@ -135,7 +135,7 @@
                         </p>
 
                         <tags-input
-                            value.bind="settings.shipmentFilter.organizations"
+                            value.bind="settings.shipmentFilter.organizationIds"
                             label="above"
                             filter="auto"
                             fixed.bind="true"
@@ -155,7 +155,7 @@
                                 </tag>
                             </div>
 
-                            <item repeat.for="organization of availableCreators" model.bind="organization">
+                            <item repeat.for="organization of availableCreators" model.bind="organization.id">
                                 ${organization.primaryName}
                             </item>
 
@@ -210,7 +210,7 @@
 
                             <custom-validator
                                 view-model.ref="shipmentDependentValidator"
-                                valid.bind="settings.shipmentFilter.organizations.length > 0 || settings.shipmentFilter.vehicleTypes.length > 0">
+                                valid.bind="settings.shipmentFilter.organizationIds.length > 0 || settings.shipmentFilter.vehicleTypes.length > 0">
 
                                 <template replace-part="invalid" translate>
                                     Please choose at least one creator or vehicle type.
@@ -263,7 +263,7 @@
                         </p>
 
                         <tags-input
-                            value.bind="settings.routeFilter.organizations"
+                            value.bind="settings.routeFilter.organizationIds"
                             label="above"
                             filter="auto"
                             fixed.bind="true"
@@ -283,7 +283,7 @@
                                 </tag>
                             </div>
 
-                            <item repeat.for="organization of availableContractors" model.bind="organization">
+                            <item repeat.for="organization of availableContractors" model.bind="organization.id">
                                 ${organization.primaryName}
                             </item>
 
@@ -334,7 +334,7 @@
 
                             <custom-validator
                                 view-model.ref="routeDependentValidator"
-                                valid.bind="settings.routeFilter.organizations.length > 0 || settings.routeFilter.tags.length > 0">
+                                valid.bind="settings.routeFilter.organizationIds.length > 0 || settings.routeFilter.tags.length > 0">
 
                                 <template replace-part="invalid" translate>
                                     Please choose at least one contractor or tag.
