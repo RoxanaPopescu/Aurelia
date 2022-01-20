@@ -121,7 +121,7 @@ export class AutomaticDispatchSettingsService
      */
     public async runNow(id: string): Promise<string>
     {
-        var result = await this._apiClient.post(`automatic-dispatch/settings/${id}/run-now`);
+        const result = await this._apiClient.post(`automatic-dispatch/settings/${id}/run-now`);
 
         return result.data.id;
     }
