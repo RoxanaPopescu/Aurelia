@@ -158,7 +158,7 @@ export class AutomaticDispatchSettingsModule extends AppModule
 
         try
         {
-            var result = await this.apiClient.post("automatic-dispatch-orchestrator/jobs",
+            const result = await this.apiClient.post("automatic-dispatch-orchestrator/jobs",
             {
                 headers: { "ownerId": context.user?.organizationId },
                 body:
