@@ -1,3 +1,4 @@
+import { ApiError } from "../../../../../shared/infrastructure";
 import { AppContext } from "../../../../app-context";
 import { AppModule } from "../../../../app-module";
 
@@ -145,6 +146,7 @@ export class AutomaticDispatchSettingsModule extends AppModule
     /**
      * Starts a new dispatch job immediately, using the specified automatic dispatch settings.
      * @param context.params.id The ID of the automatic dispatch settings to use.
+     * @returns An object with the ID of the new dispatch job, or status 409 if no job could be created.
      */
     public "POST /v2/automatic-dispatch/settings/:id/run-now" = async (context: AppContext) =>
     {
@@ -154,30 +156,46 @@ export class AutomaticDispatchSettingsModule extends AppModule
 
         const settings = await this.getDetails(context.user!.organizationId, context.params.id);
 
-        await this.apiClient.post("automatic-dispatch-orchestrator/jobs",
+        try
         {
-            headers: { "ownerId": context.user?.organizationId },
-            body:
+            var result = await this.apiClient.post("automatic-dispatch-orchestrator/jobs",
             {
-                filters:
+                headers: { "ownerId": context.user?.organizationId },
+                body:
                 {
-                    shipments: settings.shipmentFilter == null ? undefined :
+                    name: settings.name,
+                    filters:
                     {
-                        organizationIds: settings.shipmentFilter.organizationIds,
-                        vehicleTypes: settings.shipmentFilter.vehicleTypeIds,
-                        pickupTime: settings.shipmentFilter.pickupLeadTime
-                    },
-                    routes: settings.routeFilter == null ? undefined :
-                    {
-                        organizationIds: settings.routeFilter.organizationIds,
-                        tags: settings.routeFilter.tags,
-                        pickupTime: settings.routeFilter.startLeadTime
+                        shipments: settings.shipmentFilter == null ? undefined :
+                        {
+                            organizationIds: settings.shipmentFilter.organizationIds,
+                            vehicleTypes: settings.shipmentFilter.vehicleTypeIds,
+                            pickupTime: settings.shipmentFilter.pickupLeadTime
+                        },
+                        routes: settings.routeFilter == null ? undefined :
+                        {
+                            organizationIds: settings.routeFilter.organizationIds,
+                            tags: settings.routeFilter.tags,
+                            pickupTime: settings.routeFilter.startLeadTime
+                        }
                     }
                 }
-            }
-        });
+            });
 
-        context.response.status = 204;
+            context.response.body = result.data;
+            context.response.status = 200;
+        }
+        catch (error)
+        {
+            if (error instanceof ApiError && error.response?.status === 404)
+            {
+                context.response.status = 409;
+            }
+            else
+            {
+                throw error;
+            }
+        }
     }
 
     /**

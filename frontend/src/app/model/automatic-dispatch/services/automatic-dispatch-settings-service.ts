@@ -117,10 +117,12 @@ export class AutomaticDispatchSettingsService
     /**
      * Starts a new dispatch job immediately, using the specified automatic dispatch settings.
      * @param id The id identifying the automatic dispatch settings.
-     * @returns A promise that will be resolved when the operation succeeds.
+     * @returns A promise that will be resolved with the ID of the new dispatch job.
      */
-    public async runNow(id: string): Promise<void>
+    public async runNow(id: string): Promise<string>
     {
-        await this._apiClient.post(`automatic-dispatch/settings/${id}/run-now`);
+        var result = await this._apiClient.post(`automatic-dispatch/settings/${id}/run-now`);
+
+        return result.data.id;
     }
 }
