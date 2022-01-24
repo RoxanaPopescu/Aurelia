@@ -5,6 +5,8 @@ import { DateTimeRange } from "shared/src/model/general/dateTimeRange";
 const locale = ENVIRONMENT.locale.includes("da") ? "da" :
                ENVIRONMENT.locale.includes("it") ? "it" :
                ENVIRONMENT.locale.includes("de") ? "de" :
+               ENVIRONMENT.locale.includes("fi") ? "fi" :
+               ENVIRONMENT.locale.includes("nl") ? "nl" :
                ENVIRONMENT.locale.includes("fr") ? "fr" : "en";
 
 const formatLocale = "da";
@@ -39,6 +41,8 @@ namespace Area {
           en: require("./operations/en.json"),
           it: require("./operations/it.json"),
           de: require("./operations/de.json"),
+          fi: require("./operations/fi.json"),
+          nl: require("./operations/nl.json"),
           fr: require("./operations/fr.json")
         };
       case Area.Shared:
@@ -47,6 +51,8 @@ namespace Area {
           en: require("./shared/en.json"),
           it: require("./shared/it.json"),
           de: require("./shared/de.json"),
+          fi: require("./shared/fi.json"),
+          nl: require("./shared/nl.json"),
           fr: require("./shared/fr.json")
         };
     }
