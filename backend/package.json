@@ -19,6 +19,7 @@
     "start": "node \"artifacts/build/index\"",
     "lint": "tslint --project \"tsconfig.json\"",
     "translate-export": "ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-export\"",
+    "translate-export-phrase": "ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-export-phrase\"",
     "translate-pseudo": "ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-pseudo\"",
     "translate": "npm run translate-export && ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-update\""
   },
@@ -63,6 +64,8 @@
     "@types/node-fetch": "^2.5.7",
     "@types/uuid": "^8.3.1",
     "gulp-translate": "^1.5.9",
+    "gulp": "^4.0.2",
+    "gulp-rename": "^2.0.0",
     "nodemon": "^2.0.15",
     "rimraf": "^3.0.2",
     "ts-node": "^10.4.0",
