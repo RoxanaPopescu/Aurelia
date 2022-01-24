@@ -1,6 +1,6 @@
 import { autoinject, computedFrom } from "aurelia-framework";
-import { HistoryHelper, Log } from "shared/infrastructure";
-import { IValidation, ModalService } from "shared/framework";
+import { ApiError, HistoryHelper, Log } from "shared/infrastructure";
+import { IValidation, ModalService, ToastService } from "shared/framework";
 import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 import { IdentityService } from "app/services/identity";
 import { OrganizationConnection, OrganizationService } from "app/model/organization";
@@ -9,6 +9,7 @@ import { VehicleType } from "app/model/vehicle";
 import { AutomaticDispatchSettings, AutomaticDispatchSettingsService } from "app/model/automatic-dispatch";
 import { RunAutomaticDispatchSettingsDialog } from "./modals/confirm-run/confirm-run";
 import routeTitles from "../../resources/strings/route-titles.json";
+import runNowSuccessToastMessage from "./resources/strings/run-now-success-toast.json";
 
 /**
  * Represents the route parameters for the page.
@@ -34,19 +35,22 @@ export class AutomaticDispatchSettingsDetailsPage
      * @param identityService The `IdentityService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      * @param modalService The `ModalService` instance.
+     * @param toastService The `ToastService` instance.
      */
     public constructor(
         automaticDispatchSettingsService: AutomaticDispatchSettingsService,
         organizationService: OrganizationService,
         identityService: IdentityService,
         historyHelper: HistoryHelper,
-        modalService: ModalService)
+        modalService: ModalService,
+        toastService: ToastService)
     {
         this._automaticDispatchSettingsService = automaticDispatchSettingsService;
         this._organizationService = organizationService;
         this._identityService = identityService;
         this._historyHelper = historyHelper;
         this._modalService = modalService;
+        this._toastService = toastService;
     }
 
     private readonly _automaticDispatchSettingsService: AutomaticDispatchSettingsService;
@@ -54,6 +58,7 @@ export class AutomaticDispatchSettingsDetailsPage
     private readonly _identityService: IdentityService;
     private readonly _historyHelper: HistoryHelper;
     private readonly _modalService: ModalService;
+    private readonly _toastService: ToastService;
 
     /**
      * The creators connected to the current organization.
@@ -265,15 +270,37 @@ export class AutomaticDispatchSettingsDetailsPage
             return;
         }
 
-        this.busy = true;
-
         try
         {
-            await this._automaticDispatchSettingsService.runNow(this.settings.id);
+            this.busy = true;
+
+            const dispatchJobId = await this._automaticDispatchSettingsService.runNow(this.settings.id);
+
+            const toastModel =
+            {
+                heading: runNowSuccessToastMessage.heading,
+                body: runNowSuccessToastMessage.body,
+                url: `/dispatch/jobs/details/${dispatchJobId}`
+            };
+
+            this._toastService.open("success", toastModel);
         }
         catch (error)
         {
-            Log.error("Could not run the rule set", error);
+            if (error instanceof ApiError && error.response?.status === 409)
+            {
+                const toastModel =
+                {
+                    heading: "Could not create dispatch job",
+                    body: "There are currently no routes active, or no orders to be express dispatched."
+                };
+
+                this._toastService.open("warning", toastModel);
+            }
+            else
+            {
+                Log.error("Could not create dispatch job", error);
+            }
         }
         finally
         {

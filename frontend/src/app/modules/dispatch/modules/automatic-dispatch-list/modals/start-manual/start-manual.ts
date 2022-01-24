@@ -138,20 +138,19 @@ export class StartManualPanel
             {
                 const toastModel =
                 {
-                    heading: "No results",
-                    body: "There are no routes currently active or no requests in the status 'to-be-express-dispatched'"
+                    heading: "Could not create dispatch job",
+                    body: "There are currently no routes active, or no orders to be express dispatched."
                 };
 
                 this._toastService.open("warning", toastModel);
             }
             else
             {
-                Log.error("Could not save the order", error);
+                Log.error("Could not create dispatch job", error);
             }
         }
         finally
         {
-            // Mark the modal as not busy.
             this._modal.busy = false;
         }
     }
