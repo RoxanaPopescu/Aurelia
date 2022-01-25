@@ -26,10 +26,16 @@ export default class RoutePlanningRoutesStopComponent extends React.Component<
       <div
         className="c-routePlanning-unscheduledStop"
         onClick={() => {
+          // FIXME: Currently data-finance are not sending data correctly. For now we forward the GUID as a SLUG.
+          window.open("/routes/details/" + this.props.task.shipment.id.replaceAll("-", ""))
+
+          /*
           this.props.store.zoomToCoordinate(
             stop.location.position!.toGoogleLatLng()
           );
           this.props.store.focusRoute(undefined);
+
+          */
         }}
         title={this.props.task.reasons.join(", ")}
       >
