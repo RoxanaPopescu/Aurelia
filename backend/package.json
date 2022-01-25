@@ -20,6 +20,7 @@
     "lint": "tslint --project \"tsconfig.json\"",
     "translate-export": "ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-export\"",
     "translate-export-phrase": "ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-export-phrase\"",
+    "translate-import-phrase": "ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-import-phrase\"",
     "translate-pseudo": "ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-pseudo\"",
     "translate": "npm run translate-export && ts-node --project \"tools/tsconfig.json\" \"tools/scripts/translate-update\""
   },
