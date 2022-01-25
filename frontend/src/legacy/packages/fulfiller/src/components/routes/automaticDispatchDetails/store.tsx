@@ -448,6 +448,10 @@ export class RoutePlanningStore {
             };
           }}
           zIndex={9999}
+          onMouseDown={() => {
+            // FIXME: Currently data-finance are not sending data correctly. For now we forward the GUID as a SLUG.
+            window.open("/routes/details/" + task.shipment.id.replaceAll("-", ""))
+          }}
           onMouseOut={() => {
             this.hoveredItem = undefined;
           }}
