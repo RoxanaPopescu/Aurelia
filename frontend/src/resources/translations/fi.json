@@ -1475,7 +1475,7 @@
     "2cdd71c58": "Anna arvo, joka ei sisällä peräkkäisiä merkkejä <kbd>-</kbd>.",
     "307ff5bf2": "Poista tyhjät linkit.",
     "36aec3d48": "Anna kelvollinen sähköpostiosoite.",
-    "372616bfb": "${expanded ? 'Piilota sivupalkki' - 'Näytä sivupalkki}",
+    "372616bfb": "${expanded ? 'Piilota sivupalkki' : 'Näytä sivupalkki'}",
     "38995286f": "Anna arvo.",
     "44a9323ae": "Lisää kirjoittamalla...",
     "484de18af": "Uusi tagi",
