@@ -73,8 +73,9 @@ RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=da -
 RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=it --commit=${COMMIT}
 RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=de --commit=${COMMIT}
 RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=fr --commit=${COMMIT}
+RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=fi --commit=${COMMIT}
+RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=nl --commit=${COMMIT}
 RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=en-US --commit=${COMMIT}
-RUN npm run build -- --environment=${ENVIRONMENT} --platform=cloud --locale=en-US-x-pseudo --commit=${COMMIT}
 
 # Stage 2: Build the `frontend-cloud` package.
 

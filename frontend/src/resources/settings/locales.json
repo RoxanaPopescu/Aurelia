@@ -5,12 +5,6 @@
       "name": "English"
   },
   {
-      "code": "en-US-x-pseudo",
-      "unicodeExtension": "u-ca-iso8601-nu-latn",
-      "name": "English [pseudo]",
-      "environments": ["development"]
-  },
-  {
       "code": "da",
       "unicodeExtension": "u-ca-iso8601-nu-latn",
       "name": "Dansk"
@@ -29,5 +23,15 @@
       "code": "fr",
       "unicodeExtension": "u-ca-iso8601-nu-latn",
       "name": "Français"
+  },
+  {
+      "code": "fi",
+      "unicodeExtension": "u-ca-iso8601-nu-latn",
+      "name": "Viedä loppuun"
+  },
+  {
+      "code": "nl",
+      "unicodeExtension": "u-ca-iso8601-nu-latn",
+      "name": "Nederlands"
   }
 ]
