@@ -1488,7 +1488,7 @@
     "6e97531aa": "Anna arvo, jonka pituus on tarkalleen ottaen ${min | number}.",
     "7275026cb": "Anna kelvollinen puhelinnumero.",
     "729e9e531": "Anna arvo, jonka pituus on vähintään ${min | number}.",
-    "72a1d23a4": "/ ${computedPageCount | number}",
+    "72a1d23a4": "of ${computedPageCount | number}",
     "747c04115": "Uusi kansio",
     "773da66ad": "Ohita kaikki <b>${toastService.toasts.length | number & debounce}</b> ilmoitukset",
     "77ba0a632": "Anna kelvollinen kansainvälinen puhelinnumero, jonka alussa on <kbd>+</kbd>.",
