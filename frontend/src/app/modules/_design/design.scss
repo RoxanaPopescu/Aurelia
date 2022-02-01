@@ -11,10 +11,8 @@
 
 .app-modules-design-sidebar
 {
-    flex-shrink: 0;
+    --page-sidebar-min-width: 180rem;
     padding: 36rem;
-    background-color: var(--surface-color);
-    color: var(--surface-text-color);
 }
 
 .app-modules-design-content
