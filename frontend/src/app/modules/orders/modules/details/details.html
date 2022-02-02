@@ -325,7 +325,7 @@
 
                     <div class="control-row flex-push-right" if.bind="order != null">
 
-                        <div if.bind="true || routeId != null">
+                        <div if.bind="routeId != null">
                             <select-button
                                 if-claims="edit-routes"
                                 disabled.bind="order.status.slug == 'ready'"
