@@ -88,6 +88,30 @@ export class OrdersModule extends AppModule
     }
 
     /**
+     * Removes the specified order from its current route, executing the specified action.
+     * @returns 200 OK
+     */
+    public "POST /v2/orders/remove-from-route" = async (context: AppContext) =>
+    {
+        await context.authorize("edit-routes");
+
+        await this.apiClient.post("logistics-platform/routes/v5/remove-order-from-route",
+        {
+            noi: true,
+            body:
+            {
+                RouteId: context.request.body.routeId,
+                OrderOwnerId: context.request.body.consignorId,
+                OrderId: context.request.body.orderSlug,
+                OrderAction: context.request.body.action,
+                ActionBy: context.user!.id
+            }
+        });
+
+        context.response.status = 200;
+    }
+
+    /**
      * Edits an order
      * @returns 200 OK
      */

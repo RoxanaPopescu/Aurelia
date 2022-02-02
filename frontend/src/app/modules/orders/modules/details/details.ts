@@ -1,11 +1,12 @@
 import { autoinject } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { Log } from "shared/infrastructure";
-import { ModalService, IScroll } from "shared/framework";
+import { ModalService, IScroll, ToastService } from "shared/framework";
 import { IdentityService } from "app/services/identity";
 import { OrderService, OrderStatus, Order, OrderStatusSlug } from "app/model/order";
 import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 import { EditOrderPanel } from "./modals/edit-order/edit-order";
+import removeOrderFromRouteToast from "./resources/strings/remove-order-from-route-toast.json";
 
 /**
  * Represents the order parameters for the page.
@@ -29,19 +30,22 @@ export class DetailsModule
      * @param router The `Router` instance.
      * @param orderService The `OrderService` instance.
      * @param modalService The `ModalService` instance.
+     * @param toastService The `ToastService` instance.
      * @param identityService The `IdentityService` instance.
      */
-    public constructor(router: Router, orderService: OrderService, modalService: ModalService, identityService: IdentityService)
+    public constructor(router: Router, orderService: OrderService, modalService: ModalService, toastService: ToastService, identityService: IdentityService)
     {
         this._router = router;
         this._orderService = orderService;
         this._modalService = modalService;
+        this._toastService = toastService;
         this.identityService = identityService;
     }
 
     private readonly _router: Router;
     private readonly _orderService: OrderService;
     private readonly _modalService: ModalService;
+    private readonly _toastService: ToastService;
     protected readonly identityService: IdentityService;
     protected readonly environment = ENVIRONMENT.name;
 
@@ -138,7 +142,37 @@ export class DetailsModule
         }
         catch (error)
         {
-            Log.error("Could not change route status", error);
+            Log.error("Could not change order status", error);
+        }
+    }
+
+    /**
+     * Called when an item in the `Remove from route` selector is clicked.
+     * Executes the chosen action.
+     * @param action The action to execute.
+     */
+    protected async onRemoveFromRouteItemClick(action: "release-to-drivers" | "manual-dispatch" | "automatic-dispatch"): Promise<void>
+    {
+        try
+        {
+            await this._orderService.removeFromRoute(this.routeId!, this.order!.consignorId, this.order!.slug, action);
+
+            this.routeId = undefined;
+
+            if (this.tab === "route")
+            {
+                this.tab = "events";
+            }
+
+            this._toastService.open("success",
+            {
+                heading: removeOrderFromRouteToast.heading,
+                body: removeOrderFromRouteToast.body
+            });
+        }
+        catch (error)
+        {
+            Log.error("Could not remove order from route", error);
         }
     }
 

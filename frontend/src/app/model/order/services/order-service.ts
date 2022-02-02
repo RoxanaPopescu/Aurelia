@@ -86,9 +86,9 @@ export class OrderService
     }
 
     /**
-     * Gets the specified order.
+     * Gets the ID of the route associated with the specified order, if any.
      * @param orderSlug The slug identifying the order.
-     * @returns A promise that will be resolved with the order.
+     * @returns A promise that will be resolved with the ID of the route associated with the specified order, if any.
      */
     public async getRouteId(orderSlug: string): Promise<string | undefined>
     {
@@ -171,8 +171,9 @@ export class OrderService
     }
 
     /**
-     * Updated the state in the order.
+     * Updated the status of the the order.
      * @param order The order.
+     * @param status The new order status.
      * @returns A promise that will be resolved when the operation succeedes.
      */
     public async updateStatus(order: Order, status: OrderStatusSlug): Promise<void>
@@ -180,6 +181,22 @@ export class OrderService
         await this._apiClient.post("orders/update-status",
         {
             body: { id: order.id, slug: order.slug, status: status }
+        });
+    }
+
+    /**
+     * Removes the specified order from its current route, executing the specified action.
+     * @param routeId The ID of the route associated with the order.
+     * @param consignorId The ID of the consignor owning of the order.
+     * @param orderSlug The slug identifying the order.
+     * @param action The action to execute.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async removeFromRoute(routeId: string, consignorId: string, orderSlug: string, action: "release-to-drivers" | "manual-dispatch" | "automatic-dispatch"): Promise<void>
+    {
+        await this._apiClient.post("orders/remove-from-route",
+        {
+            body: { routeId, consignorId, orderSlug, action }
         });
     }
 

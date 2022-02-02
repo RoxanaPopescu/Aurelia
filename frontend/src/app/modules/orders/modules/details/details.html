@@ -323,9 +323,39 @@
 
                     </tab-nav>
 
-                    <div class="flex-push-right control-row" if.bind="order">
+                    <div class="control-row flex-push-right" if.bind="order != null">
 
-                        <select-button disabled.bind="order == null" if-claims="edit-orders" appearance="outline" accent="primary">
+                        <div if.bind="true || routeId != null">
+                            <select-button
+                                if-claims="edit-routes"
+                                disabled.bind="order.status.slug == 'ready'"
+                                appearance="outline"
+                                accent="primary">
+
+                                <div slot="label" translate>
+                                    Remove from route
+                                </div>
+
+                                <item click.trigger="onRemoveFromRouteItemClick('release-to-drivers')" model="release-to-drivers" translate>
+                                    Release to drivers
+                                </item>
+
+                                <item click.trigger="onRemoveFromRouteItemClick('manual-dispatch')" model="manual-dispatch" translate>
+                                    Manual dispatch
+                                </item>
+
+                                <item click.trigger="onRemoveFromRouteItemClick('automatic-dispatch')" model="automatic-dispatch" translate>
+                                    Automatic dispatch
+                                </item>
+
+                            </select-button>
+                        </div>
+
+                        <select-button
+                            disabled.bind="order == null"
+                            if-claims="edit-orders"
+                            appearance="outline"
+                            accent="primary">
 
                             <div slot="label" translate>
                                 Change status
