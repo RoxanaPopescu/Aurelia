@@ -16,6 +16,9 @@ const plugin = new Plugin(translateConfig);
 const localeFilePath = resolve("artifacts/translation/en.json");
 translateConfig.exportFilePath = localeFilePath;
 
+// Create initial file
+fs.writeFileSync(localeFilePath, "");
+
 // Translate
 translate();
 console.info("Translations saved as .json");

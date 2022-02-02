@@ -2,65 +2,26 @@
 const rename = require("gulp-rename");
 const gulp = require("gulp");
 const through = require("through2");
-import fs from "fs";
 import path from "path";
 import pkgDir from "pkg-dir";
-import globs from "globs";
-import { Plugin } from "gulp-translate/lib/plugin/plugin";
-import { translateConfig } from "../translate";
 
 const packageFolder = `${pkgDir.sync()}/`;
-const plugin = new Plugin(translateConfig);
-
-const sharedFilePath = resolve("artifacts/translation/shared.json");
-const appFilePath = resolve("artifacts/translation/app.json");
-
-// Translate
-translate("shared", sharedFilePath);
-translate("app", appFilePath);
-console.info("Translations saved as .json");
+const filePath = resolve("artifacts/translation/it.json");
 
 // Export fo xliff
-convertToXliff("shared", sharedFilePath);
-convertToXliff("app", appFilePath);
+convertToXliff();
 console.info("Translations saved as xcliff");
 
-function translate(type: "shared" | "app", currentPath: string): void
+function convertToXliff(): void
 {
-    translateConfig.exportFilePath = currentPath;
-    const task = plugin.export(translateConfig);
-
-    const filePaths = globs.sync([
-        resolve(`src/${type}/**/*.html`),
-        resolve(`src/${type}/**/resources/strings/**/*.json`)
-    ],
-    {
-        ignore: translateConfig.excludedFilePaths,
-        dot: true
-    });
-
-    for (const filePath of filePaths)
-    {
-        const fileContents = fs.readFileSync(filePath).toString();
-        const file = { contents: fileContents, path: filePath };
-
-        task.process(file)
-            .catch(reason => console.error(reason));
-    }
-
-    task.finalize().catch(reason => console.error(reason));
-}
-
-function convertToXliff(type: "shared" | "app", currentPath: string): void
-{
-    const taskName = `localize.export-xliff-${type}`;
+    const taskName = `localize.export-xliff`;
 
     gulp.task(taskName, () =>
     {
         return gulp
 
             // Get the source file.
-            .src(currentPath)
+            .src(filePath)
 
             // Convert the file from JSON to XLIFF.
             .pipe(through.obj((file: any, encoding: any, callback: any) =>
@@ -80,7 +41,7 @@ function convertToXliff(type: "shared" | "app", currentPath: string): void
             }))
 
             // Write the destination file.
-            .pipe(gulp.dest(path.posix.dirname(currentPath)));
+            .pipe(gulp.dest(path.posix.dirname(filePath)));
     });
 
     gulp.series(taskName)();
@@ -106,30 +67,17 @@ function exportJsonToXliff(json: any): string
     let xliff =
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<xliff version=\"1.2\">\n" +
-        "    <file original=\"translate.xliff\" source-language=\"en\">\n" +
+        "    <file original=\"translate.xliff\" source-language=\"fr\">\n" +
         "        <header></header>\n" +
         "        <body>\n";
 
     for (let key of Object.keys(json))
     {
-        const unit: any = json[key];
-
-        let note = "Found in:\n" + unit.sources.join("\n");
-
-        if (unit.hint)
-        {
-            note += "\nHint:\n" + unit.hint;
-        }
-
-        if (unit.context)
-        {
-            note += "\nContext:\n" + unit.context.join("\n");
-        }
+        const content: any = json[key];
 
         xliff +=
             "            <trans-unit id=\"" + encodeXmlEntities(key, true) + "\">\n" +
-            "                <source>" + encodeXmlEntities(unit.content, false) + "</source>\n" +
-            "                <note>" + encodeXmlEntities(note, false) + "</note>\n" +
+            "                <source>" + encodeXmlEntities(content, false) + "</source>\n" +
             "            </trans-unit>\n";
     }
 
