@@ -96,7 +96,7 @@ export class OrderService
 
         if (result.data.passages.length > 0)
         {
-            return result.data.passages[0].slug;
+            return result.data.passages[0].routeId;
         }
 
         return undefined;
