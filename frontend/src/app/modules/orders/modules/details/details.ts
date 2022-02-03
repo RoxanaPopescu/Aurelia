@@ -212,7 +212,7 @@ export class DetailsModule
         {
             this.loadingRouteInfo = true;
 
-            var result = await this._orderService.getRouteIdAndSlug(this.orderId);
+            const result = await this._orderService.getRouteIdAndSlug(this.orderId);
 
             this.routeId = result?.id;
             this.routeSlug = result?.slug;
