@@ -15,9 +15,10 @@ let tasks: string[] = [];
 
 // First run pull phrase translations
 const pullPhraseTask = "pull-phrase";
-gulp.task(pullPhraseTask, () =>
+gulp.task(pullPhraseTask, (done: any) =>
 {
     cp.exec('phrase pull');
+    done();
 });
 tasks.push(pullPhraseTask);
 
@@ -33,11 +34,11 @@ for (const language of languages)
 gulp.series(...tasks)();
 
 // Read  the files and convert them
-function convertLanguageTask(fileName: string): string
+function convertLanguageTask(language: string): string
 {
-    const currentPath = resolve(`artifacts/translation/phrase/${fileName}.xlf`);
-    const outputPath = resolve(`src/resources/translations/${fileName}.json`);
-    const taskName = `localize-xliff-${fileName}`;
+    const currentPath = resolve(`artifacts/translation/phrase/${language}.xlf`);
+    const outputPath = resolve(`src/resources/translations/${language}.json`);
+    const taskName = `localize-xliff-${language}`;
 
     gulp.task(taskName, () =>
     {
@@ -46,7 +47,7 @@ function convertLanguageTask(fileName: string): string
             .src(currentPath)
             .pipe(through.obj((file: any, encoding: any, callback: any) =>
             {
-                const json = importXliffToJson(file.contents.toString());
+                const json = importXliffToJson(file.contents.toString(), language);
                 file.contents = new Buffer(JSON.stringify(json));
 
                 callback(null, file);
@@ -70,18 +71,13 @@ function convertLanguageTask(fileName: string): string
  * @param xliff The XLIFF string representing the import file.
  * @returns The JSON object representing the import file.
  */
-function importXliffToJson(xliff: any): string
+function importXliffToJson(xliff: any, language: string): string
 {
-
     const json: any = { };
-
     const unitRegexp = /<trans-unit id="([^"]*?)">([\s\S]*?)<\/trans-unit>/g;
-
-    // NOTE: When importing, the language being imported must be manually specified here.
-    const targetRegexp = /<target xml:lang="fi">([\s\S]*)<\/target>|$/;
+    const targetRegexp = new RegExp(`<target xml:lang="${language}">([\\s\\S]*)<\/target>|$`);
 
     let unitMatch;
-
     while (unitMatch = unitRegexp.exec(xliff))
     {
         const result = targetRegexp.exec(unitMatch[2]);
