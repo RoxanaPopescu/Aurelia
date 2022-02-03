@@ -86,17 +86,17 @@ export class OrderService
     }
 
     /**
-     * Gets the ID of the route associated with the specified order, if any.
+     * Gets the ID and slug of the route associated with the specified order, if any.
      * @param orderSlug The slug identifying the order.
      * @returns A promise that will be resolved with the ID of the route associated with the specified order, if any.
      */
-    public async getRouteId(orderSlug: string): Promise<string | undefined>
+    public async getRouteIdAndSlug(orderSlug: string): Promise<{ id: string; slug: string } | undefined>
     {
         const result = await this._apiClient.get(`orders/journey/${orderSlug}`);
 
         if (result.data.passages.length > 0)
         {
-            return result.data.passages[0].routeId;
+            return { id: result.data.passages[0].routeId, slug: result.data.passages[0].slug };
         }
 
         return undefined;

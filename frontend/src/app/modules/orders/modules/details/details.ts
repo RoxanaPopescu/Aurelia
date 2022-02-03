@@ -75,14 +75,19 @@ export class DetailsModule
     protected orderId: string;
 
     /**
-     * The id of the linked route.
+     * True while loading info about the linked route, otherwise false.
      */
-    protected loadingRouteId: boolean = true;
+    protected loadingRouteInfo: boolean = true;
 
     /**
-     * The id of the linked route.
+     * The id of the linked route, if any.
      */
     protected routeId: string | undefined;
+
+    /**
+     * The slug identifying the linked route, if any.
+     */
+    protected routeSlug: string | undefined;
 
     /**
      * The order to present.
@@ -205,12 +210,19 @@ export class DetailsModule
     {
         try
         {
-            this.routeId = await this._orderService.getRouteId(this.orderId);
-            this.loadingRouteId = false;
+            this.loadingRouteInfo = true;
+
+            var result = await this._orderService.getRouteIdAndSlug(this.orderId);
+
+            this.routeId = result?.id;
+            this.routeSlug = result?.slug;
+
+            this.loadingRouteInfo = false;
         }
         catch (error)
         {
-            this.loadingRouteId = false;
+            this.loadingRouteInfo = false;
+
             Log.error("An error occurred while loading the linked route.", error);
         }
     }

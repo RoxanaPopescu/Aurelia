@@ -309,14 +309,14 @@
                             Colli
                         </tab>
 
-                        <tab name="route" disabled.bind="!routeId" invalid.bind="routeValidation.invalid">
-                            <span if.bind="loadingRouteId" translate>
+                        <tab name="route" disabled.bind="!routeSlug" invalid.bind="routeValidation.invalid">
+                            <span if.bind="loadingRouteInfo" translate>
                                 Loading route...
                             </span>
-                            <span if.bind="!loadingRouteId && routeId" translate>
-                                Route ${routeId}
+                            <span if.bind="!loadingRouteInfo && routeSlug" translate>
+                                Route ${routeSlug}
                             </span>
-                            <span if.bind="!loadingRouteId && !routeId" translate>
+                            <span if.bind="!loadingRouteInfo && !routeSlug" translate>
                                 No linked route
                             </span>
                         </tab>
@@ -421,7 +421,7 @@
 
             <route-overview
                 if.bind="tab === 'route'"
-                id.bind="routeId"
+                id.bind="routeSlug"
                 order.bind="order">
             </route-overview>
 
