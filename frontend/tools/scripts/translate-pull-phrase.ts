@@ -33,7 +33,11 @@ for (const locale of locales)
 // Run tasks
 gulp.series(...tasks)();
 
-// Read  the files and convert them
+/**
+ * Converts the specifice locale from xlf to json by returning a gulp task
+ * @param locale The locale to convert
+ * @returns The gulp task name
+ */
 function convertLocaleTask(locale: string): string
 {
     const currentPath = resolve(`artifacts/translation/phrase/${locale}.xlf`);
