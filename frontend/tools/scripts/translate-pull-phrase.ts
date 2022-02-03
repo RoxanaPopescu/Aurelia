@@ -8,25 +8,25 @@ import pkgDir from "pkg-dir";
 
 const packageFolder = `${pkgDir.sync()}/`;
 
-// TODO: Read json file src/resources/settings/locales.json
-const languages = ["da", "de", "fi", "fr", "it", "nl"];
+// Find locales besides our base locale that we currently support. They are required to exist in phrase
+const allLocales: any[] = require(`${packageFolder}/src/resources/settings/locales.json`);
+const locales = allLocales.filter(l => !l.code.includes("en")).map(l => l.code);
 
 let tasks: string[] = [];
 
-// First run pull phrase translations
+// Pull phrase translations to artifacts folder
 const pullPhraseTask = "pull-phrase";
 gulp.task(pullPhraseTask, (done: any) =>
 {
-    cp.exec('phrase pull');
-    done();
+    cp.exec('phrase pull', () => done());
 });
 tasks.push(pullPhraseTask);
 
 // Transform the translations - one task for each
-for (const language of languages)
+for (const locale of locales)
 {
-    const taskName = convertLanguageTask(language);
-    console.info(`Will convert language ${language} with taskName ${taskName}`);
+    const taskName = convertLocaleTask(locale);
+    console.info(`Will convert language ${locale} with taskName ${taskName}`);
     tasks.push(taskName);
 }
 
@@ -34,11 +34,11 @@ for (const language of languages)
 gulp.series(...tasks)();
 
 // Read  the files and convert them
-function convertLanguageTask(language: string): string
+function convertLocaleTask(locale: string): string
 {
-    const currentPath = resolve(`artifacts/translation/phrase/${language}.xlf`);
-    const outputPath = resolve(`src/resources/translations/${language}.json`);
-    const taskName = `localize-xliff-${language}`;
+    const currentPath = resolve(`artifacts/translation/phrase/${locale}.xlf`);
+    const outputPath = resolve(`src/resources/translations/${locale}.json`);
+    const taskName = `localize-xliff-${locale}`;
 
     gulp.task(taskName, () =>
     {
@@ -47,7 +47,7 @@ function convertLanguageTask(language: string): string
             .src(currentPath)
             .pipe(through.obj((file: any, encoding: any, callback: any) =>
             {
-                const json = importXliffToJson(file.contents.toString(), language);
+                const json = importXliffToJson(file.contents.toString(), locale);
                 file.contents = new Buffer(JSON.stringify(json));
 
                 callback(null, file);
@@ -71,11 +71,11 @@ function convertLanguageTask(language: string): string
  * @param xliff The XLIFF string representing the import file.
  * @returns The JSON object representing the import file.
  */
-function importXliffToJson(xliff: any, language: string): string
+function importXliffToJson(xliff: any, locale: string): string
 {
     const json: any = { };
     const unitRegexp = /<trans-unit id="([^"]*?)">([\s\S]*?)<\/trans-unit>/g;
-    const targetRegexp = new RegExp(`<target xml:lang="${language}">([\\s\\S]*)<\/target>|$`);
+    const targetRegexp = new RegExp(`<target xml:lang="${locale}">([\\s\\S]*)<\/target>|$`);
 
     let unitMatch;
     while (unitMatch = unitRegexp.exec(xliff))
