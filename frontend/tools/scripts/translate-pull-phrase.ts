@@ -2,19 +2,42 @@
 const rename = require("gulp-rename");
 const gulp = require("gulp");
 const through = require("through2");
+const cp = require('child_process');
 import path from "path";
 import pkgDir from "pkg-dir";
 
 const packageFolder = `${pkgDir.sync()}/`;
 
-readAndWriteXliff("shared");
-readAndWriteXliff("app");
+// TODO: Read json file src/resources/settings/locales.json
+const languages = ["da", "de", "fi", "fr", "it", "nl"];
+
+let tasks: string[] = [];
+
+// First run pull phrase translations
+const pullPhraseTask = "pull-phrase";
+gulp.task(pullPhraseTask, () =>
+{
+    cp.exec('phrase pull');
+});
+tasks.push(pullPhraseTask);
+
+// Transform the translations - one task for each
+for (const language of languages)
+{
+    const taskName = convertLanguageTask(language);
+    console.info(`Will convert language ${language} with taskName ${taskName}`);
+    tasks.push(taskName);
+}
+
+// Run tasks
+gulp.series(...tasks)();
 
 // Read  the files and convert them
-function readAndWriteXliff(type: "shared" | "app"): void
+function convertLanguageTask(fileName: string): string
 {
-    const currentPath = resolve(type === "shared" ? "artifacts/translation/shared.xlf" : "artifacts/translation/app.xlf");
-    const taskName = `localize.import-xliff-${type}`;
+    const currentPath = resolve(`artifacts/translation/phrase/${fileName}.xlf`);
+    const outputPath = resolve(`src/resources/translations/${fileName}.json`);
+    const taskName = `localize-xliff-${fileName}`;
 
     gulp.task(taskName, () =>
     {
@@ -36,10 +59,10 @@ function readAndWriteXliff(type: "shared" | "app"): void
             }))
 
             // Write the destination file.
-            .pipe(gulp.dest(path.posix.dirname(currentPath)));
+            .pipe(gulp.dest(path.posix.dirname(outputPath)));
     });
 
-    gulp.series(taskName)();
+    return taskName;
 }
 
 /**

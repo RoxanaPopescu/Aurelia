@@ -8,7 +8,7 @@ phraseapp:
           file_format: xlf
   pull:
     targets:
-      - file: ./packages/shared/src/localization/consignor/<locale_name>.json
+      - file: ./artifacts/translation/phrase/<locale_name>.xlf
         project_id: 449e1c5222723de3cff80d65d7d286d9
         params:
           file_format: xlf
