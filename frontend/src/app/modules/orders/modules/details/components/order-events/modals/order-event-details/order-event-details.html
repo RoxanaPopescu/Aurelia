@@ -458,6 +458,55 @@
 
         </template>
 
+        <!-- Email notification -->
+        <template if.bind="model.event.data.email">
+
+            <hr class="hr-line margin-bottom">
+
+            <data-section class="margin-bottom" toggle.bind="true">
+
+                <div slot="header" translate>
+                    Email notification
+                </div>
+
+                <div class="flex-row margin-bottom">
+
+                    <div>
+                        <div class="margin-bottom margin-large-right opacity-faded" translate>
+                            From
+                        </div>
+                        <div class="margin-bottom margin-large-right opacity-faded" translate>
+                            To
+                        </div>
+                        <div class="margin-bottom margin-large-right opacity-faded" translate>
+                            Subject
+                        </div>
+                        <div class="margin-large-right opacity-faded" translate>
+                            Message
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="margin-bottom user-select-text">
+                            ${model.event.data.email.from}
+                        </div>
+                        <div class="margin-bottom user-select-text">
+                            ${model.event.data.email.to}
+                        </div>
+                        <div class="margin-bottom user-select-text">
+                            ${model.event.data.email.subject}
+                        </div>
+                        <div class="user-select-text white-space-pre-wrap">
+                            ${model.event.data.email.content}
+                        </div>
+                    </div>
+
+                </div>
+
+            </data-section>
+
+        </template>
+
     </modal-panel>
 
 </template>

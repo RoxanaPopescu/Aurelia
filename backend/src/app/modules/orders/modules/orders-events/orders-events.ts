@@ -92,6 +92,10 @@ export class OrdersEventsModule extends AppModule
                     {
                         eventType: "notification-order-sms-sent",
                         version: "1.0"
+                    },
+                    {
+                        eventType: "notification-order-email-sent",
+                        version: "1.0"
                     }
                 ],
                 ownerId: context.request.body.consignorId,
