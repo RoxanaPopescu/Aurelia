@@ -136,22 +136,20 @@ export class DistributionCenterModule extends AppModule
     {
         await context.authorize("view-distribution-centers");
 
-        const organizationIds = [context.user?.organizationId];
         const requestBody = context.request.body;
         const locationId = requestBody.distributionCenter.location.locationId;
 
         const allColliNOIPromise = this.allColliNOI(requestBody.distributionCenter);
-        const orderIdsResultPromise = this.apiClient.post("logistics/orders/fulfiller/orderslookup",
+        const orderIdsResultPromise = this.apiClient.post(`logistics/organizations/orders/lookup`,
         {
             body: {
-                outfitIds: organizationIds,
+                organizationIdents: [context.user!.organizationId],
                 status: [1, 2, 3],
                 pickupLocationIds: [locationId],
                 FromDate: DateTime.utc().startOf("day"),
                 ToDate: DateTime.utc().plus({ days: 2 }).endOf("day"),
                 page: 1,
-                pageSize: 1000,
-                consignorIds: []
+                pageSize: 1000
             }
         });
 
@@ -163,10 +161,9 @@ export class DistributionCenterModule extends AppModule
         // If we get any we use this instead of the data from NOI - since more updated
         if (internalIds.length > 0)
         {
-            const ordersResult = await this.apiClient.post("logistics/orders/fulfiller/listorders",
+            const ordersResult = await this.apiClient.post(`logistics/organizations/${context.user!.organizationId}/orders/list`,
             {
                 body: {
-                    outfitIds: organizationIds,
                     internalOrderIds: internalIds
                 }
             });
@@ -201,7 +198,6 @@ export class DistributionCenterModule extends AppModule
     {
         await context.authorize("view-distribution-centers");
 
-        const organizationIds = [context.user?.organizationId];
         const requestBody = context.request.body;
 
         // Fetch from NOI if possible
@@ -223,15 +219,14 @@ export class DistributionCenterModule extends AppModule
         // If not found we find it through logistics platform
         if (collo.status === "not-found")
         {
-            const orderIdsResult = await this.apiClient.post("logistics/orders/fulfiller/orderslookup",
+            const orderIdsResult = await this.apiClient.post(`logistics/organizations/orders/lookup`,
             {
                 body: {
-                    outfitIds: organizationIds,
+                    organizationIdents: [context.user!.organizationId],
                     barcodes: [requestBody.barcode],
                     status: [1, 2, 3],
                     page: 1,
-                    pageSize: 1,
-                    consignorIds: []
+                    pageSize: 1
                 }
             });
 
@@ -240,10 +235,9 @@ export class DistributionCenterModule extends AppModule
             // If we get any we use this instead of the data from NOI - since more updated
             if (internalIds.length > 0)
             {
-                const ordersResult = await this.apiClient.post("logistics/orders/fulfiller/listorders",
+                const ordersResult = await this.apiClient.post(`logistics/organizations/${context.user!.organizationId}/orders/list`,
                 {
                     body: {
-                        outfitIds: organizationIds,
                         internalOrderIds: internalIds
                     }
                 });
@@ -271,7 +265,7 @@ export class DistributionCenterModule extends AppModule
             await this.apiClient.post("logistics/Orders/Events/Fulfiller/ColloArrivedAtDepot",
             {
                 body: {
-                    outfitIds: organizationIds,
+                    outfitIds: [context.user!.organizationId],
                     barcode: requestBody.barcode,
                     scanningTime: DateTime.local(),
                     scannedBy: context.user?.id,
@@ -334,14 +328,13 @@ export class DistributionCenterModule extends AppModule
 
     private async addColloToOrder(order: any, organizationId: string, userId: string): Promise<void>
     {
-        const orderIdsResult = await this.apiClient.post("logistics/orders/fulfiller/orderslookup",
+        const orderIdsResult = await this.apiClient.post(`logistics/organizations/orders/lookup`,
         {
             body: {
-                outfitIds: [organizationId],
+                organizationIdents: [organizationId],
                 orderIds: [order.orderId],
                 page: 1,
-                pageSize: 1,
-                consignorIds: []
+                pageSize: 1
             }
         });
 

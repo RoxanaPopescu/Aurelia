@@ -207,14 +207,14 @@ export class OrderStatusModule extends AppModule
      */
     private async fetchOrderDetails(orderId: string): Promise<any>
     {
-        // Fetch the order details.
+        // TODO: Update this to use the new endpoint.
         const result = await this.apiClient.post<any[]>("logistics/orders/consignor/DetailOrders",
         {
             body:
             {
                 internalOrderIds: [orderId],
 
-                // HACK: Because we do not yet have proper support for getting the access outfits associated with the current identity.
+                // HACK: Because we still don't have a dedicated tracking ID, as originally planned.
                 outfitIds: environment.name === "production"
                     ? ["F1003E94-D520-4D0C-959A-AFB76BDC91F3", "78f39900-008f-49bc-b379-369726564346"]
                     : ["5D6DB3D4-7E69-4939-8014-D028A5EB47FF"]

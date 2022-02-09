@@ -81,14 +81,7 @@ export class DistributionCenterStagingModule extends AppModule
     private async addOrderInformation(body: any): Promise<void>
     {
 
-        const orderResult = await this.apiClient.post("logistics/orders/consignor/detailOrders",
-        {
-            body:
-            {
-                "outfitIds": [ body.order.creatorId ],
-                "internalOrderIds": [ body.order.id ]
-            }
-        });
+        const orderResult = await this.apiClient.post(`logistics/organizations/${body.order.creatorId}/orders/${body.order.id}/details`);
 
         const order = orderResult.data[0];
         const tags: any[] = order.tags;

@@ -14,12 +14,13 @@ export class OrdersModule extends AppModule
     {
         await context.authorize("view-orders");
 
-        const organizationIds = [context.user?.organizationId];
-        const body = context.request.body;
-        body.outfitIds = organizationIds;
-        body.consignorIds = [];
+        const body =
+        {
+            ...context.request.body,
+            organizationIdents: [context.user!.organizationId],
+        };
 
-        const orderIdsResult = await this.apiClient.post("logistics/orders/fulfiller/orderslookup",
+        const orderIdsResult = await this.apiClient.post(`logistics/organizations/orders/lookup`,
         {
             body: body
         });
@@ -32,10 +33,9 @@ export class OrdersModule extends AppModule
             return;
         }
 
-        const result = await this.apiClient.post("logistics/orders/fulfiller/listorders",
+        const result = await this.apiClient.post(`logistics/organizations/${context.user!.organizationId}/orders/list`,
         {
             body: {
-                outfitIds: organizationIds,
                 internalOrderIds: orderIdsResult.data.internalOrderIds
             }
         });
@@ -69,11 +69,9 @@ export class OrdersModule extends AppModule
         }
         else if (body.status === "cancelled")
         {
-            const result = await this.apiClient.post("logistics/orders/fulfiller/cancel",
+            const result = await this.apiClient.post(`logistics/organizations/${context.user?.organizationId}/orders/${body.id}/cancel`,
             {
                 body: {
-                    outfitIds: [context.user?.organizationId],
-                    orderId: body.slug,
                     cancelledBy: context.user?.id
                 }
             });
@@ -201,14 +199,13 @@ export class OrdersModule extends AppModule
 
         const body =
         {
+            organizationIdents: organizationIds,
             orderIds: [context.params.id],
             page: 1,
-            pageSize: 1,
-            outfitIds: organizationIds,
-            fulfillerIds: organizationIds
+            pageSize: 1
         };
 
-        const orderIdsResult = await this.apiClient.post("logistics/orders/fulfiller/orderslookup",
+        const orderIdsResult = await this.apiClient.post(`logistics/organizations/orders/lookup`,
         {
             body: body
         });
@@ -220,13 +217,9 @@ export class OrdersModule extends AppModule
             return;
         }
 
-        const result = await this.apiClient.post("logistics/orders/fulfiller/detailOrders",
-        {
-            body: {
-                outfitIds: organizationIds,
-                internalOrderIds: orderIdsResult.data.internalOrderIds
-            }
-        });
+        const internalOrderId = orderIdsResult.data.internalOrderIds[0];
+
+        const result = await this.apiClient.post(`logistics/organizations/${context.user!.organizationId}/orders/${internalOrderId}/details`);
 
         const order = result.data[0];
 
