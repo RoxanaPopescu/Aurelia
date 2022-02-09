@@ -17,10 +17,10 @@ export class OrdersModule extends AppModule
         const body =
         {
             ...context.request.body,
-            organizationIdents: [context.user!.organizationId],
+            organizationIdents: [context.user!.organizationId]
         };
 
-        const orderIdsResult = await this.apiClient.post(`logistics/organizations/orders/lookup`,
+        const orderIdsResult = await this.apiClient.post("logistics/organizations/orders/lookup",
         {
             body: body
         });
@@ -205,7 +205,7 @@ export class OrdersModule extends AppModule
             pageSize: 1
         };
 
-        const orderIdsResult = await this.apiClient.post(`logistics/organizations/orders/lookup`,
+        const orderIdsResult = await this.apiClient.post("logistics/organizations/orders/lookup",
         {
             body: body
         });

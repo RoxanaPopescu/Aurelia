@@ -140,7 +140,7 @@ export class DistributionCenterModule extends AppModule
         const locationId = requestBody.distributionCenter.location.locationId;
 
         const allColliNOIPromise = this.allColliNOI(requestBody.distributionCenter);
-        const orderIdsResultPromise = this.apiClient.post(`logistics/organizations/orders/lookup`,
+        const orderIdsResultPromise = this.apiClient.post("logistics/organizations/orders/lookup",
         {
             body: {
                 organizationIdents: [context.user!.organizationId],
@@ -219,7 +219,7 @@ export class DistributionCenterModule extends AppModule
         // If not found we find it through logistics platform
         if (collo.status === "not-found")
         {
-            const orderIdsResult = await this.apiClient.post(`logistics/organizations/orders/lookup`,
+            const orderIdsResult = await this.apiClient.post("logistics/organizations/orders/lookup",
             {
                 body: {
                     organizationIdents: [context.user!.organizationId],
@@ -328,7 +328,7 @@ export class DistributionCenterModule extends AppModule
 
     private async addColloToOrder(order: any, organizationId: string, userId: string): Promise<void>
     {
-        const orderIdsResult = await this.apiClient.post(`logistics/organizations/orders/lookup`,
+        const orderIdsResult = await this.apiClient.post("logistics/organizations/orders/lookup",
         {
             body: {
                 organizationIdents: [organizationId],
