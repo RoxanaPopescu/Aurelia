@@ -1,0 +1,57 @@
+<template>
+
+    <modal-backdrop close-modal.bind="true"></modal-backdrop>
+
+    <modal-dialog name="create-view-preset" accent="primary" close-button.bind="false" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <modal-header>
+
+            <h1 class="font-larger" tabindex="-1" autofocus="visible.bind: false" translate>
+                New view
+            </h1>
+
+        </modal-header>
+
+        <modal-section class="margin-bottom" translate>
+            This will save the current table columns, sorting and filters.
+        </modal-section>
+
+        <modal-section class="margin-half-bottom">
+
+            <text-input label="above" value.bind="name" autocomplete="off" autofocus>
+
+                <span slot="heading">
+                    View name
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="name">
+                    </required-validator>
+
+                </div>
+
+            </text-input>
+
+        </modal-section>
+
+        <modal-footer>
+
+            <div class="button-row flex-push-right">
+
+                <button appearance="outline" accent="primary" click.delegate="onButtonClick(false)" translate>
+                    Cancel
+                </button>
+
+                <button appearance="solid" accent="primary" click.delegate="onButtonClick(true)" translate>
+                    Create view
+                </button>
+
+            </div>
+
+        </modal-footer>
+
+    </modal-dialog>
+
+</template>

@@ -1,5 +1,6 @@
 <template>
     <require from="app/components/address-input/address-input"></require>
+    <require from="app/components/view-preset-selector/view-preset-selector"></require>
     <require from="./list.scss"></require>
 
     <page name="list">
@@ -264,6 +265,15 @@
                 </h1>
 
                 <toolbar class="flex-push-right">
+
+                    <view-preset-selector
+                        appearance="outline"
+                        accent="primary"
+                        placement="bottom-end"
+                        name="route-list"
+                        get-state.call="getViewState()"
+                        set-state.call="setViewState(state)">
+                    </view-preset-selector>
 
                     <select-button appearance="outline" accent="primary" placement="bottom-end">
 

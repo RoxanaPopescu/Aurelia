@@ -707,4 +707,58 @@ export class ListPage
             }
         });
     }
+
+    /**
+     * Gets the current view state, which may be saved as a view preset.
+     * @returns The current view state.
+     */
+    protected getViewState(): any
+    {
+        return {
+            sorting: this.sorting,
+            columns: this.columns,
+            filters:
+            {
+                textFilter: this.textFilter,
+                statusFilter: this.statusFilter,
+                assignedDriver: this.assignedDriver,
+                notAssignedDriver: this.notAssignedDriver,
+                assignedVehicle: this.assignedVehicle,
+                notAssignedVehicle: this.notAssignedVehicle,
+                startTimeFromFilter: this.startTimeFromFilter?.toISO(),
+                startTimeToFilter: this.startTimeToFilter?.toISO(),
+                teamsFilterService: this.teamsFilterService.selectedTeamIds,
+                tagsFilter: this.tagsFilter,
+                legacyOwnerIdsFilter: this.legacyOwnerIdsFilter,
+                createdTimeFromFilter: this.createdTimeFromFilter?.toISO(),
+                createdTimeToFilter: this.createdTimeToFilter?.toISO()
+            }
+        };
+    }
+
+    /**
+     * Sets the current view state, to match the specified state.
+     * @param state The view state to apply.
+     */
+    protected setViewState(state: any): void
+    {
+        this.sorting = state.sorting;
+        this.customColumns = state.columns.map(slug => new RouteListColumn(slug));
+        this.textFilter = state.filters.textFilter;
+        this.statusFilter = state.filters.statusFilter;
+        this.assignedDriver = state.filters.assignedDriver;
+        this.notAssignedDriver = state.filters.notAssignedDriver;
+        this.assignedVehicle = state.filters.assignedVehicle;
+        this.notAssignedVehicle = state.filters.notAssignedVehicle;
+        this.startTimeFromFilter = state.filters.startTimeFromFilter != null ? DateTime.fromISO(state.filters.startTimeFromFilter, { setZone: true }) : undefined;
+        this.startTimeToFilter = state.filters.startTimeToFilter != null ? DateTime.fromISO(state.filters.startTimeToFilter, { setZone: true }) : undefined;
+        this.teamsFilterService.selectedTeamIds = state.filters.teamsFilterService;
+        this.tagsFilter = state.filters.tagsFilter;
+        this.legacyOwnerIdsFilter = state.filters.legacyOwnerIdsFilter;
+        this.createdTimeFromFilter = state.filters.createdTimeFromFilter != null ? DateTime.fromISO(state.filters.createdTimeFromFilter, { setZone: true }) : undefined;
+        this.createdTimeToFilter = state.filters.createdTimeToFilter != null ? DateTime.fromISO(state.filters.createdTimeToFilter, { setZone: true }) : undefined;
+
+        this.results = undefined;
+        this.update();
+    }
 }

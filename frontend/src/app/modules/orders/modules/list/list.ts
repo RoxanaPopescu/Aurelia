@@ -461,4 +461,45 @@ export class ListPage
             }
         });
     }
+
+    /**
+     * Gets the current view state, which may be saved as a view preset.
+     * @returns The current view state.
+     */
+    protected getViewState(): any
+    {
+        return {
+            sorting: this.sorting,
+            columns: this.columns,
+            filters:
+            {
+                textFilter: this.textFilter,
+                statusFilter: this.statusFilter,
+                consignorFilter: this.consignorFilter,
+                orderTagsFilter: this.orderTagsFilter,
+                fromDateFilter: this.fromDateFilter?.toISO(),
+                toDateFilter: this.toDateFilter?.toISO()
+            }
+        };
+    }
+
+    /**
+     * Sets the current view state, to match the specified state.
+     * @param state The view state to apply.
+     */
+    protected setViewState(state: any): void
+    {
+        this.sorting = state.sorting;
+        this.customColumns = state.columns.map(slug => new OrderListColumn(slug));
+        this.textFilter = state.filters.textFilter;
+        this.statusFilter = state.filters.statusFilter;
+        this.consignorFilter = state.filters.consignorFilter;
+        this.orderTagsFilter = state.filters.orderTagsFilter;
+        this.fromDateFilter = state.filters.fromDateFilter != null ? DateTime.fromISO(state.filters.fromDateFilter, { setZone: true }) : undefined;
+        this.toDateFilter = state.filters.toDateFilter != null ? DateTime.fromISO(state.filters.toDateFilter, { setZone: true }) : undefined;
+
+        this.selectedOrders = [];
+        this.results = undefined;
+        this.update();
+    }
 }

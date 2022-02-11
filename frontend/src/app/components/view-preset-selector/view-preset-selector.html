@@ -1,0 +1,77 @@
+<template
+    class="${open ? '--open' : ''}"
+    inert.bind="disabled"
+    forward-focus>
+
+    <require from="./view-preset-selector.scss"></require>
+
+    <button
+        ref="buttonElement"
+        disabled.bind="disabled"
+        appearance.bind="appearance & attr"
+        accent.bind="accent & attr"
+        click.trigger="toggleDropdown()">
+
+        <slot name="label">
+            <span slot="label" tranalste>
+                Views
+            </span>
+        </slot>
+
+        <slot name="icon">
+
+            <dropdown-icon
+                open.bind="open">
+            </dropdown-icon>
+
+        </slot>
+
+    </button>
+
+    <dropdown
+        show.bind="open"
+        owner.bind="buttonElement"
+        close.call="closeDropdown(escape || !focusout, !escape)"
+        fixed.bind="fixed"
+        placement.bind="placement">
+
+        <item-picker
+            view-model.ref="itemPicker"
+            focused-value.bind="focusedValue"
+            focused-element.bind="buttonElement"
+            keyboard.bind="open"
+            none.bind="false"
+            pick.call="closeDropdown(true)"
+            tabindex="-1"
+            scroll>
+
+            <div if.bind="presets.length == 0" class="view-preset-selector-empty" translate>
+                No saved views
+            </div>
+
+            <div>
+
+                <item repeat.for="preset of presets" click.trigger="onPresetClick($event, preset)" model.bind="preset">
+                    <div class="margin-right" translate>
+                        ${preset.name}
+                    </div>
+                    <button title.translate="Delete" appearance="none" accent="primary" click.trigger="onDeletePresetClick($event, preset)">
+                        <icon name="delete-small" inline></icon>
+                    </button>
+                </item>
+
+            </div>
+
+            <hr class="hr-line">
+
+            <item click.trigger="onCreatePresetClick()" model="save-current-view">
+                <div translate>
+                    Save current view
+                </div>
+            </item>
+
+        </item-picker>
+
+    </dropdown>
+
+</template>
