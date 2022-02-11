@@ -71,7 +71,7 @@ export class ViewPresetSelectorCustomElement
         /**
          * The state to set as the current view state.
          */
-        state: any
+        state: any;
     }>;
 
     /**
