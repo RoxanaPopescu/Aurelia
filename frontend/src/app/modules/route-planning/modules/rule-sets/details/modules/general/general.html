@@ -102,12 +102,11 @@
                 label="above"
                 none.bind="false"
                 value.bind="settings.restrictions.timeWindowAdjustmentDelivery.start | scale: 1/60"
-                class="flex-basis-1-of-2"
-                min.bind="0">
+                class="flex-basis-1-of-2">
 
                 <div slot="heading">
                     <span translate>
-                        Extending the earliest arrival time
+                        Extension of earliest arrival time
                     </span>
                     <info-icon position="right">
                         <div slot="body" translate>
@@ -126,12 +125,6 @@
                         value.bind="settings.restrictions.timeWindowAdjustmentDelivery.start">
                     </required-validator>
 
-                    <range-validator
-                        active.bind="true"
-                        value.bind="settings.restrictions.timeWindowAdjustmentDelivery.start"
-                        min.bind="0">
-                    </range-validator>
-
                 </div>
 
             </number-input>
@@ -140,8 +133,7 @@
                 label="above"
                 none.bind="false"
                 value.bind="settings.restrictions.timeWindowAdjustmentDelivery.end | scale: 1/60"
-                class="flex-basis-1-of-2"
-                min.bind="0">
+                class="flex-basis-1-of-2">
 
                 <div slot="heading">
                     <span translate>
@@ -163,12 +155,6 @@
                     <required-validator
                         value.bind="settings.restrictions.timeWindowAdjustmentDelivery.end">
                     </required-validator>
-
-                    <range-validator
-                        active.bind="true"
-                        value.bind="settings.restrictions.timeWindowAdjustmentDelivery.end"
-                        min.bind="0">
-                    </range-validator>
 
                 </div>
 
