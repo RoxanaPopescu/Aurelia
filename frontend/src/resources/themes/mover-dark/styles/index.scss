@@ -50,6 +50,16 @@ $__summary: comment;
     }
 }
 
+// Force buttons with outline appearance to use neutral border color.
+button,
+a[appearance]
+{
+    &[appearance="outline"][accent]
+    {
+        //border-color: var(--surface-neutral-border-color);
+    }
+}
+
 page[name="account"]
 {
     color: var(--palette-color-neutral-lightest) !important;

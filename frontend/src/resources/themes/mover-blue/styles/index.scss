@@ -67,6 +67,16 @@ permissions
     --legacy-card-surface-box-surface-color: var(--palette-color-neutral-light);
 }
 
+// Force buttons with outline appearance to use neutral border color.
+button,
+a[appearance]
+{
+    &[appearance="outline"][accent]
+    {
+        border-color: var(--surface-neutral-border-color);
+    }
+}
+
 body page-sidebar page-section:not(.--header-slot-empty) .page-section-header
 {
     padding-top: 16rem;

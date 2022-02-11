@@ -55,6 +55,16 @@ $__summary: comment;
     --legacy-card-surface-box-surface-color: var(--palette-color-neutral-light);
 }
 
+// Force buttons with outline appearance to use neutral border color.
+button,
+a[appearance]
+{
+    &[appearance="outline"][accent]
+    {
+        border-color: var(--surface-neutral-border-color);
+    }
+}
+
 page[name="account"]
 {
     background: hsl(213, 90%, 12%) !important;
