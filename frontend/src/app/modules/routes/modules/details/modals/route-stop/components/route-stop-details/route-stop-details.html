@@ -108,8 +108,12 @@
                         ${model.routeStop.type.name}
                     </div>
 
-                    <div class="margin-bottom user-select-text" empty-value>
+                    <div class="margin-bottom user-select-text"  if.bind="model.routeStop.type.slug !== 'break'" empty-value>
                         ${model.routeStop.estimates.taskTime | duration: 'narrow'}
+                    </div>
+
+                    <div class="margin-bottom user-select-text"  if.bind="model.routeStop.type.slug === 'break'" empty-value>
+                        ${model.routeStop.initialEstimates.taskTime | duration: 'narrow'}
                     </div>
 
                     <div class="user-select-text" empty-value>

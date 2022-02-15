@@ -866,8 +866,11 @@
                             </data-table-cell>
 
                             <data-table-cell align="right">
-                                <span class="text-truncate">
+                                <span class="text-truncate" if.bind="model.routeStop.type.slug !== 'break'">
                                     ${stop.taskTime || stop.estimates.taskTime | duration: 'narrow'}
+                                </span>
+                                <span class="text-truncate" if.bind="model.routeStop.type.slug === 'break'">
+                                    ${stop.initialEstimates.taskTime | duration: 'narrow'}
                                 </span>
                             </data-table-cell>
 
