@@ -98,7 +98,7 @@ export class RouteStopComponent extends React.Component<RoutesLayerProps> {
                   )}
                 </div>
                 <div>
-                  { this.props.routeStop.breakTime?.as("minutes") } min
+                  { this.props.routeStop.initialEstimates?.taskTime?.as("minutes") } min
                 </div>
               </div>
             }

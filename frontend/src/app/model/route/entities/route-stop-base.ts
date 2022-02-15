@@ -64,11 +64,6 @@ export abstract class RouteStopBase extends RouteStopInfo
                 this.taskTime = Duration.fromObject({ seconds: data.taskTime });
             }
 
-            if (data.breakTime != null)
-            {
-                this.breakTime = Duration.fromObject({ seconds: data.breakTime });
-            }
-
             if (data.authorityToLeave != null)
             {
                 this.authorityToLeave = new RouteStopAuthorityToLeave(data.authorityToLeave);
@@ -140,11 +135,6 @@ export abstract class RouteStopBase extends RouteStopInfo
      * The instructions the driver should follow, if any.
      */
     public readonly driverInstructions?: string;
-
-    /**
-     * The time required for the drivers to use on a break
-     */
-     public readonly breakTime?: Duration;
 
     /**
      * The time spent loading and unloading at the stop.

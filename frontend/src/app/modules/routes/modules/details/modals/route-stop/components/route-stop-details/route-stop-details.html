@@ -82,16 +82,22 @@
                         Type
                     </div>
 
-                    <div if.bind="model.routeStop.type.slug === 'break'" class="opacity-faded margin-bottom" translate>
-                        Break time
+                    <div class="opacity-faded margin-bottom">
+                        <template translate if.bind="model.routeStop.type.slug !== 'break'">
+                            Estimated task time
+                        </template>
+                        <template translate if.bind="model.routeStop.type.slug === 'break'">
+                            Break time
+                        </template>
                     </div>
 
-                    <div class="opacity-faded margin-bottom" translate>
-                        Estimated task time
-                    </div>
-
-                    <div class="opacity-faded" translate>
-                        Actual task time
+                    <div class="opacity-faded">
+                        <template translate if.bind="model.routeStop.type.slug !== 'break'">
+                            Actual task time
+                        </template>
+                        <template translate if.bind="model.routeStop.type.slug === 'break'">
+                            Actual Break time
+                        </template>
                     </div>
 
                 </div>
@@ -100,10 +106,6 @@
 
                     <div class="margin-bottom user-select-text" empty-value>
                         ${model.routeStop.type.name}
-                    </div>
-
-                    <div if.bind="model.routeStop.type.slug === 'break'" class="margin-bottom user-select-text" empty-value>
-                        ${model.routeStop.breakTime | duration: 'narrow'}
                     </div>
 
                     <div class="margin-bottom user-select-text" empty-value>

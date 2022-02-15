@@ -560,25 +560,27 @@
 
         </modal-section>
 
-        <modal-section class="margin-bottom --line-above" if.bind="model.routeStop.type.slug === 'break'">
+        <modal-section class="margin-bottom --line-above">
 
             <div slot="header" translate>
-                Break
+                Estimates
             </div>
-
 
             <div class="control-row margin-large-bottom">
 
                 <duration-input
                     label="above"
                     none.bind="false"
-                    value.bind="model.routeStop.breakTime"
+                    value.bind="model.routeStop.initialEstimates.taskTime"
                     class="flex-basis-1-of-2"
                     min.bind="0">
 
                     <div slot="heading">
-                        <span translate>
+                        <span translate if.bind="model.routeStop.type.slug === 'break'">
                             Break time
+                        </span>
+                        <span translate if.bind="model.routeStop.type.slug !== 'break'">
+                            Task time
                         </span>
                     </div>
 
@@ -588,13 +590,9 @@
 
                     <div slot="validation">
 
-                        <required-validator
-                            value.bind="model.routeStop.breakTime">
-                        </required-validator>
-
                         <range-validator
                             active.bind="true"
-                            value.bind="model.routeStop.breakTime"
+                            value.bind="model.routeStop.initialEstimates.taskTime"
                             min.bind="0">
                         </range-validator>
 
