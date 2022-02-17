@@ -96,6 +96,12 @@ export default
             themeSlug: "ikea"
         },
         {
+            hostname: /(^|\.)ikea.moversystems.com$/,
+            localeCode: "en-US",
+            currencyCode: "DKK",
+            themeSlug: "ikea"
+        },
+        {
             hostname: /(^|\.)ikea.mover.dev$/,
             localeCode: "en-US",
             currencyCode: "DKK",
