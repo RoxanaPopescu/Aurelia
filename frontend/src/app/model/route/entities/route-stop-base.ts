@@ -48,6 +48,10 @@ export abstract class RouteStopBase extends RouteStopInfo
             {
                 this.initialEstimates = new RouteEstimates(data.initialEstimates);
             }
+            else
+            {
+                this.initialEstimates = new RouteEstimates();
+            }
 
             if (data.arrivedTime != null)
             {
@@ -119,7 +123,7 @@ export abstract class RouteStopBase extends RouteStopInfo
     /**
      * The initial estimates for this stop.
      */
-    public initialEstimates?: RouteEstimates;
+    public initialEstimates: RouteEstimates;
 
     /**
      * The estimates for this stop.
