@@ -47,6 +47,9 @@ route-overview
 
             .route-cancelled-warning
             {
+                display: flex;
+                flex-direction: column;
+
                 icon
                 {
                     height: 24rem;

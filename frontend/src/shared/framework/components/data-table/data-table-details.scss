@@ -32,7 +32,23 @@ data-table[appearance="rows"]
 {
     data-table-details
     {
-        border-bottom: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
+        position: relative;
+
+        // border-bottom: var(--data-table-row-border-width) solid var(--data-table-row-border-color);
+
+        &:before
+        {
+            content: "";
+            position: absolute;
+            top: -2rem;
+            left: 0;
+            bottom: 2rem;
+        }
+
+        &:before
+        {
+            border-left: var(--data-table-row-edge-width) solid var(--data-table-row-edge-color);
+        }
     }
 }
 

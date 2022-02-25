@@ -1,6 +1,7 @@
 <template>
     <require from="app/components/address-input/address-input"></require>
     <require from="app/components/view-preset-selector/view-preset-selector"></require>
+    <require from="./components/route-list-expanded-view/route-list-expanded-view"></require>
     <require from="./list.scss"></require>
 
     <page name="list">
@@ -318,7 +319,8 @@
 
                     <template repeat.for="route of results">
                         <data-table-row
-                            accent.bind="route.criticality.accent">
+                            accent.bind="route.criticality.accent"
+                            click.call="route.__expanded = !route.__expanded">
 
                             <template repeat.for="column of columns">
 
@@ -428,13 +430,13 @@
 
                                 <data-table-cell if.bind="column.slug === 'colli-count'">
                                     <span class="text-truncate">
-                                        ${route.totalColliCount | number}
+                                        ${route.totalColliCount | number}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'estimated-colli-count'">
                                     <span class="text-truncate">
-                                        ${route.totalEstimatedColliCount | number}
+                                        ${route.totalEstimatedColliCount | number}
                                     </span>
                                 </data-table-cell>
 
@@ -550,6 +552,19 @@
                                 </data-table-cell>
 
                             </template>
+
+                            <data-table-details
+                                slot="details"
+                                if.bind="route.__expanded"
+                                surface="neutral"
+                                accent.bind="route.criticality.accent">
+
+                                <route-list-expanded-view
+                                    route-slug.bind="route.slug"
+                                    class="margin-bottom">
+                                </route-list-expanded-view>
+
+                            </data-table-details>
 
                         </data-table-row>
 
