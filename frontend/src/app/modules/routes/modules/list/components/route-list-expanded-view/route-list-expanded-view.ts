@@ -7,6 +7,18 @@ import { ModalService, ToastService } from "shared/framework";
 import { Operation } from "shared/utilities";
 import { AbortError } from "shared/types";
 import { Log } from "shared/infrastructure";
+import { RouteStatus, RouteStatusSlug } from "app/model/route";
+import { AssignDriverPanel } from "../../../../modals/assign-driver/assign-driver";
+import { AssignOrganizationPanel } from "../../../../modals/assign-organization/assign-organization";
+import { moverOrganizationId } from "app/services/identity";
+import { AddSupportNoteDialog } from "../../../details/modals/add-support-note/add-support-note";
+import { AssignVehiclePanel } from "../../../../modals/assign-vehicle/assign-vehicle";
+import { PushDriversPanel } from "../../../../modals/push-drivers/push-drivers";
+import { EditInformationPanel } from "../../../details/modals/edit-information/edit-information";
+import { RemoveDriverPanel } from "../../../details/modals/remove-driver/remove-driver";
+import { AddOrdersPanel } from "../../../details/modals/add-orders/add-orders";
+import { AssignTeamPanel } from "../../../../modals/assign-team/assign-team";
+import addedOrdersToast from "../../../details/resources/strings/added-orders-toast.json";
 
 /**
  * Represents the module.
@@ -21,23 +33,25 @@ export class RouteListExpandedViewCustomElement
      * @param modalService The `ModalService` instance.
      * @param identityService The `IdentityService` instance.
      */
-     public constructor(
-        routeService: RouteService,
-        modalService: ModalService,
-        identityService: IdentityService,
-        toastService: ToastService)
-    {
-        this.routeService = routeService;
-        this.modalService = modalService;
-        this.toastService = toastService;
-        this.identityService = identityService;
-    }
+    public constructor(
+            routeService: RouteService,
+            modalService: ModalService,
+            identityService: IdentityService,
+            toastService: ToastService)
+        {
+            this.routeService = routeService;
+            this._modalService = modalService;
+            this.toastService = toastService;
+            this.identityService = identityService;
+        }
 
-    protected readonly routeService: RouteService;
-    protected readonly modalService: ModalService;
-    protected readonly toastService: ToastService;
-    protected readonly identityService: IdentityService;
-    protected readonly environment = ENVIRONMENT.name;
+        private readonly _modalService: ModalService;
+        private _pollTimeout: any;
+
+        protected readonly routeService: RouteService;
+        protected readonly toastService: ToastService;
+        protected readonly identityService: IdentityService;
+        protected readonly environment = ENVIRONMENT.name;
 
     /**
      * The Id of the route to present.
@@ -46,9 +60,29 @@ export class RouteListExpandedViewCustomElement
     public routeSlug: string;
 
     /**
+     * The most recent update operation.
+     */
+    protected fetchOperation: Operation;
+
+    /**
      * The route to present.
      */
-    public route: Route | undefined;
+    protected route: Route | undefined;
+
+    /**
+     * The available route status values.
+     */
+    protected statusValues = Object.keys(RouteStatus.values).map(slug => new RouteStatus(slug as any));
+
+    /**
+     * The next stop on the route, or undefined if the route is not loaded,
+     * or if all stops have been visited or cancelled.
+     */
+    @computedFrom("route")
+    public get nextStop(): RouteStop | undefined
+    {
+        return this.route?.nextStop;
+    }
 
     /**
      * Counts the number of picked up colli on the route
@@ -443,7 +477,232 @@ export class RouteListExpandedViewCustomElement
      */
     public attached(): void
     {
-        new Operation(async signal =>
+        this.fetchRoute();
+    }
+
+    /**
+     * Called by the framework when the component is detached.
+     */
+    public detached(): void
+    {
+        // Abort any existing operation.
+        if (this.fetchOperation != null)
+        {
+            this.fetchOperation.abort();
+        }
+
+        clearTimeout(this._pollTimeout);
+
+        this.route = undefined;
+    }
+
+    /**
+     * Called when the `Assign driver` button is clicked.
+     * Opens the panel for assigning a driver to a route, and once assigned, re-fetches the route.
+     */
+    protected async onAssignDriverClick(): Promise<void>
+    {
+        const driver = await this._modalService.open(
+            AssignDriverPanel,
+            { route: this.route!, assignOnSelect: true }
+        ).promise;
+
+        if (driver != null)
+        {
+            this.fetchRoute();
+        }
+    }
+
+    /**
+     * Called when the `Assign vehicle` button is clicked.
+     * Opens the panel for assigning a vehicle to a route, and once assigned, re-fetches the route.
+     */
+    protected async onAssignVehicleClick(): Promise<void>
+    {
+        const vehicle = await this._modalService.open(
+            AssignVehiclePanel,
+            { route: this.route!, assignOnSelect: true }
+        ).promise;
+
+        if (vehicle != null)
+        {
+            this.fetchRoute();
+        }
+    }
+
+    /**
+     * Called when the `Assign team` button is clicked.
+     */
+    protected async onAssignTeamClick(): Promise<void>
+    {
+        const team = await this._modalService.open(
+            AssignTeamPanel,
+            { route: this.route!, assignOnSelect: true }
+        ).promise;
+
+        if (team != null)
+        {
+            this.fetchRoute();
+        }
+    }
+
+    /**
+     * Called when the `Assign executor` button is clicked.
+     * Opens the panel for assigning a executor to a route, and once assigned, re-fetches the route.
+     */
+    protected async onAssignExecutorClick(): Promise<void>
+    {
+        const organization = await this._modalService.open(
+            AssignOrganizationPanel,
+            { route: this.route!, assignOnSelect: true }
+        ).promise;
+
+        if (organization != null)
+        {
+            this.fetchRoute();
+        }
+    }
+
+    /**
+     * Called when the `Show driver list` button is clicked.
+     * Opens the driver list in a new tab.
+     */
+    protected onShowDriverListClick(): void
+    {
+        window.open(this.route?.driverListUrl, "_blank");
+    }
+
+    /**
+     * Called when the `Reload route in app` button is clicked.
+     * Notifies the driver appthat it should reload the route.
+     */
+    protected async onReloadRouteInAppClick(): Promise<void>
+    {
+        try
+        {
+            await this.routeService.reloadRoute(this.route!);
+        }
+        catch (error)
+        {
+            Log.error("Could not reload the route", error);
+        }
+    }
+
+    /**
+     * Called when the `Push to drivers` button is clicked.
+     * Shows a model for pushing a route to any amount of drivers.
+     */
+    protected async onPushToDriversClick(): Promise<void>
+    {
+        await this._modalService.open(PushDriversPanel, { route: this.route! }).promise;
+    }
+
+    /**
+     * Called when the `Add support note` button is clicked.
+     * Shows a model for adding a support note.
+     */
+    protected async onAddSupportNoteClick(): Promise<void>
+    {
+        const added = await this._modalService.open(AddSupportNoteDialog, { route: this.route! }).promise;
+
+        if (!added)
+        {
+            return;
+        }
+
+        this.fetchRoute();
+    }
+
+    /**
+     * Called when an item in the `Status` selector is clicked.
+     * Sets the new route status.
+     * @param status The slug identifying the new route status.
+     */
+    protected async onStatusItemClick(status: RouteStatusSlug): Promise<void>
+    {
+        if (status === this.route!.status.slug)
+        {
+            return;
+        }
+
+        try
+        {
+            await this.routeService.setRouteStatus(this.route!, status);
+
+            this.fetchRoute();
+        }
+        catch (error)
+        {
+            Log.error("Could not change route status", error);
+        }
+    }
+
+    /**
+     * Called when the `Edit Information` button is clicked.
+     */
+    protected async onEditRouteClick(): Promise<void>
+    {
+        await this._modalService.open(EditInformationPanel, { route: this.route! }).promise;
+    }
+
+    /**
+     * Called when the `Remove driver` button is clicked.
+     * @param route The route from which the driver should be removed.
+     */
+    protected async onRemoveDriverClick(route: Route): Promise<void>
+    {
+        await this._modalService.open(RemoveDriverPanel, { route: this.route! }).promise;
+    }
+
+    /**
+     * Called when the `Add order` button is clicked.
+     * @param route The route to which an order should be added.
+     */
+    protected async onAddOrdersClick(): Promise<void>
+    {
+        const added = await this._modalService.open(AddOrdersPanel, { route: this.route! }).promise;
+
+        if (added)
+        {
+            this.toastService.open("success", addedOrdersToast);
+        }
+    }
+
+    /**
+     * Our old system uses another 'user system', Mover Transport will need some legacy features in this transition period.
+     */
+    protected get showLegacy(): boolean
+    {
+        if (ENVIRONMENT.name !== "production")
+        {
+            return true;
+        }
+
+        const identity = this.identityService.identity;
+
+        if (identity == null)
+        {
+            return false;
+        }
+
+        const legacyOrganizationIds = [moverOrganizationId];
+
+        return legacyOrganizationIds.includes(identity.organization!.id);
+    }
+
+    /**
+     * Fetches the specified route.
+     */
+    private fetchRoute(): void
+    {
+        clearTimeout(this._pollTimeout);
+
+        if (this.fetchOperation != null)
+        {
+            this.fetchOperation.abort();
+        }
+
+        this.fetchOperation = new Operation(async signal =>
         {
             try
             {
@@ -455,6 +714,18 @@ export class RouteListExpandedViewCustomElement
                 if (!(error instanceof AbortError) && this.route == null)
                 {
                     Log.error("An error occurred while loading this route.", error);
+                }
+            }
+            finally
+            {
+
+                if (this.route != null && this.route.status.slug === "in-progress")
+                {
+                    this._pollTimeout = setTimeout(() => this.fetchRoute(), 6000);
+                }
+                else
+                {
+                    this._pollTimeout = setTimeout(() => this.fetchRoute(), 30000);
                 }
             }
         });

@@ -12,6 +12,8 @@
                 Route info
             </div>
 
+            <!--
+
             <name-value-pair class="margin-half-bottom">
 
                 <div slot="name" translate>
@@ -28,6 +30,8 @@
                 </div>
 
             </name-value-pair>
+
+            -->
 
             <name-value-pair class="margin-half-bottom">
 
@@ -215,7 +219,9 @@
 
             <name-value-pair>
 
-                <div slot="value" class="text-align-left white-space-pre-line" empty-value>${nextStopAddress}</div>
+                <div slot="value" class="text-align-left white-space-pre-line" empty-value>
+                    ${nextStop.location.address}
+                </div>
 
             </name-value-pair>
 

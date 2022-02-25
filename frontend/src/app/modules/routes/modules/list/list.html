@@ -320,6 +320,7 @@
                     <template repeat.for="route of results">
                         <data-table-row
                             accent.bind="route.criticality.accent"
+                            selected.bind="route.__expanded"
                             click.call="route.__expanded = !route.__expanded">
 
                             <template repeat.for="column of columns">

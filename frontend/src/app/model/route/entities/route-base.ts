@@ -311,6 +311,20 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     }
 
     /**
+     * The next stop on the route, or undefined
+     * if all stops have been visited or cancelled.
+     */
+    public get nextStop(): TRouteStop | undefined
+    {
+        return this.stops
+            .filter(s =>
+                s instanceof RouteStopBase &&
+                s.status.slug !== "cancelled")
+            .find(s =>
+                s.status.slug === "not-visited") as TRouteStop;
+    }
+
+    /**
      * The current or next stop on the route, or undefined
      * if all stops have been visited or cancelled.
      */
