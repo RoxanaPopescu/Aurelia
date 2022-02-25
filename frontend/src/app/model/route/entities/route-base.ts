@@ -112,28 +112,28 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     /**
      * The link for the driver list document, formatted for printing.
      */
-    public readonly driverListUrl?: string;
+    public driverListUrl?: string;
 
     /**
      * The type of product associated with the route.
      */
-    public readonly productType: ProductType;
+    public productType: ProductType;
 
     /**
      * The non-unique reference for the route,
      * or undefined if no reference has been assigned.
      */
-    public readonly reference?: string;
+    public reference?: string;
 
     /**
      * The criticality of the route.
      */
-    public readonly criticality: RouteCriticality;
+    public criticality: RouteCriticality;
 
     /**
      * The tags associated with the route.
      */
-    public readonly tags: string[];
+    public tags: string[];
 
     /**
      * The status of the route.
@@ -145,17 +145,17 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
      * and can no longer be accepted, or undefined if this route did
      * not originate as a request.
      */
-    public readonly expires?: DateTime;
+    public expires?: DateTime;
 
     /**
      * The complexity of this route
      */
-    public readonly complexity: number;
+    public complexity: number;
 
     /**
      * The type of vehicle required for the route.
      */
-    public readonly vehicleType: VehicleType;
+    public vehicleType: VehicleType;
 
     /**
      * The id of the current team if any.
@@ -189,19 +189,19 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
      * True if the driver is currently online, false if not,
      * or undefined if the route is not yet started.
      */
-    public readonly driverOnline?: boolean;
+    public driverOnline?: boolean;
 
     /**
      * The current position of the driver,
      * or undefined if the route is not yet started.
      */
-    public readonly driverPosition?: Position;
+    public driverPosition?: Position;
 
     /**
      * The planned timeframe for the route, from arrival at the first stop, to
      * completion of the last, or undefined if the planned time frame is not yet known.
      */
-    public readonly plannedTimeFrame?: DateTimeRange;
+    public plannedTimeFrame?: DateTimeRange;
 
     /**
      * The estimates for this route.
@@ -211,12 +211,12 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     /**
      * The initial estimates for this route.
      */
-     public initialEstimates?: RouteEstimates;
+    public initialEstimates?: RouteEstimates;
 
     /**
      * The date and time at which the driver completed, or is estimated to complete,
      */
-    public readonly completedTime?: DateTime;
+    public completedTime?: DateTime;
 
     /**
      * The stops at which the driver must either pick up or deliver colli.
@@ -226,7 +226,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     /**
      * The model representing the searchable text in the entity.
      */
-    public readonly searchModel = new SearchModel(this);
+    public searchModel = new SearchModel(this);
 
     /**
      * The total number colli associated with pickups on non-cancelled stops on the route.

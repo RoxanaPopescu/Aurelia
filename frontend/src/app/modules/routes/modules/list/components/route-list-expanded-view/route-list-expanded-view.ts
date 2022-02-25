@@ -1,16 +1,14 @@
 import { autoinject, computedFrom, bindable } from "aurelia-framework";
-import { Route, RouteService, RouteStop } from "app/model/route";
+import { Route, RouteInfo, RouteService, RouteStop, RouteStatus, RouteStatusSlug } from "app/model/route";
 import { Duration } from "luxon";
 import { Collo } from "app/model/collo";
-import { IdentityService } from "app/services/identity";
+import { IdentityService, moverOrganizationId } from "app/services/identity";
 import { ModalService, ToastService } from "shared/framework";
 import { Operation } from "shared/utilities";
 import { AbortError } from "shared/types";
 import { Log } from "shared/infrastructure";
-import { RouteStatus, RouteStatusSlug } from "app/model/route";
 import { AssignDriverPanel } from "../../../../modals/assign-driver/assign-driver";
 import { AssignOrganizationPanel } from "../../../../modals/assign-organization/assign-organization";
-import { moverOrganizationId } from "app/services/identity";
 import { AddSupportNoteDialog } from "../../../details/modals/add-support-note/add-support-note";
 import { AssignVehiclePanel } from "../../../../modals/assign-vehicle/assign-vehicle";
 import { PushDriversPanel } from "../../../../modals/push-drivers/push-drivers";
@@ -34,30 +32,24 @@ export class RouteListExpandedViewCustomElement
      * @param identityService The `IdentityService` instance.
      */
     public constructor(
-            routeService: RouteService,
-            modalService: ModalService,
-            identityService: IdentityService,
-            toastService: ToastService)
-        {
-            this.routeService = routeService;
-            this._modalService = modalService;
-            this.toastService = toastService;
-            this.identityService = identityService;
-        }
+        routeService: RouteService,
+        modalService: ModalService,
+        identityService: IdentityService,
+        toastService: ToastService)
+    {
+        this.routeService = routeService;
+        this._modalService = modalService;
+        this.toastService = toastService;
+        this.identityService = identityService;
+    }
 
-        private readonly _modalService: ModalService;
-        private _pollTimeout: any;
+    private readonly _modalService: ModalService;
+    private _pollTimeout: any;
 
-        protected readonly routeService: RouteService;
-        protected readonly toastService: ToastService;
-        protected readonly identityService: IdentityService;
-        protected readonly environment = ENVIRONMENT.name;
-
-    /**
-     * The Id of the route to present.
-     */
-    @bindable
-    public routeSlug: string;
+    protected readonly routeService: RouteService;
+    protected readonly toastService: ToastService;
+    protected readonly identityService: IdentityService;
+    protected readonly environment = ENVIRONMENT.name;
 
     /**
      * The most recent update operation.
@@ -79,7 +71,7 @@ export class RouteListExpandedViewCustomElement
      * or if all stops have been visited or cancelled.
      */
     @computedFrom("route")
-    public get nextStop(): RouteStop | undefined
+    protected get nextStop(): RouteStop | undefined
     {
         return this.route?.nextStop;
     }
@@ -88,7 +80,7 @@ export class RouteListExpandedViewCustomElement
      * Counts the number of picked up colli on the route
      */
     @computedFrom("route.stops.length")
-    public get pickedUpColliCount(): number | undefined
+    protected get pickedUpColliCount(): number | undefined
     {
         if (this.route == null)
         {
@@ -121,7 +113,7 @@ export class RouteListExpandedViewCustomElement
      * Counts the number of delivered colli on the route
      */
     @computedFrom("route.stops.length")
-    public get deliveredColliCount(): number | undefined
+    protected get deliveredColliCount(): number | undefined
     {
         if (this.route == null)
         {
@@ -154,7 +146,7 @@ export class RouteListExpandedViewCustomElement
      * Counts the number of colli on the route
      */
     @computedFrom("route.stops.length")
-    public get totalColliCount(): number | undefined
+    protected get totalColliCount(): number | undefined
     {
         if (this.route == null)
         {
@@ -180,7 +172,7 @@ export class RouteListExpandedViewCustomElement
      * Counts the number of colli on completed stops
      */
     @computedFrom("route.stops.length")
-    public get completedColliCount(): number | undefined
+    protected get completedColliCount(): number | undefined
     {
         if (this.route == null)
         {
@@ -207,7 +199,7 @@ export class RouteListExpandedViewCustomElement
      * Counts the number of stops not cancelled
      */
     @computedFrom("route.stops.length")
-    public get notCancelledStops(): number | undefined
+    protected get notCancelledStops(): number | undefined
     {
         if (this.route == null)
         {
@@ -230,7 +222,7 @@ export class RouteListExpandedViewCustomElement
      * Counts the number of completed stops
      */
     @computedFrom("route.stops.length")
-    public get completedStops(): number | undefined
+    protected get completedStops(): number | undefined
     {
         if (this.route == null)
         {
@@ -253,7 +245,7 @@ export class RouteListExpandedViewCustomElement
      * Calculates the duration of the route
      */
     @computedFrom("route.stops.length", "route.completedTime")
-    public get routeDuration(): Duration | undefined
+    protected get routeDuration(): Duration | undefined
     {
         if (this.route == null)
         {
@@ -285,7 +277,7 @@ export class RouteListExpandedViewCustomElement
     }
 
     @computedFrom("route.stops.length", "route.estimates.completionTime")
-    public get routeDelay(): Duration | undefined
+    protected get routeDelay(): Duration | undefined
     {
         if (this.route == null || this.route.estimates == null)
         {
@@ -307,7 +299,7 @@ export class RouteListExpandedViewCustomElement
     }
 
     @computedFrom("route.stops.driverOnline")
-    public get driverOnline(): boolean | undefined
+    protected get driverOnline(): boolean | undefined
     {
         if (this.route != null)
         {
@@ -318,7 +310,7 @@ export class RouteListExpandedViewCustomElement
     }
 
     @computedFrom("route.stops.length")
-    public get totalLoadingDuration(): Duration
+    protected get totalLoadingDuration(): Duration
     {
         const totalLoadingDuration = Duration.fromMillis(0);
 
@@ -342,7 +334,7 @@ export class RouteListExpandedViewCustomElement
      * The time the driver arrived too early at the first stop.
      */
     @computedFrom("route.status")
-    public get earlyStart(): Duration | undefined
+    protected get earlyStart(): Duration | undefined
     {
         if (this.route != null && this.route.stops[0] instanceof RouteStop)
         {
@@ -365,7 +357,7 @@ export class RouteListExpandedViewCustomElement
     }
 
     @computedFrom("route.stops.length")
-    public get routeStopsOkay(): boolean
+    protected get routeStopsOkay(): boolean
     {
         if (this.route != null)
         {
@@ -381,7 +373,7 @@ export class RouteListExpandedViewCustomElement
      * The colli that failed to be picked up on stops that have been completed.
      */
     @computedFrom("route.stops.length")
-    public get notPickedUpColli(): Collo[]
+    protected get notPickedUpColli(): Collo[]
     {
         const notPickedUpColli: Collo[] = [];
 
@@ -412,7 +404,7 @@ export class RouteListExpandedViewCustomElement
      * The colli that failed to be delivered on stops that have been visited.
      */
     @computedFrom("route.stops.length")
-    public get notDeliveredColli(): Collo[]
+    protected get notDeliveredColli(): Collo[]
     {
         const notPickedUpColli = this.notPickedUpColli;
         const notDeliveredColli: Collo[] = [];
@@ -444,7 +436,7 @@ export class RouteListExpandedViewCustomElement
      * Calculates the amount failed stops
      */
     @computedFrom("route.stops.length")
-    public get failedStops(): RouteStop[]
+    protected get failedStops(): RouteStop[]
     {
         if (this.route != null)
         {
@@ -460,7 +452,7 @@ export class RouteListExpandedViewCustomElement
      * Calculates the amount failed stops
      */
     @computedFrom("route.stops.length")
-    public get failedCancelledStops(): RouteStop[]
+    protected get failedCancelledStops(): RouteStop[]
     {
         if (this.route != null)
         {
@@ -471,6 +463,12 @@ export class RouteListExpandedViewCustomElement
 
         return [];
     }
+
+    /**
+     * The route info to present.
+     */
+    @bindable
+    public routeInfo: RouteInfo;
 
     /**
      * Called by the framework when the component is attached.
@@ -706,7 +704,10 @@ export class RouteListExpandedViewCustomElement
         {
             try
             {
-                this.route = await this.routeService.get(this.routeSlug, signal);
+                this.route = await this.routeService.get(this.routeInfo.slug, signal);
+
+                // HACK: Update the route info, to ensure it represents the most recent state of the route.
+                Object.assign(this.routeInfo, this.route);
             }
             catch (error)
             {

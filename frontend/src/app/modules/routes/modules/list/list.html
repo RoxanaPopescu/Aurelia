@@ -320,8 +320,8 @@
                     <template repeat.for="route of results">
                         <data-table-row
                             accent.bind="route.criticality.accent"
-                            selected.bind="route.__expanded"
-                            click.call="route.__expanded = !route.__expanded">
+                            selected.bind="$parent.expandedRouteId == route.id"
+                            click.call="onRouteClick(route)">
 
                             <template repeat.for="column of columns">
 
@@ -555,13 +555,13 @@
                             </template>
 
                             <data-table-details
+                                if.bind="$parent.expandedRouteId == route.id"
                                 slot="details"
-                                if.bind="route.__expanded"
                                 surface="neutral"
                                 accent.bind="route.criticality.accent">
 
                                 <route-list-expanded-view
-                                    route-slug.bind="route.slug"
+                                    route-info.bind="route"
                                     class="margin-bottom">
                                 </route-list-expanded-view>
 
