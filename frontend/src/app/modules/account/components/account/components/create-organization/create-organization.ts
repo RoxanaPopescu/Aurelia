@@ -55,7 +55,7 @@ export class CreateOrganizationCustomElement
         this._organizationService = organizationService;
 
         // Used for migration since we need to create some orgs. with a custom GUID
-        this.showId = (cookies?.get("poweruser") == 'true') ?? false;
+        this.showId = (cookies?.get("poweruser") === "true") ?? false;
     }
 
     private readonly _organizationService: OrganizationService;
