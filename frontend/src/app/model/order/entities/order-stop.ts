@@ -18,6 +18,7 @@ export class OrderStop
         this.appointment = new Appointment(data.appointment);
         this.instructions = data.instructions;
         this.type = new OrderStopType(typeSlug);
+        this.estimatedTaskTime = data.estimatedTaskTime;
     }
 
     public location: Location;
@@ -36,6 +37,8 @@ export class OrderStop
 
     public instructions: string;
 
+    public estimatedTaskTime: number;
+
     /**
      * Gets the data representing this instance.
      */
@@ -48,7 +51,8 @@ export class OrderStop
             phone: this.contactPhoneNumber,
             email: this.contactEmail,
             appointment: this.appointment.toJSON(),
-            instructions: this.instructions
+            instructions: this.instructions,
+            estimatedTaskTime: this.estimatedTaskTime
         };
     }
 }

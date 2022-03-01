@@ -192,7 +192,7 @@
 
             </div>
 
-            <div class="control-row">
+            <div class="control-row margin-large-bottom">
 
                 <text-input label="above" lines.bind="3" value.bind="model.pickup.instructions" class="flex-basis-1-of-1">
 
@@ -205,6 +205,40 @@
                     </span>
 
                 </text-input>
+
+            </div>
+
+            <div class="control-row">
+
+                <number-input label="above" value.bind="model.pickup.estimatedTaskTime | scale: 1/60" class="flex-basis-1-of-1" min.bind="0">
+
+                    <div slot="heading" translate>
+                        Estimated task time
+                    </div>
+
+                    <span slot="placeholder" translate>
+                        Use default task time
+                    </span>
+
+                    <span slot="after" class="opacity-faded" translate>
+                        min
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.pickup.estimatedTaskTime">
+                        </required-validator>
+
+                        <range-validator
+                            active.bind="true"
+                            value.bind="model.pickup.estimatedTaskTime"
+                            min.bind="0">
+                        </range-validator>
+
+                    </div>
+
+                </number-input>
 
             </div>
 
@@ -335,7 +369,7 @@
 
             </div>
 
-            <div class="control-row">
+            <div class="control-row margin-large-bottom">
 
                 <text-input label="above" lines.bind="3" value.bind="model.delivery.instructions" class="flex-basis-1-of-1">
 
@@ -348,6 +382,40 @@
                     </span>
 
                 </text-input>
+
+            </div>
+
+            <div class="control-row">
+
+                <number-input label="above" value.bind="model.delivery.estimatedTaskTime | scale: 1/60" class="flex-basis-1-of-1" min.bind="0">
+
+                    <div slot="heading" translate>
+                        Estimated task time
+                    </div>
+
+                    <span slot="placeholder" translate>
+                        Use default task time
+                    </span>
+
+                    <span slot="after" class="opacity-faded" translate>
+                        min
+                    </span>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            value.bind="model.delivery.estimatedTaskTime">
+                        </required-validator>
+
+                        <range-validator
+                            active.bind="true"
+                            value.bind="model.delivery.estimatedTaskTime"
+                            min.bind="0">
+                        </range-validator>
+
+                    </div>
+
+                </number-input>
 
             </div>
 
