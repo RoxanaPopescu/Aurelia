@@ -9,6 +9,11 @@ export interface IOrganizationInit
     name: string;
 
     /**
+     * The id of the organization.
+     */
+    id?: string;
+
+    /**
      * The type of organization to create.
      */
     type: "business" | "private";

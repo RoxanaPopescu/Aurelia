@@ -1,5 +1,5 @@
 import { autoinject, bindable } from "aurelia-framework";
-import { Log } from "shared/infrastructure";
+import { Cookies, Log } from "shared/infrastructure";
 import { IValidation } from "shared/framework";
 import { OrganizationService } from "app/model/organization";
 import { delay } from "shared/utilities";
@@ -15,6 +15,11 @@ export interface ICreateOrganizationModel
      * The name of the organization.
      */
     organizationName?: string;
+
+    /**
+     * The id of the organization.
+     */
+    organizationId?: string;
 
     /**
      * The function to call when the operation completes.
@@ -43,10 +48,14 @@ export class CreateOrganizationCustomElement
     /**
      * Creates a new instance of the type.
      * @param organizationService The `OrganizationService` instance.
+     * @param cookies The `Cookies` instance.
      */
-    public constructor(organizationService: OrganizationService)
+    public constructor(organizationService: OrganizationService, cookies: Cookies)
     {
         this._organizationService = organizationService;
+
+        // Used for migration since we need to create some orgs. with a custom GUID
+        this.showId = (cookies?.get("poweruser") == 'true') ?? false;
     }
 
     private readonly _organizationService: OrganizationService;
@@ -61,6 +70,11 @@ export class CreateOrganizationCustomElement
      * The validation for the component.
      */
     protected validation: IValidation;
+
+    /**
+     * Show organization id - this is used for migration
+     */
+    protected showId: boolean;
 
     /**
      * Called by the framework when the component is binding.
@@ -116,7 +130,8 @@ export class CreateOrganizationCustomElement
             await this._organizationService.create(
             {
                 type: "business",
-                name: this.model.organizationName!
+                name: this.model.organizationName!,
+                id: this.model.organizationId
             });
 
             // HACK: The organization and its roles are created asynchronously,

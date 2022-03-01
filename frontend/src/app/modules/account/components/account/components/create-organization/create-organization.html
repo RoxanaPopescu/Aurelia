@@ -22,6 +22,14 @@
 
             </text-input>
 
+            <text-input if.bind="showId" class="margin-top" value.bind="model.organizationId">
+
+                <span slot="placeholder" translate>
+                    Organization id
+                </span>
+
+            </text-input>
+
             <div surface="base">
 
                 <button class="margin-top" appearance="solid" accent="primary" translate click.delegate="onCreateOrganizationClick()">
