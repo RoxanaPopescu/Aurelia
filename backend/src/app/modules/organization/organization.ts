@@ -23,7 +23,8 @@ export class OrganizationModule extends AppModule
             {
                 organizationType: context.request.body.type,
                 name: context.request.body.name,
-                initialOwnerUserId: context.user!.id
+                initialOwnerUserId: context.user!.id,
+                id: context.request.body.id
             }
         });
 
