@@ -114,6 +114,11 @@ html page-sidebar page-section:not(.--header-slot-empty) .page-section-header
     font-weight: 600;
 }
 
+.route-list-expanded-view-section-title
+{
+    color: var(--palette-color-neutral-darker);
+}
+
 body
 {
     --modal-backdrop-color: hsla(213, 15%, 15%, 0.6);

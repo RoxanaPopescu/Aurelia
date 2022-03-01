@@ -86,6 +86,11 @@ body page-sidebar page-section:not(.--header-slot-empty) .page-section-header
     color: var(--surface-subtle-color) !important;
 }
 
+.route-list-expanded-view-section-title
+{
+    color: var(--surface-subtle-color) !important;
+}
+
 button[appearance="outline"]
 {
     // border-color: var(--palette-color-neutral-light) !important;

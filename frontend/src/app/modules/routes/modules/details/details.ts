@@ -26,9 +26,9 @@ import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 interface IRouteParams
 {
     /**
-     * The ID of the route.
+     * The slug identifying of the route.
      */
-    id: string;
+    slug: string;
 }
 
 /**
@@ -81,9 +81,9 @@ export class DetailsModule
     protected dataTableElement: HTMLElement;
 
     /**
-     * True to show the map, otherwise false.
+     * The ID of the route to present.
      */
-    protected routeId: string;
+    protected routeSlug: string;
 
     /**
      * True to show the map, otherwise false.
@@ -116,13 +116,14 @@ export class DetailsModule
             this.identityService.identity!.claims.has("assign-driver-route") ||
             this.identityService.identity!.claims.has("edit-routes"));
     }
+
     /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
      */
     public activate(params: IRouteParams): void
     {
-        this.routeId = params.id;
+        this.routeSlug = params.slug;
         this.fetchRoute(true);
     }
 
@@ -467,7 +468,7 @@ export class DetailsModule
 
     /**
      * Fetches the specified route.
-     * @param routeId The ID of the route to fetch.
+     * @param addToRecent True to add the rouite to the recent items list, otherwise false.
      */
     private fetchRoute(addToRecent = false): void
     {
@@ -482,7 +483,7 @@ export class DetailsModule
         {
             try
             {
-                this.route = await this.routeService.get(this.routeId, signal);
+                this.route = await this.routeService.get(this.routeSlug, signal);
 
                 this._router.title = this.route.slug;
                 this._router.updateTitle();

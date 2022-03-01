@@ -27,7 +27,7 @@
                             ${route.slug}
                         </template>
                         <template if.bind="!route">
-                            ${routeId}
+                            ${routeSlug}
                         </template>
                     </div>
 
@@ -129,7 +129,7 @@
 
                     <div slot="value" empty-value>
                         <template if.bind="route.totalWeightRange != null">
-                            ${route.totalWeightRange.from | number} - ${route.totalWeightRange.to | number} kg
+                            ${route.totalWeightRange.from | number} - ${route.totalWeightRange.to | number} kg
                         </template>
                     </div>
 
@@ -142,7 +142,7 @@
                     </div>
 
                     <div slot="value" empty-value>
-                        ${route.totalColliCount | number}
+                        ${route.totalColliCount | number}
                     </div>
 
                 </name-value-pair>
@@ -155,7 +155,7 @@
 
                     <div slot="value" empty-value>
                         <template if.bind="route.complexity != null">
-                            ${route.complexity | number}%
+                            ${route.complexity | number}%
                         </template>
                     </div>
 
@@ -522,7 +522,7 @@
                                 ${route.slug}
                             </template>
                             <template if.bind="!route">
-                                ${routeId}
+                                ${routeSlug}
                             </template>
                             <star-icon entity.bind="route"></star-icon>
                         </span>

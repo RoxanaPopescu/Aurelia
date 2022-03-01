@@ -34,7 +34,7 @@ export class RoutesModule
             },
             {
                 name: "details",
-                route: "details/:id",
+                route: "details/:slug",
                 moduleId: PLATFORM.moduleName("./modules/details/details"),
                 settings:
                 {

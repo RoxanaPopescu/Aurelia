@@ -1,0 +1,45 @@
+route-list-expanded-view
+{
+    display: flex;
+
+    .route-list-expanded-view-column
+    {
+        flex-basis: 100%;
+        margin-right: 64rem;
+    }
+
+    .route-list-expanded-view-last-column
+    {
+        flex-basis: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .route-list-expanded-view-section-title
+    {
+        font-weight: 600;
+        padding-bottom: var(--font-current-margin-bottom);
+        border-bottom: var(--border-width-thin) solid var(--surface-separator-color);
+        margin-bottom: var(--font-current-margin-bottom);
+    }
+
+    circular-meter
+    {
+        height: 180rem;
+        width: 180rem;
+        align-self: center;
+
+        .route-cancelled-warning
+        {
+            display: flex;
+            flex-direction: column;
+
+            icon
+            {
+                height: 24rem;
+                width: 20rem;
+            }
+        }
+    }
+}

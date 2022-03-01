@@ -127,6 +127,11 @@ export class ListPage
     protected pickupNearbyOperation: Operation;
 
     /**
+     * The ID of the currently expanded route, if any
+     */
+    protected expandedRouteId: string | undefined;
+
+    /**
      * The `TeamsFilterService` instance.
      */
     protected readonly teamsFilterService: TeamsFilterService;
@@ -573,6 +578,19 @@ export class ListPage
             this.customColumns = columns;
             this.results = undefined;
             this.update();
+        }
+    }
+
+    /**
+     * Called when a route in the route list is clicked.
+     * Toggles the expanded state of the route.
+     * @param route The route that was clicked.
+     */
+    protected onRouteClick(route: RouteInfo): void
+    {
+        if (ENVIRONMENT.name !== "production")
+        {
+            this.expandedRouteId = this.expandedRouteId === route.id ? undefined : route.id;
         }
     }
 

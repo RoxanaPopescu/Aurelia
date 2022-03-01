@@ -133,6 +133,11 @@ html body page-sidebar page-section:not(.--header-slot-empty) .page-section-head
     color: var(--palette-color-neutral-lightest) !important;
 }
 
+.route-list-expanded-view-section-title
+{
+    color: var(--palette-color-neutral-lightest) !important;
+}
+
 page-content page-header
 {
     border-bottom-color: var(--palette-color-neutral-lit);
@@ -153,7 +158,8 @@ page-content page-header
     --data-table-row-border-color--active: var(--palette-color-neutral-lit) !important;
 }
 
-.data-table-row[accent="neutral"]
+.data-table-row[accent="neutral"],
+data-table-details[accent="neutral"]
 {
     --data-table-row-edge-color: var(--palette-color-neutral-light);
 }
