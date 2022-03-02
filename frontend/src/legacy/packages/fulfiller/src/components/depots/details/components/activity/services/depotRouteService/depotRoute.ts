@@ -22,7 +22,7 @@ export class DepotRoute {
     this.colliScanned = data.colliScanned;
     this.colliTotal = data.colliTotal;
     this.driverListReady = data.driverListReady;
-    this.driverListUrl = data.driverListUrl;
+    this.driverListUrl = `${data.driverListUrl}&locale=${ENVIRONMENT.locale}`;
 
     if (data.driver) {
       this.driver =
