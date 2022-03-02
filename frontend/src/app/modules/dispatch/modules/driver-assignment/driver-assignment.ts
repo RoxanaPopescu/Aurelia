@@ -607,7 +607,7 @@ export class DriverAssignmentPage
                         fulfiller: columnSlugs.includes("executor"),
                         driver: true,
                         tags: columnSlugs.includes("tags"),
-                        criticality: columnSlugs.includes("criticality"),
+                        criticality: true,
                         estimates: columnSlugs.includes("estimated-time-frame"),
                         delayedStops: columnSlugs.includes("delayed-stops"),
                         stops: columnSlugs.includes("distance") || columnSlugs.includes("planned-start-time-frame") || columnSlugs.includes("estimated-colli-count"),

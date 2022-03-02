@@ -190,12 +190,6 @@ export class RouteListColumn
             columnSize: "min-content",
             column: "visible"
         },
-        "criticality":
-        {
-            name: listColumn.criticality,
-            columnSize: "min-content",
-            column: "not-added"
-        },
         "distance":
         {
             name: listColumn.distance,

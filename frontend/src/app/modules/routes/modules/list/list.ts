@@ -670,7 +670,7 @@ export class ListPage
                         fulfiller: columnSlugs.includes("executor"),
                         driver: columnSlugs.includes("driver") || columnSlugs.includes("driver-id"),
                         tags: columnSlugs.includes("tags"),
-                        criticality: columnSlugs.includes("criticality"),
+                        criticality: true,
                         estimates: columnSlugs.includes("estimated-time-frame"),
                         delayedStops: columnSlugs.includes("delayed-stops"),
                         stops: columnSlugs.includes("distance") || columnSlugs.includes("planned-start-time-frame") || columnSlugs.includes("estimated-colli-count"),
