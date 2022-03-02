@@ -199,6 +199,26 @@ export class DataTableRowCustomElement
     {
         if (this.clickable !== false && !event.defaultPrevented && !(event as any).__ignoreRowClick && this.click)
         {
+            // Don't handle the event if it originated from a nested anchor element with an `href` attribute.
+            for (const target of event.composedPath())
+            {
+                // Determine whether the target is an anchor element with an `href`.
+                if (target instanceof HTMLAnchorElement)
+                {
+                    // Only consider targets within the current element.
+                    if (target.classList.contains("data-table-row"))
+                    {
+                        break;
+                    }
+
+                    // Determine whether the anchor element has an `href`.
+                    if (target.hasAttribute("href"))
+                    {
+                        return true;
+                    }
+                }
+            }
+
             this.click({ event });
 
             return false;
