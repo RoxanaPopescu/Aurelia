@@ -100,6 +100,11 @@ export class DetailsModule
     protected statusValues = Object.keys(OrderStatus.values).map(slug => new OrderStatus(slug as any));
 
     /**
+     * True if the order is in the process of being removed from the route, otherwise false.
+     */
+    protected isRemovingOrderFromRoute = false;
+
+    /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
      */
@@ -158,27 +163,33 @@ export class DetailsModule
      */
     protected async onRemoveFromRouteItemClick(action: "release-to-drivers" | "manual-dispatch" | "automatic-dispatch"): Promise<void>
     {
+        this._toastService.open("info",
+        {
+            heading: removeOrderFromRouteToast.heading,
+            body: removeOrderFromRouteToast.body
+        });
+
         try
         {
-            await this._orderService.removeFromRoute(this.routeId!, this.order!.consignorId, this.order!.slug, action);
-
-            this.routeId = undefined;
-            this.routeSlug = undefined;
+            this.isRemovingOrderFromRoute = true;
 
             if (this.tab === "route")
             {
                 this.tab = "events";
             }
 
-            this._toastService.open("success",
-            {
-                heading: removeOrderFromRouteToast.heading,
-                body: removeOrderFromRouteToast.body
-            });
+            await this._orderService.removeFromRoute(this.routeId!, this.order!.consignorId, this.order!.slug, action);
+
+            this.routeId = undefined;
+            this.routeSlug = undefined;
         }
         catch (error)
         {
             Log.error("Could not remove order from route", error);
+        }
+        finally
+        {
+            this.isRemovingOrderFromRoute = false;
         }
     }
 

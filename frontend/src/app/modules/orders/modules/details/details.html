@@ -309,7 +309,7 @@
                             Colli
                         </tab>
 
-                        <tab name="route" disabled.bind="!routeSlug" invalid.bind="routeValidation.invalid">
+                        <tab name="route" disabled.bind="!routeSlug || isRemovingOrderFromRoute" invalid.bind="routeValidation.invalid">
                             <span if.bind="loadingRouteInfo" translate>
                                 Loading route...
                             </span>
@@ -328,7 +328,7 @@
                         <div if.bind="routeId != null">
                             <select-button
                                 if-claims="edit-routes"
-                                disabled.bind="order.status.slug == 'ready'"
+                                disabled.bind="order.status.slug == 'ready' || isRemovingOrderFromRoute"
                                 appearance="outline"
                                 accent="primary">
 
