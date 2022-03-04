@@ -163,6 +163,7 @@ export class DetailsModule
             await this._orderService.removeFromRoute(this.routeId!, this.order!.consignorId, this.order!.slug, action);
 
             this.routeId = undefined;
+            this.routeSlug = undefined;
 
             if (this.tab === "route")
             {
