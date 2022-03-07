@@ -29,14 +29,12 @@ export class SearchModalPanel
      */
     public constructor(modal: Modal, searchService: SearchService, savedSearchService: SavedSearchService, recentSearchService: RecentSearchService, starredItemService: StarredItemService)
     {
-        this._modal = modal;
         this._searchService = searchService;
         this._savedSearchService = savedSearchService;
         this._recentSearchService = recentSearchService;
         this._starredItemService = starredItemService;
     }
 
-    private readonly _modal: Modal;
     private readonly _searchService: SearchService;
     private readonly _recentSearchService: RecentSearchService;
     private readonly _savedSearchService: SavedSearchService;
@@ -344,10 +342,6 @@ export class SearchModalPanel
 
         // Ensure the search is logged as a recent search.
         this.ensureLoggedAsRecent();
-
-        // Make sure the modal closes, even if no navigation is triggered.
-        // tslint:disable-next-line: no-floating-promises
-        this._modal.close();
 
         return true;
     }
