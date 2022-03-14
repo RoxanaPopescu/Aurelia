@@ -3,7 +3,6 @@
 
 page-tab-nav
 {
-
     /// The width of the border of the component.
     --tab-nav-border-width: var(--border-width-medium);
 
@@ -23,6 +22,6 @@ page-tab-nav
     color: var(--surface-primary-text-color);
     font-weight: 500;
 
-    padding: 0 28rem;
+    padding: 0 36rem;
     border-bottom: var(--tab-nav-border-width) solid var(--tab-nav-border-color);
 }
