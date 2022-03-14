@@ -4,6 +4,21 @@
     <require from="app/components/page-tab-nav/page-tab"></require>
     <require from="./start-locations.scss"></require>
 
+    <page-section if.bind="hasDeletedVehicleGroups(undefined, bindingUpdateTrigger)">
+
+        <div class="font-small">
+            <invalid-validator active.bind="true">
+
+                <template replace-part="invalid" translate>
+                    One or more reservations reference vehicle groups that have been deleted.<br>
+                    Please ensure a vehicle group is chosen for each reservation, at each start location.
+                </template>
+
+            </invalid-validator>
+        </div>
+
+    </page-section>
+
     <page-section class="no-start-locations" if.bind="settings.departureTimes.length === 0">
 
         <empty-indicator class="margin-largest-top">
@@ -40,7 +55,7 @@
 
         <page-tab-nav appearance="tabs" value.bind="activeDepartureTimeName">
 
-            <page-tab repeat.for="departureTime of settings.departureTimes" name.bind="departureTime.name">
+            <page-tab repeat.for="departureTime of settings.departureTimes" name.bind="departureTime.name" invalid.bind="(bindingUpdateTrigger && undefined) || hasDeletedVehicleGroups(departureTime, bindingUpdateTrigger)">
 
                 <span class="text-truncate" title.bind="departureTime.name">
                     ${departureTime.name}
@@ -312,7 +327,17 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${getVehicleGroupName(scenario.gates[0].slots[0].vehicleGroup)}
+
+                                <let
+                                    vehicle-group.bind="getVehicleGroup(scenario.gates[0].slots[0].vehicleGroup, bindingUpdateTrigger)">
+                                </let>
+
+                                <span if.bind="vehicleGroup != null">
+                                    ${vehicleGroup.name}
+                                </span>
+
+                                <span else empty-value accent="negative"></span>
+
                             </data-table-cell>
 
                             <data-table-cell align="right">

@@ -34,7 +34,9 @@ export class VehicleGroups
      */
     protected async onRemoveVehicleGroupClick(vehicleGroup: VehicleGroup): Promise<void>
     {
-        const confirmed = await this._modalService.open(ConfirmDeleteVehicleGroupDialog, vehicleGroup).promise;
+        const isReferenced = this.isVehicleGroupReferenced(vehicleGroup.id);
+
+        const confirmed = await this._modalService.open(ConfirmDeleteVehicleGroupDialog, { vehicleGroup, isReferenced }).promise;
 
         if (!confirmed)
         {
@@ -78,5 +80,15 @@ export class VehicleGroups
                 this.settings.vehicleGroups.splice(index, 1, savedVehicleGroup);
             }
         }
+    }
+
+    /**
+     * Determines whether the specified vehicle group is referenced by another entity.
+     * @param vehicleGroupId The ID of the vehicle group for which to look for references.
+     * @returns True if the specified vehicle group is referenced by another entity, otherwise false.
+     */
+    protected isVehicleGroupReferenced(vehicleGroupId: string): boolean
+    {
+        return this.settings.departureTimes.some(dt => dt.scenarios.some(s => s.gates[0].slots[0].vehicleGroup === vehicleGroupId));
     }
 }

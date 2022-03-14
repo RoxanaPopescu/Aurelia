@@ -18,14 +18,16 @@ export class ConfirmDeleteVehicleGroupDialog
     private _result = false;
 
     protected vehicleGroup: VehicleGroup;
+    protected isReferenced: boolean;
 
     /**
      * Called by the framework when the modal is activated.
      * @param model The model to use.
      */
-    public activate(model: VehicleGroup): void
+    public activate(model: { vehicleGroup: VehicleGroup; isReferenced: boolean }): void
     {
-        this.vehicleGroup = model;
+        this.vehicleGroup = model.vehicleGroup;
+        this.isReferenced = model.isReferenced;
     }
 
     /**

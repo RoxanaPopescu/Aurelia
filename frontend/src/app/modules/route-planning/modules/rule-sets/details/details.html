@@ -77,7 +77,7 @@
                             Cancel
                         </button>
 
-                        <button disabled.bind="updating" appearance="solid" accent="primary" click.trigger="onSaveClick()">
+                        <button disabled.bind="updating || validation.invalid" appearance="solid" accent="primary" click.trigger="onSaveClick()">
 
                             <template if.bind="isNew && !updating" translate>
                                 Create rule set
@@ -99,7 +99,7 @@
 
             </page-header>
 
-            <name-value-list class="font-small opacity-faded">
+            <name-value-list if.bind="settings.metadata.lastModified != null || settings.metadata.created != null" class="font-small opacity-faded">
 
                 <name-value-pair if.bind="settings.metadata.lastModified != null">
 

@@ -12,6 +12,11 @@
 
         </modal-header>
 
+        <modal-section if.bind="isReferenced" accent="negative" class="margin-bottom" translate>
+            Note that this vehicle group is currently referenced by one or more departure times.<br>
+            If you continue, you will need to choose another vehicle group for those.
+        </modal-section>
+
         <modal-section translate>
             This action cannot be undone.
         </modal-section>

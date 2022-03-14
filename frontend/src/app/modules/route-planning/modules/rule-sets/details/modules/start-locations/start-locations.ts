@@ -1,5 +1,5 @@
 import { autoinject, bindable, computedFrom } from "aurelia-framework";
-import { RoutePlanningSettings, DepartureTimeScenario } from "app/model/_route-planning-settings";
+import { RoutePlanningSettings, DepartureTimeScenario, VehicleGroup } from "app/model/_route-planning-settings";
 import { DepartureTime } from "app/model/_route-planning-settings/entities/departure-time";
 import { ModalService, IValidation } from "shared/framework";
 import { ScenarioPanel } from "./modals/scenario/scenario";
@@ -27,6 +27,7 @@ export class StartLocations
     }
 
     private readonly _modalService: ModalService;
+    private _bindingUpdateTrigger = 0;
 
     /**
      * The validation for the modal.
@@ -69,6 +70,15 @@ export class StartLocations
     protected get activeDepartureTime(): DepartureTime | undefined
     {
         return this.settings?.departureTimes.filter(d => d.name === this.activeDepartureTimeName)[0];
+    }
+
+    /**
+     * Value used to trigger binding updates.
+     */
+    @computedFrom("_bindingUpdateTrigger", "settings.vehicleGroups.length")
+    protected get bindingUpdateTrigger(): any
+    {
+        return `${this._bindingUpdateTrigger}|${this.settings.vehicleGroups.length}`;
     }
 
     /**
@@ -122,7 +132,7 @@ export class StartLocations
                 case "weekdays": return scenario.criteria.weekdays.join(",");
                 case "from-date": return scenario.criteria.datePeriod.from?.valueOf() ?? "";
                 case "to-date": return scenario.criteria.datePeriod.to?.valueOf() ?? "";
-                case "vehicle-group": return this.getVehicleGroupName(scenario.gates[0].slots[0].vehicleGroup) ?? "";
+                case "vehicle-group": return this.getVehicleGroup(scenario.gates[0].slots[0].vehicleGroup)?.name ?? "";
                 default: return "";
             }
         };
@@ -160,6 +170,8 @@ export class StartLocations
         {
             this.settings.departureTimes.push(editedDepartureTime);
             this.activeDepartureTimeName = editedDepartureTime.name;
+
+            this._bindingUpdateTrigger++;
         }
     }
 
@@ -177,6 +189,8 @@ export class StartLocations
             const index = this.settings.departureTimes.indexOf(departureTime);
             this.settings.departureTimes.splice(index, 1, editedDepartureTime);
             this.activeDepartureTimeName = editedDepartureTime.name;
+
+            this._bindingUpdateTrigger++;
         }
     }
 
@@ -198,6 +212,8 @@ export class StartLocations
         {
             this.settings.departureTimes.splice(this.settings.departureTimes.indexOf(departureTime), 1);
             this.activeDepartureTimeName = this.settings.departureTimes[0]?.name;
+
+            this._bindingUpdateTrigger++;
         }
         catch (error)
         {
@@ -223,6 +239,8 @@ export class StartLocations
         if (editedStop != null)
         {
             this.activeDepartureTime!.scenarios.push(editedStop);
+
+            this._bindingUpdateTrigger++;
         }
     }
 
@@ -247,6 +265,8 @@ export class StartLocations
         {
             const index = this.activeDepartureTime!.scenarios.indexOf(scenario);
             this.activeDepartureTime!.scenarios.splice(index, 1, editedScenario);
+
+            this._bindingUpdateTrigger++;
         }
     }
 
@@ -268,6 +288,8 @@ export class StartLocations
         {
             const index = this.activeDepartureTime!.scenarios.indexOf(scenario);
             this.activeDepartureTime!.scenarios.splice(index, 1);
+
+            this._bindingUpdateTrigger++;
         }
         catch (error)
         {
@@ -276,12 +298,51 @@ export class StartLocations
     }
 
     /**
-     * Gets the name of the vehicle group with the specified ID.
+     * Gets the vehicle group with the specified ID.
      * @param vehicleGroupId The ID of the vehicle group.
-     * @returns The name of the vehicle group.
+     * @param bindingUpdateTrigger Hack used to ensure bindings update as expected.
+     * @returns The the vehicle group.
      */
-    protected getVehicleGroupName(vehicleGroupId: string): string | undefined
+    protected getVehicleGroup(vehicleGroupId: string, bindingUpdateTrigger?: any): VehicleGroup | undefined
     {
-        return this.settings.vehicleGroups.find(g => g.id === vehicleGroupId)?.name;
+        return this.settings.vehicleGroups.find(g => g.id === vehicleGroupId);
+    }
+
+    /**
+     * Determines whether any references to deleted vehicle groups exists.
+     * @param departureTime The departure time to check, or undefined to check all.
+     * @param bindingUpdateTrigger Hack used to ensure bindings update as expected.
+     * @returns True if any references to deleted vehicle groups exists, otherwise false.
+     */
+    protected hasDeletedVehicleGroups(departureTime?: DepartureTime, bindingUpdateTrigger?: any): boolean
+    {
+        if (this.settings != null)
+        {
+            if (departureTime != null)
+            {
+                for (const scenario of departureTime.scenarios)
+                {
+                    if (!this.settings.vehicleGroups.some(g => g.id === scenario.gates[0].slots[0].vehicleGroup))
+                    {
+                        return true;
+                    }
+                }
+            }
+            else
+            {
+                for (const departureTime of this.settings.departureTimes)
+                {
+                    for (const scenario of departureTime.scenarios)
+                    {
+                        if (!this.settings.vehicleGroups.some(g => g.id === scenario.gates[0].slots[0].vehicleGroup))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }
