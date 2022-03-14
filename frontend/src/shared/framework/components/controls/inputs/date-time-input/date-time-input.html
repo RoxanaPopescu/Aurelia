@@ -40,7 +40,8 @@
                 autoselect.bind="autoselect"
                 enterkey.bind="enterkey"
                 fixed.bind="fixed"
-                change.trigger="onDateValueChange($event.detail.value)">
+                input.trigger="onInternalEvent($event)"
+                change.trigger="onDateValueChange($event, $event.detail.value)">
             </date-input>
 
             <time-input
@@ -55,7 +56,8 @@
                 autoselect.bind="autoselect"
                 enterkey.bind="enterkey"
                 fixed.bind="fixed"
-                change.trigger="onTimeValueChange($event.detail.value)">
+                input.trigger="onInternalEvent($event)"
+                change.trigger="onTimeValueChange($event, $event.detail.value)">
             </time-input>
 
         </div>

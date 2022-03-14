@@ -8,6 +8,16 @@ import { EnterKeyHint } from "../input";
 @autoinject
 export class DateTimeInputCustomElement
 {
+    /**
+     * Creates a new instance of the type.
+     * @param element The element representing the component.
+     */
+    public constructor(element: Element)
+    {
+        this._element = element as HTMLElement;
+    }
+
+    private readonly _element: HTMLElement;
     private _nowIntervalHandle: any;
     private _now: DateTime;
 
@@ -242,10 +252,13 @@ export class DateTimeInputCustomElement
 
     /**
      * Called when the user changes the date.
+     * @param event The event.
      * @param newValue The new date value.
      */
-    protected onDateValueChange(newValue: DateTime): void
+    protected onDateValueChange(event: Event, newValue: DateTime): void
     {
+        var oldValue = this.value;
+
         this.isInternalUpdate = true;
         this.dateValue = newValue;
 
@@ -271,14 +284,24 @@ export class DateTimeInputCustomElement
         {
             this.isInternalUpdate = false;
         }
+
+        this.onInternalEvent(event);
+
+        if (this.value !== oldValue)
+        {
+            this.dispatchEvents();
+        }
     }
 
     /**
      * Called when the user changes the time.
+     * @param event The event.
      * @param newValue The new time value.
      */
-    protected onTimeValueChange(newValue: Duration): void
+    protected onTimeValueChange(event: Event, newValue: Duration): void
     {
+        var oldValue = this.value;
+
         this.isInternalUpdate = true;
         this.timeValue = newValue;
 
@@ -290,6 +313,35 @@ export class DateTimeInputCustomElement
         {
             this.value = undefined;
         }
+
+        this.onInternalEvent(event);
+
+        if (this.value !== oldValue)
+        {
+            this.dispatchEvents();
+        }
+    }
+
+    /**
+     * Called when an event is triggered.
+     * Prevents the event from bubbling further, as this input dispatches its own event.
+     * @param event The event.
+     */
+    protected onInternalEvent(event: Event): void
+    {
+        event.stopPropagation();
+    }
+
+    /**
+     * Dispatches an `input` and `change` events from this input.
+     */
+    protected dispatchEvents(): void
+    {
+        // Dispatch the `input` event to indicate that the comitted value, has changed.
+        this._element.dispatchEvent(new CustomEvent("input", { bubbles: true, detail: { value: this.value } }));
+
+        // Dispatch the `change` event to indicate that the comitted value, has changed.
+        this._element.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }));
     }
 
     /**
