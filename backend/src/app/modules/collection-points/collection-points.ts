@@ -7,6 +7,56 @@ import { AppModule } from "../../app-module";
 export class CollectionPointModule extends AppModule
 {
     /**
+     * Searches for collection points.
+     * @param get parameters from url.
+     * @returns The collection points without orders.
+     */
+    public "GET /v2/collection-points" = async (context: AppContext) =>
+    {
+        const validationResult = await this.validateLogin(context, "view-routes");
+
+        const result = await this.apiClient.get("collection-point/collection-points",
+        {
+            query:
+            {
+                ...context.query
+            },
+            headers:
+            {
+                "x-organization": validationResult.outfitId
+            }
+        });
+
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
+     * Searches for orders within collection points
+     * @param get parameters from url.
+     * @returns The collection points without orders.
+     */
+    public "GET /v2/collection-points/:id/orders" = async (context: AppContext) =>
+    {
+        const validationResult = await this.validateLogin(context, "view-routes");
+
+        const result = await this.apiClient.get(`collection-point/collection-points/${context.params.id}/orders`,
+        {
+            query:
+            {
+                ...context.query
+            },
+            headers:
+            {
+                "x-organization": validationResult.outfitId
+            }
+        });
+
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
      * Gets the collection point by ID.
      * @param context.params.id The ID of the collection point to receive.
      * @returns The collection point of the specified ID.
