@@ -257,7 +257,7 @@ export class DateTimeInputCustomElement
      */
     protected onDateValueChange(event: Event, newValue: DateTime): void
     {
-        var oldValue = this.value;
+        const oldValue = this.value;
 
         this.isInternalUpdate = true;
         this.dateValue = newValue;
@@ -300,7 +300,7 @@ export class DateTimeInputCustomElement
      */
     protected onTimeValueChange(event: Event, newValue: Duration): void
     {
-        var oldValue = this.value;
+        const oldValue = this.value;
 
         this.isInternalUpdate = true;
         this.timeValue = newValue;
