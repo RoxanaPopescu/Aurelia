@@ -330,9 +330,9 @@ export class StartLocations
             }
             else
             {
-                for (const departureTime of this.settings.departureTimes)
+                for (const departureTime2 of this.settings.departureTimes)
                 {
-                    for (const scenario of departureTime.scenarios)
+                    for (const scenario of departureTime2.scenarios)
                     {
                         if (!this.settings.vehicleGroups.some(g => g.id === scenario.gates[0].slots[0].vehicleGroup))
                         {
