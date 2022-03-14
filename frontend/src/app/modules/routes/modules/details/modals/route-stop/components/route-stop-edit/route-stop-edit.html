@@ -617,6 +617,7 @@
                     label="above"
                     zone="UTC"
                     value.bind="model.routeStop.arrivedTime"
+                    change.trigger="onArrivedTimeChanged($event.detail.value)"
                     class="flex-basis-2-of-3">
 
                     <div slot="heading" translate>
@@ -628,6 +629,33 @@
                         <required-validator
                             enabled.bind="model.routeStop.arrivedTime ? undefined : false"
                             value.bind="model.routeStop.arrivedTime">
+                        </required-validator>
+
+                    </div>
+
+                </date-time-input>
+
+                </time-input>
+            </div>
+
+            <div class="control-row margin-large-bottom">
+
+                <date-time-input
+                    disabled.bind="!['arrived', 'completed'].includes(model.routeStop.status.slug)"
+                    label="above"
+                    zone="UTC"
+                    value.bind="model.routeStop.taskTimeStarted"
+                    class="flex-basis-2-of-3">
+
+                    <div slot="heading" translate>
+                        Task started date
+                    </div>
+
+                    <div slot="validation">
+
+                        <required-validator
+                            enabled.bind="model.routeStop.taskTimeStarted ? undefined : false"
+                            value.bind="model.routeStop.taskTimeStarted">
                         </required-validator>
 
                     </div>

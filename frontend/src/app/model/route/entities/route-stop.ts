@@ -251,6 +251,7 @@ export class RouteStop extends RouteStopBase
             actions: this.actions,
             arrivedTime: this.arrivedTime,
             completedTime: this.completedTime,
+            taskTimeStarted: this.taskTimeStarted,
             tags: this.tags,
             estimatedTaskTime: this.initialEstimates?.taskTime?.as("seconds"),
             allColliStatus: this.allColliStatus?.slug,

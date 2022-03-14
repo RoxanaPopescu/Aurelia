@@ -63,6 +63,11 @@ export abstract class RouteStopBase extends RouteStopInfo
                 this.completedTime = DateTime.fromISO(data.completedTime, { setZone: true });
             }
 
+            if (data.taskTimeStarted != null)
+            {
+                this.taskTimeStarted = DateTime.fromISO(data.taskTimeStarted, { setZone: true });
+            }
+
             if (data.taskTime != null)
             {
                 this.taskTime = Duration.fromObject({ seconds: data.taskTime });
@@ -160,6 +165,11 @@ export abstract class RouteStopBase extends RouteStopInfo
      * The date and time at which the driver arrived.
      */
     public arrivedTime?: DateTime;
+
+    /**
+     * The date and time at which the driver started the task.
+     */
+    public taskTimeStarted?: DateTime;
 
     /**
      * The date and time at which the stop was complated.

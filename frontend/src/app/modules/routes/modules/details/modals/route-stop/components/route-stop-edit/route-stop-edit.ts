@@ -204,4 +204,18 @@ export class RouteStopEditCustomElement
             this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to.minus({ day: 1 });
         }
     }
+
+    /**
+     * Called when the arrived date changes.
+     * Updated the task time started if it's not already set.
+     */
+    protected onArrivedTimeChanged(date: DateTime): void
+    {
+        if (this.model.routeStop.taskTimeStarted != null || date == null)
+        {
+            return;
+        }
+
+        this.model.routeStop.taskTimeStarted = date;
+    }
 }
