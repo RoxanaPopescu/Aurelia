@@ -140,11 +140,11 @@ export class VehicleGroupPanel
             // Clear start location if no address is specified.
             if (this.model.startLocation!.location.address == null)
             {
-                this.model.startLocation = undefined;
+                this.model.startLocation = new VehicleGroupLocation();
             }
 
             // Resolve start location, if needed.
-            if (this.model.startLocation != null && this.model.startLocation.location.address.id != null)
+            if (this.model.startLocation.location.position == null && this.model.startLocation.location.address?.id != null)
             {
                 try
                 {
@@ -159,13 +159,13 @@ export class VehicleGroupPanel
             }
 
             // Clear end location if no address is specified.
-            if (this.model.endLocation!.location.address == null)
+            if (this.model.endLocation.location.address == null)
             {
-                this.model.endLocation = undefined;
+                this.model.endLocation = new VehicleGroupLocation();
             }
 
             // Resolve end location, if needed.
-            if (this.model.endLocation != null && this.model.endLocation.location.address.id != null)
+            if (this.model.endLocation.location.position == null && this.model.endLocation.location.address?.id != null)
             {
                 try
                 {
@@ -180,7 +180,7 @@ export class VehicleGroupPanel
             }
 
             // Resolve end location, if needed.
-            if (this.model.distributionCenterEnRoute.location?.address?.id != null)
+            if (this.model.distributionCenterEnRoute.location.position == null && this.model.distributionCenterEnRoute.location.address?.id != null)
             {
                 try
                 {

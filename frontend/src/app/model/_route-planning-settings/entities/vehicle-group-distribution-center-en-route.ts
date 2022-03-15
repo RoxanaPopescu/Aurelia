@@ -28,7 +28,7 @@ export class VehicleGroupDistributionCenterEnRoute
     /**
      * The start location associated with the vehicle group.
      */
-    public location: Location | undefined;
+    public location: Location;
 
     /**
      * The task time at this revisit.

@@ -35,9 +35,7 @@ export class Location
         }
         else
         {
-            // FIXME: Remove when backend always returns it
             this.timeZone = new IANAZone("Europe/Copenhagen");
-            // console.warn("Location created with default time zone; this might be an error.");
         }
     }
 
