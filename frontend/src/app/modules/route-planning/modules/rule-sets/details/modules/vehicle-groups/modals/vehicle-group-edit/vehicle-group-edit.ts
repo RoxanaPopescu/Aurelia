@@ -138,7 +138,7 @@ export class VehicleGroupPanel
             this._modal.busy = true;
 
             // Clear start location if no address is specified.
-            if (this.model.startLocation!.location.address == null)
+            if (this.model.startLocation.location.address == null)
             {
                 this.model.startLocation = new VehicleGroupLocation();
             }
