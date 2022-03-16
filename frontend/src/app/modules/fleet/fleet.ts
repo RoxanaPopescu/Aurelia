@@ -87,21 +87,6 @@ export class FleetModule
                 redirect: "dispatch/forecasts"
             },
             {
-                name: "driver-tracking",
-                route: "driver-tracking",
-                moduleId: PLATFORM.moduleName("./modules/driver-tracking/driver-tracking"),
-                settings:
-                {
-                    claims:
-                    [
-                        "view-routes"
-                    ]
-                },
-                title: routeTitles.driverTracking,
-                nav: true,
-                icon: "driver-tracking"
-            },
-            {
                 name: "create-multiple",
                 route: "drivers/create-multiple",
                 moduleId: PLATFORM.moduleName("./modules/drivers/create-multiple/create-multiple"),

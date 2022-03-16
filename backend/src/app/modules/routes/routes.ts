@@ -81,15 +81,15 @@ export class RoutesModule extends AppModule
      */
     public "POST /v2/routes/driver-positions" = async (context: AppContext) =>
     {
-        await context.authorize("edit-routes");
+        await context.authorize("view-routes");
 
         const body = context.request.body;
         body.fulfillerIds = [context.user?.organizationId];
 
-        const result = await this.apiClient.get("logistics-platform/routes/v4/driver-positions",
+        const result = await this.apiClient.post("logistics-platform/routes/v4/driver-positions",
         {
             noi: true,
-            query: body
+            body: body
         });
 
         context.response.body = result.data;
