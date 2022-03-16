@@ -248,7 +248,8 @@ export class OrdersModule extends AppModule
             phone: order.consignorPhoneNumber,
             email: order.consignorEmail,
             appointment: { earliestArrivalDate: order.pickupEarliestDate, earliestArrivalTime: order.pickupEarliestTime, latestArrivalDate: order.pickupLatestDate, latestArrivalTime: order.pickupLatestTime },
-            instructions: order.pickupInstructions
+            instructions: order.pickupInstructions,
+            estimatedTaskTime: order.pickupEstimatedTaskTime
         };
 
         const delivery =
@@ -259,7 +260,8 @@ export class OrdersModule extends AppModule
             phone: order.consigneePhoneNumber,
             email: order.consigneeEmail,
             appointment: { earliestArrivalDate: order.deliveryEarliestDate, earliestArrivalTime: order.deliveryEarliestTime, latestArrivalDate: order.deliveryLatestDate, latestArrivalTime: order.deliveryLatestTime },
-            instructions: order.deliveryInstructions
+            instructions: order.deliveryInstructions,
+            estimatedTaskTime: order.deliveryEstimatedTaskTime
         };
 
         context.response.body =
