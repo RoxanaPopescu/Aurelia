@@ -210,8 +210,8 @@ export class RoutePlanningOrderGroupsModule extends AppModule
 
             const [result1, result2] = await Promise.all([legacyConsignorsRequest, organizationsRequest]);
 
-            console.log("d2", result2.data);
             organizations.push(...result1.data.results);
+            organizations.push(...result2.data);
         }
         catch (error: any)
         {

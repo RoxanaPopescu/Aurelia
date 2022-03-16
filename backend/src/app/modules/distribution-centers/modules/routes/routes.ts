@@ -57,7 +57,7 @@ export class DistributionCenteRoutesModule extends AppModule
             }
         });
 
-        const organizations = await this.apiClient.get("organizations",
+        const organizations = await this.apiClient.get("organization/organizations",
         {
             query:
             {

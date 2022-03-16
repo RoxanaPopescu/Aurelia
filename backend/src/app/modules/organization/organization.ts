@@ -38,7 +38,6 @@ export class OrganizationModule extends AppModule
         context.response.status = 200;
     }
 
-    // TODO:BACKEND: Return full objects to avoid N+1 problem
     /**
      * Gets all organizations visible to the current user.
      * @returns
@@ -50,14 +49,16 @@ export class OrganizationModule extends AppModule
 
         const result1 = await this.apiClient.get(`identity/memberships/users/${context.user!.id}`);
 
-        const organizations = await Promise.all(result1.data.organizationMemberships.map(async (membership: any) =>
+        const membershipIds = result1.data.organizationMemberships.map((m: any) => m.organizationId);
+        const organizations = await this.apiClient.get("organization/organizations",
         {
-            const result2 = await this.apiClient.get(`organization/organizations/${membership.organizationId}`);
+            query:
+            {
+                ids: membershipIds
+            }
+        });
 
-            return result2.data.organization;
-        }));
-
-        context.response.body = organizations;
+        context.response.body = organizations.data;
         context.response.status = 200;
     }
 
