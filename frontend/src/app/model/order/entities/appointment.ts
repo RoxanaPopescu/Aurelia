@@ -1,5 +1,5 @@
 import { DateTime, Duration } from "luxon";
-import { TimeOfDay, DateTimeRange } from "shared/types";
+import { DateTimeRange } from "shared/types";
 
 export class Appointment
 {
@@ -11,12 +11,12 @@ export class Appointment
     {
         const fromDate = DateTime.fromISO(data.earliestArrivalDate, { setZone: true });
         // tslint:disable-next-line: deprecation
-        const fromDuration = Duration.fromMillis(TimeOfDay.fromString(data.earliestArrivalTime).valueOf());
+        const fromDuration = Duration.fromISOTime(data.earliestArrivalTime);
         this.earliestArrivalDate = fromDate.plus(fromDuration);
 
         const toDate = DateTime.fromISO(data.latestArrivalDate, { setZone: true });
         // tslint:disable-next-line: deprecation
-        const toDuration = Duration.fromMillis(TimeOfDay.fromString(data.latestArrivalTime).valueOf());
+        const toDuration = Duration.fromISOTime(data.latestArrivalTime);
         this.latestArrivalDate = toDate.plus(toDuration);
     }
 

@@ -96,6 +96,10 @@ export class OrdersEventsModule extends AppModule
                     {
                         eventType: "notification-order-email-sent",
                         version: "1.0"
+                    },
+                    {
+                        eventType: "order-removed-from-route",
+                        version: "1.0"
                     }
                 ],
                 ownerId: context.request.body.consignorId,
