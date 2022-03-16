@@ -38,5 +38,6 @@
     "authorityToLeaveGranted": "Authority to leave was granted",
     "authorityToLeaveRevoked": "Authority to leave was revoked",
     "notificationOrderSmsSent": "SMS notification sent",
-    "notificationOrderEmailSent": "Email notification sent"
+    "notificationOrderEmailSent": "Email notification sent",
+    "orderRemovedFromRoute": "Order removed from route"
 }

@@ -337,6 +337,13 @@ export class OrderEventType
             description: eventDescriptions.notificationOrderEmailSent,
             accent: "positive",
             stopType: undefined
+        },
+        "order-removed-from-route":
+        {
+            name: eventTitles.orderRemovedFromRoute,
+            description: eventDescriptions.orderRemovedFromRoute,
+            accent: "positive",
+            stopType: undefined
         }
     };
 }
