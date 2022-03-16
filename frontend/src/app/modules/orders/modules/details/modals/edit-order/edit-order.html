@@ -210,7 +210,7 @@
 
             <div class="control-row">
 
-                <number-input label="above" value.bind="model.pickup.estimatedTaskTime | scale: 1/60" class="flex-basis-1-of-1" min.bind="0">
+                <duration-input label="above" value.bind="model.pickup.estimatedTaskTime" class="flex-basis-1-of-1" min.bind="0">
 
                     <div slot="heading" translate>
                         Estimated task time
@@ -234,7 +234,7 @@
 
                     </div>
 
-                </number-input>
+                </duration-input>
 
             </div>
 
@@ -383,7 +383,7 @@
 
             <div class="control-row">
 
-                <number-input label="above" value.bind="model.delivery.estimatedTaskTime | scale: 1/60" class="flex-basis-1-of-1" min.bind="0">
+                <duration-input label="above" value.bind="model.delivery.estimatedTaskTime" class="flex-basis-1-of-1" min.bind="0">
 
                     <div slot="heading" translate>
                         Estimated task time
@@ -407,7 +407,7 @@
 
                     </div>
 
-                </number-input>
+                </duration-input>
 
             </div>
 

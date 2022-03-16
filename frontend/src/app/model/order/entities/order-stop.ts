@@ -1,6 +1,7 @@
 import { Appointment } from "./appointment";
 import { Location } from "app/model/shared";
 import { OrderStopType, OrderStopTypeSlug } from "./order-stop-type";
+import { Duration } from "luxon";
 
 export class OrderStop
 {
@@ -18,7 +19,11 @@ export class OrderStop
         this.appointment = new Appointment(data.appointment);
         this.instructions = data.instructions;
         this.type = new OrderStopType(typeSlug);
-        this.estimatedTaskTime = data.estimatedTaskTime;
+
+        if (data.estimatedTaskTime != null)
+        {
+            this.estimatedTaskTime = Duration.fromISOTime(data.estimatedTaskTime);
+        }
     }
 
     public location: Location;
@@ -37,7 +42,7 @@ export class OrderStop
 
     public instructions: string;
 
-    public estimatedTaskTime: number;
+    public estimatedTaskTime: Duration | undefined;
 
     /**
      * Gets the data representing this instance.
@@ -52,7 +57,7 @@ export class OrderStop
             email: this.contactEmail,
             appointment: this.appointment.toJSON(),
             instructions: this.instructions,
-            estimatedTaskTime: this.estimatedTaskTime
+            estimatedTaskTime: this.estimatedTaskTime?.toISOTime()
         };
     }
 }
