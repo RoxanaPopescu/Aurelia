@@ -18,6 +18,11 @@ export class Appointment
         // tslint:disable-next-line: deprecation
         const toDuration = Duration.fromISOTime(data.latestArrivalTime);
         this.latestArrivalDate = toDate.plus(toDuration);
+
+        if (data.estimatedArrivalTime != null)
+        {
+            this.estimatedArrivalTime = DateTime.fromISO(data.estimatedArrivalTime, { setZone: true });
+        }
     }
 
     public get timeFrame(): DateTimeRange {
@@ -25,7 +30,10 @@ export class Appointment
     }
 
     public earliestArrivalDate: DateTime;
+
     public latestArrivalDate: DateTime;
+
+    public estimatedArrivalTime: DateTime;
 
     /**
      * Gets the data representing this instance.
