@@ -205,23 +205,23 @@ export class OrdersModule extends AppModule
             pageSize: 1
         };
 
-        const orderIdsResult = await this.apiClient.post("logistics/organizations/orders/lookup",
+        const orderLookupResult = await this.apiClient.post("logistics/organizations/orders/lookup",
         {
             body: body
         });
 
-        if (orderIdsResult.data.internalOrderIds.length <= 0)
+        if (orderLookupResult.data.internalOrderIds.length <= 0)
         {
             context.response.status = 404;
 
             return;
         }
 
-        const internalOrderId = orderIdsResult.data.internalOrderIds[0];
+        const internalOrderId = orderLookupResult.data.internalOrderIds[0];
 
-        const result = await this.apiClient.post(`logistics/organizations/${context.user!.organizationId}/orders/${internalOrderId}/details`);
+        const orderDetailsResult = await this.apiClient.post(`logistics/organizations/${context.user!.organizationId}/orders/${internalOrderId}/details`);
 
-        const order = result.data[0];
+        const order = orderDetailsResult.data[0];
 
         let pickupPosition;
         let pickupLocationId;
@@ -247,8 +247,15 @@ export class OrdersModule extends AppModule
             companyName: order.consignorCompanyName,
             phone: order.consignorPhoneNumber,
             email: order.consignorEmail,
-            appointment: { earliestArrivalDate: order.pickupEarliestDate, earliestArrivalTime: order.pickupEarliestTime, latestArrivalDate: order.pickupLatestDate, latestArrivalTime: order.pickupLatestTime },
-            instructions: order.pickupInstructions
+            appointment:
+            {
+                earliestArrivalDate: order.pickupEarliestDate,
+                earliestArrivalTime: order.pickupEarliestTime,
+                latestArrivalDate: order.pickupLatestDate,
+                latestArrivalTime: order.pickupLatestTime
+            },
+            instructions: order.pickupInstructions,
+            estimatedTaskTime: order.pickupEstimatedTaskTime
         };
 
         const delivery =
@@ -258,8 +265,16 @@ export class OrdersModule extends AppModule
             companyName: order.consigneeCompanyName,
             phone: order.consigneePhoneNumber,
             email: order.consigneeEmail,
-            appointment: { earliestArrivalDate: order.deliveryEarliestDate, earliestArrivalTime: order.deliveryEarliestTime, latestArrivalDate: order.deliveryLatestDate, latestArrivalTime: order.deliveryLatestTime },
-            instructions: order.deliveryInstructions
+            appointment:
+            {
+                earliestArrivalDate: order.deliveryEarliestDate,
+                earliestArrivalTime: order.deliveryEarliestTime,
+                latestArrivalDate: order.deliveryLatestDate,
+                latestArrivalTime: order.deliveryLatestTime,
+                estimatedArrivalTime: order.state.isCancelled || order.state.isDeleted ? undefined : await this.fetchEstimatedArrivalTime(order.consignorId, order.orderId)
+            },
+            instructions: order.deliveryInstructions,
+            estimatedTaskTime: order.deliveryEstimatedTaskTime
         };
 
         context.response.body =
@@ -315,5 +330,45 @@ export class OrdersModule extends AppModule
         }
 
         return result;
+    }
+
+    /**
+     * Fetches the estimated arrival time for the specified order.
+     * @param outfitId The ID of the outfit owning the order.
+     * @param orderId The ID of the order.
+     * @returns A promise that will be resolved with an ISO 8601 string representing the estimated arrival time, if any.
+     */
+    private async fetchEstimatedArrivalTime(outfitId: string, orderId: string): Promise<string | undefined>
+    {
+        // Fetch the `order-delivery-eta-provided` events associated with the order.
+        const result = await this.apiClient.post<any[]>("orderevent/GetEvents",
+        {
+            body:
+            {
+                eventTypes:
+                [
+                    "order-delivery-completed",
+                    "order-delivery-failed",
+                    "order-delivery-eta-provided"
+                ],
+                ownerId: outfitId,
+                ownerOrderId: orderId
+            }
+        });
+
+        const orderEventsData = result.data!;
+
+        // If no events were found, or the order is already delivered, failed or cancelled, return undefined.
+        if (orderEventsData.length === 0 || orderEventsData.some(e => ["order-delivery-completed", "order-delivery-failed"].includes(e.eventType)))
+        {
+            return undefined;
+        }
+
+        // Ensure the events are sorted by descending date.
+        orderEventsData.sort((a, b) => b.data.timeOfEvent.valueOf() - a.data.timeOfEvent.valueOf());
+
+        // HACK: The other dates in the order model are local without offset, so to keep things consistent, we remove the offset from this date.
+        // Get the estimated arrival time from the most recent event.
+        return orderEventsData[0].data.deliveryEta.replace(/(T[^+-]*).*$/, "$1");
     }
 }
