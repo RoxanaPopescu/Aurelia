@@ -588,10 +588,7 @@ export class ListPage
      */
     protected onRouteClick(route: RouteInfo): void
     {
-        if (ENVIRONMENT.name !== "production")
-        {
-            this.expandedRouteId = this.expandedRouteId === route.id ? undefined : route.id;
-        }
+        this.expandedRouteId = this.expandedRouteId === route.id ? undefined : route.id;
     }
 
     /**
