@@ -50,15 +50,24 @@ export class OrganizationModule extends AppModule
         const result1 = await this.apiClient.get(`identity/memberships/users/${context.user!.id}`);
 
         const membershipIds = result1.data.organizationMemberships.map((m: any) => m.organizationId);
-        const organizations = await this.apiClient.get("organization/organizations",
-        {
-            query:
-            {
-                ids: membershipIds
-            }
-        });
 
-        context.response.body = organizations.data;
+        if (membershipIds.length > 0)
+        {
+            const organizations = await this.apiClient.get("organization/organizations",
+            {
+                query:
+                {
+                    ids: membershipIds
+                }
+            });
+
+            context.response.body = organizations.data;
+        }
+        else
+        {
+            context.response.body = [];
+        }
+
         context.response.status = 200;
     }
 
