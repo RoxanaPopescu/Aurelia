@@ -19,7 +19,7 @@ export class Outfit
 
         this.id = data.id;
         this.slug = data.publicId;
-        this.companyName = data.companyName;
+        this.companyName = data.companyName ?? data.name;
         this.personName = data.contactPerson;
         this.contactEmail = data.contactEmail;
         this.address = data.address;

@@ -48,23 +48,6 @@ export class DriverAssignmentPage
         this.teamsFilterService = teamsFilterService;
         this._driverService = driverService;
         this._constructed = true;
-
-        const localData = localStorage.getItem("route-columns");
-
-        if (localData != null)
-        {
-            const columnsObject = JSON.parse(localData);
-            const customColumns: RouteListColumn[] = [];
-            for (const slug of columnsObject)
-            {
-                if (Object.keys(RouteListColumn.values).includes(slug))
-                {
-                    customColumns.push(new RouteListColumn(slug));
-                }
-            }
-
-            this.customColumns = customColumns;
-        }
     }
 
     private readonly _routeService: RouteService;
@@ -144,26 +127,27 @@ export class DriverAssignmentPage
     }
 
     /**
-     * The custom columns the user has selected
-     */
-    protected customColumns: RouteListColumn[] | undefined;
-
-    /**
      * The current columns to show in the list
      */
     @computedFrom("customColumns")
     protected get columns(): RouteListColumn[]
     {
-        return this.customColumns ?? [
+        return [
+            new RouteListColumn("start-address"),
+            new RouteListColumn("owner"),
             new RouteListColumn("slug"),
             new RouteListColumn("reference"),
-            new RouteListColumn("start-date"),
-            new RouteListColumn("start-address"),
-            new RouteListColumn("tags"),
             new RouteListColumn("stop-count"),
-            new RouteListColumn("vehicle-type"),
+            new RouteListColumn("complexity"),
+            new RouteListColumn("estimated-colli-count"),
+            new RouteListColumn("distance"),
+            new RouteListColumn("estimated-time-frame"),
+            new RouteListColumn("driver"),
+            new RouteListColumn("driver-id"),
             new RouteListColumn("status"),
-            new RouteListColumn("driving-list")
+            new RouteListColumn("vehicle-type"),
+            new RouteListColumn("team"),
+            new RouteListColumn("executor")
         ];
     }
 
