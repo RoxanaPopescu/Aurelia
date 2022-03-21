@@ -333,7 +333,7 @@ export class AppModule
             name: "unknown",
             route: "unknown",
             title: routeTitles.unknown,
-            moduleId: PLATFORM.moduleName("./modules/unknown/unknown", "unknown"),
+            moduleId: PLATFORM.moduleName("./modules/unknown/pages/unknown/unknown", "unknown"),
             settings:
             {
                 scroll: true,

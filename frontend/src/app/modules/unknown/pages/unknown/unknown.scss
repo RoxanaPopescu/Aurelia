@@ -1,6 +1,6 @@
 @import "resources/index";
 
-// html[route^="unauthorized"] body
+// html[route^="unknown"] body
 // {
 //     // Expand to fit the height of the content.
 //     min-height: 100%;
@@ -9,7 +9,7 @@
 //     display: flex;
 // }
 
-page[name="unauthorized"]
+page[name="unknown"]
 {
     // Apply padding.
     padding: 32rem 128rem 32rem 128rem;
@@ -24,7 +24,7 @@ page[name="unauthorized"]
     @media ($media-smallest-max)
     {
         // Apply padding.
-        padding: 100rem 52rem 40rem 52rem;
+        padding: 104rem 52rem 0 52rem;
 
         .br-hint
         {
@@ -50,7 +50,7 @@ page[name="unauthorized"]
         margin-right: 0;
     }
 
-    .unauthorized-links
+    .unknown-links
     {
         display: flex;
         flex-direction: column;
