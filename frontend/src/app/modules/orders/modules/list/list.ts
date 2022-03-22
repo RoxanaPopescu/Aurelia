@@ -1,5 +1,5 @@
 import { autoinject, observable, computedFrom } from "aurelia-framework";
-import { DateTime } from "luxon";
+import { DateTime, Duration } from "luxon";
 import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
@@ -28,6 +28,8 @@ interface IRouteParams
     orderTagsFilter?: string;
     fromDateFilter?: string;
     toDateFilter?: string;
+    relativeFromDateFilter?: string;
+    relativeToDateFilter?: string;
 }
 
 /**
@@ -163,16 +165,40 @@ export class ListPage
     protected orderTagsFilter: any[] = [];
 
     /**
-     * The min date for whichorders should be shown.
+     * The min date for which orders should be shown.
      */
     @observable({ changeHandler: "update" })
     protected fromDateFilter: DateTime | undefined;
 
     /**
-     * The min date for which orders should be shown.
+     * The max date for which orders should be shown.
      */
     @observable({ changeHandler: "update" })
     protected toDateFilter: DateTime | undefined;
+
+    /**
+     * True to use `relativeFromDateFilter`, otherwise false.
+     */
+     @observable({ changeHandler: "updateRelative" })
+    protected useRelativeFromDateFilter = false;
+
+    /**
+     * The min relative time for which orders should be shown.
+     */
+    @observable({ changeHandler: "updateRelative" })
+    protected relativeFromDateFilter: Duration | undefined;
+
+    /**
+     * True to use `relativeToDateFilter`, otherwise false.
+     */
+     @observable({ changeHandler: "updateRelative" })
+    protected useRelativeToDateFilter = false;
+
+    /**
+     * The max relative time for which orders should be shown.
+     */
+    @observable({ changeHandler: "updateRelative" })
+    protected relativeToDateFilter: Duration | undefined;
 
     /**
      * If it failed loading.
@@ -214,6 +240,12 @@ export class ListPage
         this.orderTagsFilter = params.orderTagsFilter?.split(",") || this.orderTagsFilter;
         this.fromDateFilter = params.fromDateFilter ? DateTime.fromISO(params.fromDateFilter, { setZone: true }) : undefined;
         this.toDateFilter = params.toDateFilter ? DateTime.fromISO(params.toDateFilter, { setZone: true }) : undefined;
+
+        this.useRelativeFromDateFilter = params.relativeFromDateFilter != null;
+        this.relativeFromDateFilter = params.relativeFromDateFilter ? Duration.fromISO(params.relativeFromDateFilter) : undefined;
+
+        this.useRelativeToDateFilter = params.relativeToDateFilter != null;
+        this.relativeToDateFilter = params.relativeToDateFilter ? Duration.fromISO(params.relativeToDateFilter) : undefined;
 
         this.update();
     }
@@ -363,30 +395,6 @@ export class ListPage
     }
 
     /**
-     * Called when the from date changes.
-     * Ensures the to date remains valid.
-     */
-    protected onFromDateChanged(): void
-    {
-        if (this.fromDateFilter && this.toDateFilter && this.toDateFilter.valueOf() < this.fromDateFilter.valueOf())
-        {
-            this.toDateFilter = this.fromDateFilter;
-        }
-    }
-
-    /**
-     * Called when the from date changes.
-     * Ensures the to date remains valid.
-     */
-    protected onToDateChanged(): void
-    {
-        if (this.fromDateFilter && this.toDateFilter && this.toDateFilter.valueOf() < this.fromDateFilter.valueOf())
-        {
-            this.fromDateFilter = this.toDateFilter;
-        }
-    }
-
-    /**
      * Updates the page by fetching the latest data.
      */
     protected update(newValue?: any, oldValue?: any, propertyName?: string): void
@@ -412,10 +420,28 @@ export class ListPage
             {
                 this.failed = false;
 
+                // tslint:disable-next-line: no-floating-promises
+                this._historyHelper.navigate((state: IHistoryState) =>
+                {
+                    state.params.page = propertyName !== "paging" ? 1 : this.paging.page;
+                    state.params.pageSize = this.paging.pageSize;
+                    state.params.sortProperty = this.sorting?.property;
+                    state.params.sortDirection = this.sorting?.direction;
+                    state.params.textFilter = this.textFilter || undefined;
+                    state.params.statusFilter = this.statusFilter?.join(",") || undefined;
+                    state.params.consignorFilter = this.consignorFilter?.map(o => o.id).join(",") || undefined;
+                    state.params.orderTagsFilter = this.orderTagsFilter?.join(",") || undefined;
+                    state.params.fromDateFilter = this.relativeFromDateFilter != null ? undefined : this.fromDateFilter?.toISO();
+                    state.params.toDateFilter = this.relativeToDateFilter != null ? undefined : this.toDateFilter?.toISO();
+                    state.params.relativeFromDateFilter = this.relativeFromDateFilter?.toISO();
+                    state.params.relativeToDateFilter = this.relativeToDateFilter?.toISO();
+                },
+                { trigger: false, replace: true });
+
                 // Fetch the data.
                 const result = await this._orderService.getAll(
                     this.fromDateFilter,
-                    this.toDateFilter ? this.toDateFilter.endOf("day") : undefined,
+                    this.useRelativeToDateFilter ? this.toDateFilter : this.toDateFilter?.endOf("day"),
                     this.statusFilter,
                     this.consignorFilter.length > 0 ? this.consignorFilter.map(c => c.id) : undefined,
                     this.orderTagsFilter,
@@ -436,23 +462,6 @@ export class ListPage
 
                 // Scroll to top.
                 this.scroll?.reset();
-
-                // tslint:disable-next-line: no-floating-promises
-                this._historyHelper.navigate((state: IHistoryState) =>
-                {
-                    state.params.page = this.paging.page;
-                    state.params.pageSize = this.paging.pageSize;
-                    state.params.sortProperty = this.sorting?.property;
-                    state.params.sortDirection = this.sorting?.direction;
-                    state.params.textFilter = this.textFilter || undefined;
-                    state.params.statusFilter = this.statusFilter?.join(",") || undefined;
-                    state.params.consignorFilter = this.consignorFilter?.map(o => o.id).join(",") || undefined;
-                    state.params.orderTagsFilter = this.orderTagsFilter?.join(",") || undefined;
-                    state.params.fromDateFilter = this.fromDateFilter?.toISO();
-                    state.params.toDateFilter = this.toDateFilter?.toISO();
-                },
-                { trigger: false, replace: true });
-
             }
             catch (error)
             {
@@ -460,6 +469,29 @@ export class ListPage
                 Log.error("An error occurred while loading the list.", error);
             }
         });
+    }
+
+    protected updateRelative(): void
+    {
+        if (this.useRelativeFromDateFilter)
+        {
+            this.fromDateFilter = this.relativeFromDateFilter != null ? DateTime.local().plus(this.relativeFromDateFilter) : undefined;
+        }
+        else if (this.relativeFromDateFilter != null)
+        {
+            this.relativeFromDateFilter = undefined;
+            this.fromDateFilter = undefined;
+        }
+
+        if (this.useRelativeToDateFilter)
+        {
+            this.toDateFilter = this.relativeToDateFilter != null ? DateTime.local().plus(this.relativeToDateFilter) : undefined;
+        }
+        else if (this.relativeToDateFilter != null)
+        {
+            this.relativeToDateFilter = undefined;
+            this.toDateFilter = undefined;
+        }
     }
 
     /**
@@ -477,8 +509,10 @@ export class ListPage
                 statusFilter: this.statusFilter,
                 consignorFilter: this.consignorFilter,
                 orderTagsFilter: this.orderTagsFilter,
-                fromDateFilter: this.fromDateFilter?.toISO(),
-                toDateFilter: this.toDateFilter?.toISO()
+                fromDateFilter: this.useRelativeFromDateFilter ? undefined : this.fromDateFilter?.toISO(),
+                toDateFilter: this.useRelativeToDateFilter ? undefined : this.toDateFilter?.toISO(),
+                relativeFromDateFilter: this.relativeFromDateFilter?.toISO(),
+                relativeToDateFilter: this.relativeToDateFilter?.toISO(),
             }
         };
     }
@@ -497,6 +531,12 @@ export class ListPage
         this.orderTagsFilter = state.filters.orderTagsFilter;
         this.fromDateFilter = state.filters.fromDateFilter != null ? DateTime.fromISO(state.filters.fromDateFilter, { setZone: true }) : undefined;
         this.toDateFilter = state.filters.toDateFilter != null ? DateTime.fromISO(state.filters.toDateFilter, { setZone: true }) : undefined;
+
+        this.useRelativeFromDateFilter = state.filters.relativeFromDateFilter != null;
+        this.relativeFromDateFilter = state.filters.relativeFromDateFilter ? Duration.fromISO(state.filters.relativeFromDateFilter) : undefined;
+
+        this.useRelativeToDateFilter = state.filters.relativeToDateFilter != null;
+        this.relativeToDateFilter = state.filters.relativeToDateFilter ? Duration.fromISO(state.filters.relativeToDateFilter) : undefined;
 
         this.selectedOrders = [];
         this.results = undefined;

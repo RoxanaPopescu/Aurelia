@@ -114,7 +114,6 @@
 
             </page-section>
 
-
             <page-section toggle.bind="true">
 
                 <div slot="header" translate>
@@ -123,21 +122,70 @@
 
                 <div class="control-row">
 
-                    <date-input label="above" fixed.bind="true" value.bind="startTimeFromFilter" class="flex-grow">
+                    <div>
 
-                        <div slot="heading" translate>
-                            From
-                        </div>
+                        <date-input if.bind="!useRelativeStartTimeFromFilter" label="above" fixed.bind="true" value.bind="startTimeFromFilter" class="flex-grow">
 
-                    </date-input>
+                            <div slot="heading" translate>
+                                From
+                            </div>
 
-                    <date-input label="above" fixed.bind="true" value.bind="startTimeToFilter" class="flex-grow">
+                        </date-input>
 
-                        <div slot="heading" translate>
-                            To
-                        </div>
+                        <duration-input else label="above" fixed.bind="true" unit="hours" value.bind="relativeStartTimeFromFilter" class="flex-grow">
 
-                    </date-input>
+                            <div slot="heading" translate>
+                                From
+                            </div>
+
+                            <span slot="after" class="opacity-faded" translate>
+                                hours
+                            </span>
+
+                        </duration-input>
+
+                        <check-toggle label="after" value.bind="useRelativeStartTimeFromFilter" class="margin-top">
+
+                            <div slot="heading" translate>
+                                Relative to now
+                            </div>
+
+                        </check-toggle>
+
+                    </div>
+
+                    <div>
+
+                        <date-input if.bind="!useRelativeStartTimeToFilter" label="above" fixed.bind="true" value.bind="startTimeToFilter" class="flex-grow">
+
+                            <div slot="heading" translate>
+                                To
+                            </div>
+
+                        </date-input>
+
+
+                        <duration-input else label="above" fixed.bind="true" unit="hours" value.bind="relativeStartTimeToFilter" class="flex-grow">
+
+                            <div slot="heading" translate>
+                                To
+                            </div>
+
+                            <span slot="after" class="opacity-faded" translate>
+                                hours
+                            </span>
+
+                        </duration-input>
+
+                        <check-toggle label="after" value.bind="useRelativeStartTimeToFilter" class="margin-top">
+
+                            <div slot="heading" translate>
+                                Relative to now
+                            </div>
+
+                        </check-toggle>
+
+                    </div>
 
                 </div>
 

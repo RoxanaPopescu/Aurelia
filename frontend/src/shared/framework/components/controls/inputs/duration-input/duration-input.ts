@@ -2,7 +2,7 @@ import { autoinject, bindable, computedFrom, bindingMode } from "aurelia-framewo
 import { Id, escapeRegExp } from "shared/utilities";
 import { AutocompleteHint, EnterKeyHint } from "../input";
 import { NumberFormat } from "shared/localization";
-import { Duration } from "luxon";
+import { Duration, DurationUnit } from "luxon";
 
 /**
  * Custom element representing a duration input.
@@ -62,7 +62,7 @@ export class DurationInputCustomElement
         }
 
         // Return the value of the input element.
-        return this.value != null ? this.value.as("minutes").toString().replace(".", this.numberFormat.decimalSeparator) : "";
+        return this.value != null ? this.value.as(this.unit).toString().replace(".", this.numberFormat.decimalSeparator) : "";
     }
 
     /**
@@ -81,7 +81,7 @@ export class DurationInputCustomElement
             if (this.numberFormat.validPattern.test(value))
             {
                 const numberOfMinutes = parseFloat(value.replace(this.numberFormat.decimalSeparator, ".")) || 0;
-                this.value = Duration.fromObject({"minutes": numberOfMinutes});
+                this.value = Duration.fromObject({ [this.unit]: numberOfMinutes});
                 this.invalid = false;
             }
             else
@@ -133,6 +133,12 @@ export class DurationInputCustomElement
      */
     @bindable({ defaultValue: false })
     public autoselect: boolean;
+
+    /**
+     * The unit in  which the duration is specified, or undefined to use the default behavior.
+     */
+    @bindable({ defaultValue: "minutes" })
+    public unit: DurationUnit;
 
     /**
      * The amount by which the value should increment or decrement for each step,

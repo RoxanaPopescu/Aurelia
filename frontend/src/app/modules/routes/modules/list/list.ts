@@ -4,7 +4,7 @@ import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
 import { IScroll, ModalService } from "shared/framework";
 import { RouteService, RouteInfo, RouteStatusSlug, RouteAssignmentService } from "app/model/route";
-import { DateTime } from "luxon";
+import { DateTime, Duration } from "luxon";
 import { RouteListColumn } from "app/model/route/entities/route-list-column";
 import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
 import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
@@ -35,6 +35,8 @@ interface IRouteParams
     notAssignedVehicle?: boolean;
     startTimeFromFilter?: string;
     startTimeToFilter?: string;
+    relativeStartTimeFromFilter?: string;
+    relativeStartTimeToFilter?: string;
     teams?: string;
     tagsFilter?: string;
     // TODO: Add "Pickup nearby" filter
@@ -247,22 +249,46 @@ export class ListPage
     protected notAssignedVehicle: boolean = false;
 
     /**
-     * The order tags for which orders should be shown.
+     * The order tags for which routes should be shown.
      */
     @observable({ changeHandler: "update" })
     protected tagsFilter: any[] = [];
 
     /**
-     * The min date for whichorders should be shown.
+     * The min date for which routes should be shown.
      */
     @observable({ changeHandler: "update" })
     protected startTimeFromFilter: DateTime | undefined;
 
     /**
-     * The min date for which orders should be shown.
+     * The max date for which routes should be shown.
      */
     @observable({ changeHandler: "update" })
     protected startTimeToFilter: DateTime | undefined;
+
+    /**
+     * True to use `relativeStartTimeFromFilter`, otherwise false.
+     */
+     @observable({ changeHandler: "updateRelative" })
+    protected useRelativeStartTimeFromFilter = false;
+
+    /**
+     * The min relative time for which routes should be shown.
+     */
+    @observable({ changeHandler: "updateRelative" })
+    protected relativeStartTimeFromFilter: Duration | undefined;
+
+    /**
+     * True to use `relativeStartTimeToFilter`, otherwise false.
+     */
+     @observable({ changeHandler: "updateRelative" })
+    protected useRelativeStartTimeToFilter = false;
+
+    /**
+     * The max relative time for which routes should be shown.
+     */
+    @observable({ changeHandler: "updateRelative" })
+    protected relativeStartTimeToFilter: Duration | undefined;
 
     /**
      * The min created date for which routes should be shown.
@@ -348,6 +374,12 @@ export class ListPage
         this.legacyOwnerIdsFilter = params.owners?.split(",");
         this.createdTimeFromFilter = params.createdTimeFromFilter ? DateTime.fromISO(params.createdTimeFromFilter, { setZone: true }) : undefined;
         this.createdTimeToFilter = params.createdTimeToFilter ? DateTime.fromISO(params.createdTimeToFilter, { setZone: true }) : undefined;
+
+        this.useRelativeStartTimeFromFilter = params.relativeStartTimeFromFilter != null;
+        this.relativeStartTimeFromFilter = params.relativeStartTimeFromFilter ? Duration.fromISO(params.relativeStartTimeFromFilter) : undefined;
+
+        this.useRelativeStartTimeToFilter = params.relativeStartTimeToFilter != null;
+        this.relativeStartTimeToFilter = params.relativeStartTimeToFilter ? Duration.fromISO(params.relativeStartTimeToFilter) : undefined;
 
         if (params.teams)
         {
@@ -646,13 +678,39 @@ export class ListPage
                     assignedVehicle = this.assignedVehicle;
                 }
 
+                // tslint:disable-next-line: no-floating-promises
+                this._historyHelper.navigate((state: IHistoryState) =>
+                {
+                    state.params.page = propertyName !== "paging" ? 1 : this.paging.page;;
+                    state.params.pageSize = this.paging.pageSize;
+                    state.params.sortProperty = this.sorting?.property;
+                    state.params.sortDirection = this.sorting?.direction;
+                    state.params.textFilter = this.textFilter || undefined;
+                    state.params.statusFilter = this.statusFilter?.join(",") || undefined;
+                    state.params.assignedDriver = this.assignedDriver ? true : undefined;
+                    state.params.notAssignedDriver = this.notAssignedDriver ? true : undefined;
+                    state.params.assignedVehicle = this.assignedVehicle ? true : undefined;
+                    state.params.notAssignedVehicle = this.notAssignedVehicle ? true : undefined;
+                    state.params.startTimeFromFilter = this.relativeStartTimeFromFilter != null ? undefined : this.startTimeFromFilter?.toISO();
+                    state.params.startTimeToFilter = this.relativeStartTimeToFilter != null ? undefined : this.startTimeToFilter?.toISO();
+                    state.params.relativeStartTimeFromFilter = this.relativeStartTimeFromFilter?.toISO();
+                    state.params.relativeStartTimeToFilter = this.relativeStartTimeToFilter?.toISO();
+                    state.params.teams = this.teamsFilterService.selectedTeamIds;
+                    state.params.tagsFilter = this.tagsFilter?.join(",") || undefined;
+                    // TODO: Add "Pickup nearby" filter
+                    state.params.owners = this.legacyOwnerIdsFilter?.join(",");
+                    state.params.createdTimeFromFilter = this.createdTimeFromFilter?.toISO();
+                    state.params.createdTimeToFilter = this.createdTimeToFilter?.toISO();
+                },
+                { trigger: false, replace: true });
+
                 const result = await this._routeService.getAll(
                     {
                         statuses: this.statusFilter,
                         searchQuery: this.textFilter,
                         tagsAllMatching: this.tagsFilter,
                         startTimeFrom: this.startTimeFromFilter,
-                        startTimeTo: this.startTimeToFilter?.endOf("day"),
+                        startTimeTo: this.useRelativeStartTimeToFilter ? this.startTimeToFilter : this.startTimeToFilter?.endOf("day"),
                         createdTimeFrom: this.createdTimeFromFilter,
                         createdTimeTo: this.createdTimeToFilter?.endOf("day"),
                         assignedDriver: assignedDriver,
@@ -690,30 +748,6 @@ export class ListPage
 
                 // Scroll to top.
                 this.scroll?.reset();
-
-                // tslint:disable-next-line: no-floating-promises
-                this._historyHelper.navigate((state: IHistoryState) =>
-                {
-                    state.params.page = this.paging.page;
-                    state.params.pageSize = this.paging.pageSize;
-                    state.params.sortProperty = this.sorting?.property;
-                    state.params.sortDirection = this.sorting?.direction;
-                    state.params.textFilter = this.textFilter || undefined;
-                    state.params.statusFilter = this.statusFilter?.join(",") || undefined;
-                    state.params.assignedDriver = this.assignedDriver ? true : undefined;
-                    state.params.notAssignedDriver = this.notAssignedDriver ? true : undefined;
-                    state.params.assignedVehicle = this.assignedVehicle ? true : undefined;
-                    state.params.notAssignedVehicle = this.notAssignedVehicle ? true : undefined;
-                    state.params.startTimeFromFilter = this.startTimeFromFilter?.toISO();
-                    state.params.startTimeToFilter = this.startTimeToFilter?.toISO();
-                    state.params.teams = this.teamsFilterService.selectedTeamIds;
-                    state.params.tagsFilter = this.tagsFilter?.join(",") || undefined;
-                    // TODO: Add "Pickup nearby" filter
-                    state.params.owners = this.legacyOwnerIdsFilter?.join(",");
-                    state.params.createdTimeFromFilter = this.createdTimeFromFilter?.toISO();
-                    state.params.createdTimeToFilter = this.createdTimeToFilter?.toISO();
-                },
-                { trigger: false, replace: true });
             }
             catch (error)
             {
@@ -721,6 +755,29 @@ export class ListPage
                 Log.error("An error occurred while loading the list.", error);
             }
         });
+    }
+
+    protected updateRelative(): void
+    {
+        if (this.useRelativeStartTimeFromFilter)
+        {
+            this.startTimeFromFilter = this.relativeStartTimeFromFilter != null ? DateTime.local().plus(this.relativeStartTimeFromFilter) : undefined;
+        }
+        else if (this.relativeStartTimeFromFilter != null)
+        {
+            this.relativeStartTimeFromFilter = undefined;
+            this.startTimeFromFilter = undefined;
+        }
+
+        if (this.useRelativeStartTimeToFilter)
+        {
+            this.startTimeToFilter = this.relativeStartTimeToFilter != null ? DateTime.local().plus(this.relativeStartTimeToFilter) : undefined;
+        }
+        else if (this.relativeStartTimeToFilter != null)
+        {
+            this.relativeStartTimeToFilter = undefined;
+            this.startTimeToFilter = undefined;
+        }
     }
 
     /**
@@ -740,8 +797,10 @@ export class ListPage
                 notAssignedDriver: this.notAssignedDriver,
                 assignedVehicle: this.assignedVehicle,
                 notAssignedVehicle: this.notAssignedVehicle,
-                startTimeFromFilter: this.startTimeFromFilter?.toISO(),
-                startTimeToFilter: this.startTimeToFilter?.toISO(),
+                startTimeFromFilter: this.useRelativeStartTimeFromFilter ? undefined : this.startTimeFromFilter?.toISO(),
+                startTimeToFilter: this.useRelativeStartTimeToFilter ? undefined : this.startTimeToFilter?.toISO(),
+                relativeStartTimeFromFilter: this.relativeStartTimeFromFilter?.toISO(),
+                relativeStartTimeToFilter: this.relativeStartTimeToFilter?.toISO(),
                 teamsFilterService: this.teamsFilterService.selectedTeamIds,
                 tagsFilter: this.tagsFilter,
                 legacyOwnerIdsFilter: this.legacyOwnerIdsFilter,
@@ -772,6 +831,12 @@ export class ListPage
         this.legacyOwnerIdsFilter = state.filters.legacyOwnerIdsFilter;
         this.createdTimeFromFilter = state.filters.createdTimeFromFilter != null ? DateTime.fromISO(state.filters.createdTimeFromFilter, { setZone: true }) : undefined;
         this.createdTimeToFilter = state.filters.createdTimeToFilter != null ? DateTime.fromISO(state.filters.createdTimeToFilter, { setZone: true }) : undefined;
+
+        this.useRelativeStartTimeFromFilter = state.filters.relativeStartTimeFromFilter != null;
+        this.relativeStartTimeFromFilter = state.filters.relativeStartTimeFromFilter ? Duration.fromISO(state.filters.relativeStartTimeFromFilter) : undefined;
+
+        this.useRelativeStartTimeToFilter = state.filters.relativeStartTimeToFilter != null;
+        this.relativeStartTimeToFilter = state.filters.relativeStartTimeToFilter ? Duration.fromISO(state.filters.relativeStartTimeToFilter) : undefined;
 
         this.results = undefined;
         this.update();

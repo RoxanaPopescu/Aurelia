@@ -33,21 +33,69 @@
 
                 <div class="control-row">
 
-                    <date-input label="above" fixed.bind="true" value.bind="fromDateFilter" change.trigger="onFromDateChanged()" class="flex-grow">
+                    <div>
 
-                        <div slot="heading" translate>
-                            From
-                        </div>
+                        <date-input if.bind="!useRelativeFromDateFilter" label="above" fixed.bind="true" value.bind="fromDateFilter" class="flex-grow">
 
-                    </date-input>
+                            <div slot="heading" translate>
+                                From
+                            </div>
 
-                    <date-input label="above" fixed.bind="true" value.bind="toDateFilter" change.trigger="onToDateChanged()" class="flex-grow">
+                        </date-input>
 
-                        <div slot="heading" translate>
-                            To
-                        </div>
+                        <duration-input else label="above" fixed.bind="true" unit="hours" value.bind="relativeFromDateFilter" class="flex-grow">
 
-                    </date-input>
+                            <div slot="heading" translate>
+                                From
+                            </div>
+
+                            <span slot="after" class="opacity-faded" translate>
+                                hours
+                            </span>
+
+                        </duration-input>
+
+                        <check-toggle label="after" value.bind="useRelativeFromDateFilter" class="margin-top">
+
+                            <div slot="heading" translate>
+                                Relative to now
+                            </div>
+
+                        </check-toggle>
+
+                    </div>
+
+                    <div>
+
+                        <date-input if.bind="!useRelativeToDateFilter" label="above" fixed.bind="true" value.bind="toDateFilter" class="flex-grow">
+
+                            <div slot="heading" translate>
+                                To
+                            </div>
+
+                        </date-input>
+
+                        <duration-input else label="above" fixed.bind="true" unit="hours" value.bind="relativeToDateFilter" class="flex-grow">
+
+                            <div slot="heading" translate>
+                                To
+                            </div>
+
+                            <span slot="after" class="opacity-faded" translate>
+                                hours
+                            </span>
+
+                        </duration-input>
+
+                        <check-toggle label="after" value.bind="useRelativeToDateFilter" class="margin-top">
+
+                            <div slot="heading" translate>
+                                Relative to now
+                            </div>
+
+                        </check-toggle>
+
+                    </div>
 
                 </div>
 

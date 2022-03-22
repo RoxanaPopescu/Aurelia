@@ -30,7 +30,7 @@
         <div class="input-control-inner">
 
             <div class="input-value user-select-contain">
-                ${value.as("minutes") | number: 0 : null : useGrouping}
+                ${value.as(unit) | number: 0 : null : useGrouping}
             </div>
 
             <input
