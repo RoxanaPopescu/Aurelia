@@ -512,7 +512,7 @@ export class ListPage
                 fromDateFilter: this.useRelativeFromDateFilter ? undefined : this.fromDateFilter?.toISO(),
                 toDateFilter: this.useRelativeToDateFilter ? undefined : this.toDateFilter?.toISO(),
                 relativeFromDateFilter: this.relativeFromDateFilter?.toISO(),
-                relativeToDateFilter: this.relativeToDateFilter?.toISO(),
+                relativeToDateFilter: this.relativeToDateFilter?.toISO()
             }
         };
     }

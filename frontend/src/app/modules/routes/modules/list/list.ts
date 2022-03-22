@@ -681,7 +681,7 @@ export class ListPage
                 // tslint:disable-next-line: no-floating-promises
                 this._historyHelper.navigate((state: IHistoryState) =>
                 {
-                    state.params.page = propertyName !== "paging" ? 1 : this.paging.page;;
+                    state.params.page = propertyName !== "paging" ? 1 : this.paging.page;
                     state.params.pageSize = this.paging.pageSize;
                     state.params.sortProperty = this.sorting?.property;
                     state.params.sortDirection = this.sorting?.direction;
