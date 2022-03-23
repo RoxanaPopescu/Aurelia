@@ -14,10 +14,10 @@ interface IColumnInfo
 /**
  * Represents the model for a `SelectColumnsPanel` instance.
  */
-export interface IOrderSelectColumnsPanelModel
+export interface ISelectColumnsPanelModel
 {
-    selectedColumns: IColumn[];
     availableColumns: IColumn[];
+    selectedColumns?: IColumn[];
 }
 
 /**
@@ -55,7 +55,7 @@ export class SelectColumnsPanel
     protected get columnInfos(): IColumnInfo[]
     {
         const selectedColumns = this.selectedColumns
-            .map(column => ({ column, selected: true }))
+            .map(column => ({ column, selected: true }));
 
         const unselectedColumns = this.availableColumns
             .filter(c1 => !this.selectedColumns.some(c2 => c2.slug === c1.slug))
@@ -68,7 +68,7 @@ export class SelectColumnsPanel
      * Called by the framework when the modal is activated.
      * @param model The stop to edit, or undefined to create a new stop.
      */
-    public activate(model: { availableColumns: IColumn[], selectedColumns?: IColumn[] }): void
+    public activate(model: ISelectColumnsPanelModel): void
     {
         this.availableColumns = model.availableColumns;
         this.selectedColumns = model.selectedColumns?.slice() ?? [];
