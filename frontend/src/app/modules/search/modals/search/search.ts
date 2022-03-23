@@ -270,7 +270,7 @@ export class SearchModalPanel
      * Executes the query represented by the search.
      * @param event The mouse event.
      * @param search The search being clicked.
-     * @param isSavedSearch True id the search is saved, otherwise false.
+     * @param isSavedSearch True if the search is saved, otherwise false.
      */
     protected searchClick(event: MouseEvent, search: SearchInfo, isSavedSearch: boolean): void
     {

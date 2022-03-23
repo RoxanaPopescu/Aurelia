@@ -280,9 +280,12 @@ export class DataTableRowCustomElement
      */
     protected onDragHandleClick(event: MouseEvent): void
     {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
+        if (this.movable)
+        {
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+        }
     }
 
     /**

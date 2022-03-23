@@ -36,7 +36,7 @@ export class AutomaticDispatchSettingsService
 
     /**
      * Gets the specified automatic dispatch settings.
-     * @param id The id identifying the automatic dispatch settings.
+     * @param id The ID of the automatic dispatch settings.
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the automatic dispatch settings.
      */
@@ -82,7 +82,7 @@ export class AutomaticDispatchSettingsService
 
     /**
      * Deletes the specified automatic dispatch settings.
-     * @param id The id identifying the automatic dispatch settings.
+     * @param id The ID of the automatic dispatch settings.
      * @returns A promise that will be resolved when the operation succeeds.
      */
     public async delete(id: string): Promise<void>
@@ -92,7 +92,7 @@ export class AutomaticDispatchSettingsService
 
     /**
      * Pauses the specified automatic dispatch settings.
-     * @param id The id identifying the automatic dispatch settings.
+     * @param id The ID of the automatic dispatch settings.
      * @returns A promise that will be resolved with the automatic dispatch settings.
      */
     public async pause(id: string): Promise<AutomaticDispatchSettings>
@@ -104,7 +104,7 @@ export class AutomaticDispatchSettingsService
 
     /**
      * Unpauses the specified automatic dispatch settings.
-     * @param id The id identifying the automatic dispatch settings.
+     * @param id The ID of the automatic dispatch settings.
      * @returns A promise that will be resolved with the automatic dispatch settings.
      */
     public async unpause(id: string): Promise<AutomaticDispatchSettings>
@@ -116,7 +116,7 @@ export class AutomaticDispatchSettingsService
 
     /**
      * Starts a new dispatch job immediately, using the specified automatic dispatch settings.
-     * @param id The id identifying the automatic dispatch settings.
+     * @param id The ID of the automatic dispatch settings.
      * @returns A promise that will be resolved with the ID of the new dispatch job.
      */
     public async runNow(id: string): Promise<string>

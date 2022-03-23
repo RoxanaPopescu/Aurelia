@@ -158,7 +158,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
     public vehicleType: VehicleType;
 
     /**
-     * The id of the current team if any.
+     * The ID of the current team if any.
      */
     public teamId?: string;
 

@@ -256,16 +256,13 @@
                     <data-table-headers>
 
                         <template repeat.for="column of columns">
-                            <data-table-cell if.bind="column.column != 'not-added'" name.bind="column.sortingName">
-                                <span if.bind="column.column == 'visible'" class="text-truncate">
-                                    <template if.bind="column.columnName">
-                                        ${column.columnName}
-                                    </template>
-                                    <template if.bind="!column.columnName">
-                                        ${column.name}
-                                    </template>
+
+                            <data-table-cell name.bind="column.sortingName">
+                                <span if.bind="!column.hidden" class="text-truncate">
+                                    ${column.columnName || column.name}
                                 </span>
                             </data-table-cell>
+
                         </template>
 
                     </data-table-headers>

@@ -46,7 +46,7 @@ export class DetailsModule
     protected readonly collectionPointService: CollectionPointService;
 
     /**
-     * The id of the collection point
+     * The ID of the collection point.
      */
     protected id: string;
 

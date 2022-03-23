@@ -7,7 +7,8 @@
         ${selected ? '--selected' : ''}
         ${faded ? '--opacity-faded' : ''}
         ${clickable !== false && (clickable || href || click) ? '--clickable' : ''}
-        ${movable && dataTable.move != null && model != null ? '--movable' : ''}
+        ${model != null && movable && dataTable.move != null ? '--movable' : ''}
+        ${model != null && dataTable.draggedModel === model ? '--moving' : ''}
         ${class}"
         href.bind="clickable !== false ? href : undefined"
         target.bind="target"
@@ -38,7 +39,7 @@
         <slot></slot>
 
         <data-table-cell class="data-table-row-drag-handle" mousedown.trigger="onMouseDown($event)" click.trigger="onDragHandleClick($event)">
-            <icon if.bind="movable && dataTable.move != null && model != null" name="drag-handle" class="opacity-faded-more">
+            <icon if.bind="movable && dataTable.move != null && model != null" name="drag-handle" class="opacity-faded">
         </data-table-cell>
 
         <slot name="details"></slot>

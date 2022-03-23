@@ -60,7 +60,7 @@ export class AutomaticDispatchService
 
     /**
      * Gets the specified job.
-     * @param id The id identifying the automatic dispatch job.
+     * @param id The ID of the automatic dispatch job.
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the automatic dispatch job.
      */
@@ -76,7 +76,7 @@ export class AutomaticDispatchService
 
     /**
      * Approves a job.
-     * @param id The id identifying the automatic dispatch job.
+     * @param id The ID of the automatic dispatch job.
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the automatic dispatch job.
      */
@@ -90,8 +90,8 @@ export class AutomaticDispatchService
 
     /**
      * Starts a manual automatic dispatch based on ids.
-     * @param activeRouteIds The ids identifying the routes the drivers is active on.
-     * @param addRouteIds The ids identifying the routes to be added to the active driver routes.
+     * @param activeRouteIds The IDs identifying the routes the drivers is active on.
+     * @param addRouteIds The IDs identifying the routes to be added to the active driver routes.
      * @returns A promise that will be resolved when the operation succeedes.
      */
     public async startManualFromExpress(activeRouteIds: string[], addRouteIds: string[], signal?: AbortSignal): Promise<string>

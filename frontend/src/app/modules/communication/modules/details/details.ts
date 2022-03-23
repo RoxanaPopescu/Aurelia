@@ -137,9 +137,9 @@ export class DetailsPage
     }
 
     /**
-     * Called to link the creator id to customerName in the UI
-     * @param params the id of the creator
-     * @returns The outfit if found
+     * Called to link the creator ID to customerName in the UI.
+     * @param params the ID of the creator.
+     * @returns The outfit if found.
      */
     protected getCreatorFromId(id: string): Outfit | undefined
     {

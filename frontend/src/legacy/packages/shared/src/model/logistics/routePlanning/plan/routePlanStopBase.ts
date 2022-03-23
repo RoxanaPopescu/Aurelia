@@ -20,7 +20,7 @@ export class RoutePlanStopBase {
   }
 
   /**
-   * The id for this stop
+   * The ID for this stop
    */
   public id: string;
 

@@ -80,7 +80,7 @@ export class DetailsModule
     protected loadingRouteInfo: boolean = true;
 
     /**
-     * The id of the linked route, if any.
+     * The ID of the linked route, if any.
      */
     protected routeId: string | undefined;
 

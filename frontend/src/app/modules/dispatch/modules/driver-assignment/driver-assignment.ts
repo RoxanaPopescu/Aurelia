@@ -94,17 +94,7 @@ export class DriverAssignmentPage
     @computedFrom("columns")
     protected get tableStyleRoutes(): any
     {
-        let size = "";
-
-        for (const column of this.columns)
-        {
-            if (column.column !== "not-added")
-            {
-                size += `${column.columnSize} `;
-            }
-        }
-
-        return { "grid-template-columns": `${size} min-content` };
+        return { "grid-template-columns": `${this.columns.map(c => c.width).join(" ")} min-content` };
     }
 
     /**
@@ -113,17 +103,7 @@ export class DriverAssignmentPage
     @computedFrom("columns")
     protected get tableStyle(): any
     {
-        let size = "";
-
-        for (const column of this.columns)
-        {
-            if (column.column !== "not-added")
-            {
-                size += `${column.columnSize} `;
-            }
-        }
-
-        return { "grid-template-columns": `${size} min-content min-content` };
+        return { "grid-template-columns": `${this.columns.map(c => c.width).join(" ")} min-content min-content` };
     }
 
     /**
@@ -284,7 +264,7 @@ export class DriverAssignmentPage
     }
 
     /**
-     * Called when the driver id input has changes.
+     * Called when the driver ID input has changes.
      * Fetches the driver and will add him to the preview
      */
     protected async onDriverIdChanged(route: RouteInfo): Promise<void>
@@ -319,13 +299,13 @@ export class DriverAssignmentPage
 
                 this._modalService.open(
                     InvalidAssignmentDialog,
-                    `The driver with id '${driverId}' is not approved`
+                    `The driver with ID '${driverId}' is not approved`
                 );
             }
         }
         catch
         {
-            Log.error(`Could not find a driver with id '${driverId}'`);
+            Log.error(`Could not find a driver with ID '${driverId}'`);
             (route as any).driverId = undefined;
         }
     }

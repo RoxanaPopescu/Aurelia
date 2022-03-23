@@ -29,7 +29,7 @@ export class AutomaticDispatchRoutePlanInfo
     }
 
     /**
-     * The id identifying the route plan.
+     * The ID of the route plan.
      */
     public readonly id: string;
 
