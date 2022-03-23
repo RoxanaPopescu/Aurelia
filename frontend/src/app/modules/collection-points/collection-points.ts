@@ -18,6 +18,21 @@ export class CollectionPointModule
         config.map(
         [
             {
+                name: "list",
+                route: "",
+                moduleId: PLATFORM.moduleName("./modules/list/list"),
+                settings:
+                {
+                    claims:
+                    [
+                        "view-routes"
+                    ]
+                },
+                title: routeTitles.list,
+                nav: false,
+                icon: "routes"
+            },
+            {
                 name: "details",
                 route: "details/:id",
                 moduleId: PLATFORM.moduleName("./modules/details/details"),

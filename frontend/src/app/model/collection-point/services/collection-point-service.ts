@@ -37,6 +37,21 @@ export class CollectionPointService
     }
 
     /**
+     * Creates a new collection point, associated with the organization.
+     * @param collectionPoint The collection point to create.
+     * @returns A promise that will be resolved with the new collection point.
+     */
+     public async create(collectionPoint: CollectionPoint): Promise<CollectionPoint>
+     {
+         const result = await this._apiClient.post("collection-points",
+         {
+             body: { collectionPoint }
+         });
+
+         return new CollectionPoint(result.data);
+     }
+
+    /**
      * Saves a deviation event for the specific order
      * @param order The order from the collection point.
      * @returns A promise that will be resolved when the event is on the queue.

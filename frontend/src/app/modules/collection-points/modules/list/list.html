@@ -1,0 +1,106 @@
+<template>
+
+    <require from="./list.scss"></require>
+
+    <page name="list">
+
+        <page-content scroll scroll.ref="scroll">
+
+            <page-header class="flex-row" scroll-fade>
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <span translate>
+                            Collection points
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar class="flex-push-right">
+
+                    <button if-claims="edit-routes" appearance="outline" accent="primary" click.trigger="onAddClick()" class="flex-row">
+
+                        <icon name="add" class="font-larger margin-right"></icon>
+
+                        <span translate>
+                            New collection point
+                        </span>
+
+                    </button>
+
+                </toolbar>
+
+            </page-header>
+
+            <page-section>
+
+                <data-table
+                    appearance="rows"
+                    sorting.bind="sorting"
+                    busy.bind="updateOperation.pending">
+
+                    <data-table-headers>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Name
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Address
+                            </span>
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Id
+                            </span>
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="result of results">
+
+                        <data-table-row>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${result.name}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${result.position.address.primar}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${result.id}
+                                </span>
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <busy-indicator if.bind="results == null" class="margin-largest"></busy-indicator>
+
+                <empty-indicator if.bind="results.length == 0" class="margin-largest">
+                    <div slot="heading" translate>No results</div>
+                </empty-indicator>
+
+            </page-section>
+
+        </page-content>
+
+    </page>
+
+</template>

@@ -1,3 +1,4 @@
+import clone from "clone";
 import { DateTime, Duration } from "luxon";
 import { DateTimeRange } from "shared/types";
 import { Location } from "app/model/shared";
@@ -12,11 +13,19 @@ export class CollectionPoint
    * Creates a new instance of the type.
    * @param data The response data from which the instance should be created.
    */
-  public constructor(data: any)
+  public constructor(data?: any)
   {
-    this.id = data.id;
-    this.orders = data.orders.map((o: any) => new Order(o, this));
-    this.location = new Location(data.location);
+    if (data != null)
+    {
+      this.id = data.id;
+      this.name = data.name;
+      this.orders = data.orders.map((o: any) => new Order(o, this));
+      this.location = new Location(data.location);
+    }
+    else
+    {
+      this.location = new Location();
+    }
   }
 
   /**
@@ -25,14 +34,19 @@ export class CollectionPoint
   public id: string;
 
   /**
+   * The name of the collection point
+   */
+  public name: string;
+
+  /**
    * The location of the collection point
    */
-   public location: Location;
+  public location: Location;
 
   /**
    * The orders in the collection point
    */
-   public orders: Order[];
+  public orders: Order[];
 
   /**
    * The time range of the collection point
@@ -66,4 +80,25 @@ export class CollectionPoint
 
     return new DateTimeRange({from: minDate, to: maxDate});
   }
+
+  /**
+   * Gets a clone of this instance, suitable for editing.
+   */
+  public clone(): any
+  {
+      return clone(this);
+  }
+
+   /**
+    * Gets the data representing this instance.
+    */
+   public toJSON(): any
+   {
+       return {
+           id: this.id,
+           name: this.name,
+           location: this.location,
+       };
+   }
+
 }
