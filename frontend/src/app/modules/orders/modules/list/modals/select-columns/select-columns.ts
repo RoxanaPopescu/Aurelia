@@ -1,6 +1,12 @@
-import { OrderListColumn, OrderListColumnSlug } from "app/model/order";
-import { autoinject } from "aurelia-framework";
+import { autoinject, computedFrom } from "aurelia-framework";
 import { Modal } from "shared/framework";
+import { OrderListColumn } from "app/model/order";
+
+interface IColumnInfo
+{
+    column: OrderListColumn;
+    selected: boolean;
+}
 
 @autoinject
 export class OrderSelectColumnsPanel
@@ -18,14 +24,30 @@ export class OrderSelectColumnsPanel
     private _result: OrderListColumn[] | undefined;
 
     /**
-     * The selected columns
+     * The list of all available columns.
      */
-    protected columns: OrderListColumnSlug[];
+    protected availableColumns: OrderListColumn[];
 
     /**
-     * All possible columns
+     * The ordered list of selected columns.
      */
-    protected allColumns = Object.keys(OrderListColumn.values).map(slug => new OrderListColumn(slug as any));
+    protected selectedColumns: OrderListColumn[];
+
+    /**
+     * The combined list of selected and unselected columns.
+     */
+    @computedFrom("availableColumns.length", "selectedColumns.length")
+    protected get columnInfos(): IColumnInfo[]
+    {
+        const selectedColumns = this.selectedColumns
+            .map(column => ({ column, selected: true }))
+
+        const unselectedColumns = this.availableColumns
+            .filter(c1 => !this.selectedColumns.some(c2 => c2.slug === c1.slug))
+            .map(column => ({ column, selected: false }));
+
+        return selectedColumns.concat(unselectedColumns);
+    }
 
     /**
      * Called by the framework when the modal is activated.
@@ -33,7 +55,8 @@ export class OrderSelectColumnsPanel
      */
     public activate(model: OrderListColumn[]): void
     {
-        this.columns = model.map(o => o.slug);
+        this.availableColumns = Object.keys(OrderListColumn.values).map(slug => new OrderListColumn(slug as any));
+        this.selectedColumns = model;
     }
 
     /**
@@ -46,12 +69,43 @@ export class OrderSelectColumnsPanel
     }
 
     /**
+     * Called when a column is moved to a new position.
+     * @param source The column being moved.
+     * @param target The column currently occupying the target position.
+     */
+    protected onMoveColumn(source: OrderListColumn, target: OrderListColumn): void
+    {
+        const sourceIndex = this.selectedColumns.indexOf(source);
+        const targetIndex = this.selectedColumns.indexOf(target);
+
+        this.selectedColumns.splice(targetIndex, 0, ...this.selectedColumns.splice(sourceIndex, 1));
+    }
+
+    /**
+     * Called when a column is toggled.
+     * @param column The column being toggled.
+     */
+    protected onToggleColumn(column: OrderListColumn, selected: boolean): void
+    {
+        if (selected)
+        {
+            this.selectedColumns.push(column);
+        }
+        else
+        {
+            this.selectedColumns.splice(this.selectedColumns.indexOf(column), 1);
+        }
+    }
+
+    /**
      * Called when a column type is clicked
      */
     protected async onSaveClick(): Promise<void>
     {
-        localStorage.setItem("order-columns", JSON.stringify(this.columns));
-        this._result = this.columns.map(slug => new OrderListColumn(slug));
+        localStorage.setItem("order-columns", JSON.stringify(this.selectedColumns));
+
+        this._result = this.selectedColumns;
+
         await this._modal.close();
     }
 }

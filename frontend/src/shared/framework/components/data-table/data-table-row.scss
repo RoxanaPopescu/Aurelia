@@ -117,7 +117,7 @@
 
     &:not(.--movable) .data-table-row-drag-handle
     {
-        pointer-events: none;
+        cursor: default;
     }
 }
 

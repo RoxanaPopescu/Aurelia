@@ -1,8 +1,11 @@
 <template>
+
     <require from="./select-columns.scss"></require>
+
     <modal-backdrop close="all"></modal-backdrop>
 
     <modal-panel name="order-select-columns" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
+
         <div slot="actions">
 
             <button
@@ -16,24 +19,38 @@
 
         <modal-header scroll-fade>
 
-            <h1 class="font-largest flex-row" translate>
+            <h1 class="font-largest" translate>
                 Choose list columns
             </h1>
 
         </modal-header>
 
         <modal-section if.bind="true" class="margin-bottom">
-            <div slot="header" translate>
-                Select the colums you want to see in the list, the selection order will determine the order in the list.
-            </div>
-            <toggle-group class="flex-column" value.bind="columns">
-                <check-toggle repeat.for="column of allColumns" label="after" model.bind="column.slug">
-                    <div slot="heading">
-                        ${column.name}
-                    </div>
-                </check-toggle>
-            </toggle-group>
+
+            <data-table
+                appearance="rows"
+                selection="multiple"
+                move.call="onMoveColumn(source, target)">
+
+                <data-table-row
+                    repeat.for="columnInfo of columnInfos"
+                    toggle.call="onToggleColumn(columnInfo.column, value)"
+                    selected.bind="columnInfo.selected"
+                    movable.bind="columnInfo.selected"
+                    model.bind="columnInfo.column">
+
+                    <data-table-cell>
+                        <span class="text-truncate">
+                            ${columnInfo.column.name}
+                        </span>
+                    </data-table-cell>
+
+                </data-table-row>
+
+            </data-table>
+
         </modal-section>
 
     </modal-panel>
+
 </template>

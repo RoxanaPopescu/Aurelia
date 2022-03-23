@@ -8,6 +8,7 @@
         ${faded ? '--opacity-faded' : ''}
         ${clickable !== false && (clickable || href || click) ? '--clickable' : ''}
         ${movable && dataTable.move != null && model != null ? '--movable' : ''}
+        ${dataTable.draggedModel === model ? '--moving' : ''}
         ${class}"
         href.bind="clickable !== false ? href : undefined"
         target.bind="target"

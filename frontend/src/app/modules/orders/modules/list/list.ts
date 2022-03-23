@@ -86,16 +86,7 @@ export class ListPage
     @computedFrom("columns")
     protected get tableStyle(): any
     {
-        let size = "";
-        for (const column of this.columns)
-        {
-            if (column.column !== "not-added")
-            {
-                size += `${column.columnSize} `;
-            }
-        }
-
-        return { "grid-template-columns": `60rem ${size} min-content` };
+        return { "grid-template-columns": `60rem ${this.columns.map(c => c.width).join(" ")} min-content` };
     }
 
     /**
@@ -315,10 +306,7 @@ export class ListPage
      */
     protected async onSelectColumnsClick(): Promise<void>
     {
-        const columns = await this._modalService.open(
-            OrderSelectColumnsPanel,
-            this.columns
-        ).promise;
+        const columns = await this._modalService.open(OrderSelectColumnsPanel, this.columns).promise;
 
         if (columns != null)
         {
