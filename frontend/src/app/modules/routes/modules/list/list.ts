@@ -85,7 +85,9 @@ export class ListPage
 
         if (storedColumnsJson != null)
         {
-            this.customColumns = JSON.parse(storedColumnsJson).map(slug => new RouteListColumn(slug));
+            this.customColumns = JSON.parse(storedColumnsJson)
+                .filter(slug => Object.keys(RouteListColumn.values).includes(slug))
+                .map(slug => new RouteListColumn(slug));
         }
     }
 

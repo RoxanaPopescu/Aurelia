@@ -59,7 +59,9 @@ export class ListPage
 
         if (storedColumnsJson != null)
         {
-            this.customColumns = JSON.parse(storedColumnsJson).map(slug => new OrderListColumn(slug));
+            this.customColumns = JSON.parse(storedColumnsJson)
+                .filter(slug => Object.keys(OrderListColumn.values).includes(slug))
+                .map(slug => new OrderListColumn(slug));
         }
     }
 
