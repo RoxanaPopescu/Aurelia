@@ -6,7 +6,7 @@ import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
 import { IScroll, ModalService, ToastService } from "shared/framework";
 import { OrderService, OrderInfo, OrderStatusSlug, OrderListColumn } from "app/model/order";
 import { Consignor } from "app/model/outfit";
-import { OrderSelectColumnsPanel } from "./modals/select-columns/select-columns";
+import { SelectColumnsPanel } from "app/modals/panels/select-columns/select-columns";
 import { CreateRoutePanel } from "./modals/create-route/create-route";
 import { ChangePickupAddressPanel } from "./modals/change-pickup-address/change-pickup-address";
 import createdRouteToast from "./resources/strings/created-route-toast.json";
@@ -55,12 +55,11 @@ export class ListPage
         this._toastService = toastService;
         this._constructed = true;
 
-        const localData = localStorage.getItem("order-columns");
+        const storedColumnsJson = localStorage.getItem("order-columns");
 
-        if (localData != null)
+        if (storedColumnsJson != null)
         {
-            const columnsObject = JSON.parse(localData);
-            this.customColumns = columnsObject.map(slug => new OrderListColumn(slug));
+            this.customColumns = JSON.parse(storedColumnsJson).map(slug => new OrderListColumn(slug));
         }
     }
 
@@ -306,11 +305,19 @@ export class ListPage
      */
     protected async onSelectColumnsClick(): Promise<void>
     {
-        const columns = await this._modalService.open(OrderSelectColumnsPanel, this.columns).promise;
-
-        if (columns != null)
+        const model =
         {
-            this.customColumns = columns;
+            availableColumns: Object.keys(OrderListColumn.values).map(slug => new OrderListColumn(slug as any)),
+            selectedColumns: this.columns
+        };
+
+        const selectedColumns = await this._modalService.open(SelectColumnsPanel, model).promise;
+
+        if (selectedColumns != null)
+        {
+            localStorage.setItem("order-columns", JSON.stringify(selectedColumns));
+
+            this.customColumns = selectedColumns as OrderListColumn[];
             this.results = undefined;
             this.update();
         }

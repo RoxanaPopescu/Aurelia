@@ -94,17 +94,7 @@ export class DriverAssignmentPage
     @computedFrom("columns")
     protected get tableStyleRoutes(): any
     {
-        let size = "";
-
-        for (const column of this.columns)
-        {
-            if (column.column !== "not-added")
-            {
-                size += `${column.columnSize} `;
-            }
-        }
-
-        return { "grid-template-columns": `${size} min-content` };
+        return { "grid-template-columns": `${this.columns.map(c => c.width).join(" ")} min-content` };
     }
 
     /**
@@ -113,17 +103,7 @@ export class DriverAssignmentPage
     @computedFrom("columns")
     protected get tableStyle(): any
     {
-        let size = "";
-
-        for (const column of this.columns)
-        {
-            if (column.column !== "not-added")
-            {
-                size += `${column.columnSize} `;
-            }
-        }
-
-        return { "grid-template-columns": `${size} min-content min-content` };
+        return { "grid-template-columns": `${this.columns.map(c => c.width).join(" ")} min-content min-content` };
     }
 
     /**

@@ -9,7 +9,7 @@ import { RouteListColumn } from "app/model/route/entities/route-list-column";
 import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
 import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
 import { AssignOrganizationPanel } from "../../modals/assign-organization/assign-organization";
-import { SelectColumnsPanel } from "./modals/select-columns/select-columns";
+import { SelectColumnsPanel } from "app/modals/panels/select-columns/select-columns";
 import { Address, Position } from "app/model/shared";
 import { AddressService } from "app/components/address-input/services/address-service/address-service";
 import { IdentityService, moverOrganizationId } from "app/services/identity";
@@ -81,21 +81,11 @@ export class ListPage
         this._identityService = identityService;
         this._constructed = true;
 
-        const localData = localStorage.getItem("route-columns");
+        const storedColumnsJson = localStorage.getItem("route-columns");
 
-        if (localData != null)
+        if (storedColumnsJson != null)
         {
-            const columnsObject = JSON.parse(localData);
-            const customColumns: RouteListColumn[] = [];
-            for (const slug of columnsObject)
-            {
-                if (Object.keys(RouteListColumn.values).includes(slug))
-                {
-                    customColumns.push(new RouteListColumn(slug));
-                }
-            }
-
-            this.customColumns = customColumns;
+            this.customColumns = JSON.parse(storedColumnsJson).map(slug => new RouteListColumn(slug));
         }
     }
 
@@ -144,17 +134,7 @@ export class ListPage
     @computedFrom("columns")
     protected get tableStyle(): any
     {
-        let size = "";
-
-        for (const column of this.columns)
-        {
-            if (column.column !== "not-added")
-            {
-                size += `${column.columnSize} `;
-            }
-        }
-
-        return { "grid-template-columns": `${size} min-content` };
+        return { "grid-template-columns": `${this.columns.map(c => c.width).join(" ")} min-content` };
     }
 
     /**
@@ -600,14 +580,19 @@ export class ListPage
      */
     protected async onSelectColumnsClick(): Promise<void>
     {
-        const columns = await this._modalService.open(
-            SelectColumnsPanel,
-            this.columns
-        ).promise;
-
-        if (columns != null)
+        const model =
         {
-            this.customColumns = columns;
+            availableColumns: Object.keys(RouteListColumn.values).map(slug => new RouteListColumn(slug as any)),
+            selectedColumns: this.columns
+        };
+
+        const selectedColumns = await this._modalService.open(SelectColumnsPanel, model).promise;
+
+        if (selectedColumns != null)
+        {
+            localStorage.setItem("route-columns", JSON.stringify(selectedColumns));
+
+            this.customColumns = selectedColumns as RouteListColumn[];
             this.results = undefined;
             this.update();
         }

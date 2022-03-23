@@ -1,4 +1,5 @@
 import { textCase } from "shared/utilities/text";
+import { IColumn } from "app/modals/panels/select-columns/column";
 import listColumn from "../resources/strings/order-list-columns.json";
 
 /**
@@ -9,7 +10,7 @@ export type OrderListColumnSlug = keyof typeof OrderListColumn.values;
 /**
  * Represents the column of a order in the list.
  */
-export class OrderListColumn
+export class OrderListColumn implements IColumn
 {
     /**
      * Creates a new instance of the type.
@@ -25,6 +26,7 @@ export class OrderListColumn
     public name: string;
     public width: string;
     public sortingName?: string;
+    public hidden: boolean;
 
     /**
      * Gets the data representing this instance.
@@ -43,97 +45,113 @@ export class OrderListColumn
         {
             name: listColumn.id,
             width: "1.2fr",
-            sortingName: "slug"
+            sortingName: "slug",
+            hidden: false
         },
         "tags":
         {
             name: listColumn.tags,
-            width: "1.2fr"
+            width: "1.2fr",
+            hidden: false
         },
         "pickup-date":
         {
             name: listColumn.pickupDate,
             width: "1fr",
-            sortingName: "pickup-date"
+            sortingName: "pickup-date",
+            hidden: false
         },
         "pickup-time":
         {
             name: listColumn.pickupTimeframe,
             width: "1fr",
-            sortingName: "pickup-time"
+            sortingName: "pickup-time",
+            hidden: false
         },
         "pickup-address":
         {
             name: listColumn.pickupAddress,
             width: "1fr",
-            sortingName: "pickup-address"
+            sortingName: "pickup-address",
+            hidden: false
         },
         "delivery-date":
         {
             name: listColumn.deliveryDate,
             width: "1fr",
-            sortingName: "delivery-date"
+            sortingName: "delivery-date",
+            hidden: false
         },
         "delivery-time":
         {
             name: listColumn.deliveryTimeframe,
             width: "1fr",
-            sortingName: "delivery-time"
+            sortingName: "delivery-time",
+            hidden: false
         },
         "delivery-address":
         {
             name: listColumn.deliveryAddress,
             width: "1fr",
-            sortingName: "delivery-address"
+            sortingName: "delivery-address",
+            hidden: false
         },
         "status":
         {
             name: listColumn.status,
             width: "min-content",
-            sortingName: "status"
+            sortingName: "status",
+            hidden: false
         },
         "relational-id":
         {
             name: listColumn.RelationalId,
-            width: "1.2fr"
+            width: "1.2fr",
+            hidden: false
         },
         "colli-count":
         {
             name: listColumn.colliCount,
             columnName: "Colli",
             width: "min-content",
-            sortingName: "colli-count"
+            sortingName: "colli-count",
+            hidden: false
         },
         "colli-total-weight":
         {
             name: listColumn.colliTotalWeight,
             columnName: "Total weight",
-            width: "1.0fr"
+            width: "1.0fr",
+            hidden: false
         },
         "colli-total-volume":
         {
             name: listColumn.colliTotalVolume,
             columnName: "Total volume",
-            width: "1.0fr"
+            width: "1.0fr",
+            hidden: false
         },
         "estimated-colli-count":
         {
             name: listColumn.estimatedColliCount,
             columnName: "Est. colli",
             width: "min-content",
-            sortingName: "estimated-colli-count"
+            sortingName: "estimated-colli-count",
+            hidden: false
         },
         "estimated-colli-total-weight":
         {
             name: listColumn.estimatedColliTotalWeight,
             columnName: "Est. total weight",
-            width: "1.0fr"
+            width: "1.0fr",
+            hidden: false
         },
         "estimated-colli-total-volume":
         {
             name: listColumn.estimatedColliTotalVolume,
             columnName: "Est. Total volume",
-            width: "1.0fr"
+            width: "1.0fr",
+            hidden: false
         }
     };
 }

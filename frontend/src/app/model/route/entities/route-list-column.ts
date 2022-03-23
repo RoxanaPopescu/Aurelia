@@ -1,4 +1,5 @@
 import { textCase } from "shared/utilities/text";
+import { IColumn } from "app/modals/panels/select-columns/column";
 import listColumn from "../resources/strings/route-list-columns.json";
 
 /**
@@ -9,7 +10,7 @@ export type RouteListColumnSlug = keyof typeof RouteListColumn.values;
 /**
  * Represents the type of a route stop.
  */
-export class RouteListColumn
+export class RouteListColumn implements IColumn
 {
     /**
      * Creates a new instance of the type.
@@ -23,9 +24,9 @@ export class RouteListColumn
 
     public slug: RouteListColumnSlug;
     public name: string;
-    public column: "hidden" | "visible" | "not-added";
-    public columnSize: string;
+    public width: string;
     public sortingName?: string;
+    public hidden: boolean;
 
     /**
      * Gets the data representing this instance.
@@ -43,178 +44,178 @@ export class RouteListColumn
         "slug":
         {
             name: listColumn.id,
-            columnSize: "1.2fr",
+            width: "1.2fr",
             sortingName: "slug",
-            column: "visible"
+            hidden: false
         },
         "reference":
         {
             name: listColumn.reference,
-            columnSize: "1.2fr",
+            width: "1.2fr",
             sortingName: "reference",
-            column: "visible"
+            hidden: false
         },
         "owner":
         {
             name: listColumn.owner,
-            columnSize: "1fr",
-            column: "visible"
+            width: "1fr",
+            hidden: false
         },
         "start-date":
         {
             name: listColumn.startDate,
-            columnSize: "1fr",
+            width: "1fr",
             sortingName: "start-date",
-            column: "visible"
+            hidden: false
         },
         "start-address":
         {
             name: listColumn.startAddress,
-            columnSize: "1.3fr",
+            width: "1.3fr",
             sortingName: "start-address",
-            column: "visible"
+            hidden: false
         },
         "end-date":
         {
             name: listColumn.endDate,
-            columnSize: "1fr",
-            column: "visible"
+            width: "1fr",
+            hidden: false
         },
         "end-address":
         {
             name: listColumn.endAddress,
-            columnSize: "1.3fr",
-            column: "visible"
+            width: "1.3fr",
+            hidden: false
         },
         "tags":
         {
             name: listColumn.tags,
-            columnSize: "1.3fr",
-            column: "visible"
+            width: "1.3fr",
+            hidden: false
         },
         "stop-count":
         {
             name: listColumn.stopCount,
             columnName: listColumn.stopCountShort,
-            columnSize: "min-content",
+            width: "min-content",
             sortingName: "stop-count",
-            column: "visible"
+            hidden: false
         },
         "vehicle-type":
         {
             name: listColumn.vehicleType,
-            columnSize: "min-content",
-            column: "visible"
+            width: "min-content",
+            hidden: false
         },
         "vehicle":
         {
             name: listColumn.vehicle,
-            columnSize: "1fr",
-            column: "visible"
+            width: "1fr",
+            hidden: false
         },
         "driver":
         {
             name: listColumn.driver,
-            columnSize: "1fr",
-            column: "visible"
+            width: "1fr",
+            hidden: false
         },
         "driver-id":
         {
             name: listColumn.driverId,
-            columnSize: "min-content",
-            column: "visible"
+            width: "min-content",
+            hidden: false
         },
         "executor":
         {
             name: listColumn.executor,
-            columnSize: "1fr",
-            column: "visible"
+            width: "1fr",
+            hidden: false
         },
         "complexity":
         {
             name: listColumn.complexity,
-            columnSize: "min-content",
-            column: "visible"
+            width: "min-content",
+            hidden: false
         },
         "status":
         {
             name: listColumn.status,
-            columnSize: "min-content",
+            width: "min-content",
             sortingName: "status",
-            column: "visible"
+            hidden: false
         },
         "legacy-id":
         {
             name: listColumn.legacyId,
-            columnSize: "min-content",
-            column: "visible"
+            width: "min-content",
+            hidden: false
         },
         "driving-list":
         {
             name: listColumn.drivingList,
-            columnSize: "min-content",
-            column: "hidden"
+            width: "min-content",
+            hidden: true
         },
         "delayed-stops":
         {
             name: listColumn.delayedStops,
-            columnSize: "min-content",
-            column: "visible"
+            width: "min-content",
+            hidden: false
         },
         "estimated-time-frame":
         {
             name: listColumn.estimatedTime,
             columnName: listColumn.estimatedTimeShort,
-            columnSize: "min-content",
-            column: "visible"
+            width: "min-content",
+            hidden: false
         },
         "original-estimated-time-frame":
         {
             name: listColumn.originalEstimatedTime,
             columnName: listColumn.originalEstimatedTimeShort,
-            columnSize: "min-content",
-            column: "visible"
+            width: "min-content",
+            hidden: false
         },
         "planned-time-frame":
         {
             name: listColumn.plannedTime,
             columnName: listColumn.plannedTimeShort,
-            columnSize: "min-content",
-            column: "visible"
+            width: "min-content",
+            hidden: false
         },
         "planned-start-time-frame":
         {
             name: listColumn.plannedStartTime,
             columnName: listColumn.plannedStartTimeShort,
             sortingName: "start-date",
-            columnSize: "min-content",
-            column: "visible"
+            width: "min-content",
+            hidden: false
         },
         "distance":
         {
             name: listColumn.distance,
-            columnSize: "min-content",
-            column: "visible"
+            width: "min-content",
+            hidden: false
         },
         "team":
         {
             name: listColumn.team,
-            columnSize: "min-content",
-            column: "visible"
+            width: "min-content",
+            hidden: false
         },
         "colli-count":
         {
             name: listColumn.colliCount,
             columnName: listColumn.colliCountShort,
-            columnSize: "min-content",
-            column: "visible"
+            width: "min-content",
+            hidden: false
         },
         "estimated-colli-count":
         {
             name: listColumn.estimatedColliCount,
             columnName: listColumn.estimatedColliCountShort,
-            columnSize: "min-content",
-            column: "visible"
+            width: "min-content",
+            hidden: false
         }
     };
 }
