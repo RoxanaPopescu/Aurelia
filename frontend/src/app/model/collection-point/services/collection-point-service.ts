@@ -22,7 +22,7 @@ export class CollectionPointService
 
     /**
      * Gets the specified collection point.
-     * @param id The id identifying the collection point.
+     * @param id The ID identifying the collection point.
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the collection point.
      */

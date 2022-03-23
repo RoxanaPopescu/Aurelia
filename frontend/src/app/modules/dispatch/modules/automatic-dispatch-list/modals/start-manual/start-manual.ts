@@ -82,9 +82,9 @@ export class StartManualPanel
     }
 
     /**
-     * Called to link the creator id to customerName in the UI
-     * @param params the id of the creator
-     * @returns The outfit if found
+     * Called to link the creator ID to customerName in the UI.
+     * @param params the ID of the creator.
+     * @returns The outfit, if found.
      */
     protected getOrganizationFromId(id: string): Outfit | undefined
     {
@@ -92,9 +92,9 @@ export class StartManualPanel
     }
 
     /**
-     * Called to link the vehicle id to vehicle type in the UI
-     * @param params the id of the vehicle type
-     * @returns The vehicle type if found
+     * Called to link the vehicle ID to vehicle type in the UI.
+     * @param params the ID of the vehicle type.
+     * @returns The vehicle type, if found.
      */
     protected getVehicleFromId(id: string): VehicleType | undefined
     {

@@ -13,7 +13,7 @@ export class Address {
   }
 
   /**
-   * The id of the address. Used for lookup.
+   * The ID of the address. Used for lookup.
    * Only exists when a full address
    */
   public id?: string;

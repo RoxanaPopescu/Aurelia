@@ -22,13 +22,13 @@ export class RoutePlanSetting {
   }
 
   /**
-   * The id of the setting.
+   * The ID of the setting.
    */
   @observable
   public id: string;
 
   /**
-   * The id of fulfiller.
+   * The ID of fulfiller.
    */
   @observable
   public fulfillerId: string;

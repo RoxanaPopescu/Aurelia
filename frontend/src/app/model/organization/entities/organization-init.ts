@@ -9,7 +9,7 @@ export interface IOrganizationInit
     name: string;
 
     /**
-     * The id of the organization.
+     * The ID of the organization.
      */
     id?: string;
 

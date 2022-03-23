@@ -17,7 +17,7 @@ export interface ICreateOrganizationModel
     organizationName?: string;
 
     /**
-     * The id of the organization.
+     * The ID of the organization.
      */
     organizationId?: string;
 
@@ -72,7 +72,7 @@ export class CreateOrganizationCustomElement
     protected validation: IValidation;
 
     /**
-     * Show organization id - this is used for migration
+     * Show organization ID - this is used for migration
      */
     protected showId: boolean;
 

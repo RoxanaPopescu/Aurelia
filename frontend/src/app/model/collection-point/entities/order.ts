@@ -32,7 +32,7 @@ export class Order
   }
 
   /**
-   * The unique id of the order
+   * The unique ID of the order
    */
   public id: string;
 
@@ -42,12 +42,12 @@ export class Order
   public collectionPoint: CollectionPoint;
 
   /**
-   * The id of the organization that created the order
+   * The ID of the organization that created the order
    */
   public creatorOrderId: string;
 
   /**
-   * Renational id is usually the sales order id
+   * The renational ID, which is usually the sales order ID.
    */
   public relationalId?: string;
 

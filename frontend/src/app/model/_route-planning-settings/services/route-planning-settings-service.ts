@@ -88,7 +88,7 @@ export class RoutePlanningSettingsService
 
     /**
      * Deletes the specified route planning settings.
-     * @param id The id identifying the route planning settings to delete.
+     * @param id The ID of the route planning settings to delete.
      * @returns A promise that will be resolved when the operation succeedes.
      */
     public async delete(id: string): Promise<void>

@@ -88,7 +88,7 @@ export class RouteStop extends RouteStopBase
     public readonly signature?: Signature;
 
     /**
-     * The collection point id related to this stop
+     * The ID of the collection point related to this stop.
      */
     public readonly collectionPointId?: string;
 

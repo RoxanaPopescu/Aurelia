@@ -85,7 +85,7 @@ export class DriverRoute implements IRouteReference
     public routeId: string;
 
     /**
-     * The id identifying the route.
+     * The ID of the route.
      */
      public readonly id: string;
 

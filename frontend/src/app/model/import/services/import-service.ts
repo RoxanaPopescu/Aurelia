@@ -21,8 +21,8 @@ export class ImportService
 
     /**
      * Gets the specified order.
-     * @param fileId The id associated with the file.
-     * @param consignorId The id of the consignor who should be associated with the orders.
+     * @param fileId The ID associated with the file.
+     * @param consignorId The ID of the consignor who should be associated with the orders.
      * @returns A promise that will be resolved with the order.
      */
     public async createOrdersFromFile(fileId: string, consignorId: string): Promise<ApiResult>

@@ -77,7 +77,7 @@ export class RouteTemplateSchedule
     public routeDayOfWeek: DayOfWeek;
 
     /**
-     * The Driver id to use for the route.
+     * The Driver ID to use for the route.
      */
     public routeDriverId: string | undefined;
 

@@ -22,13 +22,13 @@ export class RouteOverview
     private readonly _routeService: RouteService;
 
     /**
-     * The id of the route.
+     * The ID of the route.
      */
     @bindable
     protected id: string;
 
     /**
-     * The id of the order.
+     * The ID of the order.
      */
     @bindable
     protected order: Order;

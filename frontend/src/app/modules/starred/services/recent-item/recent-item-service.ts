@@ -45,7 +45,7 @@ export class RecentItemService
     }
 
     /**
-     * Adds the entity identified by the specified id as a recent item.
+     * Adds the entity identified by the specified entity info as a recent item.
      * @param entityInfo The entity info representing the entity to add.
      * @returns A promise that will be resolved with the recent item.
      */

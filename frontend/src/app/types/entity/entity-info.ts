@@ -60,7 +60,7 @@ export class EntityInfo
     public id: string;
 
     /**
-     * The slug, code or id to use in a URL referencing the entity, or undefined if not relevant.
+     * The slug, code or ID to use in a URL referencing the entity, or undefined if not relevant.
      */
     public slug: string | undefined;
 

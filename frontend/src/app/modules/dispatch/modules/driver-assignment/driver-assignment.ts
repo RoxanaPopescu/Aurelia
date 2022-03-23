@@ -264,7 +264,7 @@ export class DriverAssignmentPage
     }
 
     /**
-     * Called when the driver id input has changes.
+     * Called when the driver ID input has changes.
      * Fetches the driver and will add him to the preview
      */
     protected async onDriverIdChanged(route: RouteInfo): Promise<void>
@@ -299,13 +299,13 @@ export class DriverAssignmentPage
 
                 this._modalService.open(
                     InvalidAssignmentDialog,
-                    `The driver with id '${driverId}' is not approved`
+                    `The driver with ID '${driverId}' is not approved`
                 );
             }
         }
         catch
         {
-            Log.error(`Could not find a driver with id '${driverId}'`);
+            Log.error(`Could not find a driver with ID '${driverId}'`);
             (route as any).driverId = undefined;
         }
     }

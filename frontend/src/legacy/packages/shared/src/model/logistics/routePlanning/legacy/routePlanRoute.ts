@@ -28,7 +28,7 @@ export class LegacyRoutePlanRoute {
   public routeNumber: number;
 
   /**
-   * The id for this route
+   * The ID for this route
    */
   public id: string;
 

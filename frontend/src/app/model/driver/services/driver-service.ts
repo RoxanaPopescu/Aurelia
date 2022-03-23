@@ -151,7 +151,7 @@ export class DriverService
 
     /**
      * Gets a single driver
-     * @param driverId The id of the driver.
+     * @param driverId The ID of the driver.
      * @returns A promise that will be resolved with the drivers.
      */
     public async get(driverId: string): Promise<Driver>

@@ -79,7 +79,7 @@ export class Outfit
     public readonly address?: string;
 
     /**
-     * The legacy id of this outfit in NOI
+     * The legacy ID of this outfit in NOI
      */
     public readonly legacyId?: string;
 
