@@ -39,7 +39,7 @@ export class CreateCollectionPointPanel
      * Called by the framework when the modal is activated.
      * @param model The vehicle to edit, or undefined to create a new vehicle.
      */
-    public async activate(model?: CollectionPoint): Promise<void>
+    public activate(model?: CollectionPoint)
     {
         this.collectionPoint = model?.clone() ?? new CollectionPoint();
     }
@@ -72,21 +72,21 @@ export class CreateCollectionPointPanel
 
             this._modal.busy = true;
 
-             // Resolve start location, if needed.
-             if (this.collectionPoint.location.position == null && this.collectionPoint.location.address?.id != null)
-             {
-                 try
-                 {
-                     this.collectionPoint.location = await this._addressService.getLocation(this.collectionPoint.location.address);
-                 }
-                 catch (error)
-                 {
-                     Log.error("Could not resolve address location.", error);
-                     this._modal.busy = false;
+            // Resolve start location, if needed.
+            if (this.collectionPoint.location.position == null && this.collectionPoint.location.address?.id != null)
+            {
+                try
+                {
+                    this.collectionPoint.location = await this._addressService.getLocation(this.collectionPoint.location.address);
+                }
+                catch (error)
+                {
+                    Log.error("Could not resolve address location.", error);
+                    this._modal.busy = false;
 
-                     return;
-                 }
-             }
+                    return;
+                }
+            }
 
             this.collectionPoint = await this._collectionPointService.create(this.collectionPoint);
             this._result = this.collectionPoint;

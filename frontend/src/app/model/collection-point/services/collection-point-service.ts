@@ -52,13 +52,14 @@ export class CollectionPointService
         paging?: IPaging,
         signal?: AbortSignal
     ): Promise<CollectionPoint[]> {
-        const result = await this._apiClient.get("collection-points", {
+        const result = await this._apiClient.get("collection-points",
+        {
             query: {
                 page: paging?.page,
                 pageSize: paging?.pageSize,
                 sortDirection: sorting?.direction,
                 sortProperty: sorting?.property,
-                query: filter?.searchQuery,
+                query: filter?.searchQuery
             },
             signal
         });
