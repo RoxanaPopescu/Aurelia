@@ -51,7 +51,8 @@ export class CollectionPointService
         sorting?: ISorting,
         paging?: IPaging,
         signal?: AbortSignal
-    ): Promise<CollectionPoint[]> {
+    ): Promise<CollectionPoint[]>
+    {
         const result = await this._apiClient.get("collection-points",
         {
             query: {

@@ -39,7 +39,7 @@ export class CreateCollectionPointPanel
      * Called by the framework when the modal is activated.
      * @param model The vehicle to edit, or undefined to create a new vehicle.
      */
-    public activate(model?: CollectionPoint)
+    public activate(model?: CollectionPoint): void
     {
         this.collectionPoint = model?.clone() ?? new CollectionPoint();
     }
