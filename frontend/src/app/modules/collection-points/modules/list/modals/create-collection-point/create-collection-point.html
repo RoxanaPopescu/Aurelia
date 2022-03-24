@@ -1,5 +1,6 @@
 <template>
 
+    <require from="app/components/address-input/address-input"></require>
     <require from="./create-collection-point.scss"></require>
 
     <modal-backdrop close="all"></modal-backdrop>
@@ -38,9 +39,9 @@
 
         <modal-section class="margin-larger-bottom">
 
-            <div class="control-row">
+            <div class="control-row margin-bottom">
 
-                <text-input label="above" value.bind="collectionPoint.name" class="flex-basis-1-of-2">
+                <text-input label="above" value.bind="collectionPoint.name" class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
                         Name
@@ -59,7 +60,7 @@
 
             <div class="control-row">
 
-                <address-input fixed.bind="true" label="above" value.bind="collectionPoint.location.address" class="flex-basis-1-of-1">
+                <address-input label="above" value.bind="collectionPoint.location.address" class="flex-basis-1-of-1">
 
                     <div slot="heading" translate>
                         Address

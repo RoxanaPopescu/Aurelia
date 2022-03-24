@@ -1,5 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { ApiClient } from "shared/infrastructure";
+import { IPaging, ISorting } from "shared/types";
 import { CollectionPoint } from "../entities/collection-point";
 import { Order } from "../entities/order";
 
@@ -37,6 +38,35 @@ export class CollectionPointService
     }
 
     /**
+     * Gets all collection points visible to the current user.
+     * @param filter The filter for finding collection ponts
+     * @param sorting The sorting options to use.
+     * @param paging The paging options to use.
+     * @returns A promise that will be resolved with the collection points.
+     */
+    public async getAll(
+        filter?: {
+            searchQuery?: string;
+        },
+        sorting?: ISorting,
+        paging?: IPaging,
+        signal?: AbortSignal
+    ): Promise<CollectionPoint[]> {
+        const result = await this._apiClient.get("collection-points", {
+            query: {
+                page: paging?.page,
+                pageSize: paging?.pageSize,
+                sortDirection: sorting?.direction,
+                sortProperty: sorting?.property,
+                query: filter?.searchQuery,
+            },
+            signal
+        });
+
+        return result.data.map((data: any) => new CollectionPoint(data));
+    }
+
+    /**
      * Creates a new collection point, associated with the organization.
      * @param collectionPoint The collection point to create.
      * @returns A promise that will be resolved with the new collection point.
@@ -45,7 +75,7 @@ export class CollectionPointService
      {
          const result = await this._apiClient.post("collection-points",
          {
-             body: { collectionPoint }
+             body: collectionPoint
          });
 
          return new CollectionPoint(result.data);

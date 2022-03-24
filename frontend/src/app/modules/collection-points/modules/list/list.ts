@@ -1,8 +1,9 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, observable } from "aurelia-framework";
 import { Operation } from "shared/utilities";
 import { IScroll, ModalService } from "shared/framework";
 import { CreateCollectionPointPanel } from "./modals/create-collection-point/create-collection-point";
 import { CollectionPoint, CollectionPointService } from "app/model/collection-point";
+import { IPaging } from "shared/types";
 
 /**
  * Represents the page.
@@ -37,9 +38,20 @@ export class ListPage
     protected updateOperation: Operation;
 
     /**
-     * The total number of items matching the query, or undefined if unknown.
+     * The text in the search text input.
      */
-    protected driverCount: number | undefined;
+    @observable({ changeHandler: "update" })
+    protected searchQuery: string | undefined;
+
+    /**
+     * The paging to use for the table.
+     */
+    @observable({ changeHandler: "update" })
+    protected paging: IPaging =
+    {
+        page: 1,
+        pageSize: 30
+    };
 
     /**
      * The items to present in the table.
@@ -90,7 +102,11 @@ export class ListPage
         this.updateOperation = new Operation(async signal =>
         {
             // Fetch the data.
-            const result = await this._vehicleService.getAll(undefined, signal);
+            const result = await this._collectionPointService.getAll(
+                { searchQuery: this.searchQuery },
+                { direction: "ascending", property: "name" },
+                this.paging, signal
+            );
 
             // Update the state.
             this.results = result;

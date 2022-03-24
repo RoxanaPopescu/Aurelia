@@ -2,6 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
 import { Modal, IValidation } from "shared/framework";
 import { CollectionPoint, CollectionPointService } from "app/model/collection-point";
+import { AddressService } from "app/components/address-input/services/address-service/address-service";
 
 @autoinject
 export class CreateCollectionPointPanel
@@ -10,21 +11,24 @@ export class CreateCollectionPointPanel
      * Creates a new instance of the class.
      * @param modal The `Modal` instance representing the modal.
      * @param collectionPointService The `CollectionPointService` instance.
+     * @param addressService The `AddressService` instance.
      */
-    public constructor(modal: Modal, collectionPointService: CollectionPointService)
+    public constructor(modal: Modal, collectionPointService: CollectionPointService, addressService: AddressService)
     {
         this._modal = modal;
         this._collectionPointService = collectionPointService;
+        this._addressService = addressService;
     }
 
     private readonly _modal: Modal;
     private readonly _collectionPointService: CollectionPointService;
+    private readonly _addressService: AddressService;
     private _result: CollectionPoint | undefined;
 
     /**
      * The collection point being edited or created.
      */
-    protected collectionPoint: CollectionPoint | undefined;
+    protected collectionPoint: CollectionPoint;
 
     /**
      * The validation for the modal.
@@ -68,7 +72,23 @@ export class CreateCollectionPointPanel
 
             this._modal.busy = true;
 
-            this.collectionPoint = await this._collectionPointService.create(this.collectionPoint!);
+             // Resolve start location, if needed.
+             if (this.collectionPoint.location.position == null && this.collectionPoint.location.address?.id != null)
+             {
+                 try
+                 {
+                     this.collectionPoint.location = await this._addressService.getLocation(this.collectionPoint.location.address);
+                 }
+                 catch (error)
+                 {
+                     Log.error("Could not resolve address location.", error);
+                     this._modal.busy = false;
+
+                     return;
+                 }
+             }
+
+            this.collectionPoint = await this._collectionPointService.create(this.collectionPoint);
             this._result = this.collectionPoint;
 
             await this._modal.close();

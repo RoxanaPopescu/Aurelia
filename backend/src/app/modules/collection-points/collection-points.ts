@@ -7,6 +7,31 @@ import { AppModule } from "../../app-module";
 export class CollectionPointModule extends AppModule
 {
     /**
+     * Creates a collection point
+     * @returns 200 when the collection point is created
+     */
+    public "POST /v2/collection-points" = async (context: AppContext) =>
+    {
+        const validationResult = await this.validateLogin(context, "edit-routes");
+
+        const result = await this.apiClient.post("collection-point/collection-points",
+        {
+            body:
+            {
+                ...context.request.body,
+                createdBy: validationResult.userId
+            },
+            headers:
+            {
+                "x-organization": validationResult.outfitId
+            }
+        });
+
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
      * Searches for collection points.
      * @param get parameters from url.
      * @returns The collection points without orders.

@@ -4,6 +4,26 @@
 
     <page name="list">
 
+        <page-sidebar name="routes-list-page-sidebar" scroll>
+
+            <page-section>
+
+                <search-input value.bind="searchQuery & debounce: 200">
+
+                    <span slot="before" class="opacity-faded font-larger line-height-1">
+                        <icon name="md-search"></icon>
+                    </span>
+
+                    <span slot="placeholder" translate>
+                        Find...
+                    </span>
+
+                </search-input>
+
+            </page-section>
+
+        </page-sidebar>
+
         <page-content scroll scroll.ref="scroll">
 
             <page-header class="flex-row" scroll-fade>
@@ -75,14 +95,14 @@
 
                             <data-table-cell>
                                 <span class="text-truncate">
-                                    ${result.position.address.primar}
+                                    ${result.location.address.primary}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">
+                                <a href="/collection-points/details/${result.id}" class="text-truncate">
                                     ${result.id}
-                                </span>
+                                </a>
                             </data-table-cell>
 
                         </data-table-row>
