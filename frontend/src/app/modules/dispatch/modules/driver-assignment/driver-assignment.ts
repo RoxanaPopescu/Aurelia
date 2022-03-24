@@ -122,12 +122,10 @@ export class DriverAssignmentPage
             new RouteListColumn("estimated-colli-count"),
             new RouteListColumn("distance"),
             new RouteListColumn("estimated-time-frame"),
-            new RouteListColumn("driver"),
-            new RouteListColumn("driver-id"),
             new RouteListColumn("status"),
             new RouteListColumn("vehicle-type"),
-            new RouteListColumn("team"),
-            new RouteListColumn("executor")
+            new RouteListColumn("driver"),
+            new RouteListColumn("driver-id")
         ];
     }
 
