@@ -21,7 +21,7 @@ export class RoutesListModule extends AppModule
             fulfillerIds: [context.user?.organizationId]
         };
 
-        const result = await this.apiClient.post("logistics-platform/routes/v4/details",
+        const result = await this.apiClient.post("logistics-platform/routes/v5/details",
         {
             noi: true,
             body: body

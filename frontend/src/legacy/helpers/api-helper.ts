@@ -41,6 +41,13 @@ export function getLegacyRouteSortProperty(property: string): number
         case "start-date": return 4;
         case "start-address": return 3;
         case "stop-count": return 5;
+        case "vehicle-type": return 7;
+        case "owner": return 8;
+        case "end-address": return 9;
+        case "original-estimate-start": return 10;
+        case "original-estimate-end": return 11;
+        case "planned-time-start": return 12;
+        case "planned-time-end": return 13;
         default: throw new Error("Unexpected sort property.");
     }
 }

@@ -48,7 +48,7 @@ export class RoutesListModule extends AppModule
         }
         // TODO: End generalize
 
-        const result = await this.apiClient.post("logistics-platform/routes/v4/list",
+        const result = await this.apiClient.post("logistics-platform/routes/v5/list",
         {
             noi: true,
             body: body
