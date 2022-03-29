@@ -292,7 +292,7 @@
                                     </span>
                                 </data-table-cell>
 
-                                <data-table-cell if.bind="column.slug === 'planned-start-time-frame'">
+                                <data-table-cell if.bind="column.slug === 'planned-time-start'">
                                     <span class="text-truncate">
                                         ${result.route.stops[0].arrivalTimeFrame | dateTimeRange: 'narrow' : false}
                                     </span>
@@ -539,9 +539,15 @@
                                     </span>
                                 </data-table-cell>
 
-                                <data-table-cell if.bind="column.slug === 'estimated-time-frame'">
+                                <data-table-cell if.bind="column.slug === 'estimated-start-time-frame'">
                                     <span class="text-truncate">
-                                        ${route.estimates.timeFrame | dateTimeRange: 'narrow' : false}
+                                        ${route.estimates.start.timeFrame}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'estimated-end-time-frame'">
+                                    <span class="text-truncate">
+                                        ${route.estimates.end.timeFrame}
                                     </span>
                                 </data-table-cell>
 
@@ -566,7 +572,7 @@
                                     </span>
                                 </data-table-cell>
 
-                                <data-table-cell if.bind="column.slug === 'planned-start-time-frame'">
+                                <data-table-cell if.bind="column.slug === 'planned-time-start'">
                                     <span class="text-truncate">
                                         ${route.stops[0].arrivalTimeFrame | dateTimeRange: 'narrow' : false}
                                     </span>

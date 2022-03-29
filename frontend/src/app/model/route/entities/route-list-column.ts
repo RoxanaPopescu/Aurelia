@@ -172,12 +172,42 @@ export class RouteListColumn implements IColumn
             width: "min-content",
             hidden: false
         },
+        "estimated-time-start":
+        {
+            name: listColumn.estimatedStartTime,
+            columnName: listColumn.estimatedStartTimeShort,
+            width: "min-content",
+            hidden: false
+        },
+        "estimated-time-end":
+        {
+            name: listColumn.estimatedEndTime,
+            columnName: listColumn.estimatedEndTimeShort,
+            width: "min-content",
+            hidden: false
+        },
         "original-estimated-time-frame":
         {
             name: listColumn.originalEstimatedTime,
             columnName: listColumn.originalEstimatedTimeShort,
             width: "min-content",
             sortingName: "original-estimate-start",
+            hidden: false
+        },
+        "original-estimated-start":
+        {
+            name: listColumn.originalEstimatedStartTime,
+            columnName: listColumn.originalEstimatedStartTimeShort,
+            width: "min-content",
+            sortingName: "original-estimate-start",
+            hidden: false
+        },
+        "original-estimated-end":
+        {
+            name: listColumn.originalEstimatedEndTime,
+            columnName: listColumn.originalEstimatedEndTimeShort,
+            width: "min-content",
+            sortingName: "original-estimate-end",
             hidden: false
         },
         "planned-time-frame":
@@ -188,11 +218,19 @@ export class RouteListColumn implements IColumn
             sortingName: "planned-time-start",
             hidden: false
         },
-        "planned-start-time-frame":
+        "planned-time-start":
         {
             name: listColumn.plannedStartTime,
             columnName: listColumn.plannedStartTimeShort,
             sortingName: "planned-time-start",
+            width: "min-content",
+            hidden: false
+        },
+        "planned-time-end":
+        {
+            name: listColumn.plannedStartTime,
+            columnName: listColumn.plannedStartTimeShort,
+            sortingName: "planned-time-end",
             width: "min-content",
             hidden: false
         },
