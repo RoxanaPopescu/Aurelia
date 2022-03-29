@@ -259,10 +259,12 @@ export class ViewPresetSelectorCustomElement
         if (result.shared)
         {
             this.sharedPresets.push(preset);
+            this.sharedPresets.sort((a, b) => a.name.localeCompare(b.name));
         }
         else
         {
             this.localPresets.push(preset);
+            this.localPresets.sort((a, b) => a.name.localeCompare(b.name));
         }
     }
 }
