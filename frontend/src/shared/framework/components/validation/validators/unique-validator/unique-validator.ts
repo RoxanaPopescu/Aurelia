@@ -42,8 +42,8 @@ export class UniqueValidatorCustomElement extends Validator
         }
         else
         {
-            const newPrimitiveValue = this.newValue.valueOf();
-            const oldPrimitiveValue = this.newValue.valueOf();
+            const newPrimitiveValue = this.newValue?.valueOf();
+            const oldPrimitiveValue = this.oldValue?.valueOf();
 
             // tslint:disable-next-line: triple-equals
             if (newPrimitiveValue == oldPrimitiveValue)
@@ -54,7 +54,7 @@ export class UniqueValidatorCustomElement extends Validator
             if (this.allValues != null)
             {
                 // tslint:disable-next-line: triple-equals
-                this.invalid = this.allValues.some(value => value == this.newValue || value.valueOf() === newPrimitiveValue);
+                this.invalid = this.allValues.some(value => value == this.newValue || value?.valueOf() == newPrimitiveValue);
             }
         }
 

@@ -79,11 +79,17 @@ view-preset-selector
         opacity: var(--opacity-faded);
     }
 
-    .view-preset-selector-section-title
+    .view-preset-selector-section-title,
+    .view-preset-selector-save
     {
+        display: block;
         padding: var(--item-picker-surface-item-padding);
-        font-weight: 600;
         white-space: nowrap;
         margin-right: 8rem;
+    }
+
+    .view-preset-selector-section-title
+    {
+        font-weight: 600;
     }
 }

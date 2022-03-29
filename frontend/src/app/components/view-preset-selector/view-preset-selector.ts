@@ -235,7 +235,13 @@ export class ViewPresetSelectorCustomElement
      */
     protected async onCreatePresetClick(): Promise<void>
     {
-        const result = await this._modalService.open(CreateViewPresetDialog, this.type).promise;
+        const result = await this._modalService.open(CreateViewPresetDialog,
+        {
+            type: this.type,
+            sharedPresets: this.sharedPresets,
+            localPresets: this.localPresets
+        })
+        .promise;
 
         if (result == null)
         {

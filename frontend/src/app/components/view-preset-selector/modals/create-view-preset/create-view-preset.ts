@@ -1,22 +1,43 @@
-import { ViewPresetType } from "app/model/view-presets";
 import { autoinject } from "aurelia-framework";
 import { IValidation } from "shared/framework";
 import { Modal } from "shared/framework/services/modal";
+import { ViewPreset, ViewPresetType } from "app/model/view-presets";
 
 /**
- * Represents the result returned by a modal dialog for creating a new view preset.
+ * Represents the result of a `CreateViewPresetDialog` instance.
  */
 export interface ICreateViewPresetDialogResult
 {
     /**
-     * True if the view preset is shared with the organization, otherwise false.
-     */
-    shared: boolean;
-
-    /**
      * The name of the view preset.
      */
     name: string;
+
+    /**
+     * True if the view preset is shared with the organization, otherwise false.
+     */
+    shared: boolean;
+}
+
+/**
+ * Represents the model for a `CreateViewPresetDialog` instance.
+ */
+export interface ICreateViewPresetDialogModel
+{
+    /**
+     * The type of view preset to create.
+     */
+    type: ViewPresetType;
+
+    /**
+     * The existing shared presets, used for validating name uniqueness.
+     */
+    sharedPresets: ViewPreset[];
+
+    /**
+     * The existing local presets, used for validating name uniqueness.
+     */
+    localPresets: ViewPreset[]
 }
 
 /**
@@ -49,17 +70,34 @@ export class CreateViewPresetDialog
     protected type: ViewPresetType;
 
     /**
-     * The name to use for the new view preset, or undefined if not yet specified.
+     * The existing shared presets, used for validating name uniqueness.
      */
-    protected model: ICreateViewPresetDialogResult | undefined;
+    protected sharedPresets: ViewPreset[];
+
+    /**
+     * The existing local presets, used for validating name uniqueness.
+     */
+    protected localPresets: ViewPreset[];
+
+    /**
+     * The name of the view preset.
+     */
+    protected name: string;
+
+    /**
+     * True if the view preset is shared with the organization, otherwise false.
+     */
+    protected shared = false;
 
     /**
      * Called by the framework when the modal is deactivated.
      * @param type The type of view preset to create.
      */
-    public activate(type: ViewPresetType): void
+    public activate(model: ICreateViewPresetDialogModel): void
     {
-        this.type = type;
+        this.type = model.type;
+        this.sharedPresets = model.sharedPresets;
+        this.localPresets = model.localPresets;
     }
 
     /**
@@ -73,7 +111,7 @@ export class CreateViewPresetDialog
             return undefined;
         }
 
-        return this.model;
+        return { name: this.name, shared: this.shared };
     }
 
     /**

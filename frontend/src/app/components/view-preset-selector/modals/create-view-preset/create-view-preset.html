@@ -18,7 +18,7 @@
 
         <modal-section class="margin-half-bottom">
 
-            <text-input label="above" value.bind="model.name" autocomplete="off" autofocus>
+            <text-input label="above" value.bind="name" autocomplete="off" autofocus>
 
                 <span slot="heading">
                     View name
@@ -27,14 +27,20 @@
                 <div slot="validation">
 
                     <required-validator
-                        value.bind="model.name">
+                        value.bind="name">
                     </required-validator>
+
+                    <unique-validator
+                        active.bind="true"
+                        new-value.bind="name"
+                        all-values.bind="shared ? sharedPresets : localPresets | map: 'name'">
+                    </unique-validator>
 
                 </div>
 
             </text-input>
 
-            <check-toggle if-claims.bind="'edit-' + type + '-views'" label="after" value.bind="model.shared" class="margin-top">
+            <check-toggle if-claims.bind="'edit-' + type + '-views'" label="after" value.bind="shared" class="margin-top">
 
                 <div slot="heading" translate>
                     Share this view with other users in the organization

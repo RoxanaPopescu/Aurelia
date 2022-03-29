@@ -43,8 +43,12 @@ export class ViewPresetService
         const sharedViewPresets = result.data.map(data =>
             new ViewPreset({ ...data, shared: true }));
 
+        sharedViewPresets.sort((a, b) => a.name.localeCompare(b.name));
+
         const localViewPresets = this._localStateService.get().viewPresets?.[type]?.map(data =>
             new ViewPreset({ ...data, shared: false })) ?? [];
+
+        localViewPresets.sort((a, b) => a.name.localeCompare(b.name));
 
         return { shared: sharedViewPresets, local: localViewPresets };
     }
