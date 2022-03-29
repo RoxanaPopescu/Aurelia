@@ -45,13 +45,41 @@
             tabindex="-1"
             scroll>
 
-            <div if.bind="presets.length == 0" class="view-preset-selector-empty" translate>
-                No saved views
+            <template replace-part="empty"></template>
+
+            <div class="view-preset-selector-section-title" translate>
+                Organization views
             </div>
 
             <div>
+                <item repeat.for="preset of sharedPresets" click.trigger="onPresetClick($event, preset)" model.bind="preset">
+                    <div class="margin-right" translate>
+                        ${preset.name}
+                    </div>
+                    <template if-claims.bind="'edit-' + preset.type + '-views'">
+                        <button title.translate="Delete" appearance="none" accent="primary" click.trigger="onDeletePresetClick($event, preset)">
+                            <icon name="delete-small" inline></icon>
+                        </button>
+                    </template>
+                </item>
+            </div>
 
-                <item repeat.for="preset of presets" click.trigger="onPresetClick($event, preset)" model.bind="preset">
+            <div if.bind="sharedPresets.length == 0" class="view-preset-selector-empty" translate>
+                No organization views
+            </div>
+
+            <div if.bind="sharedPresets == null" class="view-preset-selector-empty" translate>
+                Please wait…
+            </div>
+
+            <hr class="hr-line">
+
+            <div class="view-preset-selector-section-title" translate>
+                Personal views
+            </div>
+
+            <div>
+                <item repeat.for="preset of localPresets" click.trigger="onPresetClick($event, preset)" model.bind="preset">
                     <div class="margin-right" translate>
                         ${preset.name}
                     </div>
@@ -59,7 +87,14 @@
                         <icon name="delete-small" inline></icon>
                     </button>
                 </item>
+            </div>
 
+            <div if.bind="localPresets.length == 0" class="view-preset-selector-empty" translate>
+                No personal views
+            </div>
+
+            <div if.bind="localPresets == null" class="view-preset-selector-empty" translate>
+                Please wait…
             </div>
 
             <hr class="hr-line">

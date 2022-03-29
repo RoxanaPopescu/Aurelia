@@ -25,12 +25,11 @@
 
     </div>
 
-    <div if.bind="empty" class="item-picker-empty">
-
-        <template replaceable part="empty" translate>
+    <!-- Note that whitespace matters here -->
+    <div if.bind="empty" class="item-picker-empty"
+        ><template replaceable part="empty" translate>
             No items
-        </template>
-
-    </div>
+        </template
+    ></div>
 
 </template>

@@ -1,6 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { Modal } from "shared/framework/services/modal";
-import { IViewPreset } from "../../model/view-preset";
+import { ViewPreset } from "app/model/view-presets";
 
 @autoinject
 export class ConfirmDeleteViewPresetDialog
@@ -17,13 +17,13 @@ export class ConfirmDeleteViewPresetDialog
     private readonly _modal: Modal;
     private _result = false;
 
-    protected model: IViewPreset;
+    protected model: ViewPreset;
 
     /**
      * Called by the framework when the modal is activated.
      * @param model The model to use.
      */
-    public activate(model: IViewPreset): void
+    public activate(model: ViewPreset): void
     {
         this.model = model;
     }

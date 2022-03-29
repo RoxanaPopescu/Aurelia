@@ -12,6 +12,11 @@
 
         </modal-header>
 
+        <modal-section if.bind="model.shared" accent="negative" class="margin-bottom" translate>
+            Note that this view is shared with other people in the organization.<br>
+            If you continue, you will delete this view for everyone.
+        </modal-section>
+
         <modal-section translate>
             This action cannot be undone.
         </modal-section>

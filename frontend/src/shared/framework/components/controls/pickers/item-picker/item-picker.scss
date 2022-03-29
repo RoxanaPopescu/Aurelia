@@ -21,6 +21,12 @@ item-picker
 
         // Reduce opacity, as if disabled.
         opacity: var(--opacity-faded);
+
+        &:empty
+        {
+            // Hide the element if empty.
+            display: none;
+        }
     }
 
     .item-picker-none

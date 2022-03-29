@@ -3,10 +3,11 @@ import { Placement } from "popper.js";
 import { Callback, CallbackWithContext } from "shared/types";
 import { ItemPickerCustomElement, ModalService } from "shared/framework";
 import { AccentColor } from "resources/styles";
-import { LocalStateService } from "app/services/local-state";
 import { CreateViewPresetDialog } from "./modals/create-view-preset/create-view-preset";
 import { ConfirmDeleteViewPresetDialog } from "./modals/confirm-delete-view-preset/confirm-delete-view-preset";
-import { IViewPreset } from "./model/view-preset";
+import { ViewPreset, ViewPresetService, ViewPresetType } from "app/model/view-presets";
+import { Operation } from "shared/utilities";
+import { Log } from "shared/infrastructure";
 
 /**
  * Custom element representing an button for creating, picking, or deleting a view preset.
@@ -16,22 +17,27 @@ export class ViewPresetSelectorCustomElement
 {
     /**
      * Creates a new instance of the type.
-     * @param localStateService The `LocalStateService` instance.
      * @param modalService The `ModalService` instance.
+     * @param viewPresetService The `ViewPresetService` instance.
      */
-    public constructor(localStateService: LocalStateService, modalService: ModalService)
+    public constructor(modalService: ModalService, viewPresetService: ViewPresetService)
     {
-        this._localStateService = localStateService;
         this._modalService = modalService;
+        this._viewPresetService = viewPresetService;
     }
 
-    private readonly _localStateService: LocalStateService;
     private readonly _modalService: ModalService;
+    private readonly _viewPresetService: ViewPresetService;
 
     /**
-     * The presets to present.
+     * The shared presets to present.
      */
-    protected presets: IViewPreset[];
+    protected sharedPresets: ViewPreset[];
+
+    /**
+     * The local presets to present.
+     */
+    protected localPresets: ViewPreset[];
 
     /**
      * The element representing the button.
@@ -49,11 +55,10 @@ export class ViewPresetSelectorCustomElement
     protected focusedValue: any | undefined;
 
     /**
-     * The name of this preset selector, used as a key to identify the relevant set of presets.
-     * This should be unique for each view in which the this component is used.
+     * The type identifying the relevant set of presets.
      */
     @bindable
-    public name: string;
+    public type: ViewPresetType;
 
     /**
      * The function to call to get the current state of the view.
@@ -113,13 +118,27 @@ export class ViewPresetSelectorCustomElement
     public placement: Placement;
 
     /**
+     * Called by the framework when the component is attached to the DOM.
+     */
+    public attached(): void
+    {
+        const fetchOperation = new Operation(async signal =>
+        {
+            const result = await this._viewPresetService.getAll(this.type, signal);
+
+            this.sharedPresets = result.shared;
+            this.localPresets = result.local;
+        });
+
+        fetchOperation.promise.catch(error => Log.error("Could not get the views for the organization.", error));
+    }
+
+    /**
      * Opens the dropdown and optionally focuses the button element.
      * @param focusButton True to focus the button element, otherwise false.
      */
     protected openDropdown(focusButton: boolean): void
     {
-        this.loadPresets();
-
         this.open = true;
         this.focusedValue = null;
 
@@ -169,7 +188,7 @@ export class ViewPresetSelectorCustomElement
      * @param event The mouse event.
      * @param preset The preset to apply.
      */
-    protected onPresetClick(event: MouseEvent, preset: IViewPreset): void
+    protected onPresetClick(event: MouseEvent, preset: ViewPreset): void
     {
         if (event.defaultPrevented)
         {
@@ -185,7 +204,7 @@ export class ViewPresetSelectorCustomElement
      * @param event The mouse event.
      * @param preset The preset to delete.
      */
-    protected async onDeletePresetClick(event: MouseEvent, preset: IViewPreset): Promise<void>
+    protected async onDeletePresetClick(event: MouseEvent, preset: ViewPreset): Promise<void>
     {
         event.preventDefault();
 
@@ -196,9 +215,16 @@ export class ViewPresetSelectorCustomElement
             return;
         }
 
-        this.presets.splice(this.presets.indexOf(preset), 1);
+        await this._viewPresetService.delete(preset);
 
-        this.savePresets();
+        if (preset.shared)
+        {
+            this.sharedPresets.splice(this.sharedPresets.indexOf(preset), 1);
+        }
+        else
+        {
+            this.localPresets.splice(this.localPresets.indexOf(preset), 1);
+        }
     }
 
     /**
@@ -209,28 +235,28 @@ export class ViewPresetSelectorCustomElement
      */
     protected async onCreatePresetClick(): Promise<void>
     {
-        const name = await this._modalService.open(CreateViewPresetDialog).promise;
+        const result = await this._modalService.open(CreateViewPresetDialog, this.type).promise;
 
-        if (name == null)
+        if (result == null)
         {
             return;
         }
 
-        this.presets.push({ name, state: this.getState() });
-
-        this.savePresets();
-    }
-
-    private loadPresets(): void
-    {
-        this.presets = this._localStateService.get().viewPresets?.[this.name] ?? [];
-    }
-
-    private savePresets(): void
-    {
-        this._localStateService.mutate(state =>
+        const preset = await this._viewPresetService.create(
         {
-            (state.viewPresets ??= {})[this.name] = this.presets;
+            type: this.type,
+            shared: result.shared,
+            name: result.name,
+            state: this.getState()
         });
+
+        if (result.shared)
+        {
+            this.sharedPresets.push(preset);
+        }
+        else
+        {
+            this.localPresets.push(preset);
+        }
     }
 }

@@ -776,6 +776,7 @@ export class ListPage
         return {
             sorting: this.sorting,
             columns: this.columns,
+            pageSize: this.paging.pageSize,
             filters:
             {
                 textFilter: this.textFilter,
@@ -805,6 +806,7 @@ export class ListPage
     {
         this.sorting = state.sorting;
         this.customColumns = state.columns.map(slug => new RouteListColumn(slug));
+        this.paging = { ...this.paging, pageSize: state.pageSize };
         this.textFilter = state.filters.textFilter;
         this.statusFilter = state.filters.statusFilter;
         this.assignedDriver = state.filters.assignedDriver;
