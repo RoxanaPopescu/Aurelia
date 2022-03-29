@@ -21,6 +21,22 @@ export class ViewPresetService
     {
         this._apiClient = apiClient;
         this._localStateService = localStateService;
+
+        // HACK: Migrates data from the old type names to the new - remove when assumed to be done.
+        console.warn("HACK: Migrating local views - remove around 2022-05-01, or when assumed to be done.");
+        this._localStateService.mutate(state =>
+        {
+            for (const newType of ["order", "route"])
+            {
+                const oldType = `${newType}-list`;
+
+                if (oldType in state.viewPresets)
+                {
+                    state.viewPresets[newType] = state.viewPresets[oldType];
+                    delete state.viewPresets[oldType];
+                }
+            }
+        });
     }
 
     private readonly _apiClient: ApiClient;
