@@ -10,8 +10,8 @@ import { DistributionCenterService, DistributionCenter } from "app/model/distrib
  */
 interface IRouteParams
 {
-    page?: number;
-    pageSize?: number;
+    page?: string;
+    pageSize?: string;
     sortProperty?: string;
     sortDirection?: SortingDirection;
 }
@@ -79,8 +79,8 @@ export class ListPage
      */
     public activate(params: IRouteParams): void
     {
-        this.paging.page = params.page || this.paging.page;
-        this.paging.pageSize = params.pageSize || this.paging.pageSize;
+        this.paging.page = params.page != null ? parseInt(params.page) : this.paging.page;
+        this.paging.pageSize = params.pageSize != null ? parseInt(params.pageSize) : this.paging.pageSize;
         this.sorting.property = params.sortProperty || this.sorting.property;
         this.sorting.direction = params.sortDirection || this.sorting.direction;
 

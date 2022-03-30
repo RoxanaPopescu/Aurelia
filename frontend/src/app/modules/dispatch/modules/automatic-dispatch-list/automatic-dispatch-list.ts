@@ -13,8 +13,8 @@ import { ConfigurationPanel } from "./modals/configuration/configuration";
  */
 interface IRouteParams
 {
-    page?: number;
-    pageSize?: number;
+    page?: string;
+    pageSize?: string;
 }
 
 /**
@@ -96,8 +96,8 @@ export class AutomaticDispatchListPage
      */
     public activate(params: IRouteParams): void
     {
-        this.paging.page = Number(params.page || this.paging.page);
-        this.paging.pageSize = Number(params.pageSize || this.paging.pageSize);
+        this.paging.page = params.page != null ? parseInt(params.page) : this.paging.page;
+        this.paging.pageSize = params.pageSize != null ? parseInt(params.pageSize) : this.paging.pageSize;
 
         this.update();
     }
