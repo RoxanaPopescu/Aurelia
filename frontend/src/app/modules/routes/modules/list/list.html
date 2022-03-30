@@ -535,9 +535,33 @@
                                     </span>
                                 </data-table-cell>
 
+                                <data-table-cell if.bind="column.slug === 'estimated-time-start'">
+                                    <span class="text-truncate">
+                                        ${route.estimates.timeFrame.from | dateTime: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'estimated-time-end'">
+                                    <span class="text-truncate">
+                                        ${route.estimates.timeframe.to | dateTime: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
                                 <data-table-cell if.bind="column.slug === 'original-estimated-time-frame'">
                                     <span class="text-truncate">
                                         ${route.initialEstimates.timeFrame | dateTimeRange: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'original-estimated-start'">
+                                    <span class="text-truncate">
+                                        ${route.initialEstimates.timeFrame.from | dateTime: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'original-estimated-end'">
+                                    <span class="text-truncate">
+                                        ${route.initialEstimates.timeFrame.to | dateTime: 'narrow' : false}
                                     </span>
                                 </data-table-cell>
 
@@ -553,12 +577,6 @@
                                     </span>
                                     <span if.bind="!route.initialEstimates.distance" class="text-truncate">
                                         ${route.distance/1000 | number : undefined : 1 } km
-                                    </span>
-                                </data-table-cell>
-
-                                <data-table-cell if.bind="column.slug === 'planned-time-start'">
-                                    <span class="text-truncate">
-                                        ${route.stops[0].arrivalTimeFrame | dateTimeRange: 'narrow' : false}
                                     </span>
                                 </data-table-cell>
 

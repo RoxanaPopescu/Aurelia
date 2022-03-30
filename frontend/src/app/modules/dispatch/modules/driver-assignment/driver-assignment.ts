@@ -576,7 +576,7 @@ export class DriverAssignmentPage
                        // estimatesStart: columnSlugs.includes("estimated-start-time-frame"),
                         //estimatesEnd: columnSlugs.includes("estimated-end-time-frame"),
                         delayedStops: columnSlugs.includes("delayed-stops"),
-                        stops: columnSlugs.includes("distance") || columnSlugs.includes("planned-time-start") || columnSlugs.includes("estimated-colli-count"),
+                        stops: columnSlugs.includes("distance") || columnSlugs.includes("estimated-time-start") || columnSlugs.includes("estimated-colli-count"),
                         colli: columnSlugs.includes("colli-count")
                     },
                     this.sorting,

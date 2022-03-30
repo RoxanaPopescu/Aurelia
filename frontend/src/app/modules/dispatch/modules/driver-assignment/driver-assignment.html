@@ -539,15 +539,15 @@
                                     </span>
                                 </data-table-cell>
 
-                                <data-table-cell if.bind="column.slug === 'estimated-start-time-frame'">
+                                <data-table-cell if.bind="column.slug === 'estimated-time-start'">
                                     <span class="text-truncate">
-                                        ${route.estimates.start.timeFrame}
+                                        ${route.estimates.timeFrame.from | dateTime: 'narrow' : false}
                                     </span>
                                 </data-table-cell>
 
-                                <data-table-cell if.bind="column.slug === 'estimated-end-time-frame'">
+                                <data-table-cell if.bind="column.slug === 'estimated-time-end'">
                                     <span class="text-truncate">
-                                        ${route.estimates.end.timeFrame}
+                                        ${route.estimates.timeFrame.to | dateTime: 'narrow' : false}
                                     </span>
                                 </data-table-cell>
 
@@ -557,7 +557,7 @@
                                     </span>
                                 </data-table-cell>
 
-                                <data-table-cell if.bind="column.slug === 'planned-time-frame'">
+                                <data-table-cell if.bind="column.slug === 'estimated-time-frame'">
                                     <span class="text-truncate">
                                         ${route.plannedTimeFrame | dateTimeRange: 'narrow' : false}
                                     </span>

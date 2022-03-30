@@ -66,7 +66,7 @@ export class RouteListColumn implements IColumn
         {
             name: listColumn.startDate,
             width: "1fr",
-            sortingName: "start-date",
+            sortingName: "planned-time-start",
             hidden: false
         },
         "start-address":
@@ -80,6 +80,7 @@ export class RouteListColumn implements IColumn
         {
             name: listColumn.endDate,
             width: "1fr",
+            sortingName: "planned-time-end",
             hidden: false
         },
         "end-address":
@@ -216,22 +217,6 @@ export class RouteListColumn implements IColumn
             columnName: listColumn.plannedTimeShort,
             width: "min-content",
             sortingName: "planned-time-start",
-            hidden: false
-        },
-        "planned-time-start":
-        {
-            name: listColumn.plannedStartTime,
-            columnName: listColumn.plannedStartTimeShort,
-            sortingName: "planned-time-start",
-            width: "min-content",
-            hidden: false
-        },
-        "planned-time-end":
-        {
-            name: listColumn.plannedStartTime,
-            columnName: listColumn.plannedStartTimeShort,
-            sortingName: "planned-time-end",
-            width: "min-content",
             hidden: false
         },
         "distance":
