@@ -33,6 +33,8 @@ export class ViewPresetService
                 if (oldType in state.viewPresets)
                 {
                     state.viewPresets[newType] = state.viewPresets[oldType];
+
+                    // tslint:disable-next-line: no-dynamic-delete
                     delete state.viewPresets[oldType];
                 }
             }
@@ -48,7 +50,7 @@ export class ViewPresetService
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the view presets.
      */
-    public async getAll(type: ViewPresetType, signal?: AbortSignal): Promise<{ shared: ViewPreset[], local: ViewPreset[] }>
+    public async getAll(type: ViewPresetType, signal?: AbortSignal): Promise<{ shared: ViewPreset[]; local: ViewPreset[] }>
     {
         const result = await this._apiClient.get("views",
         {
@@ -78,7 +80,7 @@ export class ViewPresetService
     {
         if (viewPreset.shared)
         {
-            const result = await this._apiClient.post(`views/create`,
+            const result = await this._apiClient.post("views/create",
             {
                 body: viewPreset
             });
@@ -92,7 +94,7 @@ export class ViewPresetService
         {
             const localViewPresets = state.viewPresets?.[viewPreset.type] ?? [];
 
-            localViewPresets.push(newViewPreset)
+            localViewPresets.push(newViewPreset);
 
             if (state.viewPresets == null)
             {

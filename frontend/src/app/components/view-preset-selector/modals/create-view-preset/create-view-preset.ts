@@ -37,7 +37,7 @@ export interface ICreateViewPresetDialogModel
     /**
      * The existing local presets, used for validating name uniqueness.
      */
-    localPresets: ViewPreset[]
+    localPresets: ViewPreset[];
 }
 
 /**
