@@ -23,22 +23,38 @@ export class ViewPresetService
         this._localStateService = localStateService;
 
         // HACK: Migrates data from the old type names to the new - remove when assumed to be done.
-        console.warn("HACK: Migrating local views - remove around 2022-05-01, or when assumed to be done.");
-        this._localStateService.mutate(state =>
+        try
         {
-            for (const newType of ["order", "route"])
+            console.warn("HACK: Migrating local views - remove around 2022-05-01, or when assumed to be done.");
+
+            this._localStateService.mutate(state =>
             {
-                const oldType = `${newType}-list`;
-
-                if (oldType in state.viewPresets)
+                for (const newType of ["order", "route"])
                 {
-                    state.viewPresets[newType] = state.viewPresets[oldType];
+                    const oldType = `${newType}-list`;
 
-                    // tslint:disable-next-line: no-dynamic-delete
-                    delete state.viewPresets[oldType];
+                    if (oldType in state.viewPresets)
+                    {
+                        state.viewPresets[newType] = state.viewPresets[oldType];
+
+                        // tslint:disable-next-line: no-dynamic-delete
+                        delete state.viewPresets[oldType];
+
+                        for (const preset of state.viewPresets[newType])
+                        {
+                            preset.id = Id.uuid(1);
+                            preset.type = newType;
+                            preset.state.pageSize = 30;
+                            preset.shared = false;
+                        }
+                    }
                 }
-            }
-        });
+            });
+        }
+        catch
+        {
+            // Not that important anyway...
+        }
     }
 
     private readonly _apiClient: ApiClient;

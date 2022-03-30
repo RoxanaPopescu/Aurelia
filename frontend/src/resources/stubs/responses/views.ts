@@ -26,7 +26,7 @@ export default
                         "status",
                         "driving-list"
                     ],
-                    "pageSize": "100",
+                    "pageSize": 10,
                     "filters": {
                         "assignedDriver": false,
                         "notAssignedDriver": false,
@@ -62,7 +62,7 @@ export default
                     "status",
                     "driving-list"
                 ],
-                "pageSize": "100",
+                "pageSize": 10,
                 "filters": {
                     "assignedDriver": false,
                     "notAssignedDriver": false,
