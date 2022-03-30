@@ -51,5 +51,10 @@
     "delete-teams": "Delete teams",
     "edit-vehicles": "Edit vehicles",
     "create-roles": "Create roles",
-    "create-teams": "Create teams"
+    "create-teams": "Create teams",
+    "edit-route-views": "Edit route views",
+    "view-collection-points": "View collection points",
+    "create-collection-points": "Create collection points",
+    "delete-collection-points": "Delete collection points",
+    "edit-collection-points": "Edit collection points"
 }
