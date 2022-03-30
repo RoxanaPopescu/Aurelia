@@ -25,7 +25,7 @@ export class CollectionPointModule
                 {
                     claims:
                     [
-                        "view-routes"
+                        "view-collection-points"
                     ]
                 },
                 title: routeTitles.list,
@@ -41,7 +41,7 @@ export class CollectionPointModule
                 {
                     claims:
                     [
-                        "view-routes"
+                        "view-collection-points"
                     ]
                 }
             }
