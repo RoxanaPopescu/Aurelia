@@ -31,6 +31,7 @@
                     </required-validator>
 
                     <unique-validator
+                        view-model.ref="uniqueValidator"
                         active.bind="true"
                         new-value.bind="name"
                         all-values.bind="shared ? sharedPresets : localPresets | map: 'name'">
@@ -44,6 +45,16 @@
 
                 <div slot="heading" translate>
                     Share this view with other users in the organization
+                </div>
+
+                <div slot="validation">
+
+                    <dependent-validator
+                        active.bind="true"
+                        set-validity.one-time="false"
+                        validators.bind="[uniqueValidator]">
+                    </dependent-validator>
+
                 </div>
 
             </check-toggle>

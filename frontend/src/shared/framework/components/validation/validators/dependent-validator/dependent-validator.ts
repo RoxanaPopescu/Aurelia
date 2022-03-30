@@ -1,6 +1,7 @@
 import { containerless, bindable, noView } from "aurelia-framework";
 import { Validator } from "../../validator";
 import { ValidationReason } from "../../validation-trigger";
+import { delay } from "shared/utilities";
 
 /**
  * Represents a validator that runs a dependent validator whenever this validator runs.
@@ -40,6 +41,8 @@ export class DependentValidatorCustomElement extends Validator
         {
             if (this.validators.computedEnabled)
             {
+                await delay(0);
+
                 valid = await this.validators.validate("dependency");
             }
             else
@@ -47,8 +50,10 @@ export class DependentValidatorCustomElement extends Validator
                 valid = true;
             }
         }
-        else if (this.validators instanceof Validator)
+        else if (this.validators instanceof Array)
         {
+            await delay(0);
+
             const results = await Promise.all(this.validators.filter(v => v.computedEnabled).map(v => v.validate("dependency")));
 
             valid = results.some(r => r);
