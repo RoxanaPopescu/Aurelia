@@ -11,17 +11,12 @@ export class ViewPreset
      */
     public constructor(data: any)
     {
-        this.shared = data.shared;
         this.id = data.id;
         this.type = data.type;
         this.name = data.name;
         this.state = data.state;
+        this.shared = data.shared;
     }
-
-    /**
-     * True if the view preset is shared with the organization, otherwise false.
-     */
-    public shared: boolean;
 
     /**
      * The ID of the view preset.
@@ -42,4 +37,22 @@ export class ViewPreset
      * The view state represented by the view preset.
      */
     public state: any;
+
+    /**
+     * True if the view preset is shared with the organization, otherwise false.
+     */
+    public shared: boolean;
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        return {
+            id: this.id,
+            type: this.type,
+            name: this.name,
+            state: this.state,
+        };
+    }
 }

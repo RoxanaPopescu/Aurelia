@@ -73,38 +73,38 @@ export class ViewPresetService
 
     /**
      * Creates the specified view preset.
-     * @param viewPreset The view preset to create.
+     * @param viewPresetInit The data for the view preset to create.
      * @returns A promise that will be resolved with the created view preset.
      */
-    public async create(viewPreset: IViewPresetInit): Promise<ViewPreset>
+    public async create(viewPresetInit: IViewPresetInit): Promise<ViewPreset>
     {
-        if (viewPreset.shared)
+        if (viewPresetInit.shared)
         {
             const result = await this._apiClient.post("views/create",
             {
-                body: viewPreset
+                body: viewPresetInit
             });
 
-            return new ViewPreset(result.data);
+            return new ViewPreset({ ...result.data, shared: true });
         }
 
-        const newViewPreset = { ...viewPreset, id: Id.uuid(1) };
+        const localViewPreset = { ...viewPresetInit, id: Id.uuid(1) };
 
         this._localStateService.mutate(state =>
         {
-            const localViewPresets = state.viewPresets?.[viewPreset.type] ?? [];
-
-            localViewPresets.push(newViewPreset);
-
             if (state.viewPresets == null)
             {
                 state.viewPresets = {};
             }
 
-            state.viewPresets[viewPreset.type] = localViewPresets;
+            const localViewPresets = state.viewPresets[viewPresetInit.type] ?? [];
+
+            localViewPresets.push(localViewPreset);
+
+            state.viewPresets[localViewPreset.type] = localViewPresets;
         });
 
-        return new ViewPreset(newViewPreset);
+        return new ViewPreset(localViewPreset);
     }
 
     /**
@@ -121,17 +121,18 @@ export class ViewPresetService
 
         this._localStateService.mutate(state =>
         {
-            const localViewPresets = state.viewPresets?.[viewPreset.type] ?? [];
+            if (state.viewPresets == null)
+            {
+                state.viewPresets = {};
+            }
+
+            const localViewPresets = state.viewPresets[viewPreset.type] ?? [];
+
             const index = localViewPresets.findIndex(vp => vp.id === viewPreset.id);
 
             if (index > -1)
             {
                 localViewPresets.splice(index, 1);
-
-                if (state.viewPresets == null)
-                {
-                    state.viewPresets = {};
-                }
 
                 state.viewPresets[viewPreset.type] = localViewPresets;
             }
