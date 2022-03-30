@@ -500,7 +500,12 @@
             <ul class="ul-disc">
 
                 <li if.bind="model.routeStop.collectionPointId">
-                    <a href="/collection-points/details/${model.routeStop.collectionPointId}" translate>Collection point</a>
+                    <span if-claims="view-collection-points" class="icon-row">
+                        <a href="/collection-points/details/${model.routeStop.collectionPointId}" translate>Collection point</a>
+                    </span>
+                    <span else translate>
+                        Collection point
+                    </span>
                 </li>
 
                 <li if.bind="model.routeStop.actions.photo" translate>

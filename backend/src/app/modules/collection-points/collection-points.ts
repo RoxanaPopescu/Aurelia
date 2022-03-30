@@ -12,7 +12,7 @@ export class CollectionPointModule extends AppModule
      */
     public "POST /v2/collection-points" = async (context: AppContext) =>
     {
-        const validationResult = await this.validateLogin(context, "edit-routes");
+        const validationResult = await this.validateLogin(context, "edit-collection-points");
 
         const result = await this.apiClient.post("collection-point/collection-points",
         {
@@ -38,7 +38,7 @@ export class CollectionPointModule extends AppModule
      */
     public "GET /v2/collection-points" = async (context: AppContext) =>
     {
-        const validationResult = await this.validateLogin(context, "view-routes");
+        const validationResult = await this.validateLogin(context, "view-collection-points");
 
         const result = await this.apiClient.get("collection-point/collection-points",
         {
@@ -63,7 +63,7 @@ export class CollectionPointModule extends AppModule
      */
     public "GET /v2/collection-points/:id/orders" = async (context: AppContext) =>
     {
-        const validationResult = await this.validateLogin(context, "view-routes");
+        const validationResult = await this.validateLogin(context, "view-collection-points");
 
         const result = await this.apiClient.get(`collection-point/collection-points/${context.params.id}/orders`,
         {
@@ -88,7 +88,7 @@ export class CollectionPointModule extends AppModule
      */
     public "GET /v2/collection-points/:id" = async (context: AppContext) =>
     {
-        const validationResult = await this.validateLogin(context, "view-routes");
+        const validationResult = await this.validateLogin(context, "view-collection-points");
 
         const result = await this.apiClient.post("collection-point/details",
         {
@@ -109,7 +109,7 @@ export class CollectionPointModule extends AppModule
      */
     public "POST /v2/collection-points/orders/collected" = async (context: AppContext) =>
     {
-        const validationResult = await this.validateLogin(context, "edit-routes");
+        const validationResult = await this.validateLogin(context, "edit-collection-points");
 
         const result = await this.apiClient.post("collection-point/orders/collected",
         {
@@ -131,7 +131,7 @@ export class CollectionPointModule extends AppModule
      */
     public "POST /v2/collection-points/orders/missing" = async (context: AppContext) =>
     {
-        const validationResult = await this.validateLogin(context, "edit-routes");
+        const validationResult = await this.validateLogin(context, "edit-collection-points");
 
         const result = await this.apiClient.post("collection-point/orders/missing",
         {
@@ -153,7 +153,7 @@ export class CollectionPointModule extends AppModule
      */
     public "POST /v2/collection-points/orders/damaged" = async (context: AppContext) =>
     {
-        const validationResult = await this.validateLogin(context, "edit-routes");
+        const validationResult = await this.validateLogin(context, "edit-collection-points");
 
         const result = await this.apiClient.post("collection-point/orders/damaged",
         {
@@ -175,7 +175,7 @@ export class CollectionPointModule extends AppModule
      */
     public "POST /v2/collection-points/orders/rejected" = async (context: AppContext) =>
     {
-        const validationResult = await this.validateLogin(context, "edit-routes");
+        const validationResult = await this.validateLogin(context, "edit-collection-points");
 
         const result = await this.apiClient.post("collection-point/orders/rejected",
         {
@@ -197,7 +197,7 @@ export class CollectionPointModule extends AppModule
      */
     public "POST /v2/collection-points/orders/not-collected" = async (context: AppContext) =>
     {
-        const validationResult = await this.validateLogin(context, "edit-routes");
+        const validationResult = await this.validateLogin(context, "edit-collection-points");
 
         const result = await this.apiClient.post("collection-point/orders/NotCollected",
         {
