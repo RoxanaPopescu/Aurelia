@@ -121,7 +121,7 @@
 
             </name-value-pair>
 
-            <name-value-pair if.bind="route.totalWeightRange" class="margin-bottom">
+            <name-value-pair class="margin-half-bottom">
 
                 <div slot="name" translate>
                     Weight range
@@ -131,6 +131,38 @@
                     <template if.bind="route.totalWeightRange != null">
                         ${route.totalWeightRange.from | number} - ${route.totalWeightRange.to | number} kg
                     </template>
+                </div>
+
+            </name-value-pair>
+
+            <name-value-pair class="margin-half-bottom">
+
+                <div slot="name" translate>
+                    Distance
+                </div>
+
+                <div slot="value" empty-value>
+
+                    <template if.bind="route.initialEstimates.distance">
+                        ${route.initialEstimates.distance/1000 | number : undefined : 1 } km
+                    </template>
+
+                    <template if.bind="!route.initialEstimates.distance && route.distance">
+                        ${route.distance/1000 | number : undefined : 1 } km
+                    </template>
+
+                </div>
+
+            </name-value-pair>
+
+            <name-value-pair class="margin-half-bottom">
+
+                <div slot="name" translate>
+                    Duration
+                </div>
+
+                <div slot="value" empty-value>
+                    ${routeDuration | duration: 'narrow'}
                 </div>
 
             </name-value-pair>
@@ -175,25 +207,9 @@
 
             </name-value-pair>
 
-            <name-value-pair class="margin-half-bottom">
-
-                <div slot="name" translate>
-                    Distance
-                </div>
-
-                <div if.bind="route.initialEstimates.distance" slot="value" empty-value>
-                    ${route.initialEstimates.distance/1000 | number : undefined : 1 } km
-                </div>
-
-                <div if.bind="!route.initialEstimates.distance" slot="value" empty-value>
-                    ${route.distance/1000 | number : undefined : 1 } km
-                </div>
-
-            </name-value-pair>
-
             -->
 
-            <name-value-pair>
+            <name-value-pair class="margin-half-bottom">
 
                 <div slot="name" translate>
                     Driver phone number
@@ -235,7 +251,7 @@
 
             <name-value-pair>
 
-                <div slot="value" class="text-align-left white-space-pre-line" empty-value>${route.supportNote}</div>
+                <div slot="value" class="text-align-left white-space-pre-line route-list-expanded-view-support-note" empty-value>${route.supportNote}</div>
 
             </name-value-pair>
 
@@ -266,7 +282,7 @@
 
     <div class="route-list-expanded-view-last-column">
 
-        <toolbar inert.bind="route == null" class="margin-larger-bottom">
+        <toolbar inert.bind="route == null">
 
             <select-button appearance="outline" accent="primary">
 
@@ -457,19 +473,7 @@
 
         <circular-meter accent.bind="failedStops.length > 0 ? 'negative' : 'neutral' & attr" percentage.bind="completedStops * 100 / notCancelledStops">
 
-            <template if.bind="route.status.slug !== 'cancelled'">
-
-                <div class="font-largest">
-                    <span empty-value>${completedStops}</span>/<span empty-value>${notCancelledStops}</span>
-                </div>
-
-                <div if.bind="failedCancelledStops.length > 0" accent="neutral" class="font-small margin-top" translate>
-                    ${failedCancelledStops.length} issues
-                </div>
-
-            </template>
-
-            <div class="route-cancelled-warning" accent="negative" if.bind="route.status.slug === 'cancelled'">
+            <div if.bind="route.status.slug === 'cancelled'" class="route-cancelled-warning" accent="negative">
 
                 <icon name="warning"></icon>
 
@@ -479,13 +483,21 @@
 
             </div>
 
-            <div else>
+            <template else>
+
+                <div class="font-largest">
+                    <span empty-value>${completedStops}</span>/<span empty-value>${notCancelledStops}</span>
+                </div>
 
                 <div class="font-small margin-top" translate>
                     Completed stops
                 </div>
 
-            </div>
+                <div if.bind="route.status.slug !== 'cancelled' && failedCancelledStops.length > 0" accent="neutral" class="font-small margin-top" translate>
+                    ${failedCancelledStops.length} issues
+                </div>
+
+            </template>
 
         </circular-meter>
 

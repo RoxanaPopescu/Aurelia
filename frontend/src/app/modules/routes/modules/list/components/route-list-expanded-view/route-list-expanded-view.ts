@@ -254,26 +254,18 @@ export class RouteListExpandedViewCustomElement
 
         let duration = Duration.fromMillis(0);
 
-        if ((this.route.stops[0] as RouteStop).arrivedTime != null)
+        const firstStop = this.route.stops[0] as RouteStop;
+        const lastStop = this.route.stops[this.route.stops.length - 1] as RouteStop;
+
+        const from = firstStop.arrivedTime ?? firstStop.estimates?.arrivalTime ?? this.route.estimates?.arrivalTime;
+        const to = lastStop.completedTime ?? lastStop.estimates?.completionTime ?? this.route.estimates?.completionTime;
+
+        if (from != null && to != null)
         {
-            const from = (this.route.stops[0] as RouteStop).arrivedTime!;
-
-            if (this.route.completedTime != null)
-            {
-                duration = this.route.completedTime.diff(from);
-            }
-            else
-            {
-                const lastStop = this.route.stops[this.route.stops.length - 1];
-
-                if (lastStop instanceof RouteStop && lastStop.estimates != null)
-                {
-                    duration = lastStop.estimates.completionTime.diff(from);
-                }
-            }
+            duration = to.diff(from);
         }
 
-        return duration.get("seconds") > 0 ? duration : undefined;
+        return duration.as("seconds") > 0 ? duration : undefined;
     }
 
     @computedFrom("route.stops.length", "route.estimates.completionTime")
