@@ -179,12 +179,16 @@
                         Distance
                     </div>
 
-                    <div if.bind="route.initialEstimates.distance" slot="value" empty-value>
-                        ${route.initialEstimates.distance/1000 | number : undefined : 1 } km
-                    </div>
+                    <div slot="value" empty-value>
 
-                    <div if.bind="!route.initialEstimates.distance" slot="value" empty-value>
-                        ${route.distance/1000 | number : undefined : 1 } km
+                        <template if.bind="route.initialEstimates.distance">
+                            ${route.initialEstimates.distance/1000 | number : undefined : 1 } km
+                        </template>
+
+                        <template if.bind="!route.initialEstimates.distance && route.distance">
+                            ${route.distance/1000 | number : undefined : 1 } km
+                        </template>
+
                     </div>
 
                 </name-value-pair>

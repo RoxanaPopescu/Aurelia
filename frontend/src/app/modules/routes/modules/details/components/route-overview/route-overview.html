@@ -17,7 +17,17 @@
 
                 <circular-meter accent.bind="failedStops.length > 0 ? 'negative' : 'neutral' & attr" percentage.bind="completedStops * 100 / notCancelledStops">
 
-                    <template if.bind="route.status.slug !== 'cancelled'">
+                    <div if.bind="route.status.slug === 'cancelled'" class="route-cancelled-warning" accent="negative">
+
+                        <icon name="warning"></icon>
+
+                        <div class="font-small margin-top" translate>
+                            The route is cancelled
+                        </div>
+
+                    </div>
+
+                    <template else>
 
                         <div class="font-largest">
                             <span empty-value>${completedStops}</span>/<span empty-value>${notCancelledStops}</span>
@@ -28,16 +38,6 @@
                         </div>
 
                     </template>
-
-                    <div class="route-cancelled-warning" accent="negative" if.bind="route.status.slug === 'cancelled'">
-
-                        <icon name="warning"></icon>
-
-                        <div class="font-small margin-top" translate>
-                            The route is cancelled
-                        </div>
-
-                    </div>
 
                 </circular-meter>
 
