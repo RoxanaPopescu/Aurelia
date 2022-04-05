@@ -493,13 +493,13 @@
                             lines.bind="5"
                             ref="messageInputElement">
 
-                            <div slot="heading" translate>
-                                Message content
-                            </div>
+                            <div slot="heading">
 
-                            <div slot="before">
+                                <div translate>
+                                    Message content
+                                </div>
 
-                                <select-button appearance="text-without-hover" accent="primary" class="flex-push-right">
+                                <select-button appearance="none" accent="primary">
 
                                     <div slot="label" class="flex-row">
                                         <span translate>
@@ -523,6 +523,8 @@
                                     </item>
 
                                 </select-button>
+
+                            </div>
 
                             </div>
 

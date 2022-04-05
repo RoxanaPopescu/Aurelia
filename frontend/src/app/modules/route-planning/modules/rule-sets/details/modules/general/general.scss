@@ -5,9 +5,10 @@ page[name="route-planning"] page[name="settings-details"] general
         width: 728rem;
     }
 
-    text-input [slot="after"] select-button
+    text-input [slot="heading"] > select-button
     {
-        white-space: nowrap;
-        border-left: var(--input-border-width) solid var(--input-border-color);
+        position: absolute;
+        right: 0;
+        top: 0;
     }
 }

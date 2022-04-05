@@ -15,4 +15,11 @@ page[name="communication"] page[name="details"]
             max-width: 320rem;
         }
     }
+
+    text-input [slot="heading"] > select-button
+    {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
 }
