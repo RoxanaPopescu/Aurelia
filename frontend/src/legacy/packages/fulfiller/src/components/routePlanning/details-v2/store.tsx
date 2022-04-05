@@ -632,7 +632,7 @@ export class RoutePlanningStore {
 
     let response = await fetch(
       Base.url(`route-planning/plans/${this.plan.id}/approve`),
-      Base.defaultConfig()
+      Base.defaultConfig({})
     );
 
     if (!response.ok) {
