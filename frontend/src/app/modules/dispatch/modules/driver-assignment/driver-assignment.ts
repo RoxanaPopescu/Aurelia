@@ -573,8 +573,6 @@ export class DriverAssignmentPage
                         tags: columnSlugs.includes("tags"),
                         criticality: true,
                         estimates: columnSlugs.includes("estimated-time-frame"),
-                       // estimatesStart: columnSlugs.includes("estimated-start-time-frame"),
-                        //estimatesEnd: columnSlugs.includes("estimated-end-time-frame"),
                         delayedStops: columnSlugs.includes("delayed-stops"),
                         stops: columnSlugs.includes("distance") || columnSlugs.includes("estimated-time-start") || columnSlugs.includes("estimated-colli-count"),
                         colli: columnSlugs.includes("colli-count")
