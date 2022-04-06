@@ -19,7 +19,6 @@ import { AddOrdersPanel } from "./modals/add-orders/add-orders";
 import addedOrdersToast from "./resources/strings/added-orders-toast.json";
 import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
 import { addToRecentEntities } from "app/modules/starred/services/recent-item";
-import { RequirementsPanel } from "./modals/requirements/requirements";
 
 /**
  * Represents the route parameters for the page.
@@ -372,14 +371,6 @@ export class DetailsModule
     protected async onEditRouteClick(): Promise<void>
     {
         await this._modalService.open(EditInformationPanel, { route: this.route! }).promise;
-    }
-
-    /**
-     * Called when the `Requirements` button is clicked.
-     */
-    protected async onRequirementsClick(): Promise<void>
-    {
-        await this._modalService.open(RequirementsPanel, { route: this.route! }).promise;
     }
 
     /**

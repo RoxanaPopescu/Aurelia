@@ -663,14 +663,6 @@
                         </template>
 
                         <item
-                            if.bind="route"
-                            model="requirements"
-                            click.trigger="onRequirementsClick()"
-                            translate>
-                            Requirements
-                        </item>
-
-                        <item
                             model="print-route"
                             disabled.bind="!route.driverListUrl"
                             click.trigger="onShowDriverListClick()"
