@@ -34,16 +34,14 @@ gulp.task(uploadPhaseTask, () =>
     cp.exec('phrase push');
 });
 gulp.series(uploadPhaseTask)();
+
 console.info("Translations uploaded to phrase");
 
 function translate(): void
 {
     const task = plugin.export(translateConfig);
 
-    const filePaths = globs.sync([
-        resolve("src/**/*.html"),
-        resolve("src/**/resources/strings/**/*.json")
-    ],
+    const filePaths = globs.sync(translateConfig.includedFilePaths,
     {
         ignore: translateConfig.excludedFilePaths,
         dot: true
