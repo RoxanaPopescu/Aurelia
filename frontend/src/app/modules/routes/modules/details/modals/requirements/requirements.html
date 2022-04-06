@@ -1,0 +1,136 @@
+<template >
+
+    <require from="./requirements.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel scroll scroll.ref="scroll" name="requirements" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <div slot="actions">
+
+            <button
+                appearance="icon"
+                title.translate="Save changes"
+                click.trigger="onSaveClick()">
+                <icon name="save"></icon>
+            </button>
+
+        </div>
+
+        <div>
+
+            <modal-header scroll-fade >
+
+                <h1 class="font-largest flex-row" tabindex="-1" autoFocus= "visible.bind: false" >
+
+                    <div translate>
+                        Route requirements
+                    </div>
+
+                </h1>
+
+            </modal-header>
+
+            <modal-section class="margin-bottom">
+
+                <div class="control-row flex-row">
+
+                    <select-input  label="above" none.bind="false" value.bind="model.productType" display-value.bind="model.productType.name" class="flex-basis-1-of-1">
+
+                        <div slot="heading" translate>
+                            Type
+                        </div>
+
+                        <item repeat.for="type of types" model.bind="type">
+                            ${type.name}
+                        </item>
+
+                        <div>
+
+                            <required-validator
+                                value.bind="model.type">
+                            </required-validator>
+
+                        </div>
+
+                    </select-input>
+
+                </div>
+
+                <div class="margin-large-bottom">
+
+                    <text-input label="above" value.bind="model.reference" class="flex-basis-1-of-1 margin-large-top">
+
+                        <div slot="heading" translate>
+                            Reference
+                        </div>
+
+                    </text-input>
+
+                </div>
+
+                <div class="margin-large-bottom">
+
+                    <select-input label="above" none.bind="false" value.bind="model.vehicleType" display-value.bind="model.vehicleType.name" class="flex-basis-1-of-2">
+
+                        <div slot="heading" translate>
+                            Vehicle type
+                        </div>
+
+                        <item repeat.for="vehicleType of vehicleTypes" model.bind="vehicleType">
+                            ${vehicleType.name}
+                        </item>
+
+                        <div slot="validation">
+
+                            <required-validator
+                                value.bind="model.vehicleType.type">
+                            </required-validator>
+
+                        </div>
+
+                    </select-input>
+
+                </div>
+
+                <div class="control-row margin-large-bottom">
+
+                    <text-input label="above" lines.bind="3" value.bind="model.driverInstructions" display-value.bind="model.driverInstructions.name" class="flex-basis-1-of-1">
+
+                        <div slot="heading" translate>
+                            Instructions
+                        </div>
+
+                        <span slot="placeholder" translate>
+                            Type any instructions that might help the driver
+                        </span>
+
+                    </text-input>
+
+                </div>
+
+                <div class="control-row">
+
+                    <div class="flex-basis-1-of-1">
+
+                        <div class="heading" translate>
+                            Tags
+                        </div>
+
+                        <tags-input
+                            label="above"
+                            value.bind="model.tags"
+                            new.bind="true">
+                        </tags-input>
+
+                    </div>
+
+                </div>
+
+            </modal-section>
+
+        </div>
+
+    </modal-panel>
+
+</template>

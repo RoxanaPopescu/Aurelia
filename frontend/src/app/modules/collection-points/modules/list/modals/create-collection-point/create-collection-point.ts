@@ -73,7 +73,7 @@ export class CreateCollectionPointPanel
             this._modal.busy = true;
 
             // Resolve start location, if needed.
-            if (this.collectionPoint.location.position == null && this.collectionPoint.location.address?.id != null)
+            if (this.collectionPoint.location.address?.id != null)
             {
                 try
                 {
