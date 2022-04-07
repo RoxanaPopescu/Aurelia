@@ -19,13 +19,13 @@ export class ViewsModule extends AppModule
         // TODO: Should we add a `view-{type}-views` permission?
         await context.authorize();
 
-        const result = await this.apiClient.post("views",
+        const result = await this.apiClient.get("views/list",
         {
             headers: { "x-organization": context.user?.organizationId },
             query: { type }
         });
 
-        context.response.body = result.data;
+        context.response.body = result.data.map((data: any) => ({ ...data, state: JSON.parse(data.state) }));
         context.response.status = 200;
     }
 
@@ -44,16 +44,17 @@ export class ViewsModule extends AppModule
         const result = await this.apiClient.post("views/create",
         {
             headers: { "x-organization": context.user?.organizationId },
-            body: context.request.body
+            body: { ...context.request.body, state: JSON.stringify(context.request.body.state) }
         });
 
-        context.response.body = result.data;
+        context.response.body = { ...result.data, state: JSON.parse(result.data.state) };
         context.response.status = 200;
     }
 
     /**
      * Deletes the specified view, associated with the current organization.
      * @param context.params.id The ID of the view to delete.
+     * @param context.request.body.type The type of views to get.
      * @returns
      * - 204: No content
      */

@@ -132,7 +132,10 @@ export class ViewPresetService
     {
         if (viewPreset.shared)
         {
-            await this._apiClient.post(`views/${viewPreset.id}/delete`);
+            await this._apiClient.post(`views/${viewPreset.id}/delete`,
+            {
+                body: { type: viewPreset.type },
+            });
         }
 
         this._localStateService.mutate(state =>
