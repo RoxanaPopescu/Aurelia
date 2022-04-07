@@ -775,7 +775,7 @@ export class ListPage
     {
         return {
             sorting: this.sorting,
-            columns: this.columns,
+            columns: this.columns.map(column => column.slug),
             pageSize: this.paging.pageSize,
             filters:
             {
