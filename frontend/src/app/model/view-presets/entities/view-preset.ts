@@ -52,7 +52,7 @@ export class ViewPreset
             id: this.id,
             type: this.type,
             name: this.name,
-            state: this.state,
+            state: this.state
         };
     }
 }

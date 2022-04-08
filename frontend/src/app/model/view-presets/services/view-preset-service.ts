@@ -134,7 +134,7 @@ export class ViewPresetService
         {
             await this._apiClient.post(`views/${viewPreset.id}/delete`,
             {
-                body: { type: viewPreset.type },
+                body: { type: viewPreset.type }
             });
         }
 
