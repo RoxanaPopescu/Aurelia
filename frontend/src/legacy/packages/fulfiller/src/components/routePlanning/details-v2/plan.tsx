@@ -259,6 +259,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
                       store={this.props.store}
                       key={route.id}
                       route={route}
+                      plan={this.props.store.plan}
                     />
                   ))}
                 </div>
