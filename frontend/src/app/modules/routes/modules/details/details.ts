@@ -1,4 +1,4 @@
-import { autoinject, computedFrom } from "aurelia-framework";
+import { autoinject, computedFrom, observable } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
@@ -19,6 +19,7 @@ import { AddOrdersPanel } from "./modals/add-orders/add-orders";
 import addedOrdersToast from "./resources/strings/added-orders-toast.json";
 import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
 import { addToRecentEntities } from "app/modules/starred/services/recent-item";
+import { LocalStateService } from "app/services/local-state";
 
 /**
  * Represents the route parameters for the page.
@@ -43,6 +44,7 @@ export class DetailsModule
      * @param toastService The `ToastService` instance.
      * @param modalService The `ModalService` instance.
      * @param identityService The `IdentityService` instance.
+     * @param localStateService The `LocalStateService` instance.
      * @param router The `Router` instance.
      */
     public constructor(
@@ -50,16 +52,19 @@ export class DetailsModule
         modalService: ModalService,
         identityService: IdentityService,
         toastService: ToastService,
+        localStateService: LocalStateService,
         router: Router)
     {
         this.routeService = routeService;
         this._modalService = modalService;
-        this._router = router;
         this.toastService = toastService;
         this.identityService = identityService;
+        this._localStateService = localStateService;
+        this._router = router;
     }
 
     private readonly _modalService: ModalService;
+    private readonly _localStateService: LocalStateService;
     private readonly _router: Router;
     private _isMovingStop = false;
     private _targetIndex: number | undefined;
@@ -88,7 +93,8 @@ export class DetailsModule
     /**
      * True to show the map, otherwise false.
      */
-    protected showMap = true;
+    @observable
+    protected showMap: boolean;
 
     /**
      * The most recent update operation.
@@ -123,6 +129,7 @@ export class DetailsModule
      */
     public activate(params: IRouteParams): void
     {
+        this.showMap = this._localStateService.get().routeDetails?.showMap ?? true;
         this.routeSlug = params.slug;
         this.fetchRoute(true);
     }
@@ -466,6 +473,17 @@ export class DetailsModule
         const legacyOrganizationIds = [moverOrganizationId];
 
         return legacyOrganizationIds.includes(identity.organization!.id);
+    }
+
+    /**
+     * Called by the framework when the `showMap` property changes.
+     */
+    protected showMapChanged(): void
+    {
+        this._localStateService.mutate(data =>
+        {
+            (data.routeDetails ??= {}).showMap = this.showMap;
+        });
     }
 
     /**

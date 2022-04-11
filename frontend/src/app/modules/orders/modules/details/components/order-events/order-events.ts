@@ -1,9 +1,10 @@
-import { autoinject, bindable } from "aurelia-framework";
+import { autoinject, bindable, observable } from "aurelia-framework";
 import { Operation } from "shared/utilities";
 import { ModalService } from "shared/framework";
 import { OrderEvent } from "app/model/order/entities/order-event";
 import { OrderService, Order } from "app/model/order";
 import { OrderEventDetailsPanel } from "./modals/order-event-details/order-event-details";
+import { LocalStateService } from "app/services/local-state";
 
 /**
  * Represents the module.
@@ -14,15 +15,19 @@ export class OrderEvents
     /**
      * Creates a new instance of the class.
      * @param modalService The `ModalService` instance.
+     * @param orderService The `OrderService` instance.
+     * @param localStateService The `LocalStateService` instance.
      */
-    public constructor(modalService: ModalService, orderService: OrderService)
+    public constructor(modalService: ModalService, orderService: OrderService, localStateService: LocalStateService)
     {
         this._orderService = orderService;
         this._modalService = modalService;
+        this._localStateService = localStateService;
     }
 
     private readonly _orderService: OrderService;
     private readonly _modalService: ModalService;
+    private readonly _localStateService: LocalStateService;
     private pollTimeout: any;
 
     /**
@@ -44,22 +49,15 @@ export class OrderEvents
     /**
      * True to show the map, otherwise false.
      */
-    protected showMap = true;
+    @observable
+    protected showMap: boolean;
 
     /**
-     * Called by the framework when the `order` property changes.
+     * Called by the framework when the module is attached.
      */
-    public orderChanged(newValue: string): void
+    public attached(): void
     {
-        if (newValue != null)
-        {
-            this.fetchEvents();
-
-            if (!this.showMap)
-            {
-                this.showMap = this.order.pickup.location.position != null || this.order.delivery.location.position != null;
-            }
-        }
+        this.showMap = this._localStateService.get().orderDetails?.showMap ?? true;
     }
 
     /**
@@ -74,6 +72,28 @@ export class OrderEvents
         }
 
         clearTimeout(this.pollTimeout);
+    }
+
+    /**
+     * Called by the framework when the `showMap` property changes.
+     */
+    protected showMapChanged(): void
+    {
+        this._localStateService.mutate(data =>
+        {
+            (data.orderDetails ??= {}).showMap = this.showMap;
+        });
+    }
+
+    /**
+     * Called by the framework when the `order` property changes.
+     */
+    protected orderChanged(newValue: string): void
+    {
+        if (newValue != null)
+        {
+            this.fetchEvents();
+        }
     }
 
     /**
