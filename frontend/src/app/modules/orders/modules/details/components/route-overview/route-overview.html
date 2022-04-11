@@ -43,7 +43,7 @@
             </data-table-headers>
 
             <template repeat.for="stop of stops">
-                <data-table-row>
+                <data-table-row accent.bind="stop.status.accent">
                     <data-table-cell>
                         <span class="text-truncate">
                             ${stop.status.name}

@@ -818,18 +818,26 @@
 
                         <data-table-row
                             model.bind="stop"
-                            accent.bind="stop.status.accent"
                             click.call="onStopClick(stop, false)"
                             clickable.bind="!stop.hidden"
                             insert.call="onAddStopClick($index)"
                             movable.bind="!stop.hidden"
                             class="${(stop.status.slug == 'cancelled' || stop.hidden) ? '--cancelled' : stop.status.accent == 'negative' ? '--failed' : ''}">
 
-                            <data-table-cell>
-                                <div class="route-details-stop-number text-truncate accent-${stop.status.accent} ${stop.status.slug == 'arrived' ? '--arrived' : ''}">
+                            <data-table-cell class="route-details-stop-number-cell">
+
+                                <!-- <div class="route-details-stop-number text-truncate accent-${stop.status.accent} ${stop.status.slug == 'arrived' ? '--arrived' : ''}">
+                                    ${stop.stopNumber}
+                                    <icon if.bind="stop.hasAlert" name="warning" accent="negative"></icon>
+                                </div> -->
+
+                                <div if.bind="!$first" class="route-details-stop-number-before accent-${route.stops[$index - 1].status.accent}"></div>
+                                <div if.bind="!$last" class="route-details-stop-number-after accent-${stop.status.accent}"></div>
+                                <div class="route-details-stop-number-marker text-truncate accent-${stop.status.accent}">
                                     ${stop.stopNumber}
                                     <icon if.bind="stop.hasAlert" name="warning" accent="negative"></icon>
                                 </div>
+
                             </data-table-cell>
 
                             <data-table-cell>

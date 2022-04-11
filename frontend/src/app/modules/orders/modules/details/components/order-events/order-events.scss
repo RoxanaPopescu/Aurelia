@@ -21,30 +21,18 @@ order-events
         font-size: var(--font-small-font-size);
     }
 
-    .order-events-timeline-marker,
-    .order-events-timeline-before,
-    .order-events-timeline-after
+    .order-events-timeline-cell
     {
-        position: relative;
-        z-index: 1;
+        overflow: visible;
 
-        @each $accent in $accents
+        .data-table-cell-content
         {
-            &.accent-#{$accent}
-            {
-                --surface-accent-surface-color: var(--surface-#{$accent}-text-color, inherit);
-            }
-
-            &.accent-neutral
-            {
-                --surface-accent-surface-color: var(--palette-color-neutral-dim);
-            }
+            justify-content: center;
         }
     }
 
     .order-events-timeline-marker
     {
-        position: relative;
         overflow: visible;
         border-radius: 50%;
         width: 32rem;
@@ -59,19 +47,30 @@ order-events
         {
             font-size: var(--font-larger-font-size);
             position: absolute;
-            top: -8rem;
-            right: -10rem;
-            filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.5));
+            top: -10rem;
+            right: -13rem;
+            filter: drop-shadow(0 0 1px var(--surface-color));
         }
     }
 
-    .order-events-timeline-cell
+    .order-events-timeline-marker,
+    .order-events-timeline-before,
+    .order-events-timeline-after
     {
-        overflow: visible;
+        position: relative;
+        z-index: 1;
 
-        .data-table-cell-content
+        @each $accent in $accents
         {
-            justify-content: center;
+            &.accent-#{$accent}
+            {
+                --surface-accent-surface-color: var(--surface-#{$accent}-text-color, inherit);
+            }
+        }
+
+        &.accent-neutral
+        {
+            --surface-accent-surface-color: var(--palette-color-neutral-dim);
         }
     }
 

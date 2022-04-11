@@ -25,7 +25,7 @@
 
         <order-details-map if="condition.bind: showMap; cache: false" order.bind="order" class="margin-bottom"></order-details-map>
 
-        <data-table appearance="rows">
+        <data-table appearance="rows" class="${!showMap ? '--reduce-header-whitespace' : ''}">
 
             <data-table-headers>
 
