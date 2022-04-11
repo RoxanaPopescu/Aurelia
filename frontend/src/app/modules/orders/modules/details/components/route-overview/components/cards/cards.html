@@ -2,95 +2,112 @@
 
     <require from="./cards.scss"></require>
 
-    <page-section scroll-fade="0.7">
+    <div class="control-row">
 
-        <div class="control-row">
+        <!-- 1st card -->
+        <card class="flex-basis-1-of-4 text-align-center --non-clickable">
 
-            <!-- 1st card -->
-            <card class="flex-basis-1-of-4 text-align-center --non-clickable">
+            <div class="card-section">
 
-                <div class="card-section">
-
-                    <div class="font-small opacity-faded" translate>
-                        Route status
-                    </div>
-
-                    <div class="font-largest" accent.bind="accentFromStatus & attr">
-                        ${route.status.name}
-                    </div>
+                <div class="font-small opacity-faded" translate>
+                    Route status
                 </div>
 
-            </card>
-
-            <!-- 2nd card -->
-            <card class="flex-basis-1-of-4 text-align-center --non-clickable">
-
-                <div class="card-section">
-
-                    <div class="font-small opacity-faded" translate>
-                        Id
-                    </div>
-
-                    <a target="_blank" href="/routes/details/${route.slug}" class="font-largest" empty-value>
-                        ${route.slug}
-                    </a>
-
+                <div class="font-largest" accent.bind="accentFromStatus & attr">
+                    ${route.status.name}
                 </div>
 
-            </card>
-
-            <!-- 3rd card -->
-            <card class="flex-basis-1-of-4 text-align-center --non-clickable">
-
-                <div class="card-section">
-
-                    <div class="font-small opacity-faded" translate>
-                        Driver
-                    </div>
-
-                    <div class="font-largest" empty-value>
-                        ${route.driver.name}
-                    </div>
-
+                <div class="font-small">
+                    &nbsp;
                 </div>
 
-            </card>
+            </div>
 
-            <!-- 4th card -->
-            <card if.bind="!route.completedTime" class="flex-basis-1-of-4 text-align-center --non-clickable">
+        </card>
 
-                <div class="card-section">
+        <!-- 2nd card -->
+        <card class="flex-basis-1-of-4 text-align-center --non-clickable">
 
-                    <div class="font-small opacity-faded" translate>
-                        Estimated completion
-                    </div>
+            <div class="card-section">
 
-                    <div class="font-largest" empty-value>
-                        ${route.estimates.completionTime | dateTime: 'narrow' : false}
-                    </div>
-
+                <div class="font-small opacity-faded" translate>
+                    Id
                 </div>
 
-            </card>
+                <a target="_blank" href="/routes/details/${route.slug}" class="font-largest" empty-value>
+                    ${route.slug}
+                </a>
 
-            <card if.bind="route.completedTime" class="flex-basis-1-of-4 text-align-center --non-clickable">
-
-                <div class="card-section">
-
-                    <div class="font-small opacity-faded" translate>
-                        Completed time
-                    </div>
-
-                    <div class="font-largest" empty-value>
-                        ${route.completedTime | dateTime: 'narrow' : false}
-                    </div>
-
+                <div class="font-small">
+                    &nbsp;
                 </div>
 
-            </card>
+            </div>
 
-        </div>
+        </card>
 
-    </page-section>
+        <!-- 3rd card -->
+        <card class="flex-basis-1-of-4 text-align-center --non-clickable">
+
+            <div class="card-section">
+
+                <div class="font-small opacity-faded" translate>
+                    Driver
+                </div>
+
+                <div class="font-largest" empty-value>
+                    ${route.driver.name}
+                </div>
+
+                <div class="font-small">
+                    &nbsp;
+                </div>
+
+            </div>
+
+        </card>
+
+        <!-- 4th card -->
+        <card if.bind="!route.completedTime" class="flex-basis-1-of-4 text-align-center --non-clickable">
+
+            <div class="card-section">
+
+                <div class="font-small opacity-faded" translate>
+                    Estimated completion
+                </div>
+
+                <div class="font-largest" empty-value>
+                    ${route.estimates.completionTime | dateTime: 'narrow' : false}
+                </div>
+
+                <div class="font-small">
+                    &nbsp;
+                </div>
+
+            </div>
+
+        </card>
+
+        <card if.bind="route.completedTime" class="flex-basis-1-of-4 text-align-center --non-clickable">
+
+            <div class="card-section">
+
+                <div class="font-small opacity-faded" translate>
+                    Completed time
+                </div>
+
+                <div class="font-largest" empty-value>
+                    ${route.completedTime | dateTime: 'narrow' : false}
+                </div>
+
+                <div class="font-small">
+                    &nbsp;
+                </div>
+
+            </div>
+
+        </card>
+
+    </div>
 
 </template>
