@@ -25,7 +25,7 @@ export default class RoutePlanningRouteInfoComponent extends React.Component<
       >
         <div className="c-routePlanning-routes-route-infoContent">
           <div className="c-routePlanning-routes-route-id">
-            {this.props.store.approving && this.props.route.slug
+            {!this.props.store.plan.waitingForApproval && this.props.route.slug
             ? <a href={historyHelper.getRouteUrl(`/routes/details/${this.props.route.slug}`)}>{this.props.route.slug}</a>
             : "--"}
           </div>
