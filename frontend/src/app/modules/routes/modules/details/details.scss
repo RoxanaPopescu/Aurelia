@@ -32,12 +32,35 @@ page[name="routes"] page[name="details"]
         font-weight: 400;
     }
 
-    .route-details-stop-number
+    .route-details-stop-number-cell
     {
-        &.accent-neutral
+        overflow: visible;
+
+        .data-table-cell-content
         {
-            --surface-accent-surface-color: var(--palette-color-neutral-dim);
-            --surface-accent-surface-text-color: var(--palette-color-whitepoint);
+            justify-content: center;
+        }
+    }
+
+    .route-details-stop-number-marker
+    {
+        overflow: visible;
+        border-radius: 50%;
+        width: 32rem;
+        height: 32rem;
+        line-height: calc(32rem - 2 * var(--border-width-medium));
+        text-align: center;
+        background: var(--surface-accent-surface-color);
+        color: var(--palette-color-whitepoint);
+        border: var(--border-width-medium) solid transparent;
+
+        icon
+        {
+            font-size: var(--font-larger-font-size);
+            position: absolute;
+            top: -10rem;
+            right: -13rem;
+            filter: drop-shadow(0 0 1px var(--surface-color));
         }
 
         &.--arrived
@@ -46,24 +69,54 @@ page[name="routes"] page[name="details"]
             background: transparent;
             color: var(--palette-color-positive);
         }
+    }
 
+    .route-details-stop-number-marker,
+    .route-details-stop-number-before,
+    .route-details-stop-number-after
+    {
         position: relative;
-        overflow: visible;
-        border-radius: 50%;
-        width: 32rem;
-        line-height: calc(32rem - 2 * var(--border-width-medium));
-        text-align: center;
-        background: var(--surface-accent-surface-color);
-        color: var(--surface-accent-surface-text-color);
-        border: var(--border-width-medium) solid transparent;
+        z-index: 1;
 
-        icon
+        @each $accent in $accents
         {
-            font-size: var(--font-larger-font-size);
-            position: absolute;
-            top: -8rem;
-            right: -10rem;
-            filter: drop-shadow(0 0 1px rgba(255,255,255, 0.5));
+            &.accent-#{$accent}
+            {
+                --surface-accent-surface-color: var(--surface-#{$accent}-text-color, inherit);
+            }
         }
+
+        &.accent-neutral
+        {
+            --surface-accent-surface-color: var(--palette-color-neutral-dim);
+        }
+    }
+
+    .route-details-stop-number-before
+    {
+        position: absolute;
+        top: calc(50% - 50rem);
+        height: 52rem;
+        width: var(--border-width-thick);
+        background: var(--surface-accent-surface-color);
+    }
+
+    .route-details-stop-number-after
+    {
+        position: absolute;
+        top: 50%;
+        height: 52rem;
+        width: var(--border-width-thick);
+        background: var(--surface-accent-surface-color);
+    }
+
+    .data-table-row:first-of-type .route-details-stop-number-before
+    {
+        display: none;
+    }
+
+    .data-table-row:last-of-type .route-details-stop-number-after
+    {
+        display: none;
     }
 }

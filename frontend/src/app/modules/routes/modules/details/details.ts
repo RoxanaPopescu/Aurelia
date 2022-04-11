@@ -341,6 +341,8 @@ export class DetailsModule
         {
             this._isMovingStop = true;
 
+            clearTimeout(this._pollTimeout);
+
             document.addEventListener("mouseup", async () =>
             {
                 if (this._targetIndex !== source.stopNumber - 1)
