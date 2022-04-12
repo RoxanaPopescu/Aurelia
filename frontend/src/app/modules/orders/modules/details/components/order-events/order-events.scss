@@ -57,6 +57,7 @@ order-events
     .order-events-timeline-before,
     .order-events-timeline-after
     {
+        pointer-events: none;
         position: relative;
         z-index: 1;
 

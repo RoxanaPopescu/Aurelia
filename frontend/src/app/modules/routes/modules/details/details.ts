@@ -443,13 +443,13 @@ export class DetailsModule
     }
 
     /**
-     * Called whrn a stop is clicked on the map.
+     * Called when a stop is clicked on the map.
      * Scrolls to the stop that was clicked.
      * @param stop The stop that was clicked.
      */
     protected onMapStopClick(stop: RouteStop): void
     {
-        const element = this.dataTableElement.querySelectorAll(".route-details-stop-number")[stop.stopNumber - 2];
+        const element = this.dataTableElement.querySelectorAll(".route-details-stop-number-cell")[stop.stopNumber - 2];
         element.scrollIntoView();
     }
 

@@ -75,6 +75,7 @@ page[name="routes"] page[name="details"]
     .route-details-stop-number-before,
     .route-details-stop-number-after
     {
+        pointer-events: none;
         position: relative;
         z-index: 1;
 
