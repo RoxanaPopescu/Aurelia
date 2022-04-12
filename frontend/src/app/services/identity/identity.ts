@@ -1,4 +1,4 @@
-import gravatarUrl from "gravatar-url";
+// import gravatarUrl from "gravatar-url";
 import { Outfit } from "app/model/outfit";
 import { ApiResult } from "shared/infrastructure";
 import { IdentityTokens, IIdentityTokens } from "./identity-tokens";
@@ -23,10 +23,10 @@ export class Identity
         this.pictureUrl = result.data.pictureUrl;
         this.role = result.data.role;
 
-        if (this.pictureUrl == null)
-        {
-            this.pictureUrl = gravatarUrl(result.data.email, { default: this.pictureUrl ?? "blank" });
-        }
+        // if (this.pictureUrl == null)
+        // {
+        //     this.pictureUrl = gravatarUrl(result.data.email, { default: this.pictureUrl ?? "blank" });
+        // }
 
         if (result.data.organization != null)
         {
