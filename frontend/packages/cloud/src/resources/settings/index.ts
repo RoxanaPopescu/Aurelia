@@ -78,12 +78,6 @@ export default
     hosts:
     [
         {
-            hostname: /(^|\.)movertransport.com$/,
-            localeCode: "en-US",
-            currencyCode: "DKK",
-            themeSlug: "mover"
-        },
-        {
             hostname: /(^|\.)cooplogistikonline.dk$/,
             localeCode: "da",
             currencyCode: "DKK",
@@ -114,10 +108,16 @@ export default
             themeSlug: "interflora"
         },
         {
+            hostname: /(^|\.)movertransport.com$/,
+            localeCode: "en-US",
+            currencyCode: "DKK",
+            themeSlug: "mover-blue"
+        },
+        {
             hostname: /./,
             localeCode: "en-US",
             currencyCode: "DKK",
-            themeSlug: "mover"
+            themeSlug: "mover-blue"
         }
     ]
 };

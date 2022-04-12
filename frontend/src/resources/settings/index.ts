@@ -32,7 +32,7 @@ export default
         /**
          * The slug identifying the default theme.
          */
-        defaultThemeSlug: "mover",
+        defaultThemeSlug: "mover-blue",
 
         /**
          * The code identifying the default currency.
