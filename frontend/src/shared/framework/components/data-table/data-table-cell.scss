@@ -7,7 +7,6 @@ data-table-cell
     padding: var(--data-table-cell-padding);
     background: var(--data-table-cell-background);
     overflow: hidden;
-    z-index: 1;
 
     &.--sortable
     {

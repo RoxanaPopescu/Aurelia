@@ -5,6 +5,11 @@ order-events
     data-table
     {
         --data-table-columns: min-content min-content 1fr 1fr 1fr 1fr;
+
+        data-table-headers data-table-cell
+        {
+            z-index: 3;
+        }
     }
 
     .data-table-row.--hide
