@@ -40,7 +40,7 @@
 
                 <toolbar class="flex-push-right">
 
-                    <template if-claims="edit-order-groups">
+                    <div if-claims="edit-order-groups">
 
                         <button if.bind="orderGroup.id && !orderGroup.paused && !orderGroup.activeSchedulesCount" appearance="outline" accent="primary" click.trigger="onPauseClick()" translate>
                             Pause
@@ -50,15 +50,19 @@
                             Unpause
                         </button>
 
-                        <button if.bind="!orderGroup.id" appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
+                    </div>
+
+                    <div if-claims="edit-order-groups">
+
+                        <button if.bind="orderGroup.id == null" appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
                             Create
                         </button>
 
-                        <button if.bind="orderGroup.id && !orderGroup.activeSchedulesCount" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                        <button if.bind="orderGroup.id != null && !orderGroup.activeSchedulesCount" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
                             Save changes
                         </button>
 
-                    </template>
+                    </div>
 
                 </toolbar>
 

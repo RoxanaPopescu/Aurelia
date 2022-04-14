@@ -191,15 +191,6 @@ export class RoutePlanningOrderGroupsModule extends AppModule
 
         try
         {
-            ids.push("bf6d4bf2-49a2-44e7-9c49-489405c5776d");
-
-            const legacyConsignorsRequest = this.apiClient.post("logistics/outfits/consignor/list",
-            {
-                body: {
-                    ids: ids
-                }
-            });
-
             const organizationsRequest = this.apiClient.get("organization/organizations",
             {
                 query:
@@ -208,13 +199,27 @@ export class RoutePlanningOrderGroupsModule extends AppModule
                 }
             });
 
-            const [result1, result2] = await Promise.all([legacyConsignorsRequest, organizationsRequest]);
+            const legacyConsignorsRequest = this.apiClient.post("logistics/outfits/consignor/list",
+            {
+                body: {
+                    ids: ids
+                }
+            });
 
-            organizations.push(...result1.data.results);
-            organizations.push(...result2.data);
+            const [result1, result2] = await Promise.all([organizationsRequest, legacyConsignorsRequest]);
+
+            for (const organization of [...result1.data.map((o: any) => ({ id: o.id, companyName: o.name })), ...result2.data.results])
+            {
+                if (!organizations.some(o => o.id === organization.id))
+                {
+                    organizations.push(organization);
+                }
+            }
         }
         catch (error: any)
         {
+            // BUG: Pretty sure this doesn't work as intended
+
             console.log(error.data?.errors);
             // We should not fail if organizations can't be found
         }
