@@ -55,6 +55,35 @@ export class FilesModule extends AppModule
     }
 
     /**
+     * Uploads a file to the temporary file storage.
+     * @param context.request.query.id The ID of the file.
+     */
+    public "POST /v2/files/upload/temporary" = async (context: AppContext) =>
+    {
+        const body = await this.readStream(context.req);
+        await this.validateLogin(context);
+
+        const id = context.request.query.id;
+
+        console.log(`TODO: Upload temporary file with ID '${id}' and buffer length ${body.length}.`);
+
+        // TODO: Implement, such that the file gets the specified ID, and is auto-deleted after some time.
+
+        // const result = await this.apiClient.post("file/uploadsensitive",
+        // {
+        //     headers:
+        //     {
+        //         "content-type": context.request.headers["content-type"],
+        //         "content-length": context.request.headers["content-length"]
+        //     },
+        //     body: body
+        // });
+
+        // context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
      * Gets info about a public file, including its URL.
      * @returns An object representing info about the file.
      */
