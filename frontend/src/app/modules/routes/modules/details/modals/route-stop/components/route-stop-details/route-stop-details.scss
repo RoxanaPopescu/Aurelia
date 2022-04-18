@@ -9,4 +9,19 @@ route-stop-details
     {
         margin-bottom: 0;
     }
+
+    .route-stop-details-header-column-container
+    {
+        max-width: 60%;
+    }
+
+    .route-stop-details-header-label-column > div
+    {
+        white-space: nowrap;
+    }
+
+    .route-stop-details-header-value-column
+    {
+        min-width: 0;
+    }
 }

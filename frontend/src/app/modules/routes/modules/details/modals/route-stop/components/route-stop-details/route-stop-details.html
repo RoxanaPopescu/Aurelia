@@ -30,9 +30,9 @@
 
         <div class="flex-row">
 
-            <div class="flex-row flex-basis-1-of-2">
+            <div class="route-stop-details-header-column-container flex-row flex-basis-1-of-2 margin-large-right">
 
-                <div class="margin-large-right">
+                <div class="route-stop-details-header-label-column margin-large-right">
 
                     <div class="opacity-faded margin-bottom" translate>
                         Reference
@@ -52,9 +52,9 @@
 
                 </div>
 
-                <div>
+                <div class="route-stop-details-header-value-column">
 
-                    <div class="margin-bottom user-select-text" empty-value>
+                    <div class="margin-bottom user-select-text text-truncate" empty-value>
                         ${model.routeStop.reference}
                     </div>
 
@@ -74,9 +74,9 @@
 
             </div>
 
-            <div class="flex-row flex-basis-1-of-2">
+            <div class="route-stop-details-header-column-container flex-row flex-basis-1-of-2 route-stop-details-header-column">
 
-                <div class="margin-large-right">
+                <div class="route-stop-details-header-label-column margin-large-right">
 
                     <div class="opacity-faded margin-bottom" translate>
                         Type
@@ -102,7 +102,7 @@
 
                 </div>
 
-                <div>
+                <div class="route-stop-details-header-value-column">
 
                     <div class="margin-bottom user-select-text" empty-value>
                         ${model.routeStop.type.name}

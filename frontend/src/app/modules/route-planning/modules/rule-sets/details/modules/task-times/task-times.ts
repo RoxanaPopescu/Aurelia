@@ -40,7 +40,7 @@ export class TaskTimes
     public settings: RoutePlanningSettings;
 
     /**
-     * Called when the "Edit round definition" icon is clicked.
+     * Called when the "Edit round limits" icon is clicked.
      * Opens the modal for editing the round definition.
      */
     protected async onEditRoundDefinitionClick(): Promise<void>

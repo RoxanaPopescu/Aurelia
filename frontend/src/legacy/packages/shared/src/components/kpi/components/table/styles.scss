@@ -12,7 +12,7 @@
 
   .c-fulfillerKpi-actionContainer {
     display: flex;
-    justify-content: center;
+    padding-left: 4px;
 
     .c-fulfillerKpi-actionSkeletonBig {
       height: 42px;
@@ -63,7 +63,7 @@
   }
 
   .c-fulfillerKpi-tableOutercontainer {
-    padding: 40px 50px 0;
+    padding: 40px 4px 0 4px;
 
     .c-fulfillerKpi-tableSkeleton {
       display: flex;
@@ -88,11 +88,12 @@
 
       .c-fulfillerKpi-kpiColumn {
         grid-row-gap: 0;
-        padding: 0 22px;
-        height: 35px;
+        padding: 8px 22px;
+        min-height: 36px;
         display: flex;
         align-items: center;
         transition: background-color 150ms;
+        justify-content: flex-end;
 
         &:nth-last-child(-n + 11) {
           height: 63px;
@@ -113,7 +114,6 @@
             border-left: 1px solid var(--colorNeutralLight);
             border-right: 1px solid var(--colorNeutralLight);
             text-align: center;
-            justify-content: center;
           }
 
           &:not(:nth-child(11n + 2)) {
@@ -141,6 +141,17 @@
         &.c-fulfillerKpi-kpiGroupHeadline {
           height: 46px;
           padding-top: 20px;
+          font-weight: 600;
+          border-bottom: 1px solid var(--colorNeutralLight);
+
+          &.--collapsed
+          {
+            visibility: hidden;
+            height: 0;
+            padding: 0;
+            min-height: 0;
+            border-bottom: none;
+          }
         }
       }
     }

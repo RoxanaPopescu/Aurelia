@@ -175,7 +175,7 @@ export default class KpiTableComponent extends React.Component<Props, State> {
           className={`c-fulfillerKpi-kpiColumn c-fulfillerKpi-kpiGroupHeadline font-heading${this.hoverClass(
             0,
             this.getRowIndex(kpiGroupIndex, 0)
-          )}`}
+          )} ${!outfitData.outfitKpi!.last30Days[kpiGroupIndex].title ? '--collapsed' : ''}`}
         >
           {outfitData.outfitKpi!.last30Days[kpiGroupIndex].title}
         </div>
@@ -187,7 +187,7 @@ export default class KpiTableComponent extends React.Component<Props, State> {
             className={`c-fulfillerKpi-kpiColumn c-fulfillerKpi-kpiGroupHeadline${this.hoverClass(
               j + 1,
               this.getRowIndex(kpiGroupIndex, kpiGroupIndex + 1)
-            )}`}
+            )} ${!outfitData.outfitKpi!.last30Days[kpiGroupIndex].title ? '--collapsed' : ''}`}
             onMouseOut={() => this.setHover()}
             onMouseOver={() =>
               this.setHover(
