@@ -7,11 +7,13 @@ file-dropzone
         width: 400rem;
         height: 240rem;
         background: var(--surface-color);
-        border: var(--border-width-thin) dashed var(--palette-color-primary);
+        border: var(--border-width-medium) solid var(--surface-neutral-border-color);
         padding: 0;
         align-items: center;
         justify-content: center;
         transition: background-color 100ms;
+        column-gap: 16rem;
+        row-gap: 16rem;
 
         .dz-message
         {

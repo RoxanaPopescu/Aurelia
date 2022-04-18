@@ -201,18 +201,60 @@ export class OrderService
     }
 
     /**
+     * @deprecaated Not yet implemented in BFF or backend; see TECH-5714.
      * Changes the pickup address of the specified orders.
      * @param orders The orders for which the pickup address should be changed.
      * @param address The new pickup address.
      * @returns A promise that will be resolved when the operation succeedes.
-     * @deprecaated Not yet implemented in BFF or backend; see TECH-5714.
      */
     public async changePickupAddress(orderIds: string[], address: Address): Promise<void>
     {
-        const result = await this._apiClient.post("orders/change-pickup-address",
+        await this._apiClient.post("orders/change-pickup-address",
         {
             body: { orderIds, address }
         });
+    }
+
+    /**
+     * Imports the orders specified in the file with the specified ID.
+     * @param fileId The ID of the file, from which to import orders.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async importFromFile(fileId: string): Promise<any>
+    {
+        const result = await this._apiClient.post("orders/import-from-file",
+        {
+            body: { fileId }
+        });
+
+        if (result.data.status === "failure")
+        {
+            // Sort the errors by range and description.
+            result.data.errors = result.data.errors.sort((a, b) =>
+            {
+                // Sort by ascending `fromRow`.
+                if (a.range.fromRow < b.range.fromRow) { return -1; }
+                if (a.range.fromRow > b.range.fromRow) { return 1; }
+
+                // Sort by descending `toRow`.
+                if (a.range.toRow < b.range.toRow) { return 1; }
+                if (a.range.toRow > b.range.toRow) { return -1; }
+
+                // Sort by ascending `fromColumn`.
+                if (a.range.fromColumn < b.range.fromColumn) { return -1; }
+                if (a.range.fromColumn > b.range.fromColumn) { return 1; }
+
+                // Sort by descending `toColumn`.
+                if (a.range.toColumn < b.range.toColumn) { return 1; }
+                if (a.range.toColumn > b.range.toColumn) { return -1; }
+
+                // Sort by ascending `description`.
+                if (a.description < b.description) { return -1; }
+                if (a.description > b.description) { return 1; }
+
+                return 0;
+            });
+        }
 
         return result.data;
     }

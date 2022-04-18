@@ -1,4 +1,5 @@
 import { autoinject, bindable } from "aurelia-framework";
+import { SortingDirection } from "shared/types";
 import { DataTableCustomElement } from "./data-table";
 
 /**
@@ -25,6 +26,12 @@ export class DataTableCellCustomElement
     public name: string | undefined;
 
     /**
+     * The default sort direction, if used as a header.
+     */
+    @bindable
+    public sortDirection: SortingDirection | "preserve";
+
+    /**
      * The horizontal alignment to use.
      */
     @bindable({ defaultValue: "left"})
@@ -38,6 +45,10 @@ export class DataTableCellCustomElement
         if (this.name)
         {
             const direction =
+
+                (this.dataTable.sorting != null && this.dataTable.sorting.property !== this.name && this.sortDirection != null) ?
+                    (this.sortDirection === "preserve" ? this.dataTable.sorting.direction : this.sortDirection) :
+
                 (this.dataTable.sorting == null || this.dataTable.sorting.property !== this.name) ? "descending" :
                 this.dataTable.sorting.direction === "descending" ? "ascending" :
                 "descending";

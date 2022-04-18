@@ -65,7 +65,6 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/data-table/data-table-pager"),
         PLATFORM.moduleName("./components/data-table/data-table-row"),
         PLATFORM.moduleName("./components/data-table/data-table-details"),
-        PLATFORM.moduleName("./components/file-dropzone/file-dropzone"),
         PLATFORM.moduleName("./components/icons/badge/badge"),
         PLATFORM.moduleName("./components/icons/icon/icon"),
         PLATFORM.moduleName("./components/icons/md-icon/md-icon"),
@@ -185,7 +184,6 @@ export * from "./components/data-table/data-table-headers";
 export * from "./components/data-table/data-table-pager";
 export * from "./components/data-table/data-table-row";
 export * from "./components/data-table/data-table-details";
-export * from "./components/file-dropzone/file-dropzone";
 export * from "./components/filter/filter";
 export * from "./components/icons/badge/badge";
 export * from "./components/icons/icon/icon";

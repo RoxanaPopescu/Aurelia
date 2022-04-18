@@ -1,5 +1,7 @@
-import { autoinject, bindable, bindingMode } from "aurelia-framework";
 import Dropzone from "dropzone";
+import { autoinject, bindable, bindingMode } from "aurelia-framework";
+import { IdentityService } from "app/services/identity";
+import settings from "resources/settings";
 
 // tslint:disable-next-line: no-submodule-imports
 import "dropzone/dist/dropzone.css";
@@ -14,13 +16,16 @@ export class FileDropzoneCustomElement
     /**
      * Creates a new instance of the type.
      * @param element The element representing the component.
+     * @param identityService The `IdentityService` instance.
      */
-    public constructor(element: Element)
+    public constructor(element: Element, identityService: IdentityService)
     {
         this._element = element as HTMLElement;
+        this._identityService = identityService;
     }
 
     private readonly _element: HTMLElement;
+    private readonly _identityService: IdentityService;
 
     /**
      * The `Dropzone` instance attached to this component.
@@ -43,7 +48,16 @@ export class FileDropzoneCustomElement
     {
         if (this.dropzone == null)
         {
-            this.dropzone = new Dropzone(this._element, this.options);
+            this.dropzone = new Dropzone(this._element,
+            {
+                ...this.options,
+                headers:
+                {
+                    ...settings.infrastructure.api.defaults?.headers,
+                    authorization: this._identityService.identity!.tokens.accessToken,
+                    ...this.options.headers
+                }
+            });
         }
     }
 }

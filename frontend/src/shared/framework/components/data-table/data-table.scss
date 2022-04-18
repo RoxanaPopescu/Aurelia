@@ -17,7 +17,7 @@ data-table
 
     &.--selection
     {
-        grid-template-columns: 60rem var(--data-table-columns) min-content;
+        grid-template-columns: minmax(60rem, max-content) var(--data-table-columns) min-content;
     }
 
     &:not(.--move)

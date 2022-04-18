@@ -2,9 +2,11 @@
 
     <require from="./data-table-headers.scss"></require>
 
-    <data-table-cell if.bind="dataTable.selection === 'multiple'">
-        <input type="checkbox" checked.bind="dataTable.allSelected" change.trigger="onToggleAll()">
-    </data-table-cell>
+    <template if.bind="dataTable.selection === 'multiple'" replaceable part="toggle-all">
+        <data-table-cell>
+            <input type="checkbox" checked.bind="dataTable.allSelected" change.trigger="onToggleAll()">
+        </data-table-cell>
+    </template>
 
     <data-table-cell if.bind="dataTable.selection === 'single'">
         <!-- No select all in `single` selection mode. -->

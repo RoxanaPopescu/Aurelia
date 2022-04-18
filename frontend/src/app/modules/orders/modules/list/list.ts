@@ -12,6 +12,7 @@ import { ChangePickupAddressPanel } from "./modals/change-pickup-address/change-
 import createdRouteToast from "./resources/strings/created-route-toast.json";
 import createdCollectionPointToast from "./resources/strings/created-collection-point-toast.json";
 import changedPickupAddressToast from "./resources/strings/changed-pickup-address-toast.json";
+import { ImportOrdersPanel } from "./modals/import-orders/import-orders";
 
 /**
  * Represents the route parameters for the page.
@@ -323,6 +324,15 @@ export class ListPage
             this.results = undefined;
             this.update();
         }
+    }
+
+    /**
+     * Called when the `Import orders` button is clicked.
+     * Opens the import orders panel.
+     */
+    protected async onImportOrdersClick(): Promise<void>
+    {
+        await this._modalService.open(ImportOrdersPanel).promise;
     }
 
     /**

@@ -95,28 +95,7 @@ export class OrdersModule
                 title: routeTitles.daoRelabel,
                 nav: false,
                 icon: "orders"
-            },
-
-            ...
-            ENVIRONMENT.name === "development" ?
-            [
-                {
-                    name: "import",
-                    route: "import",
-                    moduleId: PLATFORM.moduleName("./modules/import/import"),
-                    settings:
-                    {
-                        claims:
-                        [
-                            "create-orders"
-                        ]
-                    },
-                    title: routeTitles.import,
-                    nav: true,
-                    href: "/orders/import",
-                    icon: "import"
-                }
-            ] : []
+            }
         ]);
     }
 }
