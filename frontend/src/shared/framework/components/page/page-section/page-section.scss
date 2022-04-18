@@ -125,7 +125,7 @@ page-section
     &:not(.--header-slot-empty) .page-section-content
     {
         // Apply spacing between the header and the content.
-        margin-top: var(--font-large-margin-top);
+        margin-top: var(--font-large-margin-bottom);
     }
 
     &:not(.--expanded) .page-section-content,
