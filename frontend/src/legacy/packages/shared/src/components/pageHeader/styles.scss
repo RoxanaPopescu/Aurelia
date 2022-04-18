@@ -60,6 +60,10 @@
   border: var(--border-width-thin) solid var(--colorNeutralExtraLight);
   border-radius: var(--border-radius-large);
   overflow: hidden;
+
+  &.hidden {
+    visibility: hidden;
+  }
 }
 
 // HACK: We use important here to work around a bug that causes
@@ -79,10 +83,6 @@
   &.active {
     background: var(--colorNeutralExtraLight);
     color: var(--colorNeutralDark);
-  }
-
-  &.hidden {
-    visibility: hidden;
   }
 }
 
