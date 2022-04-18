@@ -46,7 +46,13 @@
         transition: background-color 120ms, color 120ms, border-color 120ms;
 
         &:not(:last-child) {
-          margin-right: 7px;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+
+        &:not(:first-child) {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
         }
 
         &.active {
@@ -159,14 +165,14 @@
 }
 @keyframes animation-skeleton {
   0% {
-    background-color: var(--colorNeutralExtraLight);
+    background-color: var(--surface-neutral-surface-color);
   }
 
   50% {
-    background-color: var(--colorNeutralExtraLightAlpha70);
+    background-color: transparent;
   }
 
   100% {
-    background-color: var(--colorNeutralExtraLight);
+    background-color: var(--surface-neutral-surface-color);
   }
 }

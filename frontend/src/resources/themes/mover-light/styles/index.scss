@@ -155,9 +155,10 @@ page-sidebar
     }
 }
 
-page-content page-header
+page-content page-header,
+.react-component .pageHeader
 {
-    border-bottom-color: var(--palette-color-neutral-light);
+    border-bottom-color: var(--palette-color-neutral-light) !important;
 }
 
 modal-overlay

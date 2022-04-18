@@ -77,7 +77,6 @@ export default class DepotActivityComponent extends React.Component<Props> {
       <>
         <DateComponent
           className="c-depots-activity-date"
-          headline={Localization.operationsValue("Depots_Activity_ChooseDate")}
           date={this.date}
           size="medium"
           onChange={value => {

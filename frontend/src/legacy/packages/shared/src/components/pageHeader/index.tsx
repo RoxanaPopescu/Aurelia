@@ -133,8 +133,7 @@ export class PageHeaderComponent extends React.Component<Props> {
 
   private renderTabs() {
     return (
-      this.props.tabs &&
-      this.props.tabs.length > 0 && (
+      this.props.tabs && (
         <div className="pageHeader-tabs">
           {this.props.tabs.map((t, i) => (
             <div
@@ -162,6 +161,14 @@ export class PageHeaderComponent extends React.Component<Props> {
               {t.title}
             </div>
           ))}
+          {this.props.tabs.length === 0 &&
+            <div
+              key="placeholder-tab"
+              className={"pageHeader-tabs-tab font-label-base hidden"}
+            >
+              &nbsp;
+            </div>
+          }
         </div>
       )
     );

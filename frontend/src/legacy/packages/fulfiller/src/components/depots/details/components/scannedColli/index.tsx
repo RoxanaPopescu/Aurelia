@@ -100,7 +100,6 @@ export default class DepotScannedColliComponent extends React.Component<Props> {
         >
           <DateComponent
             className="c-depots-scannedColli-date"
-            headline={Localization.operationsValue("Depots_Activity_ChooseDate")}
             size="medium"
             date={this.date}
             onChange={value => {

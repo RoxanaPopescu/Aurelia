@@ -132,7 +132,7 @@ export default class ConsignorKpiComponent extends React.Component<Props> {
             };
           }
         })
-      : undefined;
+      : [];
 
     return (
       <>
@@ -140,7 +140,7 @@ export default class ConsignorKpiComponent extends React.Component<Props> {
           path={[{ title: "KPI", href: "/kpi" }, { title: "Consignors" }]}
           history={this.props.history}
           tabs={tabs}
-          tab={tabs ? tabs[consignorKpiStore.activeOutfitIndex].name : undefined}
+          tab={tabs?.length > 0 ? tabs[consignorKpiStore.activeOutfitIndex].name : undefined}
           onTabChange={(tab, index) => {
             consignorKpiStore.activeOutfitIndex = index;
             this.fetchKpi();

@@ -2,7 +2,6 @@ import "./styles.scss";
 import { observer } from "mobx-react";
 import Localization from "shared/src/localization";
 import React from "react";
-import { Button, ButtonType } from "shared/src/webKit";
 import DateComponent from "shared/src/webKit/date/date";
 import { DateTime } from "luxon";
 import { OutfitData } from "../../models/outfitData";
@@ -44,6 +43,7 @@ export default class KpiTableComponent extends React.Component<Props, State> {
         onClick={() => {
           this.props.formatChange(new KpiFormat("numbers"));
           this.setState({ format: new KpiFormat("numbers") });
+          this.props.fetchData();
         }}
         className={`c-fulfillerKpi-formatToggle-format${
           this.state.format.slug === "numbers" ? " active" : ""
@@ -58,6 +58,7 @@ export default class KpiTableComponent extends React.Component<Props, State> {
         onClick={() => {
           this.props.formatChange(new KpiFormat("percentage"));
           this.setState({ format: new KpiFormat("percentage") });
+          this.props.fetchData();
         }}
         className={`c-fulfillerKpi-formatToggle-format${
           this.state.format.slug === "percentage" ? " active" : ""
@@ -76,9 +77,6 @@ export default class KpiTableComponent extends React.Component<Props, State> {
   private renderActionContainer() {
     return (
       <>
-        <div key={`kpiDataFormat`} className="c-fulfillerKpi-formatToggle">
-          {this.renderFormats()}
-        </div>
         <DateComponent
           maximum={DateTime.local()}
           key={`kpiDateTo`}
@@ -86,18 +84,15 @@ export default class KpiTableComponent extends React.Component<Props, State> {
           onChange={date => {
             this.setState({ date: date });
             this.props.dateChange(date);
+            this.props.fetchData();
           }}
           date={this.state.date}
           placeholder="DD.MM.ÅÅ"
           className="c-fulfillerKpi-dateComponent"
         />
-        <Button
-          key={`button-getKpi`}
-          onClick={() => this.props.fetchData()}
-          type={ButtonType.Action}
-        >
-          {Localization.sharedValue("Kpi_Button:ShowData")}
-        </Button>
+        <div key={`kpiDataFormat`} className="c-fulfillerKpi-formatToggle">
+          {this.renderFormats()}
+        </div>
       </>
     );
   }
@@ -365,13 +360,12 @@ export default class KpiTableComponent extends React.Component<Props, State> {
     }
 
     return (
-      <div className="c-fulfillerKpi loading">
+      <div className="c-fulfillerKpi">
         <div className="c-fulfillerKpi-headline font-large loading" />
         <div className="c-fulfillerKpi-actionContainer">
-          <div className="c-fulfillerKpi-actionSkeletonBig c-fulfillerKpi-tableSkeleton-bone" />
-          <div className="c-fulfillerKpi-actionSkeletonSmall c-fulfillerKpi-tableSkeleton-bone" />
+          {this.renderActionContainer()}
         </div>
-        <div className="c-fulfillerKpi-tableOutercontainer">
+        <div className="c-fulfillerKpi-tableOutercontainer loading">
           <div key={`table-skeleton`} className="c-fulfillerKpi-tableSkeleton">
             {bones}
           </div>

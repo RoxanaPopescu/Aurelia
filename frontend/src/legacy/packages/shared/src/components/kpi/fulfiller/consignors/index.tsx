@@ -120,7 +120,7 @@ export default class ConsignorsKpiComponent extends React.Component<Props> {
           title: consignorData.connection!.organization.name
         };
       })
-    : undefined;
+    : [];
 
     return (
       <>
@@ -128,7 +128,7 @@ export default class ConsignorsKpiComponent extends React.Component<Props> {
           path={[{ title: "KPI", href: "/kpi" }, { title: "Consignors" }]}
           history={this.props.history}
           tabs={tabs}
-          tab={tabs ? tabs[consignorsKpiStore.activeOutfitIndex].name : undefined}
+          tab={tabs?.length > 0 ? tabs[consignorsKpiStore.activeOutfitIndex].name : undefined}
           onTabChange={(tab, index) => {
             consignorsKpiStore.activeOutfitIndex = index;
             this.fetchKpi();

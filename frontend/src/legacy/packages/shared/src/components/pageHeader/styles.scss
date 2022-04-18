@@ -80,6 +80,10 @@
     background: var(--colorNeutralExtraLight);
     color: var(--colorNeutralDark);
   }
+
+  &.hidden {
+    visibility: hidden;
+  }
 }
 
 .pageHeader-actions {

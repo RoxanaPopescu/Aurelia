@@ -180,7 +180,7 @@ export default class FulfillersKpiComponent extends React.Component<Props> {
         });
       }
     } else {
-      tabs = undefined;
+      tabs = [];
     }
 
     return (
@@ -189,11 +189,7 @@ export default class FulfillersKpiComponent extends React.Component<Props> {
           path={[{ title: "KPI", href: "/kpi" }]}
           history={this.props.history}
           tabs={tabs}
-          tab={
-            tabs
-              ? tabs[this.fulfillersKpiStore.activeOutfitIndex].name
-              : undefined
-          }
+          tab={tabs?.length > 0 ? tabs[this.fulfillersKpiStore.activeOutfitIndex].name : undefined}
           onTabChange={(tab, index) => {
             this.fulfillersKpiStore.activeOutfitIndex = index;
             this.fetchKpi();
