@@ -63,7 +63,7 @@ export class FilesModule extends AppModule
         const body = await this.readStream(context.req);
         await this.validateLogin(context);
 
-        const id = context.request.query.id;
+        const id = context.request.query.id as string;
 
         console.log(`TODO: Upload temporary file with ID '${id}' and buffer length ${body.length}.`);
 
