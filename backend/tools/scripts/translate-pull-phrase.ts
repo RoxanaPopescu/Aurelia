@@ -7,10 +7,11 @@ import path from "path";
 import pkgDir from "pkg-dir";
 
 const packageFolder = `${pkgDir.sync()}/`;
+const settings = require(`${packageFolder}src/resources/settings/settings.ts`);
 
 // Find locales besides our base locale that we currently support. They are required to exist in phrase
-const allLocales: any[] = require(`${packageFolder}/src/resources/settings/locales.json`);
-const locales = allLocales.filter(l => !l.code.includes("en")).map(l => l.code);
+const allLocales: string[] = settings.default.app.supportedLocaleCodes;
+const locales = allLocales.filter(l => !l.includes("en")).map(l => l);
 
 let tasks: string[] = [];
 

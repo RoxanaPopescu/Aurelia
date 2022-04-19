@@ -9,6 +9,6 @@ phraseapp:
   pull:
     targets:
       - file: ./artifacts/translation/phrase/<locale_name>.xlf
-        project_id: 449e1c5222723de3cff80d65d7d286d9
+        project_id: e1bd87cc934d55c093785894ac6e2910
         params:
           file_format: xlf
