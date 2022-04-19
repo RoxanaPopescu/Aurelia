@@ -101,6 +101,9 @@ export class OrderDetailsMapComponent extends React.Component<IOrderDetailsMapPr
             }
         }
 
-        (this.map.fitBounds as Function)(orderBounds, 50);
+        if (!orderBounds.isEmpty())
+        {
+            (this.map.fitBounds as Function)(orderBounds, 50);
+        }
     }
 }

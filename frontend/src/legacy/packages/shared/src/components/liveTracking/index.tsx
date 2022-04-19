@@ -258,8 +258,11 @@ export default class LiveTrackingComponent extends React.Component<ILiveTracking
         routeBounds.extend(route.driverPosition.toGoogleLatLng());
       }
 
-      (this.map.fitBounds as Function)(routeBounds, 50);
-    } else if (this.routesBounds != null) {
+      if (!routeBounds.isEmpty)
+      {
+        (this.map.fitBounds as Function)(routeBounds, 50);
+      }
+    } else if (this.routesBounds != null && !this.routesBounds.isEmpty) {
       (this.map.fitBounds as Function)(this.routesBounds, 0);
     }
   }
