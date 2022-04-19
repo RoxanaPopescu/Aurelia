@@ -59,12 +59,16 @@
                             Create route
                         </button>
 
-                        <button if.bind="!template.id" disabled.bind="saving" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
-                            Create template
-                        </button>
+                        <button disabled.bind="saving || validation.invalid" appearance="solid" accent="primary" click.trigger="onSaveClick()">
 
-                        <button if.bind="template.id" disabled.bind="saving" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
-                            Save changes
+                            <template if.bind="!template.id" translate>
+                                Create template
+                            </template>
+
+                            <template if.bind="template.id" translate>
+                                Save changes
+                            </template>
+
                         </button>
 
                     </div>

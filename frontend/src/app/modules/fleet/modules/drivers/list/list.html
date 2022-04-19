@@ -142,31 +142,37 @@
                         <data-table-row>
 
                             <data-table-cell>
-                                <a href="/fleet-management/drivers/details/${driver.id}" class="text-truncate">
+                                <a href="/fleet-management/drivers/details/${driver.id}" class="text-truncate" empty-value>
                                     ${driver.name}
                                 </a>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${driver.email}
+                                <span class="text-truncate" empty-value>
+                                    ${driver.email}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${driver.phone}
+                                <span class="text-truncate" empty-value>
+                                    ${driver.phone}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${driver.vehicleTypes | map: 'name' | list: 'short' : 'unit'}
+                                <span class="text-truncate" empty-value>
+                                    ${driver.vehicleTypes | map: 'name' | list: 'short' : 'unit'}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">
+                                <span class="text-truncate" empty-value>
                                     ${driver.id}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell align="right">
-                                <span class="text-truncate">
+                                <span class="text-truncate" empty-value>
                                     ${driver.status.name}
                                 </span>
                             </data-table-cell>

@@ -1,3 +1,4 @@
+import { RouteTemplateInfo } from "app/model/route-template";
 import { autoinject } from "aurelia-framework";
 import { Modal } from "shared/framework/services/modal";
 
@@ -15,6 +16,17 @@ export class ConfirmDeleteTemplateDialog
 
     private readonly _modal: Modal;
     private _result = false;
+
+    protected template: RouteTemplateInfo;
+
+    /**
+     * Called by the framework when the modal is activated.
+     * @param model The model to use.
+     */
+    public activate(model: RouteTemplateInfo): void
+    {
+        this.template = model;
+    }
 
     /**
      * Called by the framework when the modal is deactivated.

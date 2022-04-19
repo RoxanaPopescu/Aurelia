@@ -92,7 +92,7 @@ export class ListPage
      */
     protected async onDeleteClick(template: RouteTemplateInfo): Promise<void>
     {
-        if (!await this._modalService.open(ConfirmDeleteTemplateDialog).promise)
+        if (!await this._modalService.open(ConfirmDeleteTemplateDialog, template).promise)
         {
             return;
         }

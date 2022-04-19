@@ -1,6 +1,7 @@
 <template>
 
     <require from="app/components/star-icon/star-icon"></require>
+    <require from="app/components/name-value-pair/name-value-pair"></require>
 
     <require from="./details.scss"></require>
 
@@ -19,7 +20,12 @@
 
                         <span>
                             <template if.bind="!isNew">
-                                ${driver.name} (${driver.id})
+                                <span if.bind="driver.name1">
+                                    ${driver.name1 || "(Unnamed driver)"}
+                                </span>
+                                <span class="opacity-faded" else>
+                                    Unnamed driver
+                                </span>
                                 <star-icon entity.bind="driver"></star-icon>
                             </template>
                             <template if.bind="isNew" translate>
@@ -43,14 +49,11 @@
                         Change password
                     </button>
                     <button disabled.bind="updating" appearance="solid" accent="primary" click.trigger="onSaveClick()">
-                        <template if.bind="isNew && !updating" translate>
+                        <template if.bind="isNew" translate>
                             Create driver
                         </template>
-                        <template if.bind="!isNew && !updating" translate>
+                        <template if.bind="!isNew" translate>
                             Save changes
-                        </template>
-                        <template if.bind="updating" translate>
-                            Saving...
                         </template>
                     </button>
                 </toolbar>
@@ -58,6 +61,25 @@
             </page-header>
 
             <page-section class="driver-section">
+                <div class="flex-row">
+                    <name-value-pair>
+
+                        <div slot="name" translate>
+                            ID
+                        </div>
+
+                        <div slot="value">
+                            ${driver.id}
+                        </div>
+
+                    </name-value-pair>
+                </div>
+            </page-section>
+
+            <page-section class="driver-section">
+                <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
+                    Profile
+                </h1>
                 <div class="control-row margin-bottom">
                     <text-input label="above" value.bind="driver.name.first" class="flex-basis-1-of-2">
 

@@ -73,22 +73,14 @@
 
                     <div class="flex-push-right control-row">
 
-                        <button if.bind="isNew" appearance="outline" accent="primary" page-href="path: /route-planning/rule-sets" translate>
-                            Cancel
-                        </button>
-
                         <button disabled.bind="updating || validation.invalid" appearance="solid" accent="primary" click.trigger="onSaveClick()">
 
-                            <template if.bind="isNew && !updating" translate>
+                            <template if.bind="isNew" translate>
                                 Create rule set
                             </template>
 
-                            <template if.bind="!isNew && !updating" translate>
+                            <template if.bind="!isNew" translate>
                                 Save changes
-                            </template>
-
-                            <template if.bind="updating" translate>
-                                Updating...
                             </template>
 
                         </button>

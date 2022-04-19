@@ -55,7 +55,7 @@
                     <div if-claims="edit-order-groups">
 
                         <button if.bind="orderGroup.id == null" appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
-                            Create
+                            Create order group
                         </button>
 
                         <button if.bind="orderGroup.id != null && !orderGroup.activeSchedulesCount" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>

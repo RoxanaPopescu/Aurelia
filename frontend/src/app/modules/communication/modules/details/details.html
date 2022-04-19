@@ -47,22 +47,14 @@
 
                 <div class="flex-push-right control-row">
 
-                    <button if.bind="model.id == null" appearance="outline" accent="primary" page-href="path: /communication/list" translate>
-                        Cancel
-                    </button>
+                    <button appearance="solid" disabled.bind="loading || validation.invalid" accent="primary" click.trigger="onSaveClick()">
 
-                    <button appearance="solid" disabled.bind="loading" accent="primary" click.trigger="onSaveClick()">
-
-                        <template if.bind="model.id == null && !loading" translate>
+                        <template if.bind="model.id == null" translate>
                             Create trigger
                         </template>
 
-                        <template if.bind="model.id != null && !loading" translate>
+                        <template if.bind="model.id != null" translate>
                             Save changes
-                        </template>
-
-                        <template if.bind="loading" translate>
-                            Saving...
                         </template>
 
                     </button>

@@ -1,6 +1,8 @@
 <template>
 
     <require from="app/components/star-icon/star-icon"></require>
+    <require from="app/components/name-value-pair/name-value-pair"></require>
+
     <require from="./vehicle.scss"></require>
 
     <modal-backdrop close="all"></modal-backdrop>
@@ -25,7 +27,7 @@
 
                 <template if.bind="vehicle.id != null">
                     <span translate>
-                        Edit vehicle (${vehicle.id})
+                        Edit vehicle
                     </span>
                     <star-icon entity.bind="vehicle"></star-icon>
                 </template>
@@ -38,7 +40,21 @@
 
         </modal-header>
 
-        <modal-section class="margin-larger-bottom">
+        <modal-section>
+
+            <div class="control-row margin-larger-bottom">
+                <name-value-pair>
+
+                    <div slot="name" translate>
+                        ID
+                    </div>
+
+                    <div slot="value">
+                        ${vehicle.id}
+                    </div>
+
+                </name-value-pair>
+            </div>
 
             <div class="control-row">
 
@@ -80,9 +96,7 @@
 
         </modal-section>
 
-        <hr class="hr-line margin-large-bottom">
-
-        <modal-section class="margin-larger-bottom">
+        <modal-section class="--line-above">
 
             <div slot="header" translate>
                 Vehicle information
@@ -208,9 +222,7 @@
 
         </modal-section>
 
-        <hr class="hr-line margin-large-bottom">
-
-        <modal-section class="margin-larger-bottom">
+        <modal-section class="--line-above">
 
             <div slot="header" translate>
                 Weight and inner dimensions
