@@ -1,8 +1,9 @@
 import { autoinject } from "aurelia-framework";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
-import { IScroll } from "shared/framework";
+import { IScroll, ModalService } from "shared/framework";
 import { RouteTemplateService, RouteTemplateInfo } from "app/model/route-template";
+import { ConfirmDeleteTemplateDialog } from "./modals/confirm-delete-template/confirm-delete-template";
 
 /**
  * Represents the page.
@@ -13,13 +14,16 @@ export class ListPage
     /**
      * Creates a new instance of the class.
      * @param routeTemplateService The `RouteTemplateService` instance.
+     * @param modalService The `ModalService` instance.
      */
-    public constructor(routeTemplateService: RouteTemplateService)
+    public constructor(routeTemplateService: RouteTemplateService, modalService: ModalService)
     {
         this._routeTemplateService = routeTemplateService;
+        this._modalService = modalService;
     }
 
     private readonly _routeTemplateService: RouteTemplateService;
+    private readonly _modalService: ModalService;
 
     /**
      * The scroll manager for the page.
@@ -78,6 +82,30 @@ export class ListPage
         if (this.fetchOperation != null)
         {
             this.fetchOperation.abort();
+        }
+    }
+
+    /**
+     * Called when the "Delete template" icon is clicked.
+     * Deletes the template.
+     * @param template The template to delete.
+     */
+    protected async onDeleteClick(template: RouteTemplateInfo): Promise<void>
+    {
+        if (!await this._modalService.open(ConfirmDeleteTemplateDialog).promise)
+        {
+            return;
+        }
+
+        try
+        {
+            await this._routeTemplateService.delete(template.id);
+
+            this.results?.splice(this.results.indexOf(template), 1);
+        }
+        catch (error)
+        {
+            Log.error("Could not delete template", error);
         }
     }
 }

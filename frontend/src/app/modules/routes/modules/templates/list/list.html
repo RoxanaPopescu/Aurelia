@@ -63,6 +63,10 @@
                             </span>
                         </data-table-cell>
 
+                        <data-table-cell align="right">
+                            <!-- Icons -->
+                        </data-table-cell>
+
                     </data-table-headers>
 
                     <template repeat.for="template of results">
@@ -86,6 +90,23 @@
                                 <span class="text-truncate">
                                     ${template.slug}
                                 </span>
+                            </data-table-cell>
+                            <data-table-cell align="right">
+
+                                <div class="icon-row">
+
+                                    <template if-claims="edit-routes">
+                                        <button
+                                            title.translate="Delete template"
+                                            appearance="none"
+                                            accent="primary"
+                                            click.trigger="onDeleteClick(template)">
+                                            <icon name="delete-small"></icon>
+                                        </button>
+                                    </template>
+
+                                </div>
+
                             </data-table-cell>
 
                         </data-table-row>

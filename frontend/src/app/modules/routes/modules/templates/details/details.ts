@@ -1,13 +1,11 @@
 import { autoinject, observable } from "aurelia-framework";
 import { Operation } from "shared/utilities";
 import { RouteTemplateService, RouteTemplate } from "app/model/route-template";
-import { ConfirmDeleteTemplateDialog } from "./modals/confirm-delete-template/confirm-delete-template";
 import { Log } from "shared/infrastructure";
-import { AppRouter } from "aurelia-router";
 import { ModalService, IValidation, ToastService } from "shared/framework";
-import toast from "./resources/strings/toast.json";
 import { CreateRoutePanel } from "./modals/create-route/create-route";
 import { addToRecentEntities } from "app/modules/starred/services/recent-item";
+import toast from "./resources/strings/toast.json";
 
 /**
  * Represents the route parameters for the page.
@@ -30,25 +28,17 @@ export class DetailsPage
      * Creates a new instance of the class.
      * @param routeTemplateService The `RouteTemplateService` instance.
      * @param modalService The `ModalService` instance.
-     * @param router The `AppRouter` instance.
      * @param toastService The `ToastService` instance.
      */
-    public constructor(
-        routeTemplateService: RouteTemplateService,
-        modalService: ModalService,
-        router: AppRouter,
-        toastService: ToastService
-    )
+    public constructor(routeTemplateService: RouteTemplateService, toastService: ToastService, modalService: ModalService)
     {
         this._routeTemplateService = routeTemplateService;
         this._modalService = modalService;
-        this._router = router;
         this._toastService = toastService;
     }
 
     private readonly _routeTemplateService: RouteTemplateService;
     private readonly _modalService: ModalService;
-    private readonly _router: AppRouter;
     private readonly _toastService: ToastService;
 
     /**
@@ -125,29 +115,6 @@ export class DetailsPage
     protected async onCreateRouteClick(): Promise<void>
     {
         await this._modalService.open(CreateRoutePanel, this.template).promise;
-    }
-
-    /**
-     * Called when the "Delete template" button is clicked.
-     * Deletes the template.
-     */
-    protected async onDeleteClick(): Promise<void>
-    {
-        if (!await this._modalService.open(ConfirmDeleteTemplateDialog).promise)
-        {
-            return;
-        }
-
-        try
-        {
-            await this._routeTemplateService.delete(this.template.id);
-
-            this._router.navigate("/routes/templates");
-        }
-        catch (error)
-        {
-            Log.error("Could not delete template", error);
-        }
     }
 
     /**

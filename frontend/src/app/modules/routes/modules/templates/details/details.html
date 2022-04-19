@@ -28,7 +28,7 @@
                         </span>
 
                         <span if.bind="template && template.id">
-                            ${template.slug}
+                            ${template.name}
                             <star-icon entity.bind="template"></star-icon>
                         </span>
 
@@ -53,32 +53,18 @@
 
                     </tab-nav>
 
-                    <div class="flex-push-right control-row">
+                    <div if.bind="template != null" class="flex-push-right control-row">
 
-                        <button if.bind="template && template.id" disabled.bind="template.stops.length < 2" appearance="outline" accent="primary" click.trigger="onCreateRouteClick()" translate>
+                        <button if.bind="template.id" disabled.bind="template.stops.length < 2" appearance="outline" accent="primary" click.trigger="onCreateRouteClick()" translate>
                             Create route
                         </button>
 
-                        <button if.bind="template && template.id && tab === 'general'" appearance="outline" accent="primary" click.trigger="onDeleteClick()" translate>
-                            Delete template
+                        <button if.bind="!template.id" disabled.bind="saving" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                            Create template
                         </button>
 
-                        <button if.bind="template && !template.id && tab === 'general'" disabled.bind="saving" appearance="solid" accent="primary" click.trigger="onSaveClick()">
-                            <span translate if.bind="!saving">
-                                Create template
-                            </span>
-                            <span translate if.bind="saving">
-                                Creating template...
-                            </span>
-                        </button>
-
-                        <button if.bind="template && template.id && tab === 'general'" disabled.bind="saving" appearance="solid" accent="primary" click.trigger="onSaveClick()">
-                            <span translate if.bind="!saving">
-                                Save template
-                            </span>
-                            <span translate if.bind="saving">
-                                Updating template...
-                            </span>
+                        <button if.bind="template.id" disabled.bind="saving" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                            Save changes
                         </button>
 
                     </div>
