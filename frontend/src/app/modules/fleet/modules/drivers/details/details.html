@@ -71,10 +71,12 @@
             </page-section>
 
             <page-section class="driver-section">
-                <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
+
+                <div slot="header" translate>
                     Profile
-                </h1>
-                <div class="control-row margin-bottom">
+                </div>
+
+                <div class="control-row margin-large-bottom">
                     <text-input label="above" value.bind="driver.name.first" class="flex-basis-1-of-2">
 
                         <div slot="heading" translate>
@@ -108,7 +110,7 @@
                     </text-input>
                 </div>
 
-                <div class="control-row margin-bottom">
+                <div class="control-row margin-large-bottom">
                     <email-input label="above" value.bind="driver.email" class="flex-basis-1-of-1">
 
                         <div slot="heading" translate>
@@ -134,7 +136,7 @@
                     </email-input>
                 </div>
 
-                <div class="control-row margin-bottom">
+                <div class="control-row margin-large-bottom">
                     <text-input maxlength="2" label="above" value.bind="driver.phone.countryPrefix" style="width: 100rem;">
                         <div slot="heading" translate>
                             Country code
@@ -189,7 +191,7 @@
                     </text-input>
                 </div>
 
-                <div if.bind="isNew" class="control-row margin-bottom">
+                <div if.bind="isNew" class="control-row margin-large-bottom">
                     <text-input label="above" value.bind="driver.password" class="flex-basis-1-of-1">
                         <div slot="heading" translate>
                             Password
@@ -207,7 +209,7 @@
                     </text-input>
                 </div>
 
-                <div class="control-row margin-bottom">
+                <div class="control-row">
                     <select-input label="above" none.bind="false" value.bind="driver.status" display-value.bind="driver.status.name" class="flex-basis-1-of-1">
 
                         <div slot="heading" translate>
@@ -230,10 +232,11 @@
                 </div>
             </page-section>
 
-            <page-section if.bind="driver.id">
-                <h1 class="font-largest margin-bottom" tabindex="-1" autofocus="visible.bind: false" translate>
+            <page-section if.bind="driver.id" class="--line-above">
+
+                <div slot="header" translate>
                     Vehicles
-                </h1>
+                </div>
 
                 <data-table
                     appearance="rows"
