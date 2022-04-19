@@ -83,9 +83,10 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
   }
 
   public render() {
-    let route = this.props.service.selectedListRoute;
+    const selectedRoute = this.props.service.selectedRoute;
+    const currentRoute = selectedRoute ?? this.props.service.selectedListRoute;
 
-    if (!route) {
+    if (!currentRoute) {
       return null;
     }
 
@@ -169,8 +170,11 @@ export class RoutePanel extends React.Component<RoutePanelProps> {
   }
 
   private onRouteDetailsClick(): void {
+    const selectedRoute = this.props.service.selectedRoute;
+    const currentRoute = selectedRoute ?? this.props.service.selectedListRoute;
+
     const routeDetailsUrl = SubPage.path(SubPage.RouteDetails)
-      .replace(":id", this.props.service.selectedListRoute!.slug);
+      .replace(":id", currentRoute!.slug);
 
     window.open(routeDetailsUrl, "_blank");
   }

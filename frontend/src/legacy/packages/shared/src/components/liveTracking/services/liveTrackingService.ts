@@ -288,7 +288,7 @@ export class LiveTrackingService {
     if (slug == null) {
       this.stoppedDetails = true;
       this.selectedRoute = undefined;
-      clearImmediate(this.pollTimeout.selectedRoute);
+      clearTimeout(this.pollTimeout.selectedRoute);
     } else {
       this.stoppedDetails = false;
       this.pollDetails();

@@ -11,8 +11,10 @@ export interface RoutesLayerProps {
 @observer
 export class RouteInfo extends React.Component<RoutesLayerProps> {
   public render() {
-    let route = this.props.service.selectedListRoute;
-    if (!route) {
+    const selectedRoute = this.props.service.selectedRoute;
+    const currentRoute = selectedRoute ?? this.props.service.selectedListRoute;
+
+    if (!currentRoute) {
       return null;
     }
 
@@ -21,7 +23,7 @@ export class RouteInfo extends React.Component<RoutesLayerProps> {
 
         <RouteComponent
           service={this.props.service}
-          route={route}
+          route={currentRoute}
         />
 
       </div>
