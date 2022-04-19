@@ -112,7 +112,7 @@ export class DetailsModule
     protected statusValues = Object.keys(RouteStatus.values).map(slug => new RouteStatus(slug as any));
 
     /**
-     * True if the `Assign` button should be visible, otherwise false,
+     * * True if the user is authorized to assign routes, otherwise false,
      */
     @computedFrom("identityService.identity.claims.size")
     protected get canAssign(): boolean
@@ -121,6 +121,15 @@ export class DetailsModule
             this.identityService.identity!.claims.has("assign-organization-route") ||
             this.identityService.identity!.claims.has("assign-driver-route") ||
             this.identityService.identity!.claims.has("edit-routes"));
+    }
+
+    /**
+     * True if the user is authorized to edit the route, otherwise false,
+     */
+    @computedFrom("identityService.identity.claims.size")
+    protected get canEditRoute(): boolean
+    {
+        return this.identityService.identity!.claims.has("edit-routes");
     }
 
     /**

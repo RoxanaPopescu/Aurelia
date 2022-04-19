@@ -16,7 +16,7 @@
         click.delegate="onClick($event)"
         mouseenter.trigger="onMouseEnter($event)">
 
-        <div if.bind="insert != null" class="data-table-row-insert" click.trigger="onInsertClick($event)">
+        <div if.bind="insertable && insert != null" class="data-table-row-insert" click.trigger="onInsertClick($event)">
 
             <div class="data-table-row-insert-line" surface="base"></div>
 

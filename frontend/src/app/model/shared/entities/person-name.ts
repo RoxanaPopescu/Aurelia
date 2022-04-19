@@ -47,7 +47,7 @@ export class PersonName
      */
     public toString(): string
     {
-        return `${this.first} ${this.last}`;
+        return `${this.first} ${this.last}`.trim();
     }
 
     /**

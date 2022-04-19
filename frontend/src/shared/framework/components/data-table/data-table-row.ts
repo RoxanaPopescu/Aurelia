@@ -114,6 +114,12 @@ export class DataTableRowCustomElement
     public movable: boolean;
 
     /**
+     * False to hide the insert button above the row, otherwise false.
+     */
+    @bindable({ defaultValue: true })
+    public insertable: boolean;
+
+    /**
      * Called by the framework when the component is attached.
      */
     public attached(): void

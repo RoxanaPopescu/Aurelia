@@ -20,10 +20,10 @@
 
                         <span>
                             <template if.bind="!isNew">
-                                <span if.bind="driver.name1">
-                                    ${driver.name1 || "(Unnamed driver)"}
+                                <span if.bind="driver.name.toString()">
+                                    ${driver.name}
                                 </span>
-                                <span class="opacity-faded" else>
+                                <span if.bind="!driver.name.toString()" class="opacity-faded">
                                     Unnamed driver
                                 </span>
                                 <star-icon entity.bind="driver"></star-icon>
@@ -36,12 +36,6 @@
                 </h1>
 
                 <toolbar class="flex-push-right">
-                    <button if.bind="driver.id" if-claims="create-vehicles" appearance="outline" accent="primary" click.trigger="onAddVehicleClick()" class="flex-row">
-                        <icon name="add" class="font-larger margin-right"></icon>
-                        <span translate>
-                            New vehicle
-                        </span>
-                    </button>
                     <button if.bind="driver.id" translate if-claims="create-vehicles" appearance="outline" accent="primary" click.trigger="onSendMessageClick()">
                         Send message
                     </button>
@@ -60,7 +54,7 @@
 
             </page-header>
 
-            <page-section class="driver-section">
+            <page-section if.bind="driver.id != null" class="driver-section">
                 <div class="flex-row">
                     <name-value-pair>
 
@@ -244,7 +238,9 @@
                 <data-table
                     appearance="rows"
                     sorting.bind="sorting"
-                    busy.bind="updateOperation.pending">
+                    busy.bind="updateOperation.pending"
+                    append.call="onAddVehicleClick()"
+                    appendable.bind="canCreateVehicle">
 
                     <data-table-headers>
 
@@ -333,7 +329,7 @@
 
                             <data-table-cell align="right">
 
-                                <div if-claims="create-vehicles" class="icon-row">
+                                <div class="icon-row">
 
                                     <button appearance="none" accent="primary" click.trigger="onRemoveVehicleClick(vehicle)">
                                         <icon name="delete-small"></icon>
@@ -345,6 +341,10 @@
 
                         </data-table-row>
 
+                    </template>
+
+                    <template replace-part="append" translate>
+                        New vehicle
                     </template>
 
                 </data-table>

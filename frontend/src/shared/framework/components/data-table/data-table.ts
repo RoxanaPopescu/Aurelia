@@ -43,7 +43,7 @@ export class DataTableCustomElement
     public append: ((context: { event: MouseEvent }) => void) | undefined;
 
     /**
-     * False to disable appending to the table, otherwise true.
+     * False to hide the append button below the last row, otherwise false.
      */
     @bindable({ defaultValue: true })
     public appendable: boolean;

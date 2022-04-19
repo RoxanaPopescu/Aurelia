@@ -42,7 +42,7 @@
 
         <modal-section>
 
-            <div class="control-row margin-larger-bottom">
+            <div if.bind="vehicle.id != null" class="control-row margin-larger-bottom">
                 <name-value-pair>
 
                     <div slot="name" translate>
@@ -222,7 +222,7 @@
 
         </modal-section>
 
-        <modal-section class="--line-above">
+        <modal-section class="margin-bottom --line-above">
 
             <div slot="header" translate>
                 Weight and inner dimensions

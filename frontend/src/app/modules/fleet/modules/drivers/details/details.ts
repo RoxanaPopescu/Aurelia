@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, computedFrom } from "aurelia-framework";
 import { DriverService, Driver } from "app/model/driver";
 import { VehicleService, Vehicle } from "app/model/vehicle";
 import { ModalService, IValidation } from "shared/framework";
@@ -10,6 +10,7 @@ import { DriverStatus } from "app/model/driver/entities/driver-status";
 import { ChangePasswordPanel } from "./modals/change-password/change-password";
 import { SendMessagePanel } from "../modals/send-message/send-message";
 import { addToRecentEntities } from "app/modules/starred/services/recent-item";
+import { IdentityService } from "app/services/identity";
 
 /**
  * Represents the route parameters for the page.
@@ -33,18 +34,25 @@ export class DetailsPage
      * @param vehicleService The `VehicleService` instance.
      * @param driverService The `DriverService` instance.
      * @param modalService The `ModalService` instance.
+     * @param identityService The `IdentityService` instance.
      */
-    public constructor(vehicleService: VehicleService, driverService: DriverService, modalService: ModalService)
+    public constructor(
+        vehicleService: VehicleService,
+        driverService: DriverService,
+        modalService: ModalService,
+        identityService: IdentityService)
     {
         this._vehicleService = vehicleService;
         this._driverService = driverService;
         this._modalService = modalService;
+        this._identityService = identityService;
         this._constructed = true;
     }
 
     private readonly _vehicleService: VehicleService;
     private readonly _driverService: DriverService;
     private readonly _modalService: ModalService;
+    private readonly _identityService: IdentityService;
     private readonly _constructed;
 
     /**
@@ -86,6 +94,15 @@ export class DetailsPage
      * The available statuses for the driver
      */
     protected statuses = Object.keys(DriverStatus.values).map(slug => new DriverStatus(slug as any));
+
+    /**
+     * True if the user is authorized to create vehicles, otherwise false,
+     */
+    @computedFrom("identityService.identity.claims.size")
+    protected get canCreateVehicle(): boolean
+    {
+        return this._identityService.identity!.claims.has("create-vehicles");
+    }
 
     /**
      * Called by the framework when the module is activated.

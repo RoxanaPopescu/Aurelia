@@ -59,11 +59,15 @@
                             href="/distribution-centers/details/${distributionCenter.id}">
 
                             <data-table-cell>
-                                ${distributionCenter.name}
+                                <span class="text-truncate" empty-value>
+                                    ${distributionCenter.name}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${distributionCenter.location.address.primary}
+                                <span class="text-truncate" empty-value>
+                                    ${distributionCenter.location.address.primary}
+                                </span>
                             </data-table-cell>
 
                         </data-table-row>
