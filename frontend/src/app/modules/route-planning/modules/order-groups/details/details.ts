@@ -1,11 +1,10 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
-import { ModalService, IValidation, ToastService } from "shared/framework";
+import { ModalService, IValidation } from "shared/framework";
 import { Consignor } from "app/model/outfit";
 import { OrderGroupService, OrderGroup, MatchingCriteria, RoutePlanningTime } from "app/model/order-group";
 import { MatchingCriteriaDialog } from "./modals/matching-criteria/matching-criteria";
 import { RoutePlanningTimeDialog } from "./modals/route-planning-time/route-planning-time";
-import updatedToast from "./resources/strings/updated-toast.json";
 import { RoutePlanningSettingsService, RoutePlanningSettingsInfo } from "app/model/_route-planning-settings";
 import { OrganizationService } from "app/model/organization";
 import { IdentityService } from "app/services/identity";
@@ -30,7 +29,6 @@ export class DetailsPage
      * @param modalService The `ModalService` instance.
      * @param orderGroupsService The `OrderGroupService` instance.
      * @param organizationService The `OrganizationService` instance.
-     * @param toastService The `ToastService` instance.
      * @param routePlanningSettingsService The `RoutePlanningSettingsService` instance.
      * @param identityService The `IdentityService` instance.
      */
@@ -38,7 +36,6 @@ export class DetailsPage
         modalService: ModalService,
         orderGroupsService: OrderGroupService,
         organizationService: OrganizationService,
-        toastService: ToastService,
         routePlanningSettingsService: RoutePlanningSettingsService,
         identityService: IdentityService
     )
@@ -46,7 +43,6 @@ export class DetailsPage
         this._modalService = modalService;
         this._orderGroupsService = orderGroupsService;
         this._organizationService = organizationService;
-        this._toastService = toastService;
         this._identityService = identityService;
         this._routePlanningSettingsService = routePlanningSettingsService;
     }
@@ -55,7 +51,6 @@ export class DetailsPage
     private readonly _orderGroupsService: OrderGroupService;
     private readonly _organizationService: OrganizationService;
     private readonly _identityService: IdentityService;
-    private readonly _toastService: ToastService;
     private readonly _routePlanningSettingsService: RoutePlanningSettingsService;
 
     private availableConsignors: Consignor[];
@@ -155,7 +150,7 @@ export class DetailsPage
     }
 
     /**
-     * Called when the `Save order group` button is clicked.
+     * Called when the `Save changes` button is clicked.
      * Saves the order group.
      */
     protected async onSaveClick(): Promise<void>
@@ -170,7 +165,6 @@ export class DetailsPage
         try
         {
             this.orderGroup = await this._orderGroupsService.update(this.orderGroup);
-            this._toastService.open("success", updatedToast);
         }
         catch (error)
         {

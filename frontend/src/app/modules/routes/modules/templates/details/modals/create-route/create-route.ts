@@ -115,6 +115,7 @@ export class CreateRoutePanel
         catch (error)
         {
             this._modal.busy = false;
+
             Log.error("Could not create the route from the template", error);
         }
     }

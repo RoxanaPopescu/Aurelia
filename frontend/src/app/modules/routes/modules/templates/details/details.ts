@@ -2,10 +2,9 @@ import { autoinject, observable } from "aurelia-framework";
 import { Operation } from "shared/utilities";
 import { RouteTemplateService, RouteTemplate } from "app/model/route-template";
 import { Log } from "shared/infrastructure";
-import { ModalService, IValidation, ToastService } from "shared/framework";
+import { ModalService, IValidation } from "shared/framework";
 import { CreateRoutePanel } from "./modals/create-route/create-route";
 import { addToRecentEntities } from "app/modules/starred/services/recent-item";
-import toast from "./resources/strings/toast.json";
 
 /**
  * Represents the route parameters for the page.
@@ -28,18 +27,15 @@ export class DetailsPage
      * Creates a new instance of the class.
      * @param routeTemplateService The `RouteTemplateService` instance.
      * @param modalService The `ModalService` instance.
-     * @param toastService The `ToastService` instance.
      */
-    public constructor(routeTemplateService: RouteTemplateService, toastService: ToastService, modalService: ModalService)
+    public constructor(routeTemplateService: RouteTemplateService, modalService: ModalService)
     {
         this._routeTemplateService = routeTemplateService;
         this._modalService = modalService;
-        this._toastService = toastService;
     }
 
     private readonly _routeTemplateService: RouteTemplateService;
     private readonly _modalService: ModalService;
-    private readonly _toastService: ToastService;
 
     /**
      * Current tab page the user is routed to.
@@ -118,7 +114,7 @@ export class DetailsPage
     }
 
     /**
-     * Called when the "Save template" button is clicked.
+     * Called when the "Save changes" button is clicked.
      * Saves the template.
      */
     protected async onSaveClick(): Promise<void>
@@ -134,32 +130,23 @@ export class DetailsPage
 
         try
         {
-            let toastHeading: string;
             this.saving = true;
 
             if (!this.template.id)
             {
                 await this._routeTemplateService.create(this.template);
-
-                toastHeading = toast["heading-created"];
             }
             else
             {
                 await this._routeTemplateService.update(this.template);
-
-                toastHeading = toast["heading-updated"];
             }
 
             this.saving = false;
-            this._toastService.open("success",
-            {
-                "heading": toastHeading
-            });
         }
         catch (error)
         {
             this.saving = false;
-            Log.error("Could not save template", error);
+            Log.error("Could not save the template", error);
         }
     }
 }
