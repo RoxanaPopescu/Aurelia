@@ -2,19 +2,47 @@
 const rename = require("gulp-rename");
 const gulp = require("gulp");
 const through = require("through2");
+const cp = require('child_process');
 import path from "path";
 import pkgDir from "pkg-dir";
 
 const packageFolder = `${pkgDir.sync()}/`;
 
-const lang = "nl";
-readAndWriteXliff();
+// Find locales besides our base locale that we currently support. They are required to exist in phrase
+const allLocales: any[] = require(`${packageFolder}/src/resources/settings/locales.json`);
+const locales = allLocales.filter(l => !l.code.includes("en")).map(l => l.code);
 
-// Read  the files and convert them
-function readAndWriteXliff(): void
+let tasks: string[] = [];
+
+// Pull phrase translations to artifacts folder
+const pullPhraseTask = "pull-phrase";
+gulp.task(pullPhraseTask, (done: any) =>
 {
-    const currentPath = resolve(`artifacts/translation/${lang}.xlf`);
-    const taskName = `localize.import-xliff-${lang}`;
+    cp.exec('phrase pull', () => done());
+});
+tasks.push(pullPhraseTask);
+
+// Transform the translations - one task for each
+for (const locale of locales)
+{
+    const taskName = convertLocaleTask(locale);
+    console.info(`Will convert language ${locale} with taskName ${taskName}`);
+    tasks.push(taskName);
+}
+
+// Run tasks
+gulp.series(...tasks)();
+
+/**
+ * Converts the specifice locale from xlf to json by returning a gulp task
+ * @param locale The locale to convert
+ * @returns The gulp task name
+ */
+function convertLocaleTask(locale: string): string
+{
+    const currentPath = resolve(`artifacts/translation/phrase/${locale}.xlf`);
+    const outputPath = resolve(`src/resources/translations/${locale}.json`);
+    const taskName = `localize-xliff-${locale}`;
 
     gulp.task(taskName, () =>
     {
@@ -23,7 +51,7 @@ function readAndWriteXliff(): void
             .src(currentPath)
             .pipe(through.obj((file: any, encoding: any, callback: any) =>
             {
-                const json = importXliffToJson(file.contents.toString());
+                const json = importXliffToJson(file.contents.toString(), locale);
                 file.contents = new Buffer(JSON.stringify(json));
 
                 callback(null, file);
@@ -36,10 +64,10 @@ function readAndWriteXliff(): void
             }))
 
             // Write the destination file.
-            .pipe(gulp.dest(path.posix.dirname(currentPath)));
+            .pipe(gulp.dest(path.posix.dirname(outputPath)));
     });
 
-    gulp.series(taskName)();
+    return taskName;
 }
 
 /**
@@ -47,18 +75,13 @@ function readAndWriteXliff(): void
  * @param xliff The XLIFF string representing the import file.
  * @returns The JSON object representing the import file.
  */
-function importXliffToJson(xliff: any): string
+function importXliffToJson(xliff: any, locale: string): string
 {
-
     const json: any = { };
-
     const unitRegexp = /<trans-unit id="([^"]*?)">([\s\S]*?)<\/trans-unit>/g;
-
-    // NOTE: When importing, the language being imported must be manually specified here.
-    const targetRegexp = /<target xml:lang="nl">([\s\S]*)<\/target>|$/;
+    const targetRegexp = new RegExp(`<target xml:lang="${locale}">([\\s\\S]*)<\/target>|$`);
 
     let unitMatch;
-
     while (unitMatch = unitRegexp.exec(xliff))
     {
         const result = targetRegexp.exec(unitMatch[2]);

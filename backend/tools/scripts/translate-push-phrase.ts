@@ -2,6 +2,7 @@
 const rename = require("gulp-rename");
 const gulp = require("gulp");
 const through = require("through2");
+const cp = require('child_process');
 import fs from "fs";
 import path from "path";
 import pkgDir from "pkg-dir";
@@ -12,25 +13,35 @@ import { translateConfig } from "../translate";
 const packageFolder = `${pkgDir.sync()}/`;
 const plugin = new Plugin(translateConfig);
 
-const appFilePath = resolve("artifacts/translation/export.json");
+const localeFilePath = resolve("artifacts/translation/en.json");
+translateConfig.exportFilePath = localeFilePath;
+
+// Create initial file
+fs.writeFileSync(localeFilePath, "");
 
 // Translate
-translate(appFilePath);
+translate();
 console.info("Translations saved as .json");
 
 // Export fo xliff
-convertToXliff(appFilePath);
+convertToXliff();
 console.info("Translations saved as xcliff");
 
-function translate(currentPath: string): void
+// Upload to phrase
+const uploadPhaseTask = "upload-phrase";
+gulp.task(uploadPhaseTask, () =>
 {
-    translateConfig.exportFilePath = currentPath;
+    cp.exec('phrase push');
+});
+gulp.series(uploadPhaseTask)();
+
+console.info("Translations uploaded to phrase");
+
+function translate(): void
+{
     const task = plugin.export(translateConfig);
 
-    const filePaths = globs.sync([
-        resolve(`src/**/*.html`),
-        resolve(`src/**/resources/strings/**/*.json`)
-    ],
+    const filePaths = globs.sync(translateConfig.includedFilePaths,
     {
         ignore: translateConfig.excludedFilePaths,
         dot: true
@@ -48,16 +59,16 @@ function translate(currentPath: string): void
     task.finalize().catch(reason => console.error(reason));
 }
 
-function convertToXliff(currentPath: string): void
+function convertToXliff(): void
 {
-    const taskName = `localize.export-xliff`;
+    const taskName = "localize.export-xliff";
 
     gulp.task(taskName, () =>
     {
         return gulp
 
             // Get the source file.
-            .src(currentPath)
+            .src(localeFilePath)
 
             // Convert the file from JSON to XLIFF.
             .pipe(through.obj((file: any, encoding: any, callback: any) =>
@@ -77,7 +88,7 @@ function convertToXliff(currentPath: string): void
             }))
 
             // Write the destination file.
-            .pipe(gulp.dest(path.posix.dirname(currentPath)));
+            .pipe(gulp.dest(path.posix.dirname(localeFilePath)));
     });
 
     gulp.series(taskName)();

@@ -1,0 +1,14 @@
+phraseapp:
+  access_token: 212eb4fa549d15dd609ad7283e67b5521da865996b1a99b04a6d3443aa9eb0bc
+  push:
+    sources:
+      - file: ./artifacts/translation/en.xliff
+        project_id: e1bd87cc934d55c093785894ac6e2910
+        params:
+          file_format: xlf
+  pull:
+    targets:
+      - file: ./artifacts/translation/phrase/<locale_name>.xlf
+        project_id: 449e1c5222723de3cff80d65d7d286d9
+        params:
+          file_format: xlf
