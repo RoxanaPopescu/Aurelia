@@ -280,7 +280,7 @@
                     <template repeat.for="result of results">
 
                         <data-table-row
-                            accent.bind="result.status.accent == 'neutral' ? undefined : result.status.accent"
+                            accent.bind="result.status.accent == 'neutral' ? 'neutral' : result.status.accent"
                             selected.bind="orderSelected(result)"
                             toggle.call="onRowToggle(result, value)"
                             href="/orders/details/${result.slug}">

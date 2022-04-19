@@ -4,7 +4,7 @@ order-events
 {
     data-table
     {
-        --data-table-columns: min-content min-content 1fr 1fr 1fr 1fr;
+        --data-table-columns: minmax(106rem, min-content) minmax(72rem, min-content) 1fr 1fr 1fr 1fr;
 
         data-table-headers data-table-cell
         {
