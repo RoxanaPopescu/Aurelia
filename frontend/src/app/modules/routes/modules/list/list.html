@@ -379,61 +379,61 @@
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'reference'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.reference}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'owner'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.owner.primaryName}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'start-date'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.plannedTimeFrame.from | dateTime: 'narrow' : false}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'start-address'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.startLocation.address}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'end-date'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.plannedTimeFrame.to | dateTime: 'narrow' : false}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'end-address'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.endLocation.address}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'tags'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.tags | list: 'short' : 'unit'}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'stop-count'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.stopCount}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'vehicle-type'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.vehicleType.name}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'complexity'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.complexity | number}%
                                     </span>
                                 </data-table-cell>
@@ -450,7 +450,7 @@
                                             Assign executor
                                         </template>
                                     </a>
-                                    <span else class="text-truncate">
+                                    <span else class="text-truncate" empty-value>
                                         ${route.executor.companyName}
                                     </span>
                                 </data-table-cell>
@@ -467,19 +467,19 @@
                                             ${route.driver.name}
                                         </template>
                                     </a>
-                                    <span else class="text-truncate">
+                                    <span else class="text-truncate" empty-value>
                                         ${route.driver.name}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'colli-count'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.totalColliCount | number}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'estimated-colli-count'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.totalEstimatedColliCount | number}
                                     </span>
                                 </data-table-cell>
@@ -492,7 +492,7 @@
                                         href="/fleet-management/drivers/details/${route.driver.id}">
                                         ${route.driver.id}
                                     </a>
-                                    <span else></span>
+                                    <span else empty-value></span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'vehicle'" class="${updating.vehicle ? 'opacity-faded' : ''}">
@@ -512,13 +512,13 @@
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'status'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.status.name}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'legacy-id'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         <a if.bind="route.driver && route.legacyId" target="_blank" href="https://admin.mover.dk/dk/da/user-area/trips/session/${route.legacyId}">
                                             ${route.legacyId}
                                         </a>
@@ -529,43 +529,43 @@
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'estimated-time-frame'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.estimates.timeFrame | dateTimeRange: 'narrow' : false}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'estimated-time-start'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.estimates.timeFrame.from | dateTime: 'narrow' : false}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'estimated-time-end'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.estimates.timeFrame.to | dateTime: 'narrow' : false}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'original-estimated-time-frame'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.initialEstimates.timeFrame | dateTimeRange: 'narrow' : false}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'original-estimated-start'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.initialEstimates.timeFrame.from | dateTime: 'narrow' : false}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'original-estimated-end'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.initialEstimates.timeFrame.to | dateTime: 'narrow' : false}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'planned-time-frame'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${route.plannedTimeFrame | dateTimeRange: 'narrow' : false}
                                     </span>
                                 </data-table-cell>
@@ -580,7 +580,7 @@
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'delayed-stops'">
-                                    <span class="text-truncate">
+                                    <span class="text-truncate" empty-value>
                                         ${delayedStops(route)}
                                     </span>
                                 </data-table-cell>
@@ -597,7 +597,7 @@
                                             ${teamName(route.teamId)}
                                         </template>
                                     </a>
-                                    <span else class="text-truncate">
+                                    <span else class="text-truncate" empty-value>
                                         ${teamName(route.teamId)}
                                     </span>
                                 </data-table-cell>

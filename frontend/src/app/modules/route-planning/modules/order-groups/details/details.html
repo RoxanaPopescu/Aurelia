@@ -185,13 +185,13 @@
                                 <data-table-row>
 
                                     <data-table-cell>
-                                        <span class="text-truncate">
+                                        <span class="text-truncate" empty-value>
                                             ${matchingCriteria.organizations | map: 'primaryName' | list: 'short' : 'unit'}
                                         </span>
                                     </data-table-cell>
 
                                     <data-table-cell>
-                                        <span class="text-truncate">
+                                        <span class="text-truncate" empty-value>
                                             ${matchingCriteria.tags | list: 'short' : 'unit'}
                                         </span>
                                     </data-table-cell>

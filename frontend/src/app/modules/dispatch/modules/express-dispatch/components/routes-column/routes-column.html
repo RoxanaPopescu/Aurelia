@@ -142,61 +142,65 @@
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.consignor.primaryName">
-                            <a if.bind="item.owner.primaryName" href="https://admin.mover.dk/dk/da/user-area/users/${item.consignor.legacyId}/overview" class="text-truncate" target="_blank">
-                                ${item.owner.primaryName}
-                            </a>
+                            <span empty-value>
+                                <a if.bind="item.owner.primaryName" href="https://admin.mover.dk/dk/da/user-area/users/${item.consignor.legacyId}/overview" class="text-truncate" target="_blank">
+                                    ${item.owner.primaryName}
+                                </a>
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.vehicleType.name">
-                            <span class="text-truncate">
+                            <span class="text-truncate" empty-value>
                                 ${item.vehicleType.name}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell title="${item.totalWeightRange.from | number} – ${item.totalWeightRange.to | number} kg">
-                            <span if.bind="item.totalWeightRange != null" class="text-truncate">
-                                ${item.totalWeightRange.from | number} – ${item.totalWeightRange.to | number} kg
+                            <span class="text-truncate" empty-value>
+                                <template if.bind="item.totalWeightRange != null">
+                                    ${item.totalWeightRange.from | number} – ${item.totalWeightRange.to | number} kg
+                                </template>
                             </span>
                         </data-table-cell>
 
                         <data-table-cell>
-                            <span class="text-truncate">
+                            <span class="text-truncate" empty-value>
                                 ${item.stops[0].outfit.primaryName}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.pickupLocation.address">
-                            <span class="text-truncate">
+                            <span class="text-truncate" empty-value>
                                 ${item.pickupLocation.address}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.pickupLocation.address.zipCode">
-                            <span class="text-truncate">
+                            <span class="text-truncate" empty-value>
                                 ${item.pickupLocation.address.zipCode}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.earliestPickupDate | time: 'narrow' : false">
-                            <span class="text-truncate">
+                            <span class="text-truncate" empty-value>
                                 ${item.earliestPickupDate | time: 'narrow' : false}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.latestPickupDate | time: 'narrow' : false">
-                            <span class="text-truncate">
+                            <span class="text-truncate" empty-value>
                                 ${item.latestPickupDate | time: 'narrow' : false}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.stopsCount">
-                            <span class="text-truncate">
+                            <span class="text-truncate" empty-value>
                                 ${item.stops.length} stops
                             </span>
                         </data-table-cell>
 
                         <data-table-cell title="item.estimate">
-                            <span class="text-truncate">
+                            <span class="text-truncate" empty-value>
                                 ${item.estimatedDuration | duration}
                             </span>
                         </data-table-cell>

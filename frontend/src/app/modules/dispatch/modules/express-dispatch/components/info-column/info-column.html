@@ -114,25 +114,25 @@
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.driver.name">
-                            <span class="text-truncate">
+                            <span class="text-truncate" empty-value>
                                 ${item.driver.name}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.vehicle.vehicleType.name">
-                            <span class="text-truncate">
+                            <span class="text-truncate" empty-value>
                                 ${item.vehicle.type.name}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.completionTime">
-                            <span class="text-truncate">
+                            <span class="text-truncate" empty-value>
                                 ${item.completionTime | time: 'narrow' : false}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.lastStop.location.address">
-                            <span class="text-truncate">
+                            <span class="text-truncate" empty-value>
                                 ${item.lastStop.location.address}
                             </span>
                         </data-table-cell>

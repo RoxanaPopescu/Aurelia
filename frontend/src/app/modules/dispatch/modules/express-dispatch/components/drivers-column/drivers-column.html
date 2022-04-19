@@ -135,7 +135,7 @@
                     <data-table-row accent.bind="item.selected ? 'neutral' : undefined" selected.bind="item.selected" toggle.call="onRowToggle(item, value)">
 
                         <data-table-cell title.bind="item.vehicle.vehicleType.name">
-                            <span class="text-truncate">
+                            <span class="text-truncate" empty-value>
                                 ${item.vehicle.type.name}
                             </span>
                         </data-table-cell>
@@ -164,25 +164,27 @@
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.driver.name">
-                            <a class="text-truncate" href="/fleet-management/drivers/details/${item.driver.id}">
+                            <a class="text-truncate" href="/fleet-management/drivers/details/${item.driver.id}" empty-value>
                                 ${item.driver.name}
                             </a>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.driver.phone">
-                            <a if.bind="item.driver.phone" class="text-truncate" href="tel:${item.driver.phone}">
-                                ${item.driver.phone}
-                            </a>
+                            <span empty-value>
+                                <a if.bind="item.driver.phone" class="text-truncate" href="tel:${item.driver.phone}">
+                                    ${item.driver.phone}
+                                </a>
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.completionTime | time: 'narrow' : false">
-                            <span class="text-truncate">
+                            <span class="text-truncate" empty-value>
                                 ${item.completionTime | time: 'narrow' : false}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.nextStop.location.address">
-                            <span class="text-truncate">
+                            <span class="text-truncate" empty-value>
                                 ${item.nextStop.location.address}
                             </span>
                         </data-table-cell>

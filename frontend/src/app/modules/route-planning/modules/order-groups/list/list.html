@@ -159,19 +159,19 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">
+                                <span class="text-truncate" empty-value>
                                     ${orderGroup.allConsignors | map: 'companyName' | list: 'short' : 'unit'}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">
+                                <span class="text-truncate" empty-value>
                                     ${orderGroup.allTags | list: 'short' : 'unit'}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">
+                                <span class="text-truncate" empty-value>
                                     ${orderGroup.nextPlanningTime | dateTime: 'narrow' : false}
                                 </span>
                             </data-table-cell>
