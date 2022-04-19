@@ -70,166 +70,180 @@
                 </div>
             </page-section>
 
-            <page-section class="driver-section">
+            <page-section if.bind="driver.id != null">
+
+                <div class="driver-section">
+
+                    <div class="control-row">
+                        <select-input label="above" none.bind="false" value.bind="driver.status" display-value.bind="driver.status.name" class="flex-basis-1-of-2">
+
+                            <div slot="heading" translate>
+                                Status
+                            </div>
+
+                            <item repeat.for="status of statuses" model.bind="status">
+                                ${status.name}
+                            </item>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="driver.status">
+                                </required-validator>
+
+                            </div>
+
+                        </select-input>
+                        <div class="flex-basis-1-of-2"></div>
+                    </div>
+
+                </div>
+
+            </page-section>
+
+            <page-section class="--line-above">
 
                 <div slot="header" translate>
                     Profile
                 </div>
 
-                <div class="control-row margin-large-bottom">
-                    <text-input label="above" value.bind="driver.name.first" class="flex-basis-1-of-2">
+                <div class="driver-section">
 
-                        <div slot="heading" translate>
-                            First name
-                        </div>
+                    <div class="control-row margin-large-bottom">
+                        <text-input label="above" value.bind="driver.name.first" class="flex-basis-1-of-2">
 
-                        <div slot="validation">
+                            <div slot="heading" translate>
+                                First name
+                            </div>
 
-                            <required-validator
-                                value.bind="driver.name.first">
-                            </required-validator>
+                            <div slot="validation">
 
-                        </div>
+                                <required-validator
+                                    value.bind="driver.name.first">
+                                </required-validator>
 
-                    </text-input>
+                            </div>
 
-                    <text-input label="above" value.bind="driver.name.last" class="flex-basis-1-of-2">
+                        </text-input>
 
-                        <div slot="heading" translate>
-                            Last name
-                        </div>
+                        <text-input label="above" value.bind="driver.name.last" class="flex-basis-1-of-2">
 
-                        <div slot="validation">
+                            <div slot="heading" translate>
+                                Last name
+                            </div>
 
-                            <required-validator
-                                value.bind="driver.name.last">
-                            </required-validator>
+                            <div slot="validation">
 
-                        </div>
+                                <required-validator
+                                    value.bind="driver.name.last">
+                                </required-validator>
 
-                    </text-input>
+                            </div>
+
+                        </text-input>
+                    </div>
+
+                    <div class="control-row margin-large-bottom">
+                        <email-input label="above" value.bind="driver.email" class="flex-basis-1-of-1">
+
+                            <div slot="heading" translate>
+                                Email
+                            </div>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="driver.email">
+                                </required-validator>
+
+                                <invalid-validator if.bind="emailOrPhoneAlreadyExist">
+
+                                    <template replace-part="invalid" translate>
+                                        The email or phone number already exist
+                                    </template>
+
+                                </invalid-validator>
+
+                            </div>
+
+                        </email-input>
+                    </div>
+
+                    <div class="control-row margin-large-bottom">
+                        <text-input maxlength="2" label="above" value.bind="driver.phone.countryPrefix" style="width: 100rem;">
+                            <div slot="heading" translate>
+                                Country code
+                            </div>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="driver.phone.countryPrefix">
+                                </required-validator>
+
+                                <length-validator
+                                    value.bind="driver.phone.countryPrefix"
+                                    max.bind="2"
+                                    min.bind="2">
+                                </length-validator>
+
+                                <pattern-validator
+                                    active.bind="true"
+                                    value.bind="driver.phone.countryPrefix"
+                                    pattern="^[0-9]*$">
+
+                                    <template replace-part="invalid" translate>
+                                        Please only provide a value with numbers.
+                                    </template>
+
+                                </pattern-validator>
+                            </div>
+                        </text-input>
+                        <text-input label="above" value.bind="driver.phone.number" class="flex-grow">
+                            <div slot="heading" translate>
+                                Phone number
+                            </div>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    value.bind="driver.phone.number">
+                                </required-validator>
+
+                                <length-validator
+                                    value.bind="driver.phone.number"
+                                    min.bind="6">
+                                </length-validator>
+
+                                <invalid-validator if.bind="emailOrPhoneAlreadyExist">
+                                    <template replace-part="invalid" translate>
+                                        The email or phone number already exist
+                                    </template>
+                                </invalid-validator>
+                            </div>
+                        </text-input>
+                    </div>
+
+                    <div if.bind="isNew" class="control-row">
+                        <text-input label="above" value.bind="driver.password" class="flex-basis-1-of-1">
+                            <div slot="heading" translate>
+                                Password
+                            </div>
+
+                            <div if.bind="driver.password" slot="validation">
+                                <required-validator
+                                    value.bind="driver.password">
+                                </required-validator>
+                                <length-validator
+                                    value.bind="driver.password"
+                                    min.bind="6">
+                                </length-validator>
+                            </div>
+                        </text-input>
+                    </div>
+
                 </div>
 
-                <div class="control-row margin-large-bottom">
-                    <email-input label="above" value.bind="driver.email" class="flex-basis-1-of-1">
-
-                        <div slot="heading" translate>
-                            Email
-                        </div>
-
-                        <div slot="validation">
-
-                            <required-validator
-                                value.bind="driver.email">
-                            </required-validator>
-
-                            <invalid-validator if.bind="emailOrPhoneAlreadyExist">
-
-                                <template replace-part="invalid" translate>
-                                    The email or phone number already exist
-                                </template>
-
-                            </invalid-validator>
-
-                        </div>
-
-                    </email-input>
-                </div>
-
-                <div class="control-row margin-large-bottom">
-                    <text-input maxlength="2" label="above" value.bind="driver.phone.countryPrefix" style="width: 100rem;">
-                        <div slot="heading" translate>
-                            Country code
-                        </div>
-
-                        <div slot="validation">
-
-                            <required-validator
-                                value.bind="driver.phone.countryPrefix">
-                            </required-validator>
-
-                            <length-validator
-                                value.bind="driver.phone.countryPrefix"
-                                max.bind="2"
-                                min.bind="2">
-                            </length-validator>
-
-                            <pattern-validator
-                                active.bind="true"
-                                value.bind="driver.phone.countryPrefix"
-                                pattern="^[0-9]*$">
-
-                                <template replace-part="invalid" translate>
-                                    Please only provide a value with numbers.
-                                </template>
-
-                            </pattern-validator>
-                        </div>
-                    </text-input>
-                    <text-input label="above" value.bind="driver.phone.number" class="flex-grow">
-                        <div slot="heading" translate>
-                            Phone number
-                        </div>
-
-                        <div slot="validation">
-
-                            <required-validator
-                                value.bind="driver.phone.number">
-                            </required-validator>
-
-                            <length-validator
-                                value.bind="driver.phone.number"
-                                min.bind="6">
-                            </length-validator>
-
-                            <invalid-validator if.bind="emailOrPhoneAlreadyExist">
-                                <template replace-part="invalid" translate>
-                                    The email or phone number already exist
-                                </template>
-                            </invalid-validator>
-                        </div>
-                    </text-input>
-                </div>
-
-                <div if.bind="isNew" class="control-row margin-large-bottom">
-                    <text-input label="above" value.bind="driver.password" class="flex-basis-1-of-1">
-                        <div slot="heading" translate>
-                            Password
-                        </div>
-
-                        <div if.bind="driver.password" slot="validation">
-                            <required-validator
-                                value.bind="driver.password">
-                            </required-validator>
-                            <length-validator
-                                value.bind="driver.password"
-                                min.bind="6">
-                            </length-validator>
-                        </div>
-                    </text-input>
-                </div>
-
-                <div class="control-row">
-                    <select-input label="above" none.bind="false" value.bind="driver.status" display-value.bind="driver.status.name" class="flex-basis-1-of-1">
-
-                        <div slot="heading" translate>
-                            Status
-                        </div>
-
-                        <item repeat.for="status of statuses" model.bind="status">
-                            ${status.name}
-                        </item>
-
-                        <div slot="validation">
-
-                            <required-validator
-                                value.bind="driver.status">
-                            </required-validator>
-
-                        </div>
-
-                    </select-input>
-                </div>
             </page-section>
 
             <page-section if.bind="driver.id" class="--line-above">
