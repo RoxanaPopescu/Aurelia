@@ -151,7 +151,7 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.slug">
+                        <data-table-cell title.bind="item.slug" accent.bind="!item.driverOnline ? 'negative' : 'neutral' & attr">
                             <icon name="md-warning" if.bind="!item.driverOnline"></icon>
                             <span class="text-truncate">
                                 <template if.bind="item.driverOnline" translate>
