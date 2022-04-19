@@ -145,10 +145,6 @@
                                 For orders from one of these creators…
                             </div>
 
-                            <span slot="placeholder" translate>
-                                Choose creators
-                            </span>
-
                             <div slot="value">
                                 <tag repeat.for="creatorName of selectedCreatorNames">
                                     ${creatorName}
@@ -180,10 +176,6 @@
                             <div slot="heading" translate>
                                 Match if the order has one of these vehicle types…
                             </div>
-
-                            <span slot="placeholder" translate>
-                                Choose vehicle type
-                            </span>
 
                             <div slot="value">
                                 <tag model.bind="vehicleType" repeat.for="vehicleType of settings.shipmentFilter.vehicleTypes">
@@ -273,10 +265,6 @@
                                 For routes assigned to one of these contractors…
                             </div>
 
-                            <span slot="placeholder" translate>
-                                Choose contractors
-                            </span>
-
                             <div slot="value">
                                 <tag repeat.for="contractorName of selectedContractorNames">
                                     ${contractorName}
@@ -308,10 +296,6 @@
                             <div slot="heading" translate>
                                 Match if the route has all the tags…
                             </div>
-
-                            <span slot="placeholder" translate>
-                                Choose tags
-                            </span>
 
                             <div slot="value">
                                 <tag model.bind="tag" repeat.for="tag of settings.routeFilter.tags">

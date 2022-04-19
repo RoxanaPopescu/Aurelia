@@ -36,10 +36,6 @@
                     Organizations
                 </div>
 
-                <span slot="placeholder" translate>
-                    Choose organizations
-                </span>
-
                 <div slot="value">
                     <tag repeat.for="organization of model.matchingCriteria.organizations">
                         ${organization.primaryName}
@@ -78,10 +74,6 @@
                 <div slot="heading" translate>
                     Tags
                 </div>
-
-                <span slot="placeholder" translate>
-                    Choose tags
-                </span>
 
                 <div slot="value">
                     <tag model.bind="tag" repeat.for="tag of model.matchingCriteria.tags">

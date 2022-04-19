@@ -48,10 +48,6 @@
                         Day of week
                     </div>
 
-                    <span slot="placeholder" translate>
-                        Choose a day
-                    </span>
-
                     <item repeat.for="dayOfWeek of [1, 2, 3, 4, 5, 6, 7]" model.bind="dayOfWeek">
                         ${dayOfWeek | weekday | case: 'sentence'}
                     </item>
@@ -155,10 +151,6 @@
                     <div slot="heading" translate>
                         Day of week
                     </div>
-
-                    <span slot="placeholder" translate>
-                        Choose a day
-                    </span>
 
                     <item repeat.for="dayOfWeek of [1, 2, 3, 4, 5, 6, 7]" model.bind="dayOfWeek">
                         ${dayOfWeek | weekday | case: 'sentence'}
