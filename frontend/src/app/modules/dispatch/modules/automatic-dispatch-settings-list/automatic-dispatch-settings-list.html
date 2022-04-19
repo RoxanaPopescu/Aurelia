@@ -46,8 +46,10 @@
 
                     <data-table-headers>
 
-                        <data-table-cell translate>
-                            Name
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Name
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell>
@@ -76,18 +78,22 @@
                             accent.bind="item.paused ? 'neutral' : 'positive'">
 
                             <data-table-cell>
-                                ${item.name}
+                                <span class="text-truncate">
+                                    ${item.name}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${item.updated | dateTime: 'narrow' : false}
+                                <span class="text-truncate">
+                                    ${item.updated | dateTime: 'narrow' : false}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span if.bind="item.paused" translate>
+                                <span if.bind="item.paused" class="text-truncate" translate>
                                     Paused
                                 </span>
-                                <span if.bind="!item.paused" translate>
+                                <span if.bind="!item.paused" class="text-truncate" translate>
                                     Active
                                 </span>
                             </data-table-cell>

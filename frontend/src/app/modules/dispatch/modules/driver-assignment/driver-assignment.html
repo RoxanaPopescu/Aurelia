@@ -195,7 +195,7 @@
                                             Assign executor
                                         </template>
                                     </a>
-                                    <span else empty-value>
+                                    <span else>
                                         <template if.bind="result.route.executor.companyName">
                                             ${result.route.executor.companyName}
                                         </template>
@@ -316,7 +316,7 @@
                                             ${teamName(result.route.teamId)}
                                         </template>
                                     </a>
-                                    <span else empty-value>
+                                    <span else>
                                         ${teamName(result.route.teamId)}
                                     </span>
                                 </data-table-cell>
@@ -438,7 +438,9 @@
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'vehicle-type'">
-                                    ${route.vehicleType.name}
+                                    <span class="text-truncate">
+                                        ${route.vehicleType.name}
+                                    </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'complexity'">
@@ -459,7 +461,7 @@
                                             Assign executor
                                         </template>
                                     </a>
-                                    <span else empty-value>
+                                    <span else>
                                         <template if.bind="route.executor.companyName">
                                             ${route.executor.companyName}
                                         </template>
@@ -478,7 +480,7 @@
                                             ${route.driver.name}
                                         </span>
                                     </a>
-                                    <span else empty-value>
+                                    <span else>
                                         <template if.bind="route.driver">
                                             ${route.driver.name}
                                         </template>
@@ -498,11 +500,7 @@
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'driver-id'">
-
-                                    <text-input value.bind="route.driverId" disabled.bind="assigningDrivers" focusout.trigger="onDriverIdChanged(route)">
-
-                                    </text-input>
-
+                                    <text-input value.bind="route.driverId" disabled.bind="assigningDrivers" focusout.trigger="onDriverIdChanged(route)"></text-input>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'vehicle'" class="${updating.vehicle ? 'opacity-faded' : ''}">
@@ -516,7 +514,7 @@
                                             ${route.vehicle.name}
                                         </template>
                                         <template if.bind="route.vehicle && !route.vehicle.name">
-                                            ${route.vehicle.model} - ${route.vehicle.make}
+                                            ${route.vehicle.make} ${route.vehicle.model}
                                         </template>
                                     </a>
                                 </data-table-cell>
@@ -596,7 +594,7 @@
                                             ${teamName(route.teamId)}
                                         </template>
                                     </a>
-                                    <span else empty-value>
+                                    <span else>
                                         ${teamName(route.teamId)}
                                     </span>
                                 </data-table-cell>

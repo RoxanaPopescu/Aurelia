@@ -427,7 +427,9 @@
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'vehicle-type'">
-                                    ${route.vehicleType.name}
+                                    <span class="text-truncate">
+                                        ${route.vehicleType.name}
+                                    </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'complexity'">
@@ -448,7 +450,7 @@
                                             Assign executor
                                         </template>
                                     </a>
-                                    <span else empty-value>
+                                    <span else>
                                         <template if.bind="route.executor.companyName">
                                             ${route.executor.companyName}
                                         </template>
@@ -467,7 +469,7 @@
                                             ${route.driver.name}
                                         </template>
                                     </a>
-                                    <span else empty-value>
+                                    <span else>
                                         <template if.bind="route.driver">
                                             ${route.driver.name}
                                         </template>
@@ -488,11 +490,13 @@
 
                                 <data-table-cell if.bind="column.slug === 'driver-id'">
                                     <a
+                                        if.bind="route.driver.id"
                                         class="text-truncate"
                                         target="_blank"
                                         href="/fleet-management/drivers/details/${route.driver.id}">
                                         ${route.driver.id}
                                     </a>
+                                    <span else></span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'vehicle'" class="${updating.vehicle ? 'opacity-faded' : ''}">
@@ -506,7 +510,7 @@
                                             ${route.vehicle.name}
                                         </template>
                                         <template if.bind="route.vehicle && !route.vehicle.name">
-                                            ${route.vehicle.model} - ${route.vehicle.make}
+                                            ${route.vehicle.make} ${route.vehicle.model}
                                         </template>
                                     </a>
                                 </data-table-cell>
@@ -598,7 +602,7 @@
                                             ${teamName(route.teamId)}
                                         </template>
                                     </a>
-                                    <span else empty-value>
+                                    <span else>
                                         ${teamName(route.teamId)}
                                     </span>
                                 </data-table-cell>

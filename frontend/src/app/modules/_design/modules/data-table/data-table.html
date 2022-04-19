@@ -116,28 +116,40 @@
 
                     <data-table-headers>
 
-                        <data-table-cell translate>
-                            ID
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                ID
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell name="reference" translate>
-                            Reference
+                        <data-table-cell name="reference">
+                            <span class="text-truncate" translate>
+                                Reference
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell name="start-date" translate>
-                            Start date
+                        <data-table-cell name="start-date">
+                            <span class="text-truncate" translate>
+                                Start date
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell name="start-address" translate>
-                            Start address
+                        <data-table-cell name="start-address">
+                            <span class="text-truncate" translate>
+                                Start address
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell name="stops" align="right" translate>
-                            Stops
+                        <data-table-cell name="stops" align="right">
+                            <span class="text-truncate" translate>
+                                Stops
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell name="status" translate>
-                            Status
+                        <data-table-cell name="status">
+                            <span class="text-truncate" translate>
+                                Status
+                            </span>
                         </data-table-cell>
 
                     </data-table-headers>
@@ -153,27 +165,39 @@
                             href.bind="rowType == 'link' ? `/routes/details/${route.slug}` : undefined">
 
                             <data-table-cell>
-                                <a href="/routes/details/${route.slug}">${route.slug}</a>
+                                <span class="text-truncate">
+                                    <a href="/routes/details/${route.slug}">${route.slug}</a>
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${route.reference}
+                                <span class="text-truncate">
+                                    ${route.reference}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${route.startDateTime | dateTime: 'narrow' : false}
+                                <span class="text-truncate">
+                                    ${route.startDateTime | dateTime: 'narrow' : false}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${route.startAddress}
+                                <span class="text-truncate">
+                                    ${route.startAddress}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell align="right">
-                                ${route.stopCount}
+                                <span class="text-truncate">
+                                    ${route.stopCount}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${route.status.name}
+                                <span class="text-truncate">
+                                    ${route.status.name}
+                                </span>
                             </data-table-cell>
 
                             <data-table-details

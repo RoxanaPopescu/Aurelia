@@ -69,19 +69,17 @@
                     </data-table-cell>
 
                     <data-table-cell>
-                        <span class="text-truncate" if.bind="collo.weight">
+                        <span if.bind="collo.weight" class="text-truncate">
                             ${collo.weight | number}kg
                         </span>
-
-                        <span if.bind="!collo.weight" empty-value />
+                        <span else empty-value></span>
                     </data-table-cell>
 
                     <data-table-cell>
-                        <span class="text-truncate" if.bind="collo.dimensions">
+                        <span if.bind="collo.dimensions" class="text-truncate">
                             ${collo.dimensions.height | number}m x ${collo.dimensions.length | number}m x ${collo.dimensions.width | number}m
                         </span>
-
-                        <span if.bind="!collo.dimensions" empty-value />
+                        <span else empty-value></span>
                     </data-table-cell>
 
                     <data-table-cell align="right">

@@ -271,28 +271,40 @@
 
                     <data-table-headers>
 
-                        <data-table-cell name="name" translate>
-                            Name
+                        <data-table-cell name="name">
+                            <span class="text-truncate" translate>
+                                Name
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell name="gate" translate>
-                            Gate
+                        <data-table-cell name="gate">
+                            <span class="text-truncate" translate>
+                                Gate
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell name="weekdays" translate>
-                            Reserved weekdays
+                        <data-table-cell name="weekdays">
+                            <span class="text-truncate" translate>
+                                Reserved weekdays
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell name="from-date" translate>
-                            From date
+                        <data-table-cell name="from-date">
+                            <span class="text-truncate" translate>
+                                From date
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell name="to-date" translate>
-                            To date
+                        <data-table-cell name="to-date">
+                            <span class="text-truncate" translate>
+                                To date
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell name="vehicle-group" translate>
-                            Vehicle group
+                        <data-table-cell name="vehicle-group">
+                            <span class="text-truncate" translate>
+                                Vehicle group
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell align="right">
@@ -306,24 +318,33 @@
                         <data-table-row click.call="onScenarioClick(scenario)">
 
                             <data-table-cell>
-                                ${scenario.name}
-                            </data-table-cell>
-
-                            <data-table-cell>
-                                ${scenario.gates[0].name}
-                            </data-table-cell>
-
-                            <data-table-cell>
-                                ${scenario.criteria.weekdays | weekdayList}
+                                <span class="text-truncate">
+                                    ${scenario.name}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${scenario.criteria.datePeriod.from | date: 'narrow' : false}
+                                <span class="text-truncate">
+                                    ${scenario.gates[0].name}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${scenario.criteria.datePeriod.to | date: 'narrow' : false}
+                                <span class="text-truncate">
+                                    ${scenario.criteria.weekdays | weekdayList}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${scenario.criteria.datePeriod.from | date: 'narrow' : false}
+                                </span>
+                            </data-table-cell>
+
+                            <data-table-cell>
+                                <span class="text-truncate">
+                                    ${scenario.criteria.datePeriod.to | date: 'narrow' : false}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
@@ -332,7 +353,7 @@
                                     vehicle-group.bind="getVehicleGroup(scenario.gates[0].slots[0].vehicleGroup, bindingUpdateTrigger)">
                                 </let>
 
-                                <span if.bind="vehicleGroup != null">
+                                <span if.bind="vehicleGroup != null" class="text-truncate">
                                     ${vehicleGroup.name}
                                 </span>
 

@@ -46,8 +46,10 @@
 
                     <data-table-headers>
 
-                        <data-table-cell translate>
-                            Name
+                        <data-table-cell>
+                            <span class="text-truncate" translate>
+                                Name
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell>
@@ -68,11 +70,15 @@
                             href="/route-planning/rule-sets/details/${item.slug}">
 
                             <data-table-cell>
-                                ${item.name}
+                                <span class="text-truncate">
+                                    ${item.name}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${item.lastModified | dateTime: 'narrow' : false}
+                                <span class="text-truncate">
+                                    ${item.lastModified | dateTime: 'narrow' : false}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell align="right">

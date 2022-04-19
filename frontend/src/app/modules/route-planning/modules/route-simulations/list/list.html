@@ -33,12 +33,16 @@
 
                     <data-table-headers>
 
-                        <data-table-cell DISABLED-name="name" translate>
-                            Name
+                        <data-table-cell DISABLED-name="name">
+                            <span class="text-truncate" translate>
+                                Name
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell DISABLED-name="zip-range" translate>
-                            Created
+                        <data-table-cell DISABLED-name="zip-range">
+                            <span class="text-truncate" translate>
+                                Created
+                            </span>
                         </data-table-cell>
 
                     </data-table-headers>
@@ -49,11 +53,15 @@
                             href="/route-planning/simulations/${simulation.id}/result">
 
                             <data-table-cell>
-                                ${simulation.name}
+                                <span class="text-truncate">
+                                    ${simulation.name}
+                                </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                ${simulation.created | dateTime: 'narroew' }
+                                <span class="text-truncate">
+                                    ${simulation.created | dateTime: 'narroew' }
+                                </span>
                             </data-table-cell>
 
                         </data-table-row>

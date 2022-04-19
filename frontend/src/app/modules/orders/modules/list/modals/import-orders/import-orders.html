@@ -97,23 +97,31 @@
                     <data-table-headers>
 
                         <template replace-part="toggle-all">
-                            <data-table-cell name="fixed" sort-direction="descending" translate>
-                                Fixed
+                            <data-table-cell name="fixed" sort-direction="descending">
+                                <span class="text-truncate" translate>
+                                    Fixed
+                                </span>
                             </data-table-cell>
                         </template>
 
-                        <data-table-cell name="range.fromRow" sort-direction="ascending" align="right" translate>
-                            Row
+                        <data-table-cell name="range.fromRow" sort-direction="ascending" align="right">
+                            <span class="text-truncate" translate>
+                                Row
+                            </span>
                         </data-table-cell>
 
-                        <data-table-cell name="range.fromColumn" sort-direction="ascending" align="right" translate>
-                            Column
+                        <data-table-cell name="range.fromColumn" sort-direction="ascending" align="right">
+                            <span class="text-truncate" translate>
+                                Column
+                            </span>
                         </data-table-cell>
 
                         <data-table-cell></data-table-cell>
 
-                        <data-table-cell name="description" sort-direction="ascending" translate>
-                            Error description
+                        <data-table-cell name="description" sort-direction="ascending">
+                            <span class="text-truncate" translate>
+                                Error description
+                            </span>
                         </data-table-cell>
 
                     </data-table-headers>
@@ -126,7 +134,7 @@
                             accent.bind="error.fixed ? 'positive' : 'negative'">
 
                             <data-table-cell align="right">
-                                <span empty-value>
+                                <span class="text-truncate" empty-value>
                                     <template if.bind="error.range != null">
                                         ${
                                             error.range.fromRow === error.range.toRow
@@ -138,7 +146,7 @@
                             </data-table-cell>
 
                             <data-table-cell align="right">
-                                <span empty-value>
+                                <span class="text-truncate" empty-value>
                                     <template if.bind="error.range != null">
                                         ${
                                             error.range.fromColumn === error.range.toColumn
@@ -152,7 +160,7 @@
                             <data-table-cell></data-table-cell>
 
                             <data-table-cell>
-                                <span empty-value>
+                                <span class="text-truncate" empty-value>
                                     ${error.description}
                                 </span>
                             </data-table-cell>
