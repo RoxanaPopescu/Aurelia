@@ -164,15 +164,13 @@
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.driver.name">
-
                             <a class="text-truncate" href="/fleet-management/drivers/details/${item.driver.id}">
                                 ${item.driver.name}
                             </a>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.driver.phone">
-
-                            <a class="text-truncate" href="tel:${item.driver.phone}">
+                            <a if.bind="item.driver.phone" class="text-truncate" href="tel:${item.driver.phone}">
                                 ${item.driver.phone}
                             </a>
                         </data-table-cell>

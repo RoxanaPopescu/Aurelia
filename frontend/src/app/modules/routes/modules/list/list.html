@@ -450,10 +450,8 @@
                                             Assign executor
                                         </template>
                                     </a>
-                                    <span else>
-                                        <template if.bind="route.executor.companyName">
-                                            ${route.executor.companyName}
-                                        </template>
+                                    <span else class="text-truncate">
+                                        ${route.executor.companyName}
                                     </span>
                                 </data-table-cell>
 
@@ -469,10 +467,8 @@
                                             ${route.driver.name}
                                         </template>
                                     </a>
-                                    <span else>
-                                        <template if.bind="route.driver">
-                                            ${route.driver.name}
-                                        </template>
+                                    <span else class="text-truncate">
+                                        ${route.driver.name}
                                     </span>
                                 </data-table-cell>
 
@@ -523,11 +519,10 @@
 
                                 <data-table-cell if.bind="column.slug === 'legacy-id'">
                                     <span class="text-truncate">
-                                        <a target="_blank" href="https://admin.mover.dk/dk/da/user-area/trips/session/${route.legacyId}" if.bind="route.driver">
+                                        <a if.bind="route.driver && route.legacyId" target="_blank" href="https://admin.mover.dk/dk/da/user-area/trips/session/${route.legacyId}">
                                             ${route.legacyId}
                                         </a>
-
-                                        <a target="_blank" href="https://admin.mover.dk/dk/da/user-area/trips/request/${route.legacyId}" if.bind="!route.driver">
+                                        <a if.bind="!route.driver && route.legacyId" target="_blank" href="https://admin.mover.dk/dk/da/user-area/trips/request/${route.legacyId}">
                                             ${route.legacyId}
                                         </a>
                                     </span>
@@ -602,7 +597,7 @@
                                             ${teamName(route.teamId)}
                                         </template>
                                     </a>
-                                    <span else>
+                                    <span else class="text-truncate">
                                         ${teamName(route.teamId)}
                                     </span>
                                 </data-table-cell>

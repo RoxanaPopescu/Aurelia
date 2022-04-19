@@ -142,7 +142,7 @@
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.consignor.primaryName">
-                            <a href="https://admin.mover.dk/dk/da/user-area/users/${item.consignor.legacyId}/overview" class="text-truncate" target="_blank">
+                            <a if.bind="item.owner.primaryName" href="https://admin.mover.dk/dk/da/user-area/users/${item.consignor.legacyId}/overview" class="text-truncate" target="_blank">
                                 ${item.owner.primaryName}
                             </a>
                         </data-table-cell>

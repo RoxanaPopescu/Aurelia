@@ -174,7 +174,9 @@
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'vehicle-type'">
-                                    ${result.route.vehicleType.name}
+                                    <span class="text-truncate">
+                                        ${result.route.vehicleType.name}
+                                    </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'complexity'">
@@ -195,10 +197,8 @@
                                             Assign executor
                                         </template>
                                     </a>
-                                    <span else>
-                                        <template if.bind="result.route.executor.companyName">
-                                            ${result.route.executor.companyName}
-                                        </template>
+                                    <span else class="text-truncate">
+                                        ${result.route.executor.companyName}
                                     </span>
                                 </data-table-cell>
 
@@ -215,20 +215,20 @@
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'driver'" class="${updating.driver ? 'opacity-faded' : ''}">
-                                    <span>
+                                    <span class="text-truncate">
                                         ${result.driver.name}
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'driver-id'">
-
                                     <a
+                                        if.bind="result.driver.id"
                                         class="text-truncate"
                                         target="_blank"
                                         href="/fleet-management/drivers/details/${result.driver.id}">
                                         ${result.driver.id}
                                     </a>
-
+                                    <span else></span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'vehicle'" class="${updating.vehicle ? 'opacity-faded' : ''}">
@@ -242,7 +242,7 @@
                                             ${result.route.vehicle.name}
                                         </template>
                                         <template if.bind="result.route.vehicle && !result.route.vehicle.name">
-                                            ${result.route.vehicle.model} - ${result.route.vehicle.make}
+                                            ${result.route.vehicle.make} ${result.route.vehicle.model}
                                         </template>
                                     </a>
                                 </data-table-cell>
@@ -255,11 +255,10 @@
 
                                 <data-table-cell if.bind="column.slug === 'legacy-id'">
                                     <span class="text-truncate">
-                                        <a target="_blank" href="https://admin.mover.dk/dk/da/user-area/trips/session/${route.legacyId}" if.bind="route.driver">
+                                        <a if.bind="route.driver && result.route.legacyId" target="_blank" href="https://admin.mover.dk/dk/da/user-area/trips/session/${route.legacyId}">
                                             ${result.route.legacyId}
                                         </a>
-
-                                        <a target="_blank" href="https://admin.mover.dk/dk/da/user-area/trips/request/${route.legacyId}" if.bind="!route.driver">
+                                        <a if.bind="!route.driver && result.route.legacyId" target="_blank" href="https://admin.mover.dk/dk/da/user-area/trips/request/${route.legacyId}">
                                             ${result.route.legacyId}
                                         </a>
                                     </span>
@@ -316,7 +315,7 @@
                                             ${teamName(result.route.teamId)}
                                         </template>
                                     </a>
-                                    <span else>
+                                    <span else class="text-truncate">
                                         ${teamName(result.route.teamId)}
                                     </span>
                                 </data-table-cell>
