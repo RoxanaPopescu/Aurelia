@@ -13,17 +13,21 @@
 
 .c-liveTracking-routesPanel-filters-badge {
   display: inline-block;
-  margin-left: 6px;
-  padding: 4px 4px;
-  min-width: 2em;
+  padding: 5px 5px;
+  min-width: 24rem;
   border-radius: 12px;
-  line-height: 1.33;
+  line-height: 1;
   font-size: 12px;
   font-weight: 600;
   text-align: center;
   background-color: var(--surface-neutral-surface-color);
   color: white;
   border: 1px solid hsla(0, 0%, 50%, 0.05);
+
+  &:not(:first-child)
+  {
+    margin-left: 6px;
+  }
 
   &.--negative
   {

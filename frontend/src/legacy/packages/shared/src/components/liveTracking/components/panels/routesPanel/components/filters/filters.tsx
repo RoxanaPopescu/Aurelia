@@ -56,13 +56,13 @@ export class Filters extends React.Component<RoutesLayerProps> {
             }}
           className="c-liveTracking-routesPanel-filters-info c-liveTracking-box-clickable">
             <span className="c-liveTracking-routesPanel-filters-criticality">
-              <span className={"c-liveTracking-routesPanel-filters-badge --negative"}>
+              <span className={"c-liveTracking-routesPanel-filters-badge --negative"} title="High criticality">
                 <span>{highCriticalityCount}</span>
               </span>
-              <span className={"c-liveTracking-routesPanel-filters-badge --attention"}>
+              <span className={"c-liveTracking-routesPanel-filters-badge --attention"} title="Medium criticality">
                 <span>{mediumCriticalityCount}</span>
               </span>
-              <span className={"c-liveTracking-routesPanel-filters-badge --neutral"}>
+              <span className={"c-liveTracking-routesPanel-filters-badge --neutral"} title="Low criticality">
                 <span>{lowCriticalityCount}</span>
               </span>
             </span>
