@@ -36,7 +36,7 @@
                 Selected driver
             </h2>
 
-            <data-table appearance="rows" class="selected-driver-table">
+            <data-table appearance="rows" class="selected-driver-table --reduce-header-whitespace">
 
                 <data-table-headers>
 
@@ -95,7 +95,7 @@
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell title.bind="item.slug">
+                        <data-table-cell title.bind="item.slug" accent.bind="!item.driverOnline ? 'negative' : 'neutral' & attr">
                             <icon name="md-warning" if.bind="!item.driverOnline"></icon>
                             <span class="text-truncate">
                                 <template if.bind="item.driverOnline" translate>
@@ -151,7 +151,7 @@
                 Selected routes
             </h2>
 
-            <data-table appearance="rows" class="selected-routes-table">
+            <data-table appearance="rows" class="selected-routes-table --reduce-header-whitespace">
 
                 <data-table-headers>
 

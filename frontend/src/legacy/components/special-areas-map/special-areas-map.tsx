@@ -138,6 +138,9 @@ export class SpecialAreasMapComponent extends React.Component<ISpecialAreasMapPr
             }
         }
 
-        (this.map.fitBounds as Function)(routeBounds, 50);
+        if (!routeBounds.isEmpty())
+        {
+            (this.map.fitBounds as Function)(routeBounds, 50);
+        }
     }
 }

@@ -110,10 +110,6 @@
           padding-left: 45px;
         }
 
-        &:nth-child(11n + 11) {
-          padding-right: 0;
-        }
-
         &:not(.c-fulfillerKpi-kpiColumn-head) {
           &:nth-child(11n + 2) {
             background-color: var(--legacy-card-surface-color, var(--colorNeutralExtraLight));

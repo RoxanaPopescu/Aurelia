@@ -188,6 +188,9 @@ export class RouteDetailsMapComponent extends React.Component<IRouteDetailsMapPr
             }
         }
 
-        (this.map.fitBounds as Function)(routeBounds, 50);
+        if (!routeBounds.isEmpty())
+        {
+            (this.map.fitBounds as Function)(routeBounds, 50);
+        }
     }
 }

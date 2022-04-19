@@ -182,7 +182,10 @@ export class RoutePlanningStore {
 
     this.map = ref;
     if (this.lastBounds) {
-      this.map.fitBounds(this.lastBounds);
+      if (!this.lastBounds.isEmpty)
+      {
+        this.map.fitBounds(this.lastBounds);
+      }
     } else {
       this.zoom();
     }
@@ -323,7 +326,10 @@ export class RoutePlanningStore {
         bounds.extend(stop.location.position!.toGoogleLatLng())
       );
 
-      this.map.fitBounds(bounds);
+      if (!bounds.isEmpty)
+      {
+        this.map.fitBounds(bounds);
+      }
     } else {
       this.zoom();
     }

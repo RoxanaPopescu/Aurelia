@@ -125,7 +125,10 @@ export class RoutePlanningStore {
 
     this.map = ref;
     if (this.lastBounds) {
-      this.map.fitBounds(this.lastBounds);
+      if (!this.lastBounds.isEmpty)
+      {
+        this.map.fitBounds(this.lastBounds);
+      }
     } else {
       this.zoom();
     }
@@ -259,7 +262,10 @@ export class RoutePlanningStore {
     }
 
     if (this.focusedRoute) {
-      this.map.fitBounds(this.focusedRoute.mapBounds);
+      if (!this.focusedRoute.mapBounds.isEmpty)
+      {
+        this.map.fitBounds(this.focusedRoute.mapBounds);
+      }
     } else {
       this.zoom();
     }
