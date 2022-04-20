@@ -96,12 +96,57 @@ export class ImportOrdersPanel
                 if (a.range == null && b.range != null) { return -1; }
                 if (a.range != null && b.range == null) { return 1; }
 
+                // Sort by selected column and direction.
+
                 const aPropertyValue = getPropertyValue(a, this.sorting.property);
                 const bPropertyValue = getPropertyValue(b, this.sorting.property);
 
-                // Sort by selected column and direction.
                 if (aPropertyValue < bPropertyValue) { return -offset; }
                 if (aPropertyValue > bPropertyValue) { return offset; }
+
+                // Sort by additional properties.
+
+                if (this.sorting.property !== "range.sheetName")
+                {
+                    // Sort by ascending `sheetName`.
+                    if ((a.range!.sheetName ?? "") < (b.range!.sheetName ?? "")) { return -1; }
+                    if ((a.range!.sheetName ?? "") > (b.range!.sheetName ?? "")) { return 1; }
+                }
+
+                if (this.sorting.property !== "range.fromRow")
+                {
+                    // Sort by ascending `fromRow`.
+                    if (a.range!.fromRow < b.range!.fromRow) { return -1; }
+                    if (a.range!.fromRow > b.range!.fromRow) { return 1; }
+                }
+
+                if (this.sorting.property !== "range.toRow")
+                {
+                    // Sort by descending `toRow`.
+                    if (a.range!.toRow < b.range!.toRow) { return 1; }
+                    if (a.range!.toRow > b.range!.toRow) { return -1; }
+                }
+
+                if (this.sorting.property !== "range.fromColumn")
+                {
+                    // Sort by ascending `fromColumn`.
+                    if (a.range!.fromColumn < b.range!.fromColumn) { return -1; }
+                    if (a.range!.fromColumn > b.range!.fromColumn) { return 1; }
+                }
+
+                if (this.sorting.property !== "range.toColumn")
+                {
+                    // Sort by descending `toColumn`.
+                    if (a.range!.toColumn < b.range!.toColumn) { return 1; }
+                    if (a.range!.toColumn > b.range!.toColumn) { return -1; }
+                }
+
+                if (this.sorting.property !== "description")
+                {
+                    // Sort by ascending `description`.
+                    if (a.description < b.description) { return -1; }
+                    if (a.description > b.description) { return 1; }
+                }
 
                 return 0;
             });

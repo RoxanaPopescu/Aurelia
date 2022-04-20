@@ -18,13 +18,27 @@ const failureResponse =
         status: "failure",
         errors:
         [
-            ...!useSheetName ?
+            ...useSheetName ?
+            [
+                {
+                    range:
+                    {
+                        sheetName:"Sheet name 2",
+                        fromColumn: "A",
+                        fromRow: 2,
+                        toColumn: "A",
+                        toRow: 2
+                    },
+                    description: "Expected order ID to not already exist."
+                }
+            ]
+            :
             [
                 {
                     range: undefined,
                     description: "Expected file to contain only one sheet."
                 }
-            ] : [],
+            ],
             {
                 range:
                 {
