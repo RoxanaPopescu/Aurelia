@@ -2,6 +2,8 @@
 
 page[name="routes"] page[name="details"]
 {
+    --base-surface-color: var(--surface-color);
+
     data-table
     {
         --data-table-columns: min-content 3fr 1.75fr min-content min-content 1.25fr 1.5fr 1.25fr min-content;
@@ -13,10 +15,11 @@ page[name="routes"] page[name="details"]
 
         .data-table-row.--cancelled
         {
-            > data-table-cell > *,
-            > data-table-cell::before
+            > data-table-cell::before,
+            > data-table-cell:not(.route-details-stop-number-cell) > *,
+            .route-details-stop-number-marker
             {
-                opacity: var(--opacity-faded);
+                opacity: var(--opacity-faded-more);
             }
         }
 
@@ -67,15 +70,25 @@ page[name="routes"] page[name="details"]
             position: absolute;
             top: -10rem;
             right: -13rem;
-            filter: drop-shadow(0 0 1px var(--surface-color));
+            filter: drop-shadow(0 0 1px var(--base-surface-color));
         }
 
         &.--arrived
         {
             border-color: var(--palette-color-positive);
-            background: transparent;
+            background: var(--base-surface-color);
             color: var(--palette-color-positive);
         }
+    }
+
+    .route-details-stop-number-marker-background
+    {
+        position: absolute;
+        z-index: 2;
+        width: 32rem;
+        height: 32rem;
+        border-radius: 50%;
+        background: var(--base-surface-color);
     }
 
     .route-details-stop-number-marker,
@@ -103,7 +116,7 @@ page[name="routes"] page[name="details"]
         position: absolute;
         z-index: 1;
         top: calc(50% - 50rem);
-        height: 52rem;
+        height: 50rem;
         width: var(--border-width-thick);
         background: var(--surface-accent-surface-color);
     }
@@ -113,7 +126,7 @@ page[name="routes"] page[name="details"]
         position: absolute;
         z-index: 1;
         top: 50%;
-        height: 52rem;
+        height: 50rem;
         width: var(--border-width-thick);
         background: var(--surface-accent-surface-color);
     }
