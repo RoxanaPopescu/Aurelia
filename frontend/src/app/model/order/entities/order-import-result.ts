@@ -53,23 +53,23 @@ export interface IOrderImportError
         /**
          * The first column in the range.
          */
-        fromColumn: string,
+        fromColumn: string;
 
         /**
          * The first row in the range.
          */
-        fromRow: number,
+        fromRow: number;
 
         /**
          * The last column in the range.
          */
-        toColumn: string,
+        toColumn: string;
 
         /**
          * The last column in the range.
          */
-        toRow: number
-    },
+        toRow: number;
+    };
 
     /**
      * The description of the error.
