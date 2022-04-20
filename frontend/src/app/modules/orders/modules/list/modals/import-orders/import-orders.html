@@ -35,7 +35,7 @@
 
                 <div translate>
                     Note that the file must be an Excel file (.xlsx), formatted according to our
-                    <a download href="/app/modules/orders/modules/list/modals/import-orders/resources/templates/mover-orders-template.xlsx">template</a>.
+                    <a download href="/app/modules/orders/modules/list/modals/import-orders/resources/templates/mover-orders-template.xlsx">Template</a>.
                 </div>
 
             </modal-section>
@@ -89,12 +89,19 @@
                     Errors found in the uploaded file
                 </div>
 
+                <div class="margin-bottom" translate>
+                    Note that the file must be formatted according to our
+                    <a download href="/app/modules/orders/modules/list/modals/import-orders/resources/templates/mover-orders-template.xlsx">Template</a>.
+                </div>
+
                 <data-table
                     appearance="rows"
-                    selection="multiple"
+                    selection="none"
                     sorting.bind="sorting">
 
                     <data-table-headers>
+
+                        <!-- Enable this if using selection "multiple"
 
                         <template replace-part="toggle-all">
                             <data-table-cell name="fixed" sort-direction="descending">
@@ -104,13 +111,15 @@
                             </data-table-cell>
                         </template>
 
-                        <data-table-cell name="range.fromRow" sort-direction="ascending" align="right">
+                        -->
+
+                        <data-table-cell name="range.fromRow" sort-direction="ascending">
                             <span class="text-truncate" translate>
                                 Row
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell name="range.fromColumn" sort-direction="ascending" align="right">
+                        <data-table-cell name="range.fromColumn" sort-direction="ascending">
                             <span class="text-truncate" translate>
                                 Column
                             </span>
