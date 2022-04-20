@@ -2,12 +2,13 @@ import { autoinject } from "aurelia-framework";
 import { DateTime } from "luxon";
 import { IPaging, ISorting } from "shared/types";
 import { ApiClient } from "shared/infrastructure";
+import { Address } from "app/model/shared";
 import { OrderStatusSlug } from "../entities/order-status";
 import { OrderInfo } from "../entities/order-info";
 import { getLegacyOrderSortProperty, getLegacySortDirection, getLegacyOrderStatus } from "legacy/helpers/api-helper";
 import { Order } from "../entities/order";
 import { OrderEvent } from "../entities/order-event";
-import { Address } from "app/model/shared";
+import { OrderImportResult } from "../entities/order-import-result";
 
 /**
  * Represents a service that manages orders.
@@ -220,7 +221,7 @@ export class OrderService
      * @param fileId The ID of the file, from which to import orders.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async importFromFile(fileId: string): Promise<any>
+    public async importFromFile(fileId: string): Promise<OrderImportResult>
     {
         const result = await this._apiClient.post("orders/import-from-file",
         {

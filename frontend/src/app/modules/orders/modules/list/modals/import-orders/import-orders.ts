@@ -4,7 +4,7 @@ import { ISorting } from "shared/types";
 import { Id, getPropertyValue } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { Modal, ToastService } from "shared/framework";
-import { OrderService } from "app/model/order";
+import { OrderService, IOrderImportError } from "app/model/order";
 import successToast from "./resources/strings/success-toast.json";
 
 /**
@@ -56,7 +56,7 @@ export class ImportOrdersPanel
     /**
      * The errors detected in the uploaded file.
      */
-    protected errors: any[] | undefined;
+    protected errors: IOrderImportError[] | undefined;
 
     /**
      * The sorting to use for the error table.
@@ -71,7 +71,7 @@ export class ImportOrdersPanel
      * Gets the errors detected in the uploaded file, sorted as specified.
      */
     @computedFrom("errors.length", "sorting")
-    protected get orderedErrors(): any[] | undefined
+    protected get orderedErrors(): IOrderImportError[] | undefined
     {
         if (this.errors == null)
         {
