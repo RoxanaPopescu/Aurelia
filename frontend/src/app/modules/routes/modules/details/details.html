@@ -843,47 +843,47 @@
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">
+                                <span class="text-truncate" empty-value>
                                     ${stop.location.address}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">
+                                <span class="text-truncate" empty-value>
                                     ${stop.reference}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">
+                                <span class="text-truncate" empty-value>
                                     ${stop.type.name}
                                 </span>
 
                             </data-table-cell>
 
                             <data-table-cell align="right">
-                                <span class="text-truncate" accent.bind="stop.hasColliProblem ? 'negative' : undefined & attr">
+                                <span class="text-truncate" accent.bind="stop.hasColliProblem ? 'negative' : undefined & attr" empty-value>
                                     ${stop.scannedColliCount | number}/${stop.totalColliCount | number}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate" accent.bind="stop.isDelayed ? 'negative' : undefined & attr">
+                                <span class="text-truncate" accent.bind="stop.isDelayed ? 'negative' : undefined & attr" empty-value>
                                     ${stop.arrivedTime || stop.estimates.arrivalTime | time: 'narrow' : false}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate">
+                                <span class="text-truncate" empty-value>
                                     ${stop.arrivalTimeFrame | timeRange : false}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell align="right">
-                                <span class="text-truncate" if.bind="model.routeStop.type.slug !== 'break'">
+                                <span class="text-truncate" if.bind="model.routeStop.type.slug !== 'break'" empty-value>
                                     ${stop.taskTime || stop.estimates.taskTime | duration: 'narrow'}
                                 </span>
-                                <span class="text-truncate" if.bind="model.routeStop.type.slug === 'break'">
+                                <span class="text-truncate" if.bind="model.routeStop.type.slug === 'break'" empty-value>
                                     ${stop.initialEstimates.taskTime | duration: 'narrow'}
                                 </span>
                             </data-table-cell>
