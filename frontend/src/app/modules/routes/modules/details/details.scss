@@ -13,6 +13,11 @@ page[name="routes"] page[name="details"]
             z-index: 3;
         }
 
+        .data-table-row:hover .data-table-row-insert
+        {
+            z-index: 2;
+        }
+
         .data-table-row.--cancelled
         {
             > data-table-cell::before,
@@ -63,6 +68,7 @@ page[name="routes"] page[name="details"]
         background: var(--surface-accent-surface-color);
         color: var(--palette-color-whitepoint);
         border: var(--border-width-medium) solid transparent;
+        font-weight: 500;
 
         icon
         {
@@ -115,8 +121,8 @@ page[name="routes"] page[name="details"]
     {
         position: absolute;
         z-index: 1;
-        top: calc(50% - 50rem);
-        height: 50rem;
+        top: calc(50% - 32rem);
+        height: 32rem;
         width: var(--border-width-thick);
         background: var(--surface-accent-surface-color);
     }

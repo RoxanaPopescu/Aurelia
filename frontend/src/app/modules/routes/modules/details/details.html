@@ -826,8 +826,8 @@
                             class="${(stop.status.slug == 'cancelled' || stop.hidden) ? '--cancelled' : stop.status.accent == 'negative' ? '--failed' : ''}">
 
                             <data-table-cell class="route-details-stop-number-cell">
-                                <div if.bind="!$first" class="route-details-stop-number-before accent-${route.stops[$index - 1].status.accent}"></div>
-                                <div if.bind="!$last" class="route-details-stop-number-after accent-${stop.status.accent}"></div>
+                                <div if.bind="!$first" class="route-details-stop-number-before accent-${stop.status.slug == 'arrived' || stop.status.slug == 'completed' || stop.status.slug == 'failed' ? 'positive' : 'neutral'}"></div>
+                                <div if.bind="!$last" class="route-details-stop-number-after accent-${stop.status.slug == 'completed' || stop.status.slug == 'failed' ? 'positive' : 'neutral'}"></div>
                                 <div class="route-details-stop-number-marker-background"></div>
                                 <div class="route-details-stop-number-marker text-truncate accent-${stop.status.accent} ${stop.status.slug == 'arrived' ? '--arrived' : ''}">
                                     ${stop.stopNumber}
