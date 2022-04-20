@@ -21,8 +21,7 @@ page[name="routes"] page[name="details"]
         .data-table-row.--cancelled
         {
             > data-table-cell::before,
-            > data-table-cell:not(.route-details-stop-number-cell) > *,
-            .route-details-stop-number-marker
+            > data-table-cell > *
             {
                 opacity: var(--opacity-faded-more);
             }
@@ -132,9 +131,14 @@ page[name="routes"] page[name="details"]
         position: absolute;
         z-index: 1;
         top: 50%;
-        height: 50rem;
+        height: 33rem;
         width: var(--border-width-thick);
         background: var(--surface-accent-surface-color);
+    }
+
+    .data-table-row.--next-is-cancelled .route-details-stop-number-after
+    {
+        height: 32rem;
     }
 
     .data-table-row:first-of-type .route-details-stop-number-before
