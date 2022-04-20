@@ -27,7 +27,12 @@ modal-panel[name="import-orders"]
 
     data-table
     {
-        --data-table-columns: minmax(100rem, max-content) minmax(100rem, max-content) 20rem 1fr;
+        --data-table-columns: minmax(100rem, max-content) minmax(100rem, max-content) 20rem minmax(min-content, 1fr);
+
+        &.--has-sheet-name
+        {
+            --data-table-columns: minmax(min-content, 0.5fr) minmax(100rem, max-content) minmax(100rem, max-content) 20rem minmax(min-content, 1fr);
+        }
 
         data-table-headers > data-table-cell:first-of-type
         {

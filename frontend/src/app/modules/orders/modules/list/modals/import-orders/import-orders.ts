@@ -61,11 +61,16 @@ export class ImportOrdersPanel
     /**
      * The sorting to use for the error table.
      */
-    protected sorting: ISorting =
+    protected sorting: ISorting;
+
+    /**
+     * Gets the errors detected in the uploaded file, sorted as specified.
+     */
+    @computedFrom("errors.length")
+    protected get hasSheetName(): boolean
     {
-        property: "range.fromRow",
-        direction: "ascending"
-    };
+        return this.errors?.some(error => error.range?.sheetName != null) ?? false;
+    }
 
     /**
      * Gets the errors detected in the uploaded file, sorted as specified.
@@ -87,6 +92,10 @@ export class ImportOrdersPanel
             // Sorting
             .sort((a, b) =>
             {
+                // Sort errors without a range before errors with a range.
+                if (a.range == null && b.range != null) { return -1; }
+                if (a.range != null && b.range == null) { return 1; }
+
                 const aPropertyValue = getPropertyValue(a, this.sorting.property);
                 const bPropertyValue = getPropertyValue(b, this.sorting.property);
 
@@ -177,6 +186,12 @@ export class ImportOrdersPanel
                 case "failure":
                 {
                     this.errors = result.errors.map(error => ({ ...error, fixed: false }));
+
+                    this.sorting =
+                    {
+                        property: this.hasSheetName ? "range.sheetName" : "range.fromRow",
+                        direction: "ascending"
+                    };
 
                     this.view = "errors";
 

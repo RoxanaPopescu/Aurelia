@@ -97,7 +97,8 @@
                 <data-table
                     appearance="rows"
                     selection="none"
-                    sorting.bind="sorting">
+                    sorting.bind="sorting"
+                    class="${hasSheetName ? '--has-sheet-name' : ''}">
 
                     <data-table-headers>
 
@@ -112,6 +113,12 @@
                         </template>
 
                         -->
+
+                        <data-table-cell if.bind="hasSheetName" name="range.sheetName" sort-direction="ascending">
+                            <span class="text-truncate" translate>
+                                Sheet
+                            </span>
+                        </data-table-cell>
 
                         <data-table-cell name="range.fromRow" sort-direction="ascending">
                             <span class="text-truncate" translate>
@@ -142,6 +149,12 @@
                             toggle.call="sorting = { property: sorting.property, direction: sorting.direction }"
                             accent.bind="error.fixed ? 'positive' : 'negative'">
 
+                            <data-table-cell if.bind="hasSheetName">
+                                <span empty-value>
+                                    ${error.range.sheetName}
+                                </span>
+                            </data-table-cell>
+
                             <data-table-cell align="right">
                                 <span class="text-truncate" empty-value>
                                     <template if.bind="error.range != null">
@@ -169,7 +182,7 @@
                             <data-table-cell></data-table-cell>
 
                             <data-table-cell>
-                                <span class="text-truncate" empty-value>
+                                <span empty-value>
                                     ${error.description}
                                 </span>
                             </data-table-cell>

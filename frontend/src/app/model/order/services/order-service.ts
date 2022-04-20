@@ -233,6 +233,10 @@ export class OrderService
             // Sort the errors by range and description.
             result.data.errors = result.data.errors.sort((a, b) =>
             {
+                // Sort errors without a range before errors with a range.
+                if (a.range == null && b.range != null) { return -1; }
+                if (a.range != null && b.range == null) { return 1; }
+
                 // Sort by ascending `fromRow`.
                 if (a.range.fromRow < b.range.fromRow) { return -1; }
                 if (a.range.fromRow > b.range.fromRow) { return 1; }
@@ -248,6 +252,10 @@ export class OrderService
                 // Sort by descending `toColumn`.
                 if (a.range.toColumn < b.range.toColumn) { return 1; }
                 if (a.range.toColumn > b.range.toColumn) { return -1; }
+
+                // Sort by ascending `sheetName`.
+                if (a.range.sheetName ?? "" < b.range.sheetName ?? "") { return -1; }
+                if (a.range.sheetName ?? "" > b.range.sheetName ?? "") { return 1; }
 
                 // Sort by ascending `description`.
                 if (a.description < b.description) { return -1; }

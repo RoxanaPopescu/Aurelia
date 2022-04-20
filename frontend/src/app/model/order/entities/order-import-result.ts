@@ -51,6 +51,11 @@ export interface IOrderImportError
     range?:
     {
         /**
+         * The name of the sheet, if relevant.
+         */
+        sheetName?: string;
+
+        /**
          * The first column in the range.
          */
         fromColumn: string;

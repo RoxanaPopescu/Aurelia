@@ -1,3 +1,5 @@
+const useSheetName = false;
+
 const successResponse =
 {
     delay: 2000,
@@ -16,9 +18,17 @@ const failureResponse =
         status: "failure",
         errors:
         [
+            ...!useSheetName ?
+            [
+                {
+                    range: undefined,
+                    description: "Expected file to contain only one sheet."
+                }
+            ] : [],
             {
                 range:
                 {
+                    sheetName: useSheetName ? "Sheet name 1" : undefined,
                     fromColumn: "A",
                     fromRow: 2,
                     toColumn: "A",
@@ -29,6 +39,7 @@ const failureResponse =
             {
                 range:
                 {
+                    sheetName: useSheetName ? "Sheet name 1" : undefined,
                     fromColumn: "A",
                     fromRow: 6,
                     toColumn: "A",
@@ -39,6 +50,7 @@ const failureResponse =
             {
                 range:
                 {
+                    sheetName: useSheetName ? "Sheet name 1" : undefined,
                     fromColumn: "D",
                     fromRow: 27,
                     toColumn: "D",
@@ -49,6 +61,7 @@ const failureResponse =
             {
                 range:
                 {
+                    sheetName: useSheetName ? "Sheet name 1" : undefined,
                     fromColumn: "E",
                     fromRow: 27,
                     toColumn: "E",
@@ -59,6 +72,7 @@ const failureResponse =
             {
                 range:
                 {
+                    sheetName: useSheetName ? "Sheet name 2" : undefined,
                     fromColumn: "A",
                     fromRow: 39,
                     toColumn: "A",
@@ -69,6 +83,7 @@ const failureResponse =
             {
                 range:
                 {
+                    sheetName: useSheetName ? "Sheet name 2" : undefined,
                     fromColumn: "E",
                     fromRow: 38,
                     toColumn: "E",
