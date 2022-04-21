@@ -66,6 +66,7 @@ export class DetailsModule
     private readonly _modalService: ModalService;
     private readonly _localStateService: LocalStateService;
     private readonly _router: Router;
+    private readonly _wrappedStops: { value: RouteStop | RouteStopInfo }[] = [];
     private _isMovingStop = false;
     private _targetIndex: number | undefined;
     private _pollTimeout: any;
@@ -143,7 +144,6 @@ export class DetailsModule
      * @returns The iterable containing the wrapped items, where each wrapped item
      * is an object that exposes the corresponding item as a `value` property.
      */
-    private _wrappedStops: { value: RouteStop | RouteStopInfo }[] = [];
     protected get wrappedStops(): Iterable<{ value: RouteStop | RouteStopInfo }> | undefined
     {
         const value = this.route?.stops;
