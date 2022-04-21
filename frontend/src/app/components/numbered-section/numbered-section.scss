@@ -6,13 +6,19 @@ numbered-section
     display: flex;
     flex-direction: column;
 
-    ---accent-surface-color: var(--surface-positive-surface-color);
-    ---accent-text-color: var(--surface-positive-surface-text-color);
+    ---accent-surface-color: var(--surface-neutral-surface-color);
+    ---accent-text-color: var(--surface-neutral-surface-text-color);
 
     &.--disabled
     {
-        ---accent-surface-color: var(--palette-color-neutral-dim);
-        ---accent-text-color: var(--palette-color-whitepoint);
+        ---accent-surface-color: var(--surface-neutral-surface-color);
+        ---accent-text-color: var(--surface-neutral-surface-text-color);
+
+        .numbered-section-header,
+        .numbered-section-line
+        {
+            opacity: var(--opacity-faded);
+        }
 
         .numbered-section-content
         {
@@ -43,7 +49,7 @@ numbered-section
     .numbered-section-number
     {
         position: absolute;
-        left: -21rem;
+        left: -22rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -91,7 +97,7 @@ numbered-section
     .numbered-section-content,
     .numbered-section-line
     {
-        border-left: 2rem solid transparent;
+        border-left: var(--border-width-thick) solid transparent;
     }
 
     &:not(:last-of-type)
