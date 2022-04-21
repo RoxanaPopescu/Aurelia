@@ -6,18 +6,28 @@ numbered-section
     display: flex;
     flex-direction: column;
 
-    ---accent-surface-color: var(--surface-neutral-surface-color);
-    ---accent-text-color: var(--surface-neutral-surface-text-color);
+    ---accent-surface-color: var(--palette-color-neutral-dim);
+    ---accent-text-color: var(--palette-color-whitepoint);
 
     &.--disabled
     {
-        ---accent-surface-color: var(--surface-neutral-surface-color);
-        ---accent-text-color: var(--surface-neutral-surface-text-color);
+        ---accent-surface-color: var(--palette-color-neutral-dim);
+        ---accent-text-color: var(--palette-color-whitepoint);
+
+        .numbered-section-header
+        {
+            padding-bottom: 8rem;
+        }
+
+        .numbered-section-line
+        {
+            padding-top: 20rem;
+        }
 
         .numbered-section-header,
         .numbered-section-line
         {
-            opacity: var(--opacity-faded);
+            opacity: var(--opacity-faded-more);
         }
 
         .numbered-section-content
