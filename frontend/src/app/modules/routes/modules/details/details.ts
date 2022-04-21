@@ -3,7 +3,7 @@ import { Router } from "aurelia-router";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { ModalService, IScroll, ToastService } from "shared/framework";
-import { RouteService, Route, RouteStop, RouteStatus, RouteStatusSlug } from "app/model/route";
+import { RouteService, Route, RouteStop, RouteStatus, RouteStatusSlug, RouteStopInfo } from "app/model/route";
 import { RouteStopPanel } from "./modals/route-stop/route-stop";
 import { CancelDeleteStopDialog } from "./modals/confirm-cancel-stop/confirm-cancel-stop";
 import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
@@ -133,6 +133,47 @@ export class DetailsModule
     }
 
     /**
+     * Gets the route stops, as a stable array of wrapper objects.
+     *
+     * Wraps the items of an immutable iterable.
+     * This is intended to be used as a performance optimization for `repeat.for`, as it prevents elements
+     * in the DOM from being unnessesarily destroyed and recreated whenever the iterable is replaced.
+     * Note that this converter does not observe mutations of the iterable, meaning that this only works if
+     * the iterable is treated as immutable, and is replaced with a new instance whenever the items change.
+     * @returns The iterable containing the wrapped items, where each wrapped item
+     * is an object that exposes the corresponding item as a `value` property.
+     */
+    private _wrappedStops: { value: RouteStop | RouteStopInfo }[] = [];
+    protected get wrappedStops(): Iterable<{ value: RouteStop | RouteStopInfo }> | undefined
+    {
+        const value = this.route?.stops;
+
+        if (value == null)
+        {
+            return value;
+        }
+
+        const array = value instanceof Array ? value : Array.from<RouteStop | RouteStopInfo>(value);
+
+        for (let i = 0; i < Math.min(this._wrappedStops.length, array.length); i++)
+        {
+            this._wrappedStops[i].value = array[i];
+        }
+
+        for (let i = this._wrappedStops.length + 1; i < array.length; i++)
+        {
+            this._wrappedStops.push({ value: array[i] });
+        }
+
+        for (let i = array.length + 1; i < this._wrappedStops.length; i++)
+        {
+            this._wrappedStops.splice(i, 1);
+        }
+
+        return this._wrappedStops;
+    }
+
+    /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
      */
@@ -140,7 +181,8 @@ export class DetailsModule
     {
         this.showMap = this._localStateService.get().routeDetails?.showMap ?? true;
         this.routeSlug = params.slug;
-        this.fetchRoute(true);
+
+        this.startPolling(true);
     }
 
     /**
@@ -148,13 +190,7 @@ export class DetailsModule
      */
     public deactivate(): void
     {
-        // Abort any existing operation.
-        if (this.fetchOperation != null)
-        {
-            this.fetchOperation.abort();
-        }
-
-        clearTimeout(this._pollTimeout);
+        this.stopPolling();
     }
 
     /**
@@ -163,15 +199,11 @@ export class DetailsModule
      */
     protected async onAssignDriverClick(): Promise<void>
     {
-        const driver = await this._modalService.open(
-            AssignDriverPanel,
-            { route: this.route!, assignOnSelect: true }
-        ).promise;
+        this.stopPolling();
 
-        if (driver != null)
-        {
-            this.fetchRoute();
-        }
+        await this._modalService.open(AssignDriverPanel, { route: this.route!, assignOnSelect: true }).promise;
+
+        this.startPolling();
     }
 
     /**
@@ -180,15 +212,11 @@ export class DetailsModule
      */
     protected async onAssignVehicleClick(): Promise<void>
     {
-        const vehicle = await this._modalService.open(
-            AssignVehiclePanel,
-            { route: this.route!, assignOnSelect: true }
-        ).promise;
+        this.stopPolling();
 
-        if (vehicle != null)
-        {
-            this.fetchRoute();
-        }
+        await this._modalService.open(AssignVehiclePanel, { route: this.route!, assignOnSelect: true }).promise;
+
+        this.startPolling();
     }
 
     /**
@@ -196,15 +224,11 @@ export class DetailsModule
      */
     protected async onAssignTeamClick(): Promise<void>
     {
-        const team = await this._modalService.open(
-            AssignTeamPanel,
-            { route: this.route!, assignOnSelect: true }
-        ).promise;
+        this.stopPolling();
 
-        if (team != null)
-        {
-            this.fetchRoute();
-        }
+        await this._modalService.open(AssignTeamPanel, { route: this.route!, assignOnSelect: true }).promise;
+
+        this.startPolling();
     }
 
     /**
@@ -213,15 +237,11 @@ export class DetailsModule
      */
     protected async onAssignExecutorClick(): Promise<void>
     {
-        const organization = await this._modalService.open(
-            AssignOrganizationPanel,
-            { route: this.route!, assignOnSelect: true }
-        ).promise;
+        this.stopPolling();
 
-        if (organization != null)
-        {
-            this.fetchRoute();
-        }
+        await this._modalService.open(AssignOrganizationPanel, { route: this.route!, assignOnSelect: true }).promise;
+
+        this.startPolling();
     }
 
     /**
@@ -264,14 +284,11 @@ export class DetailsModule
      */
     protected async onAddSupportNoteClick(): Promise<void>
     {
-        const added = await this._modalService.open(AddSupportNoteDialog, { route: this.route! }).promise;
+        this.stopPolling();
 
-        if (!added)
-        {
-            return;
-        }
+        await this._modalService.open(AddSupportNoteDialog, { route: this.route! }).promise;
 
-        this.fetchRoute();
+        this.startPolling();
     }
 
     /**
@@ -288,13 +305,17 @@ export class DetailsModule
 
         try
         {
-            await this.routeService.setRouteStatus(this.route!, status);
+            this.stopPolling();
 
-            this.fetchRoute();
+            await this.routeService.setRouteStatus(this.route!, status);
         }
         catch (error)
         {
             Log.error("Could not change route status", error);
+        }
+        finally
+        {
+            this.startPolling();
         }
     }
 
@@ -305,14 +326,17 @@ export class DetailsModule
      */
     protected async onStopClick(stop: RouteStop, edit: boolean): Promise<void>
     {
+        this.stopPolling();
+
         const savedStop = await this._modalService.open(RouteStopPanel, { route: this.route!, routeStop: stop, edit }).promise;
 
         if (savedStop != null)
         {
             this.route!.stops.splice(this.route!.stops.indexOf(stop), 1, savedStop);
-
-            this.fetchRoute();
+            this.route!.stops = this.route!.stops.slice();
         }
+
+        this.startPolling();
     }
 
     /**
@@ -331,14 +355,18 @@ export class DetailsModule
 
         try
         {
+            this.stopPolling();
+
             await this.routeService.setRouteStopStatus(this.route!, stop, "cancelled");
         }
         catch (error)
         {
             Log.error("Could not remove route stop", error);
         }
-
-        this.fetchRoute();
+        finally
+        {
+            this.startPolling();
+        }
     }
 
     /**
@@ -348,36 +376,37 @@ export class DetailsModule
      */
     protected onMoveStop(source: RouteStop, target: RouteStop): void
     {
-        const sourceIndex = this.route!.stops.indexOf(source);
-        this._targetIndex = this.route!.stops.indexOf(target);
+        const sourceIndex = this.route!.stops.findIndex(s => s.id === source.id);
+        this._targetIndex = this.route!.stops.findIndex(s => s.id === target.id);
 
         this.route!.stops.splice(this._targetIndex, 0, ...this.route!.stops.splice(sourceIndex, 1));
+        this.route!.stops = this.route!.stops.slice();
 
         if (!this._isMovingStop)
         {
             this._isMovingStop = true;
 
-            clearTimeout(this._pollTimeout);
+            this.stopPolling();
 
             document.addEventListener("mouseup", async () =>
             {
-                if (this._targetIndex !== source.stopNumber - 1)
+                try
                 {
-                    try
+                    if (this._targetIndex !== source.stopNumber - 1)
                     {
                         await this.routeService.moveRouteStop(this.route!, source, this._targetIndex!);
+                    }
+                }
+                catch (error)
+                {
+                    Log.error("Could not move route stop", error);
+                }
+                finally
+                {
+                    this._isMovingStop = false;
+                    this._targetIndex = undefined;
 
-                        this.fetchRoute();
-                    }
-                    catch (error)
-                    {
-                        Log.error("Could not move route stop", error);
-                    }
-                    finally
-                    {
-                        this._isMovingStop = false;
-                        this._targetIndex = undefined;
-                    }
+                    this.startPolling(false, 2000);
                 }
             }, { once: true });
         }
@@ -388,7 +417,11 @@ export class DetailsModule
      */
     protected async onEditRouteClick(): Promise<void>
     {
+        this.stopPolling();
+
         await this._modalService.open(EditInformationPanel, { route: this.route! }).promise;
+
+        this.startPolling();
     }
 
     /**
@@ -397,7 +430,11 @@ export class DetailsModule
      */
     protected async onRemoveDriverClick(route: Route): Promise<void>
     {
+        this.stopPolling();
+
         await this._modalService.open(RemoveDriverPanel, { route: this.route! }).promise;
+
+        this.startPolling();
     }
 
     /**
@@ -406,12 +443,16 @@ export class DetailsModule
      */
     protected async onAddOrdersClick(): Promise<void>
     {
+        this.stopPolling();
+
         const added = await this._modalService.open(AddOrdersPanel, { route: this.route! }).promise;
 
         if (added)
         {
             this.toastService.open("success", addedOrdersToast);
         }
+
+        this.startPolling();
     }
 
     /**
@@ -420,6 +461,8 @@ export class DetailsModule
      */
     protected async onAddStopClick(index?: number): Promise<void>
     {
+        this.stopPolling();
+
         let stopNumber: number;
 
         if (index != null)
@@ -447,8 +490,10 @@ export class DetailsModule
                 this.route!.stops.push(savedStop);
             }
 
-            this.fetchRoute();
+            this.route!.stops = this.route!.stops.slice();
         }
+
+        this.startPolling(false, 2000);
     }
 
     /**
@@ -496,16 +541,20 @@ export class DetailsModule
     }
 
     /**
-     * Fetches the specified route.
+     * Fetches the specified route and starts polling.
      * @param addToRecent True to add the rouite to the recent items list, otherwise false.
+     * @param delay The time to wait before starting to fetch.
+     * This is needed because the backend is eventually consistent, and may need time to update.
      */
-    private fetchRoute(addToRecent = false): void
+    private startPolling(addToRecent = false, delay?: number): void
     {
-        clearTimeout(this._pollTimeout);
+        this.stopPolling();
 
-        if (this.fetchOperation != null)
+        if (delay)
         {
-            this.fetchOperation.abort();
+            this._pollTimeout = setTimeout(() => this.startPolling(), delay);
+
+            return;
         }
 
         this.fetchOperation = new Operation(async signal =>
@@ -532,16 +581,24 @@ export class DetailsModule
             }
             finally
             {
-
                 if (this.route != null && this.route.status.slug === "in-progress")
                 {
-                    this._pollTimeout = setTimeout(() => this.fetchRoute(), 6000);
+                    this._pollTimeout = setTimeout(() => this.startPolling(), 6000);
                 }
                 else
                 {
-                    this._pollTimeout = setTimeout(() => this.fetchRoute(), 30000);
+                    this._pollTimeout = setTimeout(() => this.startPolling(), 30000);
                 }
             }
         });
+    }
+
+    /**
+     * Stops polling and aborts any pending fetch request.
+     */
+    private stopPolling(): void
+    {
+        this.fetchOperation?.abort();
+        clearTimeout(this._pollTimeout);
     }
 }

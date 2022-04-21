@@ -814,7 +814,10 @@
 
                     </data-table-headers>
 
-                    <template repeat.for="stop of route.stops">
+                    <template repeat.for="wrappedStop of wrappedStops">
+
+                        <!-- HACK: This approach prevents the page from scrolling to the top every time the page polls. -->
+                        <let stop.bind="wrappedStop.value"></let>
 
                         <data-table-row
                             model.bind="stop"
