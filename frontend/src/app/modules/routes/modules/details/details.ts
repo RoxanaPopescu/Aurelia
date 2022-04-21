@@ -144,6 +144,7 @@ export class DetailsModule
      * @returns The iterable containing the wrapped items, where each wrapped item
      * is an object that exposes the corresponding item as a `value` property.
      */
+    @computedFrom("route.stops.length")
     protected get wrappedStops(): Iterable<{ value: RouteStop | RouteStopInfo }> | undefined
     {
         const value = this.route?.stops;
@@ -160,12 +161,12 @@ export class DetailsModule
             this._wrappedStops[i].value = array[i];
         }
 
-        for (let i = this._wrappedStops.length + 1; i < array.length; i++)
+        for (let i = this._wrappedStops.length; i < array.length; i++)
         {
             this._wrappedStops.push({ value: array[i] });
         }
 
-        for (let i = array.length + 1; i < this._wrappedStops.length; i++)
+        for (let i = array.length; i < this._wrappedStops.length; i++)
         {
             this._wrappedStops.splice(i, 1);
         }

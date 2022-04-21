@@ -19,7 +19,7 @@
             </button>
 
             <button
-                if.bind="edit"
+                if.bind="edit && !isNew"
                 appearance="icon"
                 title.translate="Save changes"
                 click.trigger="onSaveClick()">
