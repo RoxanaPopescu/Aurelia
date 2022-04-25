@@ -3,6 +3,7 @@ import { RoutePlanMeta } from "./routePlanMeta";
 import { RoutePlanUnscheduledTask } from "./routePlanUnscheduledTask";
 import { Consignor } from "shared/src/model/logistics/consignor";
 import { EntityInfo } from "app/types/entity";
+import { DateTime, Duration } from "luxon";
 
 export type RoutePlanStatus =
   | "waiting-for-approval"
@@ -40,8 +41,8 @@ export class RoutePlan {
     let volume = 0;
     let stopsCount = 0;
 
-    let earliestEstimatedFrom = this.routes[0].meta.timeFrame.from!;
-    let latestEstimatedTo = this.routes[0].meta.timeFrame.to!;
+    let earliestEstimatedFrom = DateTime.now().plus(Duration.fromObject({ year: 5}));
+    let latestEstimatedTo = DateTime.now().minus(Duration.fromObject({ year: 5}));
 
     for (const route of this.routes)
     {
@@ -54,7 +55,6 @@ export class RoutePlan {
         distance += route.meta.distance;
         weight += route.meta.weight;
         volume += route.meta.volume;
-        stopsCount += route.stops.length;
 
         if (route.routeNumber !== 1)
         {
