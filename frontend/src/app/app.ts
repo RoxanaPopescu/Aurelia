@@ -401,46 +401,42 @@ class AuthorizePipelineStep implements PipelineStep
     {
         // Determine whether the user is authorized to access the route.
         const routeSettings = navigationInstruction.getAllInstructions().map(i => i.config.settings);
-        const authorized = this._authorizationService.isAuthorizedForRoute(routeSettings);
+        const isAuthorized = this._authorizationService.isAuthorizedForRoute(routeSettings);
 
-        if (!authorized)
+        if (!isAuthorized)
         {
             let redirectUrl: string;
 
             if (this._identityService.identity?.organization != null)
             {
                 // Get the URL for the `unauthorized` page.
-
                 redirectUrl = this._historyHelper.getRouteUrl("/unauthorized");
 
                 // HACK: Restore the current URL after the redirect completes.
-
                 const currentUrl = location.href;
-
                 setTimeout(() => history.replaceState(history.state, "", currentUrl));
             }
             else
             {
+                // Get the URL for the `sign-in` or `choose-organization` page, including
+                // a reference to the page that the user was denied access to.
+
                 if (this._identityService.identity != null)
                 {
-                    // Get the URL for the `choose-organization` page.
-
                     redirectUrl = this._historyHelper.getRouteUrl("/account/choose-organization");
                 }
                 else
                 {
-                    // Get the URL for the `sign-in` page.
-
                     redirectUrl = this._historyHelper.getRouteUrl("/account/sign-in");
                 }
 
-                // Set the `url` parameter to the URL user was denied access to.
+                const originalUrl = location.pathname.startsWith("/account/")
+                    ? new URL(location.search).searchParams.get("url")
+                    : this._historyHelper.getCurrentRouteUrl();
 
-                const currentUrl = this._historyHelper.getCurrentRouteUrl();
-
-                if (currentUrl !== "/")
+                if (originalUrl && originalUrl !== "/")
                 {
-                    redirectUrl += `?url=${this._urlEncoder.encodeQueryValue(currentUrl)}`;
+                    redirectUrl += `?url=${this._urlEncoder.encodeQueryValue(originalUrl)}`;
                 }
             }
 
