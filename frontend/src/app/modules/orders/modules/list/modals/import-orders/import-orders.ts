@@ -1,7 +1,7 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { DropzoneFile, DropzoneOptions } from "dropzone";
 import { ISorting } from "shared/types";
-import { Id, getPropertyValue } from "shared/utilities";
+import { delay, getPropertyValue } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { Modal, ToastService } from "shared/framework";
 import { OrderService, IOrderImportError } from "app/model/order";
@@ -21,17 +21,18 @@ export class ImportOrdersPanel
      */
     public constructor(modal: Modal, toastService: ToastService, orderService: OrderService)
     {
-        this._modal = modal;
+        this.modal = modal;
         this._toastService = toastService;
         this._orderService = orderService;
     }
 
-    private readonly _modal: Modal;
     private readonly _toastService: ToastService;
     private readonly _orderService: OrderService;
 
-    private _dropzoneFile: DropzoneFile | undefined;
-    private _dropzoneFileId: string | undefined;
+    /**
+     * The `Modal` instance.
+     */
+    protected readonly modal: Modal;
 
     /**
      * The slug identifying the view currently being presented.
@@ -48,9 +49,9 @@ export class ImportOrdersPanel
      */
     protected dropzoneOptions: DropzoneOptions =
     {
-        maxFiles: 1,
         acceptedFiles: ".xlsx",
-        url: () => `/api/v2/files/upload/temporary?id=${this._dropzoneFileId}`
+        autoProcessQueue: false,
+        url: "irrelevant"
     };
 
     /**
@@ -157,33 +158,45 @@ export class ImportOrdersPanel
      */
     public attached(): void
     {
-        this.dropzone.on("addedfile", file =>
+        this.dropzone.on("error", async (file, error) =>
         {
-            if (this._dropzoneFile !== undefined)
-            {
-                this.dropzone.removeFile(this._dropzoneFile);
-            }
-
-            this._dropzoneFile = file;
-            this._dropzoneFileId = Id.uuid(1);
-        });
-
-        this.dropzone.on("success", async (file, response) =>
-        {
-            await this.onUploadSuccess();
-        });
-
-        this.dropzone.on("error", (file, messageOrError) =>
-        {
-            this.reset();
-
-            if (messageOrError.toString() === "You can't upload files of this type.")
+            if (error.toString() === "You can't upload files of this type.")
             {
                 Log.error("You can't upload files of this type.");
             }
             else
             {
-                Log.error("Could not upload the file.", messageOrError);
+                Log.error("Could not upload the file.", error);
+            }
+
+            // Allow the files to briefly appear in the dropzone, then reset.
+            await delay(200);
+            this.reset();
+        });
+
+        this.dropzone.on("addedfiles", async (files: DropzoneFile[]) =>
+        {
+            if (files.length !== 1)
+            {
+                Log.error("You can't upload multiple files at the same time.");
+
+                // Allow the files to briefly appear in the dropzone, then reset.
+                await delay(200);
+                this.reset();
+            }
+            else
+            {
+                // Verify that the file is acceptable.
+                // This is needed because the `error` callback is called too late.
+                this.dropzone.accept(files[0], async error =>
+                {
+                    if (!error)
+                    {
+                        await this.importOrders(files[0]);
+
+                        this.dropzone.removeAllFiles();
+                    }
+                });
             }
         });
     }
@@ -194,23 +207,21 @@ export class ImportOrdersPanel
     public reset(): void
     {
         this.dropzone.removeAllFiles();
-        this._dropzoneFile = undefined;
-        this._dropzoneFileId = undefined;
         this.errors = undefined;
         this.view = "upload";
     }
 
     /**
-     * Called when a file upload succeeds.
-     * Creates the orders specified in the file.
+     * Called when a file is added to the dropzone.
+     * Uploads the file and creates the orders specified in the file.
      */
-    public async onUploadSuccess(): Promise<void>
+    public async importOrders(file: File): Promise<void>
     {
         try
         {
-            this._modal.busy = true;
+            this.modal.busy = true;
 
-            const result = await this._orderService.importFromFile(this._dropzoneFileId!);
+            const result = await this._orderService.importFromFile(file);
 
             switch (result.status)
             {
@@ -224,7 +235,7 @@ export class ImportOrdersPanel
 
                     this._toastService.open("success", toastModel);
 
-                    await this._modal.close();
+                    await this.modal.close();
 
                     break;
                 }
@@ -252,7 +263,7 @@ export class ImportOrdersPanel
         }
         finally
         {
-            this._modal.busy = false;
+            this.modal.busy = false;
         }
     }
 }

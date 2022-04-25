@@ -217,15 +217,18 @@ export class OrderService
     }
 
     /**
-     * Imports the orders specified in the file with the specified ID.
-     * @param fileId The ID of the file, from which to import orders.
-     * @returns A promise that will be resolved when the operation succeedes.
+     * Imports the orders represented by the specified file.
+     * @param file The file from which to import orders.
+     * @returns A promise that will be resolved with the result of the operation.
      */
-    public async importFromFile(fileId: string): Promise<OrderImportResult>
+    public async importFromFile(file: File): Promise<OrderImportResult>
     {
+        const formData = new FormData();
+        formData.append("file", file);
+
         const result = await this._apiClient.post("orders/import-from-file",
         {
-            body: { fileId }
+            body: formData
         });
 
         return result.data;
