@@ -121,7 +121,6 @@ export class DriverAssignmentPage
             new RouteListColumn("complexity"),
             new RouteListColumn("estimated-colli-count"),
             new RouteListColumn("distance"),
-            new RouteListColumn("estimated-time-frame"),
             new RouteListColumn("estimated-time-start"),
             new RouteListColumn("estimated-time-end"),
             new RouteListColumn("status"),
