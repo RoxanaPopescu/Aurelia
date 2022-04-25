@@ -12,10 +12,11 @@ export class FilesModule extends AppModule
 {
     /**
      * Uploads a file to the public file storage.
+     * Note that the form body should be formatted as FormData.
      */
     public "POST /v2/files/upload/public" = async (context: AppContext) =>
     {
-        const body = await this.readStream(context.req);
+        const body = await FilesModule.readStream(context.req);
         await this.validateLogin(context);
 
         const result = await this.apiClient.post("file/uploadpublic",
@@ -34,10 +35,11 @@ export class FilesModule extends AppModule
 
     /**
      * Uploads a file to the secure file storage.
+     * Note that the form body should be formatted as FormData.
      */
     public "POST /v2/files/upload/sensitive" = async (context: AppContext) =>
     {
-        const body = await this.readStream(context.req);
+        const body = await FilesModule.readStream(context.req);
         await this.validateLogin(context);
 
         const result = await this.apiClient.post("file/uploadsensitive",
@@ -51,35 +53,6 @@ export class FilesModule extends AppModule
         });
 
         context.response.body = result.data;
-        context.response.status = 200;
-    }
-
-    /**
-     * Uploads a file to the temporary file storage.
-     * @param context.request.query.id The ID of the file.
-     */
-    public "POST /v2/files/upload/temporary" = async (context: AppContext) =>
-    {
-        const body = await this.readStream(context.req);
-        await this.validateLogin(context);
-
-        const id = context.request.query.id as string;
-
-        console.log(`TODO: Upload temporary file with ID '${id}' and buffer length ${body.length}.`);
-
-        // TODO: Implement, such that the file gets the specified ID, and is auto-deleted after some time.
-
-        // const result = await this.apiClient.post("file/uploadsensitive",
-        // {
-        //     headers:
-        //     {
-        //         "content-type": context.request.headers["content-type"],
-        //         "content-length": context.request.headers["content-length"]
-        //     },
-        //     body: body
-        // });
-
-        // context.response.body = result.data;
         context.response.status = 200;
     }
 
@@ -146,7 +119,7 @@ export class FilesModule extends AppModule
      * @param stream The stream to read.
      * @returns A buffer representing the data read from the stream.
      */
-    private async readStream(stream: Readable): Promise<Buffer>
+    public static async readStream(stream: Readable): Promise<Buffer>
     {
         return new Promise<Buffer>((resolve, reject) =>
         {

@@ -1,5 +1,6 @@
 import { AppContext } from "../../app-context";
 import { AppModule } from "../../app-module";
+import { FilesModule } from "../files/files";
 
 /**
  * Represents a module exposing endpoints related to route details
@@ -83,6 +84,32 @@ export class OrdersModule extends AppModule
         {
             context.response.status = 404;
         }
+    }
+
+    /**
+     * Imports the orders represented by the specified file.
+     * Note that the form body should be formatted as FormData.
+     * @param context.request.body.file The file from which to import orders.
+     * @returns The result of the operation.
+     */
+    public "POST /v2/orders/import-from-file" = async (context: AppContext) =>
+    {
+        await context.authorize("create-orders");
+
+        const body = await FilesModule.readStream(context.req);
+
+        const result = await this.apiClient.post(`logistics/organizations/${context.user?.organizationId}/orders/import-from-file`,
+        {
+            headers:
+            {
+                "content-type": context.request.headers["content-type"],
+                "content-length": context.request.headers["content-length"]
+            },
+            body: body
+        });
+
+        context.response.body = result.data;
+        context.response.status = 200;
     }
 
     /**

@@ -46,7 +46,7 @@
                     dropzone.bind="dropzone"
                     options.bind="dropzoneOptions">
 
-                    <div class="order-import-dropzone-content font-base" accent="primary">
+                    <div show.bind="!modal.busy" class="order-import-dropzone-content font-base" accent="primary">
 
                         <icon name="import" class="font-largest margin-right"></icon>
 
