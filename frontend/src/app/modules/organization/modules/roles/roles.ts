@@ -1,4 +1,4 @@
-import { autoinject, computedFrom } from "aurelia-framework";
+import { autoinject, computedFrom, observable } from "aurelia-framework";
 import { AbortError, ISorting, SortingDirection } from "shared/types";
 import { getPropertyValue, Operation } from "shared/utilities";
 import { Log, HistoryHelper, IHistoryState } from "shared/infrastructure";
@@ -49,11 +49,13 @@ export class RolesPage
     /**
      * The text filter to apply, if any.
      */
+    @observable
     protected textFilter: string | undefined;
 
     /**
      * The sorting to use for the table.
      */
+    @observable
     protected sorting: ISorting =
     {
         property: "name",
@@ -120,7 +122,7 @@ export class RolesPage
     public textFilterChanged(): void
     {
         // tslint:disable-next-line: no-floating-promises
-        this._historyHelper.navigate((state: IHistoryState) =>
+        this._historyHelper?.navigate((state: IHistoryState) =>
         {
             state.params.text = this.textFilter || undefined;
         },
@@ -133,7 +135,7 @@ export class RolesPage
     public sortingChanged(): void
     {
         // tslint:disable-next-line: no-floating-promises
-        this._historyHelper.navigate((state: IHistoryState) =>
+        this._historyHelper?.navigate((state: IHistoryState) =>
         {
             state.params.sortProperty = this.sorting?.property || undefined;
             state.params.sortDirection = this.sorting?.direction || undefined;

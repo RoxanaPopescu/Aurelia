@@ -200,7 +200,7 @@ export class TemplateScheduleDetailsPanel
                 return;
             }
 
-            this.model.timeZone = new IANAZone(this.timeZone) ?? "Europe/Copenhagen";
+            this.model.timeZone = new IANAZone(this.timeZone);
             this.model.routeDriverId = this.driver?.id;
             this._modal.busy = true;
 
