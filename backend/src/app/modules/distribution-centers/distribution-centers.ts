@@ -41,12 +41,12 @@ export class DistributionCenterModule extends AppModule
         const body = context.request.body;
         body.createdBy = context.user?.id;
 
-        const result = await this.apiClient.post("logistics/depots/update",
+        await this.apiClient.post("logistics/depots/update",
         {
             body: body
         });
 
-        context.response.body = result.data;
+        context.response.body = context.request.body;
         context.response.status = 200;
     }
 

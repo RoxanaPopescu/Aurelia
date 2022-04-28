@@ -58,11 +58,11 @@
 
                         <div>
 
-                            <button if.bind="isNew" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
-                                Create
+                            <button if.bind="isNew" appearance="solid" accent="primary" disabled.bind="settings == null || busy" click.trigger="onSaveClick()" translate>
+                                Create rule set
                             </button>
 
-                            <button if.bind="!isNew" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                            <button if.bind="!isNew" appearance="solid" accent="primary" disabled.bind="settings == null || busy" click.trigger="onSaveClick()" translate>
                                 Save changes
                             </button>
 

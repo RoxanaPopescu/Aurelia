@@ -77,6 +77,11 @@ export class DetailsPage
     protected validation: IValidation;
 
     /**
+     * True while saving changes, otherwise false.
+     */
+    protected isSavingChanges = false;
+
+    /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
      * @returns A promise that will be resolved when the module is activated.
@@ -141,11 +146,17 @@ export class DetailsPage
 
         try
         {
+            this.isSavingChanges = true;
+
             this.orderGroup = await this._orderGroupsService.create(this.orderGroup);
         }
         catch (error)
         {
             Log.error("Could not create the order group", error);
+        }
+        finally
+        {
+            this.isSavingChanges = false;
         }
     }
 
@@ -164,11 +175,17 @@ export class DetailsPage
 
         try
         {
+            this.isSavingChanges = true;
+
             this.orderGroup = await this._orderGroupsService.update(this.orderGroup);
         }
         catch (error)
         {
             Log.error("Could not save the order group", error);
+        }
+        finally
+        {
+            this.isSavingChanges = false;
         }
     }
 

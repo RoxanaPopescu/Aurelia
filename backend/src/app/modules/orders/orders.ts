@@ -70,7 +70,7 @@ export class OrdersModule extends AppModule
         }
         else if (body.status === "cancelled")
         {
-            const result = await this.apiClient.post(`logistics/organizations/${context.user?.organizationId}/orders/${body.id}/cancel`,
+            const result = await this.apiClient.post(`logistics/organizations/${context.user!.organizationId}/orders/${body.id}/cancel`,
             {
                 body: {
                     cancelledBy: context.user?.id
@@ -98,7 +98,7 @@ export class OrdersModule extends AppModule
 
         const body = await FilesModule.readStream(context.req);
 
-        const result = await this.apiClient.post(`logistics/organizations/${context.user?.organizationId}/orders/import-from-file`,
+        const result = await this.apiClient.post(`logistics/organizations/${context.user!.organizationId}/orders/import-from-file`,
         {
             headers:
             {

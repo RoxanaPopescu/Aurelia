@@ -54,11 +54,11 @@
 
                     <div if-claims="edit-order-groups">
 
-                        <button if.bind="orderGroup.id == null" appearance="solid" accent="primary" click.trigger="onCreateClick()" translate>
+                        <button if.bind="orderGroup.id == null" appearance="solid" accent="primary" disabled.bind="orderGroup == null || isSavingChanges" click.trigger="onCreateClick()" translate>
                             Create order group
                         </button>
 
-                        <button if.bind="orderGroup.id != null && !orderGroup.activeSchedulesCount" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                        <button if.bind="orderGroup.id != null && !orderGroup.activeSchedulesCount" appearance="solid" accent="primary" disabled.bind="orderGroup == null || isSavingChanges" click.trigger="onSaveClick()" translate>
                             Save changes
                         </button>
 
