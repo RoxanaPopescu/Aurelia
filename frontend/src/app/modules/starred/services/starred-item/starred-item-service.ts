@@ -1,4 +1,5 @@
 import { autoinject } from "aurelia-framework";
+import { EventAggregator } from "aurelia-event-aggregator";
 import { ApiClient } from "shared/infrastructure";
 import { EntityInfo } from "app/types/entity";
 import { LocalStateService } from "app/services/local-state";
@@ -13,15 +14,18 @@ export class StarredItemService
      * Creates a new instance of the type.
      * @param apiClient The `ApiClient` instance.
      * @param localStateService The `LocalStateService` instance.
+     * @param eventAggregator The `EventAggregator` instance.
      */
-    public constructor(apiClient: ApiClient, localStateService: LocalStateService)
+    public constructor(apiClient: ApiClient, localStateService: LocalStateService, eventAggregator: EventAggregator)
     {
         this._apiClient = apiClient;
         this._localStateService = localStateService;
+        this._eventAggregator = eventAggregator;
     }
 
     private readonly _apiClient: ApiClient;
     private readonly _localStateService: LocalStateService;
+    private readonly _eventAggregator: EventAggregator;
 
     /**
      * Gets all items starred by the user.
@@ -77,6 +81,9 @@ export class StarredItemService
             state.starredItems.unshift(entityInfo);
         });
 
+        // Notify listeners that an entity was starred.
+        this._eventAggregator.publish("starred-item-service:add", entityInfo);
+
         return entityInfo;
     }
 
@@ -105,5 +112,8 @@ export class StarredItemService
 
             entityInfo.starred = false;
         });
+
+        // Notify listeners that an entity was unstarred.
+        this._eventAggregator.publish("starred-item-service:remove", entityInfo);
     }
 }
