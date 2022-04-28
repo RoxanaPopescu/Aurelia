@@ -1,12 +1,12 @@
-import { EntityInfo } from "app/types/entity";
 import { PersonName, PhoneNumber, Position } from "app/model/shared";
 import { VehicleType, Vehicle } from "app/model/vehicle";
+import { DriverInfo } from "./driver-info";
 import { DriverStatus } from "./driver-status";
 
 /**
- * Represents a driver, who makes the trip to fulfill the transportation of an order.
+ * Represents a driver.
  */
-export class Driver
+export class Driver extends DriverInfo
 {
     /**
      * Creates a new instance of the type.
@@ -15,14 +15,11 @@ export class Driver
      */
     public constructor(data?: any, vehicleTypes?: VehicleType[])
     {
+        super(data);
+
         if (data)
         {
-            this.id = `${data.id}`;
-            this.status = new DriverStatus(data.status);
-            this.name = new PersonName(data.name);
-            this.phone = new PhoneNumber(data.phone);
             this.email = data.email;
-            this.pictureUrl = data.pictureUrl;
             this.vehicleTypes = vehicleTypes;
             this.device = data.device;
 
@@ -38,28 +35,13 @@ export class Driver
         }
         else
         {
+            // HACK: This should not be done...
             this.status = new DriverStatus("approved");
             this.name = new PersonName();
             this.phone = new PhoneNumber();
             this.phone.countryCode = "45";
         }
-
     }
-
-    /**
-     * The ID of the driver.
-     */
-    public id: string;
-
-    /**
-     * The status of the driver.
-     */
-    public status: DriverStatus;
-
-    /**
-     * The name of the driver.
-     */
-    public name: PersonName;
 
     /**
      * The device of the driver.
@@ -74,17 +56,7 @@ export class Driver
     /**
      * The phone number at which the driver can be contacted.
      */
-    public phone: PhoneNumber;
-
-    /**
-     * The phone number at which the driver can be contacted.
-     */
     public position?: Position;
-
-    /**
-     * The URL for the picture of the driver.
-     */
-    public pictureUrl: string;
 
     /**
      * The password of the driver, only used for when creating.
@@ -101,22 +73,4 @@ export class Driver
      * The current online vehicle
      */
     public onlineVehicle?: Vehicle;
-
-    public toString(): string
-    {
-        return `${this.name.toString()} (${this.id})`;
-    }
-
-    /**
-     * Gets an `EntityInfo` instance representing this instance.
-     */
-    public toEntityInfo(): EntityInfo
-    {
-        return new EntityInfo(
-        {
-            type: "driver",
-            id: this.id,
-            name: `${this.name?.first ?? ""} ${this.name?.last ?? ""}`.trim() ?? this.id
-        });
-    }
 }

@@ -2,7 +2,8 @@ import { Duration } from "luxon";
 import { DayOfWeek } from "app/model/shared";
 
 /**
- * Represents the availability of a depot.
+ * @deprecated
+ * Represents an availability associated with a distribution center.
  */
 export class DistributionCenterAvailability
 {
@@ -12,11 +13,25 @@ export class DistributionCenterAvailability
      */
     public constructor(data?: any)
     {
-        this.openingTime = Duration.fromObject({ seconds: data.openingTime });
-        this.closingTime = Duration.fromObject({ seconds: data.closingTime });
-        this.numberOfPorts = data.numberOfPorts;
-        this.daysOfWeek = data.daysOfWeek;
+        if (data)
+        {
+            this.created = true;
+            this.openingTime = Duration.fromObject({ seconds: data.openingTime });
+            this.closingTime = Duration.fromObject({ seconds: data.closingTime });
+            this.numberOfGates = data.numberOfGates;
+            this.daysOfWeek = data.daysOfWeek;
+        }
+        else
+        {
+            this.created = false;
+        }
     }
+
+    /**
+     * HACK: Without this, updating apparently fails.
+     * Has it been created on the server?
+     */
+    private created: boolean;
 
     /**
      * The time of day at which the depot opens.
@@ -29,12 +44,26 @@ export class DistributionCenterAvailability
     public closingTime?: Duration;
 
     /**
-     * The number of ports available.
+     * The number of gates available.
      */
-    public numberOfPorts?: number;
+    public numberOfGates?: number;
 
     /**
      * The days of the week on which this availability applies.
      */
     public daysOfWeek?: DayOfWeek[];
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        const data = { ...this } as any;
+
+        data.created = this.created;
+        data.openingTime = this.openingTime?.as("seconds");
+        data.closingTime = this.closingTime?.as("seconds");
+
+        return data;
+    }
 }

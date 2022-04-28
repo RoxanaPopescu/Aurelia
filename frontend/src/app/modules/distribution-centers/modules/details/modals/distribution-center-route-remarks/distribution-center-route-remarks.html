@@ -1,0 +1,62 @@
+<template>
+
+    <require from="./distribution-center-route-remarks.scss"></require>
+
+    <modal-backdrop close-modal.bind="true"></modal-backdrop>
+
+    <modal-dialog name="distribution-center-route-remarks" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <modal-header>
+
+            <h1 class="font-larger" translate>
+                Problems with route <b>${model.route.slug}</b>
+            </h1>
+
+        </modal-header>
+
+        <modal-section class="margin-bottom">
+
+            <text-input lines="4" label="above" value.bind="note" autofocus>
+
+                <span slot="placeholder" translate>
+                    Type any comments here…
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="note">
+                    </required-validator>
+
+                    <range-validator
+                        value.bind="note"
+                        min.bind="10">
+                    </range-validator>
+
+                </div>
+
+            </text-input>
+
+        </modal-section>
+
+        <modal-section>
+
+            <div slot="header" translate>
+                Reasons for delay
+            </div>
+
+            <check-toggle repeat.for="remarkInfo of remarkInfos" label="after" model="remarkInfo.remark.code" value.bind="remarkInfo.selected">
+
+                <div slot="heading">
+                    ${remarkInfo.remark.name}
+                </div>
+
+            </check-toggle>
+
+        </modal-section>
+
+        <modal-footer></modal-footer>
+
+    </modal-dialog>
+
+</template>

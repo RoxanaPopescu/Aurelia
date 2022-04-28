@@ -1,0 +1,12 @@
+{
+    "late-release-pick-of-route": "Late release / pick of route",
+    "late-route-consolidation": "Late route consolidation",
+    "late-route-not-ready-at-ramp": "Late route not ready at ramp",
+    "driver-error": "Driver error (Fulfiller)",
+    "route-planning-incorrect": "Route planning incorrect (Fulfiller)",
+    "it-system-failure": "IT system failure (Fulfiller)",
+    "late-arrival-to-ramp": "Late arrival to ramp (Driver / Fulfiller)",
+    "late-departure-from-ramp": "Late departure from ramp (Driver / Fulfiller)",
+    "change-of-fulfiller": "Change of fulfiller",
+    "other": "Other reason that does not match codes above"
+}

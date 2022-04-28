@@ -4,6 +4,6 @@ page[name="distribution-centers"] page[name="list"]
 {
     data-table
     {
-        --data-table-columns: 1fr 1fr;
+        --data-table-columns: 1fr 1fr min-content;
     }
 }

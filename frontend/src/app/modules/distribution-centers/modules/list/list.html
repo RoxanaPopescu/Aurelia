@@ -20,15 +20,14 @@
 
                 <toolbar class="flex-push-right">
 
-                    <button if-claims="create-distribution-centers" appearance="outline" accent="primary" page-href="path: /distribution-centers/create" class="flex-row">
-
-                        <icon name="add" class="font-larger margin-right"></icon>
-
-                        <span translate>
-                            New distribution center
-                        </span>
-
-                    </button>
+                    <template if-claims="create-distribution-centers">
+                        <button appearance="outline" accent="primary" click.trigger="onNewDistributionCenterClick()" class="flex-row">
+                            <icon name="add" class="font-larger margin-right"></icon>
+                            <span translate>
+                                New distribution center
+                            </span>
+                        </button>
+                    </template>
 
                 </toolbar>
 
@@ -36,42 +35,94 @@
 
             <page-section>
 
+                <toolbar scroll-fade="0.2">
+
+                    <search-input value.bind="textFilter & debounce: 200">
+
+                        <span slot="before" class="opacity-faded font-larger line-height-1">
+                            <icon name="md-search"></icon>
+                        </span>
+
+                        <span slot="placeholder" translate>
+                            Filter…
+                        </span>
+
+                    </search-input>
+
+                </toolbar>
+
+            </page-section>
+
+            <page-section>
+
                 <data-table
                     appearance="rows"
                     sorting.bind="sorting"
-                    busy.bind="updateOperation.pending">
+                    busy.bind="operation.pending">
 
                     <data-table-headers>
 
-                        <data-table-cell DISABLED-name="name">
+                        <data-table-cell name="name">
                             <span class="text-truncate" translate>
                                 Name
                             </span>
                         </data-table-cell>
 
-                        <data-table-cell DISABLED-name="address">
+                        <data-table-cell name="distributionCenter.location.address.primary">
                             <span class="text-truncate" translate>
                                 Address
                             </span>
                         </data-table-cell>
 
+                        <data-table-cell align="right">
+                            <!-- Icons -->
+                        </data-table-cell>
+
                     </data-table-headers>
 
-                    <template repeat.for="distributionCenter of distributionCenters">
+                    <template repeat.for="distributionCenter of orderedAndFilteredDistributionCenters">
 
                         <data-table-row
-                            href="/distribution-centers/details/${distributionCenter.id}">
+                            page-href="path.bind: '/distribution-centers/details/' + distributionCenter.id">
 
                             <data-table-cell>
-                                <span class="text-truncate" empty-value>
+                                <span class="text-truncate">
                                     ${distributionCenter.name}
                                 </span>
                             </data-table-cell>
 
                             <data-table-cell>
                                 <span class="text-truncate" empty-value>
-                                    ${distributionCenter.location.address.primary}
+                                    ${distributionCenter.location.address}
                                 </span>
+                            </data-table-cell>
+
+                            <data-table-cell align="right">
+
+                                <div class="icon-row">
+
+                                    <template if-claims="edit-distribution-centers">
+                                        <button
+                                            title.translate="Edit distribution center"
+                                            appearance="none"
+                                            accent="primary"
+                                            click.trigger="onEditDistributionCenterClick(distributionCenter)">
+                                            <icon name="edit-small"></icon>
+                                        </button>
+                                    </template>
+
+                                    <template if-claims="delete-distribution-centers">
+                                        <button
+                                            title.translate="Delete distribution centers"
+                                            appearance="none"
+                                            accent="primary"
+                                            click.trigger="onDeleteDistributionCenterClick(distributionCenter)">
+                                            <icon name="delete-small"></icon>
+                                        </button>
+                                    </template>
+
+                                </div>
+
                             </data-table-cell>
 
                         </data-table-row>
@@ -80,24 +131,13 @@
 
                 </data-table>
 
-                <busy-indicator if.bind="distributionCenters == null" class="margin-largest"></busy-indicator>
+                <busy-indicator if.bind="orderedAndFilteredDistributionCenters == null" class="margin-largest"></busy-indicator>
 
-                <empty-indicator if.bind="distributionCenters.length == 0" class="margin-largest">
-                    <div slot="heading" translate>No results</div>
+                <empty-indicator if.bind="orderedAndFilteredDistributionCenters.length == 0" class="margin-largest">
+                    <div slot="heading" translate>
+                        No results
+                    </div>
                 </empty-indicator>
-
-                <!--
-                <div class="flex-row">
-
-                    <data-table-pager
-                        if.bind="depots.length > 0"
-                        class="flex-push-right margin-top"
-                        value.bind="paging"
-                        list-size.bind="depotCount">
-                    </data-table-pager>
-
-                </div>
-                -->
 
             </page-section>
 

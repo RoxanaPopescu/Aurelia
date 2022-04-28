@@ -1,6 +1,7 @@
 import { Duration } from "luxon";
 import { EntityInfo } from "app/types/entity";
 import { Location } from "app/model/shared";
+import { SearchModel } from "app/model/search-model";
 import { DistributionCenterAvailability } from "./distribution-center-availability";
 
 /**
@@ -12,7 +13,7 @@ export class DistributionCenter
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data: any)
+    public constructor(data?: any)
     {
         if (data != null)
         {
@@ -20,12 +21,23 @@ export class DistributionCenter
             this.ownerId = data.ownerId;
             this.name = data.name;
             this.slotInterval = Duration.fromObject({ seconds: data.slotInterval });
-            this.availability = data.availabilities.map(a => new DistributionCenterAvailability(a));
+            this.availabilities = data.availabilities?.map(a => new DistributionCenterAvailability(a)) ?? [];
             this.location = new Location(data.location);
         }
         else
         {
-            this.availability = [];
+            // HACK: Availabilities are deprecated and will be removed, but for now, they are still required.
+            this.availabilities =
+            [
+                new DistributionCenterAvailability(
+                {
+                    created: false,
+                    openingTime: 0,
+                    closingTime: 1,
+                    daysOfWeek: [1],
+                    numberOfGates: 1
+                })
+            ];
         }
     }
 
@@ -52,12 +64,18 @@ export class DistributionCenter
     /**
      * The location of the distribution center.
      */
-    public location?: Location;
+    public location: Location;
 
     /**
-     * The availability of the distribution center.
+     * @deprecated
+     * The availabilities of the distribution center.
      */
-    public availability: DistributionCenterAvailability[];
+    public availabilities: DistributionCenterAvailability[];
+
+    /**
+     * The model representing the searchable text in the entity.
+     */
+    public readonly searchModel = new SearchModel(this);
 
     /**
      * Gets an `EntityInfo` instance representing this instance.
@@ -69,7 +87,19 @@ export class DistributionCenter
             type: "distribution-center",
             id: this.id,
             name: this.name,
-            description: `${this.location?.address?.primary ?? ""} ${this.location?.address?.secondary ?? ""}`.trim() ?? undefined
+            description: this.location?.address?.toString() ?? undefined
         });
+    }
+
+    /**
+     * Gets the data representing this instance.
+     */
+    public toJSON(): any
+    {
+        const data = { ...this } as any;
+
+        data.slotInterval = this.slotInterval?.as("seconds");
+
+        return data;
     }
 }

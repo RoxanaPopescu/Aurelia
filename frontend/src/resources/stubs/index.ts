@@ -28,6 +28,7 @@ import { IResponseStubs } from "shared/infrastructure";
 // import automaticDispatchSettings from "./responses/automatic-dispatch-settings";
 // import views from "./responses/views";
 // import ordersImport from "./responses/orders-import";
+// import distributionCenters from "./responses/distribution-centers";
 
 /**
  * Here you can stub HTTP responses e.g. if the API is not yet available.
@@ -68,4 +69,5 @@ export const stubs: IResponseStubs =
     // ...automaticDispatchSettings,
     // ...views
     // ...ordersImport
+    // ...distributionCenters
 };
