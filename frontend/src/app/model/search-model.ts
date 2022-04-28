@@ -34,9 +34,10 @@ export class SearchModel
     /**
      * Determines whether the search model contains the specified text.
      * @param text The text to search for.
+     * @param update True to update the search model, otherwise false.
      * @returns True if the model contains the specified text, otherwise false.
      */
-    public contains(text?: string): boolean
+    public contains(text?: string, update = true): boolean
     {
         // An empty query is always a match.
         if (!text)
@@ -44,9 +45,9 @@ export class SearchModel
             return true;
         }
 
-        // Get a JSON representation of the entity, ignoring circular references.
+        // Update the JSON representation of the entity, ignoring any circular references.
 
-        if (this._json == null)
+        if (this._json == null || update)
         {
             this.update();
         }

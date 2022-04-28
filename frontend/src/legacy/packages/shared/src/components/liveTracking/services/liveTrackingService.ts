@@ -234,7 +234,7 @@ export class LiveTrackingService {
           }
         }
 
-        return route.searchModel.contains(this.filter.searchQuery);
+        return route.searchModel.contains(this.filter.searchQuery, false);
       })
   }
 
