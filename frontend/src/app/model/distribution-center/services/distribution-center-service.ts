@@ -61,7 +61,7 @@ export class DistributionCenterService
      */
     public async create(distributionCenter: DistributionCenter, signal?: AbortSignal): Promise<DistributionCenter>
     {
-        const result = await this._apiClient.post(`distribution-centers`,
+        const result = await this._apiClient.post("distribution-centers",
             {
                 body: distributionCenter,
                 signal
@@ -78,7 +78,7 @@ export class DistributionCenterService
      */
     public async update(distributionCenter: DistributionCenter, signal?: AbortSignal): Promise<DistributionCenter>
     {
-        const result = await this._apiClient.post(`distribution-centers/update`,
+        const result = await this._apiClient.post("distribution-centers/update",
             {
                 body: distributionCenter,
                 signal

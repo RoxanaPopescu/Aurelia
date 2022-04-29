@@ -2,7 +2,7 @@ import { autoinject, computedFrom, observable } from "aurelia-framework";
 import { AbortError, ISorting, SortingDirection } from "shared/types";
 import { getPropertyValue, Operation } from "shared/utilities";
 import { Log, HistoryHelper, IHistoryState } from "shared/infrastructure";
-import { ModalService, ToastService } from "shared/framework";
+import { ModalService } from "shared/framework";
 import { DistributionCenterService, DistributionCenter, DistributionCenterRoute } from "app/model/distribution-center";
 import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 import { DateTime } from "luxon";
@@ -32,20 +32,17 @@ export class DetailsPage
     /**
      * Creates a new instance of the class.
      * @param modalService The `ModalService` instance.
-     * @param toastService The `ToastService` instance.
      * @param distributionCenterService The `DistributionCenterService` instance.
      * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(modalService: ModalService, toastService: ToastService, distributionCenterService: DistributionCenterService, historyHelper: HistoryHelper)
+    public constructor(modalService: ModalService, distributionCenterService: DistributionCenterService, historyHelper: HistoryHelper)
     {
         this._modalService = modalService;
-        this._toastService = toastService;
         this._distributionCenterService = distributionCenterService;
         this._historyHelper = historyHelper;
     }
 
-    protected readonly _modalService: ModalService;
-    protected readonly _toastService: ToastService;
+    private readonly _modalService: ModalService;
     private readonly _distributionCenterService: DistributionCenterService;
     private readonly _historyHelper: HistoryHelper;
     private _distributionCenterId: string;
@@ -193,7 +190,7 @@ export class DetailsPage
             // tslint:disable-next-line: no-floating-promises
             this._historyHelper?.navigate((state: IHistoryState) =>
             {
-                state.params.date = this.dateFilter
+                state.params.date = this.dateFilter;
             },
             { trigger: false, replace: true });
 

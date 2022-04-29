@@ -51,7 +51,7 @@ export class EditDistributionCenterPanel
      * Called by the framework when the modal is activated.
      * @param model The model to use.
      */
-    public async activate(model: { distributionCenter?: DistributionCenter; distributionCenters?: DistributionCenter[] }): Promise<void>
+    public activate(model: { distributionCenter?: DistributionCenter; distributionCenters?: DistributionCenter[] }): void
     {
         if (model.distributionCenter != null)
         {

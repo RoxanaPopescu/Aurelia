@@ -31,7 +31,7 @@ export class DistributionCenterAvailability
      * HACK: Without this, updating apparently fails.
      * Has it been created on the server?
      */
-    private created: boolean;
+    private readonly created: boolean;
 
     /**
      * The time of day at which the depot opens.

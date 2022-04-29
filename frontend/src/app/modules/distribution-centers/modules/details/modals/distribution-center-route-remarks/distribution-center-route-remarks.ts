@@ -23,7 +23,7 @@ export class DistributionCenterRouteRemarksDialog
     /**
      * The model for the modal.
      */
-    protected model: { distributionCenterId: string, route: DistributionCenterRoute };
+    protected model: { distributionCenterId: string; route: DistributionCenterRoute };
 
     /**
      * The remarks associated with the route.
@@ -39,7 +39,7 @@ export class DistributionCenterRouteRemarksDialog
      * Called by the framework when the modal is activated.
      * @param model The model to use.
      */
-    public activate(model: { distributionCenterId: string, route: DistributionCenterRoute }): void
+    public activate(model: { distributionCenterId: string; route: DistributionCenterRoute }): void
     {
         this.model = model;
 

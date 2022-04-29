@@ -38,43 +38,43 @@ export class DistributionCenterRouteRemark
     {
         "26":
         {
-            name: distributionCenterRouteRemarks["late-release-pick-of-route"]
+            name: distributionCenterRouteRemarks.lateReleasePickOfRoute
         },
         "31":
         {
-            name: distributionCenterRouteRemarks["late-route-consolidation"]
+            name: distributionCenterRouteRemarks.lateRouteConsolidation
         },
         "32":
         {
-            name: distributionCenterRouteRemarks["late-route-not-ready-at-ramp"]
+            name: distributionCenterRouteRemarks.lateRouteNotReadyAtRamp
         },
         "39":
         {
-            name: distributionCenterRouteRemarks["driver-error"]
+            name: distributionCenterRouteRemarks.driverError
         },
         "61":
         {
-            name: distributionCenterRouteRemarks["route-planning-incorrect"]
+            name: distributionCenterRouteRemarks.routePlanningIncorrect
         },
         "87":
         {
-            name: distributionCenterRouteRemarks["it-system-failure"]
+            name: distributionCenterRouteRemarks.itSystemFailure
         },
         "92":
         {
-            name: distributionCenterRouteRemarks["late-arrival-to-ramp"]
+            name: distributionCenterRouteRemarks.lateArrivalToRamp
         },
         "93":
         {
-            name: distributionCenterRouteRemarks["late-departure-from-ramp"]
+            name: distributionCenterRouteRemarks.lateDepartureFromRamp
         },
         "96":
         {
-            name: distributionCenterRouteRemarks["change-of-fulfiller"]
+            name: distributionCenterRouteRemarks.changeOfFulfiller
         },
         "99":
         {
-            name: distributionCenterRouteRemarks["other"]
+            name: distributionCenterRouteRemarks.other
         }
     };
 }
