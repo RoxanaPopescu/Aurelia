@@ -32,8 +32,8 @@ export class DistributionCenter
                 new DistributionCenterAvailability(
                 {
                     created: false,
-                    openingTime: 0,
-                    closingTime: 1,
+                    openingTime: 1,
+                    closingTime: 2,
                     daysOfWeek: [1],
                     numberOfGates: 1
                 })

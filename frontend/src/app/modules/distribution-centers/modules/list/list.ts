@@ -172,7 +172,7 @@ export class ListPage
      */
     protected async onNewDistributionCenterClick(): Promise<void>
     {
-        const newDistributionCenter = await this._modalService.open(EditDistributionCenterPanel, { }).promise;
+        const newDistributionCenter = await this._modalService.open(EditDistributionCenterPanel, { distributionCenters: this._distributionCenters }).promise;
 
         if (newDistributionCenter != null)
         {
