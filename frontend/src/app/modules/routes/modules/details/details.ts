@@ -3,7 +3,7 @@ import { Router } from "aurelia-router";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { ModalService, IScroll, ToastService } from "shared/framework";
-import { RouteService, Route, RouteStop, RouteStatus, RouteStatusSlug, RouteStopInfo } from "app/model/route";
+import { RouteService, Route, RouteStop, RouteStatus, RouteStatusSlug } from "app/model/route";
 import { RouteStopPanel } from "./modals/route-stop/route-stop";
 import { CancelDeleteStopDialog } from "./modals/confirm-cancel-stop/confirm-cancel-stop";
 import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
@@ -16,10 +16,10 @@ import { PushDriversPanel } from "../../modals/push-drivers/push-drivers";
 import { EditInformationPanel } from "./modals/edit-information/edit-information";
 import { RemoveDriverPanel } from "./modals/remove-driver/remove-driver";
 import { AddOrdersPanel } from "./modals/add-orders/add-orders";
-import addedOrdersToast from "./resources/strings/added-orders-toast.json";
 import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
 import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 import { LocalStateService } from "app/services/local-state";
+import addedOrdersToast from "./resources/strings/added-orders-toast.json";
 
 /**
  * Represents the route parameters for the page.
@@ -66,7 +66,6 @@ export class DetailsModule
     private readonly _modalService: ModalService;
     private readonly _localStateService: LocalStateService;
     private readonly _router: Router;
-    private readonly _wrappedStops: { value: RouteStop | RouteStopInfo }[] = [];
     private _isMovingStop = false;
     private _targetIndex: number | undefined;
     private _pollTimeout: any;
@@ -75,6 +74,13 @@ export class DetailsModule
     protected readonly toastService: ToastService;
     protected readonly identityService: IdentityService;
     protected readonly environment = ENVIRONMENT.name;
+
+    /**
+     * HACK:
+     * The binding system apparently doesn't observe changes correctly here,
+     * so we use this to trigger a binding update whenever the stop list changes.
+     */
+    protected bindingUpdateTrigger = 1;
 
     /**
      * The scroll manager for the page.
@@ -131,47 +137,6 @@ export class DetailsModule
     protected get canEditRoute(): boolean
     {
         return this.identityService.identity!.claims.has("edit-routes");
-    }
-
-    /**
-     * Gets the route stops, as a stable array of wrapper objects.
-     *
-     * Wraps the items of an immutable iterable.
-     * This is intended to be used as a performance optimization for `repeat.for`, as it prevents elements
-     * in the DOM from being unnessesarily destroyed and recreated whenever the iterable is replaced.
-     * Note that this converter does not observe mutations of the iterable, meaning that this only works if
-     * the iterable is treated as immutable, and is replaced with a new instance whenever the items change.
-     * @returns The iterable containing the wrapped items, where each wrapped item
-     * is an object that exposes the corresponding item as a `value` property.
-     */
-    @computedFrom("route.stops.length")
-    protected get wrappedStops(): Iterable<{ value: RouteStop | RouteStopInfo }> | undefined
-    {
-        const value = this.route?.stops;
-
-        if (value == null)
-        {
-            return value;
-        }
-
-        const array = value instanceof Array ? value : Array.from<RouteStop | RouteStopInfo>(value);
-
-        for (let i = 0; i < Math.min(this._wrappedStops.length, array.length); i++)
-        {
-            this._wrappedStops[i].value = array[i];
-        }
-
-        for (let i = this._wrappedStops.length; i < array.length; i++)
-        {
-            this._wrappedStops.push({ value: array[i] });
-        }
-
-        for (let i = array.length; i < this._wrappedStops.length; i++)
-        {
-            this._wrappedStops.splice(i, 1);
-        }
-
-        return this._wrappedStops;
     }
 
     /**
@@ -334,7 +299,7 @@ export class DetailsModule
         if (savedStop != null)
         {
             this.route!.stops.splice(this.route!.stops.indexOf(stop), 1, savedStop);
-            this.route!.stops = this.route!.stops.slice();
+            this.bindingUpdateTrigger++;
         }
 
         this.startPolling();
@@ -381,7 +346,7 @@ export class DetailsModule
         this._targetIndex = this.route!.stops.findIndex(s => s.id === target.id);
 
         this.route!.stops.splice(this._targetIndex, 0, ...this.route!.stops.splice(sourceIndex, 1));
-        this.route!.stops = this.route!.stops.slice();
+        this.bindingUpdateTrigger++;
 
         if (!this._isMovingStop)
         {
@@ -491,7 +456,7 @@ export class DetailsModule
                 this.route!.stops.push(savedStop);
             }
 
-            this.route!.stops = this.route!.stops.slice();
+            this.bindingUpdateTrigger++;
         }
 
         this.startPolling(false, 2000);

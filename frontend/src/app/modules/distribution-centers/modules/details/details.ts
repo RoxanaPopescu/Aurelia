@@ -208,7 +208,7 @@ export class DetailsPage
         // Abort any existing operation.
         this.operation?.abort();
 
-        clearInterval(this._pollTimeout);
+        clearTimeout(this._pollTimeout);
 
         await this._modalService.open(DistributionCenterRouteRemarksDialog, { distributionCenterId: this._distributionCenterId, route }).promise;
 

@@ -31,6 +31,7 @@ export default
                 "reference": "HN 16 Kbh",
                 "colliTotal": 2,
                 "fulfillerName": "IKEA Denmark",
+                "gate": 42,
                 "remarks":
                 {
                     "remarkCodes": [87],

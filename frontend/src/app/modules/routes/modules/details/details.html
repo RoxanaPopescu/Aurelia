@@ -814,10 +814,14 @@
 
                     </data-table-headers>
 
-                    <template repeat.for="wrappedStop of wrappedStops">
+                    <template repeat.for="i of route.stops.length">
 
-                        <!-- HACK: This approach prevents the page from scrolling to the top every time the page polls. -->
-                        <let stop.bind="wrappedStop.value"></let>
+                        <!--
+                        HACK:
+                        This prevents the page from scrolling to the top every time the page polls and the list is rerendered.
+                        Note that this assumes the list is treated as immutable, as it only updates when the list is replaced.
+                        -->
+                        <let stop.bind="bindingUpdateTrigger && route.stops[i]"></let>
 
                         <data-table-row
                             model.bind="stop"

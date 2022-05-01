@@ -134,7 +134,14 @@
 
                     </data-table-headers>
 
-                    <template repeat.for="route of orderedAndFilteredRoutes">
+                    <template repeat.for="i of orderedAndFilteredRoutes.length">
+
+                        <!--
+                        HACK:
+                        This prevents the page from scrolling to the top every time the page polls and the list is rerendered.
+                        Note that this assumes the list is treated as immutable, as it only updates when the list is replaced.
+                        -->
+                        <let route.bind="orderedAndFilteredRoutes[i]"></let>
 
                         <data-table-row accent.bind="route.hasDelayedArrival || route.hasDelayedDeparture || route.hasRemarks ? 'negative' : 'neutral'">
 

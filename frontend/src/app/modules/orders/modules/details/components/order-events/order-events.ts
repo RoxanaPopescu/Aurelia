@@ -44,7 +44,7 @@ export class OrderEvents
     /**
      * The order events, where consecutive events of the same type at the same location are grouped together.
      */
-    protected groupedOrderEvents: OrderEvent[][];
+    protected orderEventGroups: OrderEvent[][];
 
     /**
      * True to show the map, otherwise false.
@@ -131,28 +131,25 @@ export class OrderEvents
             {
                 const orderEvents = await this._orderService.getEvents(this.order.consignorId, this.order.slug);
 
-                const groupedOrderEvents: OrderEvent[][] = [];
+                const orderEventGroups: OrderEvent[][] = [];
 
                 for (let i = 0; i < orderEvents.length; i++)
                 {
                     if (orderEvents[i].eventType.slug !== orderEvents[i - 1]?.eventType.slug)
                     {
-                        groupedOrderEvents.push([orderEvents[i]]);
+                        orderEventGroups.push([orderEvents[i]]);
                     }
                     else
                     {
-                        groupedOrderEvents[groupedOrderEvents.length - 1].push(orderEvents[i]);
+                        orderEventGroups[orderEventGroups.length - 1].push(orderEvents[i]);
                     }
                 }
 
-                this.groupedOrderEvents = groupedOrderEvents;
+                this.orderEventGroups = orderEventGroups;
             }
             finally
             {
-                if (!ENVIRONMENT.stubs)
-                {
-                    this.pollTimeout = setTimeout(() => this.fetchEvents(), 10000);
-                }
+                this.pollTimeout = setTimeout(() => this.fetchEvents(), 10000);
             }
         });
     }

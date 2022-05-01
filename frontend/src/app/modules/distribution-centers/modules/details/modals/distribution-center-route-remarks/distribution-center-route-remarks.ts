@@ -65,7 +65,9 @@ export class DistributionCenterRouteRemarksDialog
     {
         const remarks = this.remarkInfos.filter(r => r.selected).map(r => r.remark);
 
-        if (this.note === this.model.route.note && remarks.map(r => r.code).sort().join(",") === this.model.route.remarks.map(r => r.code).sort().join(","))
+        // If no changes were made, do nothing.
+        if (this.note === this.model.route.note &&
+            remarks.map(r => r.code).sort().join(",") === this.model.route.remarks.map(r => r.code).sort().join(","))
         {
             return;
         }
