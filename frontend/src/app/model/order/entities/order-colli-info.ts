@@ -7,7 +7,7 @@ export class OrderColliInfo
      */
     public constructor(data: any)
     {
-        this.colliCount = data.colliCount;
+        this.colliCount = data.numberOfColli;
         this.totalVolume = data.totalVolume;
         this.totalWeight = data.totalWeight;
     }
