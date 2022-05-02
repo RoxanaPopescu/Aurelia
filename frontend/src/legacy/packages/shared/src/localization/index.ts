@@ -80,15 +80,15 @@ export default class Localization {
   // HACK: Needed until https://github.com/moment/luxon/issues/352 is resolved.
   private static dateFormat = new Intl.DateTimeFormat(
     localeCode,
-    DateTime.DATE_SHORT
+    { ...DateTime.DATE_SHORT, hourCycle: "h24" }
   );
   private static timeFormat = new Intl.DateTimeFormat(
     localeCode,
-    DateTime.TIME_SIMPLE
+    { ...DateTime.TIME_SIMPLE, hourCycle: "h24" }
   );
   private static dateTimeFormat = new Intl.DateTimeFormat(
     localeCode,
-    DateTime.DATETIME_SHORT
+    { ...DateTime.DATETIME_SHORT, hourCycle: "h24" }
   );
   private static weekdays?: Weekday[];
 
