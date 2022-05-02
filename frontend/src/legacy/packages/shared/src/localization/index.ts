@@ -2,18 +2,19 @@ import { DateTime, Settings, Duration } from "luxon";
 import humanizeDuration from "humanize-duration";
 import { DateTimeRange } from "shared/src/model/general/dateTimeRange";
 
-const locale = ENVIRONMENT.locale.includes("da") ? "da" :
-               ENVIRONMENT.locale.includes("it") ? "it" :
-               ENVIRONMENT.locale.includes("de") ? "de" :
-               ENVIRONMENT.locale.includes("fi") ? "fi" :
-               ENVIRONMENT.locale.includes("nl") ? "nl" :
-               ENVIRONMENT.locale.includes("fr") ? "fr" : "en";
-
-const formatLocale = "da";
+const localeCode = ENVIRONMENT.locale;
+const langCode =
+  localeCode.startsWith("da") ? "da" :
+  localeCode.startsWith("de") ? "de" :
+  localeCode.startsWith("fi") ? "fi" :
+  localeCode.startsWith("fr") ? "fr" :
+  localeCode.startsWith("it") ? "it" :
+  localeCode.startsWith("nl") ? "nl" :
+  "en";
 
 var I18n = require("i18n-js");
-I18n.defaultLocale = locale;
-I18n.locale = locale;
+I18n.defaultLocale = langCode;
+I18n.locale = langCode;
 I18n.fallbacks = true;
 
 enum Area {
@@ -32,28 +33,28 @@ namespace Area {
     switch (area) {
       case Area.Consignor:
         return {
-          da: require("./consignor/da.json"),
-          en: require("./consignor/en.json")
+          en: require("./consignor/en.json"),
+          da: require("./consignor/da.json")
         };
       case Area.Operations:
         return {
-          da: require("./operations/da.json"),
           en: require("./operations/en.json"),
-          it: require("./operations/it.json"),
+          da: require("./operations/da.json"),
           de: require("./operations/de.json"),
           fi: require("./operations/fi.json"),
-          nl: require("./operations/nl.json"),
-          fr: require("./operations/fr.json")
+          fr: require("./operations/fr.json"),
+          it: require("./operations/it.json"),
+          nl: require("./operations/nl.json")
         };
       case Area.Shared:
         return {
-          da: require("./shared/da.json"),
           en: require("./shared/en.json"),
-          it: require("./shared/it.json"),
+          da: require("./shared/da.json"),
           de: require("./shared/de.json"),
           fi: require("./shared/fi.json"),
-          nl: require("./shared/nl.json"),
-          fr: require("./shared/fr.json")
+          fr: require("./shared/fr.json"),
+          it: require("./shared/it.json"),
+          nl: require("./shared/nl.json")
         };
     }
   }
@@ -78,15 +79,15 @@ export default class Localization {
 
   // HACK: Needed until https://github.com/moment/luxon/issues/352 is resolved.
   private static dateFormat = new Intl.DateTimeFormat(
-    formatLocale,
+    localeCode,
     DateTime.DATE_SHORT
   );
   private static timeFormat = new Intl.DateTimeFormat(
-    formatLocale,
+    localeCode,
     DateTime.TIME_SIMPLE
   );
   private static dateTimeFormat = new Intl.DateTimeFormat(
-    formatLocale,
+    localeCode,
     DateTime.DATETIME_SHORT
   );
   private static weekdays?: Weekday[];
@@ -160,14 +161,14 @@ export default class Localization {
     return Localization.formatString(I18n.t(key), values);
   }
 
-  static configure(localeCode: string, formatLocaleCode: string) {
+  static configure() {
     this.localeCode = localeCode;
-    this.formatLocaleCode = formatLocaleCode;
+    this.formatLocaleCode = localeCode;
 
-    Settings.defaultLocale = formatLocaleCode;
+    Settings.defaultLocale = localeCode;
 
     this.humanizeDuration = humanizeDuration.humanizer({
-      language: formatLocaleCode.substring(0, 2),
+      language: localeCode.substring(0, 2),
       units: ["y", "mo", "w", "d", "h", "m"],
       largest: 2,
       round: true
@@ -343,21 +344,38 @@ export default class Localization {
     }
 
     const humanizer = options && options.format === "short" ?
-      humanizeDuration.humanizer({
-        language: "shortDk",
-        languages: {
-          shortDk: {
-            y: () => "å",
-            mo: () => "må",
-            w: () => "u",
-            d: () => "d",
-            h: () => "t",
-            m: () => "m",
-            s: () => "s",
-            ms: () => "ms"
+      humanizeDuration.humanizer(
+        langCode === "da" ?
+        {
+          language: "shortDk",
+          languages: {
+            shortDk: {
+              y: () => "å",
+              mo: () => "må",
+              w: () => "u",
+              d: () => "d",
+              h: () => "t",
+              m: () => "m",
+              s: () => "s",
+              ms: () => "ms"
+            }
           }
-        }
-      }) :
+        } :
+        {
+          language: "shortEn",
+          languages: {
+            shortEn: {
+              y: () => "y",
+              mo: () => "mo",
+              w: () => "w",
+              d: () => "d",
+              h: () => "h",
+              m: () => "m",
+              s: () => "s",
+              ms: () => "ms"
+            }
+          }
+        }) :
       this.humanizeDuration;
 
     return humanizer(duration.valueOf(), {
@@ -492,3 +510,5 @@ export interface DurationFormatOptions {
   round?: boolean;
   format?: "long" | "short";
 }
+
+Localization.configure();

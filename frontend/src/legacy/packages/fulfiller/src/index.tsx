@@ -7,7 +7,4 @@ import "shared/src/utillity/fixSelectionHandling";
 
 import Localization from "shared/src/localization";
 
-Localization.configure(
-  document.documentElement!.getAttribute("formatlang")!,
-  document.documentElement!.lang
-);
+Localization.configure();

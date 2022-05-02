@@ -15,9 +15,6 @@ import { IdentityService, Identity } from "app/services/identity";
 import { TeamsFilterService } from "app/services/teams-filter";
 import settings from "resources/settings";
 
-// Legacy Mover services that need to be configured.
-import Localization from "shared/src/localization";
-
 /**
  * The entry point of the app, called by the Aurelia bootstrapper.
  * @param aurelia The `Aurelia` instance.
@@ -96,10 +93,6 @@ export async function configure(aurelia: Aurelia): Promise<void>
 
         const googleMapsService = aurelia.container.get(GoogleMapsService);
         googleMapsService.configure(settings.integrations.googleMaps);
-
-        // Configure legacy features.
-
-        Localization.configure(localeService.locale.code, localeService.locale.code);
 
         // Execute network requests concurrently.
         await Promise.all(
