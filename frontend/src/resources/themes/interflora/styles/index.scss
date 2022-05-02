@@ -90,29 +90,13 @@ dropdown-icon
 
 data-table[appearance="rows"]
 {
-    --data-table-header-padding: 10rem 14rem;
-    --data-table-cell-padding: 10rem 14rem;
-    --data-table-cell-background--hover: var(--palette-color-primary-lighter);
-}
-
-page-sidebar page-header,
-page-sidebar page-section,
-page-sidebar page-footer,
-page-content page-section,
-page-content page-footer,
-{
-    margin: 24rem 28rem !important;
-}
-
-page-content page-header,
-{
-    padding: 24rem 28rem !important;
+    --data-table-cell-background--hover: var(--palette-color-primary-lightest);
 }
 
 html page-sidebar page-section:not(.--header-slot-empty) .page-section-header
 {
-    margin: 0;
-    padding: 8rem 0 5px 0;
+    padding-top: 8rem;
+    padding-bottom: 5rem;
     border-bottom: var(--border-width-thin) solid var(--palette-color-neutral);
     background: none !important;
     color: var(--palette-color-neutral-darker);
@@ -127,8 +111,6 @@ html page-sidebar page-section:not(.--header-slot-empty) .page-section-header
 body
 {
     --modal-backdrop-color: rgba(200, 192, 172, 0.5);
-    --app-sidebar-width: 60rem;
-    --toggle-height: 1.75em !important;
 }
 
 html app-sidebar
@@ -151,37 +133,9 @@ html app-sidebar
 
     user-identity
     {
-        margin-bottom: 12rem;
-
         a identity-picture
         {
-            width: 36rem;
-            height: 36rem;
             background: var(--palette-color-primary--child);
         }
-
-        + .nav-link
-        {
-            padding-top: 4rem !important;
-            padding-bottom: 4rem !important;
-        }
-    }
-
-    &:not(.--expanded)
-    {
-        .nav-link
-        {
-            padding: 12rem 18rem;
-        }
-
-        .sidebar-child-link
-        {
-            padding: 7rem 0 7rem 22rem;
-        }
-    }
-
-    &.--expanded user-identity
-    {
-        margin-left: 24rem;
     }
 }

@@ -13,6 +13,14 @@ $__summary: comment;
 {
     --border-color: var(--palette-color-neutral);
 
+    // Primary elements on the surface.
+    &
+    {
+        // State: normal
+        --surface-primary-text-color: var(--palette-color-primary-dark);
+        --surface-primary-icon-color: var(--palette-color-primary-dark);
+    }
+
     // Inputs on the surface.
     &
     {
