@@ -105,7 +105,7 @@ export class RouteDetailsMapComponent extends React.Component<IRouteDetailsMapPr
                         {Localization.sharedValue("Map_ZoomToFit")}
                     </Button>
 
-                    {this.props.route && ["in-progress", "completd"].includes(this.props.route!.status.slug) &&
+                    {this.props.route && ["in-progress", "completed"].includes(this.props.route!.status.slug) &&
                         <Button
                             className="routeDetails-map-fit-button"
                             type={ButtonType.Light}
