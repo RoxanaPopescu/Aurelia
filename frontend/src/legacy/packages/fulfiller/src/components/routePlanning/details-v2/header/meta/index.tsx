@@ -117,7 +117,7 @@ export default class MetaHeaderComponent extends React.Component<Props> {
         <HeaderItemComponent
           title={Localization.sharedValue("Total_Time")}
           description={Localization.formatDuration(
-            route.meta.timeFrame.duration
+            route.meta.timeFrame.duration, { units: ["h", "m"] }
           )}
         />
         <HeaderItemComponent
