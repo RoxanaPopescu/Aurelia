@@ -207,8 +207,13 @@
 
                             <data-table-cell>
                                 <span empty-value>
-                                    <a if.bind="route.driverListReady && route.driverListUrl" href.bind="route.driverListUrl" class="text-truncate" target="_blank" translate>
-                                        Driver list
+                                    <a if.bind="route.driverListUrl != null" href.bind="route.driverListUrl" class="text-truncate" target="_blank">
+                                        <template if.bind="route.driverListReady" translate>
+                                            Ready
+                                        </template>
+                                        <template if.bind="!route.driverListReady" translate>
+                                            Draft
+                                        </template>
                                     </a>
                                 </span>
                             </data-table-cell>

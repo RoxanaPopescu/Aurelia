@@ -25,7 +25,13 @@ export class DistributionCenterRoute
         this.colliScanned = data.colliScanned;
         this.colliTotal = data.colliTotal;
         this.driverListReady = data.driverListReady;
-        this.driverListUrl = `${data.driverListUrl}&locale=${ENVIRONMENT.locale}`;
+
+        if (data.driverListUrl != null)
+        {
+            const url = new URL(data.driverListUrl);
+            url.searchParams.set("locale", ENVIRONMENT.locale);
+            this.driverListUrl = url.toString();
+        }
 
         if (data.driver)
         {
