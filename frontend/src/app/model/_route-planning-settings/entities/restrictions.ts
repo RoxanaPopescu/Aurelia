@@ -21,7 +21,6 @@ export class Restrictions
             this.curbApproachStrategy = new CurbApproachStrategy(data.curbApproachStrategy);
             this.timeWindowAdjustmentDelivery = new TimeWindowAdjustment(data.timeWindowAdjustmentDelivery);
             this.oneRoutePlanPerStartLocation = data.oneRoutePlanPerStartLocation;
-            this.maxCalculationTime = data.maxCalculationTime;
         }
         else
         {
@@ -62,9 +61,4 @@ export class Restrictions
      * True to produce one route plan per start location, otherwise false.
      */
     public oneRoutePlanPerStartLocation: boolean;
-
-    /**
-     * The timeout to use when calculating a route plan.
-     */
-    public maxCalculationTime: number;
 }

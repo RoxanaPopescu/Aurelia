@@ -162,51 +162,6 @@
 
         </div>
 
-        <div class="control-row margin-large-bottom">
-
-            <number-input
-                label="above"
-                value.bind="settings.restrictions.maxCalculationTime | scale: 1/60"
-                class="flex-basis-1-of-2"
-                min.bind="0">
-
-                <div slot="heading">
-                    <span translate>
-                        Max time for route calculation
-                    </span>
-
-                    <info-icon position="right">
-                        <div slot="body" translate>
-                            The maximum time the route calculation is to perform the calculation itself. Note that if the route optimization is in the middle of a calculation, it will first complete the current calculation before it will finish
-                        </div>
-                    </info-icon>
-                </div>
-
-                <span slot="after" class="opacity-faded" translate>
-                    min
-                </span>
-
-                <div slot="validation">
-
-                    <required-validator
-                        value.bind="settings.restrictions.maxCalculationTime">
-                    </required-validator>
-
-                    <range-validator
-                        active.bind="true"
-                        value.bind="settings.restrictions.maxCalculationTime"
-                        min.bind="0"
-                        min-inclusive.bind="false">
-                    </range-validator>
-
-                </div>
-
-            </number-input>
-
-            <div class="flex-basis-1-of-2"></div>
-
-        </div>
-
         <div class="control-row">
 
             <check-toggle

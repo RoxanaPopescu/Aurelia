@@ -25,8 +25,7 @@ export default
                 {
                     "start": 300,
                     "end": 600
-                },
-                "maxCalculationTime": 3600
+                }
             },
             "routeCreation":
             {
