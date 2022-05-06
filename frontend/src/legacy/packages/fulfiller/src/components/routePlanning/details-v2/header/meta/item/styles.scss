@@ -1,11 +1,10 @@
 .c-routePlanning-headerItem {
   margin: 0 10px;
-  display: flex;
   flex-direction: row;
 }
 
 .c-routePlanning-headerItem-title {
-  margin-right: 8px;
+  margin-bottom: 2px;
   opacity: var(--opacity-faded);
   white-space: nowrap;
   text-overflow: ellipsis;
