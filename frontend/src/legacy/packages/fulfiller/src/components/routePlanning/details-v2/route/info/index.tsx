@@ -5,6 +5,7 @@ import { observer } from "mobx-react";
 import { RoutePlanningStore } from "../../store";
 import { Container } from "aurelia-framework";
 import { HistoryHelper } from "shared/infrastructure";
+import Localization from "shared/src/localization";
 
 interface Props {
   store: RoutePlanningStore;
@@ -25,10 +26,18 @@ export default class RoutePlanningRouteInfoComponent extends React.Component<
       >
         <div className="c-routePlanning-routes-route-infoContent">
           <div className="c-routePlanning-routes-route-id">
-            {!this.props.store.plan.waitingForApproval && this.props.route.slug
-            ? <a href={historyHelper.getRouteUrl(`/routes/details/${this.props.route.slug}`)}>{this.props.route.slug}</a>
-            : "--"}
+              {!this.props.store.plan.waitingForApproval && this.props.route.slug
+              ? <a href={historyHelper.getRouteUrl(`/routes/details/${this.props.route.slug}`)}>{this.props.route.slug}</a>
+              : "--"}
           </div>
+          <div className="c-routePlanning-routes-route-infoItem font-small">
+              {this.props.route.vehicleType
+              ? <>
+                  <div className="c-routePlanning-routes-route-infoItem-title font-small">{Localization.sharedValue("Order_VehicleType")}</div>
+                  <div className="c-routePlanning-routes-route-infoItem-description font-small">{this.props.route.vehicleType.name}</div>
+                </>
+              : "--"}
+            </div>
         </div>
       </div>
     );

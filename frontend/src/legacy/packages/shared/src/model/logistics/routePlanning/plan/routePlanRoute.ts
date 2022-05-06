@@ -4,6 +4,7 @@ import {
   RoutePlanMeta
 } from "..";
 import { Consignor } from "shared/src/model/logistics/consignor";
+import { VehicleType } from "app/model/vehicle";
 
 // Colors for different routes
 const colors = [
@@ -42,6 +43,11 @@ export class RoutePlanRoute {
     let orderCount = 0;
     let weight = 0;
     let volume = 0;
+
+    if (data.vehicleTypeId)
+    {
+      this.vehicleType = VehicleType.get(data.vehicleTypeId);
+    }
 
     for (const stop of this.stops)
     {
@@ -118,6 +124,11 @@ export class RoutePlanRoute {
    * The driving directions for this route
    */
   public directions: RoutePlanRouteDirections;
+
+  /**
+   * The vehicle type for this route
+   */
+  public vehicleType: VehicleType;
 
   /**
    * The bounds of the stops in this route

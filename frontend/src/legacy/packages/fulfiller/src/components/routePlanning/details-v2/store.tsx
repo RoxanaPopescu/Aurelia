@@ -593,6 +593,10 @@ export class RoutePlanningStore {
   getRouteRows(route: RoutePlanRoute) {
     return [
       {
+        headline: Localization.sharedValue("Order_VehicleType"),
+        value: route.vehicleType.name
+      },
+      {
         headline: Localization.sharedValue("Expected_TimePeriod"),
         value: Localization.formatTimeRange(route.meta.timeFrame)
       },

@@ -7,7 +7,6 @@
   padding-right: 20px;
   border-bottom: 1px solid var(--surface-separator-color, rgba(0, 0, 0, 0.1));
   background: linear-gradient(to right, var(--surface-color) 75%, transparent 95%, transparent);
-  cursor: pointer;
 
   &:last-child
   {
@@ -30,4 +29,23 @@
 
 .c-routePlanning-routes-route-infoContent {
   padding-left: 40px;
+}
+
+.c-routePlanning-routes-route-infoItem {
+  margin-right: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.c-routePlanning-routes-route-infoItem-title {
+  margin-right: 8px;
+  opacity: var(--opacity-faded);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.c-routePlanning-routes-route-infoItem-description {
+  font-weight: 500;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
