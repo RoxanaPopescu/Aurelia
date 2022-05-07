@@ -20,10 +20,7 @@ export default class RoutePlanningRouteInfoComponent extends React.Component<
   render() {
     const historyHelper = Container.instance.get(HistoryHelper);
     return (
-      <div
-        className="c-routePlanning-routes-routeInfo"
-        onClick={() => this.props.store.focusRoute(this.props.route)}
-      >
+      <div className="c-routePlanning-routes-routeInfo">
         <div className="c-routePlanning-routes-route-infoContent">
           <div className="c-routePlanning-routes-route-id">
               {!this.props.store.plan.waitingForApproval && this.props.route.slug
@@ -39,6 +36,11 @@ export default class RoutePlanningRouteInfoComponent extends React.Component<
               : "--"}
             </div>
         </div>
+        <img
+          src={require("./assets/zoom-in.svg")}
+          className="c-routePlanning-routes-routeInfo-zoom"
+          onClick={() => this.props.store.focusRoute(this.props.route)}
+        />
       </div>
     );
   }
