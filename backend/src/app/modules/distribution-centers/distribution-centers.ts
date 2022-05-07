@@ -246,8 +246,7 @@ export class DistributionCenterModule extends AppModule
 
                 // Find correct status dependent on locationId
                 const pickupLocationId = order.pickupLocation.locationId;
-                const currentLocationId = requestBody.distributionCenter.location.locationId;
-                const status = pickupLocationId === currentLocationId ? "not-assigned-to-route" : "wrong-depot";
+                const status ="not-assigned-to-route";
 
                 collo =
                 {
