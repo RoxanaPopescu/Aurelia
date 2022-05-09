@@ -205,7 +205,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
           className="c-routePlanning-routes-list"
         >
           <div className="c-routePlanning-routes-infoBar">
-            <div className="c-routePlanning-routes-infoBar-left">
+            <div className="c-routePlanning-routes-infoBar-left scroll">
               <MetaHeaderComponent store={this.props.store} />
             </div>
             <div className="c-routePlanning-routes-infoBar-right">

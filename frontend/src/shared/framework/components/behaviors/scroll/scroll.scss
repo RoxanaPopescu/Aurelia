@@ -1,5 +1,8 @@
 @import "resources/index";
 
+// HACK: This class is used to enable custom styled scroll bars within legacy react components.
+.react-component .scroll,
+
 [scroll]
 {
     // HACK: Because Firefox does not support the `overlay` value.

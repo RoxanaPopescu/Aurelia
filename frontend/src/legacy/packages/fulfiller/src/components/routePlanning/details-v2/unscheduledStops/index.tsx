@@ -32,7 +32,7 @@ export default class RoutePlanningUnscheduledStopsComponent extends React.Compon
   }
 
   render() {
-    let classNames = "c-routePlanning-routes-unscheduledTasksBar";
+    let classNames = "c-routePlanning-routes-unscheduledTasksBar scroll";
     if (this.props.store.updatingRoute) {
       classNames += " disabled";
     }
