@@ -16,10 +16,7 @@ export default class RoutePlanningRouteInfoComponent extends React.Component<
 > {
   render() {
     return (
-      <div
-        className="c-routePlanning-routes-routeInfo"
-        onClick={() => this.props.store.focusRoute(this.props.route)}
-      >
+      <div className="c-routePlanning-routes-routeInfo">
         <div className="c-routePlanning-routes-route-infoContent">
           <div className="c-routePlanning-routes-route-id">
             <a href={`/routes/details/${this.props.route.slug}`} target="_blank">
@@ -27,6 +24,11 @@ export default class RoutePlanningRouteInfoComponent extends React.Component<
             </a>
           </div>
         </div>
+        <img
+          src={require("./assets/zoom-in.svg")}
+          className="c-routePlanning-routes-routeInfo-zoom"
+          onClick={() => this.props.store.focusRoute(this.props.route)}
+        />
       </div>
     );
   }

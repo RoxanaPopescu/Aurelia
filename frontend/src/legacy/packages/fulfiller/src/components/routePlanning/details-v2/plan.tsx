@@ -243,7 +243,7 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
           )}
           <div className="c-routePlanning-routes-list-main">
             <RouteScaleComponent store={this.props.store} />
-            <div className="c-routePlanning-routes-list-mainContainer">
+            <div className="c-routePlanning-routes-list-mainContainer scroll">
               <div className="c-routePlanning-routes-list-mainLeft">
                 <div className="c-routePlanning-routes-routeInfoContainer">
                   <div className="c-routePlanning-routes-list-headerInfo">
