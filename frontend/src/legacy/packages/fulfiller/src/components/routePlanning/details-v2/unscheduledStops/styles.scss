@@ -7,10 +7,11 @@
 }
 
 .c-routePlanning-routes-unscheduledTasksBar-title {
-  min-width: 194px;
+  min-width: 172px;
+  min-height: 34px;
   z-index: 99999;
   color: var(--surface-neutral-surface-text-color);
-  padding: 0 43px 0 40px;
+  padding: 0 16px 0 16px;
   white-space: nowrap;
   text-overflow: ellipsis;
   background: linear-gradient(to right, var(--surface-color) 85%, transparent);
@@ -19,9 +20,4 @@
   left: 0;
   display: flex;
   align-items: center;
-
-  span
-  {
-    opacity: var(--opacity-faded);
-  }
 }

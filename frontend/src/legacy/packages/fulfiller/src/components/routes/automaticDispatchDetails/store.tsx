@@ -23,7 +23,7 @@ export class RoutePlanningStore {
 
   listUnschedulTasksHeight = 56;
   listStopOrderIdsHeight = 56;
-  listInfoHeight = 125;
+  listInfoHeight = 129;
   listItemHeight = 48;
   minuteToPixel = 5;
 

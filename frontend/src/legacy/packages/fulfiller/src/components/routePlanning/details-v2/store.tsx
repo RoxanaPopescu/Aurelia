@@ -20,7 +20,7 @@ export class RoutePlanningStore {
 
   listUnschedulTasksHeight = 56;
   listStopOrderIdsHeight = 56;
-  listInfoHeight = 125;
+  listInfoHeight = 129;
   listItemHeight = 48;
   minuteToPixel = 5;
 
@@ -253,7 +253,7 @@ export class RoutePlanningStore {
   }
 
   get minimumHeight(): number {
-    return 98;
+    return 105;
   }
 
   setMapViewport() {

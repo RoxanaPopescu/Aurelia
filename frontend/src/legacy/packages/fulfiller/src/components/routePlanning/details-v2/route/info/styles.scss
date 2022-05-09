@@ -18,8 +18,8 @@
 {
   position: absolute;
   left: 0;
-  padding: 16px 8px 16px 14px;
-  width: calc(13px + 14px + 8px);
+  padding: 16px 10px 16px 16px;
+  width: calc(13px + 16px + 10px);
   height: calc(13px + 2 * 16px);
   cursor: pointer;
 }
@@ -38,7 +38,7 @@
 }
 
 .c-routePlanning-routes-route-infoContent {
-  padding-left: 40px;
+  padding-left: 44px;
 }
 
 .c-routePlanning-routes-route-infoItem {
