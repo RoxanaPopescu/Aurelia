@@ -49,9 +49,8 @@
 .c-routePlanning-routes-infoBar-left {
   flex-grow: 1;
   position: relative;
-  padding-left: 32px;
   min-height: 49px;
-  overflow-x: auto;
+  overflow-x: auto !important;
   display: flex;
   align-items: center;
   justify-content: flex-start;

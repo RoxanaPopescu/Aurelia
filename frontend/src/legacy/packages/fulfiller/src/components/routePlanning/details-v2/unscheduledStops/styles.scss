@@ -3,10 +3,11 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  overflow-x: auto;
+  overflow-x: auto !important;
 }
 
 .c-routePlanning-routes-unscheduledTasksBar-title {
+  min-width: 194px;
   z-index: 99999;
   color: var(--surface-neutral-surface-text-color);
   padding: 0 43px 0 40px;

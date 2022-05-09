@@ -205,6 +205,9 @@ export default class RoutePlanningPlanComponent extends React.Component<Props> {
         >
           <div className="c-routePlanning-routes-infoBar">
             <div className="c-routePlanning-routes-infoBar-left scroll">
+              <div className="c-routePlanning-routes-unscheduledTasksBar-title font-small" style={{ height: "34px" }}>
+                <span>{Localization.operationsValue("RoutePlanning_RoutePlan_Details_Title")}</span>
+              </div>
               <MetaHeaderComponent store={this.props.store} />
             </div>
             <div className="c-routePlanning-routes-infoBar-right">
