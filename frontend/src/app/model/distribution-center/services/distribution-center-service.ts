@@ -100,12 +100,12 @@ export class DistributionCenterService
     /**
      * Gets the routes associated with the specified distribution center on the specified date.
      * @param id The ID of the distribution center for which to get routes.
-     * @param fromDate The first date and time for which to get routes.
      * @param toDate The last date and time for which to get routes.
+     * @param fromDate The first date and time for which to get routes.
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the routes.
      */
-    public async getRoutes(distributionCenterId: string, toDate: DateTime, fromDate: DateTime, signal?: AbortSignal): Promise<DistributionCenterRoute[]>
+    public async getRoutes(distributionCenterId: string, fromDate: DateTime, toDate: DateTime, signal?: AbortSignal): Promise<DistributionCenterRoute[]>
     {
         const result = await this._apiClient.get("distribution-centers/routes/list",
         {

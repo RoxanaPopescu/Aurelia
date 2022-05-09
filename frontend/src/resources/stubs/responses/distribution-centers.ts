@@ -1,7 +1,7 @@
 // tslint:disable
 export default
 {
-    "GET /api/v2/distribution-centers/routes/list?distributionCenterId=2265d491-d1af-46cf-ad63-6b863e0c344b&fromDate=2022-04-28T23:59:59.999&toDate=2022-04-28T00:00:00.000":
+    "GET /api/v2/distribution-centers/routes/list?distributionCenterId=2265d491-d1af-46cf-ad63-6b863e0c344b&fromDate=2022-04-28T00:00:00.000&toDate=2022-04-28T23:59:59.999":
     {
         body:
         [
