@@ -71,7 +71,7 @@ export class DistributionCenteRoutesModule extends AppModule
             delete route.totalNumberOfColli;
 
             route.remarks = routeRemarks.data.find((r: any) => r.routeId === route.id);
-            route.fulfillerName = organizations.data.find((r: any) => r.id === route.fulfillerId)?.name;
+            route.fulfillerName = organizations.data.find((o: any) => o.id === route.fulfillerId)?.name;
         }
 
         context.response.body = routes;
