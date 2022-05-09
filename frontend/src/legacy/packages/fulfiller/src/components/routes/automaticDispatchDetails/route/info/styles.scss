@@ -16,10 +16,11 @@
 
 .c-routePlanning-routes-routeInfo-zoom
 {
-  width: auto;
-  height: 13px;
   position: absolute;
-  left: 14px;
+  left: 0;
+  padding: 16px 8px 16px 14px;
+  width: calc(13px + 14px + 8px);
+  height: calc(13px + 2 * 16px);
   cursor: pointer;
 }
 
