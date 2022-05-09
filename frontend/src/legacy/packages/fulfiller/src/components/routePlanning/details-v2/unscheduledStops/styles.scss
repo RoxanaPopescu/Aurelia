@@ -1,9 +1,9 @@
 .c-routePlanning-routes-unscheduledTasksBar {
-  height: 56px;
+  min-height: 56px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 .c-routePlanning-routes-unscheduledTasksBar-title {
