@@ -3,6 +3,7 @@ import jwksRsa from "jwks-rsa";
 import { Middleware } from "koa";
 import { AuthorizationError } from "../../shared/types";
 import { AuthorizeParameter, IAppContext } from "../../app/app-context";
+import { setRequestHeaders } from "./headers-middleware";
 import settings from "../../resources/settings/settings";
 
 /**
@@ -240,6 +241,13 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
                         throw new Error("Invalid permission.");
                 }
             }
+
+            // Set request headers, so they can be included with all requests.
+            setRequestHeaders(
+            {
+                userId: context.user.id,
+                organizationId: context.user.organizationId
+            })
         };
 
         try

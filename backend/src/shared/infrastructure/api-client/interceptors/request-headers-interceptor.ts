@@ -75,6 +75,16 @@ export class RequestHeadersInterceptor implements IApiInterceptor
             request.headers.set("x-currency", headers.currencyCode);
         }
 
+        if (headers.userId && !request.headers.has("x-user"))
+        {
+            request.headers.set("x-user", headers.userId);
+        }
+
+        if (headers.organizationId && !request.headers.has("x-organization"))
+        {
+            request.headers.set("x-organization", headers.organizationId);
+        }
+
         return request;
     }
 }
