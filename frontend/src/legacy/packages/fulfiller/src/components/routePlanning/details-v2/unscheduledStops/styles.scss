@@ -4,7 +4,17 @@
   flex-direction: row;
   align-items: center;
   overflow-x: auto !important;
-  padding-right: 8px;
+
+  &::after {
+    content: "";
+    display: block;
+    position: sticky;
+    height: 42px;
+    min-width: 44px;
+    right: 0;
+    top: 0;
+    background: linear-gradient(to left, var(--surface-color) 40%, transparent);
+  }
 }
 
 .c-routePlanning-routes-unscheduledTasksBar-title {
