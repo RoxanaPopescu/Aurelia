@@ -223,9 +223,9 @@ export class ImportOrdersPanel
 
             const result = await this._orderService.importFromFile(file);
 
-            switch (result.status)
+            switch (result.success)
             {
-                case "success":
+                case true:
                 {
                     const toastModel =
                     {
@@ -239,9 +239,9 @@ export class ImportOrdersPanel
 
                     break;
                 }
-                case "failure":
+                case false:
                 {
-                    this.errors = result.errors.map(error => ({ ...error, fixed: false }));
+                    this.errors = result.validationErrors.map(error => ({ ...error, fixed: false }));
 
                     this.sorting =
                     {

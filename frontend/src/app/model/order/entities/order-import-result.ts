@@ -1,9 +1,4 @@
 /**
- * Represents the status of a completed order import operation.
- */
-export type OrderImportStatus = "success" | "failure";
-
-/**
  * Represents the result of a completed order import operation.
  */
 export type OrderImportResult = IOrderImportSuccessResult | IOrderImportFailureResult;
@@ -14,9 +9,9 @@ export type OrderImportResult = IOrderImportSuccessResult | IOrderImportFailureR
 export interface IOrderImportSuccessResult
 {
     /**
-     * The status of the completed order import operation.
+     * True if the import succeeded, otherwise false.
      */
-    status: "success";
+    success: true;
 
     /**
      * The number of orders that were imported.
@@ -30,14 +25,14 @@ export interface IOrderImportSuccessResult
 export interface IOrderImportFailureResult
 {
     /**
-     * The status of the completed order import operation.
+     * True if the import succeeded, otherwise false.
      */
-    status: "failure";
+    success: false;
 
     /**
-     * The errors that caused the import to fail.
+     * The validation errors that caused the import to fail.
      */
-    errors: IOrderImportError[];
+    validationErrors: IOrderImportError[];
 }
 
 /**

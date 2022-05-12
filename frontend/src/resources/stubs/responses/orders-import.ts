@@ -5,7 +5,7 @@ const successResponse =
     delay: 2000,
     body:
     {
-        status: "success",
+        success: true,
         orderCount: 123
     }
 };
@@ -15,8 +15,8 @@ const failureResponse =
     delay: 2000,
     body:
     {
-        status: "failure",
-        errors:
+        success: false,
+        validationErrors:
         [
             ...useSheetName ?
             [
