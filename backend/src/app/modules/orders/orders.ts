@@ -98,7 +98,7 @@ export class OrdersModule extends AppModule
 
         const body = await FilesModule.readStream(context.req);
 
-        const result = await this.apiClient.post(`import-orders-api/uploadfile`,
+        const result = await this.apiClient.post("import-orders-api/uploadfile",
         {
             headers:
             {

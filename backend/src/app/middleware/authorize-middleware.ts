@@ -247,7 +247,7 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
             {
                 userId: context.user.id,
                 organizationId: context.user.organizationId
-            })
+            });
         };
 
         try
