@@ -2,6 +2,8 @@
 
 order-events
 {
+    display: block;
+
     data-table
     {
         --data-table-columns: minmax(106rem, min-content) minmax(72rem, min-content) 1fr 1fr 1fr 1fr;

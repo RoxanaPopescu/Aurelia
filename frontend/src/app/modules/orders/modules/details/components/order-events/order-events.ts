@@ -14,17 +14,20 @@ export class OrderEvents
 {
     /**
      * Creates a new instance of the class.
+     * @param element The element representing the component.
      * @param modalService The `ModalService` instance.
      * @param orderService The `OrderService` instance.
      * @param localStateService The `LocalStateService` instance.
      */
-    public constructor(modalService: ModalService, orderService: OrderService, localStateService: LocalStateService)
+    public constructor(element: Element, modalService: ModalService, orderService: OrderService, localStateService: LocalStateService)
     {
+        this._element = element as HTMLElement;
         this._orderService = orderService;
         this._modalService = modalService;
         this._localStateService = localStateService;
     }
 
+    private readonly _element: HTMLElement;
     private readonly _orderService: OrderService;
     private readonly _modalService: ModalService;
     private readonly _localStateService: LocalStateService;
@@ -145,6 +148,7 @@ export class OrderEvents
                     }
                 }
 
+                this.temporarilyLockScroll();
                 this.orderEventGroups = orderEventGroups;
             }
             finally
@@ -153,4 +157,23 @@ export class OrderEvents
             }
         });
     }
+
+    /**
+     * HACK:
+     * We apparantly have a minor layout shift while the data-table renders, which causes the browser to scroll to the top of the page.
+     * We currently don't know the root cause of this layout shift, so as a workaround, we temporarily lock the height of the data-table.
+     */
+    private temporarilyLockScroll(): void
+    {
+        const element = (this._element.querySelector("data-table") as HTMLElement);
+        const offsetHeight = element.offsetHeight;
+
+        if (offsetHeight > 0)
+        {
+            element.style.setProperty("height", `${offsetHeight}px`);
+
+            setTimeout(() => element.style.setProperty("height", null), 500);
+        }
+    }
+
 }
