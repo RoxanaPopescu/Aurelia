@@ -1,5 +1,12 @@
 import { autoinject, bindable, bindingMode } from "aurelia-framework";
 
+// HACK:
+// This attribute causes significant performance issues when used in a data-table.
+// Therefore, to reduce the performance impact, we queue initializations and updates,
+// so they execute in batches and don't impact the load time of the list.
+let queuedFuncs = new Set<() => void>();
+let flushTimeoutHandle: any;
+
 /**
  * Custom attribute that determines whether the element is empty.
  * Note that non-visual elements are ignored, and by default, whitespace is ignored too.
@@ -17,8 +24,8 @@ export class EmptyCustomAttribute
     }
 
     private readonly _element: HTMLElement;
-    private readonly _childListMutationObserver = new MutationObserver(mutations => this.onChildListChanged(mutations));
-    private readonly _textNodeMutationObserver = new MutationObserver(mutations => this.onContentChanged());
+    private _childListMutationObserver: MutationObserver;
+    private _textNodeMutationObserver: MutationObserver;
 
     /**
      * The name of the attribute.
@@ -42,9 +49,70 @@ export class EmptyCustomAttribute
      */
     public attached(): void
     {
+        queuedFuncs.add(this.initialize);
+
+        if (flushTimeoutHandle == null)
+        {
+            flushTimeoutHandle = setTimeout(() =>
+            {
+                flushTimeoutHandle = undefined;
+
+                const funcs = queuedFuncs;
+                queuedFuncs = new Set<() => void>();
+
+                document.body.classList.add("--empty-value-busy");
+                funcs.forEach(f => f());
+                document.body.classList.remove("--empty-value-busy");
+            });
+        }
+    }
+
+    /**
+     * Called by the framework when the component is detached.
+     */
+    public detached(): void
+    {
+        queuedFuncs.delete(this.initialize);
+        queuedFuncs.delete(this.update);
+
+        this._childListMutationObserver.disconnect();
+        this._textNodeMutationObserver.disconnect();
+    }
+
+    /**
+     * Called when the text in a child node of the element changes.
+     */
+    private onContentChanged(): void
+    {
+        queuedFuncs.add(this.update);
+
+        if (flushTimeoutHandle == null)
+        {
+            flushTimeoutHandle = setTimeout(() =>
+            {
+                flushTimeoutHandle = undefined;
+
+                const funcs = queuedFuncs;
+                queuedFuncs = new Set<() => void>();
+
+                document.body.classList.add("--empty-value-busy");
+                funcs.forEach(f => f());
+                document.body.classList.remove("--empty-value-busy");
+            });
+        }
+    }
+
+    /**
+     * Determines whether the element is considered empty, and updates the attribute accordingly.
+     */
+    private readonly initialize = () =>
+    {
+        this._childListMutationObserver = new MutationObserver(mutations => this.onChildListChanged(mutations));
+        this._textNodeMutationObserver = new MutationObserver(mutations => this.onContentChanged());
+
         this._childListMutationObserver.observe(this._element, { childList: true, characterData: true });
 
-        this.onContentChanged();
+        this.update();
 
         this._element.childNodes.forEach(node =>
         {
@@ -56,18 +124,9 @@ export class EmptyCustomAttribute
     }
 
     /**
-     * Called by the framework when the component is detached.
+     * Determines whether the element is considered empty, and updates the attribute accordingly.
      */
-    public detached(): void
-    {
-        this._childListMutationObserver.disconnect();
-        this._textNodeMutationObserver.disconnect();
-    }
-
-    /**
-     * Called when the text in a child node of the element changes.
-     */
-    private onContentChanged(): void
+    private readonly update = () =>
     {
         const innerText = this.ignoreWhitespace
             ? this._element.innerText.trim()

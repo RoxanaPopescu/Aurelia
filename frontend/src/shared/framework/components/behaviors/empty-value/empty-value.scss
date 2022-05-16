@@ -6,3 +6,13 @@
         opacity: var(--opacity-faded);
     }
 }
+
+body.--empty-value-busy data-table-cell [empty-value]::before
+{
+    // HACK:
+    // This attribute causes significant performance issues when used in a table, as
+    // it causes a reflow for every cell. Therefore, to reduce the performance impact,
+    // we hide the content of all empty-value attributes within a data-table-cell until
+    // the update is complete.
+    display: none;
+}
