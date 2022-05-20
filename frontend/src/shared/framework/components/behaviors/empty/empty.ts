@@ -75,8 +75,8 @@ export class EmptyCustomAttribute
         queuedFuncs.delete(this.initialize);
         queuedFuncs.delete(this.update);
 
-        this._childListMutationObserver.disconnect();
-        this._textNodeMutationObserver.disconnect();
+        this._childListMutationObserver?.disconnect();
+        this._textNodeMutationObserver?.disconnect();
     }
 
     /**
