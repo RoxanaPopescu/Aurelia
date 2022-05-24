@@ -77,6 +77,7 @@ export const paths =
             resolve("src/worker.js"),
             resolve("src/**/resources/fonts/**"),
             resolve("src/**/resources/images/**"),
+            resolve("src/**/resources/files/**"),
             resolve("src/resources/themes/*/images/**"),
             resolve("src/resources/themes/*/integration/**")
         ],
