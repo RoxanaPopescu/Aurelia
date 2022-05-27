@@ -43,22 +43,39 @@
 
                         </date-input>
 
-                        <duration-input else label="above" fixed.bind="true" unit="hours" value.bind="relativeFromDateFilter" class="flex-grow">
+                        <duration-input else label="above" fixed.bind="true" unit.bind="relativeFromDateFilterUnit" value.bind="relativeFromDateFilter" class="flex-grow">
 
                             <div slot="heading" translate>
                                 From
                             </div>
 
-                            <span slot="after" class="opacity-faded" translate>
-                                hours
-                            </span>
+                            <select-input none.bind="false" slot="after" value.bind="relativeFromDateFilterUnit"
+                                style="width: 220rem; margin: -1rem -1rem -1rem -10rem;">
+
+                                <item model="hours" translate>
+                                    hours
+                                </item>
+
+                                <item model="days" translate>
+                                    days
+                                </item>
+
+                            </select-input>
 
                         </duration-input>
 
                         <check-toggle label="after" value.bind="useRelativeFromDateFilter" class="margin-top">
 
-                            <div slot="heading" translate>
-                                Relative to now
+                            <div slot="heading">
+                                <template if.bind="useRelativeFromDateFilter && relativeFromDateFilterUnit === 'days'" translate>
+                                    Relative to today
+                                </template>
+                                <template if.bind="useRelativeFromDateFilter && relativeFromDateFilterUnit === 'hours'" translate>
+                                    Relative to now
+                                </template>
+                                <template if.bind="!useRelativeFromDateFilter || relativeFromDateFilterUnit === null" translate>
+                                    Relative
+                                </template>
                             </div>
 
                         </check-toggle>
@@ -75,22 +92,39 @@
 
                         </date-input>
 
-                        <duration-input else label="above" fixed.bind="true" unit="hours" value.bind="relativeToDateFilter" class="flex-grow">
+                        <duration-input else label="above" fixed.bind="true" unit.bind="relativeToDateFilterUnit" value.bind="relativeToDateFilter" class="flex-grow">
 
                             <div slot="heading" translate>
                                 To
                             </div>
 
-                            <span slot="after" class="opacity-faded" translate>
-                                hours
-                            </span>
+                            <select-input none.bind="false" slot="after" value.bind="relativeToDateFilterUnit"
+                                style="width: 220rem; margin: -1rem -1rem -1rem -10rem;">
+
+                                <item model="hours" translate>
+                                    hours
+                                </item>
+
+                                <item model="days" translate>
+                                    days
+                                </item>
+
+                            </select-input>
 
                         </duration-input>
 
                         <check-toggle label="after" value.bind="useRelativeToDateFilter" class="margin-top">
 
-                            <div slot="heading" translate>
-                                Relative to now
+                            <div slot="heading">
+                                <template if.bind="useRelativeToDateFilter && relativeToDateFilterUnit === 'days'" translate>
+                                    Relative to today
+                                </template>
+                                <template if.bind="useRelativeToDateFilter && relativeToDateFilterUnit === 'hours'" translate>
+                                    Relative to now
+                                </template>
+                                <template if.bind="!useRelativeToDateFilter || relativeToDateFilterUnit === null" translate>
+                                    Relative
+                                </template>
                             </div>
 
                         </check-toggle>

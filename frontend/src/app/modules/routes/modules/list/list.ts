@@ -261,6 +261,12 @@ export class ListPage
     protected relativeStartTimeFromFilter: Duration | undefined;
 
     /**
+     * The unit in which `relativeStartTimeFromFilter` is specified.
+     */
+     @observable({ changeHandler: "updateRelative" })
+    protected relativeStartTimeFromFilterUnit: "days" | "hours" | undefined;
+
+    /**
      * True to use `relativeStartTimeToFilter`, otherwise false.
      */
      @observable({ changeHandler: "updateRelative" })
@@ -271,6 +277,12 @@ export class ListPage
      */
     @observable({ changeHandler: "updateRelative" })
     protected relativeStartTimeToFilter: Duration | undefined;
+
+    /**
+     * The unit in which `relativeStartTimeToFilter` is specified.
+     */
+     @observable({ changeHandler: "updateRelative" })
+    protected relativeStartTimeToFilterUnit: "days" | "hours" | undefined;
 
     /**
      * The min created date for which routes should be shown.
@@ -359,9 +371,17 @@ export class ListPage
 
         this.useRelativeStartTimeFromFilter = params.relativeStartTimeFromFilter != null;
         this.relativeStartTimeFromFilter = params.relativeStartTimeFromFilter ? Duration.fromISO(params.relativeStartTimeFromFilter) : undefined;
+        this.relativeStartTimeFromFilterUnit =
+            params.relativeStartTimeFromFilter?.includes("D") ? "days" :
+            params.relativeStartTimeFromFilter?.includes("H") ? "hours" :
+            "hours";
 
         this.useRelativeStartTimeToFilter = params.relativeStartTimeToFilter != null;
         this.relativeStartTimeToFilter = params.relativeStartTimeToFilter ? Duration.fromISO(params.relativeStartTimeToFilter) : undefined;
+        this.relativeStartTimeToFilterUnit =
+            params.relativeStartTimeToFilter?.includes("D") ? "days" :
+            params.relativeStartTimeToFilter?.includes("H") ? "hours" :
+            "hours";
 
         if (params.teams)
         {
@@ -680,8 +700,8 @@ export class ListPage
                     state.params.notAssignedVehicle = this.notAssignedVehicle ? true : undefined;
                     state.params.startTimeFromFilter = this.relativeStartTimeFromFilter != null ? undefined : this.startTimeFromFilter?.toISO();
                     state.params.startTimeToFilter = this.relativeStartTimeToFilter != null ? undefined : this.startTimeToFilter?.toISO();
-                    state.params.relativeStartTimeFromFilter = this.relativeStartTimeFromFilter?.toISO();
-                    state.params.relativeStartTimeToFilter = this.relativeStartTimeToFilter?.toISO();
+                    state.params.relativeStartTimeFromFilter = this.relativeStartTimeFromFilter?.shiftTo(this.relativeStartTimeFromFilterUnit!).toISO();
+                    state.params.relativeStartTimeToFilter = this.relativeStartTimeToFilter?.shiftTo(this.relativeStartTimeToFilterUnit!).toISO();
                     state.params.teams = this.teamsFilterService.selectedTeamIds;
                     state.params.tagsFilter = this.tagsFilter?.join(",") || undefined;
                     // TODO: Add "Pickup nearby" filter
@@ -697,7 +717,7 @@ export class ListPage
                         searchQuery: this.textFilter,
                         tagsAllMatching: this.tagsFilter,
                         startTimeFrom: this.startTimeFromFilter,
-                        startTimeTo: this.useRelativeStartTimeToFilter ? this.startTimeToFilter : this.startTimeToFilter?.endOf("day"),
+                        startTimeTo: this.startTimeToFilter,
                         createdTimeFrom: this.createdTimeFromFilter,
                         createdTimeTo: this.createdTimeToFilter?.endOf("day"),
                         assignedDriver: assignedDriver,
@@ -746,9 +766,12 @@ export class ListPage
 
     protected updateRelative(): void
     {
+        const now = DateTime.local();
+
         if (this.useRelativeStartTimeFromFilter)
         {
-            this.startTimeFromFilter = this.relativeStartTimeFromFilter != null ? DateTime.local().plus(this.relativeStartTimeFromFilter) : undefined;
+            const nowOrToday = this.relativeStartTimeFromFilterUnit === "days" ? now.startOf("day") : now;
+            this.startTimeFromFilter = this.relativeStartTimeFromFilter != null ? nowOrToday.plus(this.relativeStartTimeFromFilter) : undefined;
         }
         else if (this.relativeStartTimeFromFilter != null)
         {
@@ -758,7 +781,8 @@ export class ListPage
 
         if (this.useRelativeStartTimeToFilter)
         {
-            this.startTimeToFilter = this.relativeStartTimeToFilter != null ? DateTime.local().plus(this.relativeStartTimeToFilter) : undefined;
+            const nowOrToday = this.relativeStartTimeToFilterUnit === "days" ? now.endOf("day") : now;
+            this.startTimeToFilter = this.relativeStartTimeToFilter != null ? nowOrToday.plus(this.relativeStartTimeToFilter) : undefined;
         }
         else if (this.relativeStartTimeToFilter != null)
         {

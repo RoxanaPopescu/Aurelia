@@ -52,7 +52,7 @@ export class DurationInputCustomElement
     /**
      * Gets the value of the input element based on the value of the component.
      */
-    @computedFrom("enteredValue", "value")
+    @computedFrom("enteredValue", "value", "unit")
     protected get inputValue(): string
     {
         // If the user entered a value, return that.

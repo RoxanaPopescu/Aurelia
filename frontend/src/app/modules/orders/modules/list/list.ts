@@ -182,6 +182,12 @@ export class ListPage
     protected relativeFromDateFilter: Duration | undefined;
 
     /**
+     * The unit in which `relativeFromDateFilter` is specified.
+     */
+     @observable({ changeHandler: "updateRelative" })
+    protected relativeFromDateFilterUnit: "days" | "hours" | undefined;
+
+    /**
      * True to use `relativeToDateFilter`, otherwise false.
      */
      @observable({ changeHandler: "updateRelative" })
@@ -192,6 +198,12 @@ export class ListPage
      */
     @observable({ changeHandler: "updateRelative" })
     protected relativeToDateFilter: Duration | undefined;
+
+    /**
+     * The unit in which `relativeToDateFilter` is specified.
+     */
+     @observable({ changeHandler: "updateRelative" })
+    protected relativeToDateFilterUnit: "days" | "hours" | undefined;
 
     /**
      * If it failed loading.
@@ -236,9 +248,17 @@ export class ListPage
 
         this.useRelativeFromDateFilter = params.relativeFromDateFilter != null;
         this.relativeFromDateFilter = params.relativeFromDateFilter ? Duration.fromISO(params.relativeFromDateFilter) : undefined;
+        this.relativeFromDateFilterUnit =
+            params.relativeFromDateFilter?.includes("D") ? "days" :
+            params.relativeFromDateFilter?.includes("H") ? "hours" :
+            "hours";
 
         this.useRelativeToDateFilter = params.relativeToDateFilter != null;
         this.relativeToDateFilter = params.relativeToDateFilter ? Duration.fromISO(params.relativeToDateFilter) : undefined;
+        this.relativeToDateFilterUnit =
+            params.relativeToDateFilter?.includes("D") ? "days" :
+            params.relativeToDateFilter?.includes("H") ? "hours" :
+            "hours";
 
         this.update();
     }
@@ -440,15 +460,15 @@ export class ListPage
                     state.params.orderTagsFilter = this.orderTagsFilter?.join(",") || undefined;
                     state.params.fromDateFilter = this.relativeFromDateFilter != null ? undefined : this.fromDateFilter?.toISO();
                     state.params.toDateFilter = this.relativeToDateFilter != null ? undefined : this.toDateFilter?.toISO();
-                    state.params.relativeFromDateFilter = this.relativeFromDateFilter?.toISO();
-                    state.params.relativeToDateFilter = this.relativeToDateFilter?.toISO();
+                    state.params.relativeFromDateFilter = this.relativeFromDateFilter?.shiftTo(this.relativeFromDateFilterUnit!).toISO();
+                    state.params.relativeToDateFilter = this.relativeToDateFilter?.shiftTo(this.relativeToDateFilterUnit!).toISO();
                 },
                 { trigger: false, replace: true });
 
                 // Fetch the data.
                 const result = await this._orderService.getAll(
                     this.fromDateFilter,
-                    this.useRelativeToDateFilter ? this.toDateFilter : this.toDateFilter?.endOf("day"),
+                    this.toDateFilter,
                     this.statusFilter,
                     this.consignorFilter.length > 0 ? this.consignorFilter.map(c => c.id) : undefined,
                     this.orderTagsFilter,
@@ -480,9 +500,12 @@ export class ListPage
 
     protected updateRelative(): void
     {
+        const now = DateTime.local();
+
         if (this.useRelativeFromDateFilter)
         {
-            this.fromDateFilter = this.relativeFromDateFilter != null ? DateTime.local().plus(this.relativeFromDateFilter) : undefined;
+            const nowOrToday = this.relativeFromDateFilterUnit === "days" ? now.startOf("day") : now;
+            this.fromDateFilter = this.relativeFromDateFilter != null ? nowOrToday.plus(this.relativeFromDateFilter) : undefined;
         }
         else if (this.relativeFromDateFilter != null)
         {
@@ -492,7 +515,8 @@ export class ListPage
 
         if (this.useRelativeToDateFilter)
         {
-            this.toDateFilter = this.relativeToDateFilter != null ? DateTime.local().plus(this.relativeToDateFilter) : undefined;
+            const nowOrToday = this.relativeToDateFilterUnit === "days" ? now.endOf("day") : now;
+            this.toDateFilter = this.relativeToDateFilter != null ? nowOrToday.plus(this.relativeToDateFilter) : undefined;
         }
         else if (this.relativeToDateFilter != null)
         {

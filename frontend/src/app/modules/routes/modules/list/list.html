@@ -132,22 +132,39 @@
 
                         </date-input>
 
-                        <duration-input else label="above" fixed.bind="true" unit="hours" value.bind="relativeStartTimeFromFilter" class="flex-grow">
+                        <duration-input else label="above" fixed.bind="true" unit.bind="relativeStartTimeFromFilterUnit" value.bind="relativeStartTimeFromFilter" class="flex-grow">
 
                             <div slot="heading" translate>
                                 From
                             </div>
 
-                            <span slot="after" class="opacity-faded" translate>
-                                hours
-                            </span>
+                            <select-input none.bind="false" slot="after" value.bind="relativeStartTimeFromFilterUnit"
+                                style="width: 220rem; margin: -1rem -1rem -1rem -10rem;">
+
+                                <item model="hours" translate>
+                                    hours
+                                </item>
+
+                                <item model="days" translate>
+                                    days
+                                </item>
+
+                            </select-input>
 
                         </duration-input>
 
                         <check-toggle label="after" value.bind="useRelativeStartTimeFromFilter" class="margin-top">
 
-                            <div slot="heading" translate>
-                                Relative to now
+                            <div slot="heading">
+                                <template if.bind="useRelativeStartTimeFromFilter && relativeStartTimeFromFilterUnit === 'days'" translate>
+                                    Relative to today
+                                </template>
+                                <template if.bind="useRelativeStartTimeFromFilter && relativeStartTimeFromFilterUnit === 'hours'" translate>
+                                    Relative to now
+                                </template>
+                                <template if.bind="!useRelativeStartTimeFromFilter || relativeStartTimeFromFilterUnit === null" translate>
+                                    Relative
+                                </template>
                             </div>
 
                         </check-toggle>
@@ -165,22 +182,39 @@
                         </date-input>
 
 
-                        <duration-input else label="above" fixed.bind="true" unit="hours" value.bind="relativeStartTimeToFilter" class="flex-grow">
+                        <duration-input else label="above" fixed.bind="true" unit.bind="relativeStartTimeToFilterUnit" value.bind="relativeStartTimeToFilter" class="flex-grow">
 
                             <div slot="heading" translate>
                                 To
                             </div>
 
-                            <span slot="after" class="opacity-faded" translate>
-                                hours
-                            </span>
+                            <select-input none.bind="false" slot="after" value.bind="relativeStartTimeToFilterUnit"
+                                style="width: 220rem; margin: -1rem -1rem -1rem -10rem;">
+
+                                <item model="hours" translate>
+                                    hours
+                                </item>
+
+                                <item model="days" translate>
+                                    days
+                                </item>
+
+                            </select-input>
 
                         </duration-input>
 
                         <check-toggle label="after" value.bind="useRelativeStartTimeToFilter" class="margin-top">
 
-                            <div slot="heading" translate>
-                                Relative to now
+                            <div slot="heading">
+                                <template if.bind="useRelativeStartTimeToFilter && relativeStartTimeToFilterUnit === 'days'" translate>
+                                    Relative to today
+                                </template>
+                                <template if.bind="useRelativeStartTimeToFilter && relativeStartTimeToFilterUnit === 'hours'" translate>
+                                    Relative to now
+                                </template>
+                                <template if.bind="!useRelativeStartTimeToFilter || relativeStartTimeToFilterUnit === null" translate>
+                                    Relative
+                                </template>
                             </div>
 
                         </check-toggle>
