@@ -369,19 +369,19 @@ export class ListPage
         this.createdTimeFromFilter = params.createdTimeFromFilter ? DateTime.fromISO(params.createdTimeFromFilter, { setZone: true }) : undefined;
         this.createdTimeToFilter = params.createdTimeToFilter ? DateTime.fromISO(params.createdTimeToFilter, { setZone: true }) : undefined;
 
-        this.useRelativeStartTimeFromFilter = params.relativeStartTimeFromFilter != null;
-        this.relativeStartTimeFromFilter = params.relativeStartTimeFromFilter ? Duration.fromISO(params.relativeStartTimeFromFilter) : undefined;
         this.relativeStartTimeFromFilterUnit =
             params.relativeStartTimeFromFilter?.includes("D") ? "days" :
             params.relativeStartTimeFromFilter?.includes("H") ? "hours" :
             "hours";
+        this.useRelativeStartTimeFromFilter = params.relativeStartTimeFromFilter != null;
+        this.relativeStartTimeFromFilter = params.relativeStartTimeFromFilter ? Duration.fromISO(params.relativeStartTimeFromFilter) : undefined;
 
-        this.useRelativeStartTimeToFilter = params.relativeStartTimeToFilter != null;
-        this.relativeStartTimeToFilter = params.relativeStartTimeToFilter ? Duration.fromISO(params.relativeStartTimeToFilter) : undefined;
         this.relativeStartTimeToFilterUnit =
             params.relativeStartTimeToFilter?.includes("D") ? "days" :
             params.relativeStartTimeToFilter?.includes("H") ? "hours" :
             "hours";
+        this.useRelativeStartTimeToFilter = params.relativeStartTimeToFilter != null;
+        this.relativeStartTimeToFilter = params.relativeStartTimeToFilter ? Duration.fromISO(params.relativeStartTimeToFilter) : undefined;
 
         if (params.teams)
         {
@@ -717,7 +717,7 @@ export class ListPage
                         searchQuery: this.textFilter,
                         tagsAllMatching: this.tagsFilter,
                         startTimeFrom: this.startTimeFromFilter,
-                        startTimeTo: this.startTimeToFilter,
+                        startTimeTo: this.useRelativeStartTimeToFilter ? this.startTimeToFilter : this.startTimeToFilter?.endOf("day"),
                         createdTimeFrom: this.createdTimeFromFilter,
                         createdTimeTo: this.createdTimeToFilter?.endOf("day"),
                         assignedDriver: assignedDriver,
@@ -764,14 +764,15 @@ export class ListPage
         });
     }
 
-    protected updateRelative(): void
+    protected updateRelative(newValue: any, oldValue: any, propertyName: string): void
     {
         const now = DateTime.local();
 
-        if (this.useRelativeStartTimeFromFilter)
+        if (this.useRelativeStartTimeFromFilter && propertyName !== "relativeStartTimeFromFilterUnit")
         {
-            const nowOrToday = this.relativeStartTimeFromFilterUnit === "days" ? now.startOf("day") : now;
-            this.startTimeFromFilter = this.relativeStartTimeFromFilter != null ? nowOrToday.plus(this.relativeStartTimeFromFilter) : undefined;
+            const nowOrStartOfToday = this.relativeStartTimeFromFilterUnit === "days" ? now.startOf("day") : now;
+
+            this.startTimeFromFilter = this.relativeStartTimeFromFilter != null ? nowOrStartOfToday.plus(this.relativeStartTimeFromFilter) : undefined;
         }
         else if (this.relativeStartTimeFromFilter != null)
         {
@@ -779,10 +780,11 @@ export class ListPage
             this.startTimeFromFilter = undefined;
         }
 
-        if (this.useRelativeStartTimeToFilter)
+        if (this.useRelativeStartTimeToFilter && propertyName !== "relativeStartTimeToFilterUnit")
         {
-            const nowOrToday = this.relativeStartTimeToFilterUnit === "days" ? now.endOf("day") : now;
-            this.startTimeToFilter = this.relativeStartTimeToFilter != null ? nowOrToday.plus(this.relativeStartTimeToFilter) : undefined;
+            const nowOrEndOfToday = this.relativeStartTimeToFilterUnit === "days" ? now.endOf("day") : now;
+
+            this.startTimeToFilter = this.relativeStartTimeToFilter != null ? nowOrEndOfToday.plus(this.relativeStartTimeToFilter) : undefined;
         }
         else if (this.relativeStartTimeToFilter != null)
         {

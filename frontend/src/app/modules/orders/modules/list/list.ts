@@ -246,19 +246,19 @@ export class ListPage
         this.fromDateFilter = params.fromDateFilter ? DateTime.fromISO(params.fromDateFilter, { setZone: true }) : undefined;
         this.toDateFilter = params.toDateFilter ? DateTime.fromISO(params.toDateFilter, { setZone: true }) : undefined;
 
-        this.useRelativeFromDateFilter = params.relativeFromDateFilter != null;
-        this.relativeFromDateFilter = params.relativeFromDateFilter ? Duration.fromISO(params.relativeFromDateFilter) : undefined;
         this.relativeFromDateFilterUnit =
             params.relativeFromDateFilter?.includes("D") ? "days" :
             params.relativeFromDateFilter?.includes("H") ? "hours" :
             "hours";
+        this.useRelativeFromDateFilter = params.relativeFromDateFilter != null;
+        this.relativeFromDateFilter = params.relativeFromDateFilter ? Duration.fromISO(params.relativeFromDateFilter) : undefined;
 
-        this.useRelativeToDateFilter = params.relativeToDateFilter != null;
-        this.relativeToDateFilter = params.relativeToDateFilter ? Duration.fromISO(params.relativeToDateFilter) : undefined;
         this.relativeToDateFilterUnit =
             params.relativeToDateFilter?.includes("D") ? "days" :
             params.relativeToDateFilter?.includes("H") ? "hours" :
             "hours";
+        this.useRelativeToDateFilter = params.relativeToDateFilter != null;
+        this.relativeToDateFilter = params.relativeToDateFilter ? Duration.fromISO(params.relativeToDateFilter) : undefined;
 
         this.update();
     }
@@ -468,7 +468,7 @@ export class ListPage
                 // Fetch the data.
                 const result = await this._orderService.getAll(
                     this.fromDateFilter,
-                    this.toDateFilter,
+                    this.useRelativeToDateFilter ? this.toDateFilter : this.toDateFilter?.endOf("day"),
                     this.statusFilter,
                     this.consignorFilter.length > 0 ? this.consignorFilter.map(c => c.id) : undefined,
                     this.orderTagsFilter,
@@ -498,14 +498,15 @@ export class ListPage
         });
     }
 
-    protected updateRelative(): void
+    protected updateRelative(newValue: any, oldValue: any, propertyName: string): void
     {
         const now = DateTime.local();
 
-        if (this.useRelativeFromDateFilter)
+        if (this.useRelativeFromDateFilter && propertyName !== "relativeFromDateFilterUnit")
         {
-            const nowOrToday = this.relativeFromDateFilterUnit === "days" ? now.startOf("day") : now;
-            this.fromDateFilter = this.relativeFromDateFilter != null ? nowOrToday.plus(this.relativeFromDateFilter) : undefined;
+            const nowOrStartOfToday = this.relativeFromDateFilterUnit === "days" ? now.startOf("day") : now;
+
+            this.fromDateFilter = this.relativeFromDateFilter != null ? nowOrStartOfToday.plus(this.relativeFromDateFilter) : undefined;
         }
         else if (this.relativeFromDateFilter != null)
         {
@@ -513,10 +514,11 @@ export class ListPage
             this.fromDateFilter = undefined;
         }
 
-        if (this.useRelativeToDateFilter)
+        if (this.useRelativeToDateFilter && propertyName !== "relativeToDateFilterUnit")
         {
-            const nowOrToday = this.relativeToDateFilterUnit === "days" ? now.endOf("day") : now;
-            this.toDateFilter = this.relativeToDateFilter != null ? nowOrToday.plus(this.relativeToDateFilter) : undefined;
+            const nowOrEndOfToday = this.relativeToDateFilterUnit === "days" ? now.endOf("day") : now;
+
+            this.toDateFilter = this.relativeToDateFilter != null ? nowOrEndOfToday.plus(this.relativeToDateFilter) : undefined;
         }
         else if (this.relativeToDateFilter != null)
         {
