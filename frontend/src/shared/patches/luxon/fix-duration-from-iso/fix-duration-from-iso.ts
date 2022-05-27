@@ -10,7 +10,7 @@ import { Duration, DurationOptions } from "luxon";
  * although the `toISO` method outputs up to 16 fractional digits. We therefore override the `fromISO` method, as
  * that's unfortunately the only way we can override the regular expression that is the root cause of the bug.
  */
-Duration.fromISO = function (text: string, opts?: DurationOptions | undefined): Duration
+Duration.fromISO = (text: string, opts?: DurationOptions | undefined): Duration =>
 {
     const [parsed] = parseISODuration(text);
 
@@ -18,10 +18,8 @@ Duration.fromISO = function (text: string, opts?: DurationOptions | undefined): 
     {
         return Duration.fromObject(parsed, opts);
     }
-    else
-    {
-        return Duration.invalid("unparsable", `the input "${text}" can't be parsed as ISO 8601`);
-    }
+
+    return Duration.invalid("unparsable", `the input "${text}" can't be parsed as ISO 8601`);
 };
 
 // The regular expression, with the upper limits on the number of digits removed.
@@ -31,12 +29,12 @@ const isoDuration = /^-?P(?:(?:(-?\d{1,20}(?:\.\d{1,20})?)Y)?(?:(-?\d{1,20}(?:\.
 
 // @ts-nocheck
 
-function parseISODuration(s: any)
+function parseISODuration(s: string | null | undefined): any
 {
     return parse(s, [isoDuration, extractISODuration]);
 }
 
-function parse(s: any, ...patterns: any)
+function parse(s: string | null | undefined, ...patterns: any[]): any
 {
     if (s == null)
     {
@@ -46,6 +44,7 @@ function parse(s: any, ...patterns: any)
     for (const [regex, extractor] of patterns)
     {
         const m = regex.exec(s);
+
         if (m)
         {
             return extractor(m);
@@ -55,13 +54,12 @@ function parse(s: any, ...patterns: any)
     return [null, null];
 }
 
-function extractISODuration(match: any)
+function extractISODuration(match: string[]): any
 {
-    const [s, yearStr, monthStr, weekStr, dayStr, hourStr, minuteStr, secondStr, millisecondsStr] =
-        match;
+    const [s, yearStr, monthStr, weekStr, dayStr, hourStr, minuteStr, secondStr, millisecondsStr] = match;
 
     const hasNegativePrefix = s[0] === "-";
-    const negativeSeconds = secondStr && secondStr[0] === "-";
+    const negativeSeconds = !!secondStr && secondStr[0] === "-";
 
     const maybeNegate = (num: any, force = false) =>
         num !== undefined && (force || (num && hasNegativePrefix)) ? -num : num;
@@ -75,39 +73,35 @@ function extractISODuration(match: any)
             hours: maybeNegate(parseFloating(hourStr)),
             minutes: maybeNegate(parseFloating(minuteStr)),
             seconds: maybeNegate(parseFloating(secondStr), secondStr === "-0"),
-            milliseconds: maybeNegate(parseMillis(millisecondsStr), negativeSeconds),
-        },
+            milliseconds: maybeNegate(parseMillis(millisecondsStr), negativeSeconds)
+        }
     ];
 }
 
-function parseFloating(string: any)
+function parseFloating(string: string): number | undefined
 {
     if (isUndefined(string) || string === null || string === "")
     {
         return undefined;
     }
-    else
-    {
-        return parseFloat(string);
-    }
+
+    return parseFloat(string);
 }
 
-function parseMillis(fraction: any)
+function parseMillis(fraction: string): number | undefined
 {
     // Return undefined (instead of 0) in these cases, where fraction is not set
     if (isUndefined(fraction) || fraction === null || fraction === "")
     {
         return undefined;
     }
-    else
-    {
-        const f = parseFloat("0." + fraction) * 1000;
 
-        return Math.floor(f);
-    }
+    const f = parseFloat(`0.${fraction}`) * 1000;
+
+    return Math.floor(f);
 }
 
-function isUndefined(o: any)
+function isUndefined(o: any): any
 {
     return typeof o === "undefined";
 }
