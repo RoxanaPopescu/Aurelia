@@ -56,7 +56,7 @@ export class DispatchRouteModule extends AppModule
      */
     public "POST /v2/dispatch/route/assign-vehicle" = async (context: AppContext) =>
     {
-        await context.authorize("edit-routes");
+        await context.authorize("assign-vehicle-route");
 
         const body: any = context.request.body;
         body.fulfillerIds = [context.user?.organizationId];

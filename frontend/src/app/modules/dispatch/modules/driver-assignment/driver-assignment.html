@@ -514,19 +514,33 @@
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'vehicle'" class="${updating.vehicle ? 'opacity-faded' : ''}">
-                                    <a
-                                        class="text-truncate"
-                                        click.trigger="onAssignVehicleClick(route, updating)">
-                                        <template if.bind="!route.vehicle" translate>
-                                            Assign Vehicle
-                                        </template>
-                                        <template if.bind="route.vehicle && route.vehicle.name">
-                                            ${route.vehicle.name}
-                                        </template>
-                                        <template if.bind="route.vehicle && !route.vehicle.name">
-                                            ${route.vehicle.make} ${route.vehicle.model}
-                                        </template>
-                                    </a>
+                                    <template if-claims="assign-vehicle-route">
+                                        <a
+                                            class="text-truncate"
+                                            click.trigger="onAssignVehicleClick(route, updating)">
+                                            <template if.bind="!route.vehicle" translate>
+                                                Assign Vehicle
+                                            </template>
+                                            <template if.bind="route.vehicle && route.vehicle.name">
+                                                ${route.vehicle.name}
+                                            </template>
+                                            <template if.bind="route.vehicle && !route.vehicle.name">
+                                                ${route.vehicle.make} ${route.vehicle.model}
+                                            </template>
+                                        </a>
+                                    </template>
+                                    <template else>
+                                        <span
+                                            class="text-truncate"
+                                            empty-value>
+                                            <template if.bind="route.vehicle && route.vehicle.name">
+                                                ${route.vehicle.name}
+                                            </template>
+                                            <template if.bind="route.vehicle && !route.vehicle.name">
+                                                ${route.vehicle.make} ${route.vehicle.model}
+                                            </template>
+                                        </span>
+                                    </template>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'status'">

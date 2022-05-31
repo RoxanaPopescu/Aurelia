@@ -109,7 +109,7 @@ export class DispatchModule
                 {
                     claims:
                     [
-                        "edit-routes"
+                        "assign-driver-route"
                     ]
                 },
                 title: routeTitles.driverAssignment,
