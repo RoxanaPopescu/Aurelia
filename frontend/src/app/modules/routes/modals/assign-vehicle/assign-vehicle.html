@@ -11,7 +11,7 @@
         <modal-header scroll-fade>
 
             <h1 class="font-largest margin-bottom flex-row">
-                <div>
+                <div class="white-space-nowrap">
                     <template if.bind="route.vehicle" translate>
                         Reassign vehicle
                     </template>
@@ -25,7 +25,7 @@
                     –
                 </div>
 
-                <div class="opacity-faded" if.bind="route">
+                <div class="opacity-faded text-truncate" if.bind="route">
                     ${route.slug}
                 </div>
             </h1>
