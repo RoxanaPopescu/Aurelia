@@ -862,7 +862,7 @@ export class ListPage
         this.startTimeToFilter = state.filters.startTimeToFilter != null ? DateTime.fromISO(state.filters.startTimeToFilter, { setZone: true }) : undefined;
         this.teamsFilterService.selectedTeamIds = state.filters.teamsFilterService;
         this.tagsFilter = state.filters.tagsFilter;
-        this.orderedVehicleTypesFilter = state.filters.orderedVehicleTypesFilter?.map(slug => VehicleType.getBySlug(slug)),
+        this.orderedVehicleTypesFilter = state.filters.orderedVehicleTypesFilter?.map(slug => VehicleType.getBySlug(slug));
         this.legacyOwnerIdsFilter = state.filters.legacyOwnerIdsFilter;
         this.createdTimeFromFilter = state.filters.createdTimeFromFilter != null ? DateTime.fromISO(state.filters.createdTimeFromFilter, { setZone: true }) : undefined;
         this.createdTimeToFilter = state.filters.createdTimeToFilter != null ? DateTime.fromISO(state.filters.createdTimeToFilter, { setZone: true }) : undefined;
