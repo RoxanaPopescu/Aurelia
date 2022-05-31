@@ -225,7 +225,7 @@
 
             </page-section>
 
-            <page-section toggle.bind="true">
+            <page-section if-environment="development, preview" toggle.bind="true">
 
                 <div slot="header" translate>
                     Ordered vehicle type
