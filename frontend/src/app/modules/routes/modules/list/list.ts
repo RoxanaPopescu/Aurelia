@@ -40,7 +40,7 @@ interface IRouteParams
     relativeStartTimeToFilter?: string;
     teams?: string;
     tagsFilter?: string;
-    orderedVehicleTypeFilter?: string;
+    orderedVehicleTypesFilter?: string;
     // TODO: Add "Pickup nearby" filter
     owners?: string;
     createdTimeFromFilter?: string;
@@ -241,7 +241,7 @@ export class ListPage
      * The vehicle types for which routes should be shown.
      */
     @observable({ changeHandler: "update" })
-    protected orderedVehicleTypeFilter: VehicleType[] | undefined;
+    protected orderedVehicleTypesFilter: VehicleType[] | undefined;
 
     /**
      * The tags for which routes should be shown.
@@ -377,7 +377,7 @@ export class ListPage
         this.startTimeFromFilter = params.startTimeFromFilter ? DateTime.fromISO(params.startTimeFromFilter, { setZone: true }) : undefined;
         this.startTimeToFilter = params.startTimeToFilter ? DateTime.fromISO(params.startTimeToFilter, { setZone: true }) : undefined;
         this.tagsFilter = params.tagsFilter?.split(",") || this.tagsFilter;
-        this.orderedVehicleTypeFilter = params.orderedVehicleTypeFilter?.split(",").map(slug => VehicleType.getBySlug(slug)) || this.orderedVehicleTypeFilter;
+        this.orderedVehicleTypesFilter = params.orderedVehicleTypesFilter?.split(",").map(slug => VehicleType.getBySlug(slug)) || this.orderedVehicleTypesFilter;
         // TODO: Add "Pickup nearby" filter
         this.legacyOwnerIdsFilter = params.owners?.split(",");
         this.createdTimeFromFilter = params.createdTimeFromFilter ? DateTime.fromISO(params.createdTimeFromFilter, { setZone: true }) : undefined;
@@ -720,7 +720,7 @@ export class ListPage
                     state.params.relativeStartTimeToFilter = this.relativeStartTimeToFilter?.shiftTo(this.relativeStartTimeToFilterUnit!).toISO();
                     state.params.teams = this.teamsFilterService.selectedTeamIds;
                     state.params.tagsFilter = this.tagsFilter?.join(",") || undefined;
-                    state.params.orderedVehicleTypeFilter = this.orderedVehicleTypeFilter?.map(vt => vt.slug).join(",") || undefined;
+                    state.params.orderedVehicleTypesFilter = this.orderedVehicleTypesFilter?.map(vt => vt.slug).join(",") || undefined;
                     // TODO: Add "Pickup nearby" filter
                     state.params.owners = this.legacyOwnerIdsFilter?.join(",");
                     state.params.createdTimeFromFilter = this.createdTimeFromFilter?.toISO();
@@ -741,7 +741,7 @@ export class ListPage
                         assignedVehicle: assignedVehicle,
                         pickupNearby: (this.pickupNearbyPosition != null) ? { position: this.pickupNearbyPosition, precision: 3 } : undefined,
                         teams: this.teamsFilterService.selectedTeamIds,
-                        orderedVehicleType: this.orderedVehicleTypeFilter?.map(vt => vt.id),
+                        orderedVehicleTypes: this.orderedVehicleTypesFilter?.map(vt => vt.id),
                         legacyOwnerIds: this.legacyOwnerIdsFilter
                     },
                     {
@@ -835,7 +835,7 @@ export class ListPage
                 relativeStartTimeToFilter: this.relativeStartTimeToFilter?.toISO(),
                 teamsFilterService: this.teamsFilterService.selectedTeamIds,
                 tagsFilter: this.tagsFilter,
-                orderedVehicleTypeFilter: this.orderedVehicleTypeFilter?.map(vt => vt.slug),
+                orderedVehicleTypesFilter: this.orderedVehicleTypesFilter?.map(vt => vt.slug),
                 legacyOwnerIdsFilter: this.legacyOwnerIdsFilter,
                 createdTimeFromFilter: this.createdTimeFromFilter?.toISO(),
                 createdTimeToFilter: this.createdTimeToFilter?.toISO()
@@ -862,7 +862,7 @@ export class ListPage
         this.startTimeToFilter = state.filters.startTimeToFilter != null ? DateTime.fromISO(state.filters.startTimeToFilter, { setZone: true }) : undefined;
         this.teamsFilterService.selectedTeamIds = state.filters.teamsFilterService;
         this.tagsFilter = state.filters.tagsFilter;
-        this.orderedVehicleTypeFilter = state.filters.orderedVehicleTypeFilter?.map(slug => VehicleType.getBySlug(slug)),
+        this.orderedVehicleTypesFilter = state.filters.orderedVehicleTypesFilter?.map(slug => VehicleType.getBySlug(slug)),
         this.legacyOwnerIdsFilter = state.filters.legacyOwnerIdsFilter;
         this.createdTimeFromFilter = state.filters.createdTimeFromFilter != null ? DateTime.fromISO(state.filters.createdTimeFromFilter, { setZone: true }) : undefined;
         this.createdTimeToFilter = state.filters.createdTimeToFilter != null ? DateTime.fromISO(state.filters.createdTimeToFilter, { setZone: true }) : undefined;

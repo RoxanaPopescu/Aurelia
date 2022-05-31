@@ -55,7 +55,7 @@ export class RouteService
             assignedVehicle?: boolean;
             pickupNearby?: { position: Position; precision?: number };
             teams?: string[];
-            orderedVehicleType?: string[];
+            orderedVehicleTypes?: string[];
             legacyOwnerIds?: string[];
         },
         include?:
@@ -101,7 +101,7 @@ export class RouteService
                 include: include ? include : {},
                 pickupNearby: filter?.pickupNearby,
                 teams: filter?.teams,
-                orderedVehicleType: filter?.orderedVehicleType,
+                orderedVehicleTypes: filter?.orderedVehicleTypes,
                 legacyOwnerIds: filter?.legacyOwnerIds
             },
             signal
