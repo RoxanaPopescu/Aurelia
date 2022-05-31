@@ -103,6 +103,19 @@ export class VehicleType
     }
 
     /**
+     * Gets the vehicle type with the specified slug.
+     */
+    public static getBySlug(slug: string): VehicleType
+    {
+        if (supportedVehicleTypes == null)
+        {
+            VehicleType.configure();
+        }
+
+        return supportedVehicleTypes.find(vt => vt.slug === slug)!;
+    }
+
+    /**
      * Gets the supported vehicle types.
      */
     public static getAll(): VehicleType[]

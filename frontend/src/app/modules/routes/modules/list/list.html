@@ -228,6 +228,26 @@
             <page-section toggle.bind="true">
 
                 <div slot="header" translate>
+                    Ordered vehicle type
+                </div>
+
+                <toggle-group class="flex-column" value.bind="orderedVehicleTypeFilter">
+
+                    <check-toggle repeat.for="vehicleType of availableVehicleTypes" model.bind="vehicleType" label="after">
+
+                        <div slot="heading" translate>
+                            ${vehicleType.name}
+                        </div>
+
+                    </check-toggle>
+
+                </toggle-group>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
                     Teams
                 </div>
 
