@@ -51,6 +51,11 @@ export class IdentityTokens
                 ? accessJwt.organization_permissions as string[]
                 : [accessJwt.organization_permissions as string];
 
+        if (permissions.includes("edit-routes"))
+        {
+            permissions.push("assign-vehicle-route");
+        }
+
         this.claims = new Set<string>(permissions);
     }
 
