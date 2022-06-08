@@ -254,6 +254,23 @@ export default
             "TrackingId"
         ])
     },
+    "order-removed-from-route":
+    {
+        recipientTypes:
+        [
+            "driver"
+        ],
+        messageTypes:
+        [
+            "sms"
+        ],
+        placeholders: getPlaceholders(
+        [
+            "OrderId",
+            "DriverName",
+            "DriverPhone"
+        ])
+    },
     "route-optimization-unscheduled-task":
     {
         recipientTypes:

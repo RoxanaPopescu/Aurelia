@@ -69,6 +69,10 @@ export class CommunicationTriggerEvent
         {
             name: triggerEvents.orderScheduleTriggered
         },
+        "order-removed-from-route":
+        {
+            name: triggerEvents.orderRemovedFromRoute
+        },
         "route-optimization-unscheduled-task":
         {
             name: triggerEvents.routeOptimizationUnscheduledTask

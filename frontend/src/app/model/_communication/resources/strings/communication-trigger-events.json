@@ -8,5 +8,6 @@
     "orderDeliveryDelayedETAProvided": "Order delivery delayed ETA provided",
     "orderDeliveryETAProvided": "Order delivery ETA provided",
     "orderScheduleTriggered": "Order schedule triggered",
-    "routeOptimizationUnscheduledTask": "Route optimization unscheduled task"
+    "routeOptimizationUnscheduledTask": "Route optimization unscheduled task",
+    "orderRemovedFromRoute": "Order removed from route"
 }
