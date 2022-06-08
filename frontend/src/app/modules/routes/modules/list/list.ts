@@ -38,10 +38,11 @@ interface IRouteParams
     startTimeToFilter?: string;
     relativeStartTimeFromFilter?: string;
     relativeStartTimeToFilter?: string;
+    relativeStartTimeFromFilterUnit?: "days" | "hours" | undefined;
+    relativeStartTimeToFilterUnit?: "days" | "hours" | undefined;
     teams?: string;
     tagsFilter?: string;
     orderedVehicleTypesFilter?: string;
-    // TODO: Add "Pickup nearby" filter
     owners?: string;
     createdTimeFromFilter?: string;
     createdTimeToFilter?: string;
@@ -378,22 +379,17 @@ export class ListPage
         this.startTimeToFilter = params.startTimeToFilter ? DateTime.fromISO(params.startTimeToFilter, { setZone: true }) : undefined;
         this.tagsFilter = params.tagsFilter?.split(",") || this.tagsFilter;
         this.orderedVehicleTypesFilter = params.orderedVehicleTypesFilter?.split(",").map(slug => VehicleType.getBySlug(slug)) || this.orderedVehicleTypesFilter;
-        // TODO: Add "Pickup nearby" filter
+
         this.legacyOwnerIdsFilter = params.owners?.split(",");
         this.createdTimeFromFilter = params.createdTimeFromFilter ? DateTime.fromISO(params.createdTimeFromFilter, { setZone: true }) : undefined;
         this.createdTimeToFilter = params.createdTimeToFilter ? DateTime.fromISO(params.createdTimeToFilter, { setZone: true }) : undefined;
 
-        this.relativeStartTimeFromFilterUnit =
-            params.relativeStartTimeFromFilter?.includes("D") ? "days" :
-            params.relativeStartTimeFromFilter?.includes("H") ? "hours" :
-            "hours";
+        this.relativeStartTimeFromFilterUnit = params.relativeStartTimeFromFilterUnit;
         this.useRelativeStartTimeFromFilter = params.relativeStartTimeFromFilter != null;
         this.relativeStartTimeFromFilter = params.relativeStartTimeFromFilter ? Duration.fromISO(params.relativeStartTimeFromFilter) : undefined;
 
-        this.relativeStartTimeToFilterUnit =
-            params.relativeStartTimeToFilter?.includes("D") ? "days" :
-            params.relativeStartTimeToFilter?.includes("H") ? "hours" :
-            "hours";
+        this.relativeStartTimeToFilterUnit = params.relativeStartTimeToFilterUnit;
+
         this.useRelativeStartTimeToFilter = params.relativeStartTimeToFilter != null;
         this.relativeStartTimeToFilter = params.relativeStartTimeToFilter ? Duration.fromISO(params.relativeStartTimeToFilter) : undefined;
 
@@ -716,8 +712,10 @@ export class ListPage
                     state.params.notAssignedVehicle = this.notAssignedVehicle ? true : undefined;
                     state.params.startTimeFromFilter = this.relativeStartTimeFromFilter != null ? undefined : this.startTimeFromFilter?.toISO();
                     state.params.startTimeToFilter = this.relativeStartTimeToFilter != null ? undefined : this.startTimeToFilter?.toISO();
-                    state.params.relativeStartTimeFromFilter = this.relativeStartTimeFromFilter?.shiftTo(this.relativeStartTimeFromFilterUnit!).toISO();
-                    state.params.relativeStartTimeToFilter = this.relativeStartTimeToFilter?.shiftTo(this.relativeStartTimeToFilterUnit!).toISO();
+                    state.params.relativeStartTimeFromFilter = this.relativeStartTimeFromFilter?.toISO();
+                    state.params.relativeStartTimeToFilter = this.relativeStartTimeToFilter?.toISO();
+                    state.params.relativeStartTimeFromFilterUnit = this.relativeStartTimeFromFilterUnit;
+                    state.params.relativeStartTimeToFilterUnit = this.relativeStartTimeToFilterUnit;
                     state.params.teams = this.teamsFilterService.selectedTeamIds;
                     state.params.tagsFilter = this.tagsFilter?.join(",") || undefined;
                     state.params.orderedVehicleTypesFilter = this.orderedVehicleTypesFilter?.map(vt => vt.slug).join(",") || undefined;
@@ -833,6 +831,8 @@ export class ListPage
                 startTimeToFilter: this.useRelativeStartTimeToFilter ? undefined : this.startTimeToFilter?.toISO(),
                 relativeStartTimeFromFilter: this.relativeStartTimeFromFilter?.toISO(),
                 relativeStartTimeToFilter: this.relativeStartTimeToFilter?.toISO(),
+                relativeStartTimeFromFilterUnit: this.relativeStartTimeFromFilterUnit,
+                relativeStartTimeToFilterUnit: this.relativeStartTimeToFilterUnit,
                 teamsFilterService: this.teamsFilterService.selectedTeamIds,
                 tagsFilter: this.tagsFilter,
                 orderedVehicleTypesFilter: this.orderedVehicleTypesFilter?.map(vt => vt.slug),
@@ -860,6 +860,8 @@ export class ListPage
         this.notAssignedVehicle = state.filters.notAssignedVehicle;
         this.startTimeFromFilter = state.filters.startTimeFromFilter != null ? DateTime.fromISO(state.filters.startTimeFromFilter, { setZone: true }) : undefined;
         this.startTimeToFilter = state.filters.startTimeToFilter != null ? DateTime.fromISO(state.filters.startTimeToFilter, { setZone: true }) : undefined;
+        this.relativeStartTimeFromFilterUnit = state.filters.relativeStartTimeFromFilterUnit;
+        this.relativeStartTimeToFilterUnit = state.filters.relativeStartTimeToFilterUnit;
         this.teamsFilterService.selectedTeamIds = state.filters.teamsFilterService;
         this.tagsFilter = state.filters.tagsFilter;
         this.orderedVehicleTypesFilter = state.filters.orderedVehicleTypesFilter?.map(slug => VehicleType.getBySlug(slug));

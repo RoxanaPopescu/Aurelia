@@ -31,6 +31,8 @@ interface IRouteParams
     toDateFilter?: string;
     relativeFromDateFilter?: string;
     relativeToDateFilter?: string;
+    relativeFromDateFilterUnit?: "days" | "hours" | undefined;
+    relativeToDateFilterUnit?: "days" | "hours" | undefined;
 }
 
 /**
@@ -246,17 +248,11 @@ export class ListPage
         this.fromDateFilter = params.fromDateFilter ? DateTime.fromISO(params.fromDateFilter, { setZone: true }) : undefined;
         this.toDateFilter = params.toDateFilter ? DateTime.fromISO(params.toDateFilter, { setZone: true }) : undefined;
 
-        this.relativeFromDateFilterUnit =
-            params.relativeFromDateFilter?.includes("D") ? "days" :
-            params.relativeFromDateFilter?.includes("H") ? "hours" :
-            "hours";
+        this.relativeFromDateFilterUnit = params.relativeFromDateFilterUnit;
         this.useRelativeFromDateFilter = params.relativeFromDateFilter != null;
         this.relativeFromDateFilter = params.relativeFromDateFilter ? Duration.fromISO(params.relativeFromDateFilter) : undefined;
 
-        this.relativeToDateFilterUnit =
-            params.relativeToDateFilter?.includes("D") ? "days" :
-            params.relativeToDateFilter?.includes("H") ? "hours" :
-            "hours";
+        this.relativeToDateFilterUnit = params.relativeToDateFilterUnit;
         this.useRelativeToDateFilter = params.relativeToDateFilter != null;
         this.relativeToDateFilter = params.relativeToDateFilter ? Duration.fromISO(params.relativeToDateFilter) : undefined;
 
@@ -460,8 +456,10 @@ export class ListPage
                     state.params.orderTagsFilter = this.orderTagsFilter?.join(",") || undefined;
                     state.params.fromDateFilter = this.relativeFromDateFilter != null ? undefined : this.fromDateFilter?.toISO();
                     state.params.toDateFilter = this.relativeToDateFilter != null ? undefined : this.toDateFilter?.toISO();
-                    state.params.relativeFromDateFilter = this.relativeFromDateFilter?.shiftTo(this.relativeFromDateFilterUnit!).toISO();
-                    state.params.relativeToDateFilter = this.relativeToDateFilter?.shiftTo(this.relativeToDateFilterUnit!).toISO();
+                    state.params.relativeFromDateFilter = this.relativeFromDateFilter?.toISO();
+                    state.params.relativeToDateFilter = this.relativeToDateFilter?.toISO();
+                    state.params.relativeFromDateFilterUnit = this.relativeFromDateFilterUnit;
+                    state.params.relativeToDateFilterUnit = this.relativeToDateFilterUnit;
                 },
                 { trigger: false, replace: true });
 
@@ -546,7 +544,9 @@ export class ListPage
                 fromDateFilter: this.useRelativeFromDateFilter ? undefined : this.fromDateFilter?.toISO(),
                 toDateFilter: this.useRelativeToDateFilter ? undefined : this.toDateFilter?.toISO(),
                 relativeFromDateFilter: this.relativeFromDateFilter?.toISO(),
-                relativeToDateFilter: this.relativeToDateFilter?.toISO()
+                relativeToDateFilter: this.relativeToDateFilter?.toISO(),
+                relativeFromDateFilterUnit: this.relativeFromDateFilterUnit,
+                relativeToDateFilterUnit: this.relativeToDateFilterUnit
             }
         };
     }
@@ -567,9 +567,11 @@ export class ListPage
         this.fromDateFilter = state.filters.fromDateFilter != null ? DateTime.fromISO(state.filters.fromDateFilter, { setZone: true }) : undefined;
         this.toDateFilter = state.filters.toDateFilter != null ? DateTime.fromISO(state.filters.toDateFilter, { setZone: true }) : undefined;
 
+        this.relativeFromDateFilterUnit = state.filters.relativeFromDateFilterUnit;
         this.useRelativeFromDateFilter = state.filters.relativeFromDateFilter != null;
         this.relativeFromDateFilter = state.filters.relativeFromDateFilter ? Duration.fromISO(state.filters.relativeFromDateFilter) : undefined;
 
+        this.relativeToDateFilterUnit = state.filters.relativeToDateFilterUnit;
         this.useRelativeToDateFilter = state.filters.relativeToDateFilter != null;
         this.relativeToDateFilter = state.filters.relativeToDateFilter ? Duration.fromISO(state.filters.relativeToDateFilter) : undefined;
 
