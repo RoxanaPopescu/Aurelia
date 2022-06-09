@@ -248,11 +248,11 @@ export class ListPage
         this.fromDateFilter = params.fromDateFilter ? DateTime.fromISO(params.fromDateFilter, { setZone: true }) : undefined;
         this.toDateFilter = params.toDateFilter ? DateTime.fromISO(params.toDateFilter, { setZone: true }) : undefined;
 
-        this.relativeFromDateFilterUnit = params.relativeFromDateFilterUnit;
+        this.relativeFromDateFilterUnit = params.relativeFromDateFilterUnit || "hours";
         this.useRelativeFromDateFilter = params.relativeFromDateFilter != null;
         this.relativeFromDateFilter = params.relativeFromDateFilter ? Duration.fromISO(params.relativeFromDateFilter) : undefined;
 
-        this.relativeToDateFilterUnit = params.relativeToDateFilterUnit;
+        this.relativeToDateFilterUnit = params.relativeToDateFilterUnit || "hours";
         this.useRelativeToDateFilter = params.relativeToDateFilter != null;
         this.relativeToDateFilter = params.relativeToDateFilter ? Duration.fromISO(params.relativeToDateFilter) : undefined;
 
