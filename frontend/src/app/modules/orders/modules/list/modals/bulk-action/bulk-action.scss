@@ -1,0 +1,15 @@
+modal-panel[name="bulk-action"]
+{
+    data-table
+    {
+        --data-table-columns: 2fr 1.25fr;
+    }
+
+    .button-container
+    {
+        button
+        {
+            width: 100%;
+        }
+    }
+}
