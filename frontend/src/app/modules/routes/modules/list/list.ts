@@ -384,12 +384,11 @@ export class ListPage
         this.createdTimeFromFilter = params.createdTimeFromFilter ? DateTime.fromISO(params.createdTimeFromFilter, { setZone: true }) : undefined;
         this.createdTimeToFilter = params.createdTimeToFilter ? DateTime.fromISO(params.createdTimeToFilter, { setZone: true }) : undefined;
 
-        this.relativeStartTimeFromFilterUnit = params.relativeStartTimeFromFilterUnit;
+        this.relativeStartTimeFromFilterUnit = params.relativeStartTimeFromFilterUnit || "hours";
         this.useRelativeStartTimeFromFilter = params.relativeStartTimeFromFilter != null;
         this.relativeStartTimeFromFilter = params.relativeStartTimeFromFilter ? Duration.fromISO(params.relativeStartTimeFromFilter) : undefined;
 
-        this.relativeStartTimeToFilterUnit = params.relativeStartTimeToFilterUnit;
-
+        this.relativeStartTimeToFilterUnit = params.relativeStartTimeToFilterUnit || "hours";
         this.useRelativeStartTimeToFilter = params.relativeStartTimeToFilter != null;
         this.relativeStartTimeToFilter = params.relativeStartTimeToFilter ? Duration.fromISO(params.relativeStartTimeToFilter) : undefined;
 
