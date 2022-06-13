@@ -1,0 +1,506 @@
+<template>
+
+    <require from="./route-list-expanded-view.scss"></require>
+    <require from="app/components/name-value-pair/name-value-pair"></require>
+    <require from="app/components/circular-meter/circular-meter"></require>
+
+    <div class="route-list-expanded-view-column">
+
+        <div class="route-list-expanded-view-section">
+
+            <div class="route-list-expanded-view-section-title" translate>
+                Route info
+            </div>
+
+            <!--
+
+            <name-value-pair class="margin-half-bottom">
+
+                <div slot="name" translate>
+                    ID
+                </div>
+
+                <div slot="value" empty-value>
+                    <template if.bind="route">
+                        ${route.slug}
+                    </template>
+                    <template if.bind="!route">
+                        ${routeInfo.slug}
+                    </template>
+                </div>
+
+            </name-value-pair>
+
+            -->
+
+            <name-value-pair class="margin-half-bottom">
+
+                <div slot="name" translate>
+                    Type
+                </div>
+
+                <div slot="value" empty-value>
+                    ${route.productType.name}
+                </div>
+
+            </name-value-pair>
+
+            <name-value-pair class="margin-half-bottom">
+
+                <div slot="name" translate>
+                    Owner
+                </div>
+
+                <div slot="value" empty-value>
+                    ${route.owner.primaryName}
+                </div>
+
+            </name-value-pair>
+
+            <name-value-pair class="margin-half-bottom">
+
+                <div slot="name" translate>
+                    Reference
+                </div>
+
+                <div slot="value" empty-value>
+                    ${route.reference}
+                </div>
+
+            </name-value-pair>
+
+            <name-value-pair class="margin-half-bottom">
+
+                <div slot="name" translate>
+                    Status
+                </div>
+
+                <div slot="value" accent.bind="route.status.slug === 'cancelled' ? 'negative' : 'neutral' & attr" empty-value>
+                    ${route.status.name}
+                </div>
+
+            </name-value-pair>
+
+            <name-value-pair class="margin-half-bottom">
+
+                <div slot="name" translate>
+                    Vehicle
+                </div>
+
+                <div slot="value" empty-value>
+                    ${route.vehicleType.name}
+                </div>
+
+            </name-value-pair>
+
+            <name-value-pair class="margin-half-bottom">
+
+                <div slot="name" translate>
+                    Total volume of all pickups
+                </div>
+
+                <div slot="value" empty-value>
+                    <template if.bind="route.totalVolume != null">
+                        ${route.totalVolume | number} m³
+                    </template>
+                </div>
+
+            </name-value-pair>
+
+            <name-value-pair class="margin-half-bottom">
+
+                <div slot="name" translate>
+                    Total weight of all pickups
+                </div>
+
+                <div slot="value" empty-value>
+                    <template if.bind="route.totalWeight != null">
+                        ${route.totalWeight | number} kg
+                    </template>
+                </div>
+
+            </name-value-pair>
+
+            <name-value-pair class="margin-half-bottom">
+
+                <div slot="name" translate>
+                    Weight range
+                </div>
+
+                <div slot="value" empty-value>
+                    <template if.bind="route.totalWeightRange != null">
+                        ${route.totalWeightRange.from | number} - ${route.totalWeightRange.to | number} kg
+                    </template>
+                </div>
+
+            </name-value-pair>
+
+            <name-value-pair class="margin-half-bottom">
+
+                <div slot="name" translate>
+                    Distance
+                </div>
+
+                <div slot="value" empty-value>
+
+                    <template if.bind="route.initialEstimates.distance">
+                        ${route.initialEstimates.distance/1000 | number : undefined : 1 } km
+                    </template>
+
+                    <template if.bind="!route.initialEstimates.distance && route.distance">
+                        ${route.distance/1000 | number : undefined : 1 } km
+                    </template>
+
+                </div>
+
+            </name-value-pair>
+
+            <name-value-pair class="margin-half-bottom">
+
+                <div slot="name" translate>
+                    Duration
+                </div>
+
+                <div slot="value" empty-value>
+                    ${routeDuration | duration: 'narrow'}
+                </div>
+
+            </name-value-pair>
+
+            <!--
+
+            <name-value-pair class="margin-half-bottom">
+
+                <div slot="name" translate>
+                    Colli count
+                </div>
+
+                <div slot="value" empty-value>
+                    ${route.totalColliCount | number}
+                </div>
+
+            </name-value-pair>
+
+            <name-value-pair class="margin-half-bottom">
+
+                <div slot="name" translate>
+                    Complexity
+                </div>
+
+                <div slot="value" empty-value>
+                    <template if.bind="route.complexity != null">
+                        ${route.complexity | number}%
+                    </template>
+                </div>
+
+            </name-value-pair>
+
+            <name-value-pair class="margin-half-bottom">
+
+                <div slot="name" translate>
+                    Criticality
+                </div>
+
+                <div slot="value" empty-value>
+                    ${route.criticality.name}
+                </div>
+
+            </name-value-pair>
+
+            -->
+
+            <name-value-pair class="margin-half-bottom">
+
+                <div slot="name" translate>
+                    Driver phone number
+                </div>
+
+                <div slot="value" empty-value>
+                    ${route.driver.phone}
+                </div>
+
+            </name-value-pair>
+
+        </div>
+
+    </div>
+
+    <div class="route-list-expanded-view-column">
+
+        <div class="route-list-expanded-view-section">
+
+            <div class="route-list-expanded-view-section-title" translate>
+                Next stop
+            </div>
+
+            <name-value-pair>
+
+                <div slot="value" class="text-align-left white-space-pre-line" empty-value>
+                    ${nextStop.location.address}
+                </div>
+
+            </name-value-pair>
+
+        </div>
+
+        <div if.bind="environment == 'development' || route.isPrimaryFulfiller" class="route-list-expanded-view-section margin-large-top">
+
+            <div class="route-list-expanded-view-section-title" translate>
+                Support note
+            </div>
+
+            <name-value-pair>
+
+                <div slot="value" class="text-align-left white-space-pre-line route-list-expanded-view-support-note" empty-value>${route.supportNote}</div>
+
+            </name-value-pair>
+
+        </div>
+
+
+        <div class="route-list-expanded-view-section margin-large-top">
+
+            <div class="route-list-expanded-view-section-title" translate>
+                Tags
+            </div>
+
+            <div if.bind="route == null || route.tags.length == 0" empty-value></div>
+
+            <tags-input if.bind="route.tags.length > 0" readonly.bind="true" class="--tags-only">
+
+                <div slot="value">
+                    <tag repeat.for="tag of route.tags">
+                        ${tag}
+                    </tag>
+                </div>
+
+            </tags-input>
+
+        </div>
+
+    </div>
+
+    <div class="route-list-expanded-view-last-column">
+
+        <toolbar inert.bind="route == null">
+
+            <select-button appearance="outline" accent="primary">
+
+                <div slot="label" translate>
+                    Assign
+                </div>
+
+                <item
+                    if-claims="assign-organization-route"
+                    model="assign-executor"
+                    click.trigger="onAssignExecutorClick()">
+                    <template if.bind="route.executor.id == identityService.identity.organization.id" translate>
+                        Assign executor
+                    </template>
+                    <template if.bind="route.executor.id != identityService.identity.organization.id" translate>
+                        Reassign executor
+                    </template>
+                </item>
+
+                <item
+                    if-claims="assign-driver-route"
+                    model="assign-driver"
+                    click.trigger="onAssignDriverClick()">
+                    <template if.bind="!route.driver" translate>
+                        Assign driver
+                    </template>
+                    <template if.bind="route.driver" translate>
+                        Reassign driver
+                    </template>
+                </item>
+
+                <item
+                    if-claims="assign-vehicle-route"
+                    model="assign-vehicle"
+                    click.trigger="onAssignVehicleClick()">
+                    <template if.bind="!route.vehicle" translate>
+                        Assign vehicle
+                    </template>
+                    <template if.bind="route.vehicle" translate>
+                        Reassign vehicle
+                    </template>
+                </item>
+
+                <item
+                    if-claims="edit-routes"
+                    model="assign-team"
+                    click.trigger="onAssignTeamClick()">
+                    <template if.bind="!route.teamId" translate>
+                        Assign team
+                    </template>
+                    <template if.bind="route.teamId" translate>
+                        Reassign team
+                    </template>
+                </item>
+
+            </select-button>
+
+            <select-button if-claims="edit-routes" appearance="outline" accent="primary">
+
+                <div slot="label" translate>
+                    Change status
+                </div>
+
+                <item
+                    model="not-started"
+                    disabled.bind="['not-started'].includes(route.status.slug)"
+                    click.trigger="onStatusItemClick('not-started')"
+                    translate>
+                    Not started
+                </item>
+
+                <item
+                    model="not-approved"
+                    disabled.bind="['not-approved', 'in-progress', 'completed', 'cancelled'].includes(route.status.slug)"
+                    click.trigger="onStatusItemClick('not-approved')"
+                    translate>
+                    Not approved
+                </item>
+
+                <item
+                    model="to-be-express-dispatched"
+                    if.bind="showLegacy"
+                    disabled.bind="['to-be-express-dispatched'].includes(route.status.slug)"
+                    click.trigger="onStatusItemClick('to-be-express-dispatched')"
+                    translate>
+                    To be express dispatched
+                </item>
+
+                <item
+                    model="in-progress"
+                    disabled.bind="['in-progress', 'not-approved'].includes(route.status.slug)"
+                    click.trigger="onStatusItemClick('in-progress')"
+                    translate>
+                    In progress
+                </item>
+
+                <item
+                    model="completed"
+                    disabled.bind="['completed', 'not-approved'].includes(route.status.slug)"
+                    click.trigger="onStatusItemClick('completed')"
+                    translate>
+                    Completed
+                </item>
+
+                <item
+                    model="cancelled"
+                    disabled.bind="['cancelled'].includes(route.status.slug)"
+                    click.trigger="onStatusItemClick('cancelled')"
+                    translate>
+                    Cancelled
+                </item>
+
+            </select-button>
+
+            <select-button appearance="outline" accent="primary" placement="bottom-end">
+
+                <div slot="icon">
+                    <icon name="more"></icon>
+                </div>
+
+                <template if-claims="edit-routes">
+
+                    <item
+                        if.bind="route"
+                        model="edit-route"
+                        click.trigger="onEditRouteClick()"
+                        translate>
+                        Edit route
+                    </item>
+
+                </template>
+
+                <item
+                    model="print-route"
+                    disabled.bind="!route.driverListUrl"
+                    click.trigger="onShowDriverListClick()"
+                    translate>
+                    Print route
+                </item>
+
+                <template if-claims="edit-routes">
+
+                    <item
+                        if.bind="route.driver"
+                        model="reload-route-in-app"
+                        click.trigger="onReloadRouteInAppClick()"
+                        translate>
+                        Reload route in app
+                    </item>
+
+                    <item
+                        if.bind="!route.driver"
+                        model="push-to-drivers"
+                        click.trigger="onPushToDriversClick()"
+                        translate>
+                        Push to drivers
+                    </item>
+
+                    <item
+                        if.bind="environment == 'development' || route.isPrimaryFulfiller"
+                        model="add-support-note"
+                        click.trigger="onAddSupportNoteClick()"
+                        translate>
+                        Add support note
+                    </item>
+
+                    <item
+                        if.bind="route.driver"
+                        model="remove-driver"
+                        click.trigger="onRemoveDriverClick()"
+                        translate>
+                        Remove driver
+                    </item>
+
+                    <item
+                        if.bind="route"
+                        model="add-order"
+                        click.trigger="onAddOrdersClick()"
+                        translate>
+                        Add orders
+                    </item>
+
+                </template>
+
+            </select-button>
+
+        </toolbar>
+
+        <circular-meter accent.bind="failedStops.length > 0 ? 'negative' : 'neutral' & attr" percentage.bind="completedStops * 100 / notCancelledStops">
+
+            <div if.bind="route.status.slug === 'cancelled'" class="route-cancelled-warning" accent="negative">
+
+                <icon name="warning"></icon>
+
+                <div class="font-small margin-top" translate>
+                    The route is cancelled
+                </div>
+
+            </div>
+
+            <template else>
+
+                <div class="font-largest">
+                    <span empty-value>${completedStops}</span>/<span empty-value>${notCancelledStops}</span>
+                </div>
+
+                <div class="font-small margin-top" translate>
+                    Completed stops
+                </div>
+
+                <div if.bind="route.status.slug !== 'cancelled' && failedCancelledStops.length > 0" accent="neutral" class="font-small margin-top" translate>
+                    ${failedCancelledStops.length} issues
+                </div>
+
+            </template>
+
+        </circular-meter>
+
+    </div>
+
+</template>

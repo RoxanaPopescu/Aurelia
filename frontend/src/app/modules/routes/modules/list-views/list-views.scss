@@ -1,0 +1,10 @@
+@import "resources/index";
+
+page[name="routes"] page[name="list-views"]
+{
+    data-table-details
+    {
+        background: var(--surface-color);
+        cursor: default;
+    }
+}
