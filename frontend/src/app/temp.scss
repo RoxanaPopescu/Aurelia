@@ -179,15 +179,6 @@ modal-panel .modal-panel-content modal-header
     }
 }
 
-button[appearance],
-a[appearance]
-{
-    &:not([appearance="none"]):not([appearance="icon"])
-    {
-        min-width: 160rem;
-    }
-}
-
 select-button button[appearance]
 {
     // HACK: Ensure select-button, which may be icon-only, is not too wide.

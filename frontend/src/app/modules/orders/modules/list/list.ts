@@ -13,6 +13,7 @@ import createdRouteToast from "./resources/strings/created-route-toast.json";
 import createdCollectionPointToast from "./resources/strings/created-collection-point-toast.json";
 import changedPickupAddressToast from "./resources/strings/changed-pickup-address-toast.json";
 import { ImportOrdersPanel } from "./modals/import-orders/import-orders";
+import { BulkActionPanel } from "./modals/bulk-action/bulk-action";
 
 /**
  * Represents the route parameters for the page.
@@ -350,6 +351,18 @@ export class ListPage
     {
         await this._modalService.open(ImportOrdersPanel).promise;
     }
+
+    /**
+     * Called when any bulk action is clicked.
+     * Opens the bulk action panel.
+     * @param orders The selected orders.
+     */
+     protected async onBulkActionClick(orders: OrderInfo[]): Promise<void>
+     {
+         await this._modalService.open(BulkActionPanel, { orders: orders }).promise;
+
+         // TODO TOAST
+     }
 
     /**
      * Called when the `Create route from selected orders` button is clicked.
