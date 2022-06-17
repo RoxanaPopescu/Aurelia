@@ -97,5 +97,5 @@ export class OrderInfo
     public readonly estimatedColliInfo: OrderColliInfo;
 
     // FIXME: Use correctly
-    public readonly canBeCancelled: Boolean;
+    public readonly canBeCancelled: boolean;
 }
