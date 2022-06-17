@@ -295,7 +295,7 @@ export class ListViewsPage
     /**
      * The unit in which `relativeStartTimeToFilter` is specified.
      */
-     @observable({ changeHandler: "updateRelative" })
+    @observable({ changeHandler: "updateRelative" })
     protected relativeStartTimeToFilterUnit: "days" | "hours" | undefined;
 
     /**
