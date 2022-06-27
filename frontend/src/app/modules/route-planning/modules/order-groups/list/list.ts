@@ -1,4 +1,4 @@
-import { autoinject, observable } from "aurelia-framework";
+import { autoinject, observable, computedFrom } from "aurelia-framework";
 import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
@@ -71,20 +71,19 @@ export class ListPage
         direction: "descending"
     };
 
-    /**
+     /**
      * The paging to use for the table.
      */
     @observable({ changeHandler: "update" })
     protected paging: IPaging =
     {
         page: 1,
-        pageSize: 20
+        pageSize: 30
     };
 
     /**
      * The text in the filter text input.
      */
-    @observable({ changeHandler: "update" })
     protected textFilter: string | undefined;
 
     /**
@@ -120,8 +119,6 @@ export class ListPage
      */
     public activate(params: IRouteParams): void
     {
-        this.paging.page = params.page != null ? parseInt(params.page) : this.paging.page;
-        this.paging.pageSize = params.pageSize != null ? parseInt(params.pageSize) : this.paging.pageSize;
         this.sorting.property = params.sortProperty || this.sorting.property;
         this.sorting.direction = params.sortDirection || this.sorting.direction;
 
@@ -146,6 +143,17 @@ export class ListPage
         {
             this.updateOperation.abort();
         }
+    }
+
+    @computedFrom("orderGroups", "textFilter", "sorting")
+    protected get filteredItems(): OrderGroup[]
+    {
+        if (this.orderGroups == null)
+        {
+            return [];
+        }
+
+        return this.orderGroups.filter(r => !this.textFilter || r.searchModel.contains(this.textFilter));
     }
 
     /**
@@ -173,7 +181,6 @@ export class ListPage
             // Fetch the data.
             const result = await this._orderGroupsService.getAll(
                 {
-                    text: this.textFilter,
                     consignorIds: this.organizationsFilter.map(c => c.id),
                     tags: this.tagFilter
                 },

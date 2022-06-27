@@ -4,6 +4,7 @@ import { EntityInfo } from "app/types/entity";
 import { Consignor } from "app/model/outfit";
 import { MatchingCriteria as MatchingCriteria } from "./matching-criteria";
 import { RoutePlanningTime } from "./route-planning-time";
+import { SearchModel } from "app/model/search-model";
 
 /**
  * Represents an order group used for route planning.
@@ -74,6 +75,11 @@ export class OrderGroup
      * The consignors to which the order group applies.
      */
     public readonly routePlanningTimes: RoutePlanningTime[];
+
+    /**
+     * The model representing the searchable text in the entity.
+     */
+    public readonly searchModel = new SearchModel(this);
 
     /**
      * Gets a list of consignors associated with the order group.
