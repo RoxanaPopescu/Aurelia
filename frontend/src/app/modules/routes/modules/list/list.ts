@@ -832,7 +832,6 @@ export class ListPage
                 relativeStartTimeToFilter: this.relativeStartTimeToFilter?.toISO(),
                 relativeStartTimeFromFilterUnit: this.relativeStartTimeFromFilterUnit,
                 relativeStartTimeToFilterUnit: this.relativeStartTimeToFilterUnit,
-                teamsFilterService: this.teamsFilterService.selectedTeamIds,
                 tagsFilter: this.tagsFilter,
                 orderedVehicleTypesFilter: this.orderedVehicleTypesFilter?.map(vt => vt.slug),
                 legacyOwnerIdsFilter: this.legacyOwnerIdsFilter,
@@ -848,9 +847,9 @@ export class ListPage
      */
     protected setViewState(state: any): void
     {
-        this.sorting = state.sorting;
+        this.sorting = state.sorting ?? { property: "start-date", direction: "descending" };
         this.customColumns = state.columns.map(slug => new RouteListColumn(slug));
-        this.paging = { ...this.paging, pageSize: state.pageSize };
+        this.paging = { ...this.paging, pageSize: state.pageSize ?? 30 };
         this.textFilter = state.filters.textFilter;
         this.statusFilter = state.filters.statusFilter;
         this.assignedDriver = state.filters.assignedDriver;
@@ -861,7 +860,6 @@ export class ListPage
         this.startTimeToFilter = state.filters.startTimeToFilter != null ? DateTime.fromISO(state.filters.startTimeToFilter, { setZone: true }) : undefined;
         this.relativeStartTimeFromFilterUnit = state.filters.relativeStartTimeFromFilterUnit;
         this.relativeStartTimeToFilterUnit = state.filters.relativeStartTimeToFilterUnit;
-        this.teamsFilterService.selectedTeamIds = state.filters.teamsFilterService;
         this.tagsFilter = state.filters.tagsFilter;
         this.orderedVehicleTypesFilter = state.filters.orderedVehicleTypesFilter?.map(slug => VehicleType.getBySlug(slug));
         this.legacyOwnerIdsFilter = state.filters.legacyOwnerIdsFilter;

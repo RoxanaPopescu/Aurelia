@@ -1,5 +1,6 @@
 export * from "./entities/route-info";
 export * from "./entities/route-base";
+export * from "./entities/route-view";
 export * from "./entities/route-status";
 export * from "./entities/route-criticality";
 export * from "./entities/route-reference";

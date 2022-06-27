@@ -30,7 +30,7 @@
                     Status
                 </div>
 
-                <toggle-group class="flex-column" value.bind="statusFilter">
+                <toggle-group class="flex-column" value.bind="view.statusFilter">
 
                     <check-toggle label="after" model="not-started">
 
@@ -374,7 +374,7 @@
                         accent="primary"
                         placement="bottom-end"
                         type="route"
-                        get-state.call="getViewState()"
+                        get-state.call="view.getState()"
                         set-state.call="setViewState(state)">
                     </view-preset-selector>
 
@@ -404,7 +404,7 @@
 
                     <data-table-headers>
 
-                        <template repeat.for="column of columns">
+                        <template repeat.for="column of view.columns">
 
                             <data-table-cell name.bind="column.sortingName">
                                 <span if.bind="!column.hidden" class="text-truncate">
@@ -422,7 +422,7 @@
                             selected.bind="$parent.expandedRouteId == route.id"
                             click.call="onRouteClick(route)">
 
-                            <template repeat.for="column of columns">
+                            <template repeat.for="column of view.columns">
 
                                 <let updating.bind="{ driver: false, vehicle: false, executor: false, team: false }"></let>
 
