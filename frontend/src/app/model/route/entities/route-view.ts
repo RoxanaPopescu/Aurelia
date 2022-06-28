@@ -9,19 +9,22 @@ import { ListViewsPage } from "app/modules/routes/modules/list-views/list-views"
 /**
  * Represents an route view.
  */
-export class RouteView {
+export class RouteView
+{
   /**
    * Creates a new instance of the type.
    * @param data The response data from which the instance should be created.
    */
-  public constructor(list: ListViewsPage, data: any = null) {
+  public constructor(list: ListViewsPage, data: any = null)
+  {
     this.list = list;
     this.private = true;
 
-    if (data != null) {
+    if (data != null)
+    {
       this.name = "TODO";
 
-      this.columns = data.columns.map((slug) => new RouteListColumn(slug));
+      this.columns = data.columns.map(slug => new RouteListColumn(slug));
       this.textFilter = data.filters.textFilter;
       this.statusFilter = data.filters.statusFilter;
       this.assignedDriver = data.filters.assignedDriver;
@@ -31,7 +34,7 @@ export class RouteView {
       this.startTimeFromFilter =
         data.filters.startTimeFromFilter != null
           ? DateTime.fromISO(data.filters.startTimeFromFilter, {
-              setZone: true,
+              setZone: true
             })
           : undefined;
       this.startTimeToFilter =
@@ -44,20 +47,18 @@ export class RouteView {
         data.filters.relativeStartTimeToFilterUnit;
       this.tagsFilter = data.filters.tagsFilter;
       this.orderedVehicleTypesFilter =
-        data.filters.orderedVehicleTypesFilter?.map((slug) =>
-          VehicleType.getBySlug(slug)
-        );
+        data.filters.orderedVehicleTypesFilter?.map(slug => VehicleType.getBySlug(slug));
       this.legacyOwnerIdsFilter = data.filters.legacyOwnerIdsFilter;
       this.createdTimeFromFilter =
         data.filters.createdTimeFromFilter != null
           ? DateTime.fromISO(data.filters.createdTimeFromFilter, {
-              setZone: true,
+              setZone: true
             })
           : undefined;
       this.createdTimeToFilter =
         data.filters.createdTimeToFilter != null
           ? DateTime.fromISO(data.filters.createdTimeToFilter, {
-              setZone: true,
+              setZone: true
             })
           : undefined;
 
@@ -86,7 +87,7 @@ export class RouteView {
       new RouteListColumn("stop-count"),
       new RouteListColumn("vehicle-type"),
       new RouteListColumn("status"),
-      new RouteListColumn("driving-list"),
+      new RouteListColumn("driving-list")
     ];
 
     this.name = "Default";
@@ -95,7 +96,7 @@ export class RouteView {
   /**
    * The list class - TODO: Remove this if we can do observable from this to that class
    */
-  private list: ListViewsPage;
+  private readonly list: ListViewsPage;
 
   /**
    * The name of the view
@@ -244,7 +245,8 @@ export class RouteView {
     newValue?: any,
     oldValue?: any,
     propertyName?: string
-  ): void {
+  ): void
+  {
     this.list?.update(newValue, oldValue, propertyName);
   }
 
@@ -252,7 +254,8 @@ export class RouteView {
    * Gets the current view state, which may be saved as a view preset.
    * @returns The current view state.
    */
-  protected getState(): any {
+  protected getState(): any
+  {
     return {
       columns: this.columns.map((column) => column.slug),
       filters: {
@@ -273,13 +276,11 @@ export class RouteView {
         relativeStartTimeFromFilterUnit: this.relativeStartTimeFromFilterUnit,
         relativeStartTimeToFilterUnit: this.relativeStartTimeToFilterUnit,
         tagsFilter: this.tagsFilter,
-        orderedVehicleTypesFilter: this.orderedVehicleTypesFilter?.map(
-          (vt) => vt.slug
-        ),
+        orderedVehicleTypesFilter: this.orderedVehicleTypesFilter?.map((vt) => vt.slug),
         legacyOwnerIdsFilter: this.legacyOwnerIdsFilter,
         createdTimeFromFilter: this.createdTimeFromFilter?.toISO(),
-        createdTimeToFilter: this.createdTimeToFilter?.toISO(),
-      },
+        createdTimeToFilter: this.createdTimeToFilter?.toISO()
+      }
     };
   }
 }

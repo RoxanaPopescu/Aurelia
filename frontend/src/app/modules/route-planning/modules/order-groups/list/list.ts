@@ -71,7 +71,7 @@ export class ListPage
         direction: "descending"
     };
 
-     /**
+    /**
      * The paging to use for the table.
      */
     @observable({ changeHandler: "update" })

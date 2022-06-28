@@ -271,6 +271,125 @@ export class ListViewsPage
     }
 
     /**
+     * Updates the page by fetching the latest data.
+     */
+     public update(newValue?: any, oldValue?: any, propertyName?: string): void
+     {
+        // Return if the object is not constructed.
+        // This is needed because the `observable` decorator calls the change handler when the
+        // initial property value is set, which happens before the constructor is called.
+        if (!this._constructed)
+        {
+            return;
+        }
+
+        // Update the global teams filter.
+        this.teamsFilterService.selectedTeamIds = this.teamsFilter;
+
+        // Abort any existing operation.
+        if (this.updateOperation != null)
+        {
+            this.updateOperation.abort();
+        }
+
+        const columnSlugs = this.view.columns.map(c => c.slug);
+
+        // Fetch teams if needed
+        if (this.teams.length === 0 && columnSlugs.includes("team"))
+        {
+            // tslint:disable-next-line: no-floating-promises
+            (async () =>
+            {
+                this.teams = await this._organizationService.getTeams();
+            })();
+        }
+
+        // Create and execute the new operation.
+        this.updateOperation = new Operation(async signal =>
+        {
+            this.failed = false;
+
+            try
+            {
+                let assignedDriver: boolean | undefined;
+
+                if (this.view.assignedDriver !== this.view.notAssignedDriver)
+                {
+                    assignedDriver = this.view.assignedDriver;
+                }
+
+                let assignedVehicle: boolean | undefined;
+
+                if (this.view.assignedVehicle !== this.view.notAssignedVehicle)
+                {
+                    assignedVehicle = this.view.assignedVehicle;
+                }
+
+                // tslint:disable-next-line: no-floating-promises
+                this._historyHelper.navigate((state: IHistoryState) =>
+                {
+                    state.params.page = propertyName !== "paging" ? 1 : this.paging.page;
+                    state.params.pageSize = this.paging.pageSize;
+                    state.params.sortProperty = this.sorting?.property;
+                    state.params.sortDirection = this.sorting?.direction;
+                },
+                { trigger: false, replace: true });
+
+                const result = await this._routeService.getAll(
+                    {
+                        statuses: this.view.statusFilter,
+                        searchQuery: this.view.textFilter,
+                        tagsAllMatching: this.view.tagsFilter,
+                        startTimeFrom: this.view.startTimeFromFilter,
+                        startTimeTo: this.view.useRelativeStartTimeToFilter ? this.view.startTimeToFilter : this.view.startTimeToFilter?.endOf("day"),
+                        createdTimeFrom: this.view.createdTimeFromFilter,
+                        createdTimeTo: this.view.createdTimeToFilter?.endOf("day"),
+                        assignedDriver: assignedDriver,
+                        assignedVehicle: assignedVehicle,
+                        pickupNearby: (this.view.pickupNearbyPosition != null) ? { position: this.view.pickupNearbyPosition, precision: 3 } : undefined,
+                        teams: this.teamsFilterService.selectedTeamIds,
+                        orderedVehicleTypes: this.view.orderedVehicleTypesFilter?.map(vt => vt.id),
+                        legacyOwnerIds: this.view.legacyOwnerIdsFilter
+                    },
+                    {
+                        owner: columnSlugs.includes("owner"),
+                        vehicle: columnSlugs.includes("vehicle"),
+                        fulfiller: columnSlugs.includes("executor"),
+                        driver: columnSlugs.includes("driver") || columnSlugs.includes("driver-id"),
+                        tags: columnSlugs.includes("tags"),
+                        criticality: true,
+                        estimates: columnSlugs.includes("estimated-time-frame"),
+                        delayedStops: columnSlugs.includes("delayed-stops"),
+                        stops: columnSlugs.includes("distance") || columnSlugs.includes("estimated-time-start") || columnSlugs.includes("estimated-colli-count"),
+                        colli: columnSlugs.includes("colli-count")
+                    },
+                    this.sorting,
+                    this.paging,
+                    signal
+                );
+
+                // Update the state.
+                this.results = result.routes;
+                this.routeCount = result.routeCount;
+
+                // Reset page.
+                if (propertyName !== "paging")
+                {
+                    this.paging.page = 1;
+                }
+
+                // Scroll to top.
+                this.scroll?.reset();
+            }
+            catch (error)
+            {
+                this.failed = true;
+                Log.error("An error occurred while loading the list.", error);
+            }
+        });
+    }
+
+    /**
      * Called when the `Assign executor` button is clicked.
      * Opens the panel for assigning a executor to a route, and once assigned, re-fetches the route.
      */
@@ -459,125 +578,6 @@ export class ListViewsPage
         this.expandedRouteId = this.expandedRouteId === route.id ? undefined : route.id;
     }
 
-    /**
-     * Updates the page by fetching the latest data.
-     */
-    public update(newValue?: any, oldValue?: any, propertyName?: string): void
-    {
-        // Return if the object is not constructed.
-        // This is needed because the `observable` decorator calls the change handler when the
-        // initial property value is set, which happens before the constructor is called.
-        if (!this._constructed)
-        {
-            return;
-        }
-
-        // Update the global teams filter.
-        this.teamsFilterService.selectedTeamIds = this.teamsFilter;
-
-        // Abort any existing operation.
-        if (this.updateOperation != null)
-        {
-            this.updateOperation.abort();
-        }
-
-        const columnSlugs = this.view.columns.map(c => c.slug);
-
-        // Fetch teams if needed
-        if (this.teams.length === 0 && columnSlugs.includes("team"))
-        {
-            // tslint:disable-next-line: no-floating-promises
-            (async () =>
-            {
-                this.teams = await this._organizationService.getTeams();
-            })();
-        }
-
-        // Create and execute the new operation.
-        this.updateOperation = new Operation(async signal =>
-        {
-            this.failed = false;
-
-            try
-            {
-                let assignedDriver: boolean | undefined;
-
-                if (this.view.assignedDriver !== this.view.notAssignedDriver)
-                {
-                    assignedDriver = this.view.assignedDriver;
-                }
-
-                let assignedVehicle: boolean | undefined;
-
-                if (this.view.assignedVehicle !== this.view.notAssignedVehicle)
-                {
-                    assignedVehicle = this.view.assignedVehicle;
-                }
-
-                // tslint:disable-next-line: no-floating-promises
-                this._historyHelper.navigate((state: IHistoryState) =>
-                {
-                    state.params.page = propertyName !== "paging" ? 1 : this.paging.page;
-                    state.params.pageSize = this.paging.pageSize;
-                    state.params.sortProperty = this.sorting?.property;
-                    state.params.sortDirection = this.sorting?.direction;
-                },
-                { trigger: false, replace: true });
-
-                const result = await this._routeService.getAll(
-                    {
-                        statuses: this.view.statusFilter,
-                        searchQuery: this.view.textFilter,
-                        tagsAllMatching: this.view.tagsFilter,
-                        startTimeFrom: this.view.startTimeFromFilter,
-                        startTimeTo: this.view.useRelativeStartTimeToFilter ? this.view.startTimeToFilter : this.view.startTimeToFilter?.endOf("day"),
-                        createdTimeFrom: this.view.createdTimeFromFilter,
-                        createdTimeTo: this.view.createdTimeToFilter?.endOf("day"),
-                        assignedDriver: assignedDriver,
-                        assignedVehicle: assignedVehicle,
-                        pickupNearby: (this.view.pickupNearbyPosition != null) ? { position: this.view.pickupNearbyPosition, precision: 3 } : undefined,
-                        teams: this.teamsFilterService.selectedTeamIds,
-                        orderedVehicleTypes: this.view.orderedVehicleTypesFilter?.map(vt => vt.id),
-                        legacyOwnerIds: this.view.legacyOwnerIdsFilter
-                    },
-                    {
-                        owner: columnSlugs.includes("owner"),
-                        vehicle: columnSlugs.includes("vehicle"),
-                        fulfiller: columnSlugs.includes("executor"),
-                        driver: columnSlugs.includes("driver") || columnSlugs.includes("driver-id"),
-                        tags: columnSlugs.includes("tags"),
-                        criticality: true,
-                        estimates: columnSlugs.includes("estimated-time-frame"),
-                        delayedStops: columnSlugs.includes("delayed-stops"),
-                        stops: columnSlugs.includes("distance") || columnSlugs.includes("estimated-time-start") || columnSlugs.includes("estimated-colli-count"),
-                        colli: columnSlugs.includes("colli-count")
-                    },
-                    this.sorting,
-                    this.paging,
-                    signal
-                );
-
-                // Update the state.
-                this.results = result.routes;
-                this.routeCount = result.routeCount;
-
-                // Reset page.
-                if (propertyName !== "paging")
-                {
-                    this.paging.page = 1;
-                }
-
-                // Scroll to top.
-                this.scroll?.reset();
-            }
-            catch (error)
-            {
-                this.failed = true;
-                Log.error("An error occurred while loading the list.", error);
-            }
-        });
-    }
-
     protected updateRelative(newValue: any, oldValue: any, propertyName: string): void
     {
         const now = DateTime.local();
@@ -613,7 +613,7 @@ export class ListViewsPage
      */
     protected setViewState(state: any): void
     {
-        this.view = new RouteView(this,state);
+        this.view = new RouteView(this, state);
 
         this.results = undefined;
         this.update();
