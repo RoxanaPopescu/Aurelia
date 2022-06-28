@@ -257,7 +257,7 @@ export class RouteView
   protected getState(): any
   {
     return {
-      columns: this.columns.map((column) => column.slug),
+      columns: this.columns.map(column => column.slug),
       filters: {
         textFilter: this.textFilter,
         statusFilter: this.statusFilter,
@@ -276,7 +276,7 @@ export class RouteView
         relativeStartTimeFromFilterUnit: this.relativeStartTimeFromFilterUnit,
         relativeStartTimeToFilterUnit: this.relativeStartTimeToFilterUnit,
         tagsFilter: this.tagsFilter,
-        orderedVehicleTypesFilter: this.orderedVehicleTypesFilter?.map((vt) => vt.slug),
+        orderedVehicleTypesFilter: this.orderedVehicleTypesFilter?.map(vt => vt.slug),
         legacyOwnerIdsFilter: this.legacyOwnerIdsFilter,
         createdTimeFromFilter: this.createdTimeFromFilter?.toISO(),
         createdTimeToFilter: this.createdTimeToFilter?.toISO()
