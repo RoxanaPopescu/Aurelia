@@ -1,5 +1,6 @@
 import { AppContext } from "../../app-context";
 import { AppModule } from "../../app-module";
+import { v4 as uuidV4 } from "uuid";
 
 /**
  * Represents a module exposing endpoints related to linehauls.
@@ -7,73 +8,46 @@ import { AppModule } from "../../app-module";
 export class LinehaulsModule extends AppModule
 {
     /**
-     * Starts loading with the specified id - if it does not exist it will be created
-     * @param context.params.id The ID of the linehaul to get.
-     * @returns The linehaul with the specified reference.
-     * @returns 400 if not found.
+     * Creates a linehaul with a auto generated GUID reference
+     * @returns The created linehaul.
      */
-    public "GET /v2/linehauls/load/:reference" = async (context: AppContext) =>
+    public "POST /v2/linehauls" = async (context: AppContext) =>
     {
         await context.authorize();
 
-        try
+        const result = await this.apiClient.post("linehauls/create",
         {
-            const result = await this.apiClient.post("linehauls/details",
+            body:
             {
-                body:
-                {
-                    reference: context.params.reference,
-                    outfitId: context.user?.organizationId,
-                    actionById: context.user?.id
-                }
-            });
+                reference: uuidV4(),
+                ownerId: context.user?.organizationId,
+                actionById: context.user?.id
+            }
+        });
 
-            context.response.body = result.data;
-            context.response.status = 200;
-        }
-        catch (error)
+        context.internal();
+
+        const detailsResult = await this.apiClient.post("linehauls/details",
         {
-            if (error.response.status === 400 || error.response.status === 404)
+            body:
             {
-                const result = await this.apiClient.post("linehauls/create",
-                {
-                    body:
-                    {
-                        reference: context.params.reference,
-                        ownerId: context.user?.organizationId,
-                        actionById: context.user?.id
-                    }
-                });
-
-                context.internal();
-
-                const detailsResult = await this.apiClient.post("linehauls/details",
-                {
-                    body:
-                    {
-                        id: result.data.id,
-                        outfitId: context.user?.organizationId,
-                        actionById: context.user?.id
-                    }
-                });
-
-                context.response.body = detailsResult.data;
-                context.response.status = 200;
+                id: result.data.id,
+                outfitId: context.user?.organizationId,
+                actionById: context.user?.id
             }
-            else
-            {
-                throw error;
-            }
-        }
+        });
+
+        context.response.body = detailsResult.data;
+        context.response.status = 200;
     }
 
     /**
-     * Starts unloading with the specified
+     * Get a specific linehaul
      * @param context.params.id The ID of the linehaul to get.
-     * @returns The linehaul with the specified reference.
+     * @returns The linehaul with the specified id.
      * @returns 400 if not found.
      */
-    public "GET /v2/linehauls/unload/:reference" = async (context: AppContext) =>
+    public "GET /v2/linehauls/:id" = async (context: AppContext) =>
     {
         await context.authorize();
 
@@ -81,7 +55,7 @@ export class LinehaulsModule extends AppModule
         {
             body:
             {
-                reference: context.params.reference,
+                reference: context.params.id,
                 outfitId: context.user?.organizationId,
                 actionById: context.user?.id
             }
