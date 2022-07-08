@@ -307,7 +307,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
             return stop;
         }
 
-        return stops[0] as TRouteStop;
+        return (stops.length > 0 ? stops[0] : this.stops[0]) as TRouteStop;
     }
 
     /**
