@@ -16,6 +16,9 @@ dropdown-button
 
             // Apply opacity to de-emphasize the icon.
             opacity: var(--opacity-faded);
+
+            // Disable pointer events, so clicks reach the button.
+            pointer-events: none;
         }
 
         [slot="label"]
