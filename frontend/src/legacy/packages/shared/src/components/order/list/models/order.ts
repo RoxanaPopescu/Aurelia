@@ -55,14 +55,6 @@ export class OrderStatus {
       name: Localization.sharedValue("Model_Logistics_OrderStatus:Delivered"),
       accent: "positive",
       value: 7
-    },
-    routePlanned: {
-      slug: "routePlanned",
-      name: Localization.sharedValue(
-        "Model_Logistics_OrderStatus:RoutePlanned"
-      ),
-      accent: "positive",
-      value: 8
     }
   };
 

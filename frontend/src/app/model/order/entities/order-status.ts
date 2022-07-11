@@ -76,12 +76,6 @@ export class OrderStatus
             accent: "neutral",
             value: 6
         },
-        "route-planned":
-        {
-            name: orderStatus.routePlanned,
-            accent: "neutral",
-            value: 8
-        },
         "delivered":
         {
             name: orderStatus.delivered,
