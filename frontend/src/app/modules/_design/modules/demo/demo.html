@@ -46,6 +46,84 @@
         <div surface.bind="surface" class="font-${fontSize}">
 
             <h1 class="font-largest margin">
+                Composite components
+            </h1>
+
+            <design-item heading="dropdown-button with toggle-group">
+
+                <design-row heading="toggle-group">
+
+                    <design-column heading="enabled">
+
+                        <dropdown-button appearance="outline" accent="primary">
+
+                            <span slot="label">
+                                ${toggleGroupValue || "Choose options"}
+                            </span>
+
+                            <toggle-group class="margin-left margin-right" value.bind="toggleGroupValue">
+
+                                <radio-toggle
+                                    label="after"
+                                    model="toggle-1"
+                                    class="margin-half-bottom margin-top">
+
+                                    <div slot="heading">
+                                        Toggle 1
+                                    </div>
+
+                                </radio-toggle>
+
+                                <radio-toggle
+                                    label="after"
+                                    model="toggle-2"
+                                    class="margin-half-bottom">
+
+                                    <div slot="heading">
+                                        Toggle 2
+                                    </div>
+
+                                </radio-toggle>
+
+                                <check-toggle
+                                    label="after"
+                                    model="toggle-3"
+                                    value.one-time="false"
+                                    class="margin-half-bottom">
+
+                                    <div slot="heading">
+                                        Toggle 3
+                                    </div>
+
+                                </check-toggle>
+
+                                <check-toggle
+                                    label="after"
+                                    model="toggle-4"
+                                    value.one-time="false"
+                                    class="margin-bottom">
+
+                                    <div slot="heading">
+                                        Toggle 4
+                                    </div>
+
+                                </check-toggle>
+
+                            </toggle-group>
+
+                        </dropdown-button>
+
+                    </design-column>
+
+                    <design-column heading="values">
+                        <div>value: ${toggleGroupValue}</div>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
+            <h1 class="font-largest margin">
                 App components
             </h1>
 
