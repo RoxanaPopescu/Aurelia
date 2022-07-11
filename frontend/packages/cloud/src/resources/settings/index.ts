@@ -84,7 +84,7 @@ export default
             themeSlug: "coop"
         },
         {
-            hostname: /(^|\.)ikea\.(dk|com|ch|nl)$/,
+            hostname: /(^|\.)ikea\.[a-z]*$/,
             localeCode: "en-US",
             currencyCode: "DKK",
             themeSlug: "ikea"
