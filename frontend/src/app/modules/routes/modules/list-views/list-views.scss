@@ -7,4 +7,14 @@ page[name="routes"] page[name="list-views"]
         background: var(--surface-color);
         cursor: default;
     }
+
+    page-header
+    {
+        border-bottom: none;
+    }
+
+    view-preset-selector dropdown
+    {
+        min-width: 250rem !important;
+    }
 }

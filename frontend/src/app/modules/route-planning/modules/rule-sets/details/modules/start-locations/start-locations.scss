@@ -16,31 +16,6 @@ start-locations
     page-tab-nav
     {
         margin-top: 28rem;
-
-        page-tab
-        {
-            justify-content: space-between;
-
-            span
-            {
-               padding-right: 4rem;
-            }
-
-            .button-container
-            {
-                display: flex;
-
-                button
-                {
-                    margin-left: var(--size-inline-spacing-large);
-                }
-            }
-        }
-
-        .add-location-button
-        {
-            margin-left: var(--size-inline-spacing-larger);
-        }
     }
 
     .departure-time-name

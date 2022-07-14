@@ -24,4 +24,14 @@ page-tab-nav
 
     padding: 0 36rem;
     border-bottom: var(--tab-nav-border-width) solid var(--tab-nav-border-color);
+    overflow-y: hidden !important;
+    overflow-x: auto !important;
+
+    .page-tab-nav-add-button
+    {
+        margin-left: var(--size-inline-spacing-larger);
+        margin-right: var(--size-inline-spacing-larger);
+        margin-bottom: calc(var(--tab-nav-border-width) * -1);
+        min-width: max-content;
+    }
 }
