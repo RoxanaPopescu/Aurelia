@@ -1,11 +1,12 @@
 import { ISorting, IPaging } from "shared/types";
 import { ListViewType } from "./list-view-type";
-import { IListViewColumn } from "./list-view-column";
+import { IListViewFilter } from "./list-view-filter";
+import { ListViewColumn } from "./list-view-column";
 
 /**
  * Represents the data needed to create a list view definition.
  */
-export interface IListViewDefinitionInit<TFilter>
+export interface IListViewDefinitionInit<TFilter extends IListViewFilter>
 {
     /**
      * The type of the list view.
@@ -40,5 +41,5 @@ export interface IListViewDefinitionInit<TFilter>
     /**
      * The columns to be shown.
      */
-    columns: IListViewColumn[];
+    columns: ListViewColumn[];
 }

@@ -4,7 +4,7 @@ import { HistoryHelper, Log } from "shared/infrastructure";
 import { ModalService } from "shared/framework";
 import { LocalStateService } from "app/services/local-state";
 import { RouteAssignmentService, RouteInfo, RouteService } from "app/model/route";
-import { ListViewService, ListView, IListViewFilter } from "app/model/list-view";
+import { ListViewService, ListView, RouteListViewFilter } from "app/model/list-view";
 import { IListViewPageItems, IListViewPageParams, ListViewsBasePage } from "./list-views-base";
 import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
 import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
@@ -14,10 +14,6 @@ import { Fulfiller } from "app/model/outfit";
 import { AssignOrganizationPanel } from "../../modals/assign-organization/assign-organization";
 import { IdentityService, moverOrganizationId } from "app/services/identity";
 import { TeamsFilterService } from "app/services/teams-filter";
-
-interface IRouteListFilter extends IListViewFilter, MapObject
-{
-}
 
 /**
  * Represents the route parameters for the page.
@@ -30,7 +26,7 @@ export interface IRouteListViewPageParams extends IListViewPageParams
  * Represents the page.
  */
 @autoinject
-export class ListViewsPage extends ListViewsBasePage<IRouteListFilter, RouteInfo>
+export class ListViewsPage extends ListViewsBasePage<RouteListViewFilter, RouteInfo>
 {
     /**
      * Creates a new instance of the type.
@@ -132,7 +128,7 @@ export class ListViewsPage extends ListViewsBasePage<IRouteListFilter, RouteInfo
      * @param signal The abort signal for the operation.
      * @returns A model representing the items to present in the list.
      */
-    protected async fetch(listView: ListView<IRouteListFilter, RouteInfo>, signal: AbortSignal): Promise<IListViewPageItems>
+    protected async fetch(listView: ListView<RouteListViewFilter, RouteInfo>, signal: AbortSignal): Promise<IListViewPageItems>
     {
         const filter = listView.definition.filter;
 
@@ -317,7 +313,7 @@ export class ListViewsPage extends ListViewsBasePage<IRouteListFilter, RouteInfo
      * @param signal The abort signal for the operation.
      * @returns A model representing the items to present in the list.
      */
-    private async fetchTeamsIfNeeded(listView: ListView<IRouteListFilter, RouteInfo>, signal: AbortSignal): Promise<void>
+    private async fetchTeamsIfNeeded(listView: ListView<RouteListViewFilter, RouteInfo>, signal: AbortSignal): Promise<void>
     {
         const columnSlugs = listView.definition.columns.map(column => column.slug);
 
@@ -344,7 +340,7 @@ export class ListViewsPage extends ListViewsBasePage<IRouteListFilter, RouteInfo
      * @param signal The abort signal for the operation.
      * @returns A model representing the items to present in the list.
      */
-    private async fetchRoutes(listView: ListView<IRouteListFilter, RouteInfo>, signal: AbortSignal): Promise<IListViewPageItems>
+    private async fetchRoutes(listView: ListView<RouteListViewFilter, RouteInfo>, signal: AbortSignal): Promise<IListViewPageItems>
     {
         const filter = listView.definition.filter;
         const columnSlugs = listView.definition.columns.map(column => column.slug);

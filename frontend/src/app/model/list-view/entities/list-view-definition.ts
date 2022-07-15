@@ -1,7 +1,7 @@
 import { ISorting } from "shared/types";
 import { ListViewType } from "./list-view-type";
 import { IListViewFilter } from "./list-view-filter";
-import { IListViewColumn } from "./list-view-column";
+import { ListViewColumn } from "./list-view-column";
 
 /**
  * Represents the definition of a list view.
@@ -65,7 +65,7 @@ export abstract class ListViewDefinition<TFilter extends IListViewFilter>
     /**
      * The columns to be shown.
      */
-    public columns: IListViewColumn[];
+    public columns: ListViewColumn[];
 
     /**
      * Gets the data representing this instance.

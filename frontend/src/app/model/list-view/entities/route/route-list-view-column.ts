@@ -1,5 +1,4 @@
-import { textCase } from "shared/utilities/text";
-import { IListViewColumn } from "../list-view-column";
+import { ListViewColumn } from "../list-view-column";
 import listColumn from "../../resources/strings/route-list-columns.json";
 
 /**
@@ -10,7 +9,7 @@ export type RouteListViewColumnSlug = keyof typeof RouteListViewColumn.values;
 /**
  * Represents a column in a list view presenting items of type `RouteInfo`.
  */
-export class RouteListViewColumn implements IListViewColumn
+export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
 {
     /**
      * Creates a new instance of the type.
@@ -18,28 +17,7 @@ export class RouteListViewColumn implements IListViewColumn
      */
     public constructor(data: { slug: RouteListViewColumnSlug, width?: string })
     {
-        this.slug = data.slug ? textCase(data.slug, "pascal", "kebab") as any : "unknown";
-        Object.assign(this, RouteListViewColumn.values[this.slug]);
-
-        if (data.width)
-        {
-            this.width = data.width;
-        }
-    }
-
-    public slug: RouteListViewColumnSlug;
-    public name: string;
-    public shortName: string;
-    public width: string;
-    public property: string | undefined;
-    public hidden: boolean;
-
-    /**
-     * Gets the data representing this instance.
-     */
-    public toJSON(): any
-    {
-        return { slug: this.slug, width: this.width };
+        super(RouteListViewColumn.values, data);
     }
 
     /**

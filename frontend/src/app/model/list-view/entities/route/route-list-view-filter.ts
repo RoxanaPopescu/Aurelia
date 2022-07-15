@@ -50,6 +50,7 @@ export class RouteListViewFilter implements IListViewFilter
             this.relativeStartTimeToFilter = data.filters.relativeStartTimeToFilter
                 ? Duration.fromISO(data.filters.relativeStartTimeToFilter)
                 : undefined;
+            this.teamsFilter = data.teamsFilter;
 
             return;
         }
@@ -174,6 +175,12 @@ export class RouteListViewFilter implements IListViewFilter
     public createdTimeToFilter: DateTime | undefined;
 
     /**
+     * The IDs of the teams for which data should be presented, or undefined if no team is selected.
+     */
+    @observable({ changeHandler: "update" })
+    public teamsFilter: ("no-team" | string)[] | undefined;
+
+    /**
      * The legacy owner IDs to show, only used by Mover Transport in a transition phase.
      */
     @observable({ changeHandler: "update" })
@@ -212,7 +219,8 @@ export class RouteListViewFilter implements IListViewFilter
             orderedVehicleTypesFilter: this.orderedVehicleTypesFilter?.map(vt => vt.slug),
             legacyOwnerIdsFilter: this.legacyOwnerIdsFilter,
             createdTimeFromFilter: this.createdTimeFromFilter?.toISO(),
-            createdTimeToFilter: this.createdTimeToFilter?.toISO()
+            createdTimeToFilter: this.createdTimeToFilter?.toISO(),
+            teamsFilter: this.teamsFilter
         };
     }
 }

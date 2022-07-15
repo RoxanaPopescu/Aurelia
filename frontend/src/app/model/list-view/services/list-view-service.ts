@@ -7,6 +7,7 @@ import { IListViewDefinitionInit } from "../entities/list-view-definition-init";
 import { IListViewFilter } from "../entities/list-view-filter";
 import { ListViewType } from "../entities/list-view-type";
 import { createListViewDefinition } from "../factories/list-view-definition-factory";
+import { IListViews } from "../entities/list-views";
 
 /**
  * Represents a service that manages list views.
@@ -34,7 +35,7 @@ export class ListViewService
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the list views.
      */
-    public async getAll<TFilter extends IListViewFilter>(type: ListViewType, signal?: AbortSignal): Promise<{ shared: ListViewDefinition<TFilter>[]; personal: ListViewDefinition<TFilter>[]; }>
+    public async getAll<TFilter extends IListViewFilter>(type: ListViewType, signal?: AbortSignal) : Promise<IListViews<TFilter>>
     {
         const result = await this._apiClient.get("views",
         {
@@ -60,7 +61,7 @@ export class ListViewService
      * @param listViewInit The data for the list view to create.
      * @returns A promise that will be resolved with the created list view.
      */
-    public async create<TFilter extends IListViewFilter>(listViewInit: IListViewDefinitionInit<TFilter>): Promise<ListViewDefinition<TFilter>>
+    public async create<TFilter extends IListViewFilter>(listViewInit: IListViewDefinitionInit<TFilter>) : Promise<ListViewDefinition<TFilter>>
     {
         if (listViewInit.shared)
         {
