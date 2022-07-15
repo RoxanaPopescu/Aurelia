@@ -55,16 +55,20 @@ export class ListViewsPage extends ListViewsBasePage<RouteListViewFilter, RouteI
 
         this._routeService = routeService;
         this._routeAssignmentService = routeAssignmentService;
-        this._teamsFilterService = teamsFilterService;
         this._organizationService = organizationService;
         this._identityService = identityService;
+        this.teamsFilterService = teamsFilterService;
     }
 
     private readonly _routeService: RouteService;
     private readonly _routeAssignmentService: RouteAssignmentService;
-    private readonly _teamsFilterService: TeamsFilterService;
     private readonly _organizationService: OrganizationService;
     private readonly _identityService: IdentityService;
+
+    /**
+     * The `TeamsFilterService` instance.
+     */
+    private readonly teamsFilterService: TeamsFilterService;
 
     /**
      * The type of list views presented by the page.
@@ -136,7 +140,7 @@ export class ListViewsPage extends ListViewsBasePage<RouteListViewFilter, RouteI
 
         // TODO: Is this the right place to do this?
         // Update the global teams filter.
-        this._teamsFilterService.selectedTeamIds = filter.teamsFilter;
+        this.teamsFilterService.selectedTeamIds = filter.teamsFilter;
 
         return await this.fetchRoutes(listView, signal);
     }
@@ -317,7 +321,6 @@ export class ListViewsPage extends ListViewsBasePage<RouteListViewFilter, RouteI
     {
         const columnSlugs = listView.definition.columns.map(column => column.slug);
 
-        // If needed, fetch the teams associated with the organization.
         try
         {
             if (this.teams == null && columnSlugs.includes("team"))
@@ -345,7 +348,6 @@ export class ListViewsPage extends ListViewsBasePage<RouteListViewFilter, RouteI
         const filter = listView.definition.filter;
         const columnSlugs = listView.definition.columns.map(column => column.slug);
 
-        // Fetch the list items.
         try
         {
             const assignedDriver = filter.assignedDriver !== filter.notAssignedDriver ? filter.assignedDriver : undefined;
@@ -363,7 +365,7 @@ export class ListViewsPage extends ListViewsBasePage<RouteListViewFilter, RouteI
                 assignedDriver: assignedDriver,
                 assignedVehicle: assignedVehicle,
                 pickupNearby: (filter.pickupNearbyPosition != null) ? { position: filter.pickupNearbyPosition, precision: 3 } : undefined,
-                teams: this._teamsFilterService.selectedTeamIds,
+                teams: this.teamsFilterService.selectedTeamIds,
                 orderedVehicleTypes: filter.orderedVehicleTypesFilter?.map(vt => vt.id),
                 legacyOwnerIds: filter.legacyOwnerIdsFilter
             },

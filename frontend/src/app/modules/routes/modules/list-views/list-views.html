@@ -696,7 +696,7 @@
 
                                 <data-table-cell if.bind="column.slug === 'distance'">
                                     <span if.bind="route.initialEstimates.distance" class="text-truncate">
-                                        ${route.initialEstimates.distance/1000 | number : undefined : 1 } km
+                                        ${route.initialEstimates.distance / 1000 | number : undefined : 1 } km
                                     </span>
                                     <span if.bind="!route.initialEstimates.distance" class="text-truncate">
                                         ${route.distance / 1000 | number : undefined : 1 } km
@@ -705,7 +705,7 @@
 
                                 <data-table-cell if.bind="column.slug === 'delayed-stops'">
                                     <span class="text-truncate" empty-value>
-                                        ${getDelayedStops(route) | list}
+                                        ${getDelayedStops(route) | list: 'short' : 'unit'}
                                     </span>
                                 </data-table-cell>
 
@@ -730,7 +730,7 @@
 
                                     <div class="icon-row">
 
-                                        <button appearance="none" accent="primary" click.trigger="onShowDrivingList(route)">
+                                        <button appearance="none" accent="primary" click.trigger="onShowDrivingListClick(route)">
                                             <icon name="document"></icon>
                                         </button>
 

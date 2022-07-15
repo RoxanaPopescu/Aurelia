@@ -19,7 +19,7 @@ export class TeamsFilterService
     private readonly _organizationService: OrganizationService;
 
     /**
-     * The teams for which data should be presented, or undefined if no team is selected.
+     * The teams for which data should be presented, or undefined if not yet fetched.
      */
     public accessibleTeams: (OrganizationTeam | "no-team")[] | undefined;
 
@@ -47,7 +47,7 @@ export class TeamsFilterService
     /**
      * Fetches the teams accessible to the current user, within the current organization.
      * @param signal The abort signal to use, or undefined to use no abort signal.
-     * @returns A promise that will be resolved when the operation succeeds.
+     * @returns A promise that will be resolved with the teams.
      */
     public async fetchAccessibleTeams(signal?: AbortSignal): Promise<void>
     {
