@@ -5,7 +5,7 @@ import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
 import { IScroll, ModalService } from "shared/framework";
 import { LocalStateService } from "app/services/local-state";
-import { ListViewService, ListViewDefinition, ListView, IListViewFilter, IListViewItem } from "app/model/list-view";
+import { ListViewService, ListViewDefinition, ListView, IListViewFilter } from "app/model/list-view";
 import { ListViewType } from "app/model/list-view/entities/list-view-type";
 
 /**
@@ -38,19 +38,19 @@ export interface IListViewPageItems
     /**
      * The items to present in the list.
      */
-    items: any[],
+    items: any[];
 
     /**
      * The total number of items matching the query, if known.
      */
-    itemCount: number
+    itemCount: number;
 }
 
 /**
  * Represents the page.
  */
 @autoinject
-export abstract class ListViewsBasePage<TListViewFilter extends IListViewFilter, TListItem extends IListViewItem>
+export abstract class ListViewsBasePage<TListViewFilter extends IListViewFilter, TListItem>
 {
     /**
      * Creates a new instance of the type.
@@ -83,8 +83,8 @@ export abstract class ListViewsBasePage<TListViewFilter extends IListViewFilter,
      */
     protected listViewDefinitions:
     {
-        personal: ListViewDefinition<TListViewFilter>[],
-        shared: ListViewDefinition<TListViewFilter>[]
+        personal: ListViewDefinition<TListViewFilter>[];
+        shared: ListViewDefinition<TListViewFilter>[];
     };
 
     /**
@@ -121,7 +121,7 @@ export abstract class ListViewsBasePage<TListViewFilter extends IListViewFilter,
     {
         // Fetch the list view definitions.
 
-        this.listViewDefinitions = await this._listViewService.getAll(this.listViewType)
+        this.listViewDefinitions = await this._listViewService.getAll(this.listViewType);
 
         // Get the locally stored IDs of the open list views.
 
@@ -182,6 +182,8 @@ export abstract class ListViewsBasePage<TListViewFilter extends IListViewFilter,
     {
         // Abort any pending operation.
         this.activeListView?.operation?.abort();
+
+        await Promise.resolve();
     }
 
     /**
@@ -189,13 +191,13 @@ export abstract class ListViewsBasePage<TListViewFilter extends IListViewFilter,
      * @param listViewId The ID of the list view to get.
      * @returns The list view with the specified ID, or undefined if not available.
      */
-    private getListViewDefinition(listViewId: string): ListViewDefinition<TListViewFilter> | undefined
+    protected getListViewDefinition(listViewId: string): ListViewDefinition<TListViewFilter> | undefined
     {
-        const listView =
-            this.listViewDefinitions.shared.find(listView => listView.id == listViewId) ??
-            this.listViewDefinitions.personal.find(listView => listView.id == listViewId);
+        const listViewDefinition =
+            this.listViewDefinitions.shared.find(lvd => lvd.id === listViewId) ??
+            this.listViewDefinitions.personal.find(lvd => lvd.id === listViewId);
 
-        return listView;
+        return listViewDefinition;
     }
 
     /**
@@ -262,7 +264,7 @@ export abstract class ListViewsBasePage<TListViewFilter extends IListViewFilter,
             try
             {
                 // Fetch the items.
-                var result = await this.fetch(listView, signal);
+                const result = await this.fetch(listView, signal);
 
                 // Update the state of the list view.
                 listView.items = result.items;

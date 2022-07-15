@@ -2,13 +2,12 @@ import { DateTime } from "luxon";
 import { IPaging } from "shared/types";
 import { Operation } from "shared/utilities";
 import { IListViewFilter } from "./list-view-filter";
-import { IListViewItem } from "./list-view-item";
 import { ListViewDefinition } from "./list-view-definition";
 
 /**
  * Represents an open list view.
  */
-export class ListView<TFilter extends IListViewFilter, TItem extends IListViewItem>
+export class ListView<TFilter extends IListViewFilter, TItem>
 {
     /**
      * Creates a new instance of the type.

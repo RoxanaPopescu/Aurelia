@@ -16,7 +16,7 @@ export function createListViewDefinition(type: ListViewType): ListViewDefinition
  */
 export function createListViewDefinition(data: any): ListViewDefinition<any>;
 
- /**
+/**
  * Factory method for creating instances of type `ListViewDefinition`.
  * @param typeOrData The type of list view definition to create, or the response data from which the instance should be created.
  * @returns A `ListViewDefinition` instance of the appropiate type.

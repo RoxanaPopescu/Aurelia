@@ -18,6 +18,7 @@ import { TeamsFilterService } from "app/services/teams-filter";
 /**
  * Represents the route parameters for the page.
  */
+// tslint:disable-next-line: no-empty-interface
 export interface IRouteListViewPageParams extends IListViewPageParams
 {
 }
@@ -142,7 +143,7 @@ export class ListViewsPage extends ListViewsBasePage<RouteListViewFilter, RouteI
         // Update the global teams filter.
         this.teamsFilterService.selectedTeamIds = filter.teamsFilter;
 
-        return await this.fetchRoutes(listView, signal);
+        return this.fetchRoutes(listView, signal);
     }
 
     /**

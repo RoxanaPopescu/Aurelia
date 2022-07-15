@@ -35,7 +35,7 @@ export class ListViewService
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the list views.
      */
-    public async getAll<TFilter extends IListViewFilter>(type: ListViewType, signal?: AbortSignal) : Promise<IListViews<TFilter>>
+    public async getAll<TFilter extends IListViewFilter>(type: ListViewType, signal?: AbortSignal): Promise<IListViews<TFilter>>
     {
         const result = await this._apiClient.get("views",
         {
@@ -61,7 +61,7 @@ export class ListViewService
      * @param listViewInit The data for the list view to create.
      * @returns A promise that will be resolved with the created list view.
      */
-    public async create<TFilter extends IListViewFilter>(listViewInit: IListViewDefinitionInit<TFilter>) : Promise<ListViewDefinition<TFilter>>
+    public async create<TFilter extends IListViewFilter>(listViewInit: IListViewDefinitionInit<TFilter>): Promise<ListViewDefinition<TFilter>>
     {
         if (listViewInit.shared)
         {
@@ -94,16 +94,16 @@ export class ListViewService
 
     /**
      * Deletes the specified list view.
-     * @param ListView The list view to delete.
+     * @param listView The list view to delete.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async delete(ListView: ListViewDefinition<any>): Promise<void>
+    public async delete(listView: ListViewDefinition<any>): Promise<void>
     {
-        if (ListView.shared)
+        if (listView.shared)
         {
-            await this._apiClient.post(`views/${ListView.id}/delete`,
+            await this._apiClient.post(`views/${listView.id}/delete`,
             {
-                body: { type: ListView.type }
+                body: { type: listView.type }
             });
         }
 
@@ -114,24 +114,24 @@ export class ListViewService
                 state.ListViews = {};
             }
 
-            const localListViews = state.ListViews[ListView.type] ?? [];
+            const localListViews = state.ListViews[listView.type] ?? [];
 
-            const index = localListViews.findIndex(vp => vp.id === ListView.id);
+            const index = localListViews.findIndex(vp => vp.id === listView.id);
 
             if (index > -1)
             {
                 localListViews.splice(index, 1);
 
-                state.ListViews[ListView.type] = localListViews;
+                state.ListViews[listView.type] = localListViews;
             }
         });
     }
 
     private toLegacy(listViewDefinition: ListViewDefinition<any> | IListViewDefinitionInit<any>): any
     {
-        var data =
+        const data =
         {
-            id: listViewDefinition["id"],
+            id: (listViewDefinition as ListViewDefinition<any>).id,
             type: listViewDefinition.type,
             name: listViewDefinition.name,
             shared: listViewDefinition.shared,
@@ -151,7 +151,7 @@ export class ListViewService
 
     private fromLegacy(legacyListViewDefinition: any): any
     {
-        var data =
+        const data =
         {
             id: legacyListViewDefinition.id,
             type: legacyListViewDefinition.type,
@@ -161,7 +161,7 @@ export class ListViewService
             filter: legacyListViewDefinition.state.filter,
             columns: legacyListViewDefinition.state.columns.map(text =>
             {
-                var [slug, width] = text.split("|");
+                const [slug, width] = text.split("|");
 
                 return { slug, width };
             })

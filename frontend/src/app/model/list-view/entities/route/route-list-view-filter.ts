@@ -187,13 +187,6 @@ export class RouteListViewFilter implements IListViewFilter
     public legacyOwnerIdsFilter: any[] | undefined;
 
     /**
-     * Called by the framework when a property changes.
-     */
-    protected update(newValue?: any, oldValue?: any, propertyName?: string): void
-    {
-    }
-
-    /**
      * Gets the data representing this instance.
      */
     public toJSON(): any
@@ -222,5 +215,13 @@ export class RouteListViewFilter implements IListViewFilter
             createdTimeToFilter: this.createdTimeToFilter?.toISO(),
             teamsFilter: this.teamsFilter
         };
+    }
+
+    /**
+     * Called by the framework when a property changes.
+     */
+    protected update(newValue?: any, oldValue?: any, propertyName?: string): void
+    {
+        // TODO
     }
 }

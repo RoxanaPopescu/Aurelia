@@ -15,7 +15,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(data: { slug: RouteListViewColumnSlug, width?: string })
+    public constructor(data: { slug: RouteListViewColumnSlug; width?: string })
     {
         super(RouteListViewColumn.values, data);
     }

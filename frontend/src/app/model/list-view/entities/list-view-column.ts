@@ -10,7 +10,7 @@ export abstract class ListViewColumn<TSlug extends string = string>
      * Creates a new instance of the type.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(values: MapObject, data: { slug: TSlug, width?: string })
+    public constructor(values: MapObject, data: { slug: TSlug; width?: string })
     {
         this.slug = data.slug ? textCase(data.slug, "pascal", "kebab") as any : "unknown";
         Object.assign(this, values[this.slug]);
