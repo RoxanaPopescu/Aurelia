@@ -6,6 +6,7 @@ import { ListViewDefinition } from "../entities/list-view-definition";
 import { IListViewDefinitionInit } from "../entities/list-view-definition-init";
 import { IListViewFilter } from "../entities/list-view-filter";
 import { ListViewType } from "../entities/list-view-type";
+import { createListViewDefinition } from "../factories/list-view-definition-factory";
 
 /**
  * Represents a service that manages list views.
@@ -42,12 +43,12 @@ export class ListViewService
         });
 
         const sharedListViews = result.data.map(data =>
-            new ListViewDefinition(this.fromLegacy({ ...data, shared: true })));
+            createListViewDefinition(this.fromLegacy({ ...data, shared: true })));
 
         sharedListViews.sort((a, b) => a.name.localeCompare(b.name));
 
         const localListViews = this._localStateService.get().ListViews?.[type]?.map(data =>
-            new ListViewDefinition(this.fromLegacy({ ...data, shared: false }))) ?? [];
+            createListViewDefinition(this.fromLegacy({ ...data, shared: false }))) ?? [];
 
         localListViews.sort((a, b) => a.name.localeCompare(b.name));
 
@@ -68,7 +69,7 @@ export class ListViewService
                 body: this.toLegacy(listViewInit)
             });
 
-            return new ListViewDefinition(this.fromLegacy({ ...result.data, shared: true }));
+            return createListViewDefinition(this.fromLegacy({ ...result.data, shared: true }));
         }
 
         const localListView = { ...listViewInit, id: Id.uuid(1) };
@@ -87,7 +88,7 @@ export class ListViewService
             state.ListViews[localListView.type] = localListViews;
         });
 
-        return new ListViewDefinition(localListView);
+        return createListViewDefinition(localListView);
     }
 
     /**

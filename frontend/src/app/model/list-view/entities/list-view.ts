@@ -1,9 +1,9 @@
+import { DateTime } from "luxon";
+import { IPaging } from "shared/types";
 import { Operation } from "shared/utilities";
 import { IListViewFilter } from "./list-view-filter";
 import { IListViewItem } from "./list-view-item";
 import { ListViewDefinition } from "./list-view-definition";
-import { IPaging } from "shared/types";
-import { DateTime } from "luxon";
 
 /**
  * Represents an open list view.

@@ -2,13 +2,11 @@ import { ISorting } from "shared/types";
 import { ListViewType } from "./list-view-type";
 import { IListViewFilter } from "./list-view-filter";
 import { IListViewColumn } from "./list-view-column";
-import { RouteListViewColumn } from "./route-list-view-column";
-import { RouteListViewFilter } from "./route-list-view-filter";
 
 /**
  * Represents the definition of a list view.
  */
-export class ListViewDefinition<TFilter extends IListViewFilter>
+export abstract class ListViewDefinition<TFilter extends IListViewFilter>
 {
     /**
      * Creates a new instance of the type.
@@ -23,19 +21,6 @@ export class ListViewDefinition<TFilter extends IListViewFilter>
             this.name = data.name;
             this.shared = data.shared;
             this.sorting = data.sorting;
-
-            switch (this.type)
-            {
-                case "route":
-                {
-                    this.filter = new RouteListViewFilter(data.filter) as any;
-                    this.columns = data.columns.map((column: any) => new RouteListViewColumn(column));
-
-                    break;
-                }
-
-                default: throw new Error("Unknown list view type.");
-            }
         }
         else
         {
@@ -44,30 +29,6 @@ export class ListViewDefinition<TFilter extends IListViewFilter>
             this.name = data.name;
             this.shared = data.shared;
             this.sorting = data.sorting;
-
-            switch (this.type)
-            {
-                case "route":
-                {
-                    this.filter = new RouteListViewFilter() as any;
-                    this.columns =
-                    [
-                        new RouteListViewColumn({ slug: "slug" }),
-                        new RouteListViewColumn({ slug: "reference" }),
-                        new RouteListViewColumn({ slug: "start-date" }),
-                        new RouteListViewColumn({ slug: "start-address" }),
-                        new RouteListViewColumn({ slug: "tags" }),
-                        new RouteListViewColumn({ slug: "stop-count" }),
-                        new RouteListViewColumn({ slug: "vehicle-type" }),
-                        new RouteListViewColumn({ slug: "status" }),
-                        new RouteListViewColumn({ slug: "driving-list" })
-                    ];
-
-                    break;
-                }
-
-                default: throw new Error("Unknown list view type.");
-            }
         }
     }
 

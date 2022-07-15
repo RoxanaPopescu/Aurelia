@@ -14,6 +14,11 @@ export interface IListViewColumn
     name: string;
 
     /**
+     * The localized short name of the column, suitable for use in a table header.
+     */
+    shortName: string;
+
+    /**
      * The width of the column.
      */
     width: string;
@@ -22,6 +27,11 @@ export interface IListViewColumn
      * The property to use for sorting.
      */
     property: string | undefined;
+
+    /**
+     * True if the column is hidden, e.g. because it represents an icon, otherwise false.
+     */
+    hidden: boolean;
 
     /**
      * Gets the data representing this instance.

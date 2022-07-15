@@ -1,6 +1,6 @@
 import { textCase } from "shared/utilities/text";
-import { IListViewColumn } from "./list-view-column";
-import listColumn from "../resources/strings/route-list-columns.json";
+import { IListViewColumn } from "../list-view-column";
+import listColumn from "../../resources/strings/route-list-columns.json";
 
 /**
  * Represents the slug identifying a `RouteListViewColumn`.

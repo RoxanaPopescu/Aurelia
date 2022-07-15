@@ -2,8 +2,8 @@ import { DateTime, Duration } from "luxon";
 import { observable } from "aurelia-framework";
 import { Position, Address } from "app/model/shared";
 import { VehicleType } from "app/model/vehicle";
-import { RouteStatusSlug } from "../../route";
-import { IListViewFilter } from "./list-view-filter";
+import { RouteStatusSlug } from "../../../route";
+import { IListViewFilter } from "../list-view-filter";
 
 /**
  * Represents a filter for a list view presenting items of type `RouteInfo`.
