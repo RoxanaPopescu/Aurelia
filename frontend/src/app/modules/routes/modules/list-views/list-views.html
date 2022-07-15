@@ -373,6 +373,14 @@
 
                     <toolbar class="flex-push-right">
 
+                        <button if.bind="activeListView.definition.id == null || activeListView.hasUnsavedChanges" appearance="outline" accent="primary" click.trigger="onSaveViewClick()" translate>
+                            Save view
+                        </button>
+
+                        <button if.bind="activeListView.definition.id != null"appearance="outline" accent="primary" click.trigger="onEditViewClick()" translate>
+                            Edit view
+                        </button>
+
                         <select-button appearance="outline" accent="primary" placement="bottom-end">
 
                             <div slot="icon">
@@ -391,16 +399,15 @@
 
             </page-header>
 
-            <let selected-tab-name="0"></let>
-            <page-tab-nav appearance="tabs" value.bind="selectedTabName" scroll-fade="0.3">
+            <page-tab-nav appearance="tabs" value.bind="activeListView" scroll-fade="0.3">
 
-                <page-tab repeat.for="i of 8" name="${i}">
+                <page-tab repeat.for="listView of openListViews" model.bind="listView">
 
-                    <span class="text-truncate" title="View ${i}">
-                        View ${i}
+                    <span class="text-truncate" title.bind="listView.definition.name">
+                        ${listView.definition.name}
                     </span>
 
-                    <span if.bind="i == 3" accent="attention">&nbsp;*</span>
+                    <span if.bind="listView.hasUnsavedChanges" accent="attention">&nbsp;*</span>
 
                     <div class="page-tab-buttons">
 
@@ -408,7 +415,7 @@
                             appearance="none"
                             accent="primary"
                             title.translate="Close view"
-                            click.delegate="onCloseViewClick(TODO)">
+                            click.delegate="onCloseViewClick(listView)">
                             <icon name="close" inline></icon>
                         </button>
 
@@ -423,8 +430,8 @@
                     placement="bottom-end"
                     fixed.bind="true"
                     type="route"
-                    get-state.call="view.getState()"
-                    set-state.call="setViewState(state)">
+                    get-state.call="TODO"
+                    set-state.call="TODO">
 
                     <span slot="label">
 
@@ -445,18 +452,19 @@
             <page-section>
 
                 <data-table
+                    if.bind="activeListView != null"
                     appearance="rows"
-                    sorting.bind="sorting"
+                    sorting.bind="activeListView.definition.sorting"
                     style.bind="tableStyle"
-                    busy.bind="updateOperation.pending || pickupNearbyOperation.pending">
+                    busy.bind="activeListView.operation.pending || pickupNearbyOperation.pending">
 
                     <data-table-headers>
 
-                        <template repeat.for="column of view.columns">
+                        <template repeat.for="column of activeListView.definition.columns">
 
-                            <data-table-cell name.bind="column.sortingName">
-                                <span if.bind="!column.hidden" class="text-truncate">
-                                    ${column.columnName || column.name}
+                            <data-table-cell name.bind="column.property">
+                                <span class="text-truncate">
+                                    ${column.name}
                                 </span>
                             </data-table-cell>
 
@@ -464,10 +472,10 @@
 
                     </data-table-headers>
 
-                    <template repeat.for="route of results">
+                    <template repeat.for="route of activeListView.items">
                         <data-table-row
                             accent.bind="route.criticality.accent"
-                            selected.bind="$parent.expandedRouteId == route.id"
+                            selected.bind="$parent.activeListView.expandedItemId == route.id"
                             click.call="onRouteClick(route)">
 
                             <template repeat.for="column of view.columns">
@@ -733,7 +741,7 @@
                             </template>
 
                             <data-table-details
-                                if.bind="$parent.expandedRouteId == route.id"
+                                if.bind="$parent.activeListView.expandedItemId == route.id"
                                 slot="details"
                                 surface="neutral"
                                 accent.bind="route.criticality.accent">
@@ -748,19 +756,23 @@
 
                 </data-table>
 
-                <busy-indicator if.bind="results == null && !failed" class="margin-largest"></busy-indicator>
+                <busy-indicator if.bind="activeListView.items == null && !failed" class="margin-largest"></busy-indicator>
 
-                <empty-indicator if.bind="results.length == 0" class="margin-largest">
+                <empty-indicator if.bind="activeListView == null" class="margin-largest">
+                    <div slot="heading" translate>No view selected</div>
+                </empty-indicator>
+
+                <empty-indicator if.bind="activeListView.items.length == 0" class="margin-largest">
                     <div slot="heading" translate>No results</div>
                 </empty-indicator>
 
                 <div class="flex-row">
 
                     <data-table-pager
-                        if.bind="results.length > 0"
+                        if.bind="activeListView.items.length > 0"
                         class="flex-push-right margin-top"
-                        value.bind="paging"
-                        list-size.bind="routeCount">
+                        value.bind="activeListView.paging"
+                        list-size.bind="activeListView.itemCount">
                     </data-table-pager>
 
                 </div>

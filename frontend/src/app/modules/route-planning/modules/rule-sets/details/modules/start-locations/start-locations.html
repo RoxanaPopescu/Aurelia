@@ -55,7 +55,7 @@
 
         <page-tab-nav appearance="tabs" value.bind="activeDepartureTimeName">
 
-            <page-tab repeat.for="departureTime of settings.departureTimes" name.bind="departureTime.name" invalid.bind="(bindingUpdateTrigger && undefined) || hasDeletedVehicleGroups(departureTime, bindingUpdateTrigger)">
+            <page-tab repeat.for="departureTime of settings.departureTimes" model.bind="departureTime.name" invalid.bind="(bindingUpdateTrigger && undefined) || hasDeletedVehicleGroups(departureTime, bindingUpdateTrigger)">
 
                 <span class="text-truncate" title.bind="departureTime.name">
                     ${departureTime.name}

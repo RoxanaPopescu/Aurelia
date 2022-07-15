@@ -1,111 +1,72 @@
-import { autoinject, observable, computedFrom } from "aurelia-framework";
-import { ISorting, IPaging, SortingDirection } from "shared/types";
+import { DateTime } from "luxon";
+import { autoinject, computedFrom, observable } from "aurelia-framework";
+import { MapObject } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
 import { IScroll, ModalService } from "shared/framework";
-import { RouteService, RouteInfo, RouteStatusSlug, RouteAssignmentService, RouteView } from "app/model/route";
-import { DateTime } from "luxon";
-import { RouteListColumn } from "app/model/route/entities/route-list-column";
-import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
-import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
-import { AssignOrganizationPanel } from "../../modals/assign-organization/assign-organization";
-import { SelectColumnsPanel } from "app/modals/panels/select-columns/select-columns";
-import { AddressService } from "app/components/address-input/services/address-service/address-service";
-import { IdentityService, moverOrganizationId } from "app/services/identity";
-import { OrganizationService, OrganizationTeam } from "app/model/organization";
-import { TeamsFilterService } from "app/services/teams-filter";
-import { Fulfiller } from "app/model/outfit";
-import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
-import { VehicleType } from "app/model/vehicle";
+import { LocalStateService } from "app/services/local-state";
+import { RouteInfo } from "app/model/route";
+import { ListViewService, ListViewDefinition, ListView, IListViewFilter, IListViewItem } from "app/model/list-view";
+
+interface IRouteFilter extends IListViewFilter
+{
+}
 
 /**
  * Represents the route parameters for the page.
  */
-interface IRouteParams
+interface IListViewParams
 {
-    page?: string;
-    pageSize?: string;
-    sortProperty?: string;
-    sortDirection?: SortingDirection;
-    textFilter?: string;
-    statusFilter?: RouteStatusSlug;
-    assignedDriver?: boolean;
-    notAssignedDriver?: boolean;
-    assignedVehicle?: boolean;
-    notAssignedVehicle?: boolean;
-    startTimeFromFilter?: string;
-    startTimeToFilter?: string;
-    relativeStartTimeFromFilter?: string;
-    relativeStartTimeToFilter?: string;
-    relativeStartTimeFromFilterUnit?: "days" | "hours" | undefined;
-    relativeStartTimeToFilterUnit?: "days" | "hours" | undefined;
-    teams?: string;
-    tagsFilter?: string;
-    orderedVehicleTypesFilter?: string;
-    owners?: string;
-    createdTimeFromFilter?: string;
-    createdTimeToFilter?: string;
+    view?: string;
 }
 
 /**
  * Represents the page.
  */
 @autoinject
-export class ListViewsPage
+export class ListViewsPage<TListItem extends IListViewItem = RouteInfo, TListViewFilter extends IListViewFilter = IRouteFilter>
 {
     /**
-     * Creates a new instance of the class.
-     * @param routeService The `RouteService` instance.
-     * @param modalService The `ModalService` instance.
-     * @param routeAssignmentService The `RouteAssignmentService` instance.
+     * Creates a new instance of the type.
      * @param historyHelper The `HistoryHelper` instance.
-     * @param organizationService The `OrganizationService` instance.
-     * @param teamsFilterService The `TeamsFilterService` instance.
-     * @param identityService The `IdentityService` instance.
+     * @param modalService The `ModalService` instance.
+     * @param localStateService The `LocalStateService` instance.
+     * @param listViewService The `ListViewService` instance.
      */
-    public constructor(
-        routeService: RouteService,
-        addressService: AddressService,
-        routeAssignmentService: RouteAssignmentService,
-        modalService: ModalService,
-        historyHelper: HistoryHelper,
-        organizationService: OrganizationService,
-        teamsFilterService: TeamsFilterService,
-        identityService: IdentityService)
+    public constructor(historyHelper: HistoryHelper, modalService: ModalService, localStateService: LocalStateService, listViewService: ListViewService)
     {
-        this._routeService = routeService;
-        this._modalService = modalService;
-        this._routeAssignmentService = routeAssignmentService;
         this._historyHelper = historyHelper;
-        this._addressService = addressService;
-        this._organizationService = organizationService;
-        this.teamsFilterService = teamsFilterService;
-        this._identityService = identityService;
-        this._constructed = true;
-
-        // TODO: Load last selection from local
-        this.view = new RouteView(this);
+        this._modalService = modalService;
+        this._localStateService = localStateService;
+        this._listViewService = listViewService;
     }
 
-    private readonly _routeService: RouteService;
-    private readonly _modalService: ModalService;
-    private readonly _addressService: AddressService;
-    private readonly _organizationService: OrganizationService;
-    private readonly _routeAssignmentService: RouteAssignmentService;
-    private readonly _historyHelper: HistoryHelper;
-    private readonly _identityService: IdentityService;
-    private readonly _constructed;
+    protected readonly _historyHelper: HistoryHelper;
+    protected readonly _modalService: ModalService;
+    protected readonly _localStateService: LocalStateService;
+    protected readonly _listViewService: ListViewService;
+
+    protected readonly listViewType = "route";
 
     /**
-     * The IDs of the teams for which data should be presented, or undefined if no team is selected.
+     * The list view definitions.
      */
-    @observable({ changeHandler: "update" })
-    protected teamsFilter: ("no-team" | string)[] | undefined;
+    protected listViewDefinitions:
+    {
+        personal: ListViewDefinition<TListViewFilter>[],
+        shared: ListViewDefinition<TListViewFilter>[]
+    };
 
     /**
-     * The scroll manager for the page.
+     * The list views that are currently open.
      */
-    protected view: RouteView;
+    protected openListViews: ListView<TListViewFilter, TListItem>[];
+
+    /**
+     * The list view that is curently active, if any.
+     */
+    @observable
+    protected activeListView: ListView<TListViewFilter, TListItem> | undefined;
 
     /**
      * The scroll manager for the page.
@@ -113,115 +74,74 @@ export class ListViewsPage
     protected scroll: IScroll;
 
     /**
-     * The most recent update operation.
+     * The style defining the grid template columns for the `data-table`.
      */
-    protected updateOperation: Operation;
-
-    /**
-     * The most recent update operation.
-     */
-    protected pickupNearbyOperation: Operation;
-
-    /**
-     * The ID of the currently expanded route, if any
-     */
-    protected expandedRouteId: string | undefined;
-
-    /**
-     * The available vehicle types.
-     */
-    protected availableVehicleTypes: VehicleType[];
-
-    /**
-     * The `TeamsFilterService` instance.
-     */
-    protected readonly teamsFilterService: TeamsFilterService;
-
-    /**
-     * The custom grid column widths calculated from the columns
-     */
-    @computedFrom("view.columns")
-    protected get tableStyle(): any
+    @computedFrom("activeListView.definition.columns")
+    protected get tableStyle(): MapObject
     {
-        return { "grid-template-columns": `${this.view.columns.map(c => c.width).join(" ")} min-content` };
+        return { "grid-template-columns": `${this.activeListView?.definition.columns.map(c => c.width).join(" ")} min-content` };
     }
-
-    /**
-     * The sorting to use for the table.
-     */
-    @observable({ changeHandler: "update" })
-    protected sorting: ISorting =
-    {
-        property: "start-date",
-        direction: "descending"
-    };
-
-    /**
-     * The paging to use for the table.
-     */
-    @observable({ changeHandler: "update" })
-    protected paging: IPaging =
-    {
-        page: 1,
-        pageSize: 30
-    };
-
-    /**
-     * True if initial loading failed
-     */
-    protected failed: boolean = false;
-
-    /**
-     * The teams for the organization
-     */
-    protected teams: OrganizationTeam[] = [];
-
-    /**
-     * Our old system uses another 'user system', Mover Transport will need some legacy features in this transition period.
-     */
-    protected get showLegacy(): boolean
-    {
-        if (ENVIRONMENT.name !== "production")
-        {
-            return true;
-        }
-
-        const identity = this._identityService.identity;
-
-        if (identity == null)
-        {
-            return false;
-        }
-
-        const legacyOrganizationIds = [moverOrganizationId];
-
-        return legacyOrganizationIds.includes(identity.organization!.id);
-    }
-
-    /**
-     * The total number of items matching the query, or undefined if unknown.
-     */
-    protected routeCount: number | undefined;
-
-    /**
-     * The items to present in the table.
-     */
-    protected results: RouteInfo[] | undefined;
 
     /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
      */
-    public activate(params: IRouteParams): void
+    public async activate(params: IListViewParams): Promise<void>
     {
-        this.paging.page = params.page != null ? parseInt(params.page) : this.paging.page;
-        this.paging.pageSize = params.pageSize != null ? parseInt(params.pageSize) : this.paging.pageSize;
-        this.sorting.property = params.sortProperty || this.sorting.property;
-        this.sorting.direction = params.sortDirection || this.sorting.direction;
+        // Fetch the list view definitions.
 
-        this.availableVehicleTypes = VehicleType.getAll();
-        this.teamsFilterService.fetchAccessibleTeams().catch(error => Log.error(error));
-        this.update();
+        this.listViewDefinitions = await this._listViewService.getAll(this.listViewType)
+
+        // Get the locally stored IDs of the open list views.
+
+        let openListViewIds = this._localStateService.get().listViews?.[this.listViewType] ?? [];
+
+        // TODO: For debugging only.
+        openListViewIds = [this.listViewDefinitions.shared[0].id];
+
+        // Create the open list views, if any.
+
+        this.openListViews = [];
+
+        for (const listViewId of openListViewIds)
+        {
+            const listViewDefinition = this.getListViewDefinition(listViewId);
+
+            if (listViewDefinition != null)
+            {
+                const listView = new ListView<TListViewFilter, TListItem>(listViewDefinition);
+                this.openListViews.push(listView);
+            }
+        }
+
+        // If the ID of an available list view is specified in the URL, ensure it is open and active.
+
+        if (params.view)
+        {
+            const specifiedListView = this.openListViews.find(listView => listView.definition.id === params.view);
+
+            if (specifiedListView != null)
+            {
+                this.activeListView = specifiedListView;
+            }
+            else
+            {
+                const listViewDefinition = this.getListViewDefinition(params.view);
+
+                if (listViewDefinition != null)
+                {
+                    this.activeListView = new ListView<TListViewFilter, TListItem>(listViewDefinition);
+                    this.openListViews.unshift(this.activeListView);
+                }
+            }
+        }
+
+        // If the ID of an available list view was not specified in the URL, activate the first open view, if any.
+
+        if (this.activeListView == null)
+        {
+            this.activeListView = this.openListViews[0];
+        }
     }
 
     /**
@@ -229,393 +149,110 @@ export class ListViewsPage
      */
     public deactivate(): void
     {
-        // Abort any existing operation.
-        if (this.updateOperation != null)
+        // Abort any pending operation.
+        this.activeListView?.operation?.abort();
+    }
+
+    /**
+     * Gets the list view with the specified ID, if available.
+     * @param listViewId The ID of the list view to get.
+     * @returns The list view with the specified ID, or undefined if not available.
+     */
+    private getListViewDefinition(listViewId: string): ListViewDefinition<TListViewFilter> | undefined
+    {
+        const listView =
+            this.listViewDefinitions.shared.find(listView => listView.id == listViewId) ??
+            this.listViewDefinitions.personal.find(listView => listView.id == listViewId);
+
+        return listView;
+    }
+
+    /**
+     * Called when the `Close view` icon on a list view tab is clicked.
+     * Closes the specified list view, and activates the first of the remaining open list views.
+     * @param listView The list view to close.
+     */
+    protected onCloseViewClick(listView: ListView<TListViewFilter, TListItem>): void
+    {
+        this.openListViews.splice(this.openListViews.indexOf(listView), 1);
+
+        if (this.activeListView === listView)
         {
-            this.updateOperation.abort();
+            this.activeListView = this.openListViews[0];
         }
     }
 
     /**
-     * Called when the user selects the route to show the driver list url from
+     * Called when an item in the list is clicked.
+     * Toggles the expanded state of the item.
+     * @param item The item that was clicked.
      */
-    public onShowDriverLink(route: RouteInfo): void
+    protected onItemClick(item: { id: string }): void
     {
-        window.open(route.driverListUrl, "_blank");
+        this.activeListView!.expandedItemId = this.activeListView!.expandedItemId === item.id ? undefined : item.id;
     }
 
     /**
-     * Called from the table when delayed stops are being represented
+     * Called by the framework when the `activeListView` property changes.
+     * Updates the URL to reference the active view.
      */
-    public delayedStops(route: RouteInfo): string | undefined
+    protected activeListViewChanged(): void
     {
-        if (route.delayedStopIndexes)
+        // If a list view is active, fetch the items to present.
+
+        if (this.activeListView != null)
         {
-            return route.delayedStopIndexes.map(d => d + 1).join(", ");
+            this.update(this.activeListView);
         }
 
-        return undefined;
-    }
+        // Ensure the URL specifies the ID of the active list view, if any.
 
-    /**
-     * Called from the table when team is being represented
-     */
-    public teamName(teamId?: string): string | undefined
-    {
-        if (teamId == null)
+        // tslint:disable-next-line: no-floating-promises
+        this._historyHelper.navigate((state: IHistoryState) =>
         {
-            return undefined;
-        }
-
-        return this.teams.find(t => t.id === teamId)?.name;
+            state.params.view = this.activeListView?.definition.id;
+        },
+        { trigger: false, replace: true });
     }
 
     /**
      * Updates the page by fetching the latest data.
+     * @param listView The list view to update.
      */
-     public update(newValue?: any, oldValue?: any, propertyName?: string): void
-     {
-        // Return if the object is not constructed.
-        // This is needed because the `observable` decorator calls the change handler when the
-        // initial property value is set, which happens before the constructor is called.
-        if (!this._constructed)
+    protected update(listView: ListView<TListViewFilter, TListItem>): void
+    {
+        listView.operation = new Operation(async signal =>
         {
-            return;
-        }
-
-        // Update the global teams filter.
-        this.teamsFilterService.selectedTeamIds = this.teamsFilter;
-
-        // Abort any existing operation.
-        if (this.updateOperation != null)
-        {
-            this.updateOperation.abort();
-        }
-
-        const columnSlugs = this.view.columns.map(c => c.slug);
-
-        // Fetch teams if needed
-        if (this.teams.length === 0 && columnSlugs.includes("team"))
-        {
-            // tslint:disable-next-line: no-floating-promises
-            (async () =>
-            {
-                this.teams = await this._organizationService.getTeams();
-            })();
-        }
-
-        // Create and execute the new operation.
-        this.updateOperation = new Operation(async signal =>
-        {
-            this.failed = false;
-
             try
             {
-                let assignedDriver: boolean | undefined;
+                // Fetch the items.
+                var result = await this.fetchItems(listView, signal);
 
-                if (this.view.assignedDriver !== this.view.notAssignedDriver)
-                {
-                    assignedDriver = this.view.assignedDriver;
-                }
+                // Update the state of the list view.
+                listView.items = result.items;
+                listView.itemCount = result.itemCount;
+                listView.fetchedDateTime = DateTime.utc();
 
-                let assignedVehicle: boolean | undefined;
+                // Reset paging.
+                listView.paging.page = 1;
 
-                if (this.view.assignedVehicle !== this.view.notAssignedVehicle)
-                {
-                    assignedVehicle = this.view.assignedVehicle;
-                }
-
-                // tslint:disable-next-line: no-floating-promises
-                this._historyHelper.navigate((state: IHistoryState) =>
-                {
-                    state.params.page = propertyName !== "paging" ? 1 : this.paging.page;
-                    state.params.pageSize = this.paging.pageSize;
-                    state.params.sortProperty = this.sorting?.property;
-                    state.params.sortDirection = this.sorting?.direction;
-                },
-                { trigger: false, replace: true });
-
-                const result = await this._routeService.getAll(
-                    {
-                        statuses: this.view.statusFilter,
-                        searchQuery: this.view.textFilter,
-                        tagsAllMatching: this.view.tagsFilter,
-                        startTimeFrom: this.view.startTimeFromFilter,
-                        startTimeTo: this.view.useRelativeStartTimeToFilter ? this.view.startTimeToFilter : this.view.startTimeToFilter?.endOf("day"),
-                        createdTimeFrom: this.view.createdTimeFromFilter,
-                        createdTimeTo: this.view.createdTimeToFilter?.endOf("day"),
-                        assignedDriver: assignedDriver,
-                        assignedVehicle: assignedVehicle,
-                        pickupNearby: (this.view.pickupNearbyPosition != null) ? { position: this.view.pickupNearbyPosition, precision: 3 } : undefined,
-                        teams: this.teamsFilterService.selectedTeamIds,
-                        orderedVehicleTypes: this.view.orderedVehicleTypesFilter?.map(vt => vt.id),
-                        legacyOwnerIds: this.view.legacyOwnerIdsFilter
-                    },
-                    {
-                        owner: columnSlugs.includes("owner"),
-                        vehicle: columnSlugs.includes("vehicle"),
-                        fulfiller: columnSlugs.includes("executor"),
-                        driver: columnSlugs.includes("driver") || columnSlugs.includes("driver-id"),
-                        tags: columnSlugs.includes("tags"),
-                        criticality: true,
-                        estimates: columnSlugs.includes("estimated-time-frame"),
-                        delayedStops: columnSlugs.includes("delayed-stops"),
-                        stops: columnSlugs.includes("distance") || columnSlugs.includes("estimated-time-start") || columnSlugs.includes("estimated-colli-count"),
-                        colli: columnSlugs.includes("colli-count")
-                    },
-                    this.sorting,
-                    this.paging,
-                    signal
-                );
-
-                // Update the state.
-                this.results = result.routes;
-                this.routeCount = result.routeCount;
-
-                // Reset page.
-                if (propertyName !== "paging")
-                {
-                    this.paging.page = 1;
-                }
-
-                // Scroll to top.
+                // Reset scroll.
                 this.scroll?.reset();
             }
             catch (error)
             {
-                this.failed = true;
-                Log.error("An error occurred while loading the list.", error);
+                Log.error("An error occurred while fetching the items.", error);
             }
         });
     }
 
     /**
-     * Called when the `Assign executor` button is clicked.
-     * Opens the panel for assigning a executor to a route, and once assigned, re-fetches the route.
+     * Updates the page by fetching the latest data.
+     * @param listView The list view for which to fetch.
+     * @param signal The abort signal for the operation.
      */
-    protected async onAssignExecutorClick(route: RouteInfo, updating: any): Promise<void>
+    protected async fetchItems(listView: ListView<TListViewFilter, TListItem>, signal: AbortSignal): Promise<{ items: [], itemCount: 0 }>
     {
-        const executor = await this._modalService.open(
-            AssignOrganizationPanel,
-            { route: route, assignOnSelect: false }
-        ).promise;
-
-        if (executor != null)
-        {
-            const previousValue = route.executor;
-            route.executor = new Fulfiller({ id: executor.organization.id, companyName: executor.organization.name });
-            updating.executor = true;
-
-            try
-            {
-                await this._routeAssignmentService.assignExecutor(route, executor);
-            }
-            catch
-            {
-                route.executor = previousValue;
-                Log.error(`Could not assign executor '${executor.organization.name}'`);
-            }
-
-            updating.executor = false;
-        }
-    }
-
-    /**
-     * Called when the pickup nearby address has updated
-     */
-    protected pickupNearbyAddressChanged(): void
-    {
-        this.view.pickupNearbyPosition = undefined;
-        if (this.pickupNearbyOperation != null)
-        {
-            this.pickupNearbyOperation.abort();
-        }
-
-        if (this.view.pickupNearbyAddress != null)
-        {
-            this.pickupNearbyOperation = new Operation(async signal =>
-            {
-                try
-                {
-                    const location = await this._addressService.getLocation(this.view.pickupNearbyAddress!);
-                    this.view.pickupNearbyPosition = location.position;
-                    this.update();
-                }
-                catch (error)
-                {
-                    Log.error("Could not resolve address location.", error);
-                }
-            });
-        }
-    }
-
-    /**
-     * Called when the `Assign vehicle` button is clicked.
-     * Opens the panel for assigning a vehicle to a route, and once assigned, re-fetches the route.
-     */
-    protected async onAssignVehicleClick(route: RouteInfo, updating: any): Promise<void>
-    {
-        const vehicle = await this._modalService.open(
-            AssignVehiclePanel,
-            { route: route, assignOnSelect: false }
-        ).promise;
-
-        if (vehicle != null)
-        {
-            const previousValue = route.vehicle;
-            route.vehicle = vehicle;
-            updating.vehicle = true;
-
-            try
-            {
-                await this._routeAssignmentService.assignVehicle(route, vehicle);
-            }
-            catch
-            {
-                route.vehicle = previousValue;
-                Log.error(`Could not assign the vehicle '${vehicle.name}'`);
-            }
-
-            updating.vehicle = false;
-        }
-    }
-
-    /**
-     * Called when the `Assign driver` button is clicked.
-     * Opens the panel for assigning a driver to a route, and once assigned, re-fetches the route.
-     */
-    protected async onAssignDriverClick(route: RouteInfo, updating: any): Promise<void>
-    {
-        const driver = await this._modalService.open(
-            AssignDriverPanel,
-            { route: route, assignOnSelect: false }
-        ).promise;
-
-        if (driver != null)
-        {
-            const previousValue = route.driver;
-            route.driver = driver;
-            updating.driver = true;
-
-            try
-            {
-                await this._routeAssignmentService.assignDriver(route, driver);
-            }
-            catch
-            {
-                route.driver = previousValue;
-                Log.error(`Could not assign the driver '${driver.name.toString()}'`);
-            }
-
-            updating.driver = false;
-        }
-    }
-
-    /**
-     * Called when the `Assign team` button is clicked.
-     * Opens the panel for assigning a team to a route, and once assigned, re-fetches the route.
-     */
-    protected async onAssignTeamClick(route: RouteInfo, updating: any): Promise<void>
-    {
-        const result = await this._modalService.open(
-            AssignTeamPanel,
-            { route: route, assignOnSelect: false }
-        ).promise;
-
-        if (result != null)
-        {
-            const team = result === "no-team" ? undefined : result;
-
-            const previousValue = route.teamId;
-            route.teamId = team?.id;
-            updating.team = true;
-
-            try
-            {
-                await this._routeAssignmentService.assignTeam(route, team);
-            }
-            catch
-            {
-                route.teamId = previousValue;
-                Log.error(`Could not assign the team '${team?.name}''`);
-            }
-
-            updating.team = false;
-        }
-    }
-
-    /**
-     * Called when the `Select columns` button is clicked.
-     * Opens the panel for selecting the columns to see.
-     */
-    protected async onSelectColumnsClick(): Promise<void>
-    {
-        const model =
-        {
-            availableColumns: Object.keys(RouteListColumn.values).map(slug => new RouteListColumn(slug as any)),
-            selectedColumns: this.view.columns
-        };
-
-        const selectedColumns = await this._modalService.open(SelectColumnsPanel, model).promise;
-
-        if (selectedColumns != null)
-        {
-            localStorage.setItem("route-columns", JSON.stringify(selectedColumns));
-
-            this.view.columns = selectedColumns as RouteListColumn[];
-            this.results = undefined;
-            this.update();
-        }
-    }
-
-    /**
-     * Called when a route in the route list is clicked.
-     * Toggles the expanded state of the route.
-     * @param route The route that was clicked.
-     */
-    protected onRouteClick(route: RouteInfo): void
-    {
-        this.expandedRouteId = this.expandedRouteId === route.id ? undefined : route.id;
-    }
-
-    protected updateRelative(newValue: any, oldValue: any, propertyName: string): void
-    {
-        const now = DateTime.local();
-
-        if (this.view.useRelativeStartTimeFromFilter && propertyName !== "relativeStartTimeFromFilterUnit")
-        {
-            const nowOrStartOfToday = this.view.relativeStartTimeFromFilterUnit === "days" ? now.startOf("day") : now;
-
-            this.view.startTimeFromFilter = this.view.relativeStartTimeFromFilter != null ? nowOrStartOfToday.plus(this.view.relativeStartTimeFromFilter) : undefined;
-        }
-        else if (this.view.relativeStartTimeFromFilter != null)
-        {
-            this.view.relativeStartTimeFromFilter = undefined;
-            this.view.startTimeFromFilter = undefined;
-        }
-
-        if (this.view.useRelativeStartTimeToFilter && propertyName !== "relativeStartTimeToFilterUnit")
-        {
-            const nowOrEndOfToday = this.view.relativeStartTimeToFilterUnit === "days" ? now.endOf("day") : now;
-
-            this.view.startTimeToFilter = this.view.relativeStartTimeToFilter != null ? nowOrEndOfToday.plus(this.view.relativeStartTimeToFilter) : undefined;
-        }
-        else if (this.view.relativeStartTimeToFilter != null)
-        {
-            this.view.relativeStartTimeToFilter = undefined;
-            this.view.startTimeToFilter = undefined;
-        }
-    }
-
-    /**
-     * Sets the current view state, to match the specified state.
-     * @param state The view state to apply.
-     */
-    protected setViewState(state: any): void
-    {
-        this.view = new RouteView(this, state);
-
-        this.results = undefined;
-        this.update();
+        return { items: [], itemCount: 0 };
     }
 }

@@ -7,21 +7,22 @@ import { autoinject, bindable, bindingMode } from "aurelia-framework";
 export class PageTabNavCustomElement
 {
     /**
-     * The currently selected tab.
+     * The model associated with the currently selected tab, if any.
      */
     @bindable({ defaultBindingMode: bindingMode.twoWay })
-    public value: string | undefined;
+    public value: any | undefined;
 
     /**
      * Called when the value is about to change.
      * @param context.newValue The new value.
-     * @param oldValue The old value.
+     * @param context.oldValue The old value.
      * @returns False to prevent the change, otherwise true.
      */
     @bindable({ defaultValue: undefined })
     public change: undefined | ((params:
     {
-        newValue: string | undefined;
-        oldValue: string | undefined;
+        newValue: any | undefined;
+        oldValue: any | undefined;
+
     }) => undefined | boolean);
 }

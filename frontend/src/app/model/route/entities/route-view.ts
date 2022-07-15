@@ -247,7 +247,7 @@ export class RouteView
     propertyName?: string
   ): void
   {
-    this.list?.update(newValue, oldValue, propertyName);
+    this.list; //this.list?.update(newValue, oldValue, propertyName);
   }
 
   /**

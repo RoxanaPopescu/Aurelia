@@ -22,10 +22,10 @@ export class PageTabCustomElement
     protected pageTabNav: PageTabNavCustomElement;
 
     /**
-     * The name identifying the tab.
+     * The model associated with the tab.
      */
     @bindable
-    public name: string | undefined;
+    public model: any | undefined;
 
     /**
      * True to disable the tab, otherwise false.
@@ -47,7 +47,7 @@ export class PageTabCustomElement
         // Call the change callback, if specified.
         if (this.pageTabNav.change != null)
         {
-            const allowChange = this.pageTabNav.change({ newValue: this.name, oldValue: this.pageTabNav.value });
+            const allowChange = this.pageTabNav.change({ newValue: this.model, oldValue: this.pageTabNav.value });
 
             // Did the callback cancel the change?
             if (allowChange === false)
@@ -57,6 +57,6 @@ export class PageTabCustomElement
         }
 
         // Change the of the `tab-nav` value.
-        this.pageTabNav.value = this.name;
+        this.pageTabNav.value = this.model;
     }
 }

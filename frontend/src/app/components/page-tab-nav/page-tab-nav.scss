@@ -29,9 +29,14 @@ page-tab-nav
 
     .page-tab-nav-add-button
     {
-        margin-left: var(--size-inline-spacing-larger);
         margin-right: var(--size-inline-spacing-larger);
         margin-bottom: calc(var(--tab-nav-border-width) * -1);
         min-width: max-content;
+        height: 40rem;
+
+        &:not(:first-child)
+        {
+            margin-left: var(--size-inline-spacing-larger);
+        }
     }
 }
