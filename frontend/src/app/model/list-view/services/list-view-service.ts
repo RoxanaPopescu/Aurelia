@@ -137,7 +137,10 @@ export class ListViewService
             {
                 sorting: listViewDefinition.sorting,
                 filter: listViewDefinition.filter,
-                columns: listViewDefinition.columns
+                columns: listViewDefinition.columns.map(column =>
+                {
+                    return `${column.slug}|${column.width}`;
+                })
             }
         };
 
@@ -152,9 +155,14 @@ export class ListViewService
             type: legacyListViewDefinition.type,
             name: legacyListViewDefinition.name,
             shared: legacyListViewDefinition.shared,
-            sorting: legacyListViewDefinition.sorting,
-            filter: legacyListViewDefinition.filter,
-            columns: legacyListViewDefinition.columns
+            sorting: legacyListViewDefinition.state.sorting,
+            filter: legacyListViewDefinition.state.filter,
+            columns: legacyListViewDefinition.state.columns.map(text =>
+            {
+                var [slug, width] = text.split("|");
+
+                return { slug, width };
+            })
         };
 
         return data;

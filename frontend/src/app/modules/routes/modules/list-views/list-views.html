@@ -476,9 +476,9 @@
                         <data-table-row
                             accent.bind="route.criticality.accent"
                             selected.bind="$parent.activeListView.expandedItemId == route.id"
-                            click.call="onRouteClick(route)">
+                            click.call="onItemClick(route)">
 
-                            <template repeat.for="column of view.columns">
+                            <template repeat.for="column of $parent.activeListView.definition.columns">
 
                                 <let updating.bind="{ driver: false, vehicle: false, executor: false, team: false }"></let>
 
@@ -553,11 +553,11 @@
                                         class="text-truncate"
                                         if-claims="assign-organization-route"
                                         click.trigger="onAssignExecutorClick(route, updating)">
-                                        <template if.bind="route.executor.companyName">
-                                            ${route.executor.companyName}
-                                        </template>
                                         <template if.bind="!route.executor.companyName" translate>
                                             Assign executor
+                                        </template>
+                                        <template if.bind="route.executor.companyName">
+                                            ${route.executor.companyName}
                                         </template>
                                     </a>
                                     <span else class="text-truncate" empty-value>
@@ -699,13 +699,13 @@
                                         ${route.initialEstimates.distance/1000 | number : undefined : 1 } km
                                     </span>
                                     <span if.bind="!route.initialEstimates.distance" class="text-truncate">
-                                        ${route.distance/1000 | number : undefined : 1 } km
+                                        ${route.distance / 1000 | number : undefined : 1 } km
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'delayed-stops'">
                                     <span class="text-truncate" empty-value>
-                                        ${delayedStops(route)}
+                                        ${getDelayedStops(route) | list}
                                     </span>
                                 </data-table-cell>
 
@@ -718,11 +718,11 @@
                                             Assign team
                                         </template>
                                         <template if.bind="route.teamId">
-                                            ${teamName(route.teamId)}
+                                            ${getTeamName(route.teamId)}
                                         </template>
                                     </a>
                                     <span else class="text-truncate" empty-value>
-                                        ${teamName(route.teamId)}
+                                        ${getTeamName(route.teamId)}
                                     </span>
                                 </data-table-cell>
 
@@ -730,7 +730,7 @@
 
                                     <div class="icon-row">
 
-                                        <button appearance="none" accent="primary" click.trigger="onShowDriverLink(route)">
+                                        <button appearance="none" accent="primary" click.trigger="onShowDrivingList(route)">
                                             <icon name="document"></icon>
                                         </button>
 
@@ -756,20 +756,34 @@
 
                 </data-table>
 
-                <busy-indicator if.bind="activeListView.items == null && !failed" class="margin-largest"></busy-indicator>
+                <busy-indicator
+                    if.bind="activeListView != null && activeListView.operation.error == null && activeListView.items == null"
+                    class="margin-largest">
+                </busy-indicator>
 
-                <empty-indicator if.bind="activeListView == null" class="margin-largest">
+                <empty-indicator
+                    if.bind="activeListView == null"
+                    class="margin-largest">
                     <div slot="heading" translate>No view selected</div>
                 </empty-indicator>
 
-                <empty-indicator if.bind="activeListView.items.length == 0" class="margin-largest">
+                <empty-indicator
+                    if.bind="activeListView != null && activeListView.operation.error == null && activeListView.items.length == 0"
+                    class="margin-largest">
                     <div slot="heading" translate>No results</div>
                 </empty-indicator>
 
-                <div class="flex-row">
+                <empty-indicator
+                    if.bind="activeListView != null && activeListView.operation.error != null"
+                    class="margin-largest">
+                    <div slot="heading" translate>Could not fetch results</div>
+                </empty-indicator>
+
+                <div
+                    if.bind="activeListView != null && activeListView.operation.error == null && activeListView.itemCount > 0"
+                    class="flex-row">
 
                     <data-table-pager
-                        if.bind="activeListView.items.length > 0"
                         class="flex-push-right margin-top"
                         value.bind="activeListView.paging"
                         list-size.bind="activeListView.itemCount">

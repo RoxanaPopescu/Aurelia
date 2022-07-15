@@ -22,4 +22,9 @@ export interface IListViewColumn
      * The property to use for sorting.
      */
     property: string | undefined;
+
+    /**
+     * Gets the data representing this instance.
+     */
+    toJSON(): any
 }

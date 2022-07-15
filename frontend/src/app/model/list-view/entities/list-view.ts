@@ -6,7 +6,7 @@ import { IPaging } from "shared/types";
 import { DateTime } from "luxon";
 
 /**
- * Represents the state of a list view.
+ * Represents an open list view.
  */
 export class ListView<TFilter extends IListViewFilter, TItem extends IListViewItem>
 {
