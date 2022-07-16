@@ -50,7 +50,7 @@ export interface IListViewPageItems
  * Represents the page.
  */
 @autoinject
-export abstract class ListViewsBasePage<TListViewFilter extends IListViewFilter, TListItem>
+export abstract class ListViewsPage<TListViewFilter extends IListViewFilter, TListItem>
 {
     /**
      * Creates a new instance of the type.
@@ -104,13 +104,51 @@ export abstract class ListViewsBasePage<TListViewFilter extends IListViewFilter,
     protected scroll: IScroll;
 
     /**
+     * The widths of the columns, or undefined if no view is active.
+     * Implementations may override this if needed, e.g. to support selection.
+     */
+    @computedFrom("activeListView.definition.columns")
+    protected get columnWidths(): string[] | undefined
+    {
+        return this.activeListView?.definition.columns
+            .filter(column => column.visibility === "visible")
+            .map(c => c.width);
+    }
+
+    /**
+     * True if the icons column should be visible, otherwise false.
+     */
+    @computedFrom("activeListView.definition.columns")
+    protected get showIconsColumn(): boolean
+    {
+        return this.activeListView?.definition.columns
+            .some(column => column.visibility === "icon") ?? false;
+    }
+
+    /**
      * The style defining the grid template columns for the `data-table`.
-     * Implementations may override this as needed, to support additional columns.
      */
     @computedFrom("activeListView.definition.columns")
     protected get tableStyle(): MapObject
     {
-        return { "grid-template-columns": `${this.activeListView?.definition.columns.map(c => c.width).join(" ")}` };
+        if (this.activeListView == null)
+        {
+            return {};
+        }
+
+        // Get the widths of the data columns.
+        const columnWidths = this.columnWidths!;
+
+        // Add the width of the `icons` column, if relevant.
+        if (this.showIconsColumn)
+        {
+            columnWidths.push("min-content");
+        }
+
+        // Add the width of the drag handle column.
+        columnWidths.push("min-content");
+
+        return { "grid-template-columns": columnWidths.join(" ") };
     }
 
     /**

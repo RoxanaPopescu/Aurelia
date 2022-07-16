@@ -1,11 +1,10 @@
-import { autoinject, computedFrom } from "aurelia-framework";
-import { MapObject } from "shared/types";
+import { autoinject } from "aurelia-framework";
 import { HistoryHelper, Log } from "shared/infrastructure";
 import { ModalService } from "shared/framework";
 import { LocalStateService } from "app/services/local-state";
 import { RouteAssignmentService, RouteInfo, RouteService } from "app/model/route";
 import { ListViewService, ListView, RouteListViewFilter } from "app/model/list-view";
-import { IListViewPageItems, IListViewPageParams, ListViewsBasePage } from "./list-views-base";
+import { IListViewPageItems, IListViewPageParams, ListViewsPage } from "./list-views-base";
 import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
 import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
 import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
@@ -27,7 +26,7 @@ export interface IRouteListViewPageParams extends IListViewPageParams
  * Represents the page.
  */
 @autoinject
-export class ListViewsPage extends ListViewsBasePage<RouteListViewFilter, RouteInfo>
+export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, RouteInfo>
 {
     /**
      * Creates a new instance of the type.
@@ -81,15 +80,6 @@ export class ListViewsPage extends ListViewsBasePage<RouteListViewFilter, RouteI
      * or undefined if not yet fetched.
      */
     protected teams: OrganizationTeam[] | undefined;
-
-    /**
-     * The style defining the grid template columns for the `data-table`.
-     */
-    @computedFrom("activeListView.definition.columns")
-    protected get tableStyle(): MapObject
-    {
-        return { "grid-template-columns": `${this.activeListView?.definition.columns.map(c => c.width).join(" ")} min-content` };
-    }
 
     /**
      * HACK:

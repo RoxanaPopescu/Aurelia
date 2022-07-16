@@ -1,5 +1,5 @@
 import { ListViewColumn } from "../list-view-column";
-import listColumn from "../../resources/strings/route-list-columns.json";
+import listColumn from "./resources/strings/route-list-view-columns.json";
 
 /**
  * Represents the slug identifying a `RouteListViewColumn`.
@@ -13,11 +13,12 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
 {
     /**
      * Creates a new instance of the type.
-     * @param data The response data from which the instance should be created.
+     * @param slug The slug identifying the column.
+     * @param width The width of he column, or undefined to use the default.
      */
-    public constructor(data: { slug: RouteListViewColumnSlug; width?: string })
+    public constructor(slug: RouteListViewColumnSlug, width?: string)
     {
-        super(RouteListViewColumn.values, data);
+        super(RouteListViewColumn.values, slug, width);
     }
 
     /**
@@ -31,7 +32,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.id,
             width: "1.2fr",
             property: "slug",
-            hidden: false
+            visibility: "visible"
         },
         "reference":
         {
@@ -39,7 +40,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.reference,
             width: "1.2fr",
             property: "reference",
-            hidden: false
+            visibility: "visible"
         },
         "owner":
         {
@@ -47,7 +48,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.owner,
             width: "1fr",
             property: "owner",
-            hidden: false
+            visibility: "visible"
         },
         "start-date":
         {
@@ -55,7 +56,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.startDate,
             width: "1fr",
             property: "planned-time-start",
-            hidden: false
+            visibility: "visible"
         },
         "start-address":
         {
@@ -63,7 +64,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.startAddress,
             width: "1.3fr",
             property: "start-address",
-            hidden: false
+            visibility: "visible"
         },
         "end-date":
         {
@@ -71,7 +72,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.endDate,
             width: "1fr",
             property: "planned-time-end",
-            hidden: false
+            visibility: "visible"
         },
         "end-address":
         {
@@ -79,7 +80,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.endAddress,
             width: "1.3fr",
             property: "end-address",
-            hidden: false
+            visibility: "visible"
         },
         "tags":
         {
@@ -87,7 +88,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.tags,
             width: "1.3fr",
             property: undefined,
-            hidden: false
+            visibility: "visible"
         },
         "stop-count":
         {
@@ -95,7 +96,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.stopCountShort,
             width: "min-content",
             property: "stop-count",
-            hidden: false
+            visibility: "visible"
         },
         "vehicle-type":
         {
@@ -103,7 +104,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.vehicleType,
             width: "min-content",
             property: "vehicle-type",
-            hidden: false
+            visibility: "visible"
         },
         "vehicle":
         {
@@ -111,7 +112,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.vehicle,
             width: "1fr",
             property: undefined,
-            hidden: false
+            visibility: "visible"
         },
         "driver":
         {
@@ -119,7 +120,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.driver,
             width: "1fr",
             property: undefined,
-            hidden: false
+            visibility: "visible"
         },
         "driver-id":
         {
@@ -127,7 +128,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.driverId,
             width: "min-content",
             property: undefined,
-            hidden: false
+            visibility: "visible"
         },
         "executor":
         {
@@ -135,7 +136,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.executor,
             width: "1fr",
             property: undefined,
-            hidden: false
+            visibility: "visible"
         },
         "complexity":
         {
@@ -143,7 +144,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.complexity,
             width: "min-content",
             property: undefined,
-            hidden: false
+            visibility: "visible"
         },
         "status":
         {
@@ -151,7 +152,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.status,
             width: "min-content",
             property: "status",
-            hidden: false
+            visibility: "visible"
         },
         "legacy-id":
         {
@@ -159,7 +160,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.legacyId,
             width: "min-content",
             property: undefined,
-            hidden: false
+            visibility: "visible"
         },
         "driving-list":
         {
@@ -167,7 +168,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.drivingList,
             width: "min-content",
             property: undefined,
-            hidden: true
+            visibility: "icon"
         },
         "delayed-stops":
         {
@@ -175,7 +176,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.delayedStops,
             width: "min-content",
             property: undefined,
-            hidden: false
+            visibility: "visible"
         },
         "estimated-time-frame":
         {
@@ -183,7 +184,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.estimatedTimeShort,
             width: "min-content",
             property: undefined,
-            hidden: false
+            visibility: "visible"
         },
         "estimated-time-start":
         {
@@ -191,7 +192,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.estimatedStartTimeShort,
             width: "min-content",
             property: undefined,
-            hidden: false
+            visibility: "visible"
         },
         "estimated-time-end":
         {
@@ -199,7 +200,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.estimatedEndTimeShort,
             width: "min-content",
             property: undefined,
-            hidden: false
+            visibility: "visible"
         },
         "original-estimated-time-frame":
         {
@@ -207,7 +208,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.originalEstimatedTimeShort,
             width: "min-content",
             property: "original-estimate-start",
-            hidden: false
+            visibility: "visible"
         },
         "original-estimated-start":
         {
@@ -215,7 +216,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.originalEstimatedStartTimeShort,
             width: "min-content",
             property: "original-estimate-start",
-            hidden: false
+            visibility: "visible"
         },
         "original-estimated-end":
         {
@@ -223,7 +224,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.originalEstimatedEndTimeShort,
             width: "min-content",
             property: "original-estimate-end",
-            hidden: false
+            visibility: "visible"
         },
         "planned-time-frame":
         {
@@ -231,7 +232,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.plannedTimeShort,
             width: "min-content",
             property: "planned-time-start",
-            hidden: false
+            visibility: "visible"
         },
         "distance":
         {
@@ -239,7 +240,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.distance,
             width: "min-content",
             property: undefined,
-            hidden: false
+            visibility: "visible"
         },
         "team":
         {
@@ -247,7 +248,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.team,
             width: "min-content",
             property: undefined,
-            hidden: false
+            visibility: "visible"
         },
         "colli-count":
         {
@@ -255,7 +256,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.colliCountShort,
             width: "min-content",
             property: undefined,
-            hidden: false
+            visibility: "visible"
         },
         "estimated-colli-count":
         {
@@ -263,7 +264,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.estimatedColliCountShort,
             width: "min-content",
             property: undefined,
-            hidden: false
+            visibility: "visible"
         },
         "unknown":
         {
@@ -271,7 +272,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             shortName: listColumn.unknown,
             width: "0",
             property: undefined,
-            hidden: true
+            visibility: "hidden"
         }
     };
 }

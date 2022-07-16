@@ -8,16 +8,17 @@ export abstract class ListViewColumn<TSlug extends string = string>
 {
     /**
      * Creates a new instance of the type.
-     * @param data The response data from which the instance should be created.
+     * @param slug The slug identifying the column.
+     * @param width The width of he column, or undefined to use the default.
      */
-    public constructor(values: MapObject, data: { slug: TSlug; width?: string })
+    public constructor(values: MapObject, slug: TSlug, width?: string)
     {
-        this.slug = data.slug ? textCase(data.slug, "pascal", "kebab") as any : "unknown";
+        this.slug = slug ? textCase(slug, "pascal", "kebab") as any : "unknown";
         Object.assign(this, values[this.slug]);
 
-        if (data.width)
+        if (width)
         {
-            this.width = data.width;
+            this.width = width;
         }
     }
 
@@ -47,9 +48,9 @@ export abstract class ListViewColumn<TSlug extends string = string>
     public property: string | undefined;
 
     /**
-     * True if the column is hidden, e.g. because it represents an icon, otherwise false.
+     * The visibility of the column.
      */
-    public hidden: boolean;
+    public visibility: "visible" | "icon" | "hidden";
 
     /**
      * Gets the data representing this instance.

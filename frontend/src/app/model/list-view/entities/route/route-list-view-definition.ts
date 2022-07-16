@@ -18,22 +18,22 @@ export class RouteListViewDefinition extends ListViewDefinition<RouteListViewFil
         if (data != null)
         {
             this.filter = new RouteListViewFilter(data.filter);
-            this.columns = data.columns.map((column: any) => new RouteListViewColumn(column));
+            this.columns = data.columns.map((column: any) => new RouteListViewColumn(column.slug, column.width));
         }
         else
         {
             this.filter = new RouteListViewFilter();
             this.columns =
             [
-                new RouteListViewColumn({ slug: "slug" }),
-                new RouteListViewColumn({ slug: "reference" }),
-                new RouteListViewColumn({ slug: "start-date" }),
-                new RouteListViewColumn({ slug: "start-address" }),
-                new RouteListViewColumn({ slug: "tags" }),
-                new RouteListViewColumn({ slug: "stop-count" }),
-                new RouteListViewColumn({ slug: "vehicle-type" }),
-                new RouteListViewColumn({ slug: "status" }),
-                new RouteListViewColumn({ slug: "driving-list" })
+                new RouteListViewColumn("slug"),
+                new RouteListViewColumn("reference"),
+                new RouteListViewColumn("start-date"),
+                new RouteListViewColumn("start-address"),
+                new RouteListViewColumn("tags"),
+                new RouteListViewColumn("stop-count"),
+                new RouteListViewColumn("vehicle-type"),
+                new RouteListViewColumn("status"),
+                new RouteListViewColumn("driving-list")
             ];
         }
     }

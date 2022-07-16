@@ -1,4 +1,5 @@
 <template>
+
     <require from="app/components/address-input/address-input"></require>
     <require from="app/components/view-preset-selector/view-preset-selector"></require>
     <require from="app/components/page-tab-nav/page-tab-nav"></require>
@@ -462,17 +463,22 @@
 
                         <template repeat.for="column of activeListView.definition.columns">
 
-                            <data-table-cell name.bind="column.property">
+                            <data-table-cell if.bind="column.visibility === 'visible'" name.bind="column.property">
                                 <span class="text-truncate">
-                                    ${column.name}
+                                    ${column.shortName}
                                 </span>
                             </data-table-cell>
 
                         </template>
 
+                        <data-table-cell if.bind="showIconsColumn">
+                            <!-- Icons -->
+                        </data-table-cell>
+
                     </data-table-headers>
 
                     <template repeat.for="route of activeListView.items">
+
                         <data-table-row
                             accent.bind="route.criticality.accent"
                             selected.bind="$parent.activeListView.expandedItemId == route.id"
@@ -726,19 +732,23 @@
                                     </span>
                                 </data-table-cell>
 
-                                <data-table-cell if.bind="column.slug === 'driving-list'" align="right">
+                            </template>
 
-                                    <div class="icon-row">
+                            <data-table-cell if.bind="showIconsColumn" align="right">
 
-                                        <button appearance="none" accent="primary" click.trigger="onShowDrivingListClick(route)">
+                                <div class="icon-row">
+
+                                    <template repeat.for="column of $parent.activeListView.definition.columns">
+
+                                        <button if.bind="column.slug === 'driving-list'" appearance="none" accent="primary" click.trigger="onShowDrivingListClick(route)">
                                             <icon name="document"></icon>
                                         </button>
 
-                                    </div>
+                                    </template>
 
-                                </data-table-cell>
+                                </div>
 
-                            </template>
+                            </data-table-cell>
 
                             <data-table-details
                                 if.bind="$parent.activeListView.expandedItemId == route.id"

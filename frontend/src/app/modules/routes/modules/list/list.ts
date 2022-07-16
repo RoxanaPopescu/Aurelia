@@ -5,7 +5,7 @@ import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
 import { IScroll, ModalService } from "shared/framework";
 import { RouteService, RouteInfo, RouteStatusSlug, RouteAssignmentService } from "app/model/route";
 import { DateTime, Duration } from "luxon";
-import { RouteListColumn } from "app/model/route/entities/route-list-column";
+import { RouteListViewColumn } from "app/model/list-view";
 import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
 import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
 import { AssignOrganizationPanel } from "../../modals/assign-organization/assign-organization";
@@ -89,8 +89,9 @@ export class ListPage
         if (storedColumnsJson != null)
         {
             this.customColumns = JSON.parse(storedColumnsJson)
-                .filter(slug => Object.keys(RouteListColumn.values).includes(slug))
-                .map(slug => new RouteListColumn(slug));
+                // HACK: Fallback values needed to support existing data.
+                .filter(column => Object.keys(RouteListViewColumn.values).includes(column.slug ?? column))
+                .map(column => new RouteListViewColumn(column.slug ?? column, column.width));
         }
     }
 
@@ -150,24 +151,24 @@ export class ListPage
     /**
      * The custom columns the user has selected
      */
-    protected customColumns: RouteListColumn[] | undefined;
+    protected customColumns: RouteListViewColumn[] | undefined;
 
     /**
      * The current columns to show in the list
      */
     @computedFrom("customColumns")
-    protected get columns(): RouteListColumn[]
+    protected get columns(): RouteListViewColumn[]
     {
         return this.customColumns ?? [
-            new RouteListColumn("slug"),
-            new RouteListColumn("reference"),
-            new RouteListColumn("start-date"),
-            new RouteListColumn("start-address"),
-            new RouteListColumn("tags"),
-            new RouteListColumn("stop-count"),
-            new RouteListColumn("vehicle-type"),
-            new RouteListColumn("status"),
-            new RouteListColumn("driving-list")
+            new RouteListViewColumn("slug"),
+            new RouteListViewColumn("reference"),
+            new RouteListViewColumn("start-date"),
+            new RouteListViewColumn("start-address"),
+            new RouteListViewColumn("tags"),
+            new RouteListViewColumn("stop-count"),
+            new RouteListViewColumn("vehicle-type"),
+            new RouteListViewColumn("status"),
+            new RouteListViewColumn("driving-list")
         ];
     }
 
@@ -615,7 +616,7 @@ export class ListPage
     {
         const model =
         {
-            availableColumns: Object.keys(RouteListColumn.values).map(slug => new RouteListColumn(slug as any)),
+            availableColumns: Object.keys(RouteListViewColumn.values).map(slug => new RouteListViewColumn(slug as any)),
             selectedColumns: this.columns
         };
 
@@ -625,7 +626,7 @@ export class ListPage
         {
             localStorage.setItem("route-columns", JSON.stringify(selectedColumns));
 
-            this.customColumns = selectedColumns as RouteListColumn[];
+            this.customColumns = selectedColumns as RouteListViewColumn[];
             this.results = undefined;
             this.update();
         }
@@ -848,7 +849,7 @@ export class ListPage
     protected setViewState(state: any): void
     {
         this.sorting = state.sorting ?? { property: "start-date", direction: "descending" };
-        this.customColumns = state.columns.map(slug => new RouteListColumn(slug));
+        this.customColumns = state.columns.map(slug => new RouteListViewColumn(slug));
         this.paging = { ...this.paging, pageSize: state.pageSize ?? 30 };
         this.textFilter = state.filters.textFilter;
         this.statusFilter = state.filters.statusFilter;

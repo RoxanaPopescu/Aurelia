@@ -9,7 +9,7 @@ import { AssignDriverPanel } from "../../../routes/modals/assign-driver/assign-d
 import { AssignVehiclePanel } from "../../../routes/modals/assign-vehicle/assign-vehicle";
 import { AssignTeamPanel } from "../../../routes/modals/assign-team/assign-team";
 import { AssignOrganizationPanel } from "../../../routes/modals/assign-organization/assign-organization";
-import { RouteListColumn } from "app/model/route/entities/route-list-column";
+import { RouteListViewColumn } from "app/model/list-view";
 import { OrganizationService, OrganizationTeam } from "app/model/organization";
 import { TeamsFilterService } from "app/services/teams-filter";
 import { Fulfiller } from "app/model/outfit";
@@ -110,23 +110,23 @@ export class DriverAssignmentPage
      * The current columns to show in the list
      */
     @computedFrom("customColumns")
-    protected get columns(): RouteListColumn[]
+    protected get columns(): RouteListViewColumn[]
     {
         return [
-            new RouteListColumn("start-address"),
-            new RouteListColumn("owner"),
-            new RouteListColumn("slug"),
-            new RouteListColumn("reference"),
-            new RouteListColumn("stop-count"),
-            new RouteListColumn("complexity"),
-            new RouteListColumn("estimated-colli-count"),
-            new RouteListColumn("distance"),
-            new RouteListColumn("estimated-time-start"),
-            new RouteListColumn("estimated-time-end"),
-            new RouteListColumn("status"),
-            new RouteListColumn("vehicle-type"),
-            new RouteListColumn("driver"),
-            new RouteListColumn("driver-id")
+            new RouteListViewColumn("start-address"),
+            new RouteListViewColumn("owner"),
+            new RouteListViewColumn("slug"),
+            new RouteListViewColumn("reference"),
+            new RouteListViewColumn("stop-count"),
+            new RouteListViewColumn("complexity"),
+            new RouteListViewColumn("estimated-colli-count"),
+            new RouteListViewColumn("distance"),
+            new RouteListViewColumn("estimated-time-start"),
+            new RouteListViewColumn("estimated-time-end"),
+            new RouteListViewColumn("status"),
+            new RouteListViewColumn("vehicle-type"),
+            new RouteListViewColumn("driver"),
+            new RouteListViewColumn("driver-id")
         ];
     }
 

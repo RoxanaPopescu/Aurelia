@@ -1,4 +1,5 @@
 {
+    "unknown": "Unknown",
     "id": "ID",
     "tags": "Tags",
     "pickupDate": "Pickup date",
@@ -10,10 +11,15 @@
     "status": "Status",
     "RelationalId": "Relational ID",
     "colliCount": "Colli count",
+    "colliCountShort": "Colli",
     "colliTotalWeight": "Colli total weight",
+    "colliTotalWeightShort": "ColliTotal weight",
     "colliTotalVolume": "Colli total volume",
+    "colliTotalVolumeShort": "Colli total volume",
     "estimatedColliCount": "Estimated colli count",
+    "estimatedColliCountShort": "Est. colli count",
     "estimatedColliTotalWeight": "Estimated colli total weight",
-    "estimatedColliTotalVolume": "Estimated colli total volume"
-
+    "estimatedColliTotalWeightShort": "Est. total weight",
+    "estimatedColliTotalVolume": "Estimated colli total volume",
+    "estimatedColliTotalVolumeShort": "Est. total volume"
 }

@@ -4,7 +4,7 @@ import { ISorting, IPaging, SortingDirection } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
 import { IScroll, ModalService, ToastService } from "shared/framework";
-import { OrderService, OrderInfo, OrderStatusSlug, OrderListColumn } from "app/model/order";
+import { OrderService, OrderInfo, OrderStatusSlug } from "app/model/order";
 import { Consignor } from "app/model/outfit";
 import { SelectColumnsPanel } from "app/modals/panels/select-columns/select-columns";
 import { CreateRoutePanel } from "./modals/create-route/create-route";
@@ -14,6 +14,7 @@ import createdCollectionPointToast from "./resources/strings/created-collection-
 import changedPickupAddressToast from "./resources/strings/changed-pickup-address-toast.json";
 import { ImportOrdersPanel } from "./modals/import-orders/import-orders";
 import { BulkActionPanel } from "./modals/bulk-action/bulk-action";
+import { OrderListViewColumn } from "app/model/list-view/entities/order/order-list-view-column";
 
 /**
  * Represents the route parameters for the page.
@@ -64,8 +65,9 @@ export class ListPage
         if (storedColumnsJson != null)
         {
             this.customColumns = JSON.parse(storedColumnsJson)
-                .filter(slug => Object.keys(OrderListColumn.values).includes(slug))
-                .map(slug => new OrderListColumn(slug));
+                // HACK: Fallback values needed to support existing data.
+                .filter(column => Object.keys(OrderListViewColumn.values).includes(column.slug ?? column))
+                .map(column => new OrderListViewColumn(column.slug ?? column, column.width));
         }
     }
 
@@ -97,22 +99,22 @@ export class ListPage
     /**
      * The custom columns the user has selected
      */
-    protected customColumns: OrderListColumn[] | undefined;
+    protected customColumns: OrderListViewColumn[] | undefined;
 
     /**
      * The current columns to show in the list
      */
     @computedFrom("customColumns")
-    protected get columns(): OrderListColumn[]
+    protected get columns(): OrderListViewColumn[]
     {
         return this.customColumns ?? [
-            new OrderListColumn("slug"),
-            new OrderListColumn("tags"),
-            new OrderListColumn("pickup-date"),
-            new OrderListColumn("pickup-time"),
-            new OrderListColumn("pickup-address"),
-            new OrderListColumn("delivery-address"),
-            new OrderListColumn("status")
+            new OrderListViewColumn("slug"),
+            new OrderListViewColumn("tags"),
+            new OrderListViewColumn("pickup-date"),
+            new OrderListViewColumn("pickup-time"),
+            new OrderListViewColumn("pickup-address"),
+            new OrderListViewColumn("delivery-address"),
+            new OrderListViewColumn("status")
         ];
     }
 
@@ -327,7 +329,7 @@ export class ListPage
     {
         const model =
         {
-            availableColumns: Object.keys(OrderListColumn.values).map(slug => new OrderListColumn(slug as any)),
+            availableColumns: Object.keys(OrderListViewColumn.values).map(slug => new OrderListViewColumn(slug as any)),
             selectedColumns: this.columns
         };
 
@@ -337,7 +339,7 @@ export class ListPage
         {
             localStorage.setItem("order-columns", JSON.stringify(selectedColumns));
 
-            this.customColumns = selectedColumns as OrderListColumn[];
+            this.customColumns = selectedColumns as OrderListViewColumn[];
             this.results = undefined;
             this.update();
         }
@@ -571,7 +573,7 @@ export class ListPage
     protected setViewState(state: any): void
     {
         this.sorting = state.sorting;
-        this.customColumns = state.columns.map(slug => new OrderListColumn(slug));
+        this.customColumns = state.columns.map(slug => new OrderListViewColumn(slug));
         this.paging = { ...this.paging, pageSize: state.pageSize };
         this.textFilter = state.filters.textFilter;
         this.statusFilter = state.filters.statusFilter;
