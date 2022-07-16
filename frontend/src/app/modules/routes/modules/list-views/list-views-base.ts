@@ -2,7 +2,7 @@ import { DateTime } from "luxon";
 import { autoinject, computedFrom, observable } from "aurelia-framework";
 import { MapObject } from "shared/types";
 import { Operation } from "shared/utilities";
-import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
+import { HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { IScroll, ModalService } from "shared/framework";
 import { LocalStateService } from "app/services/local-state";
 import { ListViewService, ListViewDefinition, ListView, IListViewFilter } from "app/model/list-view";
@@ -180,8 +180,11 @@ export abstract class ListViewsBasePage<TListViewFilter extends IListViewFilter,
      */
     public async deactivate(): Promise<void>
     {
-        // Abort any pending operation.
-        this.activeListView?.operation?.abort();
+        // Abort any pending operations.
+        for (const listView of this.openListViews)
+        {
+            listView.operation?.abort();
+        }
 
         await Promise.resolve();
     }
@@ -261,28 +264,19 @@ export abstract class ListViewsBasePage<TListViewFilter extends IListViewFilter,
         // Create and execute a new operation.
         listView.operation = new Operation(async signal =>
         {
-            try
-            {
-                // Fetch the items.
-                const result = await this.fetch(listView, signal);
+            // Fetch the items.
+            const result = await this.fetch(listView, signal);
 
-                // Update the state of the list view.
-                listView.items = result.items;
-                listView.itemCount = result.itemCount;
-                listView.fetchedDateTime = DateTime.utc();
+            // Update the state of the list view.
+            listView.items = result.items;
+            listView.itemCount = result.itemCount;
+            listView.fetchedDateTime = DateTime.utc();
 
-                // Reset paging.
-                listView.paging.page = 1;
+            // Reset paging.
+            listView.paging.page = 1;
 
-                // Reset scroll.
-                this.scroll?.reset();
-            }
-            catch (error)
-            {
-                Log.error("An error occurred while updating the view.", error);
-
-                throw error;
-            }
+            // Reset scroll.
+            this.scroll?.reset();
         });
     }
 
