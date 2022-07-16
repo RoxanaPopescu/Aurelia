@@ -22,7 +22,7 @@ export abstract class ListViewDefinition<TFilter extends IListViewFilter>
         }
         else
         {
-            this.name = listViewDefinitionStrings.defaultName
+            this.name = listViewDefinitionStrings.defaultName;
         }
     }
 
