@@ -1,4 +1,4 @@
-import { ISorting, IPaging } from "shared/types";
+import { ISorting } from "shared/types";
 import { ListViewType } from "./list-view-type";
 import { IListViewFilter } from "./list-view-filter";
 import { ListViewColumn } from "./list-view-column";
@@ -24,16 +24,6 @@ export interface IListViewDefinitionInit<TFilter extends IListViewFilter>
     shared: boolean;
 
     /**
-     * The sorting to use for the table.
-     */
-    sorting: ISorting;
-
-    /**
-     * The paging to use for the table.
-     */
-    paging: IPaging;
-
-    /**
      * The filter model.
      */
     filter: TFilter;
@@ -42,4 +32,9 @@ export interface IListViewDefinitionInit<TFilter extends IListViewFilter>
      * The columns to be shown.
      */
     columns: ListViewColumn[];
+
+    /**
+     * The sorting to use for the table.
+     */
+    sorting: ISorting;
 }

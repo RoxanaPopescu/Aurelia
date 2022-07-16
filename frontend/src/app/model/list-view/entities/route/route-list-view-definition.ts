@@ -1,6 +1,6 @@
+import { ListViewDefinition } from "../list-view-definition";
 import { RouteListViewColumn } from "./route-list-view-column";
 import { RouteListViewFilter } from "./route-list-view-filter";
-import { ListViewDefinition } from "../list-view-definition";
 
 /**
  * Represents the definition of a list view presenting items of type `RouteInfo`.
@@ -9,19 +9,22 @@ export class RouteListViewDefinition extends ListViewDefinition<RouteListViewFil
 {
     /**
      * Creates a new instance of the type.
-     * @param data The response data from which the instance should be created.
+     * @param data The response data from which the instance should be created, or undefined to create a new instance.
      */
-    public constructor(data: any)
+    public constructor(data?: any)
     {
         super(data);
 
         if (data != null)
         {
+            this.shared = data.shared;
             this.filter = new RouteListViewFilter(data.filter);
             this.columns = data.columns.map((column: any) => new RouteListViewColumn(column.slug, column.width));
+            this.sorting = data.sorting;
         }
         else
         {
+            this.shared = false;
             this.filter = new RouteListViewFilter();
             this.columns =
             [
@@ -35,6 +38,16 @@ export class RouteListViewDefinition extends ListViewDefinition<RouteListViewFil
                 new RouteListViewColumn("status"),
                 new RouteListViewColumn("driving-list")
             ];
+            this.sorting =
+            {
+                property: "start-date",
+                direction: "descending"
+            };
         }
     }
+
+    /**
+     * The type of the list view.
+     */
+    public type: "route" = "route";
 }

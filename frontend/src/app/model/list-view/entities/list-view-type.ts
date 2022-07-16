@@ -1,4 +1,6 @@
+import { RouteListViewDefinition } from "./route/route-list-view-definition";
+
 /**
  * Represents the type of a list view.
  */
-export type ListViewType = "order" | "route";
+export type ListViewType = RouteListViewDefinition["type"];

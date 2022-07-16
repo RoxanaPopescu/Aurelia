@@ -1,7 +1,8 @@
 import { ISorting } from "shared/types";
 import { ListViewType } from "./list-view-type";
-import { IListViewFilter } from "./list-view-filter";
 import { ListViewColumn } from "./list-view-column";
+import { IListViewFilter } from "./list-view-filter";
+import listViewDefinitionStrings from "./resources/strings/list-view-definition.json";
 
 /**
  * Represents the definition of a list view.
@@ -17,30 +18,23 @@ export abstract class ListViewDefinition<TFilter extends IListViewFilter>
         if (data != null)
         {
             this.id = data.id;
-            this.type = data.type;
             this.name = data.name;
-            this.shared = data.shared;
-            this.sorting = data.sorting;
         }
         else
         {
-            this.id = data.id;
-            this.type = data.type;
-            this.name = data.name;
-            this.shared = data.shared;
-            this.sorting = data.sorting;
+            this.name = listViewDefinitionStrings.defaultName
         }
     }
 
     /**
-     * The ID of the list view.
-     */
-    public id: string;
-
-    /**
      * The type of the list view.
      */
-    public type: ListViewType;
+    public abstract type: ListViewType;
+
+    /**
+     * The ID of the list view, or undefined if not yet saved.
+     */
+    public id: string;
 
     /**
      * The name of the list view.
@@ -53,11 +47,6 @@ export abstract class ListViewDefinition<TFilter extends IListViewFilter>
     public shared: boolean;
 
     /**
-     * The sorting to use for the table.
-     */
-    public sorting: ISorting;
-
-    /**
      * The filter model.
      */
     public filter: TFilter;
@@ -66,6 +55,11 @@ export abstract class ListViewDefinition<TFilter extends IListViewFilter>
      * The columns to be shown.
      */
     public columns: ListViewColumn[];
+
+    /**
+     * The sorting to use for the table.
+     */
+    public sorting: ISorting;
 
     /**
      * Gets the data representing this instance.
@@ -77,9 +71,9 @@ export abstract class ListViewDefinition<TFilter extends IListViewFilter>
             type: this.type,
             name: this.name,
             shared: this.shared,
-            sorting: this.sorting,
             filters: this.filter.toJSON(),
-            columns: this.columns.map(column => column.toJSON())
+            columns: this.columns.map(column => column.toJSON()),
+            sorting: this.sorting
         };
     }
 }
