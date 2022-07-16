@@ -154,58 +154,60 @@ export abstract class ListViewsPage<TListViewFilter extends IListViewFilter, TLi
     /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
+     * @returns A promise that will be resolved when the operation completes.
      */
     public async activate(params: IListViewPageParams): Promise<void>
     {
+        // Get the local state for list views of the relevant type.
+        const localListViewState = this._localStateService.get().listView?.[this.listViewType];
+
+        // Get the IDs of the open list views, if any.
+        const openListViewIds = localListViewState?.open;
+
+        // Get the ID of the active list view, if any.
+        const activeListViewId = params.view || localListViewState?.active;
+
         // Fetch the list view definitions.
-
         this.listViewDefinitions = await this._listViewService.getAll(this.listViewType);
-
-        // Get the locally stored IDs of the open list views.
-
-        let openListViewIds = this._localStateService.get().listViews?.[this.listViewType] ?? [];
-
-        // TODO: For debugging only.
-        openListViewIds = [this.listViewDefinitions.shared[0].id];
 
         // Create the open list views, if any.
 
         this.openListViews = [];
 
-        for (const listViewId of openListViewIds)
+        if (openListViewIds != null)
         {
-            const listViewDefinition = this.getListViewDefinition(listViewId);
-
-            if (listViewDefinition != null)
+            for (const openListViewId of openListViewIds)
             {
-                const listView = new ListView<TListViewFilter, TListItem>(listViewDefinition);
-                this.openListViews.push(listView);
-            }
-        }
-
-        // If the ID of an available list view is specified in the URL, ensure it is open and active.
-
-        if (params.view)
-        {
-            const specifiedListView = this.openListViews.find(listView => listView.definition.id === params.view);
-
-            if (specifiedListView != null)
-            {
-                this.activeListView = specifiedListView;
-            }
-            else
-            {
-                const listViewDefinition = this.getListViewDefinition(params.view);
+                const listViewDefinition = this.getListViewDefinition(openListViewId);
 
                 if (listViewDefinition != null)
                 {
-                    this.activeListView = new ListView<TListViewFilter, TListItem>(listViewDefinition);
-                    this.openListViews.unshift(this.activeListView);
+                    const listView = new ListView<TListViewFilter, TListItem>(listViewDefinition);
+                    this.openListViews.push(listView);
                 }
             }
         }
 
-        // If the ID of an available list view was not specified in the URL, activate the first open view, if any.
+        // If the ID of an available list view was specified, ensure it is open and active.
+
+        if (activeListViewId)
+        {
+            this.activeListView = this.openListViews.find(listView => listView.definition.id === activeListViewId);
+
+            if (this.activeListView == null)
+            {
+                const listViewDefinition = this.getListViewDefinition(activeListViewId);
+
+                if (listViewDefinition != null)
+                {
+                    var listView = new ListView<TListViewFilter, TListItem>(listViewDefinition);
+                    this.openListViews.unshift(listView);
+                    this.activeListView = listView;
+                }
+            }
+        }
+
+        // If the ID of an available list view was not specified, activate the first open view, if any.
 
         if (this.activeListView == null)
         {
@@ -215,6 +217,7 @@ export abstract class ListViewsPage<TListViewFilter extends IListViewFilter, TLi
 
     /**
      * Called by the framework when the module is deactivated.
+     * @returns A promise that will be resolved when the operation completes.
      */
     public async deactivate(): Promise<void>
     {
@@ -291,7 +294,7 @@ export abstract class ListViewsPage<TListViewFilter extends IListViewFilter, TLi
     }
 
     /**
-     * Updates the page by fetching the items to present in the list.
+     * Updates the page by fetching the items to present.
      * @param listView The list view to update.
      */
     protected update(listView: ListView<TListViewFilter, TListItem>): void
@@ -319,11 +322,11 @@ export abstract class ListViewsPage<TListViewFilter extends IListViewFilter, TLi
     }
 
     /**
-     * Fetches the the items to present in the list.
+     * Fetches the the items to present.
      * Implementations must override this, to implement the actual fetching.
      * @param listView The list view for which to fetch.
      * @param signal The abort signal for the operation.
-     * @returns A model representing the items to present in the list.
+     * @returns A promise that will be resolved with a model representing the items to present.
      */
     protected abstract fetch(listView: ListView<TListViewFilter, TListItem>, signal: AbortSignal): Promise<IListViewPageItems>;
 }

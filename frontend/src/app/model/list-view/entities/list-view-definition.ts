@@ -2,7 +2,6 @@ import { ISorting } from "shared/types";
 import { ListViewType } from "./list-view-type";
 import { ListViewColumn } from "./list-view-column";
 import { IListViewFilter } from "./list-view-filter";
-import listViewDefinitionStrings from "./resources/strings/list-view-definition.json";
 
 /**
  * Represents the definition of a list view.
@@ -19,10 +18,6 @@ export abstract class ListViewDefinition<TFilter extends IListViewFilter>
         {
             this.id = data.id;
             this.name = data.name;
-        }
-        else
-        {
-            this.name = listViewDefinitionStrings.defaultName;
         }
     }
 
