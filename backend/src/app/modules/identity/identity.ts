@@ -2,9 +2,9 @@ import jwt from "jsonwebtoken";
 import jwksRsa from "jwks-rsa";
 import { Base64 } from "../../../shared/utilities";
 import { ApiError, ApiResult } from "../../../shared/infrastructure";
-import settings from "../../../resources/settings/settings";
 import { AppModule } from "../../app-module";
 import { AppContext } from "../../app-context";
+import settings from "../../../resources/settings/settings";
 
 /**
  * Represents a module exposing endpoints related to authentication and authorization.
@@ -31,7 +31,7 @@ export class IdentityModule extends AppModule
                 body:
                     // tslint:disable: quotemark
                     `client_id=bff&` +
-                    `client_secret=${encodeURIComponent(settings.app.oAuth.clientSecret)}&` +
+                    `client_secret=${encodeURIComponent(settings.middleware.authorize.verification.clientSecret)}&` +
                     `scope=openid profile email organization-selection offline_access&` +
                     `grant_type=password&` +
                     `username=${encodeURIComponent(context.request.body.email)}&` +
@@ -112,7 +112,7 @@ export class IdentityModule extends AppModule
                 body:
                     // tslint:disable: quotemark
                     `client_id=bff&` +
-                    `client_secret=${encodeURIComponent(settings.app.oAuth.clientSecret)}&` +
+                    `client_secret=${encodeURIComponent(settings.middleware.authorize.verification.clientSecret)}&` +
                     `grant_type=refresh_token&` +
                     `refresh_token=${encodeURIComponent(context.request.body.refreshToken)}`
                     // tslint:enable
@@ -149,7 +149,7 @@ export class IdentityModule extends AppModule
             headers:
             {
                 "content-type": "application/x-www-form-urlencoded",
-                "authorization": `Basic ${Base64.encode(`bff:${settings.app.oAuth.clientSecret}`)}`
+                "authorization": `Basic ${Base64.encode(`bff:${settings.middleware.authorize.verification.clientSecret}`)}`
             },
             body:
                 // tslint:disable: quotemark
@@ -190,12 +190,13 @@ export class IdentityModule extends AppModule
 
     private readonly _verifyOptions: jwt.VerifyOptions =
     {
-        issuer: settings.middleware.authorize.accessToken.issuer
+        issuer: settings.middleware.authorize.verification.issuer,
+        clockTolerance: settings.middleware.authorize.verification.clockTolerance
     };
 
     private readonly _jwksRsaClient = jwksRsa(
     {
-        jwksUri: settings.app.oAuth.jwksUri
+        jwksUri: settings.middleware.authorize.verification.jwksUri
     });
 
     private readonly _getKeyFunc = (header: any, callback: any) =>

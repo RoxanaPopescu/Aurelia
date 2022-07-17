@@ -4,17 +4,24 @@ import { Middleware } from "koa";
 import { AuthorizationError } from "../../shared/types";
 import { AuthorizeParameter, IAppContext } from "../../app/app-context";
 import { setRequestHeaders } from "./headers-middleware";
-import settings from "../../resources/settings/settings";
 
 /**
  * Represents the options to use for the authorize middleware.
  */
 export interface IAuthorizeMiddlewareOptions
 {
-    issuer: string;
-    header: string;
-    cookie: string;
-    secret: string;
+    accessToken:
+    {
+        header: string;
+        cookie: string;
+    };
+    verification:
+    {
+        issuer: string;
+        jwksUri: string;
+        clockTolerance: number;
+        clientSecret: string;
+    };
 }
 
 /**
@@ -95,10 +102,11 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
 {
     const verifyOptions: jwt.VerifyOptions =
     {
-        issuer: options.issuer
+        issuer: options.verification.issuer,
+        clockTolerance: options.verification.clockTolerance
     };
 
-    let jwksRsaClient = jwksRsa({ jwksUri: settings.app.oAuth.jwksUri });
+    let jwksRsaClient = jwksRsa({ jwksUri: options.verification.jwksUri });
 
     const getKeyFunc = (header: any, callback: any) =>
     {
@@ -110,7 +118,7 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
                 // Try recreating the client, as potential workaround for
                 // https://github.com/auth0/node-jwks-rsa/issues/257
 
-                jwksRsaClient = jwksRsa({ jwksUri: settings.app.oAuth.jwksUri });
+                jwksRsaClient = jwksRsa({ jwksUri: options.verification.jwksUri });
 
                 // Try fetching the signing key again.
                 jwksRsaClient.getSigningKey(header.kid, (error2: any, key2: any) =>
@@ -118,7 +126,7 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
                     if (error2)
                     {
                         // Recreate the client again, before giving up.
-                        jwksRsaClient = jwksRsa({ jwksUri: settings.app.oAuth.jwksUri });
+                        jwksRsaClient = jwksRsa({ jwksUri: options.verification.jwksUri });
                     }
 
                     callback(error2, key2?.publicKey || key2?.rsaPublicKey);
@@ -140,8 +148,8 @@ export function authorizeMiddleware(options: IAuthorizeMiddlewareOptions): Middl
             if (context.user === undefined)
             {
                 const jwtString =
-                    (context.headers[options.header] as string)?.replace(/^Bearer\s+/, "") ||
-                    context.cookies.get(options.cookie);
+                    (context.headers[options.accessToken.header] as string)?.replace(/^Bearer\s+/, "") ||
+                    context.cookies.get(options.accessToken.cookie);
 
                 if (jwtString)
                 {

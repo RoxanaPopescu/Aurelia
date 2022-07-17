@@ -65,7 +65,7 @@ export class App extends Koa<any, IAppContext>
         this.use(logErrorMiddleware());
         this.use(headersMiddleware());
         this.use(apiErrorMiddleware());
-        this.use(authorizeMiddleware(settings.middleware.authorize.accessToken));
+        this.use(authorizeMiddleware(settings.middleware.authorize));
         this.use(sortingMiddleware());
         this.use(pagingMiddleware());
         this.use(fetchMiddleware());

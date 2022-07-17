@@ -29,16 +29,7 @@ export default
          */
         publicImageBaseUrl: environment.name === "production"
             ? "https://filestorageprodmover.blob.core.windows.net/public/"
-            : "https://filestoragetestmover.blob.core.windows.net/public/",
-
-        /**
-         * Settings related to OAuth.
-         */
-        oAuth:
-        {
-            clientSecret: "R4KfRWz66:=?fg2sggwnEWAB]k^iHs3dP3rpmMWN4E@zu#J3*7NiKNk-_i*RdAK6",
-            jwksUri: `${environment.apiBaseUrl}identity/.well-known/openid-configuration/jwks?subscription-key=${environment.subscriptionKey}`
-        }
+            : "https://filestoragetestmover.blob.core.windows.net/public/"
     },
 
     /**
@@ -51,12 +42,24 @@ export default
          */
         authorize:
         {
+            /**
+             * Settings related to the access token.
+             */
             accessToken:
             {
-                issuer: environment.issuer,
                 header: "authorization",
-                cookie: "access-token",
-                secret: "TODO: Remove - This is my little secret for protecting my resources. Muhahaha!!"
+                cookie: "access-token"
+            },
+
+            /**
+             * Settings related to token verification.
+             */
+            verification:
+            {
+                issuer: environment.issuer,
+                jwksUri: `${environment.apiBaseUrl}identity/.well-known/openid-configuration/jwks?subscription-key=${environment.subscriptionKey}`,
+                clientSecret: "R4KfRWz66:=?fg2sggwnEWAB]k^iHs3dP3rpmMWN4E@zu#J3*7NiKNk-_i*RdAK6",
+                clockTolerance: 120
             }
         }
     },
