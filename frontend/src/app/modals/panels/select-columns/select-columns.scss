@@ -1,4 +1,20 @@
 modal-panel[name="order-select-columns"]
 {
+    --panel-surface-color: var(--surface-color);
+
     --modal-panel-min-width: 520rem;
+
+    data-table
+    {
+        --data-table-columns: 1fr 130rem;
+    }
+
+    .select-columns-width-cell
+    {
+        --surface-input-border-color: var(--panel-surface-color);
+        --surface-input-surface-color: var(--panel-surface-color);
+
+        padding-top: 0;
+        padding-bottom: 0;
+    }
 }

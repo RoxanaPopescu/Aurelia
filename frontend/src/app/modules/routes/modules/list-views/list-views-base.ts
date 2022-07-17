@@ -145,10 +145,7 @@ export abstract class ListViewsPage<TListViewFilter extends IListViewFilter, TLi
             columnWidths.push("min-content");
         }
 
-        // Add the width of the drag handle column.
-        columnWidths.push("min-content");
-
-        return { "grid-template-columns": columnWidths.join(" ") };
+        return { "--data-table-columns": columnWidths.join(" ") };
     }
 
     /**

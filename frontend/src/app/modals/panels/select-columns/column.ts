@@ -12,4 +12,9 @@ export interface IColumn
      * The localized name of the column.
      */
     name: string;
+
+    /**
+     * The localized name of the column.
+     */
+    width: string;
 }

@@ -45,6 +45,20 @@
                         </span>
                     </data-table-cell>
 
+                    <data-table-cell class="select-columns-width-cell">
+                        <select-input
+                            if.bind="columnInfo.selected"
+                            appearance="outline"
+                            value.bind="columnInfo.column.width"
+                            display-value.bind="columnInfo.column.width"
+                            none.bind="false"
+                            fixed.bind="true">
+                            <item repeat.for="i of 5" model="${i + 1}fr">
+                                ${i + 1}fr
+                            </item>
+                        </select-input>
+                    </data-table-cell>
+
                 </data-table-row>
 
             </data-table>
