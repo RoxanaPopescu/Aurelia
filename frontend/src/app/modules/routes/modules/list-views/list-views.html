@@ -1,9 +1,9 @@
 <template>
 
     <require from="app/components/address-input/address-input"></require>
-    <require from="app/components/view-preset-selector/view-preset-selector"></require>
     <require from="app/components/page-tab-nav/page-tab-nav"></require>
     <require from="app/components/page-tab-nav/page-tab"></require>
+    <require from="./components/list-view-selector/list-view-selector"></require>
     <require from="./components/route-list-expanded-view/route-list-expanded-view"></require>
     <require from="./list-views.scss"></require>
 
@@ -424,15 +424,16 @@
 
                 </page-tab>
 
-                <view-preset-selector
+                <list-view-selector
                     class="page-tab-nav-add-button"
                     appearance="none"
                     accent="primary"
                     placement="bottom-end"
                     fixed.bind="true"
                     type="route"
-                    get-state.call="TODO"
-                    set-state.call="TODO">
+                    list-view-definitions.bind="listViewDefinitions"
+                    open-list-view.call="onOpenListView(listViewDefinition)"
+                    close-list-view.call="onCloseListView(listViewDefinition)">
 
                     <span slot="label">
 
@@ -446,7 +447,7 @@
 
                     <span slot="icon"></span>
 
-                </view-preset-selector>
+                </list-view-selector>
 
             </page-tab-nav>
 
@@ -766,16 +767,16 @@
 
                 </data-table>
 
-                <busy-indicator
-                    if.bind="activeListView != null && activeListView.operation.error == null && activeListView.items == null"
-                    class="margin-largest">
-                </busy-indicator>
-
                 <empty-indicator
                     if.bind="activeListView == null"
                     class="margin-largest">
                     <div slot="heading" translate>No view selected</div>
                 </empty-indicator>
+
+                <busy-indicator
+                    if.bind="activeListView != null && activeListView.operation.error == null && activeListView.items == null"
+                    class="margin-largest">
+                </busy-indicator>
 
                 <empty-indicator
                     if.bind="activeListView != null && activeListView.operation.error == null && activeListView.items.length == 0"

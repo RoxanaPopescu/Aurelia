@@ -18,37 +18,37 @@ export class RouteListViewFilter implements IListViewFilter
     {
         if (data != null)
         {
-            this.textFilter = data.filters.textFilter;
-            this.statusFilter = data.filters.statusFilter;
-            this.assignedDriver = data.filters.assignedDriver;
-            this.notAssignedDriver = data.filters.notAssignedDriver;
-            this.assignedVehicle = data.filters.assignedVehicle;
-            this.notAssignedVehicle = data.filters.notAssignedVehicle;
-            this.startTimeFromFilter = data.filters.startTimeFromFilter != null
-                ? DateTime.fromISO(data.filters.startTimeFromFilter, { setZone: true })
+            this.textFilter = data.textFilter;
+            this.statusFilter = data.statusFilter;
+            this.assignedDriver = data.assignedDriver;
+            this.notAssignedDriver = data.notAssignedDriver;
+            this.assignedVehicle = data.assignedVehicle;
+            this.notAssignedVehicle = data.notAssignedVehicle;
+            this.startTimeFromFilter = data.startTimeFromFilter != null
+                ? DateTime.fromISO(data.startTimeFromFilter, { setZone: true })
                 : undefined;
-            this.startTimeToFilter = data.filters.startTimeToFilter != null
-                ? DateTime.fromISO(data.filters.startTimeToFilter, { setZone: true })
+            this.startTimeToFilter = data.startTimeToFilter != null
+                ? DateTime.fromISO(data.startTimeToFilter, { setZone: true })
                 : undefined;
-            this.relativeStartTimeFromFilterUnit = data.filters.relativeStartTimeFromFilterUnit;
-            this.relativeStartTimeToFilterUnit = data.filters.relativeStartTimeToFilterUnit;
-            this.tagsFilter = data.filters.tagsFilter;
-            this.orderedVehicleTypesFilter = data.filters.orderedVehicleTypesFilter?.map(slug => VehicleType.getBySlug(slug));
-            this.legacyOwnerIdsFilter = data.filters.legacyOwnerIdsFilter;
-            this.createdTimeFromFilter = data.filters.createdTimeFromFilter != null
-                ? DateTime.fromISO(data.filters.createdTimeFromFilter, { setZone: true })
+            this.relativeStartTimeFromFilterUnit = data.relativeStartTimeFromFilterUnit;
+            this.relativeStartTimeToFilterUnit = data.relativeStartTimeToFilterUnit;
+            this.tagsFilter = data.tagsFilter;
+            this.orderedVehicleTypesFilter = data.orderedVehicleTypesFilter?.map(slug => VehicleType.getBySlug(slug));
+            this.legacyOwnerIdsFilter = data.legacyOwnerIdsFilter;
+            this.createdTimeFromFilter = data.createdTimeFromFilter != null
+                ? DateTime.fromISO(data.createdTimeFromFilter, { setZone: true })
                 : undefined;
-            this.createdTimeToFilter = data.filters.createdTimeToFilter != null
-                ? DateTime.fromISO(data.filters.createdTimeToFilter, { setZone: true })
+            this.createdTimeToFilter = data.createdTimeToFilter != null
+                ? DateTime.fromISO(data.createdTimeToFilter, { setZone: true })
                 : undefined;
-            this.useRelativeStartTimeFromFilter = data.filters.relativeStartTimeFromFilter != null;
-            this.relativeStartTimeFromFilter = data.filters
+            this.useRelativeStartTimeFromFilter = data.relativeStartTimeFromFilter != null;
+            this.relativeStartTimeFromFilter = data
                 .relativeStartTimeFromFilter
-                ? Duration.fromISO(data.filters.relativeStartTimeFromFilter)
+                ? Duration.fromISO(data.relativeStartTimeFromFilter)
                 : undefined;
-            this.useRelativeStartTimeToFilter = data.filters.relativeStartTimeToFilter != null;
-            this.relativeStartTimeToFilter = data.filters.relativeStartTimeToFilter
-                ? Duration.fromISO(data.filters.relativeStartTimeToFilter)
+            this.useRelativeStartTimeToFilter = data.relativeStartTimeToFilter != null;
+            this.relativeStartTimeToFilter = data.relativeStartTimeToFilter
+                ? Duration.fromISO(data.relativeStartTimeToFilter)
                 : undefined;
             this.teamsFilter = data.teamsFilter;
 

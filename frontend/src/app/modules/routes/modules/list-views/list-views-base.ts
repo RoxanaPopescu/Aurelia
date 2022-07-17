@@ -260,6 +260,46 @@ export abstract class ListViewsPage<TListViewFilter extends IListViewFilter, TLi
     }
 
     /**
+     * Called when a list view definition was clicked in the list view selector, and should be opened.
+     * @param listViewDefinition The list view definition for which a list view should be opened.
+     */
+    protected onOpenListView(listViewDefinition: ListViewDefinition<TListViewFilter>): void
+    {
+        let listView = this.openListViews.find(listView => listView.definition === listViewDefinition);
+
+        if (listView != null)
+        {
+            this.activeListView = listView;
+        }
+        else
+        {
+            listView = new ListView<TListViewFilter, TListItem>(listViewDefinition);
+
+            this.openListViews.unshift(listView);
+            this.activeListView = listView;
+        }
+    }
+
+    /**
+     * Called when a list view definition was deleted in the list view selector, and should be closed.
+     * @param listViewDefinition The list view definition for which the list view should be closed.
+     */
+    protected onCloseListView(listViewDefinition: ListViewDefinition<TListViewFilter>): void
+    {
+        const listView = this.openListViews.find(listView => listView.definition === listViewDefinition);
+
+        if (listView != null)
+        {
+            this.openListViews.splice(this.openListViews.indexOf(listView), 1);
+
+            if (this.activeListView === listView)
+            {
+                this.activeListView = this.openListViews[0];
+            }
+        }
+    }
+
+    /**
      * Called when an item in the list is clicked.
      * Toggles the expanded state of the item.
      * Implementations may override this, to change this behavior.

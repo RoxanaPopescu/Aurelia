@@ -30,10 +30,10 @@ export class ListViewService
     private readonly _localStateService: LocalStateService;
 
     /**
-     * Gets all list views visible to the current user.
-     * @param type The type of list views to get.
+     * Gets all list view definitions visible to the current user.
+     * @param type The type of list view definitions to get.
      * @param signal The abort signal to use, or undefined to use no abort signal.
-     * @returns A promise that will be resolved with the list views.
+     * @returns A promise that will be resolved with the list view definitions.
      */
     public async getAll<TFilter extends IListViewFilter>(type: ListViewType, signal?: AbortSignal): Promise<IListViews<TFilter>>
     {
@@ -43,86 +43,86 @@ export class ListViewService
             signal
         });
 
-        const sharedListViews = result.data.map(data =>
+        const sharedListViewDefinitions = result.data.map(data =>
             createListViewDefinition(this.fromLegacy({ ...data, shared: true })));
 
-        sharedListViews.sort((a, b) => a.name.localeCompare(b.name));
+        sharedListViewDefinitions.sort((a, b) => a.name.localeCompare(b.name));
 
-        const localListViews = this._localStateService.get().ListViews?.[type]?.map(data =>
+        const personalListViewDefinitions = this._localStateService.get().listViews?.[type]?.map(data =>
             createListViewDefinition(this.fromLegacy({ ...data, shared: false }))) ?? [];
 
-        localListViews.sort((a, b) => a.name.localeCompare(b.name));
+        personalListViewDefinitions.sort((a, b) => a.name.localeCompare(b.name));
 
-        return { shared: sharedListViews, personal: localListViews };
+        return { shared: sharedListViewDefinitions, personal: personalListViewDefinitions };
     }
 
     /**
-     * Creates the specified list view.
-     * @param listViewInit The data for the list view to create.
+     * Creates the specified list view definition.
+     * @param listViewDefinition The list view definition to create.
      * @returns A promise that will be resolved with the created list view.
      */
-    public async create<TFilter extends IListViewFilter>(listViewInit: IListViewDefinitionInit<TFilter>): Promise<ListViewDefinition<TFilter>>
+    public async create<TFilter extends IListViewFilter>(listViewDefinition: ListViewDefinition<TFilter>): Promise<ListViewDefinition<TFilter>>
     {
-        if (listViewInit.shared)
+        if (listViewDefinition.shared)
         {
             const result = await this._apiClient.post("views/create",
             {
-                body: this.toLegacy(listViewInit)
+                body: this.toLegacy(listViewDefinition)
             });
 
             return createListViewDefinition(this.fromLegacy({ ...result.data, shared: true }));
         }
 
-        const localListView = { ...listViewInit, id: Id.uuid(1) };
+        const personalListViewDefinition = { ...listViewDefinition, id: Id.uuid(1) };
 
         this._localStateService.mutate(state =>
         {
-            if (state.ListViews == null)
+            if (state.listViews == null)
             {
-                state.ListViews = {};
+                state.listViews = {};
             }
 
-            const localListViews = state.ListViews[listViewInit.type] ?? [];
+            const personalListViewDefinitions = state.listViews[listViewDefinition.type] ?? [];
 
-            localListViews.push(this.toLegacy(localListView));
+            personalListViewDefinitions.push(this.toLegacy(personalListViewDefinition));
 
-            state.ListViews[localListView.type] = localListViews;
+            state.listViews[personalListViewDefinition.type] = personalListViewDefinitions;
         });
 
-        return createListViewDefinition(localListView);
+        return createListViewDefinition(personalListViewDefinition);
     }
 
     /**
-     * Deletes the specified list view.
-     * @param listView The list view to delete.
+     * Deletes the specified list view definition.
+     * @param listViewDefinition The list view definition to delete.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async delete(listView: ListViewDefinition<any>): Promise<void>
+    public async delete(listViewDefinition: ListViewDefinition<any>): Promise<void>
     {
-        if (listView.shared)
+        if (listViewDefinition.shared)
         {
-            await this._apiClient.post(`views/${listView.id}/delete`,
+            await this._apiClient.post(`views/${listViewDefinition.id}/delete`,
             {
-                body: { type: listView.type }
+                body: { type: listViewDefinition.type }
             });
         }
 
         this._localStateService.mutate(state =>
         {
-            if (state.ListViews == null)
+            if (state.listViews == null)
             {
-                state.ListViews = {};
+                state.listViews = {};
             }
 
-            const localListViews = state.ListViews[listView.type] ?? [];
+            const personalListViewDefinitions = state.listViews[listViewDefinition.type] ?? [];
 
-            const index = localListViews.findIndex(vp => vp.id === listView.id);
+            const index = personalListViewDefinitions.findIndex(lvd => lvd.id === listViewDefinition.id);
 
             if (index > -1)
             {
-                localListViews.splice(index, 1);
+                personalListViewDefinitions.splice(index, 1);
 
-                state.ListViews[listView.type] = localListViews;
+                state.listViews[listViewDefinition.type] = personalListViewDefinitions;
             }
         });
     }

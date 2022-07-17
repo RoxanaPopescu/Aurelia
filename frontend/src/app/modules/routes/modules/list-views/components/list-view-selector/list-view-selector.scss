@@ -1,0 +1,95 @@
+list-view-selector
+{
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+
+    > button
+    {
+        display: flex;
+
+        // HACK: Override normal button min-width.
+        min-width: 0 !important;
+
+        dropdown-icon
+        {
+            // Push to the right.
+            margin-left: auto;
+
+            // Apply opacity to de-emphasize the icon.
+            opacity: var(--opacity-faded);
+        }
+
+        [slot="label"]
+        {
+            // Center content on the cross axis, if flex layout is applied.
+            align-items: center;
+        }
+
+        [slot="icon"]
+        {
+            // Use flex layout.
+            display: flex;
+
+            // Center content.
+            align-items: center;
+            justify-content: center;
+
+            // Set line height to ensure correct vertical alignment.
+            line-height: 1;
+
+            // Set the size of the icon, in proportion to the text.
+            font-size: var(--dropdown-icon-size);
+
+            // Apply opacity to de-emphasize the icon.
+            opacity: var(--opacity-faded);
+        }
+
+        [slot="label"]:not(:empty) + [slot="icon"]:not(:empty),
+        [slot="label"]:not(:empty) + dropdown-icon
+        {
+            // Apply spacing between the label and icon.
+            margin-left: var(--size-inline-spacing);
+        }
+    }
+
+    > dropdown
+    {
+        --dropdown-min-width: max(100%, 250rem);
+
+        display: flex;
+
+        > item-picker
+        {
+            flex-grow: 1;
+
+            item
+            {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+    }
+
+    .list-view-selector-empty
+    {
+        padding: var(--item-picker-surface-item-padding);
+        opacity: var(--opacity-faded);
+    }
+
+    .list-view-selector-section-title,
+    .list-view-selector-save
+    {
+        display: block;
+        padding: var(--item-picker-surface-item-padding);
+        white-space: nowrap;
+        margin-right: 8rem;
+    }
+
+    .list-view-selector-section-title
+    {
+        font-weight: 600;
+    }
+}
