@@ -256,6 +256,9 @@ export abstract class ListViewsPage<TListViewFilter extends IListViewFilter, TLi
         if (this.activeListView === listView)
         {
             this.activeListView = this.openListViews[0];
+
+            // Ensure the local state is updated.
+            this.updateLocalState();
         }
     }
 
@@ -269,7 +272,13 @@ export abstract class ListViewsPage<TListViewFilter extends IListViewFilter, TLi
 
         if (listView != null)
         {
-            this.activeListView = listView;
+            if (listView !== this.activeListView)
+            {
+                this.activeListView = listView;
+
+                // Ensure the local state is updated.
+                this.updateLocalState();
+            }
         }
         else
         {
@@ -277,6 +286,9 @@ export abstract class ListViewsPage<TListViewFilter extends IListViewFilter, TLi
 
             this.openListViews.unshift(listView);
             this.activeListView = listView;
+
+            // Ensure the local state is updated.
+            this.updateLocalState();
         }
     }
 
@@ -296,7 +308,64 @@ export abstract class ListViewsPage<TListViewFilter extends IListViewFilter, TLi
             {
                 this.activeListView = this.openListViews[0];
             }
+
+            // Ensure the local state is updated.
+            this.updateLocalState();
         }
+    }
+
+    /**
+     * Called by the framework when the `activeListView` property changes.
+     * Updates the URL to reference the active view.
+     */
+    protected activeListViewChanged(): void
+    {
+        // If a list view is active, fetch the items to present.
+
+        if (this.activeListView != null && this.activeListView.items == null)
+        {
+            this.update(this.activeListView);
+        }
+
+        // Ensure the URL specifies the ID of the active list view, if any.
+
+        // tslint:disable-next-line: no-floating-promises
+        this._historyHelper.navigate((state: IHistoryState) =>
+        {
+            state.params.view = this.activeListView?.definition.id;
+        },
+        { trigger: false, replace: true });
+
+        // Ensure the local state is updated.
+        this.updateLocalState();
+    }
+
+    /**
+     * Updates the open list views and active list view stored in local state.
+     */
+    protected updateLocalState(): void
+    {
+        this._localStateService.mutate(data =>
+        {
+            if (data.listView == null)
+            {
+                data.listView = {} as any;
+            }
+
+            if (data.listView[this.listViewType] == null)
+            {
+                data.listView[this.listViewType] = {} as any;
+            }
+
+            // Get the local state for list views of the relevant type.
+            const localListViewState = data.listView[this.listViewType];
+
+            // Set the IDs of the open list views, if any.
+            localListViewState.open = this.openListViews.map(listView => listView.definition.id);
+
+            // Set the ID of the active list view, if any.
+            localListViewState.active = this.activeListView?.definition.id;
+        });
     }
 
     /**
@@ -311,29 +380,6 @@ export abstract class ListViewsPage<TListViewFilter extends IListViewFilter, TLi
     }
 
     /**
-     * Called by the framework when the `activeListView` property changes.
-     * Updates the URL to reference the active view.
-     */
-    protected activeListViewChanged(): void
-    {
-        // If a list view is active, fetch the items to present.
-
-        if (this.activeListView != null)
-        {
-            this.update(this.activeListView);
-        }
-
-        // Ensure the URL specifies the ID of the active list view, if any.
-
-        // tslint:disable-next-line: no-floating-promises
-        this._historyHelper.navigate((state: IHistoryState) =>
-        {
-            state.params.view = this.activeListView?.definition.id;
-        },
-        { trigger: false, replace: true });
-    }
-
-    /**
      * Updates the page by fetching the items to present.
      * @param listView The list view to update.
      */
@@ -345,13 +391,32 @@ export abstract class ListViewsPage<TListViewFilter extends IListViewFilter, TLi
         // Create and execute a new operation.
         listView.operation = new Operation(async signal =>
         {
-            // Fetch the items.
-            const result = await this.fetch(listView, signal);
+            // Capture the current fetched time, in case the request fails.
+            let fetchedDateTime = listView.fetchedDateTime;
 
-            // Update the state of the list view.
-            listView.items = result.items;
-            listView.itemCount = result.itemCount;
-            listView.fetchedDateTime = DateTime.utc();
+            try
+            {
+                // Capture the start time of the request, as it could take a long time to complete.
+                const fetchStartTime = DateTime.utc();
+
+                // Clear the fetched time while updating.
+                listView.fetchedDateTime = undefined;
+
+                // Fetch the items.
+                const result = await this.fetch(listView, signal);
+
+                // Update the items and item count of the list view.
+                listView.items = result.items;
+                listView.itemCount = result.itemCount;
+
+                // Assign the captured start time of the request as the new fetched time.
+                fetchedDateTime = fetchStartTime;
+            }
+            finally
+            {
+                // Update the fetched time of the list view.
+                listView.fetchedDateTime = fetchedDateTime;
+            }
 
             // Reset paging.
             listView.paging.page = 1;

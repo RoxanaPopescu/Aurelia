@@ -3,7 +3,7 @@ name-value-list
     display: flex;
     align-items: center;
 
-    name-value-pair:not(:last-of-type)::after
+    > :not(:last-child)::after
     {
         content: "|";
 

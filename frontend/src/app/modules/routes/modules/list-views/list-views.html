@@ -3,6 +3,8 @@
     <require from="app/components/address-input/address-input"></require>
     <require from="app/components/page-tab-nav/page-tab-nav"></require>
     <require from="app/components/page-tab-nav/page-tab"></require>
+    <require from="app/components/name-value-pair/name-value-pair"></require>
+    <require from="app/components/name-value-list/name-value-list"></require>
     <require from="./components/list-view-selector/list-view-selector"></require>
     <require from="./components/route-list-expanded-view/route-list-expanded-view"></require>
     <require from="./list-views.scss"></require>
@@ -453,12 +455,36 @@
 
             <page-section>
 
+                <name-value-list class="font-small">
+
+                    <a click.trigger="update(activeListView)" translate>
+                        Update
+                    </a>
+
+                    <name-value-pair class="opacity-faded">
+
+                        <div slot="name" translate>
+                            Last updated
+                        </div>
+
+                        <div slot="value">
+                            <template if.bind="activeListView.fetchedDateTime != null">
+                                ${activeListView.fetchedDateTime | relativeTime}
+                            </template>
+                            <span else empty-value></span>
+                        </div>
+
+                    </name-value-pair>
+
+                </name-value-list>
+
                 <data-table
                     if.bind="activeListView != null"
                     appearance="rows"
                     sorting.bind="activeListView.definition.sorting"
                     style.bind="tableStyle"
-                    busy.bind="activeListView.operation.pending || pickupNearbyOperation.pending">
+                    busy.bind="activeListView.operation.pending || pickupNearbyOperation.pending"
+                    class="margin-top">
 
                     <data-table-headers>
 
