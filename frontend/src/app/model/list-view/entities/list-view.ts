@@ -64,4 +64,9 @@ export class ListView<TFilter extends IListViewFilter, TItem>
      * True if the list view definition has unsaved changes, oterwise false.
      */
     public hasUnsavedChanges = false;
+
+    /**
+     * The scroll position associated with the list view.
+     */
+    public scrollPosition: ScrollToOptions;
 }
