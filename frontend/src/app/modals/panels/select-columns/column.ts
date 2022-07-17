@@ -14,7 +14,7 @@ export interface IColumn
     name: string;
 
     /**
-     * The localized name of the column.
+     * The width of the column.
      */
     width: string;
 }
