@@ -41,11 +41,13 @@ export abstract class ListViewDefinition<TFilter extends ListViewFilter>
     /**
      * The name of the list view.
      */
+     @observable({ changeHandler: "update" })
     public name: string;
 
     /**
      * True if the view preset is shared with the organization, otherwise false.
      */
+     @observable({ changeHandler: "update" })
     public shared: boolean;
 
     /**

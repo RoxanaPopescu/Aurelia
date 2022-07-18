@@ -29,18 +29,20 @@ export class ListView<TFilter extends ListViewFilter, TItem>
 
         this.update = onChangeFunc;
 
-        const innerUpdateFunc = (newValue, oldValue, propertyName) =>
+        const innerUpdateFunc = (source, newValue, oldValue, propertyName) =>
         {
             this._hasUnsavedChanges = this._definitionJson !== JSON.stringify(this.definition);
 
-            if (this.update != null)
+            const propertyPath = `${source}.${propertyName}`;
+
+            if (this.update != null && propertyPath != "definition.name" && propertyPath != "definition.shared")
             {
-                this.update(newValue, oldValue, `definition.${propertyName}`);
+                this.update(newValue, oldValue, propertyPath);
             }
         };
 
-        this.definition.update = innerUpdateFunc;
-        this.definition.filter.update = innerUpdateFunc;
+        this.definition.update = innerUpdateFunc.bind(this, "definition");
+        this.definition.filter.update = innerUpdateFunc.bind(this, "definition.filter");
     }
 
     private _definitionJson: string;
