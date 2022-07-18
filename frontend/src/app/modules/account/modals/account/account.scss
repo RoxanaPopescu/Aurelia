@@ -30,25 +30,31 @@ modal-panel[name="account"]
             > select-button
             {
                 position: relative;
+                margin-left: var(--border-width-medium);
 
                 button
                 {
                     border-top-left-radius: 0;
                     border-bottom-left-radius: 0;
+
+                    &::before
+                    {
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        left: calc(var(--border-width-medium) * -1);
+                        bottom: 0;
+                        width: var(--border-width-medium);
+                        background: inherit;
+                        opacity: var(--opacity-faded);
+                    }
                 }
 
                 dropdown-icon
                 {
-                    opacity: 1;
-                }
+                    --dropdown-icon-size: var(--font-larger-font-size);
 
-                &::before
-                {
-                    content: "";
-                    height: 100%;
-                    width: var(--border-width-thin);
-                    background: var(--surface-negative-surface-color);
-                    opacity: var(--opacity-faded);
+                    opacity: 1;
                 }
             }
 
