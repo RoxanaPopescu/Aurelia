@@ -111,7 +111,7 @@ export class ListView<TFilter extends ListViewFilter, TItem>
      * @param propertyName The name of the property that changed.
      * @param source The source identifier, if relevant.
      */
-    private internalUpdate = (newValue: any, oldValue: any, propertyName: string, source?: string) =>
+    private readonly internalUpdate = (newValue: any, oldValue: any, propertyName: string, source?: string) =>
     {
         this._hasChanges = this._unchangedDefinitionJson !== JSON.stringify(this.definition);
 
@@ -119,22 +119,22 @@ export class ListView<TFilter extends ListViewFilter, TItem>
 
         if (newValue != null)
         {
-            if (propertyPath == "definition")
+            if (propertyPath === "definition")
             {
                 this.definition.update = (...args) => this.internalUpdate(...args, "definition");
             }
 
-            if (propertyPath == "definition" || propertyPath == "definition.filter")
+            if (propertyPath === "definition" || propertyPath === "definition.filter")
             {
                 this.definition.filter.update = (...args) => this.internalUpdate(...args, "definition.filter");
             }
         }
 
-        const shouldTriggerUpdate = propertyPath != "definition.name" && propertyPath != "definition.shared";
+        const shouldTriggerUpdate = propertyPath !== "definition.name" && propertyPath !== "definition.shared";
 
         if (shouldTriggerUpdate && this.update != null)
         {
             this.update(newValue, oldValue, propertyPath);
         }
-    };
+    }
 }

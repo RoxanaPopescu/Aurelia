@@ -303,7 +303,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
      */
     protected onCloseListView(listViewDefinition: ListViewDefinition<TListViewFilter>): void
     {
-        const listView = this.openListViews.find(listView => listView.definition === listViewDefinition);
+        const listView = this.openListViews.find(lv => lv.definition === listViewDefinition);
 
         if (listView != null)
         {
@@ -407,9 +407,8 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
     /**
      * Called when the `Revert view changes` button is clicked.
      * Reverts the changes to the active list view definition.
-     * @returns A promise that will be resolved when the operation completes.
      */
-    protected async onRevertListViewChangesClick(): Promise<void>
+    protected onRevertListViewChangesClick(): void
     {
         const listView = this.activeListView!;
 
