@@ -73,7 +73,7 @@ export class ListViewService
             return createListViewDefinition(this.fromLegacy({ ...result.data, shared: true }));
         }
 
-        const personalListViewDefinition = { ...listViewDefinition, id: Id.uuid(1) };
+        listViewDefinition.id = Id.uuid(1);
 
         this._localStateService.mutate(state =>
         {
@@ -84,12 +84,12 @@ export class ListViewService
 
             const personalListViewDefinitions = state.listViews[listViewDefinition.type] ?? [];
 
-            personalListViewDefinitions.push(this.toLegacy(personalListViewDefinition));
+            personalListViewDefinitions.push(this.toLegacy(listViewDefinition));
 
-            state.listViews[personalListViewDefinition.type] = personalListViewDefinitions;
+            state.listViews[listViewDefinition.type] = personalListViewDefinitions;
         });
 
-        return createListViewDefinition(personalListViewDefinition);
+        return createListViewDefinition(listViewDefinition);
     }
 
     /**

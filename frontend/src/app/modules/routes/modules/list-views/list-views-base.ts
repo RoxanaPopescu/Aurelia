@@ -199,7 +199,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
 
                 if (listViewDefinition != null)
                 {
-                    var listView = new ListView<TListViewFilter, TListItem>(listViewDefinition);
+                    const listView = new ListView<TListViewFilter, TListItem>(listViewDefinition);
                     this.openListViews.unshift(listView);
                     this.activeListView = listView;
 
@@ -269,7 +269,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
      */
     protected onOpenListView(listViewDefinition: ListViewDefinition<TListViewFilter>): void
     {
-        let listView = this.openListViews.find(listView => listView.definition === listViewDefinition);
+        let listView = this.openListViews.find(lv => lv.definition === listViewDefinition);
 
         if (listView != null)
         {
@@ -395,7 +395,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
         listView.operation = new Operation(async signal =>
         {
             // Capture the current fetched time, in case the request fails.
-            let currentFetchedDateTime = listView.fetchedDateTime;
+            const currentFetchedDateTime = listView.fetchedDateTime;
 
             try
             {

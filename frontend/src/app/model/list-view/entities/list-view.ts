@@ -31,7 +31,7 @@ export class ListView<TFilter extends ListViewFilter, TItem>
 
         const innerUpdateFunc = (newValue, oldValue, propertyName) =>
         {
-            this._hasUnsavedChanges = this._definitionJson != JSON.stringify(this.definition);
+            this._hasUnsavedChanges = this._definitionJson !== JSON.stringify(this.definition);
 
             if (this.update != null)
             {
