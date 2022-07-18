@@ -12,13 +12,13 @@ page[name="routes"] page[name="list-views"]
     {
         border-bottom: none;
         position: relative;
-        z-index: 20;
+        z-index: 50;
     }
 
     page-tab-nav
     {
         position: relative;
-        z-index: 10;
+        z-index: 51;
     }
 
     list-view-selector

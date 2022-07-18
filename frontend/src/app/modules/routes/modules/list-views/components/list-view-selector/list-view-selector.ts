@@ -231,7 +231,7 @@ export class ListViewSelectorCustomElement
         })
         .promise;
 
-        if (result == null)
+        if (!result)
         {
             return;
         }

@@ -392,7 +392,7 @@
 
                         </div>
 
-                        <template if-claims.bind="'edit-' + activeListView.definition.type + '-views'">
+                        <template if-claims.bind="activeListView.definition.shared ? 'edit-' + activeListView.definition.type + '-views' : undefined">
 
                             <select-button if.bind="activeListView.definition.id != null" appearance="outline" accent="primary" placement="bottom-end" fixed.bind="true">
 

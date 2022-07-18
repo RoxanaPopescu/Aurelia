@@ -83,7 +83,7 @@ export class IfClaimsCustomAttribute extends If
         {
             this.updateCondition();
 
-            super.conditionChanged(newValue);
+            super.conditionChanged(this.condition);
         }
     }
 
@@ -109,6 +109,10 @@ export class IfClaimsCustomAttribute extends If
 
                 this.condition = requiredClaims.every((claim: string) => providedClaims.has(claim));
             }
+        }
+        else if (this.condition == null)
+        {
+            this.condition = true;
         }
     }
 }

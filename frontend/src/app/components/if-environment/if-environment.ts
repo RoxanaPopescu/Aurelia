@@ -79,7 +79,7 @@ export class IfEnvironmentCustomAttribute extends If
         {
             this.updateCondition();
 
-            super.conditionChanged(newValue);
+            super.conditionChanged(this.condition);
         }
     }
 

@@ -17,8 +17,13 @@
 
         </modal-header>
 
-        <modal-section if.bind="listViewDefinition.id == null" class="margin-bottom" translate>
-            This will create a new view, with filters, table columns and sorting.
+        <modal-section if.bind="listViewDefinition.id == null" class="margin-bottom">
+            <template if-claims.bind="'edit-' + listViewDefinition.type + '-views'" translate>
+                This will create a new view, with filters, table columns and sorting.
+            </template>
+            <template else translate>
+                This will create a new personal view, with filters, table columns and sorting.
+            </template>
         </modal-section>
 
         <modal-section class="margin-half-bottom">
@@ -47,9 +52,9 @@
 
             </text-input>
 
-            <template if.bind="listViewDefinition.id == null">
+            <template if-claims.bind="'edit-' + listViewDefinition.type + '-views'">
 
-                <check-toggle if-claims.bind="'edit-' + listViewDefinition.type + '-views'" label="after" value.bind="shared" class="margin-large-top">
+                <check-toggle if.bind="listViewDefinition.id == null" label="after" value.bind="shared" class="margin-large-top">
 
                     <div slot="heading" translate>
                         Share this view with other users in the organization
