@@ -5,15 +5,13 @@ import { LocalStateService } from "app/services/local-state";
 import { Fulfiller } from "app/model/outfit";
 import { OrganizationService, OrganizationTeam } from "app/model/organization";
 import { RouteAssignmentService, RouteInfo, RouteService } from "app/model/route";
-import { ListViewService, ListView, RouteListViewFilter, RouteListViewColumn } from "app/model/list-view";
+import { ListViewService, ListView, RouteListViewFilter } from "app/model/list-view";
 import { IdentityService, moverOrganizationId } from "app/services/identity";
 import { TeamsFilterService } from "app/services/teams-filter";
-import { SelectColumnsPanel } from "app/modals/panels/select-columns/select-columns";
 import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
 import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
 import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
 import { AssignOrganizationPanel } from "../../modals/assign-organization/assign-organization";
-import { EditListViewDialog } from "./modals/edit-list-view/edit-list-view";
 import { IListViewPageItems, IListViewPageParams, ListViewsPage } from "./list-views-base";
 
 /**
@@ -318,79 +316,6 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
             }
 
             updating.vehicle = false;
-        }
-    }
-
-    /**
-     * Called when the `Save view changes` button is clicked.
-     * Saves the changes to the active list view definition.
-     * @returns A promise that will be resolved when the operation completes.
-     */
-    protected async onSaveViewChangesClick(): Promise<void>
-    {
-        const listView = this.activeListView!;
-
-        try
-        {
-            listView.definition = await this._listViewService.update(listView.definition);
-            listView.hasChanges = false;
-        }
-        catch (error)
-        {
-            Log.error("Could not save the view changes", error);
-        }
-    }
-
-    /**
-     * Called when the `Revert view changes` button is clicked.
-     * Reverts the changes to the active list view definition.
-     * @returns A promise that will be resolved when the operation completes.
-     */
-    protected async onRevertViewChangesClick(): Promise<void>
-    {
-        const listView = this.activeListView!;
-
-        listView.revertChanges();
-    }
-
-    /**
-     * Called when the `Edit view` button is clicked.
-     * Opens the modal for editing the view.
-     * @returns A promise that will be resolved when the operation completes.
-     */
-    protected async onEditViewClick(): Promise<void>
-    {
-        const listView = this.activeListView!;
-
-        await this._modalService.open(EditListViewDialog,
-        {
-            listViewDefinition: listView.definition,
-            listViewDefinitions: this.listViewDefinitions
-        })
-        .promise;
-    }
-
-    /**
-     * Called when the `Select columns` button is clicked.
-     * Opens the modal for selecting the columns to see.
-     */
-    protected async onSelectColumnsClick(): Promise<void>
-    {
-        const listView = this.activeListView!;
-
-        const model =
-        {
-            availableColumns: Object.keys(RouteListViewColumn.values).map(slug => new RouteListViewColumn(slug as any)),
-            selectedColumns: listView.definition.columns
-        };
-
-        const result = await this._modalService.open(SelectColumnsPanel, model).promise;
-
-        if (result != null)
-        {
-            listView.definition.columns = result as RouteListViewColumn[];
-
-            this.update(listView);
         }
     }
 

@@ -382,31 +382,39 @@
 
                         <div if.bind="activeListView.definition.id == null || activeListView.hasChanges" class="split-button">
 
-                            <button appearance="solid" accent="primary" click.trigger="onSaveViewChangesClick()" translate>
+                            <button appearance="solid" accent="primary" click.trigger="onSaveListViewChangesClick()" translate>
                                 Save view changes
                             </button>
 
-                            <button appearance="solid" accent="primary" click.trigger="onRevertViewChangesClick()" translate>
+                            <button appearance="solid" accent="primary" click.trigger="onRevertListViewChangesClick()" translate>
                                 <icon name="md-undo" class="font-large" inline>
                             </button>
 
                         </div>
 
-                        <select-button if.bind="activeListView.definition.id != null" appearance="outline" accent="primary" placement="bottom-end" fixed.bind="true">
+                        <template if-claims.bind="'edit-' + activeListView.definition.type + '-views'">
 
-                            <div slot="icon">
-                                <icon name="more"></icon>
-                            </div>
+                            <select-button if.bind="activeListView.definition.id != null" appearance="outline" accent="primary" placement="bottom-end" fixed.bind="true">
 
-                            <item click.trigger="onEditViewClick()" model="edit-view" translate>
-                                Edit view
-                            </item>
+                                <div slot="icon">
+                                    <icon name="more"></icon>
+                                </div>
 
-                            <item click.trigger="onSelectColumnsClick()" model="edit-view-columns" translate>
-                                Edit view columns
-                            </item>
+                                <item click.trigger="onEditListViewColumnsClick()" model="edit-view-columns" translate>
+                                    Edit columns
+                                </item>
 
-                        </select-button>
+                                <item click.trigger="onEditListViewClick()" model="edit-view" translate>
+                                    Edit view
+                                </item>
+
+                                <item click.trigger="onDeleteListViewClick()" model="edit-view-columns" translate>
+                                    Delete view
+                                </item>
+
+                            </select-button>
+
+                        </template>
 
                     </toolbar>
 

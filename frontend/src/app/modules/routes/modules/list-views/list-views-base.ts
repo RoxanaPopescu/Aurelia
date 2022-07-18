@@ -2,11 +2,13 @@ import { DateTime } from "luxon";
 import { autoinject, computedFrom, observable } from "aurelia-framework";
 import { AbortError, MapObject } from "shared/types";
 import { Operation } from "shared/utilities";
-import { HistoryHelper, IHistoryState } from "shared/infrastructure";
+import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
 import { IScroll, ModalService } from "shared/framework";
 import { LocalStateService } from "app/services/local-state";
-import { ListViewService, ListViewDefinition, ListView, ListViewFilter } from "app/model/list-view";
-import { ListViewType } from "app/model/list-view/entities/list-view-type";
+import { ListViewService, ListViewDefinition, ListView, ListViewFilter, RouteListViewColumn, ListViewType } from "app/model/list-view";
+import { SelectColumnsPanel } from "app/modals/panels/select-columns/select-columns";
+import { EditListViewDialog } from "./modals/edit-list-view/edit-list-view";
+import { ConfirmDeleteListViewDialog } from "./modals/confirm-delete-list-view/confirm-delete-list-view";
 
 /**
  * Represents the route parameters for the page.
@@ -380,6 +382,109 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
     protected onItemClick(item: IListViewPageItem): void
     {
         this.activeListView!.expandedItemId = this.activeListView!.expandedItemId === item.id ? undefined : item.id;
+    }
+
+    /**
+     * Called when the `Save view changes` button is clicked.
+     * Saves the changes to the active list view definition.
+     * @returns A promise that will be resolved when the operation completes.
+     */
+    protected async onSaveListViewChangesClick(): Promise<void>
+    {
+        const listView = this.activeListView!;
+
+        try
+        {
+            listView.definition = await this._listViewService.update(listView.definition);
+            listView.hasChanges = false;
+        }
+        catch (error)
+        {
+            Log.error("Could not save the view changes", error);
+        }
+    }
+
+    /**
+     * Called when the `Revert view changes` button is clicked.
+     * Reverts the changes to the active list view definition.
+     * @returns A promise that will be resolved when the operation completes.
+     */
+    protected async onRevertListViewChangesClick(): Promise<void>
+    {
+        const listView = this.activeListView!;
+
+        listView.revertChanges();
+    }
+
+    /**
+     * Called when the `Edit view` button is clicked.
+     * Opens the modal for editing the view.
+     * @returns A promise that will be resolved when the operation completes.
+     */
+    protected async onEditListViewClick(): Promise<void>
+    {
+        const listView = this.activeListView!;
+
+        await this._modalService.open(EditListViewDialog,
+        {
+            listViewDefinition: listView.definition,
+            listViewDefinitions: this.listViewDefinitions
+        })
+        .promise;
+    }
+
+    /**
+     * Called when the `Delete view` button is clicked.
+     * Asks the user to confirm, then deletes the active list view definition.
+     * @returns A promise that will be resolved when the operation completes.
+     */
+    protected async onDeleteListViewClick(): Promise<void>
+    {
+        const listViewDefinition = this.activeListView!.definition;
+
+        const result = await this._modalService.open(ConfirmDeleteListViewDialog, listViewDefinition).promise;
+
+        if (!result)
+        {
+            return;
+        }
+
+        await this._listViewService.delete(listViewDefinition);
+
+        if (listViewDefinition.shared)
+        {
+            this.listViewDefinitions.shared.splice(this.listViewDefinitions.shared.indexOf(listViewDefinition), 1);
+        }
+        else
+        {
+            this.listViewDefinitions.personal.splice(this.listViewDefinitions.personal.indexOf(listViewDefinition), 1);
+        }
+
+        this.onCloseListView(listViewDefinition);
+    }
+
+    /**
+     * Called when the `Edit view columns` button is clicked.
+     * Opens the modal for selecting the columns to see.
+     */
+    protected async onEditListViewColumnsClick(): Promise<void>
+    {
+        const listView = this.activeListView!;
+
+        const model =
+        {
+            availableColumns: Object.keys(RouteListViewColumn.values).map(slug => new RouteListViewColumn(slug as any)),
+            selectedColumns: listView.definition.columns
+        };
+
+        const result = await this._modalService.open(SelectColumnsPanel, model).promise;
+
+        if (result != null)
+        {
+            listView.definition.columns = result as RouteListViewColumn[];
+
+            this.update(listView);
+        }
     }
 
     /**
