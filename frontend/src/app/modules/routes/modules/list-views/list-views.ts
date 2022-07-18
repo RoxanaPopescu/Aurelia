@@ -12,7 +12,8 @@ import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
 import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
 import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
 import { AssignOrganizationPanel } from "../../modals/assign-organization/assign-organization";
-import { IListViewPageItems, IListViewPageParams, ListViewsPage } from "./list-views-base";
+
+import { IListViewPageItems, IListViewPageParams, ListViewsPage } from "app/modules/list-views/list-views";
 
 /**
  * Represents the route parameters for the page.
