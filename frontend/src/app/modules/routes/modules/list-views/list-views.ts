@@ -3,7 +3,8 @@ import { HistoryHelper, Log } from "shared/infrastructure";
 import { ModalService } from "shared/framework";
 import { LocalStateService } from "app/services/local-state";
 import { RouteAssignmentService, RouteInfo, RouteService } from "app/model/route";
-import { ListViewService, ListView, RouteListViewFilter } from "app/model/list-view";
+import { ListViewService, ListView, RouteListViewFilter, RouteListViewColumn } from "app/model/list-view";
+import { SelectColumnsPanel } from "app/modals/panels/select-columns/select-columns";
 import { IListViewPageItems, IListViewPageParams, ListViewsPage } from "./list-views-base";
 import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
 import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
@@ -176,7 +177,7 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
 
     /**
      * Called when the `Assign team` button is clicked on an item.
-     * Opens the panel for assigning a team to a route.
+     * Opens the modal for assigning a team to a route.
      * @param route The route to which a team should be assigned.
      * @param updating The object representing the `updating` state of the item.
      * @returns A promise that will be resolved when the operation completes.
@@ -214,7 +215,7 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
 
     /**
      * Called when the `Assign executor` button is clicked on an item.
-     * Opens the panel for assigning a executor to a route.
+     * Opens the modal for assigning a executor to a route.
      * @param route The route to which an executor should be assigned.
      * @param updating The object representing the `updating` state of the item.
      * @returns A promise that will be resolved when the operation completes.
@@ -249,7 +250,7 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
 
     /**
      * Called when the `Assign driver` button is clicked on an item.
-     * Opens the panel for assigning a driver to a route.
+     * Opens the modal for assigning a driver to a route.
      * @param route The route to which a driver should be assigned.
      * @param updating The object representing the `updating` state of the item.
      * @returns A promise that will be resolved when the operation completes.
@@ -285,7 +286,7 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
 
     /**
      * Called when the `Assign vehicle` button is clicked on an item.
-     * Opens the panel for assigning a vehicle to a route.
+     * Opens the modal for assigning a vehicle to a route.
      * @param route The route to which a vehicle should be assigned.
      * @param updating The object representing the `updating` state of the item.
      * @returns A promise that will be resolved when the operation completes.
@@ -316,6 +317,62 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
             }
 
             updating.vehicle = false;
+        }
+    }
+
+    /**
+     * Called when the `Save view` button is clicked.
+     * Saves the changes to the current view.
+     * @returns A promise that will be resolved when the operation completes.
+     */
+    protected async onSaveViewClick(): Promise<void>
+    {
+        const listView = this.activeListView!;
+
+        try
+        {
+            listView.definition = await this._listViewService.update(listView.definition);
+            listView.hasUnsavedChanges = false;
+        }
+        catch (error)
+        {
+            Log.error("Could not save the view changes", error);
+        }
+    }
+
+    /**
+     * Called when the `Edit view` button is clicked.
+     * Opens the modal for editing the view.
+     * @returns A promise that will be resolved when the operation completes.
+     */
+    protected async onEditViewClick(): Promise<void>
+    {
+        // const listView = this.activeListView!;
+
+        // TODO
+    }
+
+    /**
+     * Called when the `Select columns` button is clicked.
+     * Opens the modal for selecting the columns to see.
+     */
+    protected async onSelectColumnsClick(): Promise<void>
+    {
+        const listView = this.activeListView!;
+
+        const model =
+        {
+            availableColumns: Object.keys(RouteListViewColumn.values).map(slug => new RouteListViewColumn(slug as any)),
+            selectedColumns: listView.definition.columns
+        };
+
+        const result = await this._modalService.open(SelectColumnsPanel, model).promise;
+
+        if (result != null)
+        {
+            listView.definition.columns = result as RouteListViewColumn[];
+
+            this.update(listView);
         }
     }
 

@@ -93,6 +93,47 @@ export class ListViewService
     }
 
     /**
+     * Updates the specified list view definition.
+     * @param listViewDefinition The list view definition to update.
+     * @returns A promise that will be resolved with the updated list view.
+     */
+    public async update<TFilter extends ListViewFilter>(listViewDefinition: ListViewDefinition<TFilter>): Promise<ListViewDefinition<TFilter>>
+    {
+        if (listViewDefinition.shared)
+        {
+            const result = await this._apiClient.post(`views/${listViewDefinition.id}/update`,
+            {
+                body: this.toLegacy(listViewDefinition)
+            });
+
+            return createListViewDefinition(this.fromLegacy({ ...result.data, shared: true }));
+        }
+
+        this._localStateService.mutate(state =>
+        {
+            if (state.listViews == null)
+            {
+                state.listViews = {};
+            }
+
+            const personalListViewDefinitions = state.listViews[listViewDefinition.type] ?? [];
+
+            const index = personalListViewDefinitions.findIndex(plvd => plvd.id === listViewDefinition.id);
+
+            if (index < 0)
+            {
+                throw new Error("The specified list view does not exist.");
+            }
+
+            personalListViewDefinitions.splice(index, 1, this.toLegacy(listViewDefinition));
+
+            state.listViews[listViewDefinition.type] = personalListViewDefinitions;
+        });
+
+        return createListViewDefinition(listViewDefinition);
+    }
+
+    /**
      * Deletes the specified list view definition.
      * @param listViewDefinition The list view definition to delete.
      * @returns A promise that will be resolved when the operation succeedes.

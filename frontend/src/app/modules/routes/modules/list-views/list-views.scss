@@ -11,6 +11,8 @@ page[name="routes"] page[name="list-views"]
     page-header
     {
         border-bottom: none;
+        position: relative;
+        z-index: 20;
     }
 
     page-tab-nav

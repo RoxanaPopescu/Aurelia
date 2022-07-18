@@ -55,7 +55,7 @@ export class ListView<TFilter extends ListViewFilter, TItem>
      * The list view definition.
      */
     @observable({ changeHandler: "update" })
-    public readonly definition: ListViewDefinition<TFilter>;
+    public definition: ListViewDefinition<TFilter>;
 
     /**
      * The paging to use for the list.

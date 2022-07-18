@@ -1,13 +1,13 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { Modal } from "shared/framework";
-import { IColumn } from "./column";
+import { ListViewColumn } from "app/model/list-view";
 
 /**
  * Represents info about a column.
  */
-interface IColumnInfo
+interface IListViewColumnInfo
 {
-    column: IColumn;
+    column: ListViewColumn;
     selected: boolean;
 }
 
@@ -16,8 +16,8 @@ interface IColumnInfo
  */
 export interface ISelectColumnsPanelModel
 {
-    availableColumns: IColumn[];
-    selectedColumns?: IColumn[];
+    availableColumns: ListViewColumn[];
+    selectedColumns?: ListViewColumn[];
 }
 
 /**
@@ -36,23 +36,23 @@ export class SelectColumnsPanel
     }
 
     private readonly _modal: Modal;
-    private _result: IColumn[] | undefined;
+    private _result: ListViewColumn[] | undefined;
 
     /**
      * The list of all available columns.
      */
-    protected availableColumns: IColumn[];
+    protected availableColumns: ListViewColumn[];
 
     /**
      * The ordered list of selected columns.
      */
-    protected selectedColumns: IColumn[];
+    protected selectedColumns: ListViewColumn[];
 
     /**
      * The combined list of selected and unselected columns.
      */
     @computedFrom("availableColumns.length", "selectedColumns.length")
-    protected get columnInfos(): IColumnInfo[]
+    protected get columnInfos(): IListViewColumnInfo[]
     {
         const selectedColumns = this.selectedColumns
             .map(column => ({ column, selected: true }));
@@ -78,7 +78,7 @@ export class SelectColumnsPanel
      * Called by the framework when the modal is deactivated.
      * @returns The selected list of columns
      */
-    public async deactivate(): Promise<IColumn[] | undefined>
+    public async deactivate(): Promise<ListViewColumn[] | undefined>
     {
         return this._result;
     }
@@ -88,7 +88,7 @@ export class SelectColumnsPanel
      * @param source The column being moved.
      * @param target The column currently occupying the target position.
      */
-    protected onMoveColumn(source: IColumn, target: IColumn): void
+    protected onMoveColumn(source: ListViewColumn, target: ListViewColumn): void
     {
         const sourceIndex = this.selectedColumns.indexOf(source);
         const targetIndex = this.selectedColumns.indexOf(target);
@@ -100,7 +100,7 @@ export class SelectColumnsPanel
      * Called when a column is toggled.
      * @param column The column being toggled.
      */
-    protected onToggleColumn(column: IColumn, selected: boolean): void
+    protected onToggleColumn(column: ListViewColumn, selected: boolean): void
     {
         if (selected)
         {

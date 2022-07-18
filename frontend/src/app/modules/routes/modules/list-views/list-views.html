@@ -380,22 +380,22 @@
 
                     <toolbar class="flex-push-right">
 
-                        <button if.bind="activeListView.definition.id == null || activeListView.hasUnsavedChanges" appearance="outline" accent="primary" click.trigger="onSaveViewClick()" translate>
-                            Save view
+                        <button if.bind="activeListView.definition.id == null || activeListView.hasUnsavedChanges" appearance="solid" accent="primary" click.trigger="onSaveViewClick()" translate>
+                            Save view changes
                         </button>
 
-                        <button if.bind="activeListView.definition.id != null"appearance="outline" accent="primary" click.trigger="onEditViewClick()" translate>
-                            Edit view
-                        </button>
-
-                        <select-button appearance="outline" accent="primary" placement="bottom-end">
+                        <select-button if.bind="activeListView.definition.id != null" appearance="outline" accent="primary" placement="bottom-end" fixed.bind="true">
 
                             <div slot="icon">
                                 <icon name="more"></icon>
                             </div>
 
-                            <item click.trigger="onSelectColumnsClick()" model="choose-list-columns" translate>
-                                Choose list columns
+                            <item click.trigger="onEditViewClick()" model="edit-view" translate>
+                                Edit view
+                            </item>
+
+                            <item click.trigger="onSelectColumnsClick()" model="edit-view-columns" translate>
+                                Edit view columns
                             </item>
 
                         </select-button>
