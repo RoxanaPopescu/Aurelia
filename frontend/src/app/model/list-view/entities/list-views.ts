@@ -1,10 +1,10 @@
-import { IListViewFilter } from "./list-view-filter";
+import { ListViewFilter } from "./list-view-filter";
 import { ListViewDefinition } from "./list-view-definition";
 
 /**
  * Represents a set of list view definitions, sourced from multiple collections.
  */
-export interface IListViews<TFilter extends IListViewFilter>
+export interface IListViews<TFilter extends ListViewFilter>
 {
     /**
      * The shared list views definitions.

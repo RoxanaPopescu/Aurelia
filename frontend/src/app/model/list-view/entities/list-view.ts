@@ -1,20 +1,22 @@
 import { DateTime } from "luxon";
-import { IPaging } from "shared/types";
+import { observable } from "aurelia-framework";
+import { AnyPropertyChangedHandler, IPaging } from "shared/types";
 import { Operation } from "shared/utilities";
-import { IListViewFilter } from "./list-view-filter";
+import { ListViewFilter } from "./list-view-filter";
 import { ListViewDefinition } from "./list-view-definition";
 
 /**
  * Represents an open list view.
  */
-export class ListView<TFilter extends IListViewFilter, TItem>
+export class ListView<TFilter extends ListViewFilter, TItem>
 {
     /**
      * Creates a new instance of the type.
      * @param listViewDefinition The list view definition.
      * @param paging The paging options to use, or undefined to use the default.
+     * @param onChangeFunc The function to call when a property change requires the list view to update.
      */
-    public constructor(listViewDefinition: ListViewDefinition<TFilter>, paging?: IPaging)
+    public constructor(listViewDefinition: ListViewDefinition<TFilter>, paging?: IPaging, onChangeFunc?: AnyPropertyChangedHandler)
     {
         this.definition = listViewDefinition;
 
@@ -23,16 +25,38 @@ export class ListView<TFilter extends IListViewFilter, TItem>
             page: 1,
             pageSize: 30
         };
+
+        this.update = onChangeFunc;
+
+        const updateFunc = (newValue, oldValue, propertyName) =>
+        {
+            this.hasUnsavedChanges = true;
+
+            if (this.update != null)
+            {
+                this.update(newValue, oldValue, `definition.${propertyName}`);
+            }
+        };
+
+        this.definition.update = updateFunc;
+        this.definition.filter.update = updateFunc;
     }
+
+    /**
+     * Called by the framework when an observable property changes.
+     */
+    public update: AnyPropertyChangedHandler | undefined;
 
     /**
      * The list view definition.
      */
+    @observable({ changeHandler: "update" })
     public definition: ListViewDefinition<TFilter>;
 
     /**
      * The paging to use for the list.
      */
+    @observable({ changeHandler: "update" })
     public paging: IPaging;
 
     /**

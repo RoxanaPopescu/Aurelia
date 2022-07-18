@@ -4,7 +4,7 @@ import { autoinject } from "aurelia-framework";
 import { LocalStateService } from "app/services/local-state";
 import { ListViewDefinition } from "../entities/list-view-definition";
 import { IListViewDefinitionInit } from "../entities/list-view-definition-init";
-import { IListViewFilter } from "../entities/list-view-filter";
+import { ListViewFilter } from "../entities/list-view-filter";
 import { ListViewType } from "../entities/list-view-type";
 import { createListViewDefinition } from "../factories/list-view-definition-factory";
 import { IListViews } from "../entities/list-views";
@@ -35,7 +35,7 @@ export class ListViewService
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved with the list view definitions.
      */
-    public async getAll<TFilter extends IListViewFilter>(type: ListViewType, signal?: AbortSignal): Promise<IListViews<TFilter>>
+    public async getAll<TFilter extends ListViewFilter>(type: ListViewType, signal?: AbortSignal): Promise<IListViews<TFilter>>
     {
         const result = await this._apiClient.get("views",
         {
@@ -61,7 +61,7 @@ export class ListViewService
      * @param listViewDefinition The list view definition to create.
      * @returns A promise that will be resolved with the created list view.
      */
-    public async create<TFilter extends IListViewFilter>(listViewDefinition: ListViewDefinition<TFilter>): Promise<ListViewDefinition<TFilter>>
+    public async create<TFilter extends ListViewFilter>(listViewDefinition: ListViewDefinition<TFilter>): Promise<ListViewDefinition<TFilter>>
     {
         if (listViewDefinition.shared)
         {

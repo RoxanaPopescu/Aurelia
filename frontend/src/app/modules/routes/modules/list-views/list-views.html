@@ -13,9 +13,13 @@
 
         <page-sidebar name="routes-list-page-sidebar" scroll="position.bind: activeListView.scrollPosition">
 
+            <let
+                filter.bind="activeListView.definition.filter">
+            </let>
+
             <page-section>
 
-                <search-input value.bind="textFilter & debounce: 200">
+                <search-input value.bind="filter.textFilter & debounce: 200">
 
                     <span slot="before" class="opacity-faded font-larger line-height-1">
                         <icon name="md-search"></icon>
@@ -35,7 +39,7 @@
                     Status
                 </div>
 
-                <toggle-group class="flex-column" value.bind="view.statusFilter">
+                <toggle-group class="flex-column" value.bind="filter.statusFilter">
 
                     <check-toggle label="after" model="not-started">
 
@@ -86,14 +90,14 @@
                     Assignment
                 </div>
 
-                <check-toggle label="after" value.bind="assignedDriver">
+                <check-toggle label="after" value.bind="filter.assignedDriver">
 
                     <div slot="heading" translate>
                         Assigned driver
                     </div>
 
                 </check-toggle>
-                <check-toggle label="after" value.bind="notAssignedDriver">
+                <check-toggle label="after" value.bind="filter.notAssignedDriver">
 
                     <div slot="heading" translate>
                         No driver assigned
@@ -101,7 +105,7 @@
 
                 </check-toggle>
 
-                <check-toggle label="after" value.bind="assignedVehicle">
+                <check-toggle label="after" value.bind="filter.assignedVehicle">
 
                     <div slot="heading" translate>
                         Assigned vehicle
@@ -109,7 +113,7 @@
 
                 </check-toggle>
 
-                <check-toggle label="after" value.bind="notAssignedVehicle">
+                <check-toggle label="after" value.bind="filter.notAssignedVehicle">
 
                     <div slot="heading" translate>
                         No vehicle assigned
@@ -129,7 +133,7 @@
 
                     <div>
 
-                        <date-input if.bind="!useRelativeStartTimeFromFilter" label="above" fixed.bind="true" value.bind="startTimeFromFilter" class="flex-grow">
+                        <date-input if.bind="!filter.useRelativeStartTimeFromFilter" label="above" fixed.bind="true" value.bind="filter.startTimeFromFilter" class="flex-grow">
 
                             <div slot="heading" translate>
                                 From
@@ -137,13 +141,13 @@
 
                         </date-input>
 
-                        <duration-input else label="above" fixed.bind="true" unit.bind="relativeStartTimeFromFilterUnit" value.bind="relativeStartTimeFromFilter" class="flex-grow">
+                        <duration-input else label="above" fixed.bind="true" unit.bind="filter.relativeStartTimeFromFilterUnit" value.bind="filter.relativeStartTimeFromFilter" class="flex-grow">
 
                             <div slot="heading" translate>
                                 From
                             </div>
 
-                            <select-input none.bind="false" slot="after" value.bind="relativeStartTimeFromFilterUnit"
+                            <select-input none.bind="false" slot="after" value.bind="filter.relativeStartTimeFromFilterUnit"
                                 style="width: 220rem; margin: -1rem -1rem -1rem -10rem;">
 
                                 <item model="hours" translate>
@@ -158,16 +162,16 @@
 
                         </duration-input>
 
-                        <check-toggle label="after" value.bind="useRelativeStartTimeFromFilter" class="margin-top">
+                        <check-toggle label="after" value.bind="filter.useRelativeStartTimeFromFilter" class="margin-top">
 
                             <div slot="heading">
-                                <template if.bind="useRelativeStartTimeFromFilter && relativeStartTimeFromFilterUnit === 'days'" translate>
+                                <template if.bind="filter.useRelativeStartTimeFromFilter && filter.relativeStartTimeFromFilterUnit === 'days'" translate>
                                     Relative to today
                                 </template>
-                                <template if.bind="useRelativeStartTimeFromFilter && relativeStartTimeFromFilterUnit === 'hours'" translate>
+                                <template if.bind="filter.useRelativeStartTimeFromFilter && filter.relativeStartTimeFromFilterUnit === 'hours'" translate>
                                     Relative to now
                                 </template>
-                                <template if.bind="!useRelativeStartTimeFromFilter || relativeStartTimeFromFilterUnit === null" translate>
+                                <template if.bind="!filter.useRelativeStartTimeFromFilter || filter.relativeStartTimeFromFilterUnit === null" translate>
                                     Relative
                                 </template>
                             </div>
@@ -178,7 +182,7 @@
 
                     <div>
 
-                        <date-input if.bind="!useRelativeStartTimeToFilter" label="above" fixed.bind="true" value.bind="startTimeToFilter" class="flex-grow">
+                        <date-input if.bind="!filter.useRelativeStartTimeToFilter" label="above" fixed.bind="true" value.bind="filter.startTimeToFilter" class="flex-grow">
 
                             <div slot="heading" translate>
                                 To
@@ -187,13 +191,13 @@
                         </date-input>
 
 
-                        <duration-input else label="above" fixed.bind="true" unit.bind="relativeStartTimeToFilterUnit" value.bind="relativeStartTimeToFilter" class="flex-grow">
+                        <duration-input else label="above" fixed.bind="true" unit.bind="filter.relativeStartTimeToFilterUnit" value.bind="filter.relativeStartTimeToFilter" class="flex-grow">
 
                             <div slot="heading" translate>
                                 To
                             </div>
 
-                            <select-input none.bind="false" slot="after" value.bind="relativeStartTimeToFilterUnit"
+                            <select-input none.bind="false" slot="after" value.bind="filter.relativeStartTimeToFilterUnit"
                                 style="width: 220rem; margin: -1rem -1rem -1rem -10rem;">
 
                                 <item model="hours" translate>
@@ -208,16 +212,16 @@
 
                         </duration-input>
 
-                        <check-toggle label="after" value.bind="useRelativeStartTimeToFilter" class="margin-top">
+                        <check-toggle label="after" value.bind="filter.useRelativeStartTimeToFilter" class="margin-top">
 
                             <div slot="heading">
-                                <template if.bind="useRelativeStartTimeToFilter && relativeStartTimeToFilterUnit === 'days'" translate>
+                                <template if.bind="filter.useRelativeStartTimeToFilter && filter.relativeStartTimeToFilterUnit === 'days'" translate>
                                     Relative to today
                                 </template>
-                                <template if.bind="useRelativeStartTimeToFilter && relativeStartTimeToFilterUnit === 'hours'" translate>
+                                <template if.bind="filter.useRelativeStartTimeToFilter && filter.relativeStartTimeToFilterUnit === 'hours'" translate>
                                     Relative to now
                                 </template>
-                                <template if.bind="!useRelativeStartTimeToFilter || relativeStartTimeToFilterUnit === null" translate>
+                                <template if.bind="!filter.useRelativeStartTimeToFilter || filter.relativeStartTimeToFilterUnit === null" translate>
                                     Relative
                                 </template>
                             </div>
@@ -236,7 +240,7 @@
                     Ordered vehicle type
                 </div>
 
-                <toggle-group class="flex-column" value.bind="orderedVehicleTypesFilter">
+                <toggle-group class="flex-column" value.bind="filter.orderedVehicleTypesFilter">
 
                     <check-toggle repeat.for="vehicleType of availableVehicleTypes" model.bind="vehicleType" label="after">
 
@@ -259,7 +263,7 @@
                 <tags-input
                     label="above"
                     filter="auto"
-                    value.bind="teamsFilter"
+                    value.bind="filter.teamsFilter"
                     class="margin-large-bottom">
 
                     <div slot="value">
@@ -294,7 +298,7 @@
 
                 <tags-input
                     label="above"
-                    value.bind="tagsFilter"
+                    value.bind="filter.tagsFilter"
                     new.bind="true"
                     class="margin-large-bottom">
                 </tags-input>
@@ -307,7 +311,7 @@
                     Pickup nearby
                 </div>
 
-                <address-input label="above" value.bind="pickupNearbyAddress" class="flex-basis-1-of-1">
+                <address-input label="above" value.bind="filter.pickupNearbyAddress" class="flex-basis-1-of-1">
 
                 </address-input>
 
@@ -321,7 +325,7 @@
 
                 <tags-input
                     label="above"
-                    value.bind="legacyOwnerIdsFilter"
+                    value.bind="filter.legacyOwnerIdsFilter"
                     new.bind="true"
                     class="margin-large-bottom">
                 </tags-input>
@@ -336,7 +340,7 @@
 
                 <div class="control-row">
 
-                    <date-input label="above" fixed.bind="true" value.bind="createdTimeFromFilter" class="flex-grow">
+                    <date-input label="above" fixed.bind="true" value.bind="filter.createdTimeFromFilter" class="flex-grow">
 
                         <div slot="heading" translate>
                             From
@@ -344,7 +348,7 @@
 
                     </date-input>
 
-                    <date-input label="above" fixed.bind="true" value.bind="createdTimeToFilter" class="flex-grow">
+                    <date-input label="above" fixed.bind="true" value.bind="filter.createdTimeToFilter" class="flex-grow">
 
                         <div slot="heading" translate>
                             To
@@ -817,7 +821,7 @@
                 </empty-indicator>
 
                 <div
-                    if.bind="activeListView != null && activeListView.operation.error == null && activeListView.itemCount > 0"
+                    if.bind="activeListView != null && activeListView.operation.error == null && activeListView.items.length > 0"
                     class="flex-row">
 
                     <data-table-pager

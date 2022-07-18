@@ -1,11 +1,11 @@
 import { DateTime } from "luxon";
 import { autoinject, computedFrom, observable } from "aurelia-framework";
-import { MapObject } from "shared/types";
+import { AbortError, MapObject } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState } from "shared/infrastructure";
 import { IScroll, ModalService } from "shared/framework";
 import { LocalStateService } from "app/services/local-state";
-import { ListViewService, ListViewDefinition, ListView, IListViewFilter } from "app/model/list-view";
+import { ListViewService, ListViewDefinition, ListView, ListViewFilter } from "app/model/list-view";
 import { ListViewType } from "app/model/list-view/entities/list-view-type";
 
 /**
@@ -50,7 +50,7 @@ export interface IListViewPageItems
  * Represents the page.
  */
 @autoinject
-export abstract class ListViewsPage<TListViewFilter extends IListViewFilter, TListItem>
+export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TListItem>
 {
     /**
      * Creates a new instance of the type.
@@ -181,6 +181,8 @@ export abstract class ListViewsPage<TListViewFilter extends IListViewFilter, TLi
                 {
                     const listView = new ListView<TListViewFilter, TListItem>(listViewDefinition);
                     this.openListViews.push(listView);
+
+                    listView.update = () => this.update(listView);
                 }
             }
         }
@@ -200,6 +202,8 @@ export abstract class ListViewsPage<TListViewFilter extends IListViewFilter, TLi
                     var listView = new ListView<TListViewFilter, TListItem>(listViewDefinition);
                     this.openListViews.unshift(listView);
                     this.activeListView = listView;
+
+                    listView.update = () => this.update(listView);
                 }
             }
         }
@@ -286,6 +290,8 @@ export abstract class ListViewsPage<TListViewFilter extends IListViewFilter, TLi
 
             // Ensure the local state is updated.
             this.updateLocalState();
+
+            listView.update = () => this.update(listView!);
         }
     }
 
@@ -389,7 +395,7 @@ export abstract class ListViewsPage<TListViewFilter extends IListViewFilter, TLi
         listView.operation = new Operation(async signal =>
         {
             // Capture the current fetched time, in case the request fails.
-            let fetchedDateTime = listView.fetchedDateTime;
+            let currentFetchedDateTime = listView.fetchedDateTime;
 
             try
             {
@@ -406,13 +412,18 @@ export abstract class ListViewsPage<TListViewFilter extends IListViewFilter, TLi
                 listView.items = result.items;
                 listView.itemCount = result.itemCount;
 
-                // Assign the captured start time of the request as the new fetched time.
-                fetchedDateTime = fetchStartTime;
-            }
-            finally
-            {
                 // Update the fetched time of the list view.
-                listView.fetchedDateTime = fetchedDateTime;
+                listView.fetchedDateTime = fetchStartTime;
+            }
+            catch (error)
+            {
+                if (!(error instanceof AbortError))
+                {
+                    // Revert the fetched time of the list view.
+                    listView.fetchedDateTime = currentFetchedDateTime;
+                }
+
+                throw error;
             }
 
             // Reset paging.

@@ -1,12 +1,12 @@
 import { ISorting } from "shared/types";
 import { ListViewType } from "./list-view-type";
-import { IListViewFilter } from "./list-view-filter";
+import { ListViewFilter } from "./list-view-filter";
 import { ListViewColumn } from "./list-view-column";
 
 /**
  * Represents the data needed to create a list view definition.
  */
-export interface IListViewDefinitionInit<TFilter extends IListViewFilter>
+export interface IListViewDefinitionInit<TFilter extends ListViewFilter>
 {
     /**
      * The type of the list view.

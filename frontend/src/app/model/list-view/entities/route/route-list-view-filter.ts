@@ -3,12 +3,12 @@ import { observable } from "aurelia-framework";
 import { Position, Address } from "app/model/shared";
 import { VehicleType } from "app/model/vehicle";
 import { RouteStatusSlug } from "../../../route";
-import { IListViewFilter } from "../list-view-filter";
+import { ListViewFilter } from "../list-view-filter";
 
 /**
  * Represents a filter for a list view presenting items of type `RouteInfo`.
  */
-export class RouteListViewFilter implements IListViewFilter
+export class RouteListViewFilter extends ListViewFilter
 {
     /**
      * Creates a new instance of the type.
@@ -16,6 +16,8 @@ export class RouteListViewFilter implements IListViewFilter
      */
     public constructor(data?: any)
     {
+        super();
+
         if (data != null)
         {
             this.textFilter = data.textFilter;
@@ -129,38 +131,38 @@ export class RouteListViewFilter implements IListViewFilter
     /**
      * True to use `relativeStartTimeFromFilter`, otherwise false.
      */
-    @observable({ changeHandler: "updateRelative" })
+    @observable({ changeHandler: "updateRelativeStartTimeFilter" })
     public useRelativeStartTimeFromFilter = false;
 
     /**
      * The min relative time for which routes should be shown.
      */
-    @observable({ changeHandler: "updateRelative" })
+    @observable({ changeHandler: "updateRelativeStartTimeFilter" })
     public relativeStartTimeFromFilter: Duration | undefined;
 
     /**
      * The unit in which `relativeStartTimeFromFilter` is specified.
      */
-    @observable({ changeHandler: "updateRelative" })
-    public relativeStartTimeFromFilterUnit: "days" | "hours" | undefined;
+    @observable({ changeHandler: "updateRelativeStartTimeFilter" })
+    public relativeStartTimeFromFilterUnit: "days" | "hours" | undefined = "hours";
 
     /**
      * True to use `relativeStartTimeToFilter`, otherwise false.
      */
-    @observable({ changeHandler: "updateRelative" })
+    @observable({ changeHandler: "updateRelativeStartTimeFilter" })
     public useRelativeStartTimeToFilter = false;
 
     /**
      * The max relative time for which routes should be shown.
      */
-    @observable({ changeHandler: "updateRelative" })
+    @observable({ changeHandler: "updateRelativeStartTimeFilter" })
     public relativeStartTimeToFilter: Duration | undefined;
 
     /**
      * The unit in which `relativeStartTimeToFilter` is specified.
      */
-    @observable({ changeHandler: "updateRelative" })
-    public relativeStartTimeToFilterUnit: "days" | "hours" | undefined;
+    @observable({ changeHandler: "updateRelativeStartTimeFilter" })
+    public relativeStartTimeToFilterUnit: "days" | "hours" | undefined = "hours";
 
     /**
      * The min created date for which routes should be shown.
@@ -218,10 +220,34 @@ export class RouteListViewFilter implements IListViewFilter
     }
 
     /**
-     * Called by the framework when a property changes.
+     * Updates the state of teh relative start time filter.
      */
-    protected update(newValue?: any, oldValue?: any, propertyName?: string): void
+    protected updateRelativeStartTimeFilter(newValue: any, oldValue: any, propertyName: string): void
     {
-        // TODO
+        const now = DateTime.local();
+
+        if (this.useRelativeStartTimeFromFilter && propertyName !== "relativeStartTimeFromFilterUnit")
+        {
+            const nowOrStartOfToday = this.relativeStartTimeFromFilterUnit === "days" ? now.startOf("day") : now;
+
+            this.startTimeFromFilter = this.relativeStartTimeFromFilter != null ? nowOrStartOfToday.plus(this.relativeStartTimeFromFilter) : undefined;
+        }
+        else if (this.relativeStartTimeFromFilter != null)
+        {
+            this.relativeStartTimeFromFilter = undefined;
+            this.startTimeFromFilter = undefined;
+        }
+
+        if (this.useRelativeStartTimeToFilter && propertyName !== "relativeStartTimeToFilterUnit")
+        {
+            const nowOrEndOfToday = this.relativeStartTimeToFilterUnit === "days" ? now.endOf("day") : now;
+
+            this.startTimeToFilter = this.relativeStartTimeToFilter != null ? nowOrEndOfToday.plus(this.relativeStartTimeToFilter) : undefined;
+        }
+        else if (this.relativeStartTimeToFilter != null)
+        {
+            this.relativeStartTimeToFilter = undefined;
+            this.startTimeToFilter = undefined;
+        }
     }
 }

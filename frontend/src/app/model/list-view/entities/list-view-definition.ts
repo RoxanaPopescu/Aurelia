@@ -1,12 +1,13 @@
-import { ISorting } from "shared/types";
+import { observable } from "aurelia-framework";
+import { AnyPropertyChangedHandler, ISorting } from "shared/types";
 import { ListViewType } from "./list-view-type";
 import { ListViewColumn } from "./list-view-column";
-import { IListViewFilter } from "./list-view-filter";
+import { ListViewFilter } from "./list-view-filter";
 
 /**
  * Represents the definition of a list view.
  */
-export abstract class ListViewDefinition<TFilter extends IListViewFilter>
+export abstract class ListViewDefinition<TFilter extends ListViewFilter>
 {
     /**
      * Creates a new instance of the type.
@@ -20,6 +21,12 @@ export abstract class ListViewDefinition<TFilter extends IListViewFilter>
             this.name = data.name;
         }
     }
+
+    /**
+     * Called by the framework when an observable property changes.
+     * Note that this will be assigned by the `ListView` class.
+     */
+    public update: AnyPropertyChangedHandler | undefined;
 
     /**
      * The type of the list view.
@@ -44,16 +51,19 @@ export abstract class ListViewDefinition<TFilter extends IListViewFilter>
     /**
      * The filter model.
      */
+    @observable({ changeHandler: "update" })
     public filter: TFilter;
 
     /**
      * The columns to be shown.
      */
+    @observable({ changeHandler: "update" })
     public columns: ListViewColumn[];
 
     /**
      * The sorting to use for the table.
      */
+    @observable({ changeHandler: "update" })
     public sorting: ISorting;
 
     /**
