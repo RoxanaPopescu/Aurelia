@@ -19,6 +19,7 @@ export class ListView<TFilter extends ListViewFilter, TItem>
     public constructor(listViewDefinition: ListViewDefinition<TFilter>, paging?: IPaging, onChangeFunc?: AnyPropertyChangedHandler)
     {
         this.definition = listViewDefinition;
+        this.hasUnsavedChanges = false;
 
         this.paging = paging ??
         {
@@ -28,9 +29,9 @@ export class ListView<TFilter extends ListViewFilter, TItem>
 
         this.update = onChangeFunc;
 
-        const updateFunc = (newValue, oldValue, propertyName) =>
+        const innerUpdateFunc = (newValue, oldValue, propertyName) =>
         {
-            this.hasUnsavedChanges = true;
+            this._hasUnsavedChanges = this._definitionJson != JSON.stringify(this.definition);
 
             if (this.update != null)
             {
@@ -38,9 +39,12 @@ export class ListView<TFilter extends ListViewFilter, TItem>
             }
         };
 
-        this.definition.update = updateFunc;
-        this.definition.filter.update = updateFunc;
+        this.definition.update = innerUpdateFunc;
+        this.definition.filter.update = innerUpdateFunc;
     }
+
+    private _definitionJson: string;
+    private _hasUnsavedChanges: boolean;
 
     /**
      * Called by the framework when an observable property changes.
@@ -51,7 +55,7 @@ export class ListView<TFilter extends ListViewFilter, TItem>
      * The list view definition.
      */
     @observable({ changeHandler: "update" })
-    public definition: ListViewDefinition<TFilter>;
+    public readonly definition: ListViewDefinition<TFilter>;
 
     /**
      * The paging to use for the list.
@@ -87,7 +91,19 @@ export class ListView<TFilter extends ListViewFilter, TItem>
     /**
      * True if the list view definition has unsaved changes, oterwise false.
      */
-    public hasUnsavedChanges = false;
+    public get hasUnsavedChanges(): boolean
+    {
+        return this._hasUnsavedChanges;
+    }
+    public set hasUnsavedChanges(value: boolean)
+    {
+        this._hasUnsavedChanges = value;
+
+        if (!this._hasUnsavedChanges)
+        {
+            this._definitionJson = JSON.stringify(this.definition);
+        }
+    }
 
     /**
      * The scroll position associated with the list view.
