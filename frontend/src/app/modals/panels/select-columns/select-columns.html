@@ -32,6 +32,22 @@
                 selection="multiple"
                 move.call="onMoveColumn(source, target)">
 
+                <data-table-headers>
+
+                    <data-table-cell>
+                        <span class="text-truncate" translate>
+                            Column
+                        </span>
+                    </data-table-cell>
+
+                    <data-table-cell>
+                        <span class="text-truncate" translate>
+                            Size
+                        </span>
+                    </data-table-cell>
+
+                </data-table-headers>
+
                 <data-table-row
                     repeat.for="columnInfo of columnInfos"
                     toggle.call="onToggleColumn(columnInfo.column, value)"
@@ -50,11 +66,22 @@
                             if.bind="columnInfo.selected"
                             appearance="outline"
                             value.bind="columnInfo.column.width"
-                            display-value.bind="columnInfo.column.width"
+                            display-value.bind="columnInfo.column.width.replace('fr', '').replace('-content', '') | case: 'sentence'"
                             none.bind="false"
                             fixed.bind="true">
-                            <item repeat.for="i of 5" model="${i + 1}fr">
-                                ${i + 1}fr
+                            <div>
+                                <item repeat.for="i of 10" model="${i + 1}fr">
+                                    ${i + 1}
+                                </item>
+                            </div>
+                            <item model="min-content">
+                                Min
+                            </item>
+                            <item model="max-content">
+                                Max
+                            </item>
+                            <item model="auto">
+                                Auto
                             </item>
                         </select-input>
                     </data-table-cell>

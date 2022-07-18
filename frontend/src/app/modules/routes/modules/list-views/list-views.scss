@@ -13,8 +13,20 @@ page[name="routes"] page[name="list-views"]
         border-bottom: none;
     }
 
-    view-preset-selector dropdown
+    page-tab-nav
     {
-        min-width: 250rem !important;
+        position: relative;
+        z-index: 10;
+    }
+
+    list-view-selector
+    {
+        padding-top: 10rem;
+        padding-bottom: 10rem;
+
+        dropdown
+        {
+            min-width: 160rem !important;
+        }
     }
 }

@@ -455,7 +455,7 @@
 
             <page-section>
 
-                <name-value-list class="font-small">
+                <name-value-list class="font-small" if.bind="activeListView != null && activeListView.operation.error == null">
 
                     <a click.trigger="update(activeListView)" translate>
                         Update
