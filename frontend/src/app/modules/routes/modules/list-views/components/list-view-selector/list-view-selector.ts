@@ -3,8 +3,8 @@ import { Placement } from "popper.js";
 import { CallbackWithContext } from "shared/types";
 import { ItemPickerCustomElement, ModalService } from "shared/framework";
 import { AccentColor } from "resources/styles";
-import { CreateListViewDialog } from "./modals/create-list-view/create-list-view";
-import { ConfirmDeleteListViewDialog } from "./modals/confirm-delete-list-view/confirm-delete-list-view";
+import { EditListViewDialog } from "../../modals/edit-list-view/edit-list-view";
+import { ConfirmDeleteListViewDialog } from "../../modals/confirm-delete-list-view/confirm-delete-list-view";
 import { createListViewDefinition, ListViewDefinition, ListViewService, ListViewType } from "app/model/list-view";
 
 /**
@@ -222,9 +222,11 @@ export class ListViewSelectorCustomElement
      */
     protected async onNewListViewDefinitionClick(): Promise<void>
     {
-        const result = await this._modalService.open(CreateListViewDialog,
+        let listViewDefinition = createListViewDefinition(this.type);
+
+        const result = await this._modalService.open(EditListViewDialog,
         {
-            type: this.type,
+            listViewDefinition: listViewDefinition,
             listViewDefinitions: this.listViewDefinitions
         })
         .promise;
@@ -234,13 +236,9 @@ export class ListViewSelectorCustomElement
             return;
         }
 
-        let listViewDefinition = createListViewDefinition(this.type);
-        listViewDefinition.name = result.name;
-        listViewDefinition.shared = result.shared;
-
         listViewDefinition = await this._listViewService.create(listViewDefinition);
 
-        if (result.shared)
+        if (listViewDefinition.shared)
         {
             this.listViewDefinitions.shared.push(listViewDefinition);
             this.listViewDefinitions.shared.sort((a, b) => a.name.localeCompare(b.name));

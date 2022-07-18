@@ -1,34 +1,13 @@
 import { autoinject } from "aurelia-framework";
 import { IValidation } from "shared/framework";
 import { Modal } from "shared/framework/services/modal";
-import { ListViewDefinition, ListViewType } from "app/model/list-view";
+import { ListViewDefinition } from "app/model/list-view";
 
 /**
- * Represents the result of a `CreateListViewDialog` instance.
+ * Represents the model for a `EditListViewDialog` instance.
  */
-export interface ICreateListViewDialogResult
+export interface IEditListViewDialogModel
 {
-    /**
-     * The name of the list view definition.
-     */
-    name: string;
-
-    /**
-     * True if the list view definition is shared with the organization, otherwise false.
-     */
-    shared: boolean;
-}
-
-/**
- * Represents the model for a `CreateListViewDialog` instance.
- */
-export interface ICreateListViewDialogModel
-{
-    /**
-     * The type of list view definition to create.
-     */
-    type: ListViewType;
-
     /**
      * The existing list view definitions, used for validating name uniqueness.
      */
@@ -37,13 +16,18 @@ export interface ICreateListViewDialogModel
         personal: ListViewDefinition<any>[];
         shared: ListViewDefinition<any>[];
     };
+
+    /**
+     * The list view definition to edit ro create.
+     */
+    listViewDefinition: ListViewDefinition<any>;
 }
 
 /**
- * Represents a modal dialog for creating a new list view.
+ * Represents a modal dialog for editing or creating a list view.
  */
 @autoinject
-export class CreateListViewDialog
+export class EditListViewDialog
 {
     /**
      * Creates a new instance of the type.
@@ -64,11 +48,6 @@ export class CreateListViewDialog
     protected validation: IValidation;
 
     /**
-     * The type of list view to create.
-     */
-    protected type: ListViewType;
-
-    /**
      * The existing list view definitions, used for validating name uniqueness.
      */
     protected listViewDefinitions:
@@ -76,6 +55,11 @@ export class CreateListViewDialog
         personal: ListViewDefinition<any>[];
         shared: ListViewDefinition<any>[];
     };
+
+    /**
+     * The list view definition to edit ro create.
+     */
+    protected listViewDefinition: ListViewDefinition<any>;
 
     /**
      * The name of the list view definition.
@@ -91,24 +75,27 @@ export class CreateListViewDialog
      * Called by the framework when the modal is deactivated.
      * @param model The model to use for the modal.
      */
-    public activate(model: ICreateListViewDialogModel): void
+    public activate(model: IEditListViewDialogModel): void
     {
-        this.type = model.type;
         this.listViewDefinitions = model.listViewDefinitions;
+        this.listViewDefinition = model.listViewDefinition;
+        this.name = model.listViewDefinition.name;
+        this.shared = model.listViewDefinition.shared;
     }
 
     /**
      * Called by the framework when the modal is deactivated.
-     * @returns An object representing the values provided by the user, or undefined if the dialog was cancelled.
+     * @returns True if the changes should be comitted, or false if the dialog was cancelled.
      */
-    public async deactivate(): Promise<ICreateListViewDialogResult | undefined>
+    public async deactivate(): Promise<boolean>
     {
-        if (!this._result)
+        if (this._result)
         {
-            return undefined;
+            this.listViewDefinition.name = this.name;
+            this.listViewDefinition.shared = this.shared;
         }
 
-        return { name: this.name, shared: this.shared };
+        return this._result;
     }
 
     /**

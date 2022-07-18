@@ -1,0 +1,97 @@
+<template>
+
+    <modal-backdrop close-modal.bind="true"></modal-backdrop>
+
+    <modal-dialog name="edit-list-view" accent="primary" close-button.bind="false" close-shortcut.bind="true" scroll validation validation.ref="validation">
+
+        <modal-header>
+
+            <h1 class="font-larger" tabindex="-1" autofocus="visible.bind: false">
+                <template if.bind="listViewDefinition.id == null" translate>
+                    New view
+                </template>
+                <template else translate>
+                    Edit view
+                </template>
+            </h1>
+
+        </modal-header>
+
+        <modal-section if.bind="listViewDefinition.id == null" class="margin-bottom" translate>
+            This will create a new view, with filters, table columns and sorting.
+        </modal-section>
+
+        <modal-section class="margin-half-bottom">
+
+            <text-input label="above" value.bind="name" autocomplete="off" autofocus>
+
+                <span slot="heading">
+                    View name
+                </span>
+
+                <div slot="validation">
+
+                    <required-validator
+                        value.bind="name">
+                    </required-validator>
+
+                    <unique-validator
+                        view-model.ref="uniqueValidator"
+                        active.bind="true"
+                        new-value.bind="name"
+                        old-value.bind="listViewDefinition.name"
+                        all-values.bind="shared ? listViewDefinitions.shared : listViewDefinitions.personal | map: 'name'">
+                    </unique-validator>
+
+                </div>
+
+            </text-input>
+
+            <template if.bind="listViewDefinition.id == null">
+
+                <check-toggle if-claims.bind="'edit-' + listViewDefinition.type + '-views'" label="after" value.bind="shared" class="margin-large-top">
+
+                    <div slot="heading" translate>
+                        Share this view with other users in the organization
+                    </div>
+
+                    <div slot="validation">
+
+                        <dependent-validator
+                            active.bind="true"
+                            set-validity.one-time="false"
+                            validators.bind="[uniqueValidator]">
+                        </dependent-validator>
+
+                    </div>
+
+                </check-toggle>
+
+            </template>
+
+        </modal-section>
+
+        <modal-footer>
+
+            <div class="button-row flex-push-right">
+
+                <button appearance="outline" accent="primary" click.delegate="onButtonClick(false)" translate>
+                    Cancel
+                </button>
+
+                <button appearance="solid" accent="primary" click.delegate="onButtonClick(true)">
+                    <template if.bind="listViewDefinition.id == null" translate>
+                        Create view
+                    </template>
+                    <template else translate>
+                        Done
+                    </template>
+                </button>
+
+            </div>
+
+        </modal-footer>
+
+    </modal-dialog>
+
+</template>

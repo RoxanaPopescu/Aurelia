@@ -2,18 +2,19 @@ import { autoinject } from "aurelia-framework";
 import { HistoryHelper, Log } from "shared/infrastructure";
 import { ModalService } from "shared/framework";
 import { LocalStateService } from "app/services/local-state";
+import { Fulfiller } from "app/model/outfit";
+import { OrganizationService, OrganizationTeam } from "app/model/organization";
 import { RouteAssignmentService, RouteInfo, RouteService } from "app/model/route";
 import { ListViewService, ListView, RouteListViewFilter, RouteListViewColumn } from "app/model/list-view";
+import { IdentityService, moverOrganizationId } from "app/services/identity";
+import { TeamsFilterService } from "app/services/teams-filter";
 import { SelectColumnsPanel } from "app/modals/panels/select-columns/select-columns";
-import { IListViewPageItems, IListViewPageParams, ListViewsPage } from "./list-views-base";
 import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
 import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
 import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
-import { OrganizationService, OrganizationTeam } from "app/model/organization";
-import { Fulfiller } from "app/model/outfit";
 import { AssignOrganizationPanel } from "../../modals/assign-organization/assign-organization";
-import { IdentityService, moverOrganizationId } from "app/services/identity";
-import { TeamsFilterService } from "app/services/teams-filter";
+import { EditListViewDialog } from "./modals/edit-list-view/edit-list-view";
+import { IListViewPageItems, IListViewPageParams, ListViewsPage } from "./list-views-base";
 
 /**
  * Represents the route parameters for the page.
@@ -347,9 +348,14 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
      */
     protected async onEditViewClick(): Promise<void>
     {
-        // const listView = this.activeListView!;
+        const listView = this.activeListView!;
 
-        // TODO
+        await this._modalService.open(EditListViewDialog,
+        {
+            listViewDefinition: listView.definition,
+            listViewDefinitions: this.listViewDefinitions
+        })
+        .promise;
     }
 
     /**
