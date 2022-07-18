@@ -92,11 +92,6 @@ export class ListView<TFilter extends ListViewFilter, TItem>
     public operation: Operation | undefined;
 
     /**
-     * The scroll position associated with the list view.
-     */
-    public scrollPosition: ScrollToOptions;
-
-    /**
      * True if the list view definition has unsaved changes, otherwise false.
      */
     public get hasChanges(): boolean

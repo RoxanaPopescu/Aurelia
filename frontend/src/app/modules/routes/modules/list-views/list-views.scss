@@ -8,15 +8,15 @@ page[name="routes"] page[name="list-views"]
         cursor: default;
     }
 
-    page-header
+    page-tab-nav
     {
-        border-bottom: none;
         position: relative;
         z-index: 50;
     }
 
-    page-tab-nav
+    page-header
     {
+        border-bottom: none;
         position: relative;
         z-index: 51;
     }
