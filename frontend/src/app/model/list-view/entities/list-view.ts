@@ -29,21 +29,6 @@ export class ListView<TFilter extends ListViewFilter, TItem>
         };
 
         this.update = onChangeFunc;
-
-        const innerUpdateFunc = (source, newValue, oldValue, propertyName) =>
-        {
-            this._hasChanges = this._unchangedDefinitionJson !== JSON.stringify(this.definition);
-
-            const propertyPath = `${source}.${propertyName}`;
-
-            if (this.update != null && propertyPath != "definition.name" && propertyPath != "definition.shared")
-            {
-                this.update(newValue, oldValue, propertyPath);
-            }
-        };
-
-        this.definition.update = innerUpdateFunc.bind(this, "definition");
-        this.definition.filter.update = innerUpdateFunc.bind(this, "definition.filter");
     }
 
     private _unchangedDefinitionJson: string;
@@ -57,13 +42,13 @@ export class ListView<TFilter extends ListViewFilter, TItem>
     /**
      * The list view definition.
      */
-    @observable({ changeHandler: "update" })
+    @observable({ changeHandler: "internalUpdate" })
     public definition: ListViewDefinition<TFilter>;
 
     /**
      * The paging to use for the list.
      */
-    @observable({ changeHandler: "update" })
+    @observable({ changeHandler: "internalUpdate" })
     public paging: IPaging;
 
     /**
@@ -118,4 +103,38 @@ export class ListView<TFilter extends ListViewFilter, TItem>
         this.definition = createListViewDefinition(unchangedDefinitionData);
         this.hasChanges = false;
     }
+
+    /**
+     * Handles internal property changes.
+     * @param newValue The new property value.
+     * @param oldValue The old property value.
+     * @param propertyName The name of the property that changed.
+     * @param source The source identifier, if relevant.
+     */
+    private internalUpdate = (newValue: any, oldValue: any, propertyName: string, source?: string) =>
+    {
+        this._hasChanges = this._unchangedDefinitionJson !== JSON.stringify(this.definition);
+
+        const propertyPath = source ? `${source}.${propertyName}` : propertyName;
+
+        if (newValue != null)
+        {
+            if (propertyPath == "definition")
+            {
+                this.definition.update = (...args) => this.internalUpdate(...args, "definition");
+            }
+
+            if (propertyPath == "definition" || propertyPath == "definition.filter")
+            {
+                this.definition.filter.update = (...args) => this.internalUpdate(...args, "definition.filter");
+            }
+        }
+
+        const shouldTriggerUpdate = propertyPath != "definition.name" && propertyPath != "definition.shared";
+
+        if (shouldTriggerUpdate && this.update != null)
+        {
+            this.update(newValue, oldValue, propertyPath);
+        }
+    };
 }

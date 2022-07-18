@@ -29,7 +29,7 @@ export type AsyncCallbackWithContext<TContext = {}, TResult = void> = (context: 
  * @param newValue The new property value.
  * @param oldValue The old property value.
  */
-export type PropertyChangedHandler = (newValue?: any, oldValue?: any) => void;
+export type PropertyChangedHandler = (newValue: any, oldValue: any) => void;
 
 /**
  * Represents a function in a component in Aurelia, called when any observed property changes.
@@ -37,4 +37,4 @@ export type PropertyChangedHandler = (newValue?: any, oldValue?: any) => void;
  * @param oldValue The old property value.
  * @param propertyName The name of the property that changed.
  */
-export type AnyPropertyChangedHandler = (newValue?: any, oldValue?: any, propertyName?: string) => void;
+export type AnyPropertyChangedHandler = (newValue: any, oldValue: any, propertyName: string) => void;
