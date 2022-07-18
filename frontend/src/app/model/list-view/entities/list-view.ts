@@ -4,6 +4,7 @@ import { AnyPropertyChangedHandler, IPaging } from "shared/types";
 import { Operation } from "shared/utilities";
 import { ListViewFilter } from "./list-view-filter";
 import { ListViewDefinition } from "./list-view-definition";
+import { createListViewDefinition } from "../factories/list-view-definition-factory";
 
 /**
  * Represents an open list view.
@@ -19,7 +20,7 @@ export class ListView<TFilter extends ListViewFilter, TItem>
     public constructor(listViewDefinition: ListViewDefinition<TFilter>, paging?: IPaging, onChangeFunc?: AnyPropertyChangedHandler)
     {
         this.definition = listViewDefinition;
-        this.hasUnsavedChanges = false;
+        this.hasChanges = false;
 
         this.paging = paging ??
         {
@@ -31,7 +32,7 @@ export class ListView<TFilter extends ListViewFilter, TItem>
 
         const innerUpdateFunc = (source, newValue, oldValue, propertyName) =>
         {
-            this._hasUnsavedChanges = this._definitionJson !== JSON.stringify(this.definition);
+            this._hasChanges = this._unchangedDefinitionJson !== JSON.stringify(this.definition);
 
             const propertyPath = `${source}.${propertyName}`;
 
@@ -45,8 +46,8 @@ export class ListView<TFilter extends ListViewFilter, TItem>
         this.definition.filter.update = innerUpdateFunc.bind(this, "definition.filter");
     }
 
-    private _definitionJson: string;
-    private _hasUnsavedChanges: boolean;
+    private _unchangedDefinitionJson: string;
+    private _hasChanges: boolean;
 
     /**
      * Called by the framework when an observable property changes.
@@ -91,24 +92,35 @@ export class ListView<TFilter extends ListViewFilter, TItem>
     public operation: Operation | undefined;
 
     /**
-     * True if the list view definition has unsaved changes, oterwise false.
+     * The scroll position associated with the list view.
      */
-    public get hasUnsavedChanges(): boolean
-    {
-        return this._hasUnsavedChanges;
-    }
-    public set hasUnsavedChanges(value: boolean)
-    {
-        this._hasUnsavedChanges = value;
+    public scrollPosition: ScrollToOptions;
 
-        if (!this._hasUnsavedChanges)
+    /**
+     * True if the list view definition has unsaved changes, otherwise false.
+     */
+    public get hasChanges(): boolean
+    {
+        return this._hasChanges;
+    }
+    public set hasChanges(value: boolean)
+    {
+        this._hasChanges = value;
+
+        if (!this._hasChanges)
         {
-            this._definitionJson = JSON.stringify(this.definition);
+            this._unchangedDefinitionJson = JSON.stringify(this.definition);
         }
     }
 
     /**
-     * The scroll position associated with the list view.
+     * Reverts any unsaved changes in the list view definition.
      */
-    public scrollPosition: ScrollToOptions;
+    public revertChanges(): void
+    {
+        const unchangedDefinitionData = JSON.parse(this._unchangedDefinitionJson);
+
+        this.definition = createListViewDefinition(unchangedDefinitionData);
+        this.hasChanges = false;
+    }
 }

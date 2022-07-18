@@ -380,9 +380,17 @@
 
                     <toolbar class="flex-push-right">
 
-                        <button if.bind="activeListView.definition.id == null || activeListView.hasUnsavedChanges" appearance="solid" accent="primary" click.trigger="onSaveViewClick()" translate>
-                            Save view changes
-                        </button>
+                        <div if.bind="activeListView.definition.id == null || activeListView.hasChanges" class="split-button">
+
+                            <button appearance="solid" accent="primary" click.trigger="onSaveViewChangesClick()" translate>
+                                Save view changes
+                            </button>
+
+                            <button appearance="solid" accent="primary" click.trigger="onRevertViewChangesClick()" translate>
+                                <icon name="md-undo" class="font-large" inline>
+                            </button>
+
+                        </div>
 
                         <select-button if.bind="activeListView.definition.id != null" appearance="outline" accent="primary" placement="bottom-end" fixed.bind="true">
 
@@ -414,7 +422,7 @@
                         ${listView.definition.name}
                     </span>
 
-                    <span if.bind="listView.hasUnsavedChanges" accent="attention">&nbsp;*</span>
+                    <span if.bind="listView.hasChanges" accent="attention">&nbsp;*</span>
 
                     <div class="page-tab-buttons">
 

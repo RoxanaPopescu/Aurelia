@@ -322,23 +322,35 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
     }
 
     /**
-     * Called when the `Save view` button is clicked.
-     * Saves the changes to the current view.
+     * Called when the `Save view changes` button is clicked.
+     * Saves the changes to the active list view definition.
      * @returns A promise that will be resolved when the operation completes.
      */
-    protected async onSaveViewClick(): Promise<void>
+    protected async onSaveViewChangesClick(): Promise<void>
     {
         const listView = this.activeListView!;
 
         try
         {
             listView.definition = await this._listViewService.update(listView.definition);
-            listView.hasUnsavedChanges = false;
+            listView.hasChanges = false;
         }
         catch (error)
         {
             Log.error("Could not save the view changes", error);
         }
+    }
+
+    /**
+     * Called when the `Revert view changes` button is clicked.
+     * Reverts the changes to the active list view definition.
+     * @returns A promise that will be resolved when the operation completes.
+     */
+    protected async onRevertViewChangesClick(): Promise<void>
+    {
+        const listView = this.activeListView!;
+
+        listView.revertChanges();
     }
 
     /**
