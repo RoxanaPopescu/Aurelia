@@ -401,7 +401,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
             listView.definition = await this._listViewService.update(listView.definition);
             listView.hasChanges = false;
 
-            listView.update = () => this.update(listView!);
+            listView.update = () => this.update(listView);
         }
         catch (error)
         {
@@ -560,7 +560,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
     /**
      * Attaches this view model as the observer for the specified list view,
      * ensuring the `update` method will be called when changes occur.
-     * @param listView
+     * @param listView The list view to observe.
      */
     private observeListView(listView: ListView<TListViewFilter, TListItem>): void
     {
