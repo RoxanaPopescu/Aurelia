@@ -72,6 +72,11 @@ export class ListView<TFilter extends ListViewFilter, TItem>
     public expandedItemId: string | undefined;
 
     /**
+     * The currently selected items.
+     */
+    public selectedItems: TItem[] = [];
+
+    /**
      * The most recent operation, if any.
      */
     public operation: Operation | undefined;

@@ -95,7 +95,25 @@ export class OrdersModule
                 title: routeTitles.daoRelabel,
                 nav: false,
                 icon: "orders"
-            }
+            },
+            ...
+            ENVIRONMENT.name !== "production" ?
+            [
+                {
+                    name: "list-views",
+                    route: "list-views",
+                    moduleId: PLATFORM.moduleName("./modules/list-views/list-views"),
+                    settings:
+                    {
+                        claims:
+                        [
+                            "view-orders"
+                        ]
+                    },
+                    nav: true,
+                    icon: "orders"
+                }
+            ] : []
         ]);
     }
 }

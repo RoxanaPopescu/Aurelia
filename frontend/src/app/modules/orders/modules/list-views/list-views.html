@@ -1,0 +1,601 @@
+<template>
+    <require from="app/components/page-tab-nav/page-tab-nav"></require>
+    <require from="app/components/page-tab-nav/page-tab"></require>
+    <require from="app/components/name-value-pair/name-value-pair"></require>
+    <require from="app/components/name-value-list/name-value-list"></require>
+    <require from="app/components/check-filter/check-filter"></require>
+    <require from="app/components/check-filter/check-filter-item"></require>
+    <require from="app/modules/list-views/components/list-view-selector/list-view-selector"></require>
+    <require from="app/modules/list-views/list-views.scss"></require>
+
+    <page name="list-views">
+
+        <page-sidebar name="orders-list-page-sidebar" scroll>
+
+            <let
+                filter.bind="activeListView.definition.filter">
+            </let>
+
+            <page-section>
+
+                <search-input value.bind="filter.textFilter & debounce: 200">
+
+                    <span slot="before" class="opacity-faded font-larger line-height-1">
+                        <icon name="md-search"></icon>
+                    </span>
+
+                    <span slot="placeholder" translate>
+                        Filter…
+                    </span>
+
+                </search-input>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Date range
+                </div>
+
+                <div class="control-row">
+
+                    <div>
+
+                        <date-input if.bind="!filter.useRelativeFromDateFilter" label="above" fixed.bind="true" value.bind="filter.fromDateFilter" class="flex-grow">
+
+                            <div slot="heading" translate>
+                                From
+                            </div>
+
+                        </date-input>
+
+                        <duration-input else label="above" fixed.bind="true" unit.bind="filter.relativeFromDateFilterUnit" value.bind="filter.relativeFromDateFilter" class="flex-grow">
+
+                            <div slot="heading" translate>
+                                From
+                            </div>
+
+                            <select-input none.bind="false" slot="after" value.bind="filter.relativeFromDateFilterUnit"
+                                style="width: 220rem; margin: -1rem -1rem -1rem -10rem;">
+
+                                <item model="hours" translate>
+                                    hours
+                                </item>
+
+                                <item model="days" translate>
+                                    days
+                                </item>
+
+                            </select-input>
+
+                        </duration-input>
+
+                        <check-toggle label="after" value.bind="filter.useRelativeFromDateFilter" class="margin-top">
+
+                            <div slot="heading">
+                                <template if.bind="filter.useRelativeFromDateFilter && filter.relativeFromDateFilterUnit === 'days'" translate>
+                                    Relative to today
+                                </template>
+                                <template if.bind="filter.useRelativeFromDateFilter && filter.relativeFromDateFilterUnit === 'hours'" translate>
+                                    Relative to now
+                                </template>
+                                <template if.bind="!filter.useRelativeFromDateFilter || filter.relativeFromDateFilterUnit === null" translate>
+                                    Relative
+                                </template>
+                            </div>
+
+                        </check-toggle>
+
+                    </div>
+
+                    <div>
+
+                        <date-input if.bind="!filter.useRelativeToDateFilter" label="above" fixed.bind="true" value.bind="filter.toDateFilter" class="flex-grow">
+
+                            <div slot="heading" translate>
+                                To
+                            </div>
+
+                        </date-input>
+
+                        <duration-input else label="above" fixed.bind="true" unit.bind="filter.relativeToDateFilterUnit" value.bind="filter.relativeToDateFilter" class="flex-grow">
+
+                            <div slot="heading" translate>
+                                To
+                            </div>
+
+                            <select-input none.bind="false" slot="after" value.bind="filter.relativeToDateFilterUnit"
+                                style="width: 220rem; margin: -1rem -1rem -1rem -10rem;">
+
+                                <item model="hours" translate>
+                                    hours
+                                </item>
+
+                                <item model="days" translate>
+                                    days
+                                </item>
+
+                            </select-input>
+
+                        </duration-input>
+
+                        <check-toggle label="after" value.bind="filter.useRelativeToDateFilter" class="margin-top">
+
+                            <div slot="heading">
+                                <template if.bind="filter.useRelativeToDateFilter && filter.relativeToDateFilterUnit === 'days'" translate>
+                                    Relative to today
+                                </template>
+                                <template if.bind="filter.useRelativeToDateFilter && filter.relativeToDateFilterUnit === 'hours'" translate>
+                                    Relative to now
+                                </template>
+                                <template if.bind="!filter.useRelativeToDateFilter || filter.relativeToDateFilterUnit === null" translate>
+                                    Relative
+                                </template>
+                            </div>
+
+                        </check-toggle>
+
+                    </div>
+
+                </div>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Order status
+                </div>
+
+                <toggle-group class="flex-column" value.bind="filter.statusFilter">
+
+                    <check-toggle label="after" model="placed">
+
+                        <div slot="heading" translate>
+                            Placed
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="ready">
+
+                        <div slot="heading" translate>
+                            Ready
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="delivered">
+
+                        <div slot="heading" translate>
+                            Delivered
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="cancelled">
+
+                        <div slot="heading" translate>
+                            Cancelled
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="deleted">
+
+                        <div slot="heading" translate>
+                            Deleted
+                        </div>
+
+                    </check-toggle>
+
+                </toggle-group>
+
+            </page-section>
+
+            <page-section toggle.bind="true">
+
+                <div slot="header" translate>
+                    Tags
+                </div>
+
+                <tags-input
+                    label="above"
+                    value.bind="filter.orderTagsFilter"
+                    new.bind="true"
+                    class="margin-large-bottom">
+                </tags-input>
+
+            </page-section>
+
+        </page-sidebar>
+
+        <page-content scroll scroll.ref="scroll">
+
+            <page-header scroll-fade>
+
+                <div class="flex-row">
+
+                    <h1 class="font-largest">
+                        <path-nav>
+
+                            <span translate>
+                                Orders
+                            </span>
+
+                        </path-nav>
+                    </h1>
+
+                    <toolbar class="flex-push-right">
+
+                        <div if.bind="activeListView.selectedItems.length > 0" class="opacity-faded" translate>
+                            ${activeListView.selectedItems.length} ${activeListView.selectedItems.length | plural: "order" : "orders"} selected
+                        </div>
+
+                        <button
+                            translate
+                            disabled.bind="activeListView.selectedItems.length === 0"
+                            if.bind="activeListView.selectedItems.length > 0"
+                            appearance="outline"
+                            accent="primary"
+                            if-claims="edit-routes"
+                            click.trigger="onCreateRouteClick(activeListView.selectedItems)"
+                            model="create-route">
+                            Create route
+                        </button>
+
+                        <button
+                            translate
+                            disabled.bind="activeListView.selectedItems.length === 0"
+                            if.bind="activeListView.selectedItems.length > 0"
+                            appearance="outline"
+                            accent="primary"
+                            if-claims="edit-routes"
+                            click.trigger="onBulkActionClick(activeListView.selectedItems)"
+                            model="create-route"
+                            if-environment="development">
+                            Change date
+                        </button>
+
+                        <button
+                            translate
+                            disabled.bind="activeListView.selectedItems.length === 0"
+                            if.bind="activeListView.selectedItems.length > 0"
+                            appearance="outline"
+                            accent="primary"
+                            if-claims="edit-routes"
+                            click.trigger="onBulkActionClick(activeListView.selectedItems)"
+                            model="create-route"
+                            if-environment="development">
+                            Change pickup address
+                        </button>
+
+                        <button
+                            translate
+                            disabled.bind="activeListView.selectedItems.length === 0"
+                            if.bind="activeListView.selectedItems.length > 0"
+                            appearance="outline"
+                            accent="negative"
+                            if-claims="edit-routes"
+                            click.trigger="onBulkActionClick(activeListView.selectedItems)"
+                            model="create-route">
+                            Cancel orders
+                        </button>
+
+                        <button if.bind="activeListView.selectedItems.length == 0" appearance="outline" accent="primary" class="flex-row" click.trigger="onImportOrdersClick()">
+                            <icon name="add" class="font-larger margin-right"></icon>
+                            <span translate>
+                                Import orders
+                            </span>
+                        </button>
+
+                        <div if.bind="activeListView != null && activeListView.definition.id == null || activeListView.hasChanges" class="split-button">
+
+                            <button appearance="solid" accent="primary" click.trigger="onSaveListViewChangesClick()" translate>
+                                Save view changes
+                            </button>
+
+                            <button appearance="solid" accent="primary" click.trigger="onRevertListViewChangesClick()" translate>
+                                <icon name="md-undo" class="font-large" inline>
+                            </button>
+
+                        </div>
+
+                        <template if-claims.bind="activeListView.definition.shared ? 'edit-' + activeListView.definition.type + '-views' : undefined">
+
+                            <select-button if.bind="activeListView.definition.id != null" appearance="outline" accent="primary" placement="bottom-end" fixed.bind="true">
+
+                                <div slot="icon">
+                                    <icon name="more"></icon>
+                                </div>
+
+                                <item click.trigger="onEditListViewColumnsClick()" model="edit-view-columns" translate>
+                                    Edit columns
+                                </item>
+
+                                <item click.trigger="onEditListViewClick()" model="edit-view" translate>
+                                    Edit view
+                                </item>
+
+                                <item click.trigger="onDeleteListViewClick()" model="edit-view-columns" translate>
+                                    Delete view
+                                </item>
+
+                            </select-button>
+
+                        </template>
+
+                    </toolbar>
+
+                </div>
+
+            </page-header>
+
+            <page-tab-nav appearance="tabs" value.bind="activeListView" scroll-fade="0.3">
+
+                <page-tab repeat.for="listView of openListViews" model.bind="listView">
+
+                    <span class="text-truncate" title.bind="listView.definition.name">
+                        ${listView.definition.name}
+                    </span>
+
+                    <span if.bind="listView.hasChanges" accent="attention">&nbsp;*</span>
+
+                    <div class="page-tab-buttons">
+
+                        <button
+                            appearance="none"
+                            accent="primary"
+                            title.translate="Close view"
+                            click.delegate="onCloseViewClick(listView)">
+                            <icon name="close" inline></icon>
+                        </button>
+
+                    </div>
+
+                </page-tab>
+
+                <list-view-selector
+                    class="page-tab-nav-add-button"
+                    appearance="none"
+                    accent="primary"
+                    placement="bottom-end"
+                    fixed.bind="true"
+                    type="order"
+                    list-view-definitions.bind="listViewDefinitions"
+                    open-list-view.call="onOpenListView(listViewDefinition)"
+                    close-list-view.call="onCloseListView(listViewDefinition)">
+
+                    <span slot="label">
+                        <icon name="plus-small" inline class="margin-right"></icon>
+                        <span if.bind="activeListView == null" translate>
+                            Add view
+                        </span>
+                    </span>
+
+                    <span slot="icon"></span>
+
+                </list-view-selector>
+
+            </page-tab-nav>
+
+            <page-section>
+
+                <name-value-list class="font-small" if.bind="activeListView != null && activeListView.operation.error == null">
+
+                    <a click.trigger="update(activeListView)" translate>
+                        Update
+                    </a>
+
+                    <name-value-pair class="opacity-faded">
+
+                        <div slot="name" translate>
+                            Last updated
+                        </div>
+
+                        <div slot="value">
+                            <template if.bind="activeListView.fetchedDateTime != null">
+                                ${activeListView.fetchedDateTime | relativeTime}
+                            </template>
+                            <span else empty-value></span>
+                        </div>
+
+                    </name-value-pair>
+
+                </name-value-list>
+
+                <data-table
+                    if.bind="activeListView != null"
+                    appearance="rows"
+                    sorting.bind="activeListView.definition.sorting"
+                    selection="multiple"
+                    toggle-all.call="onToggleAllItems(value)"
+                    style.bind="tableStyle"
+                    busy.bind="activeListView.operation.pending || pickupNearbyOperation.pending"
+                    class="margin-top">
+
+                    <data-table-headers>
+
+                        <template repeat.for="column of activeListView.definition.columns">
+
+                            <data-table-cell if.bind="column.visibility === 'visible'" name.bind="column.property">
+                                <span class="text-truncate">
+                                    ${column.shortName}
+                                </span>
+                            </data-table-cell>
+
+                        </template>
+
+                        <data-table-cell if.bind="showIconsColumn">
+                            <!-- Icons -->
+                        </data-table-cell>
+
+                    </data-table-headers>
+
+                    <template repeat.for="order of activeListView.items">
+
+                        <data-table-row
+                            accent.bind="order.criticality.accent"
+                            selected.bind="isItemSelected(order)"
+                            toggle.call="onToggleItem(order, value)"
+                            href="/orders/details/${order.slug}">
+
+                            <template repeat.for="column of $parent.activeListView.definition.columns">
+
+                                <data-table-cell if.bind="column.slug === 'slug'">
+                                    <span class="text-truncate" empty-value>
+                                        ${order.slug}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'tags'">
+                                    <span class="text-truncate" empty-value>
+                                        ${order.tags | list: 'short' : 'unit'}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'pickup-date'">
+                                    <span class="text-truncate" empty-value>
+                                        ${order.earliestPickupDate | date: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'pickup-time'">
+                                    <span class="text-truncate">
+                                        ${order.earliestPickupTime | time: 'narrow' : false} – ${order.latestPickupTime | time: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'pickup-address'">
+                                    <span class="text-truncate" empty-value>
+                                        ${order.pickupLocation.address}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'delivery-date'">
+                                    <span class="text-truncate" empty-value>
+                                        ${order.earliestDeliveryDate | date: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'delivery-time'">
+                                    <span class="text-truncate">
+                                        ${order.earliestDeliveryTime | time: 'narrow' : false} – ${order.latestDeliveryTime | time: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'delivery-address'">
+                                    <span class="text-truncate" empty-value>
+                                        ${order.deliveryLocation.address}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'status'">
+                                    <span class="text-truncate" empty-value>
+                                        ${order.status.name}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'relational-id'">
+                                    <span class="text-truncate" empty-value>
+                                        ${order.relationalId}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'colli-count'">
+                                    <span class="text-truncate" empty-value>
+                                        ${order.actualColliInfo.colliCount}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'colli-total-weight'">
+                                    <span class="text-truncate" empty-value>
+                                        ${order.actualColliInfo.totalWeight | number}kg
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'colli-total-volume'">
+                                    <span class="text-truncate" empty-value>
+                                        ${order.actualColliInfo.totalVolume | number}m³
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'estimated-colli-count'">
+                                    <span class="text-truncate" empty-value>
+                                        ${order.estimatedColliInfo.colliCount}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'estimated-colli-total-weight'">
+                                    <span class="text-truncate" empty-value>
+                                        ${order.estimatedColliInfo.totalWeight | number}kg
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'estimated-colli-total-volume'">
+                                    <span class="text-truncate" empty-value>
+                                        ${order.estimatedColliInfo.totalVolume | number}m³
+                                    </span>
+                                </data-table-cell>
+
+                            </template>
+
+                            <data-table-cell if.bind="showIconsColumn" align="right">
+
+                                <div class="icon-row">
+
+                                    <!-- Currently no icons here -->
+
+                                </div>
+
+                            </data-table-cell>
+
+                        </data-table-row>
+
+                    </template>
+
+                </data-table>
+
+                <empty-indicator
+                    if.bind="activeListView == null"
+                    class="margin-largest">
+                    <div slot="heading" translate>No view selected</div>
+                </empty-indicator>
+
+                <busy-indicator
+                    if.bind="activeListView != null && activeListView.operation.error == null && activeListView.items == null"
+                    class="margin-largest">
+                </busy-indicator>
+
+                <empty-indicator
+                    if.bind="activeListView != null && activeListView.operation.error == null && activeListView.items.length == 0"
+                    class="margin-largest">
+                    <div slot="heading" translate>No results</div>
+                </empty-indicator>
+
+                <empty-indicator
+                    if.bind="activeListView != null && activeListView.operation.error != null"
+                    class="margin-largest">
+                    <div slot="heading" translate>Could not fetch results</div>
+                </empty-indicator>
+
+                <div
+                    if.bind="activeListView != null && activeListView.operation.error == null && activeListView.items.length > 0"
+                    class="flex-row">
+
+                    <data-table-pager
+                        class="flex-push-right margin-top"
+                        value.bind="activeListView.paging"
+                        list-size.bind="activeListView.itemCount">
+                    </data-table-pager>
+
+                </div>
+
+            </page-section>
+
+        </page-content>
+
+    </page>
+
+</template>

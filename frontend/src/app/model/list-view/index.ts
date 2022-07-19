@@ -13,5 +13,5 @@ export * from "./entities/route/route-list-view-definition";
 export * from "./entities/route/route-list-view-filter";
 
 export * from "./entities/order/order-list-view-column";
-// export * from "./entities/order/order-list-view-definition";
-// export * from "./entities/order/order-list-view-filter";
+export * from "./entities/order/order-list-view-definition";
+export * from "./entities/order/order-list-view-filter";
