@@ -194,7 +194,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
                     const listView = new ListView<TListViewFilter, TListItem>(listViewDefinition);
                     this.openListViews.push(listView);
 
-                    listView.update = () => this.update(listView);
+                    this.observeListView(listView);
                 }
             }
         }
@@ -215,7 +215,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
                     this.openListViews.unshift(listView);
                     this.activeListView = listView;
 
-                    listView.update = () => this.update(listView);
+                    this.observeListView(listView);
                 }
             }
         }
@@ -495,8 +495,9 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
     /**
      * Updates the page by fetching the items to present.
      * @param listView The list view to update.
+     * @param propertyPath The property path identifying the property in the list view that changed, if any.
      */
-    protected update(listView: ListView<TListViewFilter, TListItem>): void
+    protected update(listView: ListView<TListViewFilter, TListItem>, propertyPath?: string): void
     {
         // Abort any existing operation.
         listView.operation?.abort();
@@ -537,7 +538,10 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
             }
 
             // Reset paging.
-            listView.paging.page = 1;
+            if (propertyPath !== "paging")
+            {
+                listView.paging.page = 1;
+            }
 
             // Reset scroll.
             this.scroll?.reset();
@@ -552,4 +556,14 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
      * @returns A promise that will be resolved with a model representing the items to present.
      */
     protected abstract fetch(listView: ListView<TListViewFilter, TListItem>, signal: AbortSignal): Promise<IListViewPageItems>;
+
+    /**
+     * Attaches this view model as the observer for the specified list view,
+     * ensuring the `update` method will be called when changes occur.
+     * @param listView
+     */
+    private observeListView(listView: ListView<TListViewFilter, TListItem>): void
+    {
+        listView.update = (newValue: any, oldValue: any, propertyName: string) => this.update(listView, propertyName);
+    }
 }
