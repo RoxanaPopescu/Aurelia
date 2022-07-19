@@ -1,4 +1,5 @@
 import { autoinject } from "aurelia-framework";
+import { Router } from "aurelia-router";
 import { HistoryHelper, Log } from "shared/infrastructure";
 import { ModalService } from "shared/framework";
 import { LocalStateService } from "app/services/local-state";
@@ -31,6 +32,7 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
 {
     /**
      * Creates a new instance of the type.
+     * @param router The `Router` instance.
      * @param historyHelper The `HistoryHelper` instance.
      * @param modalService The `ModalService` instance.
      * @param localStateService The `LocalStateService` instance.
@@ -42,6 +44,7 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
      * @param identityService The `IdentityService` instance.
      */
     public constructor(
+        router: Router,
         historyHelper: HistoryHelper,
         modalService: ModalService,
         localStateService: LocalStateService,
@@ -52,7 +55,7 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
         organizationService: OrganizationService,
         identityService: IdentityService)
     {
-        super(historyHelper, modalService, localStateService, listViewService);
+        super(router, historyHelper, modalService, localStateService, listViewService);
 
         this._routeService = routeService;
         this._routeAssignmentService = routeAssignmentService;

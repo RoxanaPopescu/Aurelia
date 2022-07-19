@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
 import { autoinject, computedFrom, observable } from "aurelia-framework";
+import { Router } from "aurelia-router";
 import { AbortError, MapObject } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
@@ -56,19 +57,22 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
 {
     /**
      * Creates a new instance of the type.
+     * @param router The `Router` instance.
      * @param historyHelper The `HistoryHelper` instance.
      * @param modalService The `ModalService` instance.
      * @param localStateService The `LocalStateService` instance.
      * @param listViewService The `ListViewService` instance.
      */
-    public constructor(historyHelper: HistoryHelper, modalService: ModalService, localStateService: LocalStateService, listViewService: ListViewService)
+    public constructor(router: Router, historyHelper: HistoryHelper, modalService: ModalService, localStateService: LocalStateService, listViewService: ListViewService)
     {
+        this._router = router;
         this._historyHelper = historyHelper;
         this._modalService = modalService;
         this._localStateService = localStateService;
         this._listViewService = listViewService;
     }
 
+    protected readonly _router: Router;
     protected readonly _historyHelper: HistoryHelper;
     protected readonly _modalService: ModalService;
     protected readonly _localStateService: LocalStateService;
@@ -325,6 +329,10 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
      */
     protected activeListViewChanged(): void
     {
+        // Set the title associated with the route config.
+        this._router.title = this.activeListView?.definition.name;
+        this._router.updateTitle();
+
         // If a list view is active, fetch the items to present.
 
         if (this.activeListView != null && this.activeListView.items == null)

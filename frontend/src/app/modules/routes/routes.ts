@@ -89,7 +89,6 @@ export class RoutesModule
                             "view-routes"
                         ]
                     },
-                    title: "List - Views",
                     nav: true,
                     icon: "routes"
                 },
