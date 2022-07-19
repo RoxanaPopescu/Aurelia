@@ -30,30 +30,11 @@ button[appearance="outline"]
     border-color: var(--palette-color-neutral) !important;
 }
 
-tab-nav
-{
-    /**
-     * The color of the border of tabs.
-     */
-     --tab-nav-border-color: var(--palette-color-neutral);
-
-    /**
-     * The width of the border of tabs.
-     */
-     --tab-nav-border-width: var(--border-width-thin);
-}
-
+tab-nav,
 page-tab-nav
 {
-
     /// The width of the border of the component.
-    --tab-nav-border-width: var(--border-width-thin);
-
-    /// The radius of the border of the component.
-    --tab-nav-border-radius: var(--border-radius-medium);
-
-    /// The color of the border of the component.
-    --tab-nav-border-color: var(--palette-color-neutral);
+    --tab-nav-border-width: var(--border-width-thin) !important;
 }
 
 body

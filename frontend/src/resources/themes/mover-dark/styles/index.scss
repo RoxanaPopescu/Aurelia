@@ -81,28 +81,6 @@ app-sidebar
     }
 }
 
-tab-nav
-{
-    /// The color of the border of tabs.
-    --tab-nav-border-color: var(--palette-color-neutral);
-}
-
-page-tab-nav
-{
-
-    /// The width of the border of the component.
-    --tab-nav-border-width: var(--border-width-medium);
-
-    /// The radius of the border of the component.
-    --tab-nav-border-radius: var(--border-radius-medium);
-
-    /// The color of the border of the component.
-    --tab-nav-border-color: var(--palette-color-neutral);
-
-    /// The color of the border of the component.
-    --tab-surface-color--active: var(--palette-color-neutral);
-}
-
 button[appearance="outline"]
 {
     // border-color: var(--palette-color-neutral) !important;
