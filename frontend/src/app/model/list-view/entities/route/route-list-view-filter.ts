@@ -32,8 +32,8 @@ export class RouteListViewFilter extends ListViewFilter
             this.startTimeToFilter = data.startTimeToFilter != null
                 ? DateTime.fromISO(data.startTimeToFilter, { setZone: true })
                 : undefined;
-            this.relativeStartTimeFromFilterUnit = data.relativeStartTimeFromFilterUnit;
-            this.relativeStartTimeToFilterUnit = data.relativeStartTimeToFilterUnit;
+            this.relativeStartTimeFromFilterUnit = data.relativeStartTimeFromFilterUnit || "hours";
+            this.relativeStartTimeToFilterUnit = data.relativeStartTimeToFilterUnit || "hours";
             this.tagsFilter = data.tagsFilter;
             this.orderedVehicleTypesFilter = data.orderedVehicleTypesFilter?.map(slug => VehicleType.getBySlug(slug));
             this.legacyOwnerIdsFilter = data.legacyOwnerIdsFilter;
@@ -53,8 +53,6 @@ export class RouteListViewFilter extends ListViewFilter
                 ? Duration.fromISO(data.relativeStartTimeToFilter)
                 : undefined;
             this.teamsFilter = data.teamsFilter;
-
-            return;
         }
     }
 
@@ -114,7 +112,7 @@ export class RouteListViewFilter extends ListViewFilter
      * The tags for which routes should be shown.
      */
     @observable({ changeHandler: "update" })
-    public tagsFilter: any[] = [];
+    public tagsFilter: any[];
 
     /**
      * The min date for which routes should be shown.

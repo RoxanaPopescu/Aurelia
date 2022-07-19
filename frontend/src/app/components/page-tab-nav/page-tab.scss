@@ -63,6 +63,11 @@ page-tab-nav
             display: flex;
             margin-left: auto;
 
+            icon
+            {
+                font-size: var(--font-large-font-size);
+            }
+
             button
             {
                 margin-left: var(--size-inline-spacing-large);

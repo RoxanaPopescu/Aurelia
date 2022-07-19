@@ -401,7 +401,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
             listView.definition = await this._listViewService.update(listView.definition);
             listView.hasChanges = false;
 
-            listView.update = () => this.update(listView);
+            this.observeListView(listView);
         }
         catch (error)
         {
