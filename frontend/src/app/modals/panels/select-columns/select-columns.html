@@ -1,5 +1,6 @@
 <template>
 
+    <require from="app/components/info-icon/info-icon"></require>
     <require from="./select-columns.scss"></require>
 
     <modal-backdrop close="all"></modal-backdrop>
@@ -19,9 +20,26 @@
 
         <modal-header scroll-fade>
 
-            <h1 class="font-largest" translate>
+            <h1 class="font-largest margin-bottom" translate>
                 Choose list columns
             </h1>
+
+            <div>
+
+                <span translate>
+                    Here you can choose the columns to show in the list,
+                    their order, and their width relative to each other.
+                </span>
+
+                <info-icon position="left">
+                    <div slot="body" translate>
+                        For example, setting the width of two columns to 1 and 2,
+                        or 50 and 100, would produce the same result;
+                        one column will be twice as wide as the other.
+                    </div>
+                </info-icon>
+
+            </div>
 
         </modal-header>
 
