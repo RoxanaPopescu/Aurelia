@@ -1,12 +1,12 @@
 import { DateTime } from "luxon";
 import { autoinject, computedFrom, observable } from "aurelia-framework";
 import { Router } from "aurelia-router";
-import { AbortError, MapObject } from "shared/types";
+import { AbortError, MapObject, Type } from "shared/types";
 import { Operation } from "shared/utilities";
 import { HistoryHelper, IHistoryState, Log } from "shared/infrastructure";
 import { IScroll, ModalService } from "shared/framework";
 import { LocalStateService } from "app/services/local-state";
-import { ListViewService, ListViewDefinition, ListView, ListViewFilter, RouteListViewColumn, ListViewType } from "app/model/list-view";
+import { ListViewService, ListViewDefinition, ListView, ListViewFilter, ListViewType, ListViewColumn } from "app/model/list-view";
 import { SelectColumnsPanel } from "app/modals/panels/select-columns/select-columns";
 import { EditListViewDialog } from "./modals/edit-list-view/edit-list-view";
 import { ConfirmDeleteListViewDialog } from "./modals/confirm-delete-list-view/confirm-delete-list-view";
@@ -17,7 +17,7 @@ import { ConfirmDeleteListViewDialog } from "./modals/confirm-delete-list-view/c
 export interface IListViewPageParams
 {
     /**
-     * The ID of the view to open and activate.
+     * The ID of the list view to open and activate.
      */
     view?: string;
 }
@@ -83,6 +83,12 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
      * Implementations must override this, to specify the actual type.
      */
     protected abstract readonly listViewType: ListViewType;
+
+    /**
+     * The type of list views presented by the page.
+     * Implementations must override this, to specify the actual type.
+     */
+    protected abstract readonly listViewColumnType: Type<ListViewColumn>;
 
     /**
      * The list view definitions.
@@ -416,7 +422,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
 
     /**
      * Called when the `Edit view` button is clicked.
-     * Opens the modal for editing the view.
+     * Opens the modal for editing the list view.
      * @returns A promise that will be resolved when the operation completes.
      */
     protected async onEditListViewClick(): Promise<void>
@@ -463,15 +469,16 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
 
     /**
      * Called when the `Edit view columns` button is clicked.
-     * Opens the modal for selecting the columns to see.
+     * Opens the modal for editing the list view columns.
      */
     protected async onEditListViewColumnsClick(): Promise<void>
     {
         const listView = this.activeListView!;
+        const columnType = this.listViewColumnType as any;
 
         const model =
         {
-            availableColumns: Object.keys(RouteListViewColumn.values).map(slug => new RouteListViewColumn(slug as any)),
+            availableColumns: Object.keys(columnType.values).map(slug => new columnType(slug as any)),
             selectedColumns: listView.definition.columns
         };
 
@@ -479,7 +486,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
 
         if (result != null)
         {
-            listView.definition.columns = result as RouteListViewColumn[];
+            listView.definition.columns = result;
 
             this.update(listView);
         }

@@ -6,7 +6,7 @@ import { LocalStateService } from "app/services/local-state";
 import { Fulfiller } from "app/model/outfit";
 import { OrganizationService, OrganizationTeam } from "app/model/organization";
 import { RouteAssignmentService, RouteInfo, RouteService } from "app/model/route";
-import { ListViewService, ListView, RouteListViewFilter } from "app/model/list-view";
+import { ListViewService, ListView, RouteListViewFilter, RouteListViewColumn } from "app/model/list-view";
 import { IdentityService, moverOrganizationId } from "app/services/identity";
 import { TeamsFilterService } from "app/services/teams-filter";
 import { IListViewPageItems, IListViewPageParams, ListViewsPage } from "app/modules/list-views/list-views";
@@ -77,6 +77,11 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
      * The type of list views presented by the page.
      */
     protected readonly listViewType = "route";
+
+    /**
+     * The type of list views presented by the page.
+     */
+    protected readonly listViewColumnType = RouteListViewColumn;
 
     /**
      * The teams associated with the organization,
