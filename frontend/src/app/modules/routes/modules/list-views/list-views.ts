@@ -9,12 +9,11 @@ import { RouteAssignmentService, RouteInfo, RouteService } from "app/model/route
 import { ListViewService, ListView, RouteListViewFilter } from "app/model/list-view";
 import { IdentityService, moverOrganizationId } from "app/services/identity";
 import { TeamsFilterService } from "app/services/teams-filter";
+import { IListViewPageItems, IListViewPageParams, ListViewsPage } from "app/modules/list-views/list-views";
 import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
 import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
 import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
 import { AssignOrganizationPanel } from "../../modals/assign-organization/assign-organization";
-
-import { IListViewPageItems, IListViewPageParams, ListViewsPage } from "app/modules/list-views/list-views";
 
 /**
  * Represents the route parameters for the page.
@@ -166,6 +165,16 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
         }
 
         return this.teams!.find(t => t.id === teamId)?.name;
+    }
+
+    /**
+     * Called when an item in the list is clicked.
+     * Toggles the expanded state of the item.
+     * @param item The item that was clicked.
+     */
+    protected onItemClick(item: RouteInfo): void
+    {
+        this.activeListView!.expandedItemId = this.activeListView!.expandedItemId === item.id ? undefined : item.id;
     }
 
     /**

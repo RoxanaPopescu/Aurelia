@@ -382,17 +382,6 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
     }
 
     /**
-     * Called when an item in the list is clicked.
-     * Toggles the expanded state of the item.
-     * Implementations may override this, to change this behavior.
-     * @param item The item that was clicked.
-     */
-    protected onItemClick(item: IListViewPageItem): void
-    {
-        this.activeListView!.expandedItemId = this.activeListView!.expandedItemId === item.id ? undefined : item.id;
-    }
-
-    /**
      * Called when the `Save view changes` button is clicked.
      * Saves the changes to the active list view definition.
      * @returns A promise that will be resolved when the operation completes.

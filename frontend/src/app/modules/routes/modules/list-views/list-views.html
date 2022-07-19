@@ -381,7 +381,7 @@
 
                     <toolbar class="flex-push-right">
 
-                        <div if.bind="activeListView.definition.id == null || activeListView.hasChanges" class="split-button">
+                        <div if.bind="activeListView != null && activeListView.definition.id == null || activeListView.hasChanges" class="split-button">
 
                             <button appearance="solid" accent="primary" click.trigger="onSaveListViewChangesClick()" translate>
                                 Save view changes
@@ -459,9 +459,10 @@
                     close-list-view.call="onCloseListView(listViewDefinition)">
 
                     <span slot="label">
-
                         <icon name="plus-small" inline class="margin-right"></icon>
-
+                        <span if.bind="activeListView == null" translate>
+                            Add view
+                        </span>
                     </span>
 
                     <span slot="icon"></span>
