@@ -329,7 +329,7 @@ export class ListPage
     {
         const model =
         {
-            availableColumns: Object.keys(OrderListViewColumn.values).map(slug => new OrderListViewColumn(slug as any)),
+            availableColumns: Object.keys(OrderListViewColumn.values).filter(slug => slug !== "unknown").map(slug => new OrderListViewColumn(slug as any)),
             selectedColumns: this.columns
         };
 

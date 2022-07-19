@@ -478,7 +478,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
 
         const model =
         {
-            availableColumns: Object.keys(columnType.values).map(slug => new columnType(slug as any)),
+            availableColumns: Object.keys(columnType.values).filter(slug => slug !== "unknown").map(slug => new columnType(slug as any)),
             selectedColumns: listView.definition.columns
         };
 
