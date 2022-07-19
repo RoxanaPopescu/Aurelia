@@ -360,7 +360,7 @@
                     class="page-tab-nav-add-button"
                     appearance="none"
                     accent="primary"
-                    placement="bottom-end"
+                    placement.bind="openListViews.length < 1 ? 'bottom-start' : 'bottom-end'"
                     fixed.bind="true"
                     type="order"
                     list-view-definitions.bind="listViewDefinitions"
