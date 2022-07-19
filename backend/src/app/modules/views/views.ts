@@ -52,6 +52,28 @@ export class ViewsModule extends AppModule
     }
 
     /**
+     * Updates the specified view, associated with the current organization.
+     * @param context.request.body The data representing the view to update.
+     * @returns
+     * - 200: The updated view.
+     */
+    public "POST /v2/views/:id/update" = async (context: AppContext) =>
+    {
+        const type = context.request.body?.type;
+
+        await context.authorize(`edit-${type}-views`);
+
+        const result = await this.apiClient.post(`views/${context.params.id}/update`,
+        {
+            headers: { "x-organization": context.user?.organizationId },
+            body: { ...context.request.body, state: JSON.stringify(context.request.body.state) }
+        });
+
+        context.response.body = { ...result.data, state: JSON.parse(result.data.state) };
+        context.response.status = 200;
+    }
+
+    /**
      * Deletes the specified view, associated with the current organization.
      * @param context.params.id The ID of the view to delete.
      * @param context.request.body.type The type of views to get.
