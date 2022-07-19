@@ -30,7 +30,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         {
             name: listColumn.id,
             shortName: listColumn.id,
-            width: "1.2fr",
+            width: "60fr",
             property: "slug",
             visibility: "visible"
         },
@@ -38,7 +38,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         {
             name: listColumn.reference,
             shortName: listColumn.reference,
-            width: "1.2fr",
+            width: "60fr",
             property: "reference",
             visibility: "visible"
         },
@@ -46,7 +46,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         {
             name: listColumn.owner,
             shortName: listColumn.owner,
-            width: "1fr",
+            width: "50fr",
             property: "owner",
             visibility: "visible"
         },
@@ -54,7 +54,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         {
             name: listColumn.startDate,
             shortName: listColumn.startDate,
-            width: "1fr",
+            width: "50fr",
             property: "planned-time-start",
             visibility: "visible"
         },
@@ -62,7 +62,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         {
             name: listColumn.startAddress,
             shortName: listColumn.startAddress,
-            width: "1.3fr",
+            width: "65fr",
             property: "start-address",
             visibility: "visible"
         },
@@ -70,7 +70,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         {
             name: listColumn.endDate,
             shortName: listColumn.endDate,
-            width: "1fr",
+            width: "50fr",
             property: "planned-time-end",
             visibility: "visible"
         },
@@ -78,7 +78,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         {
             name: listColumn.endAddress,
             shortName: listColumn.endAddress,
-            width: "1.3fr",
+            width: "65fr",
             property: "end-address",
             visibility: "visible"
         },
@@ -86,7 +86,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         {
             name: listColumn.tags,
             shortName: listColumn.tags,
-            width: "1.3fr",
+            width: "65fr",
             property: undefined,
             visibility: "visible"
         },
@@ -110,7 +110,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         {
             name: listColumn.vehicle,
             shortName: listColumn.vehicle,
-            width: "1fr",
+            width: "50fr",
             property: undefined,
             visibility: "visible"
         },
@@ -118,7 +118,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         {
             name: listColumn.driver,
             shortName: listColumn.driver,
-            width: "1fr",
+            width: "50fr",
             property: undefined,
             visibility: "visible"
         },
@@ -134,7 +134,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         {
             name: listColumn.executor,
             shortName: listColumn.executor,
-            width: "1fr",
+            width: "50fr",
             property: undefined,
             visibility: "visible"
         },

@@ -69,20 +69,20 @@
                             display-value.bind="columnInfo.column.width.replace('fr', '').replace('-content', '') | case: 'sentence'"
                             none.bind="false"
                             fixed.bind="true">
-                            <div>
-                                <item repeat.for="i of 10" model="${i + 1}fr">
-                                    ${i + 1}
-                                </item>
-                            </div>
+                            <item model="auto">
+                                Auto
+                            </item>
                             <item model="min-content">
                                 Min
                             </item>
                             <item model="max-content">
                                 Max
                             </item>
-                            <item model="auto">
-                                Auto
-                            </item>
+                            <div>
+                                <item repeat.for="i of 100" model="${i + 1}fr">
+                                    ${i + 1}
+                                </item>
+                            </div>
                         </select-input>
                     </data-table-cell>
 
