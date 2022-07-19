@@ -19,6 +19,7 @@ export class ItemCustomElement
     private readonly _element: HTMLElement;
     private _itemPicker: ItemPickerCustomElement | undefined;
     private _itemPickerElement: HTMLElement;
+    private _itemPickerItemsElement: HTMLElement;
 
     /**
      * True if this item represents the focused value of the item picker, otherwise false.
@@ -75,6 +76,7 @@ export class ItemCustomElement
     {
         // Find the closest item picker.
         this._itemPickerElement = this._element.closest("item-picker") as HTMLElement;
+        this._itemPickerItemsElement = this._element.closest(".items-picker-items") as HTMLElement;
 
         // Ensure the item picker element was found.
         if (this._itemPickerElement == null)
@@ -149,7 +151,7 @@ export class ItemCustomElement
      */
     public scrollIntoView(): void
     {
-        const top = this._element.offsetTop - this._element.parentElement!.offsetTop;
+        const top = this._element.offsetTop - this._itemPickerItemsElement.offsetTop;
 
         if (top < this._itemPickerElement.scrollTop)
         {
