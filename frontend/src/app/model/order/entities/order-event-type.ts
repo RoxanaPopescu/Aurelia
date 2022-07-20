@@ -344,6 +344,20 @@ export class OrderEventType
             description: eventDescriptions.orderRemovedFromRoute,
             accent: "positive",
             stopType: undefined
+        },
+        "order-delivery-address-updated":
+        {
+            name: eventTitles.orderDeliveryAddressUpdated,
+            description: eventDescriptions.orderDeliveryAddressUpdated,
+            accent: "positive",
+            stopType: undefined
+        },
+        "order-delivery-date-updated":
+        {
+            name: eventTitles.orderDeliveryDateUpdated,
+            description: eventDescriptions.orderDeliveryDateUpdated,
+            accent: "positive",
+            stopType: undefined
         }
     };
 }

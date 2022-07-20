@@ -39,5 +39,7 @@
     "authorityToLeaveRevoked": "Authority to leave was revoked",
     "notificationOrderSmsSent": "An SMS notification was sent to the receiver",
     "notificationOrderEmailSent": "An Email notification was sent to the receiver",
-    "orderRemovedFromRoute": "The order was removed from a route"
+    "orderRemovedFromRoute": "The order was removed from a route",
+    "orderDeliveryAddressUpdated": "The delivery address of the order was updated",
+    "orderDeliveryDateUpdated": "The delivery date of the order was updated"
 }

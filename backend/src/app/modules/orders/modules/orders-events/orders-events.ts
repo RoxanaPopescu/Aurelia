@@ -100,6 +100,14 @@ export class OrdersEventsModule extends AppModule
                     {
                         eventType: "order-removed-from-route",
                         version: "1.0"
+                    },
+                    {
+                        eventType: "order-delivery-address-updated",
+                        version: "1.0"
+                    },
+                    {
+                        eventType: "order-delivery-date-updated",
+                        version: "1.0"
                     }
                 ],
                 ownerId: context.request.body.consignorId,
