@@ -488,7 +488,16 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
         {
             listView.definition.columns = result;
 
-            this.update(listView);
+            // HACK: Force a re-rendering of the entire view, to prevent a bug in Aurelia's `repeat.for` behavior.
+
+            this.activeListView = undefined;
+
+            setTimeout(() =>
+            {
+                this.activeListView = listView;
+
+                this.update(listView);
+            });
         }
     }
 
