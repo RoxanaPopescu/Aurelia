@@ -79,20 +79,6 @@ export class RoutesModule
             ENVIRONMENT.name !== "production" ?
             [
                 {
-                    name: "list-views",
-                    route: "list-views",
-                    moduleId: PLATFORM.moduleName("./modules/list-views/list-views"),
-                    settings:
-                    {
-                        claims:
-                        [
-                            "view-routes"
-                        ]
-                    },
-                    nav: true,
-                    icon: "routes"
-                },
-                {
                     name: "templates-list",
                     route: "templates",
                     moduleId: PLATFORM.moduleName("./modules/templates/list/list"),
@@ -140,6 +126,20 @@ export class RoutesModule
                     title: routeTitles.test,
                     nav: false,
                     icon: "settings"
+                },
+                {
+                    name: "list-views",
+                    route: "list-views",
+                    moduleId: PLATFORM.moduleName("./modules/list-views/list-views"),
+                    settings:
+                    {
+                        claims:
+                        [
+                            "view-routes"
+                        ]
+                    },
+                    nav: true,
+                    icon: "routes"
                 }
             ] : []
         ]);

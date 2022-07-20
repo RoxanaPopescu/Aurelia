@@ -29,19 +29,17 @@ export class OrderListViewFilter extends ListViewFilter
                 ? DateTime.fromISO(data.toDateFilter, { setZone: true })
                 : undefined;
 
-            this.relativeFromDateFilterUnit = data.relativeFromDateFilterUnit;
+            this.relativeFromDateFilterUnit = data.relativeFromDateFilterUnit || "hours";
             this.useRelativeFromDateFilter = data.relativeFromDateFilter != null;
             this.relativeFromDateFilter = data.relativeFromDateFilter
                 ? Duration.fromISO(data.relativeFromDateFilter)
                 : undefined;
 
-            this.relativeToDateFilterUnit = data.relativeToDateFilterUnit;
+            this.relativeToDateFilterUnit = data.relativeToDateFilterUnit || "hours";
             this.useRelativeToDateFilter = data.relativeToDateFilter != null;
             this.relativeToDateFilter = data.relativeToDateFilter
                 ? Duration.fromISO(data.relativeToDateFilter)
                 : undefined;
-
-            return;
         }
     }
 
@@ -61,13 +59,13 @@ export class OrderListViewFilter extends ListViewFilter
      * The consignors for which orders should be shown.
      */
     @observable({ changeHandler: "update" })
-    public consignorFilter: any[] = [];
+    public consignorFilter: any[];
 
     /**
      * The order tags for which orders should be shown.
      */
     @observable({ changeHandler: "update" })
-    public orderTagsFilter: any[] = [];
+    public orderTagsFilter: any[];
 
     /**
      * The min date for which orders should be shown.
@@ -97,7 +95,7 @@ export class OrderListViewFilter extends ListViewFilter
      * The unit in which `relativeFromDateFilter` is specified.
      */
     @observable({ changeHandler: "updateRelativeStartTimeFilter" })
-    public relativeFromDateFilterUnit: "days" | "hours" | undefined;
+    public relativeFromDateFilterUnit: "days" | "hours" | undefined = "hours";
 
     /**
      * True to use `relativeToDateFilter`, otherwise false.
@@ -115,7 +113,7 @@ export class OrderListViewFilter extends ListViewFilter
      * The unit in which `relativeToDateFilter` is specified.
      */
     @observable({ changeHandler: "updateRelativeStartTimeFilter" })
-    public relativeToDateFilterUnit: "days" | "hours" | undefined;
+    public relativeToDateFilterUnit: "days" | "hours" | undefined = "hours";
 
     /**
      * Gets the data representing this instance.

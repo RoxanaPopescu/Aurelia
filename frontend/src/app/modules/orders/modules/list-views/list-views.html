@@ -296,7 +296,7 @@
                                 Save view changes
                             </button>
 
-                            <button appearance="solid" accent="primary" click.trigger="onRevertListViewChangesClick()" translate>
+                            <button title.translate="Revert changes" appearance="solid" accent="primary" click.trigger="onRevertListViewChangesClick()" translate>
                                 <icon name="md-undo" class="font-large" inline>
                             </button>
 
@@ -304,7 +304,7 @@
 
                         <template if-claims.bind="activeListView.definition.shared ? 'edit-' + activeListView.definition.type + '-views' : undefined">
 
-                            <select-button if.bind="activeListView.definition.id != null" appearance="outline" accent="primary" placement="bottom-end" fixed.bind="true">
+                            <select-button if.bind="activeListView.definition.id != null" title.translate="More options" appearance="outline" accent="primary" placement="bottom-end" fixed.bind="true">
 
                                 <div slot="icon">
                                     <icon name="more"></icon>
@@ -367,8 +367,8 @@
                     open-list-view.call="onOpenListView(listViewDefinition)"
                     close-list-view.call="onCloseListView(listViewDefinition)">
 
-                    <span slot="label">
-                        <icon name="plus-small" inline class="margin-right"></icon>
+                    <span slot="label" title.translate="Add view">
+                        <icon name="add" class="margin-right font-larger"></icon>
                         <span if.bind="activeListView == null" translate>
                             Add view
                         </span>

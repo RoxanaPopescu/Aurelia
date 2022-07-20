@@ -6,6 +6,7 @@ import { LocalStateService } from "app/services/local-state";
 import { Fulfiller } from "app/model/outfit";
 import { OrganizationService, OrganizationTeam } from "app/model/organization";
 import { RouteAssignmentService, RouteInfo, RouteService } from "app/model/route";
+import { VehicleType } from "app/model/vehicle";
 import { ListViewService, ListView, RouteListViewFilter, RouteListViewColumn } from "app/model/list-view";
 import { IdentityService, moverOrganizationId } from "app/services/identity";
 import { TeamsFilterService } from "app/services/teams-filter";
@@ -61,6 +62,8 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
         this._organizationService = organizationService;
         this._identityService = identityService;
         this.teamsFilterService = teamsFilterService;
+
+        this.availableVehicleTypes = VehicleType.getAll();
     }
 
     private readonly _routeService: RouteService;
@@ -88,6 +91,11 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
      * or undefined if not yet fetched.
      */
     protected teams: OrganizationTeam[] | undefined;
+
+    /**
+     * The available vehicle types.
+     */
+    protected availableVehicleTypes: VehicleType[];
 
     /**
      * HACK:
