@@ -14,13 +14,9 @@
 
         <page-sidebar name="routes-list-page-sidebar" scroll>
 
-            <let
-                filter.bind="activeListView.definition.filter">
-            </let>
-
             <page-section>
 
-                <search-input value.bind="filter.textFilter & debounce: 200">
+                <search-input value.bind="activeListView.definition.filter.textFilter & debounce: 200">
 
                     <span slot="before" class="opacity-faded font-larger line-height-1">
                         <icon name="md-search"></icon>
@@ -40,7 +36,7 @@
                     Status
                 </div>
 
-                <toggle-group class="flex-column" value.bind="filter.statusFilter">
+                <toggle-group class="flex-column" value.bind="activeListView.definition.filter.statusFilter">
 
                     <check-toggle label="after" model="not-started">
 
@@ -91,14 +87,14 @@
                     Assignment
                 </div>
 
-                <check-toggle label="after" value.bind="filter.assignedDriver">
+                <check-toggle label="after" value.bind="activeListView.definition.filter.assignedDriver">
 
                     <div slot="heading" translate>
                         Assigned driver
                     </div>
 
                 </check-toggle>
-                <check-toggle label="after" value.bind="filter.notAssignedDriver">
+                <check-toggle label="after" value.bind="activeListView.definition.filter.notAssignedDriver">
 
                     <div slot="heading" translate>
                         No driver assigned
@@ -106,7 +102,7 @@
 
                 </check-toggle>
 
-                <check-toggle label="after" value.bind="filter.assignedVehicle">
+                <check-toggle label="after" value.bind="activeListView.definition.filter.assignedVehicle">
 
                     <div slot="heading" translate>
                         Assigned vehicle
@@ -114,7 +110,7 @@
 
                 </check-toggle>
 
-                <check-toggle label="after" value.bind="filter.notAssignedVehicle">
+                <check-toggle label="after" value.bind="activeListView.definition.filter.notAssignedVehicle">
 
                     <div slot="heading" translate>
                         No vehicle assigned
@@ -134,7 +130,7 @@
 
                     <div>
 
-                        <date-input if.bind="!filter.useRelativeStartTimeFromFilter" label="above" fixed.bind="true" value.bind="filter.startTimeFromFilter" class="flex-grow">
+                        <date-input if.bind="!activeListView.definition.filter.useRelativeStartTimeFromFilter" label="above" fixed.bind="true" value.bind="activeListView.definition.filter.startTimeFromFilter" class="flex-grow">
 
                             <div slot="heading" translate>
                                 From
@@ -142,13 +138,13 @@
 
                         </date-input>
 
-                        <duration-input else label="above" fixed.bind="true" unit.bind="filter.relativeStartTimeFromFilterUnit" value.bind="filter.relativeStartTimeFromFilter" class="flex-grow">
+                        <duration-input else label="above" fixed.bind="true" unit.bind="activeListView.definition.filter.relativeStartTimeFromFilterUnit" value.bind="activeListView.definition.filter.relativeStartTimeFromFilter" class="flex-grow">
 
                             <div slot="heading" translate>
                                 From
                             </div>
 
-                            <select-input none.bind="false" slot="after" value.bind="filter.relativeStartTimeFromFilterUnit"
+                            <select-input none.bind="false" slot="after" value.bind="activeListView.definition.filter.relativeStartTimeFromFilterUnit"
                                 style="width: 220rem; margin: -1rem -1rem -1rem -10rem;">
 
                                 <item model="hours" translate>
@@ -163,16 +159,16 @@
 
                         </duration-input>
 
-                        <check-toggle label="after" value.bind="filter.useRelativeStartTimeFromFilter" class="margin-top">
+                        <check-toggle label="after" value.bind="activeListView.definition.filter.useRelativeStartTimeFromFilter" class="margin-top">
 
                             <div slot="heading">
-                                <template if.bind="filter.useRelativeStartTimeFromFilter && filter.relativeStartTimeFromFilterUnit === 'days'" translate>
+                                <template if.bind="activeListView.definition.filter.useRelativeStartTimeFromFilter && activeListView.definition.filter.relativeStartTimeFromFilterUnit === 'days'" translate>
                                     Relative to today
                                 </template>
-                                <template if.bind="filter.useRelativeStartTimeFromFilter && filter.relativeStartTimeFromFilterUnit === 'hours'" translate>
+                                <template if.bind="activeListView.definition.filter.useRelativeStartTimeFromFilter && activeListView.definition.filter.relativeStartTimeFromFilterUnit === 'hours'" translate>
                                     Relative to now
                                 </template>
-                                <template if.bind="!filter.useRelativeStartTimeFromFilter || filter.relativeStartTimeFromFilterUnit === null" translate>
+                                <template if.bind="!activeListView.definition.filter.useRelativeStartTimeFromFilter || activeListView.definition.filter.relativeStartTimeFromFilterUnit === null" translate>
                                     Relative
                                 </template>
                             </div>
@@ -183,7 +179,7 @@
 
                     <div>
 
-                        <date-input if.bind="!filter.useRelativeStartTimeToFilter" label="above" fixed.bind="true" value.bind="filter.startTimeToFilter" class="flex-grow">
+                        <date-input if.bind="!activeListView.definition.filter.useRelativeStartTimeToFilter" label="above" fixed.bind="true" value.bind="activeListView.definition.filter.startTimeToFilter" class="flex-grow">
 
                             <div slot="heading" translate>
                                 To
@@ -192,13 +188,13 @@
                         </date-input>
 
 
-                        <duration-input else label="above" fixed.bind="true" unit.bind="filter.relativeStartTimeToFilterUnit" value.bind="filter.relativeStartTimeToFilter" class="flex-grow">
+                        <duration-input else label="above" fixed.bind="true" unit.bind="activeListView.definition.filter.relativeStartTimeToFilterUnit" value.bind="activeListView.definition.filter.relativeStartTimeToFilter" class="flex-grow">
 
                             <div slot="heading" translate>
                                 To
                             </div>
 
-                            <select-input none.bind="false" slot="after" value.bind="filter.relativeStartTimeToFilterUnit"
+                            <select-input none.bind="false" slot="after" value.bind="activeListView.definition.filter.relativeStartTimeToFilterUnit"
                                 style="width: 220rem; margin: -1rem -1rem -1rem -10rem;">
 
                                 <item model="hours" translate>
@@ -213,16 +209,16 @@
 
                         </duration-input>
 
-                        <check-toggle label="after" value.bind="filter.useRelativeStartTimeToFilter" class="margin-top">
+                        <check-toggle label="after" value.bind="activeListView.definition.filter.useRelativeStartTimeToFilter" class="margin-top">
 
                             <div slot="heading">
-                                <template if.bind="filter.useRelativeStartTimeToFilter && filter.relativeStartTimeToFilterUnit === 'days'" translate>
+                                <template if.bind="activeListView.definition.filter.useRelativeStartTimeToFilter && activeListView.definition.filter.relativeStartTimeToFilterUnit === 'days'" translate>
                                     Relative to today
                                 </template>
-                                <template if.bind="filter.useRelativeStartTimeToFilter && filter.relativeStartTimeToFilterUnit === 'hours'" translate>
+                                <template if.bind="activeListView.definition.filter.useRelativeStartTimeToFilter && activeListView.definition.filter.relativeStartTimeToFilterUnit === 'hours'" translate>
                                     Relative to now
                                 </template>
-                                <template if.bind="!filter.useRelativeStartTimeToFilter || filter.relativeStartTimeToFilterUnit === null" translate>
+                                <template if.bind="!activeListView.definition.filter.useRelativeStartTimeToFilter || activeListView.definition.filter.relativeStartTimeToFilterUnit === null" translate>
                                     Relative
                                 </template>
                             </div>
@@ -241,7 +237,7 @@
                     Ordered vehicle type
                 </div>
 
-                <toggle-group class="flex-column" value.bind="filter.orderedVehicleTypesFilter">
+                <toggle-group class="flex-column" value.bind="activeListView.definition.filter.orderedVehicleTypesFilter">
 
                     <check-toggle repeat.for="vehicleType of availableVehicleTypes" model.bind="vehicleType" label="after">
 
@@ -264,7 +260,7 @@
                 <tags-input
                     label="above"
                     filter="auto"
-                    value.bind="filter.teamsFilter"
+                    value.bind="activeListView.definition.filter.teamsFilter"
                     class="margin-large-bottom">
 
                     <div slot="value">
@@ -299,7 +295,7 @@
 
                 <tags-input
                     label="above"
-                    value.bind="filter.tagsFilter"
+                    value.bind="activeListView.definition.filter.tagsFilter"
                     new.bind="true"
                     class="margin-large-bottom">
                 </tags-input>
@@ -312,7 +308,7 @@
                     Pickup nearby
                 </div>
 
-                <address-input label="above" value.bind="filter.pickupNearbyAddress" class="flex-basis-1-of-1">
+                <address-input label="above" value.bind="activeListView.definition.filter.pickupNearbyAddress" class="flex-basis-1-of-1">
 
                 </address-input>
 
@@ -326,7 +322,7 @@
 
                 <tags-input
                     label="above"
-                    value.bind="filter.legacyOwnerIdsFilter"
+                    value.bind="activeListView.definition.filter.legacyOwnerIdsFilter"
                     new.bind="true"
                     class="margin-large-bottom">
                 </tags-input>
@@ -341,7 +337,7 @@
 
                 <div class="control-row">
 
-                    <date-input label="above" fixed.bind="true" value.bind="filter.createdTimeFromFilter" class="flex-grow">
+                    <date-input label="above" fixed.bind="true" value.bind="activeListView.definition.filter.createdTimeFromFilter" class="flex-grow">
 
                         <div slot="heading" translate>
                             From
@@ -349,7 +345,7 @@
 
                     </date-input>
 
-                    <date-input label="above" fixed.bind="true" value.bind="filter.createdTimeToFilter" class="flex-grow">
+                    <date-input label="above" fixed.bind="true" value.bind="activeListView.definition.filter.createdTimeToFilter" class="flex-grow">
 
                         <div slot="heading" translate>
                             To

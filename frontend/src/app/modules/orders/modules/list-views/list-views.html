@@ -12,13 +12,9 @@
 
         <page-sidebar name="orders-list-page-sidebar" scroll>
 
-            <let
-                filter.bind="activeListView.definition.filter">
-            </let>
-
             <page-section>
 
-                <search-input value.bind="filter.textFilter & debounce: 200">
+                <search-input value.bind="activeListView.definition.filter.textFilter & debounce: 200">
 
                     <span slot="before" class="opacity-faded font-larger line-height-1">
                         <icon name="md-search"></icon>
@@ -42,7 +38,7 @@
 
                     <div>
 
-                        <date-input if.bind="!filter.useRelativeFromDateFilter" label="above" fixed.bind="true" value.bind="filter.fromDateFilter" class="flex-grow">
+                        <date-input if.bind="!activeListView.definition.filter.useRelativeFromDateFilter" label="above" fixed.bind="true" value.bind="activeListView.definition.filter.fromDateFilter" class="flex-grow">
 
                             <div slot="heading" translate>
                                 From
@@ -50,13 +46,13 @@
 
                         </date-input>
 
-                        <duration-input else label="above" fixed.bind="true" unit.bind="filter.relativeFromDateFilterUnit" value.bind="filter.relativeFromDateFilter" class="flex-grow">
+                        <duration-input else label="above" fixed.bind="true" unit.bind="activeListView.definition.filter.relativeFromDateFilterUnit" value.bind="activeListView.definition.filter.relativeFromDateFilter" class="flex-grow">
 
                             <div slot="heading" translate>
                                 From
                             </div>
 
-                            <select-input none.bind="false" slot="after" value.bind="filter.relativeFromDateFilterUnit"
+                            <select-input none.bind="false" slot="after" value.bind="activeListView.definition.filter.relativeFromDateFilterUnit"
                                 style="width: 220rem; margin: -1rem -1rem -1rem -10rem;">
 
                                 <item model="hours" translate>
@@ -71,16 +67,16 @@
 
                         </duration-input>
 
-                        <check-toggle label="after" value.bind="filter.useRelativeFromDateFilter" class="margin-top">
+                        <check-toggle label="after" value.bind="activeListView.definition.filter.useRelativeFromDateFilter" class="margin-top">
 
                             <div slot="heading">
-                                <template if.bind="filter.useRelativeFromDateFilter && filter.relativeFromDateFilterUnit === 'days'" translate>
+                                <template if.bind="activeListView.definition.filter.useRelativeFromDateFilter && activeListView.definition.filter.relativeFromDateFilterUnit === 'days'" translate>
                                     Relative to today
                                 </template>
-                                <template if.bind="filter.useRelativeFromDateFilter && filter.relativeFromDateFilterUnit === 'hours'" translate>
+                                <template if.bind="activeListView.definition.filter.useRelativeFromDateFilter && activeListView.definition.filter.relativeFromDateFilterUnit === 'hours'" translate>
                                     Relative to now
                                 </template>
-                                <template if.bind="!filter.useRelativeFromDateFilter || filter.relativeFromDateFilterUnit === null" translate>
+                                <template if.bind="!activeListView.definition.filter.useRelativeFromDateFilter || activeListView.definition.filter.relativeFromDateFilterUnit === null" translate>
                                     Relative
                                 </template>
                             </div>
@@ -91,7 +87,7 @@
 
                     <div>
 
-                        <date-input if.bind="!filter.useRelativeToDateFilter" label="above" fixed.bind="true" value.bind="filter.toDateFilter" class="flex-grow">
+                        <date-input if.bind="!activeListView.definition.filter.useRelativeToDateFilter" label="above" fixed.bind="true" value.bind="activeListView.definition.filter.toDateFilter" class="flex-grow">
 
                             <div slot="heading" translate>
                                 To
@@ -99,13 +95,13 @@
 
                         </date-input>
 
-                        <duration-input else label="above" fixed.bind="true" unit.bind="filter.relativeToDateFilterUnit" value.bind="filter.relativeToDateFilter" class="flex-grow">
+                        <duration-input else label="above" fixed.bind="true" unit.bind="activeListView.definition.filter.relativeToDateFilterUnit" value.bind="activeListView.definition.filter.relativeToDateFilter" class="flex-grow">
 
                             <div slot="heading" translate>
                                 To
                             </div>
 
-                            <select-input none.bind="false" slot="after" value.bind="filter.relativeToDateFilterUnit"
+                            <select-input none.bind="false" slot="after" value.bind="activeListView.definition.filter.relativeToDateFilterUnit"
                                 style="width: 220rem; margin: -1rem -1rem -1rem -10rem;">
 
                                 <item model="hours" translate>
@@ -120,16 +116,16 @@
 
                         </duration-input>
 
-                        <check-toggle label="after" value.bind="filter.useRelativeToDateFilter" class="margin-top">
+                        <check-toggle label="after" value.bind="activeListView.definition.filter.useRelativeToDateFilter" class="margin-top">
 
                             <div slot="heading">
-                                <template if.bind="filter.useRelativeToDateFilter && filter.relativeToDateFilterUnit === 'days'" translate>
+                                <template if.bind="activeListView.definition.filter.useRelativeToDateFilter && activeListView.definition.filter.relativeToDateFilterUnit === 'days'" translate>
                                     Relative to today
                                 </template>
-                                <template if.bind="filter.useRelativeToDateFilter && filter.relativeToDateFilterUnit === 'hours'" translate>
+                                <template if.bind="activeListView.definition.filter.useRelativeToDateFilter && activeListView.definition.filter.relativeToDateFilterUnit === 'hours'" translate>
                                     Relative to now
                                 </template>
-                                <template if.bind="!filter.useRelativeToDateFilter || filter.relativeToDateFilterUnit === null" translate>
+                                <template if.bind="!activeListView.definition.filter.useRelativeToDateFilter || activeListView.definition.filter.relativeToDateFilterUnit === null" translate>
                                     Relative
                                 </template>
                             </div>
@@ -148,7 +144,7 @@
                     Order status
                 </div>
 
-                <toggle-group class="flex-column" value.bind="filter.statusFilter">
+                <toggle-group class="flex-column" value.bind="activeListView.definition.filter.statusFilter">
 
                     <check-toggle label="after" model="placed">
 
@@ -202,7 +198,7 @@
 
                 <tags-input
                     label="above"
-                    value.bind="filter.orderTagsFilter"
+                    value.bind="activeListView.definition.filter.orderTagsFilter"
                     new.bind="true"
                     class="margin-large-bottom">
                 </tags-input>
