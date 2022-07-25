@@ -56,16 +56,13 @@ export class RoutePlan {
         weight += route.meta.weight;
         volume += route.meta.volume;
 
-        if (route.routeNumber !== 1)
-        {
-          if (route.meta.timeFrame.from! < earliestEstimatedFrom) {
-            earliestEstimatedFrom = route.meta.timeFrame.from!;
-          }
+        if (route.meta.timeFrame.from! < earliestEstimatedFrom) {
+          earliestEstimatedFrom = route.meta.timeFrame.from!;
+        }
 
-          if (route.meta.timeFrame.to! > latestEstimatedTo)
-          {
-              latestEstimatedTo = route.meta.timeFrame.to!;
-          }
+        if (route.meta.timeFrame.to! > latestEstimatedTo)
+        {
+            latestEstimatedTo = route.meta.timeFrame.to!;
         }
     }
 
