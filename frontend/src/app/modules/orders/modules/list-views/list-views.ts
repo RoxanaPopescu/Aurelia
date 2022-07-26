@@ -259,7 +259,6 @@ export class OrderListViewsPage extends ListViewsPage<OrderListViewFilter, Order
                 filter.fromDateFilter,
                 filter.useRelativeToDateFilter ? filter.toDateFilter : filter.toDateFilter?.endOf("day"),
                 filter.statusFilter,
-                filter.consignorFilter.length > 0 ? filter.consignorFilter.map(c => c.id) : undefined,
                 filter.orderTagsFilter,
                 filter.textFilter,
                 listView.definition.sorting,

@@ -27,7 +27,6 @@ interface IRouteParams
     sortDirection?: SortingDirection;
     textFilter?: string;
     statusFilter?: string;
-    consignorFilter?: string;
     orderTagsFilter?: string;
     fromDateFilter?: string;
     toDateFilter?: string;
@@ -149,12 +148,6 @@ export class ListPage
      */
     @observable({ changeHandler: "update" })
     protected statusFilter: OrderStatusSlug[] | undefined;
-
-    /**
-     * The consignors for which orders should be shown.
-     */
-    @observable({ changeHandler: "update" })
-    protected consignorFilter: any[] = [];
 
     /**
      * The order tags for which orders should be shown.
@@ -467,7 +460,6 @@ export class ListPage
                     state.params.sortDirection = this.sorting?.direction;
                     state.params.textFilter = this.textFilter || undefined;
                     state.params.statusFilter = this.statusFilter?.join(",") || undefined;
-                    state.params.consignorFilter = this.consignorFilter?.map(o => o.id).join(",") || undefined;
                     state.params.orderTagsFilter = this.orderTagsFilter?.join(",") || undefined;
                     state.params.fromDateFilter = this.relativeFromDateFilter != null ? undefined : this.fromDateFilter?.toISO();
                     state.params.toDateFilter = this.relativeToDateFilter != null ? undefined : this.toDateFilter?.toISO();
@@ -483,7 +475,6 @@ export class ListPage
                     this.fromDateFilter,
                     this.useRelativeToDateFilter ? this.toDateFilter : this.toDateFilter?.endOf("day"),
                     this.statusFilter,
-                    this.consignorFilter.length > 0 ? this.consignorFilter.map(c => c.id) : undefined,
                     this.orderTagsFilter,
                     this.textFilter,
                     this.sorting,
@@ -554,7 +545,6 @@ export class ListPage
             {
                 textFilter: this.textFilter,
                 statusFilter: this.statusFilter,
-                consignorFilter: this.consignorFilter,
                 orderTagsFilter: this.orderTagsFilter,
                 fromDateFilter: this.useRelativeFromDateFilter ? undefined : this.fromDateFilter?.toISO(),
                 toDateFilter: this.useRelativeToDateFilter ? undefined : this.toDateFilter?.toISO(),
@@ -577,7 +567,6 @@ export class ListPage
         this.paging = { ...this.paging, pageSize: state.pageSize };
         this.textFilter = state.filters.textFilter;
         this.statusFilter = state.filters.statusFilter;
-        this.consignorFilter = state.filters.consignorFilter;
         this.orderTagsFilter = state.filters.orderTagsFilter;
         this.fromDateFilter = state.filters.fromDateFilter != null ? DateTime.fromISO(state.filters.fromDateFilter, { setZone: true }) : undefined;
         this.toDateFilter = state.filters.toDateFilter != null ? DateTime.fromISO(state.filters.toDateFilter, { setZone: true }) : undefined;

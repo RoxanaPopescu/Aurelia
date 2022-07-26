@@ -20,7 +20,6 @@ export class OrderListViewFilter extends ListViewFilter
         {
             this.textFilter = data.textFilter;
             this.statusFilter = data.statusFilter;
-            this.consignorFilter = data.consignorFilter;
             this.orderTagsFilter = data.orderTagsFilter;
             this.fromDateFilter = data.fromDateFilter != null
                 ? DateTime.fromISO(data.fromDateFilter, { setZone: true })
@@ -54,12 +53,6 @@ export class OrderListViewFilter extends ListViewFilter
      */
     @observable({ changeHandler: "update" })
     public statusFilter: OrderStatusSlug[] | undefined;
-
-    /**
-     * The consignors for which orders should be shown.
-     */
-    @observable({ changeHandler: "update" })
-    public consignorFilter: any[];
 
     /**
      * The order tags for which orders should be shown.
@@ -123,7 +116,6 @@ export class OrderListViewFilter extends ListViewFilter
         return {
             textFilter: this.textFilter,
             statusFilter: this.statusFilter,
-            consignorFilter: this.consignorFilter,
             orderTagsFilter: this.orderTagsFilter,
             fromDateFilter: this.useRelativeFromDateFilter
                 ? undefined
