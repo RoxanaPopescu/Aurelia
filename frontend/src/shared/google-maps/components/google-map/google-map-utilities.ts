@@ -87,12 +87,12 @@ function geoJsonCoordinatesToLatLngs(geoJsonCoordinates: any): any
  * @returns An array of `google.maps.LatLng` instances representing the geometry,
  * or a single `google.maps.LatLng` instance if the geometry represents a point.
  */
- function geoJsonCoordinatesToLatLngLiterals(geoJsonCoordinates: any): any
- {
-     if (typeof geoJsonCoordinates[0] === "number")
-     {
-         return { lat: geoJsonCoordinates[1], lng: geoJsonCoordinates[0] };
-     }
+function geoJsonCoordinatesToLatLngLiterals(geoJsonCoordinates: any): any
+{
+    if (typeof geoJsonCoordinates[0] === "number")
+    {
+        return { lat: geoJsonCoordinates[1], lng: geoJsonCoordinates[0] };
+    }
 
-     return geoJsonCoordinates.map(c => geoJsonCoordinatesToLatLngLiterals(c));
- }
+    return geoJsonCoordinates.map(c => geoJsonCoordinatesToLatLngLiterals(c));
+}
