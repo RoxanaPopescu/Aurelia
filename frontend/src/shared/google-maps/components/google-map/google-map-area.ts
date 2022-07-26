@@ -2,7 +2,7 @@ import { Container, autoinject, containerless, noView, bindable } from "aurelia-
 import { CallbackWithContext, GeoJsonArea } from "shared/types";
 import { GoogleMapCustomElement } from "./google-map";
 import { GoogleMapObject } from "./google-map-object";
-import { geoJsonGeometryToLatLngs, resolveColorString } from "./google-map-utilities";
+import { geoJsonGeometryToLatLngLiterals, resolveColorString } from "./google-map-utilities";
 
 // The names of the mouse events on the marker that should be re-dispatched from the element.
 const eventNames = ["click", "dblclick", "drag", "dragend", "dragstart", "mousedown", "mouseout", "mouseover", "mouseup", "rightclick"];
@@ -143,7 +143,7 @@ export class GoogleMapAreaCustomElement extends GoogleMapObject<google.maps.Poly
         {
             map: this._map.instance,
             geodesic: false,
-            paths: geoJsonGeometryToLatLngs(this.area),
+            paths: geoJsonGeometryToLatLngLiterals(this.area),
             zIndex: this.zIndex,
             clickable: true,
             fillColor: resolveColorString(this._map, this.fillColor),
@@ -189,7 +189,7 @@ export class GoogleMapAreaCustomElement extends GoogleMapObject<google.maps.Poly
      */
     protected areaChanged(): void
     {
-        this.instance?.setPaths(geoJsonGeometryToLatLngs(this.area));
+        this.instance?.setPaths(geoJsonGeometryToLatLngLiterals(this.area));
     }
 
     /**

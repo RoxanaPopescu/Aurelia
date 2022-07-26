@@ -149,7 +149,6 @@ export class SelectOrderPanel
                         this.filter?.toDate,
                         ["ready"],
                         undefined,
-                        undefined,
                         this.searchQuery,
                         this.sorting,
                         this.paging,
