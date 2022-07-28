@@ -20,7 +20,7 @@ export class RoutePlanningTime
             this.delivery = new TimeOfWeekRange(data.delivery);
             this.planning = new TimeOfWeek(data.planning);
             this.nextPlanning = DateTime.fromISO(data.nextPlanning, { setZone: true }).setZone(timeZone);
-            this.status = data.status.toLowerCase();
+            this.status = data.status.name.toLowerCase();
         }
         else
         {
