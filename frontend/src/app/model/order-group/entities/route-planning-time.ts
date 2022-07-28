@@ -20,7 +20,7 @@ export class RoutePlanningTime
             this.delivery = new TimeOfWeekRange(data.delivery);
             this.planning = new TimeOfWeek(data.planning);
             this.nextPlanning = DateTime.fromISO(data.nextPlanning, { setZone: true }).setZone(timeZone);
-            this.status = data.status;
+            this.status = data.status.name.toLowerCase();
         }
         else
         {
@@ -58,7 +58,11 @@ export class RoutePlanningTime
      */
     public clone(): any
     {
-        return new RoutePlanningTime(this._timeZone, JSON.parse(JSON.stringify(this)));
+        return new RoutePlanningTime(this._timeZone,
+        {
+            ...JSON.parse(JSON.stringify(this)),
+            status: { name: this.status }
+        });
     }
 
     /**
