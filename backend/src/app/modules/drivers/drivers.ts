@@ -134,7 +134,7 @@ export class DriversModule extends AppModule
     {
         await context.authorize("edit-drivers");
 
-        const body = { driverId: context.request.body.id, fulfillerId: [context.user?.organizationId] };
+        const body = { driverId: context.request.body.id, fulfillerId: context.user!.organizationId };
 
         const result = await this.apiClient.post("logistics-platform/drivers/delete",
         {
