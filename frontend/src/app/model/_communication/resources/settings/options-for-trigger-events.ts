@@ -286,6 +286,21 @@ export default
             "OrderId",
             "RelationalId"
         ])
+    },
+    "route-optimization-job-failed":
+    {
+        recipientTypes:
+        [
+            "custom-email"
+        ],
+        messageTypes:
+        [
+            "email"
+        ],
+        placeholders: getPlaceholders(
+        [
+            "JobName"
+        ])
     }
 };
 

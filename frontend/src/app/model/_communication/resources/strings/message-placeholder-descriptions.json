@@ -24,5 +24,6 @@
     "PickupTimeFrame": "The pickup time frame",
     "PickupWeekday": "The pickup weekday",
     "RelationalId": "The relational ID",
-    "TrackingId": "The tracking ID, for use in a tracking URL"
+    "TrackingId": "The tracking ID, for use in a tracking URL",
+    "JobName": "The name of the route optimization job"
 }

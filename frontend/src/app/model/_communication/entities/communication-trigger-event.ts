@@ -76,6 +76,10 @@ export class CommunicationTriggerEvent
         "route-optimization-unscheduled-task":
         {
             name: triggerEvents.routeOptimizationUnscheduledTask
+        },
+        "route-optimization-job-failed":
+        {
+            name: triggerEvents.routeOptimizationJobFailed
         }
     };
 }
