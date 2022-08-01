@@ -62,7 +62,6 @@ export class ViewPresetSelectorCustomElement
 
     /**
      * The function to call to get the current state of the view.
-     *
      */
     @bindable
     public getState: Callback<any>;
