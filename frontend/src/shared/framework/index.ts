@@ -42,6 +42,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/controls/inputs/tags-input/tag"),
         PLATFORM.moduleName("./components/controls/inputs/text-input/text-input"),
         PLATFORM.moduleName("./components/controls/inputs/time-input/time-input"),
+        PLATFORM.moduleName("./components/controls/inputs/zone-input/zone-input"),
         PLATFORM.moduleName("./components/controls/inputs/url-input/url-input"),
         PLATFORM.moduleName("./components/controls/inputs/urls-input/urls-input"),
         PLATFORM.moduleName("./components/controls/navigation/path-nav/path-nav"),
@@ -160,6 +161,7 @@ export * from "./components/controls/inputs/tags-input/tags-input";
 export * from "./components/controls/inputs/tags-input/tag";
 export * from "./components/controls/inputs/text-input/text-input";
 export * from "./components/controls/inputs/time-input/time-input";
+export * from "./components/controls/inputs/zone-input/zone-input";
 export * from "./components/controls/inputs/url-input/url-input";
 export * from "./components/controls/inputs/urls-input/urls-input";
 export * from "./components/controls/navigation/path-nav/path-nav";

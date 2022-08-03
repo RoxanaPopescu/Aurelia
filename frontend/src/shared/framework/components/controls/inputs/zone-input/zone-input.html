@@ -1,0 +1,86 @@
+<template class="
+    input-container
+    ${open ? '--open' : ''}
+    ${filter != 'off' ? '--filter' : ''}"
+    inert.bind="disabled || readonly"
+    validation
+    forward-focus>
+
+    <require from="./zone-input.scss"></require>
+
+    <text-input
+        ref="inputElement"
+        value.bind="inputValue"
+        label.bind="label & attr"
+        disabled.bind="disabled"
+        readonly.bind="filter === 'off' || readonly"
+        autocomplete.bind="autocomplete"
+        autoselect.bind="autoselect"
+        enterkey.bind="enterkey"
+        mousedown.trigger="onInputMouseDown($event)"
+        focusin.trigger="onInputFocusIn($event)"
+        input.trigger="onInternalEvent($event)"
+        change.trigger="onInternalEvent($event)">
+
+        <slot name="heading" slot="heading"></slot>
+        <slot name="description" slot="description"></slot>
+        <slot name="validation" slot="validation"></slot>
+        <slot name="before" slot="before"></slot>
+
+        <span slot="placeholder">
+
+            <span show.bind="!readonly && (!open || filter === 'off')">
+
+                <slot name="placeholder"></slot>
+
+            </span>
+
+            <span show.bind="open && filter !== 'off'" translate>
+                Type to filter…
+            </span>
+
+        </span>
+
+        <div slot="after">
+
+            <slot name="after"></slot>
+
+            <dropdown-icon
+                if.bind="!readonly"
+                ref="toggleElement"
+                open.bind="open"
+                toggle.call="toggleDropdown()">
+            </dropdown-icon>
+
+        </div>
+
+        <dropdown
+            show.bind="open"
+            close.call="closeDropdown(escape || !focusout, !escape)"
+            mousedown.trigger="onDropdownMouseDown($event)"
+            fixed.bind="fixed"
+            placement.bind="placement">
+
+            <item-picker
+                view-model.ref="itemPicker"
+                value.to-view="value"
+                focused-value.bind="focusedValue"
+                filter-value.bind="filterValue"
+                focused-element.bind="inputElement"
+                keyboard.bind="open"
+                none.bind="none"
+                pick.call="closeDropdown(true, true)"
+                tabindex="-1"
+                scroll>
+
+                <item repeat.for="zone of availableZones" model.bind="zone">
+                    ${formatZone(zone)}
+                </item>
+
+            </item-picker>
+
+        </dropdown>
+
+    </text-input>
+
+</template>

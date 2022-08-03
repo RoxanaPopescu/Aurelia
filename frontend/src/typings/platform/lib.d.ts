@@ -30,6 +30,16 @@ interface EventListenerOptions
 declare namespace Intl
 {
     /**
+     * The Intl.supportedValuesOf() method returns an array containing the supported calendar,
+     * collation, currency, numbering systems, or unit values supported by the implementation.
+     * Duplicates are omitted and the array is sorted in ascending alphabetic order.
+     * @param key A key string indicating the category of values to be returned.
+     * Possible values are `calendar`, `collation`, `currency`,`numberingSystem`, `timeZone` and `unit`.
+     * @returns A sorted array of unique string values indicating the values supported by the implementation for the given key.
+     */
+    function supportedValuesOf(key: string): string[];
+
+    /**
      * Gets an array containing the canonical locale names.
      * Duplicates will be omitted and elements will be validated as structurally valid language tags.
      * @param localeCodes The locale code, or array of locale codes, for which to get the canonical locale codes.

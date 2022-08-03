@@ -1,0 +1,43 @@
+zone-input
+{
+    display: block;
+
+    > text-input
+    {
+        &.input > .input-control > .input-control-inner .input-input,
+        &.input > .input-control > .input-control-inner .input-placeholder
+        {
+            // Remove padding at the end closest to the toggle icon.
+            padding-right: 0;
+        }
+
+        dropdown
+        {
+            display: flex;
+        }
+
+        item-picker
+        {
+            flex-grow: 1;
+        }
+
+        dropdown-icon
+        {
+            // Apply input padding.
+            padding: var(--input-padding);
+        }
+    }
+
+    &:not(.--open) > text-input,
+    &:not(.--filter) > text-input
+    {
+        // Use cursor to indicate the element is clickable, when not accepting text input.
+        cursor: pointer;
+
+        > .input-control > .input-control-inner
+        {
+            // Disable pointer events to prevent unwanted text selection on double click.
+            pointer-events: none;
+        }
+    }
+}

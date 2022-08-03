@@ -681,6 +681,58 @@
 
             </design-item>
 
+            <design-item heading="zone-input">
+
+                <design-row heading="zone-input">
+
+                    <design-column heading="enabled">
+
+                        <zone-input
+                            label.bind="labelPosition"
+                            value.bind="zoneValue"
+                            focused-value.bind="zoneFocusedValue">
+
+                            <div slot="heading">
+                                Heading
+                            </div>
+
+                            <div slot="description">
+                                Description
+                            </div>
+
+                        </zone-input>
+
+                    </design-column>
+
+                    <design-column heading="disabled">
+
+                        <zone-input
+                            disabled.one-time="true"
+                            label.bind="labelPosition"
+                            value.bind="zoneValue"
+                            focused-value.bind="zoneFocusedValue">
+
+                            <div slot="heading">
+                                Heading
+                            </div>
+
+                            <div slot="description">
+                                Description
+                            </div>
+
+                        </zone-input>
+
+                    </design-column>
+
+                    <design-column heading="values">
+                        <div>focused: ${zoneFocusedValue.name}</div>
+                        <div>comitted: ${zoneValue.name}</div>
+                    </design-column>
+
+                </design-row>
+
+            </design-item>
+
             <design-item heading="item-picker">
 
                 <design-row heading="item-picker">
