@@ -133,7 +133,8 @@
                         label="above"
                         none.bind="true"
                         class="flex-basis-1-of-4"
-                        value.bind="orderGroup.timeZone">
+                        value.to-view="orderGroup.timeZone"
+                        change.trigger="orderGroup.changeTimeZone($event.detail.value)">
 
                         <div slot="heading" translate>
                             Time zone used for scheduling

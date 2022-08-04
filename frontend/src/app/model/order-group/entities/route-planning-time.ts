@@ -1,4 +1,4 @@
-import { DateTime, IANAZone } from "luxon";
+import { DateTime, Zone } from "luxon";
 import { TimeOfWeek, TimeOfWeekRange } from "app/model/shared";
 
 /**
@@ -9,17 +9,15 @@ export class RoutePlanningTime
 {
     /**
      * Creates a new instance of the type.
-     * @param timeZone The IANA Time Zone Identifier for the time zone associated with the order group.
      * @param data The response data from which the instance should be created.
      */
-    public constructor(timeZone: IANAZone, data?: any)
+    public constructor(data?: any)
     {
         if (data != null)
         {
-            this._timeZone = timeZone;
             this.delivery = new TimeOfWeekRange(data.delivery);
             this.planning = new TimeOfWeek(data.planning);
-            this.nextPlanning = DateTime.fromISO(data.nextPlanning, { setZone: true }).setZone(timeZone);
+            this.nextPlanning = DateTime.fromISO(data.nextPlanning, { setZone: true });
             this.status = data.status.name.toLowerCase();
         }
         else
@@ -29,8 +27,6 @@ export class RoutePlanningTime
             this.status = "ready";
         }
     }
-
-    private readonly _timeZone: IANAZone;
 
     /**
      * The delivery times of week for which this route planning time should be used.
@@ -54,11 +50,20 @@ export class RoutePlanningTime
     public status: "processing" | "ready";
 
     /**
+     * Changes the time zone associated with this route planning time.
+     * @param timeZone The new time zone to use.
+     */
+    public changeTimeZone(timeZone: Zone): any
+    {
+        this.nextPlanning = this.nextPlanning.setZone(timeZone, { keepLocalTime: true });
+    }
+
+    /**
      * Gets a clone of this instance, suitable for editing.
      */
     public clone(): any
     {
-        return new RoutePlanningTime(this._timeZone,
+        return new RoutePlanningTime(
         {
             ...JSON.parse(JSON.stringify(this)),
             status: { name: this.status }

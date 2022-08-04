@@ -21,6 +21,7 @@ export class ZoneInputCustomElement
     }
 
     private readonly _element: HTMLElement;
+    private _now = Date.now();
 
     /**
      * The element representing the input.
@@ -42,12 +43,7 @@ export class ZoneInputCustomElement
      */
     protected availableZones = Intl.supportedValuesOf("timeZone")
         .map(name => IANAZone.create(name))
-        .sort((a, b) => a.offset(this.now) - b.offset(this.now));
-
-    /**
-     * The current time stamp in milliseconds since the Epoch.
-     */
-    protected now = Date.now();
+        .sort((a, b) => a.offset(this._now) - b.offset(this._now));
 
     /**
      * Gets the input value.
@@ -328,7 +324,7 @@ export class ZoneInputCustomElement
      */
     protected formatZone(zone: IANAZone): string
     {
-        const offset = zone.offset(this.now);
+        const offset = zone.offset(this._now);
 
         if (offset == 0)
         {

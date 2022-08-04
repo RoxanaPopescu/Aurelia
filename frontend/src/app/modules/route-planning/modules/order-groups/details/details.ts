@@ -256,7 +256,7 @@ export class DetailsPage
      */
     protected async onAddRoutePlanningTimeClick(): Promise<void>
     {
-        const routePlanningTime = new RoutePlanningTime(this.orderGroup.timeZone);
+        const routePlanningTime = new RoutePlanningTime();
         const result = await this._modalService.open(RoutePlanningTimeDialog,
         {
             routePlanningTime,

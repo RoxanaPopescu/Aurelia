@@ -1,5 +1,5 @@
-import { computedFrom } from "aurelia-framework";
 import { IANAZone, DateTime, SystemZone } from "luxon";
+import { computedFrom } from "aurelia-framework";
 import { EntityInfo } from "app/types/entity";
 import { Consignor } from "app/model/outfit";
 import { MatchingCriteria as MatchingCriteria } from "./matching-criteria";
@@ -25,7 +25,7 @@ export class OrderGroup
             this.paused = data.paused;
             this.timeZone = IANAZone.create(data.timeZone);
             this.matchingCriteria = data.matchingCriteria.map(d => new MatchingCriteria(d));
-            this.routePlanningTimes = data.routePlanningTimes.map(d => new RoutePlanningTime(this.timeZone, d));
+            this.routePlanningTimes = data.routePlanningTimes.map(d => new RoutePlanningTime(d));
             this.routeOptimizationSettingsId = data.routeOptimizationSettingsId;
         }
         else
@@ -64,7 +64,7 @@ export class OrderGroup
     /**
      * The IANA Time Zone Identifier for the time zone associated with the order group.
      */
-    public readonly timeZone: IANAZone;
+    public timeZone: IANAZone;
 
     /**
      * The matching criteria for the group.
@@ -133,6 +133,20 @@ export class OrderGroup
         dateTimes = dateTimes.sort((a, b) => a.toMillis() - b.toMillis());
 
         return dateTimes[0];
+    }
+
+    /**
+     * Changes the time zone associated with this order group.
+     * @param timeZone The new time zone.
+     */
+    protected changeTimeZone(timeZone: IANAZone): void
+    {
+        this.timeZone = timeZone;
+
+        for (const routePlanningTime of this.routePlanningTimes)
+        {
+            routePlanningTime.changeTimeZone(this.timeZone);
+        }
     }
 
     /**
