@@ -40,20 +40,14 @@ export class ZoneInputCustomElement
     /**
      * The names of the zones supported by the platform.
      */
-    protected get availableZones(): IANAZone[]
-    {
-        return Intl.supportedValuesOf("timeZone")
-            .map(name => IANAZone.create(name))
-            .sort((a, b) => a.offset(this.now) - b.offset(this.now))
-    }
+    protected availableZones = Intl.supportedValuesOf("timeZone")
+        .map(name => IANAZone.create(name))
+        .sort((a, b) => a.offset(this.now) - b.offset(this.now));
 
     /**
      * The current time stamp in milliseconds since the Epoch.
      */
-    protected get now(): number
-    {
-        return Date.now();
-    }
+    protected now = Date.now();
 
     /**
      * Gets the input value.
