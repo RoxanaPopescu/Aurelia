@@ -1,5 +1,5 @@
 import { computedFrom } from "aurelia-framework";
-import { IANAZone, DateTime } from "luxon";
+import { IANAZone, DateTime, SystemZone } from "luxon";
 import { EntityInfo } from "app/types/entity";
 import { Consignor } from "app/model/outfit";
 import { MatchingCriteria as MatchingCriteria } from "./matching-criteria";
@@ -30,7 +30,7 @@ export class OrderGroup
         }
         else
         {
-            this.timeZone = IANAZone.create("Europe/Copenhagen");
+            this.timeZone = new SystemZone();
             this.matchingCriteria = [];
             this.routePlanningTimes = [];
         }
