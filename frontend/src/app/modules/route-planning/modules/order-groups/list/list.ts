@@ -145,7 +145,7 @@ export class ListPage
         }
     }
 
-    @computedFrom("orderGroups", "textFilter", "sorting")
+    @computedFrom("orderGroups.length", "textFilter", "sorting")
     protected get filteredItems(): OrderGroup[]
     {
         if (this.orderGroups == null)
