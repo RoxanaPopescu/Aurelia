@@ -21,7 +21,7 @@ export class ZoneInputCustomElement
     }
 
     private readonly _element: HTMLElement;
-    private _now = Date.now();
+    private readonly _now = Date.now();
 
     /**
      * The element representing the input.
@@ -326,7 +326,7 @@ export class ZoneInputCustomElement
     {
         const offset = zone.offset(this._now);
 
-        if (offset == 0)
+        if (offset === 0)
         {
             return `(GMT) ${zone.name}`;
         }

@@ -139,7 +139,7 @@ export class OrderGroup
      * Changes the time zone associated with this order group.
      * @param timeZone The new time zone.
      */
-    protected changeTimeZone(timeZone: IANAZone): void
+    public changeTimeZone(timeZone: IANAZone): void
     {
         this.timeZone = timeZone;
 
