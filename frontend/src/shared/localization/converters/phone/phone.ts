@@ -60,7 +60,7 @@ export class PhoneValueConverter
         {
             console.error(error);
 
-            return valueToFormat;
+            return style === "rfc3966" ? `tel:${valueToFormat}`: valueToFormat;
         }
     }
 }

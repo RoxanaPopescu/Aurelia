@@ -51,6 +51,12 @@ export class GoogleMapMarkerCustomElement extends GoogleMapObject<google.maps.Ma
     public icon: google.maps.ReadonlyIcon | google.maps.ReadonlySymbol | undefined;
 
     /**
+     * The label of the marker.
+     */
+    @bindable
+    public label: string | google.maps.MarkerLabel | undefined;
+
+    /**
      * The title of the marker.
      */
     @bindable
@@ -125,6 +131,7 @@ export class GoogleMapMarkerCustomElement extends GoogleMapObject<google.maps.Ma
         {
             map: this._map.instance,
             position: geoJsonPointToLatLng(this.point),
+            label: this.label,
             title: this.title,
             zIndex: this.zIndex,
             clickable: true,

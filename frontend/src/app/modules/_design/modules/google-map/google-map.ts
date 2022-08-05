@@ -50,7 +50,7 @@ export class GoogleMapPage
     protected markersAdded: GoogleMapMarkerCustomElement[] = [];
 
     /**
-     * The map view model..
+     * The map view model.
      */
     protected mapViewModel: GoogleMapCustomElement;
 

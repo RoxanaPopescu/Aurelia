@@ -60,9 +60,9 @@ export class EmptyCustomAttribute
                 const funcs = queuedFuncs;
                 queuedFuncs = new Set<() => void>();
 
-                document.body.classList.add("--empty-value-busy");
+                document.body.classList.add(`--${this.attributeName}-busy`);
                 funcs.forEach(f => f());
-                document.body.classList.remove("--empty-value-busy");
+                document.body.classList.remove(`--${this.attributeName}-busy`);
             });
         }
     }
@@ -95,9 +95,9 @@ export class EmptyCustomAttribute
                 const funcs = queuedFuncs;
                 queuedFuncs = new Set<() => void>();
 
-                document.body.classList.add("--empty-value-busy");
+                document.body.classList.add(`--${this.attributeName}-busy`);
                 funcs.forEach(f => f());
-                document.body.classList.remove("--empty-value-busy");
+                document.body.classList.remove(`--${this.attributeName}-busy`);
             });
         }
     }

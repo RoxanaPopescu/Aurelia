@@ -1,4 +1,5 @@
 import { DateTime } from "luxon";
+import { GeoJsonPoint } from "shared/types";
 
 /**
  * Represents a coordinate identifying a geographic position.
@@ -48,5 +49,13 @@ export class Position
     public toGoogleLatLngLiteral(): google.maps.LatLngLiteral
     {
         return { lat: this.latitude, lng: this.longitude };
+    }
+
+    /**
+     * Creates a new `GeoJsonPoint` object, representing this position.
+     */
+    public toGeoJsonPoint(): GeoJsonPoint
+    {
+        return new GeoJsonPoint([this.longitude, this.latitude]);
     }
 }

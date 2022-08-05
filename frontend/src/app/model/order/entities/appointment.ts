@@ -1,3 +1,4 @@
+import { computedFrom } from "aurelia-framework";
 import { DateTime, Duration } from "luxon";
 import { DateTimeRange } from "shared/types";
 
@@ -25,6 +26,7 @@ export class Appointment
         }
     }
 
+    @computedFrom("earliestArrivalDate", "latestArrivalDate")
     public get timeFrame(): DateTimeRange {
         return new DateTimeRange({ from: this.earliestArrivalDate, to: this.latestArrivalDate });
     }

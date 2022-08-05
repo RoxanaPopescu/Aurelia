@@ -190,7 +190,7 @@ $__summary: comment;
         --font-base-margin-bottom: 12rem;
 
         /// The font weight of the base text.
-        --font-base-font-weight: inherit;
+        --font-base-font-weight: 400;
     }
 
     &
@@ -208,7 +208,7 @@ $__summary: comment;
         --font-small-margin-bottom: 8rem;
 
         /// The font weight of the small text.
-        --font-small-font-weight: inherit;
+        --font-small-font-weight: 400;
     }
 
     &
