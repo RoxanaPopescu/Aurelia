@@ -17,19 +17,23 @@
     // The shadow to apply to map controls, if any.
     --google-map-control-shadow: var(--shadow-float);
 
-    // The color to use for text on a control surface.
-    --google-map-control-text-color: var(--surface-text-color);
-    --google-map-control-text-color--active: var(--google-map-control-text-color);
+    // The color to use for control surfaces.
+    --google-map-control-surface-color: var(--surface-color);
+    --google-map-control-surface-color--active: var(--google-map-control-surface-color);
+
+    // The color to use for text on control surfaces.
+    --google-map-control-surface-text-color: var(--surface-text-color);
+    --google-map-control-surface-text-color--active: var(--google-map-control-surface-text-color);
 
     // The font weight to use for text on a control surface.
     --google-map-control-font-weight: 500;
     --google-map-control-font-weight--active: 700;
 
     // Ensure the map content is positioned within the safe area of the viewport.
-    --google-map-inset-top: env(safe-area-inset-top);
-    --google-map-inset-left: env(safe-area-inset-left);
-    --google-map-inset-right: env(safe-area-inset-right);
-    --google-map-inset-bottom: env(safe-area-inset-bottom);
+    --google-map-inset-top: 0rem;
+    --google-map-inset-left: 0rem;
+    --google-map-inset-right: 0rem;
+    --google-map-inset-bottom: 0rem;
 
     // The style to use for popovers.
     --google-map-popover-surface-color: var(--surface-color);
@@ -37,26 +41,26 @@
     --google-map-popover-surface-text-color: var(--surface-text-color);
     --google-map-popover-border-width: 1px;
     --google-map-popover-border-color: rgba(92, 92, 92, 0.3);
-    --google-map-popover-close-filter: invert(0.2);
     --google-map-popover-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3);
     --google-map-popover-arrow-shadow: -2px 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
 
-    // Show focus indicator during keyboard navigation or when an element
-    // was programmatically focused - unless it has explicitly opted out.
+// Show focus indicator during keyboard navigation or when an element
+// was programmatically focused - unless it has explicitly opted out.
 
-    :focus
-    {
-        outline-offset: var(--accessibility-focus-outline-offset);
-        outline-width: var(--accessibility-focus-outline-width);
-        outline-style: var(--accessibility-focus-outline-style);
-        outline-color: var(--accessibility-focus-outline-color);
-        transition: outline 0s;
+:host :focus
+{
+    outline-offset: var(--accessibility-focus-outline-offset);
+    outline-width: var(--accessibility-focus-outline-width);
+    outline-style: var(--accessibility-focus-outline-style);
+    outline-color: var(--accessibility-focus-outline-color);
+    transition: outline 0s;
+}
 
-        @include if-focus-hidden
-        {
-            outline: none !important;
-        }
-    }
+:host-context(body:not(.focus-visible)) :focus,
+:host-context(.focus-hidden) :focus,
+{
+    outline: none !important;
 }
 
 .google-map-element,
@@ -148,12 +152,13 @@
         font: var(--font-base) !important;
         font-size: var(--font-base-font-size) !important;
         font-weight: var(--google-map-control-font-weight) !important;
-        color: var(--google-map-control-text-color) !important;
+        color: var(--google-map-control-surface-text-color) !important;
 
-        &[aria-pressed="true"]
+        &[aria-pressed="true"],
+        &[aria-checked="true"]
         {
             font-weight: var(--google-map-control-font-weight--active) !important;
-            color: var(--google-map-control-text-color--active) !important;
+            color: var(--google-map-control-surface-text-color--active) !important;
         }
     }
 
@@ -194,12 +199,14 @@
 
         > button
         {
-            &[aria-pressed="true"]
+            &[aria-pressed="true"],
+            &[aria-checked="true"]
             {
                 z-index: 1 !important;
             }
 
-            &[aria-pressed="false"]
+            &[aria-pressed="false"],
+            &[aria-checked="false"]
             {
                 z-index: 0 !important;
             }
@@ -299,10 +306,17 @@
     .gm-style-iw-d::-webkit-scrollbar-track,
     .gm-style-iw-d::-webkit-scrollbar-track-piece,
     .gm-style-iw-c,
-    .gm-style-iw-t::after
+    .gm-style-iw-t::after,
+    .gm-style-iw-tc::after
     {
         color: var(--google-map-popover-surface-text-color) !important;
         background: var(--google-map-popover-surface-color) !important;
+    }
+
+    .gm-style-iw-tc::after
+    {
+        top: -2px;
+        height: 13px;
     }
 
     .gm-style-iw-c
@@ -325,8 +339,12 @@
         {
             top: -4px !important;
             right: -4px !important;
-            opacity: var(--opacity-faded-less) !important;
-            filter: var(--google-map-popover-close-filter);
+            opacity: 1 !important;
+
+            > span
+            {
+                background: var(--surface-primary-icon-color);
+            }
         }
 
         &:not(.--pinned) > button
@@ -336,7 +354,12 @@
 
         > .gm-ui-hover-effect:not(:hover)
         {
-            opacity: var(--opacity-faded-more) !important;
+            opacity: var(--opacity-faded) !important;
+
+            > span
+            {
+                background: currentColor;
+            }
         }
 
         .gm-style-iw-t::after

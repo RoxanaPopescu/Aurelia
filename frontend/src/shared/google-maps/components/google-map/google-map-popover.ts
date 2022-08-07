@@ -33,7 +33,13 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject<google.maps.I
      * True if the popover is pinned open, otherwise false.
      */
      @bindable({ defaultBindingMode: bindingMode.twoWay, defaultValue: false })
-    private pinned = false;
+    private pinned;
+
+    /**
+     * True to pan the map to bring the popup into view, otherwise false.
+     */
+     @bindable({ defaultValue: true })
+    private autoPan;
 
     /**
      * The classes to apply to the info window element, if any.
@@ -147,6 +153,7 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject<google.maps.I
             {
                 this.instance = new google.maps.InfoWindow(
                 {
+                    disableAutoPan: !this.autoPan,
                     content: this._element.parentNode.host
                 });
             }
@@ -154,6 +161,7 @@ export class GoogleMapPopoverCustomElement extends GoogleMapObject<google.maps.I
             {
                 this.instance = new google.maps.InfoWindow(
                 {
+                    disableAutoPan: !this.autoPan,
                     content: this._element
                 });
             }

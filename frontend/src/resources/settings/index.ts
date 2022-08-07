@@ -118,7 +118,20 @@ export default
             {
                 center: { lat: 55.691, lng: 12.567 },
                 zoom: 4,
-                controlSize: 32,
+                controlSize: 40,
+                gestureHandling: "greedy",
+                fullscreenControl: false,
+                minZoom: 2,
+                scrollwheel: false,
+                clickableIcons: false,
+                restriction:
+                {
+                    latLngBounds: { north: 85, south: -85, west: -180, east: 180 }
+                },
+                mapTypeControlOptions:
+                {
+                    position: 3
+                },
 
                 // Note: This will be set when the theme loads.
                 mapId: undefined
