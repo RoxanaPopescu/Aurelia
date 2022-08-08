@@ -127,7 +127,7 @@ export class Stops
 
             if (this.validation.active)
             {
-                this.validate().catch();
+                this.validate().catch(() => undefined);
             }
         }
     }

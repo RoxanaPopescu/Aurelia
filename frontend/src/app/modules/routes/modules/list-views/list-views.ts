@@ -7,7 +7,7 @@ import { Fulfiller } from "app/model/outfit";
 import { OrganizationService, OrganizationTeam } from "app/model/organization";
 import { RouteAssignmentService, RouteInfo, RouteService } from "app/model/route";
 import { VehicleType } from "app/model/vehicle";
-import { ListViewService, ListView, RouteListViewFilter, RouteListViewColumn } from "app/model/list-view";
+import { ListViewService, ListView, RouteListViewFilter, RouteListViewColumn, createListViewDefinition, ListViewDefinition } from "app/model/list-view";
 import { IdentityService, moverOrganizationId } from "app/services/identity";
 import { TeamsFilterService } from "app/services/teams-filter";
 import { IListViewPageItems, IListViewPageParams, ListViewsPage } from "app/modules/list-views/list-views";
@@ -15,6 +15,7 @@ import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
 import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
 import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
 import { AssignOrganizationPanel } from "../../modals/assign-organization/assign-organization";
+import defaultListViewNames from "./resources/strings/default-list-view-names.json";
 
 /**
  * Represents the route parameters for the page.
@@ -132,6 +133,20 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
     public async deactivate(): Promise<void>
     {
         await super.deactivate();
+    }
+
+    /**
+     * Called when the page is activated, and no list view has ever been opened.
+     * Derived classes may override this to create a default list view definition.
+     * @returns The default list view definition to open, or undefined to not open any view.
+     */
+    protected async createDefaultListView(): Promise<ListViewDefinition<RouteListViewFilter> | undefined>
+    {
+        const listViewDefinition = createListViewDefinition("route");
+        listViewDefinition.name = defaultListViewNames.allRoutes;
+        listViewDefinition.shared = false;
+
+        return this._listViewService.create(listViewDefinition);
     }
 
     /**

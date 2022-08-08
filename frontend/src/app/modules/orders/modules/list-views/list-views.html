@@ -1,10 +1,12 @@
 <template>
+
     <require from="app/components/page-tab-nav/page-tab-nav"></require>
     <require from="app/components/page-tab-nav/page-tab"></require>
     <require from="app/components/name-value-pair/name-value-pair"></require>
     <require from="app/components/name-value-list/name-value-list"></require>
     <require from="app/components/check-filter/check-filter"></require>
     <require from="app/components/check-filter/check-filter-item"></require>
+    <require from="app/components/info-card/info-card"></require>
     <require from="app/modules/list-views/components/list-view-selector/list-view-selector"></require>
     <require from="app/modules/list-views/list-views.scss"></require>
 
@@ -553,11 +555,19 @@
 
                 </data-table>
 
-                <empty-indicator
+                <info-card
+                    if.bind="activeListView == null"
+                    heading.translate="You have no open views"
+                    class="margin-largest"
+                    translate>
+                    To create or open a view, click the <icon inline name="add" accent="primary"></icon>
+                </info-card>
+
+                <!-- <empty-indicator
                     if.bind="activeListView == null"
                     class="margin-largest">
                     <div slot="heading" translate>No view selected</div>
-                </empty-indicator>
+                </empty-indicator> -->
 
                 <busy-indicator
                     if.bind="activeListView != null && activeListView.operation.error == null && activeListView.items == null"

@@ -4,7 +4,7 @@ import { HistoryHelper, Log } from "shared/infrastructure";
 import { ModalService, ToastService } from "shared/framework";
 import { LocalStateService } from "app/services/local-state";
 import { OrderInfo, OrderService } from "app/model/order";
-import { ListViewService, ListView, OrderListViewFilter, OrderListViewColumn } from "app/model/list-view";
+import { ListViewService, ListView, OrderListViewFilter, OrderListViewColumn, createListViewDefinition, ListViewDefinition } from "app/model/list-view";
 import { IListViewPageItems, IListViewPageParams, ListViewsPage } from "app/modules/list-views/list-views";
 import { ImportOrdersPanel } from "app/modules/orders/modules/list/modals/import-orders/import-orders";
 import { BulkActionPanel } from "app/modules/orders/modules/list/modals/bulk-action/bulk-action";
@@ -13,6 +13,7 @@ import { ChangePickupAddressPanel } from "app/modules/orders/modules/list/modals
 import createdRouteToast from "app/modules/orders/modules/list/resources/strings/created-route-toast.json";
 import createdCollectionPointToast from "app/modules/orders/modules/list/resources/strings/created-collection-point-toast.json";
 import changedPickupAddressToast from "app/modules/orders/modules/list/resources/strings/changed-pickup-address-toast.json";
+import defaultListViewNames from "./resources/strings/default-list-view-names.json";
 
 /**
  * Represents the order parameters for the page.
@@ -84,6 +85,20 @@ export class OrderListViewsPage extends ListViewsPage<OrderListViewFilter, Order
     public async deactivate(): Promise<void>
     {
         await super.deactivate();
+    }
+
+    /**
+     * Called when the page is activated, and no list view has ever been opened.
+     * Derived classes may override this to create a default list view definition.
+     * @returns The default list view definition to open, or undefined to not open any view.
+     */
+    protected async createDefaultListView(): Promise<ListViewDefinition<OrderListViewFilter> | undefined>
+    {
+        const listViewDefinition = createListViewDefinition("order");
+        listViewDefinition.name = defaultListViewNames.allOrders;
+        listViewDefinition.shared = false;
+
+        return this._listViewService.create(listViewDefinition);
     }
 
     /**

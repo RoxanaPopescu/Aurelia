@@ -167,14 +167,19 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
      */
     public async activate(params: IListViewPageParams): Promise<void>
     {
+        // Get the session state for list views of the relevant type.
+        const sessionListViewState =
+            this._localStateService.get("session").listView?.[this.listViewType];
+
         // Get the local state for list views of the relevant type.
-        const localListViewState = this._localStateService.get().listView?.[this.listViewType];
+        const localListViewState =
+            this._localStateService.get("local").listView?.[this.listViewType];
 
         // Get the IDs of the open list views, if any.
-        const openListViewIds = localListViewState?.open;
+        const openListViewIds = sessionListViewState?.open ?? localListViewState?.open;
 
         // Get the ID of the active list view, if any.
-        const activeListViewId = params.view || localListViewState?.active;
+        const activeListViewId = params.view || sessionListViewState?.active || localListViewState?.active;
 
         // Fetch the list view definitions.
         this.listViewDefinitions = await this._listViewService.getAll(this.listViewType);
@@ -196,6 +201,23 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
 
                     this.observeListView(listView);
                 }
+            }
+        }
+
+        // If no list view has ever been opened, attempt to create the default list view.
+
+        if (this.openListViews.length === 0 && sessionListViewState == null && localListViewState == null)
+        {
+            const listViewDefinition = await this.createDefaultListView();
+
+            if (listViewDefinition != null)
+            {
+                this.listViewDefinitions.personal.push(listViewDefinition);
+
+                const listView = new ListView<TListViewFilter, TListItem>(listViewDefinition);
+                this.openListViews.push(listView);
+
+                this.observeListView(listView);
             }
         }
 
@@ -376,6 +398,29 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
                 data.listView[this.listViewType] = {} as any;
             }
 
+            // Get the session state for list views of the relevant type.
+            const sessionListViewState = data.listView[this.listViewType];
+
+            // Set the IDs of the open list views, if any.
+            sessionListViewState.open = this.openListViews.map(listView => listView.definition.id);
+
+            // Set the ID of the active list view, if any.
+            sessionListViewState.active = this.activeListView?.definition.id;
+        },
+        "session");
+
+        this._localStateService.mutate(data =>
+        {
+            if (data.listView == null)
+            {
+                data.listView = {} as any;
+            }
+
+            if (data.listView[this.listViewType] == null)
+            {
+                data.listView[this.listViewType] = {} as any;
+            }
+
             // Get the local state for list views of the relevant type.
             const localListViewState = data.listView[this.listViewType];
 
@@ -384,7 +429,8 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
 
             // Set the ID of the active list view, if any.
             localListViewState.active = this.activeListView?.definition.id;
-        });
+        },
+        "local");
     }
 
     /**
@@ -499,6 +545,16 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
                 this.update(listView);
             });
         }
+    }
+
+    /**
+     * Called when the page is activated, and no list view has ever been opened.
+     * Derived classes may override this to create a default list view definition.
+     * @returns The default list view definition to open, or undefined to not open any view.
+     */
+    protected async createDefaultListView(): Promise<ListViewDefinition<TListViewFilter> | undefined>
+    {
+        return undefined;
     }
 
     /**
