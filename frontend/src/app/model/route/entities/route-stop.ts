@@ -57,6 +57,7 @@ export class RouteStop extends RouteStopBase
         {
             super(undefined, stopNumber, route);
 
+            this.deviations = [];
             this.orderIds = [];
             this.actions = new RouteStopActions();
         }
