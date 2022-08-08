@@ -42,12 +42,26 @@ body
     --toggle-height: 2em;
     --page-sidebar-min-width: 384rem;
     --page-sidebar-max-width: 384rem;
+
+    // The colors to use for map features.
+    --google-map-feature-color--neutral: var(--palette-color-neutral-dark);
+    --google-map-feature-color--primary: var(--palette-color-primary);
+    --google-map-feature-color--info: var(--palette-color-info);
+    --google-map-feature-color--positive: var(--palette-color-positive);
+    --google-map-feature-color--attention: var(--palette-color-attention);
+    --google-map-feature-color--negative: var(--palette-color-negative);
 }
 
 body identity-picture
 {
     background: var(--surface-neutral-surface-color);
     color: var(--surface-neutral-surface-text-color);
+}
+
+.info-card-action
+{
+    font-weight: 500;
+    color: var(--surface-primary-text-color);
 }
 
 .--button-position-right
@@ -320,6 +334,46 @@ page-sidebar
     > :not(:last-child)
     {
         margin-right: var(--size-inline-spacing-larger);
+    }
+}
+
+.google-map-actions
+{
+    display: flex;
+    padding: 10px;
+    pointer-events: none;
+
+    > *
+    {
+        pointer-events: all;
+    }
+
+    button
+    {
+        border-width: 0;
+        font: var(--font-base);
+        font-size: var(--font-base-font-size);
+        font-weight: var(--google-map-control-font-weight);
+        background: var(--google-map-control-surface-color);
+        color: var(--google-map-control-surface-text-color);
+        box-shadow: var(--google-map-control-shadow);
+        filter: var(--google-map-control-filter);
+
+        &:hover
+        {
+            background: #ebebeb;
+        }
+
+        &.--active
+        {
+            font-weight: var(--google-map-control-font-weight--active);
+            color: var(--google-map-control-surface-text-color--active);
+        }
+
+        &:not(:last-child)
+        {
+            margin-right: 10px;
+        }
     }
 }
 

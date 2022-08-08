@@ -811,16 +811,15 @@
                 <info-card
                     if.bind="activeListView == null"
                     heading.translate="You have no open views"
-                    class="margin-largest"
                     translate>
-                    To create or open a view, click the <icon inline name="add" accent="primary"></icon>
+                    <p>
+                        Views are named sets of filters and columns, that determine which<br>
+                        routes to show, and what information to show about each route
+                    </p>
+                    <p>
+                        To see your routes, create or open a view, by clicking <span class="info-card-action"><icon inline name="add"></icon> Add view</span> above
+                    </p>
                 </info-card>
-
-                <!-- <empty-indicator
-                    if.bind="activeListView == null"
-                    class="margin-largest">
-                    <div slot="heading" translate>No view selected</div>
-                </empty-indicator> -->
 
                 <busy-indicator
                     if.bind="activeListView != null && activeListView.operation.error == null && activeListView.items == null"
