@@ -280,24 +280,6 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
     }
 
     /**
-     * Called when the `Close view` icon on a list view tab is clicked.
-     * Closes the specified list view, and activates the first of the remaining open list views.
-     * @param listView The list view to close.
-     */
-    protected onCloseViewClick(listView: ListView<TListViewFilter, TListItem>): void
-    {
-        this.openListViews.splice(this.openListViews.indexOf(listView), 1);
-
-        if (this.activeListView === listView)
-        {
-            this.activeListView = this.openListViews[0];
-
-            // Ensure the local state is updated.
-            this.updateLocalState();
-        }
-    }
-
-    /**
      * Called when a list view definition was clicked in the list view selector, and should be opened.
      * @param listViewDefinition The list view definition for which a list view should be opened.
      */
@@ -330,7 +312,8 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
     }
 
     /**
-     * Called when a list view definition was deleted in the list view selector, and should be closed.
+     * Called when the `Close view` icon on a list view tab is clicked, or when a list view definition is deleted.
+     * Closes the specified list view, reverts any unsaved changes, and activates the first of the remaining open list views.
      * @param listViewDefinition The list view definition for which the list view should be closed.
      */
     protected onCloseListView(listViewDefinition: ListViewDefinition<TListViewFilter>): void
@@ -344,6 +327,11 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
             if (this.activeListView === listView)
             {
                 this.activeListView = this.openListViews[0];
+            }
+
+            if (listView.hasChanges)
+            {
+                this.revertListViewChanges(listView);
             }
 
             // Ensure the local state is updated.
@@ -463,7 +451,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
     {
         const listView = this.activeListView!;
 
-        listView.revertChanges();
+        this.revertListViewChanges(listView);
     }
 
     /**
@@ -555,6 +543,23 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
     protected async createDefaultListView(): Promise<ListViewDefinition<TListViewFilter> | undefined>
     {
         return undefined;
+    }
+
+    /**
+     * Reverts the changes made to the specified list view.
+     * @param listView The list view forwhich to revert changes.
+     */
+    protected revertListViewChanges(listView: ListView<TListViewFilter, TListItem>): void
+    {
+        const listViewDefinitions = listView.definition.shared
+            ? this.listViewDefinitions.shared
+            : this.listViewDefinitions.personal;
+
+        const index =  listViewDefinitions.indexOf(listView.definition);
+
+        listView.revertChanges();
+
+        listViewDefinitions.splice(index, 1, listView.definition);
     }
 
     /**
