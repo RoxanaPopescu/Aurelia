@@ -266,6 +266,30 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             property: undefined,
             visibility: "visible"
         },
+        "stop-user-name":
+        {
+            name: listColumn.stopUserName,
+            shortName: listColumn.stopUserName,
+            width: "min-content",
+            property: undefined,
+            visibility: "visible"
+        },
+        "stop-company-name":
+        {
+            name: listColumn.stopCompanyName,
+            shortName: listColumn.stopCompanyName,
+            width: "min-content",
+            property: undefined,
+            visibility: "visible"
+        },
+        "stop-user-telephone":
+        {
+            name: listColumn.stopUserTelephone,
+            shortName: listColumn.stopUserTelephone,
+            width: "min-content",
+            property: undefined,
+            visibility: "visible"
+        },
         "unknown":
         {
             name: listColumn.unknown,

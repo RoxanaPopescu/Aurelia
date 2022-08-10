@@ -39,5 +39,9 @@
     "colliCount": "Colli count",
     "colliCountShort": "Colli",
     "estimatedColliCount": "Estimated colli count",
-    "estimatedColliCountShort": "Est. colli"
+    "estimatedColliCountShort": "Est. colli",
+    "stopUserName": "Stop user name",
+    "stopCompanyName": "Stop company name",
+    "stopUserTelephone": "Stop user telephone"
+
 }

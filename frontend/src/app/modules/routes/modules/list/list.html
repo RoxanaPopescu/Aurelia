@@ -653,6 +653,24 @@
                                     </span>
                                 </data-table-cell>
 
+                                <data-table-cell if.bind="column.slug === 'stop-user-name'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.stops[0].outfit.personName}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'stop-company-name'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.stops[0].outfit.companyName}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'stop-user-telephone'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.stops[0].outfit.contactPhone.nationalNumber}
+                                    </span>
+                                </data-table-cell>
+
                                 <data-table-cell if.bind="column.slug === 'team'" class="${updating.team ? 'opacity-faded' : ''}">
                                     <a
                                         class="text-truncate"
