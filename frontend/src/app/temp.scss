@@ -1,5 +1,17 @@
 @import "resources/index";
 
+// Prevent the help widget from obstructing other elements on the page.
+#jsd-widget[style*="height: 80px;"]
+{
+    transform: scale(0.4) translate(38px, 58px);
+
+    html[route="dispatch/express-dispatch"] &
+    html[route="routes/live-tracking"] &
+    {
+        display: none !important;
+    }
+}
+
 /*
 button[appearance="outline"][accent="primary"]
 {

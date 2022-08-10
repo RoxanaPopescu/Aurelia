@@ -12,7 +12,7 @@
 
     <page name="list-views">
 
-        <page-sidebar name="orders-list-page-sidebar" scroll>
+        <page-sidebar name="orders-list-page-sidebar" scroll inert.bind="activeListView == null">
 
             <page-section>
 
@@ -346,7 +346,7 @@
                             appearance="none"
                             accent="primary"
                             title.translate="Close view"
-                            click.delegate="onCloseViewClick(listView)">
+                            click.delegate="onCloseListView(listView.definition)">
                             <icon name="close" inline></icon>
                         </button>
 
@@ -561,7 +561,7 @@
                     translate>
                     <p>
                         Views are named sets of filters and columns, that determine which<br>
-                        orders to show, and what information to show about each route
+                        orders to show, and what information to show about each order
                     </p>
                     <p>
                         To see your orders, create or open a view, by clicking <span class="info-card-action"><icon inline name="add"></icon> Add view</span> above
