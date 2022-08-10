@@ -42,6 +42,10 @@
     "estimatedColliCountShort": "Est. colli",
     "stopUserName": "Stop user name",
     "stopCompanyName": "Stop company name",
-    "stopUserTelephone": "Stop user telephone"
+    "stopUserTelephone": "Stop user telephone",
+    "stopEarlistArrivalDate": "Stop ready date",
+    "stopEarlistArrivalTime": "Stop ready time",
+    "stopLatestArrivalDate": "Stop close date",
+    "stopLatestArrivalTime": "Stop close time"
 
 }

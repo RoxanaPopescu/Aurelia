@@ -290,6 +290,38 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             property: undefined,
             visibility: "visible"
         },
+        "stop-ready-date":
+        {
+            name: listColumn.stopEarlistArrivalDate,
+            shortName: listColumn.stopEarlistArrivalDate,
+            width: "min-content",
+            property: undefined,
+            visibility: "visible"
+        },
+        "stop-ready-time":
+        {
+            name: listColumn.stopEarlistArrivalTime,
+            shortName: listColumn.stopEarlistArrivalTime,
+            width: "min-content",
+            property: undefined,
+            visibility: "visible"
+        },
+        "stop-close-date":
+        {
+            name: listColumn.stopLatestArrivalDate,
+            shortName: listColumn.stopLatestArrivalDate,
+            width: "min-content",
+            property: undefined,
+            visibility: "visible"
+        },
+        "stop-close-time":
+        {
+            name: listColumn.stopLatestArrivalTime,
+            shortName: listColumn.stopLatestArrivalTime,
+            width: "min-content",
+            property: undefined,
+            visibility: "visible"
+        },
         "unknown":
         {
             name: listColumn.unknown,

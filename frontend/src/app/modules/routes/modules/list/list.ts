@@ -751,7 +751,7 @@ export class ListPage
                         criticality: true,
                         estimates: columnSlugs.includes("estimated-time-frame"),
                         delayedStops: columnSlugs.includes("delayed-stops"),
-                        stops: columnSlugs.includes("distance") || columnSlugs.includes("estimated-time-start") || columnSlugs.includes("estimated-colli-count") || columnSlugs.includes("stop-company-name") || columnSlugs.includes("stop-user-name") || columnSlugs.includes("stop-user-telephone"),
+                        stops: columnSlugs.includes("distance") || columnSlugs.includes("estimated-time-start") || columnSlugs.includes("estimated-colli-count") || columnSlugs.includes("stop-company-name") || columnSlugs.includes("stop-user-name") || columnSlugs.includes("stop-user-telephone") || columnSlugs.includes("stop-ready-date") || columnSlugs.includes("stop-ready-time") || columnSlugs.includes("stop-close-date") || columnSlugs.includes("stop-close-time"),
                         colli: columnSlugs.includes("colli-count")
                     },
                     this.sorting,

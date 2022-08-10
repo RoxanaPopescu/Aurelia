@@ -671,6 +671,30 @@
                                     </span>
                                 </data-table-cell>
 
+                                <data-table-cell if.bind="column.slug === 'stop-ready-date'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.stops[0].arrivalTimeFrame.from | date: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'stop-ready-time'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.stops[0].arrivalTimeFrame.from | time: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'stop-close-date'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.stops[0].arrivalTimeFrame.to | date: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'stop-close-time'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.stops[0].arrivalTimeFrame.to | time: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
                                 <data-table-cell if.bind="column.slug === 'team'" class="${updating.team ? 'opacity-faded' : ''}">
                                     <a
                                         class="text-truncate"
