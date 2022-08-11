@@ -42,6 +42,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
         this.isPrimaryFulfiller = data.isPrimaryFulfiller;
         this.legacyId = data.legacyId;
         this.tags = data.tags ?? [];
+        this.createdDate = DateTime.fromISO(data.createdDate, { setZone: true })
 
         if (data.expires != null)
         {
@@ -171,6 +172,13 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
      * If the fulfiller is the primary one.
      */
     public isPrimaryFulfiller: boolean;
+
+    /**
+     * The driver assigned to the route,
+     * or undefined if none has been assigned, or if the
+     * user does not have permission to see the driver.
+     */
+     public createdDate?: DateTime;
 
     /**
      * The driver assigned to the route,

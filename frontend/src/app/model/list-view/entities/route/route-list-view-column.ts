@@ -98,6 +98,14 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
             property: "stop-count",
             visibility: "visible"
         },
+        "vehicle-type-dispatched":
+        {
+            name: listColumn.vehicleTypeDispatched,
+            shortName: listColumn.vehicleTypeDispatched,
+            width: "min-content",
+            property: undefined,
+            visibility: "visible"
+        },
         "vehicle-type":
         {
             name: listColumn.vehicleType,
@@ -126,6 +134,14 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         {
             name: listColumn.driverId,
             shortName: listColumn.driverId,
+            width: "min-content",
+            property: undefined,
+            visibility: "visible"
+        },
+        "driver-telephone-number":
+        {
+            name: listColumn.driverTelephoneNumber,
+            shortName: listColumn.driverTelephoneNumber,
             width: "min-content",
             property: undefined,
             visibility: "visible"
@@ -318,6 +334,22 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         {
             name: listColumn.stopLatestArrivalTime,
             shortName: listColumn.stopLatestArrivalTime,
+            width: "min-content",
+            property: undefined,
+            visibility: "visible"
+        },
+        "route-creation-date":
+        {
+            name: listColumn.routeCreationDate,
+            shortName: listColumn.routeCreationDate,
+            width: "min-content",
+            property: undefined,
+            visibility: "visible"
+        },
+        "route-creation-time":
+        {
+            name: listColumn.routeCreationTime,
+            shortName: listColumn.routeCreationTime,
             width: "min-content",
             property: undefined,
             visibility: "visible"

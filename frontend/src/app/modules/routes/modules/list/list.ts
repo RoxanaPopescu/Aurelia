@@ -744,9 +744,9 @@ export class ListPage
                     },
                     {
                         owner: columnSlugs.includes("owner"),
-                        vehicle: columnSlugs.includes("vehicle"),
+                        vehicle: columnSlugs.includes("vehicle") || columnSlugs.includes("vehicle-type-dispatched"),
                         fulfiller: columnSlugs.includes("executor"),
-                        driver: columnSlugs.includes("driver") || columnSlugs.includes("driver-id"),
+                        driver: columnSlugs.includes("driver") || columnSlugs.includes("driver-id") || columnSlugs.includes("driver-telephone-number"),
                         tags: columnSlugs.includes("tags"),
                         criticality: true,
                         estimates: columnSlugs.includes("estimated-time-frame"),

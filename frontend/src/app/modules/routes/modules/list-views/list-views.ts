@@ -419,14 +419,14 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
             },
             {
                 owner: columnSlugs.includes("owner"),
-                vehicle: columnSlugs.includes("vehicle"),
+                vehicle: columnSlugs.includes("vehicle") || columnSlugs.includes("vehicle-type-dispatched"),
                 fulfiller: columnSlugs.includes("executor"),
-                driver: columnSlugs.includes("driver") || columnSlugs.includes("driver-id"),
+                driver: columnSlugs.includes("driver") || columnSlugs.includes("driver-id") || columnSlugs.includes("driver-telephone-number"),
                 tags: columnSlugs.includes("tags"),
                 criticality: true,
                 estimates: columnSlugs.includes("estimated-time-frame"),
                 delayedStops: columnSlugs.includes("delayed-stops"),
-                stops: columnSlugs.includes("distance") || columnSlugs.includes("estimated-time-start") || columnSlugs.includes("estimated-colli-count"),
+                stops: columnSlugs.includes("distance") || columnSlugs.includes("estimated-time-start") || columnSlugs.includes("estimated-colli-count") || columnSlugs.includes("stop-company-name") || columnSlugs.includes("stop-user-name") || columnSlugs.includes("stop-user-telephone") || columnSlugs.includes("stop-ready-date") || columnSlugs.includes("stop-ready-time") || columnSlugs.includes("stop-close-date") || columnSlugs.includes("stop-close-time"),
                 colli: columnSlugs.includes("colli-count")
             },
             listView.definition.sorting,

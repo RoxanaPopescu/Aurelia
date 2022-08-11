@@ -549,6 +549,12 @@
                                     <span else empty-value></span>
                                 </data-table-cell>
 
+                                <data-table-cell if.bind="column.slug === 'vehicle-type-dispatched'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.vehicle.type.name}
+                                    </span>
+                                </data-table-cell>
+
                                 <data-table-cell if.bind="column.slug === 'vehicle'" class="${updating.vehicle ? 'opacity-faded' : ''}">
                                     <template if-claims="assign-vehicle-route">
                                         <a
@@ -692,6 +698,24 @@
                                 <data-table-cell if.bind="column.slug === 'stop-close-time'">
                                     <span class="text-truncate" empty-value>
                                         ${route.stops[0].arrivalTimeFrame.to | time: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'driver-telephone-number'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.driver.phone.nationalNumber}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'route-creation-date'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.createdDate | date: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'route-creation-time'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.createdDate | time: 'narrow' : false}
                                     </span>
                                 </data-table-cell>
 

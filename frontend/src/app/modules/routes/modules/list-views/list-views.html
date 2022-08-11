@@ -683,6 +683,12 @@
                                     </template>
                                 </data-table-cell>
 
+                                <data-table-cell if.bind="column.slug === 'vehicle-type-dispatched'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.vehicle.type.name}
+                                    </span>
+                                </data-table-cell>
+
                                 <data-table-cell if.bind="column.slug === 'status'">
                                     <span class="text-truncate" empty-value>
                                         ${route.status.name}
@@ -754,6 +760,66 @@
                                 <data-table-cell if.bind="column.slug === 'delayed-stops'">
                                     <span class="text-truncate" empty-value>
                                         ${getDelayedStops(route) | list: 'short' : 'unit'}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'stop-user-name'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.stops[0].outfit.personName}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'stop-company-name'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.stops[0].outfit.companyName}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'stop-user-telephone'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.stops[0].outfit.contactPhone.nationalNumber}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'stop-ready-date'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.stops[0].arrivalTimeFrame.from | date: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'stop-ready-time'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.stops[0].arrivalTimeFrame.from | time: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'stop-close-date'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.stops[0].arrivalTimeFrame.to | date: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'stop-close-time'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.stops[0].arrivalTimeFrame.to | time: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'driver-telephone-number'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.driver.phone.nationalNumber}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'route-creation-date'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.createdDate | date: 'narrow' : false}
+                                    </span>
+                                </data-table-cell>
+
+                                <data-table-cell if.bind="column.slug === 'route-creation-time'">
+                                    <span class="text-truncate" empty-value>
+                                        ${route.createdDate | time: 'narrow' : false}
                                     </span>
                                 </data-table-cell>
 

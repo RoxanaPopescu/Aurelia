@@ -46,6 +46,10 @@
     "stopEarlistArrivalDate": "Stop ready date",
     "stopEarlistArrivalTime": "Stop ready time",
     "stopLatestArrivalDate": "Stop close date",
-    "stopLatestArrivalTime": "Stop close time"
+    "stopLatestArrivalTime": "Stop close time",
+    "vehicleTypeDispatched": "Vehicle type dispatched",
+    "driverTelephoneNumber": "Driver telephone number",
+    "routeCreationDate": "Route creation date",
+    "routeCreationTime": "Route creation time"
 
 }
