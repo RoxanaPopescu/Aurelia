@@ -42,14 +42,20 @@
     "estimatedColliCountShort": "Est. colli",
     "stopUserName": "Stop user name",
     "stopCompanyName": "Stop company name",
+    "stopCompanyNameShort": "Stop co. name",
     "stopUserTelephone": "Stop user telephone",
+    "stopUserTelephoneShort": "Stop user tel.",
     "stopEarlistArrivalDate": "Stop ready date",
     "stopEarlistArrivalTime": "Stop ready time",
     "stopLatestArrivalDate": "Stop close date",
     "stopLatestArrivalTime": "Stop close time",
     "vehicleTypeDispatched": "Vehicle type dispatched",
+    "vehicleTypeDispatchedShort": "Veh. type disp.",
     "driverTelephoneNumber": "Driver telephone number",
+    "driverTelephoneNumberShort": "Driver tel. no.",
     "routeCreationDate": "Route creation date",
-    "routeCreationTime": "Route creation time"
+    "routeCreationDateShort": "Created date",
+    "routeCreationTime": "Route creation time",
+    "routeCreationTimeShort": "Created time"
 
 }

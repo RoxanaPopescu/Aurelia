@@ -101,7 +101,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         "vehicle-type-dispatched":
         {
             name: listColumn.vehicleTypeDispatched,
-            shortName: listColumn.vehicleTypeDispatched,
+            shortName: listColumn.vehicleTypeDispatchedShort,
             width: "min-content",
             property: undefined,
             visibility: "visible"
@@ -141,7 +141,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         "driver-telephone-number":
         {
             name: listColumn.driverTelephoneNumber,
-            shortName: listColumn.driverTelephoneNumber,
+            shortName: listColumn.driverTelephoneNumberShort,
             width: "min-content",
             property: undefined,
             visibility: "visible"
@@ -293,7 +293,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         "stop-company-name":
         {
             name: listColumn.stopCompanyName,
-            shortName: listColumn.stopCompanyName,
+            shortName: listColumn.stopCompanyNameShort,
             width: "min-content",
             property: undefined,
             visibility: "visible"
@@ -301,7 +301,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         "stop-user-telephone":
         {
             name: listColumn.stopUserTelephone,
-            shortName: listColumn.stopUserTelephone,
+            shortName: listColumn.stopUserTelephoneShort,
             width: "min-content",
             property: undefined,
             visibility: "visible"
@@ -341,7 +341,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         "route-creation-date":
         {
             name: listColumn.routeCreationDate,
-            shortName: listColumn.routeCreationDate,
+            shortName: listColumn.routeCreationDateShort,
             width: "min-content",
             property: undefined,
             visibility: "visible"
@@ -349,7 +349,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         "route-creation-time":
         {
             name: listColumn.routeCreationTime,
-            shortName: listColumn.routeCreationTime,
+            shortName: listColumn.routeCreationTimeShort,
             width: "min-content",
             property: undefined,
             visibility: "visible"
