@@ -216,7 +216,7 @@ export class OrderStatusModule extends AppModule
 
                 // HACK: Because we still don't have a dedicated tracking ID, as originally planned.
                 outfitIds: environment.name === "production"
-                    ? ["F1003E94-D520-4D0C-959A-AFB76BDC91F3", "78f39900-008f-49bc-b379-369726564346", "22A30D79-0CC8-4D9F-9530-C15016EA40D9"]
+                    ? ["F1003E94-D520-4D0C-959A-AFB76BDC91F3", "78f39900-008f-49bc-b379-369726564346", "22A30D79-0CC8-4D9F-9530-C15016EA40D9", "bae22aaa-a95f-4f0a-b565-877e1bb7c861"]
                     : ["5D6DB3D4-7E69-4939-8014-D028A5EB47FF"]
             }
         });
