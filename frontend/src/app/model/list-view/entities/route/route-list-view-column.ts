@@ -309,7 +309,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         "stop-ready-date":
         {
             name: listColumn.stopEarlistArrivalDate,
-            shortName: listColumn.stopEarlistArrivalDate,
+            shortName: listColumn.stopEarlistArrivalDateShort,
             width: "min-content",
             property: undefined,
             visibility: "visible"
@@ -317,7 +317,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         "stop-ready-time":
         {
             name: listColumn.stopEarlistArrivalTime,
-            shortName: listColumn.stopEarlistArrivalTime,
+            shortName: listColumn.stopEarlistArrivalTimeShort,
             width: "min-content",
             property: undefined,
             visibility: "visible"
@@ -325,7 +325,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         "stop-close-date":
         {
             name: listColumn.stopLatestArrivalDate,
-            shortName: listColumn.stopLatestArrivalDate,
+            shortName: listColumn.stopLatestArrivalDateShort,
             width: "min-content",
             property: undefined,
             visibility: "visible"
@@ -333,7 +333,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         "stop-close-time":
         {
             name: listColumn.stopLatestArrivalTime,
-            shortName: listColumn.stopLatestArrivalTime,
+            shortName: listColumn.stopLatestArrivalTimeShort,
             width: "min-content",
             property: undefined,
             visibility: "visible"

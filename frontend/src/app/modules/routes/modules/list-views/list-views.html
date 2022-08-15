@@ -777,7 +777,9 @@
 
                                 <data-table-cell if.bind="column.slug === 'stop-user-telephone'">
                                     <span class="text-truncate" empty-value>
-                                        ${route.stops[0].outfit.contactPhone.nationalNumber}
+                                        <a href="${route.stops[0].outfit.contactPhone.nationalNumber | phone: 'rfc3966'}">
+                                            ${route.stops[0].outfit.contactPhone.nationalNumber | phone }
+                                        </a>
                                     </span>
                                 </data-table-cell>
 
@@ -807,7 +809,9 @@
 
                                 <data-table-cell if.bind="column.slug === 'driver-telephone-number'">
                                     <span class="text-truncate" empty-value>
-                                        ${route.driver.phone.nationalNumber}
+                                        <a href="${route.driver.phone.nationalNumber | phone: 'rfc3966'}">
+                                            ${route.driver.phone.nationalNumber | phone }
+                                        </a>
                                     </span>
                                 </data-table-cell>
 

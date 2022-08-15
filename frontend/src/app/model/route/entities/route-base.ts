@@ -42,7 +42,7 @@ export abstract class RouteBase<TRouteStop extends RouteStopBase = RouteStopBase
         this.isPrimaryFulfiller = data.isPrimaryFulfiller;
         this.legacyId = data.legacyId;
         this.tags = data.tags ?? [];
-        this.createdDate = DateTime.fromISO(data.createdDate, { setZone: true })
+        this.createdDate = DateTime.fromISO(data.createdDate, { setZone: true });
 
         if (data.expires != null)
         {
