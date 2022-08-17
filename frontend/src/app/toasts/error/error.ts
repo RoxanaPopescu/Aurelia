@@ -1,6 +1,7 @@
 import { autoinject } from "aurelia-framework";
-import { Toast } from "shared/framework";
+import { ApiOriginError, IApiProblem } from "shared/infrastructure";
 import { MapObject } from "shared/types";
+import { Toast } from "shared/framework";
 import settings from "resources/settings";
 
 /**
@@ -85,6 +86,11 @@ export class ErrorToast
     protected errorStack: string;
 
     /**
+     * The problem associated with teh error, if any.
+     */
+    protected errorProblem: IApiProblem;
+
+    /**
      * The log entry info, if available.
      */
     protected entry: undefined |
@@ -144,6 +150,11 @@ export class ErrorToast
         else if (this.model.error != null)
         {
             this.errorMessage = this.model.error.toString();
+        }
+
+        if (this.model.error instanceof ApiOriginError)
+        {
+            this.errorProblem = this.model.error.data;
         }
 
         // Schedule the toast to close automatically.
