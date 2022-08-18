@@ -150,17 +150,6 @@ declare interface IClientEnvironment
         }
 
         /**
-         * The settings to use for the Jira service desk integration, or undefined to disable the integration.
-         */
-        serviceDesk?:
-        {
-            /**
-             * The data key of the account.
-             */
-            dataKey: string;
-        }
-
-        /**
          * The settings for the Sentry integration, or undefined to disable the integration.
          */
         sentry?:
