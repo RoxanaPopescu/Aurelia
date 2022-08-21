@@ -218,7 +218,7 @@ export class RouteListViewFilter extends ListViewFilter
     }
 
     /**
-     * Updates the state of teh relative start time filter.
+     * Updates the state of the relative start time filter.
      */
     protected updateRelativeStartTimeFilter(newValue: any, oldValue: any, propertyName: string): void
     {

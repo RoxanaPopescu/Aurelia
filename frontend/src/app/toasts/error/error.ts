@@ -86,7 +86,7 @@ export class ErrorToast
     protected errorStack: string;
 
     /**
-     * The problem associated with teh error, if any.
+     * The problem associated with the error, if any.
      */
     protected errorProblem: IApiProblem;
 
