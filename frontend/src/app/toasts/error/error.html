@@ -49,6 +49,10 @@
                     <pre>${errorStack}</pre>
                 </div>
 
+                <div if.bind="errorProblem" class="${model.error ? 'margin-top' : ''}">
+                    <pre>problem:<br>${errorProblem | json}</pre>
+                </div>
+
                 <div if.bind="model.context" class="${model.error ? 'margin-top' : ''}">
                     <pre>context:<br>${model.context | json}</pre>
                 </div>

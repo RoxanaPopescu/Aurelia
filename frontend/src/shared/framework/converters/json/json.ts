@@ -9,9 +9,10 @@ export class JsonValueConverter
      * @param replacer The replacer function to use.
      * @param space The number of spaces to use when indenting.
      * @param breakBeforeBlock True to add a line break before an opening brace or bracket, otherwise false.
+     * @param stripQuotes True to strip quotes from property names, otherwise false.
      * @returns The JSON string representing the value.
      */
-    public toView(value: any, replacer?: (this: any, key: string, value: any) => any, space = 4, breakBeforeBlock = true): string
+    public toView(value: any, replacer?: (this: any, key: string, value: any) => any, space = 4, breakBeforeBlock = true, stripQuotes = true): string
     {
         if (value === undefined)
         {
@@ -22,7 +23,12 @@ export class JsonValueConverter
 
         if (breakBeforeBlock)
         {
-            json = json.replace(/^(\s*)(.*?:) (\{|\[)$/m, "$1$2\n$1$3");
+            json = json.replace(/^(\s*)(".+?"): (\{|\[)$/gm, "$1$2:\n$1$3");
+        }
+
+        if (stripQuotes)
+        {
+            json = json.replace(/^(\s*)"(.+?)":/gm, "$1$2:");
         }
 
         return json;

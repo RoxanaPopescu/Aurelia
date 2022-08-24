@@ -113,11 +113,6 @@ const compilerOptions: ICompilerOptions =
                     key: "AIzaSyAHRCItp-wdMJdLeMlI7YvpntwMrgcUbXs"
                 },
 
-                serviceDesk:
-                {
-                    dataKey: "44a9c1c9-7485-4450-80b1-c5d3fe1eafe9"
-                },
-
                 sentry:
                 {
                     dsn: "https://e1c6cac2640e4683b490730936816c46@sentry.io/1430333",
