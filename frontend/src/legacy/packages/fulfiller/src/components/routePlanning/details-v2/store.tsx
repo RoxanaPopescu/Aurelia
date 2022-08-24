@@ -525,6 +525,20 @@ export class RoutePlanningStore {
       { headline: Localization.sharedValue("TimePeriod"), value: timeframe }
     ];
 
+    if (stop.weight) {
+      rows.push({
+        headline: Localization.sharedValue("Weight"),
+        value: Localization.formatWeight(stop.weight)
+      });
+    }
+
+    if (stop.volume) {
+      rows.push({
+        headline: Localization.sharedValue("Volume"),
+        value: Localization.formatVolume(stop.volume)
+      });
+    }
+
     if (stop instanceof RoutePlanRouteStop && stop.route) {
       rows.push({
         headline: Localization.sharedValue("Expected_Arrival"),
@@ -572,19 +586,6 @@ export class RoutePlanningStore {
         value: Localization.formatDistance(stop.estimates.distance)
       });
 
-      if (stop.weight) {
-        rows.push({
-          headline: Localization.sharedValue("Weight"),
-          value: Localization.formatWeight(stop.weight)
-        });
-      }
-
-      if (stop.volume) {
-        rows.push({
-          headline: Localization.sharedValue("Volume"),
-          value: Localization.formatVolume(stop.volume)
-        });
-      }
     }
 
     return rows;
