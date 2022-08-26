@@ -26,13 +26,21 @@
 
             <page-section class="flex-grow">
 
+                <check-toggle label="after" class="geographic-areas-list-toggle-all margin-bottom" value.to-view="allAreasSelected" change.trigger="onToggleAllAreas()">
+
+                    <span slot="heading" translate>
+                        Select all
+                    </span>
+
+                </check-toggle>
+
                 <list-layout if.bind="settings.specialAreas.length > 0">
 
                     <accordion repeat.for="specialArea of settings.specialAreas" expanded.bind="specialArea.expanded" accent.bind="'data-' + specialArea.color & attr">
 
                         <div slot="header">
 
-                            <check-toggle class="margin-right" value.bind="specialArea.selected"></check-toggle>
+                            <check-toggle class="margin-right" value.to-view="specialArea.selected" change.trigger="onToggleArea(specialArea)"></check-toggle>
 
                             <div class="font-large">
                                 ${specialArea.name}

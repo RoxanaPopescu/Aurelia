@@ -26,6 +26,21 @@ page[name="route-planning"] page[name="settings-details"] geographic-areas
         }
     }
 
+    .geographic-areas-list-toggle-all
+    {
+        margin-left: 21rem;
+
+        .toggle-control
+        {
+            transform: none !important;
+        }
+
+        .toggle-label
+        {
+            padding-left: 12rem !important;
+        }
+    }
+
     .geographic-area-scenario
     {
         display: flex;

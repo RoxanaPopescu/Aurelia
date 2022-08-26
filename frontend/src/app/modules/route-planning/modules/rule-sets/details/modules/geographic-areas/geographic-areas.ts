@@ -54,6 +54,41 @@ export class GeographicAreas
     @bindable
     public visible = false;
 
+    protected allAreasSelected: boolean | null = true;
+
+    /**
+     * Called when the selection of an area is toggled.
+     * Updates the select all state.
+     * @param area The area to toggle, or undefined to only update the select all state.
+     */
+    protected onToggleArea(area?: SpecialArea): void
+    {
+        if (area != null)
+        {
+            area.selected = !area.selected;
+        }
+
+        this.allAreasSelected =
+            this.settings.specialAreas.every(a => a.selected) ||
+            (this.settings.specialAreas.some(a => a.selected) ? null : false);
+    }
+
+    /**
+     * Called when the `Select all` checkbox is toggled.
+     * Selects or deselects all areas.
+     */
+    protected onToggleAllAreas(): void
+    {
+        const allAreasSelected = this.allAreasSelected;
+
+        for (const area of this.settings.specialAreas)
+        {
+            area.selected = !allAreasSelected;
+        }
+
+        this.onToggleArea();
+    }
+
     /**
      * Called when the "Add area" button is clicked.
      * Begins the process of adding an area, by enabling drawing on the map.
