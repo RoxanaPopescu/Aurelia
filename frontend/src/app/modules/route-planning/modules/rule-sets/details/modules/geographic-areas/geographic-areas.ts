@@ -43,6 +43,11 @@ export class GeographicAreas
     protected mapRedrawTrigger = 0;
 
     /**
+     * True if all areas are selected, false if no areas are selected, or null if some areas are selected.
+     */
+    protected allAreasSelected: boolean | null = true;
+
+    /**
      * The route planning rule set.
      */
     @bindable
@@ -53,8 +58,6 @@ export class GeographicAreas
      */
     @bindable
     public visible = false;
-
-    protected allAreasSelected: boolean | null = true;
 
     /**
      * Called when the selection of an area is toggled.
