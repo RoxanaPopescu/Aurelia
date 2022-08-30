@@ -129,4 +129,27 @@ export class RoutePlanningRuleSetsModule extends AppModule
         context.response.body = result.data;
         context.response.status = 200;
     }
+
+    /**
+     * Duplicates a rule-set
+     * @returns The duplicated rule-set.
+     */
+    public "POST /v2/route-planning/rule-sets/duplicate" = async (context: AppContext) =>
+    {
+        await context.authorize("edit-routeplan-settings");
+
+        const result = await this.apiClient.post("routeoptimization/settings/duplicate",
+        {
+            body:
+            {
+                accessOutfitIds: [context.user?.organizationId],
+                originalSettingId: context.request.body.id,
+                nameOfDuplicate: context.request.body.name,
+                modifiedBy: context.user?.id
+            }
+        });
+
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
 }
