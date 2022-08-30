@@ -307,7 +307,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
             // Ensure the local state is updated.
             this.updateLocalState();
 
-            listView.update = () => this.update(listView!);
+            this.observeListView(listView);
         }
     }
 
@@ -575,6 +575,12 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
         // Create and execute a new operation.
         listView.operation = new Operation(async signal =>
         {
+            // Reset paging.
+            if (propertyPath !== "paging")
+            {
+                listView.paging = { ...listView.paging, page: 1 };
+            }
+
             // Capture the current fetched time, in case the request fails.
             const currentFetchedDateTime = listView.fetchedDateTime;
 
@@ -605,12 +611,6 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
                 }
 
                 throw error;
-            }
-
-            // Reset paging.
-            if (propertyPath !== "paging")
-            {
-                listView.paging.page = 1;
             }
 
             // Reset scroll.

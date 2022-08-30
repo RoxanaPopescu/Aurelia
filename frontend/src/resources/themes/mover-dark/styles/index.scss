@@ -147,7 +147,7 @@ google-map,
 {
     --google-map-surface-color: #222222 !important;
     --google-map-control-shadow: none !important;
-    --google-map-control-surface-text-color: #333333 !important;
+    --google-map-control-surface-text-color: #666666 !important;
     --google-map-control-surface-text-color--active: #000000 !important;
     --google-map-popover-close-filter: invert(1) !important;
 
@@ -177,4 +177,17 @@ info-icon .info-icon-container:not(:hover) icon
 .pageHeader
 {
     border-bottom-color: var(--palette-color-neutral-lit) !important;
+}
+
+.order-events-timeline-marker,
+.order-events-timeline-before,
+.order-events-timeline-after,
+.route-details-stop-number-marker,
+.route-details-stop-number-before,
+.route-details-stop-number-after
+{
+    &.accent-neutral
+    {
+        --surface-accent-surface-color: var(--surface-neutral-surface-color) !important;
+    }
 }

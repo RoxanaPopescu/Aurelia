@@ -22,7 +22,7 @@ br.br-preferred
 /// If inside a content context, text margin is applied.
 hr.hr-line
 {
-    border-top: 1rem solid var(--surface-separator-color);
+    border-top: var(--border-width-thin) solid var(--surface-separator-color);
 
     .margin-within &
     {
