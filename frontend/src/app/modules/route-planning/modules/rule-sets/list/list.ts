@@ -108,7 +108,7 @@ export class ListPage
     {
         try
         {
-            const name = ruleSet.name + " (1)";
+            const name = `${ruleSet.name} (1)`;
             await this._routePlanningSettingsService.duplicate(ruleSet.id, name);
 
             this.update();

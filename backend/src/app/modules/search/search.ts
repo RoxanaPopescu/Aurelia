@@ -64,10 +64,7 @@ export class RoutesModule extends AppModule
                     pageSize: queryLimit,
                     sorting: { field: 4, direction: 2 },
                     searchQuery: context.query.text,
-                    include: { owner: true },
-
-                    // HACK: This request times out if we don't limit the search to recent routes.
-                    startTimeFrom: DateTime.utc().minus({ days: 14 })
+                    include: { owner: true }
                 }
             }),
 
