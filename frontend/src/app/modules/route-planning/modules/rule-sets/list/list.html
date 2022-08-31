@@ -85,6 +85,15 @@
 
                                 <div class="icon-row">
 
+                                    <button
+                                        if-claims="edit-routeplan-settings"
+                                        title.translate="Duplicate rule set"
+                                        appearance="none"
+                                        accent="primary"
+                                        click.trigger="onDuplicateClick(item)">
+                                        <icon name="md-copy"></icon>
+                                    </button>
+
                                     <button if-claims="edit-routeplan-settings" appearance="none" accent="primary" click.trigger="onDeleteSettingsClick(item)">
                                         <icon name="delete-small"></icon>
                                     </button>

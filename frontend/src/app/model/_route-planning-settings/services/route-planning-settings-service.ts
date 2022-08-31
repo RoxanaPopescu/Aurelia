@@ -98,4 +98,20 @@ export class RoutePlanningSettingsService
             body: { id }
         });
     }
+
+    /**
+     * Creates a new rule set as a duplicate of the specified rule set.
+     * @param id The ID of the rule set to duplicate.
+     * @param name The name of the rule set to duplicate.
+     * @returns A promise that will be resolved with the new rule set.
+     */
+     public async duplicate(id: string, name: string): Promise<RoutePlanningSettingsInfo>
+     {
+        const result = await this._apiClient.post("route-planning/rule-sets/duplicate",
+        {
+            body: { id, name }
+        });
+
+        return new RoutePlanningSettingsInfo(result.data);
+     }
 }

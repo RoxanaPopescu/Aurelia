@@ -45,12 +45,7 @@ export class ListPage
      */
     public activate(): void
     {
-        // Create and execute the new operation.
-        this.updateOperation = new Operation(async signal =>
-        {
-            // Fetch the data.
-            this.items = await this._routePlanningSettingsService.getAll(signal);
-        });
+        this.update();
     }
 
     /**
@@ -63,6 +58,19 @@ export class ListPage
         {
             this.updateOperation.abort();
         }
+    }
+
+    /**
+     * Updates the page by fetching the latest data.
+     */
+    protected update(): void
+    {
+        // Create and execute the new operation.
+        this.updateOperation = new Operation(async signal =>
+        {
+            // Fetch the data.
+            this.items = await this._routePlanningSettingsService.getAll(signal);
+        });
     }
 
     /**
@@ -88,6 +96,26 @@ export class ListPage
         catch (error)
         {
             Log.error("Could not delete the route planning rule set", error);
+        }
+    }
+
+    /**
+     * Called when the `Duplicate` icon is clicked on a rule set.
+     * Duplicates the rule set.
+     * @param ruleSet The route planning settings to duplicate.
+     */
+    protected async onDuplicateClick(ruleSet: RoutePlanningSettingsInfo): Promise<void>
+    {
+        try
+        {
+            const name = ruleSet.name + " (1)";
+            await this._routePlanningSettingsService.duplicate(ruleSet.id, name);
+
+            this.update();
+        }
+        catch (error)
+        {
+            Log.error("Could not duplicate the rule set", error);
         }
     }
 }
