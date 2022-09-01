@@ -20,6 +20,11 @@ export interface IListViewPageParams
      * The ID of the list view to open and activate.
      */
     view?: string;
+
+    /**
+     * The page number to present in active list view.
+     */
+    page?: string;
 }
 
 /**
@@ -181,6 +186,9 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
         // Get the ID of the active list view, if any.
         const activeListViewId = params.view || sessionListViewState?.active || localListViewState?.active;
 
+        // Get the page of the active list view, if any.
+        const activeListViewPage = parseInt(params.page ?? "1");
+
         // Fetch the list view definitions.
         this.listViewDefinitions = await this._listViewService.getAll(this.listViewType);
 
@@ -197,6 +205,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
                 if (listViewDefinition != null)
                 {
                     const listView = new ListView<TListViewFilter, TListItem>(listViewDefinition);
+
                     this.openListViews.push(listView);
 
                     this.observeListView(listView);
@@ -215,6 +224,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
                 this.listViewDefinitions.personal.push(listViewDefinition);
 
                 const listView = new ListView<TListViewFilter, TListItem>(listViewDefinition);
+
                 this.openListViews.push(listView);
 
                 this.observeListView(listView);
@@ -225,15 +235,24 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
 
         if (activeListViewId)
         {
-            this.activeListView = this.openListViews.find(listView => listView.definition.id === activeListViewId);
+            let listView = this.openListViews.find(listView => listView.definition.id === activeListViewId);
 
-            if (this.activeListView == null)
+            if (listView != null)
+            {
+                listView.paging.page = activeListViewPage;
+
+                this.activeListView = listView;
+            }
+            else
             {
                 const listViewDefinition = this.getListViewDefinition(activeListViewId);
 
                 if (listViewDefinition != null)
                 {
-                    const listView = new ListView<TListViewFilter, TListItem>(listViewDefinition);
+                    listView = new ListView<TListViewFilter, TListItem>(listViewDefinition);
+
+                    listView.paging.page = activeListViewPage;
+
                     this.openListViews.unshift(listView);
                     this.activeListView = listView;
 
@@ -246,7 +265,11 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
 
         if (this.activeListView == null)
         {
-            this.activeListView = this.openListViews[0];
+            const listView = this.openListViews[0];
+
+            listView.paging.page = activeListViewPage;
+
+            this.activeListView = listView;
         }
     }
 
@@ -353,7 +376,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
 
         if (this.activeListView != null && this.activeListView.items == null)
         {
-            this.update(this.activeListView);
+            this.update(this.activeListView, "paging");
         }
 
         // Ensure the URL specifies the ID of the active list view, if any.
@@ -362,6 +385,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
         this._historyHelper.navigate((state: IHistoryState) =>
         {
             state.params.view = this.activeListView?.definition.id;
+            state.params.page = this.activeListView?.paging.page;
         },
         { trigger: false, replace: true });
 
@@ -530,7 +554,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
             {
                 this.activeListView = listView;
 
-                this.update(listView);
+                this.update(listView, "paging");
             });
         }
     }
@@ -569,21 +593,33 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
      */
     protected update(listView: ListView<TListViewFilter, TListItem>, propertyPath?: string): void
     {
-        // Abort any existing operation.
-        listView.operation?.abort();
+        if (listView.operation?.pending)
+        {
+            // Abort the pending operation.
+            listView.operation.abort();
+        }
+        else
+        {
+            // Capture the current state, so it can be restored if the update fails.
+            listView.temp =
+            {
+                fetchedDateTime: listView.fetchedDateTime,
+                paging: listView.paging
+            };
+        }
+
+        // If any filter was changed, reset the paging.
+        if (propertyPath !== "paging")
+        {
+            listView.paging = { ...listView.paging, page: 1 };
+
+            // Return, as setting the paging triggers a new update.
+            return;
+        }
 
         // Create and execute a new operation.
         listView.operation = new Operation(async signal =>
         {
-            // Reset paging.
-            if (propertyPath !== "paging")
-            {
-                listView.paging = { ...listView.paging, page: 1 };
-            }
-
-            // Capture the current fetched time, in case the request fails.
-            const currentFetchedDateTime = listView.fetchedDateTime;
-
             try
             {
                 // Capture the start time of the request, as it could take a long time to complete.
@@ -592,22 +628,45 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
                 // Clear the fetched time while updating.
                 listView.fetchedDateTime = undefined;
 
+                // tslint:disable-next-line: no-floating-promises
+                this._historyHelper.navigate((state: IHistoryState) =>
+                {
+                    state.params.page = listView.paging.page;
+                },
+                { trigger: false, replace: true });
+
                 // Fetch the items.
                 const result = await this.fetch(listView, signal);
 
-                // Update the items and item count of the list view.
+                // Update the items and item count.
                 listView.items = result.items;
                 listView.itemCount = result.itemCount;
 
-                // Update the fetched time of the list view.
+                // Update the fetched time.
                 listView.fetchedDateTime = fetchStartTime;
+
+                // Clear the captured state.
+                listView.temp = undefined;
             }
             catch (error)
             {
                 if (!(error instanceof AbortError))
                 {
-                    // Revert the fetched time of the list view.
-                    listView.fetchedDateTime = currentFetchedDateTime;
+                    // Restore the captured fetched time.
+                    listView.fetchedDateTime = listView.temp.fetchedDateTime;
+
+                    // Restore the captured paging.
+                    listView.paging = listView.temp.paging;
+
+                    // Clear the captured state.
+                    listView.temp = undefined;
+
+                    // tslint:disable-next-line: no-floating-promises
+                    this._historyHelper.navigate((state: IHistoryState) =>
+                    {
+                        state.params.page = listView.temp.paging.page;
+                    },
+                    { trigger: false, replace: true });
                 }
 
                 throw error;

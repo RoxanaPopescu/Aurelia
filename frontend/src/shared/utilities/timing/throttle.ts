@@ -40,7 +40,7 @@ export interface IThrottledFunc extends Function
 /**
  * Creates a throttled function, wrapping the specified function.
  * @param func The function to throttle.
- * @param wait The wait period, in milliseconds.
+ * @param wait The wait period, in milliseconds. Default is 0.
  * @param options The options to use.
  * @returns A throttled function, wrapping the specified function.
  */
@@ -88,10 +88,10 @@ export function createThrottledFunc<TFunc extends Function>(func: TFunc, wait = 
  * For an explanation of the difference between debouncing and throttling,
  * see: https://css-tricks.com/debouncing-throttling-explained-examples
  *
- * @param wait The wait period, in milliseconds.
+ * @param wait The wait period, in milliseconds. Default is 0.
  * @param options The options to use.
  */
-export function throttle<TFunc extends Function>(wait: number, options?: IThrottleOptions): any;
+export function throttle<TFunc extends Function>(wait?: number, options?: IThrottleOptions): any;
 
 /**
  * Creates a throttled function that wraps the specified function, such that invocation
@@ -119,7 +119,7 @@ export function throttle<TFunc extends Function>(wait: number, options?: IThrott
  * @param options The options to use.
  * @returns A throttled function, wrapping the specified function.
  */
-export function throttle<TFunc extends Function>(func: TFunc, wait: number, options?: IThrottleOptions): TFunc & IThrottledFunc;
+export function throttle<TFunc extends Function>(func: TFunc, wait?: number, options?: IThrottleOptions): TFunc & IThrottledFunc;
 
 export function throttle(...args: any[]): any
 {
