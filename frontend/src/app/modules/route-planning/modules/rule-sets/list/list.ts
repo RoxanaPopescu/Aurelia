@@ -108,8 +108,11 @@ export class ListPage
     {
         try
         {
-            const name = `${ruleSet.name} (1)`;
-            await this._routePlanningSettingsService.duplicate(ruleSet.id, name);
+            const postfixedNameRegexp = new RegExp(`^${ruleSet.name} \\((\\d+)\\)$`);
+            const nextPostfix = +(this.items.map(i => postfixedNameRegexp.exec(i.name)?.[1]).sort()?.[0] ?? "0") + 1;
+            const postfixedName = `${ruleSet.name} (${nextPostfix})`;
+
+            await this._routePlanningSettingsService.duplicate(ruleSet.id, postfixedName);
 
             this.update();
         }
