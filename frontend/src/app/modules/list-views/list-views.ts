@@ -235,6 +235,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
 
         if (activeListViewId)
         {
+            // tslint:disable-next-line: no-shadowed-variable
             let listView = this.openListViews.find(listView => listView.definition.id === activeListViewId);
 
             if (listView != null)
