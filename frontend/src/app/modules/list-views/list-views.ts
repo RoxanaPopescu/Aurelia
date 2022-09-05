@@ -325,7 +325,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
         {
             listView = new ListView<TListViewFilter, TListItem>(listViewDefinition);
 
-            this.openListViews.unshift(listView);
+            this.openListViews.push(listView);
             this.activeListView = listView;
 
             // Ensure the local state is updated.
@@ -346,11 +346,13 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
 
         if (listView != null)
         {
-            this.openListViews.splice(this.openListViews.indexOf(listView), 1);
+            const listViewIndex = this.openListViews.indexOf(listView);
+
+            this.openListViews.splice(listViewIndex, 1);
 
             if (this.activeListView === listView)
             {
-                this.activeListView = this.openListViews[0];
+                this.activeListView = this.openListViews[listViewIndex - 1] ?? this.openListViews[0];
             }
 
             if (listView.hasChanges)
