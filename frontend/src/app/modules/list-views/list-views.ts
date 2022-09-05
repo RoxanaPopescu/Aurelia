@@ -268,9 +268,12 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
         {
             const listView = this.openListViews[0];
 
-            listView.paging.page = activeListViewPage;
+            if (listView != null)
+            {
+                listView.paging.page = activeListViewPage;
 
-            this.activeListView = listView;
+                this.activeListView = listView;
+            }
         }
     }
 
