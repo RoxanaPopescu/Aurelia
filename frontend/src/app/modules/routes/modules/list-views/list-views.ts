@@ -128,6 +128,9 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
      */
     public async activate(params: IRouteListViewPageParams): Promise<void>
     {
+        this.teamsFilterService.fetchAccessibleTeams()
+            .catch(error => Log.error(error));
+
         await super.activate(params);
     }
 
