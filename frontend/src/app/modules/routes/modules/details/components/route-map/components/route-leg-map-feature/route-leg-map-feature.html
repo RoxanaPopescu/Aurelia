@@ -1,0 +1,15 @@
+<template>
+
+    <google-map-line
+        points.bind="points"
+        stroke-color.bind="
+            (fromRouteStop.status.slug !== 'not-visited' && toRouteStop.status.slug !== 'not-visited') ||
+            (fromRouteStop.status.slug !== 'not-visited' && fromRouteStop.status.slug !== 'arrived')
+            ? '--google-map-feature-color--positive'
+            : '--google-map-feature-color--neutral'"
+        stroke-width="3"
+        z-index.bind="100"
+        click.call="onClick != null ? onClick() : undefined">
+    </google-map-line>
+
+</template>

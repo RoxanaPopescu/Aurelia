@@ -1,0 +1,50 @@
+<template>
+
+    <require from="./order-map.scss"></require>
+    <require from="./components/order-leg-map-feature/order-leg-map-feature"></require>
+    <require from="./components/order-stop-map-feature/order-stop-map-feature"></require>
+
+    <google-map
+        if.bind="order != null"
+        class="au-animate animation-fade-in-mediuym"
+        configure.call="onMapConfigure(options)"
+        configured.call="onMapConfigured(map)"
+        touched.bind="mapTouched"
+        type.bind="mapType"
+        view-model.ref="mapViewModel">
+
+        <template if.bind="order != null">
+
+            <order-leg-map-feature
+                if.bind="order.pickup.location.position != null && order.delivery.location.position != null"
+                map-view-model.bind="mapViewModel"
+                order.bind="order">
+            </order-leg-map-feature>
+
+            <order-stop-map-feature
+                if.bind="order.pickup.location.position != null"
+                map-view-model.bind="mapViewModel"
+                order.bind="order"
+                order-stop.bind="order.pickup">
+            </order-stop-map-feature>
+
+            <order-stop-map-feature
+                if.bind="order.delivery.location.position != null"
+                map-view-model.bind="mapViewModel"
+                order.bind="order"
+                order-stop.bind="order.delivery">
+            </order-stop-map-feature>
+
+        </template>
+
+        <div class="google-map-actions">
+
+            <button disabled.bind="order == null || mapInstance == null" click.trigger="tryFitBounds()">
+                Zoom to fit
+            </button>
+
+        </div>
+
+    </google-map>
+
+</template>

@@ -2,8 +2,8 @@
 
     <require from="app/components/name-value-pair/name-value-pair"></require>
     <require from="app/components/star-icon/star-icon"></require>
-    <require from="legacy/components/route-details-map/wrapper" as="route-details-map"></require>
     <require from="./components/route-overview/route-overview"></require>
+    <require from="./components/route-map/route-map"></require>
     <require from="./details.scss"></require>
 
     <page name="details">
@@ -748,7 +748,7 @@
 
                 </div>
 
-                <route-details-map if="condition.bind: showMap; cache: false" route.bind="route" service.bind="routeService" on-stop-click.call="onMapStopClick(stop)" class="margin-bottom"></route-details-map>
+                <route-map if="condition.bind: showMap; cache: false" route.bind="route" on-stop-dbl-click.call="onMapStopDblClick(stop)" class="margin-bottom"></route-map>
 
                 <data-table
                     appearance="rows"
@@ -846,6 +846,7 @@
                                 <div class="route-details-stop-number-marker accent-${stop.status.accent} ${stop.status.slug == 'arrived' ? '--arrived' : ''}">
                                     ${stop.stopNumber}
                                     <icon if.bind="stop.hasAlert" name="warning" accent="negative"></icon>
+                                    <icon if.bind="!stop.hasAlert && stop.hasWarning" name="warning" accent="attention"></icon>
                                 </div>
                             </data-table-cell>
 

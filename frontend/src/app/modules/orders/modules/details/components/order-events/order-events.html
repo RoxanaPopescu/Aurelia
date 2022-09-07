@@ -1,7 +1,7 @@
 <template>
 
     <require from="./order-events.scss"></require>
-    <require from="legacy/components/order-details-map/wrapper" as="order-details-map"></require>
+    <require from="../order-map/order-map"></require>
     <require from="app/components/identity-picture/identity-picture"></require>
 
     <page-section>
@@ -23,7 +23,7 @@
             </toolbar>
         </div>
 
-        <order-details-map if="condition.bind: showMap; cache: false" order.bind="order" class="margin-bottom"></order-details-map>
+        <order-map if="condition.bind: showMap; cache: false" order.bind="order" class="margin-bottom"></order-map>
 
         <data-table appearance="rows" class="${!showMap ? '--reduce-header-whitespace' : ''}">
 

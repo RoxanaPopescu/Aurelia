@@ -1,5 +1,5 @@
 <template class="
-    ${ready === true ? '--ready' : ready === false ? '--error' : '--loading'}
+    ${state === 'ready' ? '--ready' : ''}
     ${touched ? '--touched' : ''}
     ${type ? '--type-' + type : ''}">
 

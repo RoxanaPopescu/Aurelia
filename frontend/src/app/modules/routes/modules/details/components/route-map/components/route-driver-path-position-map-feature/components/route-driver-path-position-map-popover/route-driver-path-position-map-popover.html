@@ -1,0 +1,58 @@
+<template ref="element">
+
+    <require from="shared/google-maps/components/google-map/google-map-popover.scss" as="scoped"></require>
+
+    <require from="app/components/name-value-pair/name-value-pair"></require>
+    <require from="app/components/name-value-pair/name-value-pair.scss" as="scoped"></require>
+
+    <require from="./route-driver-path-position-map-popover.scss" as="scoped"></require>
+
+    <!-- HACK: The `if.bind="true"`here is required to prevent a templating bug. -->
+    <google-map-popover
+        if.bind="true"
+        content.bind="element"
+        offset-y.bind="-4">
+
+        <h1 translate>
+            Recorded driver position
+        </h1>
+
+        <name-value-pair class="margin-top">
+
+            <div slot="name" translate>
+                Timestamp
+            </div>
+
+            <div slot="value">
+                ${position.timestamp | dateTime: 'narrow' : false}
+            </div>
+
+        </name-value-pair>
+
+        <name-value-pair class="margin-top">
+
+            <div slot="name" translate>
+                Latitude
+            </div>
+
+            <div slot="value">
+                ${position.latitude}
+            </div>
+
+        </name-value-pair>
+
+        <name-value-pair class="margin-top">
+
+            <div slot="name" translate>
+                Longitude
+            </div>
+
+            <div slot="value">
+                ${position.longitude}
+            </div>
+
+        </name-value-pair>
+
+    </google-map-popover>
+
+</template>

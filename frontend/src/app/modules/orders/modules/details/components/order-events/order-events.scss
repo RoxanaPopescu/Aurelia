@@ -4,6 +4,11 @@ order-events
 {
     display: block;
 
+    order-map
+    {
+        height: 40vh;
+    }
+
     data-table
     {
         --data-table-columns: minmax(106rem, min-content) minmax(72rem, min-content) 1fr 1fr 1fr 1fr;

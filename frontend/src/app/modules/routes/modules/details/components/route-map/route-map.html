@@ -1,0 +1,98 @@
+<template>
+
+    <require from="./route-map.scss"></require>
+    <require from="./components/route-leg-map-feature/route-leg-map-feature"></require>
+    <require from="./components/route-stop-map-feature/route-stop-map-feature"></require>
+    <require from="./components/route-driver-map-feature/route-driver-map-feature"></require>
+    <require from="./components/route-driver-path-position-map-feature/route-driver-path-position-map-feature"></require>
+    <require from="./components/route-driver-path-segment-map-feature/route-driver-path-segment-map-feature"></require>
+
+    <google-map
+        if.bind="route != null"
+        class="au-animate animation-fade-in-mediuym"
+        configure.call="onMapConfigure(options)"
+        configured.call="onMapConfigured(map)"
+        touched.bind="mapTouched"
+        type.bind="mapType"
+        view-model.ref="mapViewModel">
+
+        <template if.bind="route != null">
+
+            <route-leg-map-feature
+                repeat.for="routeLeg of routeLegs"
+                map-view-model.bind="mapViewModel"
+                route.bind="route"
+                from-route-stop.bind="routeLeg.from"
+                to-route-stop.bind="routeLeg.to">
+            </route-leg-map-feature>
+
+            <route-stop-map-feature
+                repeat.for="routeStop of routeStops"
+                map-view-model.bind="mapViewModel"
+                route.bind="route"
+                route-stop.bind="routeStop"
+                on-click.call="onStopClick != null ? onStopClick({ stop: routeStop }) : undefined"
+                on-dbl-click.call="onStopDblClick != null ? onStopDblClick({ stop: routeStop }) : undefined">
+            </route-stop-map-feature>
+
+            <route-driver-map-feature
+                if.bind="route.driverPosition != null"
+                map-view-model.bind="mapViewModel"
+                route.bind="route"
+                driver.bind="route.driver">
+            </route-driver-map-feature>
+
+            <template if.bind="driverPathState === 'visible'">
+
+                <route-driver-path-position-map-feature
+                    repeat.for="driverPathPosition of driverPath"
+                    position.bind="driverPathPosition">
+                </route-driver-path-position-map-feature>
+
+                <route-driver-path-segment-map-feature
+                    repeat.for="driverPathSegment of driverPathSegments"
+                    from-position.bind="driverPathSegment.from"
+                    to-position.bind="driverPathSegment.to">
+                </route-driver-path-segment-map-feature>
+
+            </template>
+
+        </template>
+
+        <div class="google-map-actions">
+
+            <button
+                disabled.bind="route == null || mapInstance == null"
+                click.trigger="tryFitBounds()"
+                translate>
+                Zoom to fit
+            </button>
+
+            <button
+                if.bind="route.status.slug == 'in-progress' || route.status.slug == 'completed'"
+                disabled.bind="route == null || mapInstance == null || driverPathState === 'loading' || driverPathState === 'empty'"
+                click.trigger="toggleDriverPath()">
+
+                <span if.bind="driverPathState === 'hidden'" translate>
+                    Show driver path
+                </span>
+
+                <span if.bind="driverPathState === 'loading'" translate>
+                    Loading driver path...
+                </span>
+
+                <span if.bind="driverPathState === 'empty'" accent="negative" translate>
+                    No driver positions recorded
+                </span>
+
+                <span if.bind="driverPathState === 'visible'" translate>
+                    Hide driver path
+                </span>
+
+            </button>
+
+        </div>
+
+    </google-map>
+
+</template>
