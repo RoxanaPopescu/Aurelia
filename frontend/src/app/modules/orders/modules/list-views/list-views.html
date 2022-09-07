@@ -586,7 +586,7 @@
                 </empty-indicator>
 
                 <div
-                    if.bind="activeListView != null && activeListView.operation.error == null && activeListView.items.length > 0"
+                    if.bind="activeListView.paging != null && activeListView.operation.error == null && activeListView.items.length > 0"
                     class="flex-row">
 
                     <data-table-pager

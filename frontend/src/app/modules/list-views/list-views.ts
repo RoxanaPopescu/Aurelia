@@ -145,7 +145,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
     /**
      * The style defining the grid template columns for the `data-table`.
      */
-    @computedFrom("activeListView.definition.columns")
+    @computedFrom("activeListView", "showIconsColumn", "columnWidths")
     protected get tableStyle(): MapObject
     {
         if (this.activeListView == null)
