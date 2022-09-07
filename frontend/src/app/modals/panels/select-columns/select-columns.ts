@@ -99,6 +99,7 @@ export class SelectColumnsPanel
     /**
      * Called when a column is toggled.
      * @param column The column being toggled.
+     * @param selected True if the column should be selected, otherwise false.
      */
     protected onToggleColumn(column: ListViewColumn, selected: boolean): void
     {
@@ -109,6 +110,22 @@ export class SelectColumnsPanel
         else
         {
             this.selectedColumns.splice(this.selectedColumns.indexOf(column), 1);
+        }
+    }
+
+    /**
+     * Called when all columns are toggled.
+     * @param selected True if the columns should be selected, otherwise false.
+     */
+    protected onToggleAllColumns(selected: boolean): void
+    {
+        if (selected)
+        {
+            this.selectedColumns = this.availableColumns.slice();
+        }
+        else
+        {
+            this.selectedColumns = [];
         }
     }
 
