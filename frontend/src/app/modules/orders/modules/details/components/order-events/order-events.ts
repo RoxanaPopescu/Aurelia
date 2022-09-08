@@ -148,6 +148,14 @@ export class OrderEvents
                     }
                 }
 
+                if (this.orderEventGroups != null)
+                {
+                    for (let i = 1; i <= this.orderEventGroups.length; i++)
+                    {
+                        (orderEventGroups[orderEventGroups.length - i] as any).__expanded = (this.orderEventGroups[this.orderEventGroups.length - i] as any)?.__expanded;
+                    }
+                }
+
                 this.temporarilyLockScroll();
                 this.orderEventGroups = orderEventGroups;
             }
