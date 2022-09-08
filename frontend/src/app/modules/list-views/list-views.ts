@@ -13,7 +13,7 @@ import { ConfirmDeleteListViewDialog } from "./modals/confirm-delete-list-view/c
 
 // Cached open list views, which may contain unsaved changes.
 // This is used to preserve the state when navigating in the browser history.
-const cachedOpenListViews: MapObject = {}
+const cachedOpenListViews: MapObject = {};
 
 /**
  * Represents the route parameters for the page.

@@ -219,6 +219,7 @@ export function createHtmlOverlayView(options: IHtmlOverlayViewOptions): IHtmlOv
         private readonly _readyFunc: (() => void) | undefined;
         private _position: google.maps.LatLng;
         private _zIndex: number | undefined;
+        private _added = false;
         private _ready = false;
 
         /**
@@ -246,6 +247,7 @@ export function createHtmlOverlayView(options: IHtmlOverlayViewOptions): IHtmlOv
         public set position(value: google.maps.LatLng)
         {
             this._position = value;
+
             this.draw();
         }
 
@@ -265,6 +267,7 @@ export function createHtmlOverlayView(options: IHtmlOverlayViewOptions): IHtmlOv
         public set zIndex(value: number | undefined)
         {
             this._zIndex = value;
+
             this.draw();
         }
 
@@ -274,6 +277,8 @@ export function createHtmlOverlayView(options: IHtmlOverlayViewOptions): IHtmlOv
         public onAdd(): void
         {
             this.getPanes()[this._pane].appendChild(this._element);
+
+            this._added = true;
         }
 
         /**
@@ -281,6 +286,8 @@ export function createHtmlOverlayView(options: IHtmlOverlayViewOptions): IHtmlOv
          */
         public onRemove(): void
         {
+            this._added = false;
+
             this._element.remove();
         }
 
@@ -289,6 +296,11 @@ export function createHtmlOverlayView(options: IHtmlOverlayViewOptions): IHtmlOv
          */
         public draw(): void
         {
+            if (!this._added)
+            {
+                return;
+            }
+
             const elementOffset = this.getProjection().fromLatLngToDivPixel(this._position);
 
             this._element.style.left = `${elementOffset.x}px`;
