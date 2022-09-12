@@ -419,6 +419,12 @@
 
                             <div slot="validation">
 
+                                <length-validator
+                                    if.bind="model.messageType.slug === 'sms'"
+                                    value.bind="model.fromName"
+                                    max.bind="11">
+                                </length-validator>
+
                                 <required-validator
                                     value.bind="model.fromName">
                                 </required-validator>
