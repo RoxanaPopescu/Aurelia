@@ -18,12 +18,14 @@
     --google-map-control-shadow: var(--shadow-float);
 
     // The color to use for control surfaces.
-    --google-map-control-surface-color: var(--surface-color);
+    --google-map-control-surface-color: rgb(255, 255, 255);
     --google-map-control-surface-color--active: var(--google-map-control-surface-color);
+    --google-map-control-surface-color--hover: rgb(235, 235, 235);
 
     // The color to use for text on control surfaces.
     --google-map-control-surface-text-color: var(--surface-text-color);
     --google-map-control-surface-text-color--active: var(--google-map-control-surface-text-color);
+    --google-map-control-surface-text-color--hover: var(--google-map-control-surface-text-color);
 
     // The font weight to use for text on a control surface.
     --google-map-control-font-weight: 500;
@@ -337,19 +339,14 @@
     {
         > button
         {
-            top: -4px !important;
-            right: -4px !important;
+            top: -6px !important;
+            right: -6px !important;
             opacity: 1 !important;
 
             > span
             {
                 background: var(--surface-primary-icon-color);
             }
-        }
-
-        &:not(.--pinned) > button
-        {
-            display: none !important;
         }
 
         > .gm-ui-hover-effect:not(:hover)
@@ -366,5 +363,10 @@
         {
             transform: translate(-50%, calc(-50% - 1px)) rotate(-45deg) !important;
         }
+    }
+
+    .gm-style-iw-a:not(.--pinned) .gm-style-iw > button
+    {
+        display: none !important;
     }
 }

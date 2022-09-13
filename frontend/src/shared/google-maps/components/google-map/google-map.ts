@@ -27,13 +27,17 @@ export class GoogleMapCustomElement implements IGoogleMapObjectOwner
         this._googleMapsPromise = googleMapsService.load();
 
         // Set the initial component state.
-        this._componentState = "detached";
+        this.state = "detached";
     }
 
     private readonly _googleMapsService: GoogleMapsService;
     private readonly _googleMapsPromise: Promise<typeof google.maps>;
     private readonly _objects: IGoogleMapObject[] = [];
-    private _componentState: "attaching" | "attached" | "detached";
+
+    /**
+     * The state of the component.
+     */
+    protected state: "detached" | "attaching" | "attached" | "ready";
 
     /**
      * The element to which the map instance is attached.
@@ -90,13 +94,13 @@ export class GoogleMapCustomElement implements IGoogleMapObjectOwner
     public attached(): void
     {
         // Return if the component is already attaching.
-        if (this._componentState === "attaching")
+        if (this.state === "attaching")
         {
             return;
         }
 
         // Indicate that the component is attaching.
-        this._componentState = "attaching";
+        this.state = "attaching";
 
         // Wait for the Google Maps API to load.
         this._googleMapsPromise
@@ -104,7 +108,7 @@ export class GoogleMapCustomElement implements IGoogleMapObjectOwner
             .then(async googleMaps =>
             {
                 // Return if the component was detached while the Google Maps API was loading.
-                if (this._componentState === "detached")
+                if (this.state === "detached")
                 {
                     return;
                 }
@@ -140,10 +144,11 @@ export class GoogleMapCustomElement implements IGoogleMapObjectOwner
                     this.type = streetView.getVisible() ? "street" : this.instance!.getMapTypeId();
                 });
 
+                // Wait for the map to become idle.
                 googleMaps.event.addListenerOnce(this.instance, "idle", async () =>
                 {
                     // Indicate that the component is attached.
-                    this._componentState = "attached";
+                    this.state = "attached";
 
                     // Attach objects.
                     for (const object of this._objects.slice())
@@ -151,8 +156,11 @@ export class GoogleMapCustomElement implements IGoogleMapObjectOwner
                         object.attach();
                     }
 
-                    // Call the `created` callback.
+                    // Call the `configured` callback.
                     await this.configured?.({ map: this.instance! });
+
+                    // Indicate that the component is ready.
+                    this.state = "ready";
                 });
             })
 
@@ -174,7 +182,7 @@ export class GoogleMapCustomElement implements IGoogleMapObjectOwner
         }
 
         // Indicate that the component is detached.
-        this._componentState = "detached";
+        this.state = "detached";
     }
 
     /**
@@ -190,7 +198,7 @@ export class GoogleMapCustomElement implements IGoogleMapObjectOwner
             {
                 this._objects.push(object);
 
-                if (this._componentState === "attached")
+                if (this.state === "attached" || this.state === "ready")
                 {
                     object.attach();
                 }
@@ -211,12 +219,32 @@ export class GoogleMapCustomElement implements IGoogleMapObjectOwner
             {
                 this._objects.splice(index, 1);
 
-                if (this._componentState === "attached")
+                if (this.state === "attached" || this.state === "ready")
                 {
                     object.detach();
                 }
             }
         }
+    }
+
+    /**
+     * Gets the specified CSS value, or if a variable name is specified, the value of the variable.
+     * @param cssValueOrVariable The CSS value or variable name to get.
+     * @returns The specified CSS value, of if a variable name is specified, the value of the variable.
+     */
+    public getCssValue(cssColorOrVariable: string): any
+    {
+        if (cssColorOrVariable.startsWith("--"))
+        {
+            if (this.mapElement[cssColorOrVariable] == null)
+            {
+                this.mapElement[cssColorOrVariable] = getComputedStyle(this.mapElement).getPropertyValue(cssColorOrVariable);
+            }
+
+            return this.mapElement[cssColorOrVariable];
+        }
+
+        return cssColorOrVariable;
     }
 
     /**

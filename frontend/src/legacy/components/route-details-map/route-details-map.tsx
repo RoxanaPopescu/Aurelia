@@ -51,7 +51,31 @@ export class RouteDetailsMapComponent extends React.Component<IRouteDetailsMapPr
         this.loadingDriverPositions = true;
         this.failedDriverPositions = false;
         try {
-            this.positionService = await this.props.routeService.getDriverPositions(this.props.route!);
+            //this.positionService = await this.props.routeService.getDriverPositions(this.props.route!);
+
+            // The following code was removed from the route service:
+
+            /**
+             * Gets a service representing the recorded driver positions associated with the specified route.
+             * @param route The route for which to get a driver positions service.
+             * @returns A promise that will be resolved with a driver positions service.
+             */
+            /*
+            public async getDriverPositions(route: Route): Promise<RouteDriverPositionsService>
+            {
+                const result = await this._apiClient.post("routes/driver-positions",
+                {
+                    body:
+                    {
+                        routeId: route.id
+                    }
+                });
+
+                const positions = result.data.results.map(p => new Position(p));
+
+                return new RouteDriverPositionsService(positions);
+            }
+            */
         } catch {
             this.failedDriverPositions = true;
         } finally {

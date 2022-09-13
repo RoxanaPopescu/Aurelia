@@ -1,19 +1,18 @@
+import { DateTime } from "luxon";
 import { autoinject } from "aurelia-framework";
-import { ApiClient } from "shared/infrastructure";
 import { IPaging, ISorting } from "shared/types";
+import { ApiClient } from "shared/infrastructure";
+import { Uuid } from "shared/utilities/id/uuid";
+import { getLegacyRouteSortProperty, getLegacySortDirection } from "legacy/helpers/api-helper";
+import { Position } from "app/model/shared";
+import { OrderInfo } from "app/model/order";
+import { Collo, ColloStatus, ColloStatusSlug } from "app/model/collo";
+import { VehicleType } from "app/model/vehicle";
 import { RouteStatusSlug, RouteStatus } from "../entities/route-status";
 import { RouteInfo } from "../entities/route-info";
 import { Route } from "../entities/route";
 import { RouteStopStatusSlug, RouteStopStatus } from "../entities/route-stop-status";
 import { RouteStop } from "../entities/route-stop";
-import { Collo, ColloStatus, ColloStatusSlug } from "app/model/collo";
-import { getLegacyRouteSortProperty, getLegacySortDirection } from "legacy/helpers/api-helper";
-import { VehicleType } from "app/model/vehicle";
-import { DateTime } from "luxon";
-import { Position } from "app/model/shared";
-import { RouteDriverPositionsService } from "shared/src/services/route-driver-positions-service";
-import { Uuid } from "shared/utilities/id/uuid";
-import { OrderInfo } from "app/model/order";
 
 /**
  * Represents a service that manages routes.
@@ -154,11 +153,11 @@ export class RouteService
     }
 
     /**
-     * Changes the status of the specified route to the specified status.
-     * @param route The route for which the status should be set.
-     * @returns A promise that will be resolved when the operation succeedes.
+     * Gets the recorded driver positions associated with the specified route.
+     * @param route The route for which to get driver positions.
+     * @returns A promise that will be resolved with the driver positions.
      */
-    public async getDriverPositions(route: Route): Promise<RouteDriverPositionsService>
+    public async getDriverPositions(route: Route): Promise<Position[]>
     {
         const result = await this._apiClient.post("routes/driver-positions",
         {
@@ -168,9 +167,7 @@ export class RouteService
             }
         });
 
-        const positions = result.data.results.map(p => new Position(p));
-
-        return new RouteDriverPositionsService(positions);
+        return result.data.results.map(p => new Position(p));
     }
 
     /**

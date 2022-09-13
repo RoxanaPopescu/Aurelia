@@ -227,10 +227,10 @@ function createDebouncedFunc<TFunc extends Function>(func: TFunc, wait = 0, opti
  * For an explanation of the difference between debouncing and throttling,
  * see: https://css-tricks.com/debouncing-throttling-explained-examples
  *
- * @param wait The wait period, in milliseconds.
+ * @param wait The wait period, in milliseconds. Default is 0.
  * @param options The options to use.
  */
-export function debounce<TFunc extends Function>(wait: number, options?: IDebounceOptions): any;
+export function debounce<TFunc extends Function>(wait?: number, options?: IDebounceOptions): any;
 
 /**
  * Creates a debounced function that wraps the specified function, such that invocation
@@ -259,7 +259,7 @@ export function debounce<TFunc extends Function>(wait: number, options?: IDeboun
  * @param options The options to use.
  * @returns A debounced function, wrapping the specified function.
  */
-export function debounce<TFunc extends Function>(func: TFunc, wait: number, options?: IDebounceOptions): TFunc & IDebouncedFunc;
+export function debounce<TFunc extends Function>(func: TFunc, wait?: number, options?: IDebounceOptions): TFunc & IDebouncedFunc;
 
 export function debounce(...args: any[]): any
 {

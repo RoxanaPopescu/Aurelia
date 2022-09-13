@@ -38,9 +38,7 @@ export class GoogleMapsService
 
     /**
      * Configures the instance.
-     * @param themes The themes supported by the app.
-     * @param themeFolderPath The path for the folder containing the themes.
-     * @param changeFunc The function that is invoked before the theme changes.
+     * @param settings The settings to use.
      */
     @once
     public configure(settings: IGoogleMapsSettings): void
@@ -59,7 +57,7 @@ export class GoogleMapsService
         {
             if (this.settings == null)
             {
-                throw new Error("Cannot load the Google Maps API before teh service is configured.");
+                throw new Error("Cannot load the Google Maps API before the service is configured.");
             }
 
             const parameters =

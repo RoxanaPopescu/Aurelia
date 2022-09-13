@@ -1,0 +1,18 @@
+@import "resources/index";
+
+route-map
+{
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: var(--border-radius-medium);
+
+    google-map
+    {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}

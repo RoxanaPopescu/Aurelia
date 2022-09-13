@@ -69,6 +69,11 @@ export class OrderListViewsPage extends ListViewsPage<OrderListViewFilter, Order
     protected readonly listViewColumnType = OrderListViewColumn;
 
     /**
+     * The element representing the page tab nav component.
+     */
+    protected pageTabNavElement: HTMLElement;
+
+    /**
      * Called by the framework when the module is activated.
      * @param params The order parameters from the URL.
      * @returns A promise that will be resolved when the operation completes.
@@ -99,6 +104,18 @@ export class OrderListViewsPage extends ListViewsPage<OrderListViewFilter, Order
         listViewDefinition.shared = false;
 
         return this._listViewService.create(listViewDefinition);
+    }
+
+    /**
+     * Called when a list view definition was clicked in the list view selector, and should be opened.
+     * @param listViewDefinition The list view definition for which a list view should be opened.
+     */
+    protected onOpenListView(listViewDefinition: ListViewDefinition<OrderListViewFilter>): void
+    {
+        super.onOpenListView(listViewDefinition);
+
+        // Ensure the view is scrolled into view.
+        setTimeout(() => this.pageTabNavElement.scroll({ left: this.pageTabNavElement.scrollWidth + 10000 }));
     }
 
     /**

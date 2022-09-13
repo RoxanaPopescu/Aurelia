@@ -245,16 +245,12 @@ export class HistoryHelper
     }
 
     /**
-     * The default title separator.
+     * The default title separator, configured for the app router.
      */
     @computedFrom("_router.titleSeparator")
     public get titleSeparator(): string
     {
         return this._router.titleSeparator ?? "";
-    }
-    public set titleSeparator(value: string)
-    {
-        this._router.titleSeparator = value;
     }
 
     /**
@@ -624,6 +620,10 @@ export class HistoryHelper
             // Indicate that navigation has started.
             this._navigating = options.trigger ? "new" : undefined;
 
+            // Get the navigation tracker that was set by the router,
+            // as it may be lost when navigating.
+            const aureliaNavigationTracker = history.state.NavigationTracker;
+
             // Navigate and get the result.
             // tslint:disable-next-line: no-boolean-literal-compare
             const success = this._router.navigate(this.getRouteUrl(url, options.basePath), options) !== false;
@@ -634,10 +634,17 @@ export class HistoryHelper
                 this._history.setState("data", state.data);
 
                 // If not triggering navigation, update the current state immediately.
-                if (options.trigger === false)
+                if (!options.trigger)
                 {
                     this._state = this.getHistoryState(state.params);
                 }
+            }
+
+            // If this is not a new navigation, restore the navigation tracker,
+            // as it may have been lost while navigating.
+            if (!options.trigger)
+            {
+                history.replaceState({ ...history.state, NavigationTracker: aureliaNavigationTracker }, "", location.href);
             }
 
             // Return the result.

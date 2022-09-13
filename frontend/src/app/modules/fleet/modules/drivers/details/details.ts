@@ -1,7 +1,7 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { DriverService, Driver } from "app/model/driver";
 import { VehicleService, Vehicle } from "app/model/vehicle";
-import { ModalService, IValidation } from "shared/framework";
+import { ModalService, IValidation, IScroll } from "shared/framework";
 import { DeleteVehicleDialog } from "app/modules/fleet/modals/confirm-delete/confirm-delete";
 import { VehiclePanel } from "app/modules/fleet/modals/vehicle/vehicle";
 import { Operation } from "shared/utilities";
@@ -54,6 +54,11 @@ export class DetailsPage
     private readonly _modalService: ModalService;
     private readonly _identityService: IdentityService;
     private readonly _constructed;
+
+    /**
+     * The scroll manager for the page.
+     */
+    protected scroll: IScroll;
 
     /**
      * The validation for the modal.
@@ -160,6 +165,9 @@ export class DetailsPage
 
             // Update the state.
             this.vehicles = result;
+
+            // Scroll to top.
+            this.scroll?.reset();
         });
     }
 

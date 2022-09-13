@@ -2,13 +2,13 @@ import { Container, autoinject, containerless, noView, bindable } from "aurelia-
 import { CallbackWithContext, GeoJsonArea } from "shared/types";
 import { GoogleMapCustomElement } from "./google-map";
 import { GoogleMapObject } from "./google-map-object";
-import { geoJsonGeometryToLatLngLiterals, resolveColorString } from "./google-map-utilities";
+import { geoJsonGeometryToLatLngLiterals } from "./google-map-utilities";
 
-// The names of the mouse events on the marker that should be re-dispatched from the element.
-const eventNames = ["click", "dblclick", "drag", "dragend", "dragstart", "mousedown", "mouseout", "mouseover", "mouseup", "rightclick"];
+// The names of the instance events that should be re-dispatched by the component.
+const eventNames = ["click", "dblclick", "mousedown", "mouseup", "mouseover", "mouseout", "dragstart", "drag", "dragend", "contextmenu"];
 
 /**
- * Represents a line on a map.
+ * Represents an area on a map.
  */
 @autoinject
 @containerless
@@ -75,64 +75,74 @@ export class GoogleMapAreaCustomElement extends GoogleMapObject<google.maps.Poly
     public strokeOpacity: number;
 
     /**
-     * The function to call when a `clicked` event is dispatched on the marker.
+     * The function to call when a `click` event occurs.
+     * @returns False to prevent default, otherwise true or undefined.
      */
     @bindable
-    public click: CallbackWithContext<{ event: PointerEvent }>;
+    public click: CallbackWithContext<{ event: PointerEvent }, boolean | undefined>;
 
     /**
-     * The function to call when a `dblclick` event is dispatched on the marker.
+     * The function to call when a `dblclick` event occurs.
+     * @returns False to prevent default, otherwise true or undefined.
      */
     @bindable
-    public dblclick: CallbackWithContext<{ event: PointerEvent }>;
+    public dblclick: CallbackWithContext<{ event: MouseEvent }, boolean | undefined>;
 
     /**
-     * The function to call when a `drag` event is dispatched on the marker.
+     * The function to call when a `mousedown` event occurs.
+     * @returns False to prevent default, otherwise true or undefined.
      */
     @bindable
-    public drag: CallbackWithContext<{ event: PointerEvent }>;
+    public mousedown: CallbackWithContext<{ event: MouseEvent }, boolean | undefined>;
 
     /**
-     * The function to call when a `dragend` event is dispatched on the marker.
+     * The function to call when a `mouseup` event occurs.
+     * @returns False to prevent default, otherwise true or undefined.
      */
     @bindable
-    public dragend: CallbackWithContext<{ event: PointerEvent }>;
+    public mouseup: CallbackWithContext<{ event: MouseEvent }, boolean | undefined>;
 
     /**
-     * The function to call when a `dragstart` event is dispatched on the marker.
+     * The function to call when a `mouseover` event occurs.
+     * @returns False to prevent default, otherwise true or undefined.
      */
     @bindable
-    public dragstart: CallbackWithContext<{ event: PointerEvent }>;
+    public mouseover: CallbackWithContext<{ event: MouseEvent }, boolean | undefined>;
 
     /**
-     * The function to call when a `mousedown` event is dispatched on the marker.
+     * The function to call when a `mouseout` event occurs.
+     * @returns False to prevent default, otherwise true or undefined.
      */
     @bindable
-    public mousedown: CallbackWithContext<{ event: PointerEvent }>;
+    public mouseout: CallbackWithContext<{ event: MouseEvent }, boolean | undefined>;
 
     /**
-     * The function to call when a `mouseout` event is dispatched on the marker.
+     * The function to call when a `dragstart` event occurs.
+     * @returns False to prevent default, otherwise true or undefined.
      */
     @bindable
-    public mouseout: CallbackWithContext<{ event: PointerEvent }>;
+    public dragstart: CallbackWithContext<{ event: DragEvent }, boolean | undefined>;
 
     /**
-     * The function to call when a `mouseover` event is dispatched on the marker.
+     * The function to call when a `drag` event occurs.
+     * @returns False to prevent default, otherwise true or undefined.
      */
     @bindable
-    public mouseover: CallbackWithContext<{ event: PointerEvent }>;
+    public drag: CallbackWithContext<{ event: DragEvent }, boolean | undefined>;
 
     /**
-     * The function to call when a `mouseup` event is dispatched on the marker.
+     * The function to call when a `dragend` event occurs.
+     * @returns False to prevent default, otherwise true or undefined.
      */
     @bindable
-    public mouseup: CallbackWithContext<{ event: PointerEvent }>;
+    public dragend: CallbackWithContext<{ event: DragEvent }, boolean | undefined>;
 
     /**
-     * The function to call when a `rightclick` event is dispatched on the marker.
+     * The function to call when a `contextmenu` event occurs.
+     * @returns False to prevent default, otherwise true or undefined.
      */
     @bindable
-    public rightclick: CallbackWithContext<{ event: PointerEvent }>;
+    public contextmenu: CallbackWithContext<{ event: PointerEvent }, boolean | undefined>;
 
     /**
      * Called by the map when the component should attach to the map.
@@ -146,9 +156,9 @@ export class GoogleMapAreaCustomElement extends GoogleMapObject<google.maps.Poly
             paths: geoJsonGeometryToLatLngLiterals(this.area),
             zIndex: this.zIndex,
             clickable: true,
-            fillColor: resolveColorString(this._map, this.fillColor),
+            fillColor: this._map.getCssValue(this.fillColor),
             fillOpacity: this.fillOpacity,
-            strokeColor: resolveColorString(this._map, this.strokeColor),
+            strokeColor: this._map.getCssValue(this.strokeColor),
             strokeWeight: this.strokeWidth,
             strokeOpacity: this.strokeOpacity
         });
@@ -159,7 +169,12 @@ export class GoogleMapAreaCustomElement extends GoogleMapObject<google.maps.Poly
         {
             this._eventListeners.push(this.instance.addListener(eventName as any, event =>
             {
-                this[eventName]?.({ event: event.domEvent });
+                const result = this[eventName]?.({ event: event.domEvent });
+
+                if (result === false)
+                {
+                    event.domEvent.preventDefault();
+                }
             }));
         }
 
@@ -173,15 +188,18 @@ export class GoogleMapAreaCustomElement extends GoogleMapObject<google.maps.Poly
     {
         super.detach();
 
-        this.instance?.setMap(null);
-        this.instance = undefined;
-
-        for (const eventListener of this._eventListeners!)
+        if (this.instance != null)
         {
-            eventListener.remove();
-        }
+            this.instance.setMap(null);
+            this.instance = undefined;
 
-        this._eventListeners = undefined;
+            for (const eventListener of this._eventListeners!)
+            {
+                eventListener.remove();
+            }
+
+            this._eventListeners = undefined;
+        }
     }
 
     /**
@@ -205,7 +223,7 @@ export class GoogleMapAreaCustomElement extends GoogleMapObject<google.maps.Poly
      */
     protected fillColorChanged(): void
     {
-        this.instance?.setOptions({ fillColor: resolveColorString(this._map, this.fillColor) });
+        this.instance?.setOptions({ fillColor: this._map.getCssValue(this.fillColor) });
     }
 
     /**
@@ -221,7 +239,7 @@ export class GoogleMapAreaCustomElement extends GoogleMapObject<google.maps.Poly
      */
     protected strokeColorChanged(): void
     {
-        this.instance?.setOptions({ strokeColor: resolveColorString(this._map, this.strokeColor) });
+        this.instance?.setOptions({ strokeColor: this._map.getCssValue(this.strokeColor) });
     }
 
     /**

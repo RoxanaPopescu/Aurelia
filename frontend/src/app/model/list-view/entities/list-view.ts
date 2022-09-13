@@ -82,6 +82,12 @@ export class ListView<TFilter extends ListViewFilter, TItem>
     public operation: Operation | undefined;
 
     /**
+     * The temporary data that was stored before an operation,
+     * needed to restore state in case the operation fails.
+     */
+    public temp: any;
+
+    /**
      * True if the list view definition has unsaved changes, otherwise false.
      */
     public get hasChanges(): boolean

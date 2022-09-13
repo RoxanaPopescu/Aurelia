@@ -48,6 +48,7 @@ export class GoogleMapPage
     protected markers: any[] = [];
     protected area: GeoJsonArea;
     protected markersAdded: GoogleMapMarkerCustomElement[] = [];
+    protected drawnPolygon: GeoJsonPolygon | undefined;
 
     /**
      * The map view model.
@@ -158,5 +159,10 @@ export class GoogleMapPage
         }
 
         this.markersAdded = [];
+    }
+
+    protected onDrawingComplete(polygon: GeoJsonPolygon): void
+    {
+        this.drawnPolygon = polygon;
     }
 }

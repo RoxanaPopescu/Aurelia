@@ -1,17 +1,5 @@
 @import "resources/index";
 
-// Prevent the help widget from obstructing other elements on the page.
-#jsd-widget[style*="height: 80px;"]
-{
-    transform: scale(0.4) translate(38px, 58px);
-
-    html[route="dispatch/express-dispatch"] &
-    html[route="routes/live-tracking"] &
-    {
-        display: none !important;
-    }
-}
-
 /*
 button[appearance="outline"][accent="primary"]
 {
@@ -56,7 +44,7 @@ body
     --page-sidebar-max-width: 384rem;
 
     // The colors to use for map features.
-    --google-map-feature-color--neutral: var(--palette-color-neutral-dark);
+    --google-map-feature-color--neutral: #808080; // var(--palette-color-neutral-dark);
     --google-map-feature-color--primary: var(--palette-color-primary);
     --google-map-feature-color--info: var(--palette-color-info);
     --google-map-feature-color--positive: var(--palette-color-positive);
@@ -367,7 +355,7 @@ page-sidebar
         font-size: var(--font-base-font-size);
         font-weight: var(--google-map-control-font-weight);
         background: var(--google-map-control-surface-color);
-        color: var(--google-map-control-surface-text-color);
+        color: var(--google-map-control-surface-text-color) !important;
         box-shadow: var(--google-map-control-shadow);
         filter: var(--google-map-control-filter);
 

@@ -1,0 +1,31 @@
+:host
+{
+    position: absolute;
+
+    transform: translate(-50%, -50%);
+    width: 32rem;
+    height: 32rem;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font: var(--font-base);
+    font-weight: 500;
+
+    box-shadow: 0 0 1px 1px #ffffff;
+    color: #ffffff;
+
+    cursor: pointer;
+}
+
+:host(.--status-undelivered)
+{
+    background: var(--google-map-feature-color--neutral);
+}
+
+:host(.--status-delivered)
+{
+    background: var(--google-map-feature-color--positive);
+}

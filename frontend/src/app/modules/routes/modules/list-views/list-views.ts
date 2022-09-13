@@ -88,6 +88,11 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
     protected readonly listViewColumnType = RouteListViewColumn;
 
     /**
+     * The element representing the page tab nav component.
+     */
+    protected pageTabNavElement: HTMLElement;
+
+    /**
      * The teams associated with the organization,
      * or undefined if not yet fetched.
      */
@@ -123,6 +128,9 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
      */
     public async activate(params: IRouteListViewPageParams): Promise<void>
     {
+        this.teamsFilterService.fetchAccessibleTeams()
+            .catch(error => Log.error(error));
+
         await super.activate(params);
     }
 
@@ -147,6 +155,18 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
         listViewDefinition.shared = false;
 
         return this._listViewService.create(listViewDefinition);
+    }
+
+    /**
+     * Called when a list view definition was clicked in the list view selector, and should be opened.
+     * @param listViewDefinition The list view definition for which a list view should be opened.
+     */
+    protected onOpenListView(listViewDefinition: ListViewDefinition<RouteListViewFilter>): void
+    {
+        super.onOpenListView(listViewDefinition);
+
+        // Ensure the view is scrolled into view.
+        setTimeout(() => this.pageTabNavElement.scroll({ left: this.pageTabNavElement.scrollWidth + 10000 }));
     }
 
     /**

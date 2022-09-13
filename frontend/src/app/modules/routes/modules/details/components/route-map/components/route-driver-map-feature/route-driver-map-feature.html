@@ -1,0 +1,22 @@
+<template ref="element" class="--status-${route.driverOnline ? 'online' : 'offline'}">
+
+    <require from="./components/route-driver-map-popover/route-driver-map-popover"></require>
+
+    <require from="./route-driver-map-feature.scss" as="scoped"></require>
+
+    <google-map-html-marker
+        content.bind="element"
+        point.bind="point"
+        z-index.bind="300"
+        click.call="onClick != null ? onClick() : undefined"
+        dblclick.call="onDblClick != null ? onDblClick() : undefined">
+
+        ${driver.name.initials}
+
+        <route-driver-map-popover
+            driver.bind="driver">
+        </route-driver-map-popover>
+
+    </google-map-html-marker>
+
+</template>

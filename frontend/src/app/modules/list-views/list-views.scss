@@ -28,6 +28,8 @@ page[name="list-views"]
 
         dropdown
         {
+            --dropdown-max-height: calc(100vh - 200rem);
+
             min-width: 160rem !important;
         }
     }

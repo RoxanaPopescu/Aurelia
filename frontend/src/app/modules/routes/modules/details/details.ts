@@ -463,14 +463,32 @@ export class DetailsModule
     }
 
     /**
-     * Called when a stop is clicked on the map.
+     * Called when a stop is double-clicked on the map.
      * Scrolls to the stop that was clicked.
      * @param stop The stop that was clicked.
      */
-    protected onMapStopClick(stop: RouteStop): void
+    protected onMapStopDblClick(stop: RouteStop): boolean
     {
-        const element = this.dataTableElement.querySelectorAll(".route-details-stop-number-cell")[stop.stopNumber - 2];
-        element.scrollIntoView();
+        // const element = this.dataTableElement.querySelectorAll(".route-details-stop-number-cell")[stop.stopNumber - 1];
+        // element.scrollIntoView({ block: "center" });
+
+        // return false;
+
+        this.stopPolling();
+
+        // tslint:disable-next-line: no-floating-promises
+        this._modalService.open(RouteStopPanel, { route: this.route!, routeStop: stop, edit: false }).promise.then(savedStop =>
+        {
+            if (savedStop != null)
+            {
+                this.route!.stops.splice(this.route!.stops.indexOf(stop), 1, savedStop);
+                this.bindingUpdateTrigger++;
+            }
+
+            this.startPolling();
+        });
+
+        return false;
     }
 
     /**

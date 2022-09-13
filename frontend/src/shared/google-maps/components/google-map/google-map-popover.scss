@@ -1,0 +1,45 @@
+google-map-popover
+{
+    // HACK: This is a terrible way to include the base styles, but we currently have no other option.
+    @import "resources/styles/index";
+
+    @import "resources/index";
+
+    --font-current-margin-top: var(--font-small-margin-top);
+    --font-current-margin-bottom: var(--font-small-margin-bottom);
+
+    font: var(--font-small);
+
+    section + section
+    {
+        border-top: var(--border-width-thin) solid var(--surface-separator-color);
+        margin-top: var(--font-current-margin-bottom);
+        padding-top: var(--font-current-margin-bottom);
+    }
+
+    h1
+    {
+        --font-current-margin-top: var(--font-base-margin-top);
+        --font-current-margin-bottom: var(--font-base-margin-bottom);
+
+        font: var(--font-base);
+    }
+
+    h1, h2
+    {
+        font-weight: 600;
+    }
+
+    p
+    {
+        &:first-child
+        {
+            margin-top: 0;
+        }
+
+        &:last-child
+        {
+            margin-bottom: 0;
+        }
+    }
+}
