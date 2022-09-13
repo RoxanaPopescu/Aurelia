@@ -8,7 +8,7 @@ import { geoJsonGeometryToLatLngLiterals } from "./google-map-utilities";
 const eventNames = ["click", "dblclick", "mousedown", "mouseup", "mouseover", "mouseout", "dragstart", "drag", "dragend", "contextmenu"];
 
 /**
- * Represents a line on a map.
+ * Represents an area on a map.
  */
 @autoinject
 @containerless

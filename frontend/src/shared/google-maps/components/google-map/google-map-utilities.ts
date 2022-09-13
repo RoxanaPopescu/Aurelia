@@ -1,4 +1,4 @@
-import { GeoJsonGeometry, GeoJsonPoint } from "shared/types";
+import { GeoJsonGeometry, GeoJsonPoint, GeoJsonPolygon } from "shared/types";
 
 /**
  * Converts the specified point to its equivalent representation in Google Maps.
@@ -72,6 +72,18 @@ function geoJsonCoordinatesToLatLngLiterals(geoJsonCoordinates: any): any
     }
 
     return geoJsonCoordinates.map(c => geoJsonCoordinatesToLatLngLiterals(c));
+}
+
+/**
+ * Converts the specified Google Maps Polygon to its equivalent GeoJson representation.
+ * @param polygon The polygon to convert.
+ * @returns A `GeoJsonPolygon` representing the specified polygon.
+ */
+export function polygonToGeoJsonPolygon(polygon: google.maps.Polygon): GeoJsonPolygon
+{
+    const positions = polygon.getPath().getArray().map(p => [p.lng(), p.lat() ]);
+
+    return new GeoJsonPolygon([positions]);
 }
 
 export type GoogleMapsPane =

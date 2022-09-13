@@ -11,7 +11,8 @@
                 show-map.bind="true"
                 show-line.bind="true"
                 show-area.bind="true"
-                show-markers.bind="true">
+                show-markers.bind="true"
+                show-drawing.bind="false">
             </let>
 
             <button appearance="solid" click.trigger="showMap = !showMap">
@@ -36,6 +37,10 @@
 
             <button if.bind="markersAdded.length > 0" appearance="solid" click.trigger="removeMarkers()">
                 Markers in code: true
+            </button>
+
+            <button appearance="solid" click.trigger="showDrawing = !showDrawing">
+                Drawing: ${showDrawing}
             </button>
 
         </toolbar>
@@ -97,6 +102,25 @@
                         repeat.for="marker of markers"
                         model.bind="marker">
                     </custom-map-marker>
+
+                </template>
+
+                <template if.bind="showDrawing">
+
+                    <google-map-drawing
+                        stroke-color="--google-map-feature-color--primary"
+                        stroke-width="3"
+                        fill-color="--google-map-feature-color--primary"
+                        z-index.bind="1000"
+                        complete.call="onDrawingComplete(polygon)">
+                    </google-map-drawing>
+
+                    <google-map-area
+                        if.bind="drawnPolygon != null"
+                        area.bind="drawnPolygon"
+                        fill-color="--google-map-feature-color--info"
+                        stroke-color="--google-map-feature-color--info">
+                    </google-map-area>
 
                 </template>
 
