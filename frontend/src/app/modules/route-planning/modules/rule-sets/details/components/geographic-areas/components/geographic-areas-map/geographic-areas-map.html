@@ -22,12 +22,13 @@
         <google-map-area
             repeat.for="area of areas"
             area.bind="area.polygon"
-            click.call="areaClick({ area: area })"
+            z-index.bind="100"
             stroke-width="3"
             stroke-color="--palette-color-data-${area.color}"
             stroke-opacity.bind="area.selected ? 0.9 : 0.2"
             fill-color="--palette-color-data-${area.color}"
-            fill-opacity.bind="area.selected ? 0.4 : 0.05">
+            fill-opacity.bind="area.selected ? 0.4 : 0.05"
+            click.call="areaClick({ area: area })">
         </google-map-area>
 
         <div class="google-map-actions">
