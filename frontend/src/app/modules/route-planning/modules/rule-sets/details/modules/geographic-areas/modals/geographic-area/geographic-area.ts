@@ -22,6 +22,16 @@ export class GeographicAreaPanel
     protected isNew: boolean;
 
     /**
+     * The initial name of the area, used for validating the uniqueness of the name
+     */
+    protected areaName: string;
+
+    /**
+     * The existing areas, used for validating the uniqueness of the name.
+     */
+    protected allAreas: SpecialArea[];
+
+    /**
      * The model for the modal.
      */
     protected model: SpecialArea;
@@ -35,10 +45,12 @@ export class GeographicAreaPanel
      * Called by the framework when the modal is activated.
      * @param model The model for the modal, or undefined if creating a new entity.
      */
-    public activate(model: { area: SpecialArea; index?: number }): void
+    public activate(model: { area: SpecialArea; index?: number; allAreas: SpecialArea[] }): void
     {
         this.isNew = model.index == null;
         this.model = model.area;
+        this.areaName = model.area.name;
+        this.allAreas = model.allAreas;
     }
 
     /**

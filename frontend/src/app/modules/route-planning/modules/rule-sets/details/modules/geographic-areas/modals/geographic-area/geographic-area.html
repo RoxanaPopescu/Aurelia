@@ -36,6 +36,12 @@
                         value.bind="model.name">
                     </required-validator>
 
+                    <unique-validator
+                        new-value.bind="model.name"
+                        old-value.bind="areaName"
+                        all-values.bind="allAreas | map: 'name'">
+                    </unique-validator>
+
                 </div>
 
             </text-input>

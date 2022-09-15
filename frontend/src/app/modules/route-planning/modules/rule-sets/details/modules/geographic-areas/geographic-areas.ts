@@ -107,7 +107,7 @@ export class GeographicAreas
         this._currentAreaModel = { area, index };
         this._currentAreaModel.area.expanded = area.expanded;
 
-        const result = await this._modalService.open(GeographicAreaPanel, this._currentAreaModel).promise;
+        const result = await this._modalService.open(GeographicAreaPanel, { ...this._currentAreaModel, allAreas: this.settings.specialAreas }).promise;
 
         if (result == null)
         {
@@ -207,7 +207,7 @@ export class GeographicAreas
      */
     protected async onDrawingCompleted(polygon: GeoJsonPolygon): Promise<void>
     {
-        const result = await this._modalService.open(GeographicAreaPanel, this._currentAreaModel).promise;
+        const result = await this._modalService.open(GeographicAreaPanel, { ...this._currentAreaModel!, allAreas: this.settings.specialAreas }).promise;
 
         if (result == null)
         {
@@ -248,7 +248,7 @@ export class GeographicAreas
         }
         else
         {
-            const result = await this._modalService.open(GeographicAreaPanel, this._currentAreaModel).promise;
+            const result = await this._modalService.open(GeographicAreaPanel, { ...this._currentAreaModel!, allAreas: this.settings.specialAreas }).promise;
 
             if (result == null)
             {
