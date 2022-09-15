@@ -2,7 +2,7 @@
 
     <require from="app/components/accordion/accordion"></require>
     <require from="app/components/name-value-pair/name-value-pair"></require>
-    <require from="legacy/components/special-areas-map/wrapper" as="special-areas-map"></require>
+    <require from="./components/geographic-areas-map/geographic-areas-map"></require>
 
     <require from="./geographic-areas.scss"></require>
 
@@ -250,16 +250,14 @@
 
         </div>
 
-        <special-areas-map
+        <geographic-areas-map
             class="flex-basis-2-of-3"
             areas.bind="visible ? settings.specialAreas : undefined"
-            redraw-trigger.bind="mapRedrawTrigger"
-            hovered-area.bind="hoveredArea"
-            on-area-click.call="onAreaClick(area)"
+            area-click.call="onAreaClick(area)"
             enable-drawing.bind="enableDrawing"
-            on-drawing-complete.call="onDrawingComplete(polygon)"
-            on-drawing-cancelled.call="onDrawingCancelled()">
-        </special-areas-map>
+            drawing-completed.call="onDrawingCompleted(polygon)"
+            drawing-cancelled.call="onDrawingCancelled()">
+        </geographic-areas-map>
 
     </div>
 

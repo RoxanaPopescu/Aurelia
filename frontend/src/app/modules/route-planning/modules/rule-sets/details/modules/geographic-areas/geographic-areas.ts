@@ -28,19 +28,9 @@ export class GeographicAreas
     private _currentAreaModel: { area: SpecialArea; index?: number } | undefined;
 
     /**
-     * The area currently being hovered, if any.
-     */
-    protected hoveredArea: SpecialArea | undefined;
-
-    /**
      * True if drawing is enabled, otherwise false.
      */
     protected enableDrawing = false;
-
-    /**
-     * Variable used to trigger map repaints.
-     */
-    protected mapRedrawTrigger = 0;
 
     /**
      * True if all areas are selected, false if no areas are selected, or null if some areas are selected.
@@ -131,7 +121,6 @@ export class GeographicAreas
         {
             this.settings.specialAreas.splice(index, 1, this._currentAreaModel.area);
             this._currentAreaModel = undefined;
-            this.mapRedrawTrigger++;
         }
     }
 
@@ -148,7 +137,6 @@ export class GeographicAreas
         }
 
         this.settings.specialAreas.splice(index, 1);
-        this.mapRedrawTrigger++;
     }
 
     /**
@@ -163,7 +151,6 @@ export class GeographicAreas
         if (result != null)
         {
             area.scenarios.push(result);
-            this.mapRedrawTrigger++;
         }
     }
 
@@ -186,7 +173,6 @@ export class GeographicAreas
         if (result != null)
         {
             area.scenarios.splice(index, 1, result);
-            this.mapRedrawTrigger++;
         }
     }
 
@@ -204,7 +190,6 @@ export class GeographicAreas
         }
 
         area.scenarios.splice(index, 1);
-        this.mapRedrawTrigger++;
     }
 
     /**
@@ -220,7 +205,7 @@ export class GeographicAreas
      * Called when the user completes a drawing on the map.
      * Opens the modal for creating an area.
      */
-    protected async onDrawingComplete(polygon: GeoJsonPolygon): Promise<void>
+    protected async onDrawingCompleted(polygon: GeoJsonPolygon): Promise<void>
     {
         const result = await this._modalService.open(GeographicAreaPanel, this._currentAreaModel).promise;
 
@@ -246,7 +231,6 @@ export class GeographicAreas
             }
 
             this._currentAreaModel = undefined;
-            this.mapRedrawTrigger++;
         }
     }
 
@@ -279,7 +263,6 @@ export class GeographicAreas
                 this.settings.specialAreas.splice(this._currentAreaModel!.index, 1, this._currentAreaModel!.area);
 
                 this._currentAreaModel = undefined;
-                this.mapRedrawTrigger++;
             }
         }
     }
