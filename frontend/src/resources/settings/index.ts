@@ -111,6 +111,13 @@ export default
                 language: ENVIRONMENT.locale,
                 libraries: ["drawing", "geometry"],
 
+                // HACK: The version is locked, as newer versions crash the browser.
+                // The crash appears to occur the second time a map containing a polyline or polygon is created,
+                // and the bug appears to be related to the use of a `mapId`. An alternative workaround may be
+                // to stop using a `mapId`, and revert to using hardcoded style objects instead.
+                // However, this is an untested hypothesis.
+                v: "3.47",
+
                 // Note: This will be set when the theme loads.
                 mapIds: undefined
             },
