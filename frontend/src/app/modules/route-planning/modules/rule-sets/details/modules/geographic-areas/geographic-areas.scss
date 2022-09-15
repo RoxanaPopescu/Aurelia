@@ -1,5 +1,10 @@
 page[name="route-planning"] page[name="settings-details"] geographic-areas
 {
+    .geographic-areas-header
+    {
+        flex-shrink: 0;
+    }
+
     .geographic-areas-list
     {
         border-right: var(--border-width-thin) solid var(--surface-separator-color);
