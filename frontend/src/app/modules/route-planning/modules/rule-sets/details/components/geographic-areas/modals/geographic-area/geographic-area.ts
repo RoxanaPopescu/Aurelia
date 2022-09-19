@@ -63,10 +63,10 @@ export class GeographicAreaPanel
     }
 
     /**
-     * Called when the "Save and close" button is clicked.
+     * Called when the "Done" button is clicked.
      * Closes the modal and returns the model.
      */
-    protected async onSaveAndCloseClick(): Promise<void>
+    protected async onDoneClick(): Promise<void>
     {
         // Activate validation so any further changes will be validated immediately.
         this.validation.active = true;

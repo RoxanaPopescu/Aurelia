@@ -2,7 +2,7 @@ import { Container, autoinject, containerless, noView, bindable } from "aurelia-
 import { CallbackWithContext, GeoJsonArea } from "shared/types";
 import { GoogleMapCustomElement } from "./google-map";
 import { GoogleMapObject } from "./google-map-object";
-import { geoJsonGeometryToLatLngLiterals } from "./google-map-utilities";
+import { geoJsonPolygonToLatLngs } from "./google-map-utilities";
 
 // The names of the instance events that should be re-dispatched by the component.
 const eventNames = ["click", "dblclick", "mousedown", "mouseup", "mouseover", "mouseout", "dragstart", "drag", "dragend", "contextmenu"];
@@ -153,7 +153,7 @@ export class GoogleMapAreaCustomElement extends GoogleMapObject<google.maps.Poly
         {
             map: this._map.instance,
             geodesic: false,
-            paths: geoJsonGeometryToLatLngLiterals(this.area),
+            paths: geoJsonPolygonToLatLngs(this.area),
             zIndex: this.zIndex,
             clickable: true,
             fillColor: this._map.getCssValue(this.fillColor),
@@ -207,7 +207,7 @@ export class GoogleMapAreaCustomElement extends GoogleMapObject<google.maps.Poly
      */
     protected areaChanged(): void
     {
-        this.instance?.setPaths(geoJsonGeometryToLatLngLiterals(this.area));
+        this.instance?.setPaths(geoJsonPolygonToLatLngs(this.area));
     }
 
     /**

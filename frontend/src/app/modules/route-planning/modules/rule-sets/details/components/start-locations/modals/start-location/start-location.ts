@@ -61,10 +61,10 @@ export class StartLocationDialog
     }
 
     /**
-     * Called when the "Save" icon is clicked.
-     * Saves changes and closes the modal.
+     * Called when the "Done" icon is clicked.
+     * Closes the modal and returns the departure times.
      */
-    protected async onSaveClick(): Promise<void>
+    protected async onDoneClick(): Promise<void>
     {
         try
         {
