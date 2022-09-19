@@ -39,7 +39,7 @@ export class AutomaticContractorAssignmentModule extends AppModule
         body.createdBy = context.user?.id;
         body.id = uuidV4();
 
-        await this.apiClient.post(`logistics/dispatch/settings/fulfillers/create`,
+        await this.apiClient.post("logistics/dispatch/settings/fulfillers/create",
         {
             body: body
         });
@@ -60,7 +60,7 @@ export class AutomaticContractorAssignmentModule extends AppModule
         body.outfitId = context.user?.organizationId;
         body.createdBy = context.user?.id;
 
-        await this.apiClient.post(`logistics/dispatch/settings/fulfillers/update`,
+        await this.apiClient.post("logistics/dispatch/settings/fulfillers/update",
         {
             body: body
         });

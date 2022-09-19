@@ -31,7 +31,7 @@ export class AutoContractorAssignmentModule
     protected settings: AutoContractorAssignmentSettings;
 
     /**
-     * True if the rule set is being updated, otherwise false.
+     * True if the auto contractor assignment settings are being updated, otherwise false.
      */
     protected updating: boolean = false;
 

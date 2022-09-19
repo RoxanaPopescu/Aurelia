@@ -1,13 +1,15 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { IValidation, Modal } from "shared/framework";
+import { OrganizationService } from "app/model/organization";
 import { AutoContractorAssignmentRule } from "app/model/auto-contractor-assignment";
-import { OrganizationInfo, OrganizationService } from "app/model/organization";
 
 @autoinject
 export class GeographicAreaPanel
 {
     /**
      * Creates a new instance of the class.
+     * @param modal The `Modal` instance representing the modal.
+     * @param organizationService The `OrganizationService` instance.
      */
     public constructor(modal: Modal, organizationService: OrganizationService)
     {
@@ -42,13 +44,13 @@ export class GeographicAreaPanel
     /**
      * The available organizations.
      */
-    protected availableOrganizations: OrganizationInfo[];
+    protected availableOrganizations: { id: string, name: string }[];
 
     /**
      * The selected organization.
      */
     @computedFrom("availableOrganizations", "model.fulfillerId")
-    protected get selectedOrganization(): OrganizationInfo | undefined
+    protected get selectedOrganization(): { id: string, name: string } | undefined
     {
         return this.availableOrganizations.find(o => o.id === this.model.fulfillerId);
     }
@@ -69,7 +71,7 @@ export class GeographicAreaPanel
         this.areaLabel = model.area.label;
         this.allAreas = model.allAreas;
 
-        this.availableOrganizations = await (await this._organizationService.getConnections()).map(c => c.organization);
+        this.availableOrganizations = (await this._organizationService.getConnections()).map(c => c.organization);
     }
 
     /**
