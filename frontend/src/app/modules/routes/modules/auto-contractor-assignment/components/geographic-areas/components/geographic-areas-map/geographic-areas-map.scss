@@ -1,0 +1,37 @@
+@import "resources/index";
+
+page[name="routes"] page[name="auto-contractor-assignment"] geographic-areas-map
+{
+    position: relative;
+    display: block;
+
+    google-map
+    {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .geographic-areas-map-message
+    {
+
+        display: flex;
+        align-items: center;
+        margin-right: 8rem;
+        height: 40px;
+        border-radius: 2px;
+        padding: 0 16rem;
+        background: var(--surface-info-surface-color);
+        color: var(--surface-info-surface-text-color);
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+
+        a
+        {
+            font-weight: 500;
+            margin-left: 32rem;
+            color: var(--palette-color-whitepoint);
+        }
+    }
+}

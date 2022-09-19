@@ -1,10 +1,47 @@
 <template>
 
-    <require from="legacy/wrappers/routes/auto-contractor-assignment" as="react-module"></require>
+    <require from="app/components/name-value-pair/name-value-pair"></require>
+    <require from="app/components/name-value-list/name-value-list"></require>
+    <require from="app/components/star-icon/star-icon"></require>
+
+    <require from="./components/geographic-areas/geographic-areas"></require>
 
     <page name="auto-contractor-assignment">
 
-        <react-module></react-module>
+        <page-content class="page-content-stretch" scroll scroll.ref="scroll" validation validation.ref="validation">
+
+            <page-header class="flex-row" scroll-fade>
+
+                <h1 class="font-largest margin-bottom">
+                    <path-nav>
+
+                        <a accent="inherit" href="/routes/list" translate>
+                            Routes
+                        </a>
+
+                        <span translate>
+                            Auto contractor assignment
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar class="flex-push-right">
+
+                    <button disabled.bind="updating || validation.invalid" appearance="solid" accent="primary" click.trigger="onSaveClick()" translate>
+                        Save changes
+                    </button>
+
+                </toolbar>
+
+            </page-header>
+
+            <geographic-areas
+                visible.bind="true"
+                settings.bind="settings">
+            </geographic-areas>
+
+        </page-content>
 
     </page>
 

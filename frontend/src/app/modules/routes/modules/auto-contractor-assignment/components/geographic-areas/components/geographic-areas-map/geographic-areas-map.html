@@ -1,0 +1,60 @@
+<template>
+
+    <require from="./geographic-areas-map.scss"></require>
+
+    <google-map
+        class="au-animate animation-fade-in-medium"
+        configure.call="onMapConfigure(options)"
+        configured.call="onMapConfigured(map)"
+        touched.bind="mapTouched"
+        type.bind="mapType"
+        view-model.ref="mapViewModel">
+
+        <google-map-drawing
+            if.bind="enableDrawing"
+            stroke-color="--google-map-feature-color--primary"
+            stroke-width="3"
+            fill-color="--google-map-feature-color--primary"
+            z-index.bind="1000"
+            complete.call="drawingCompleted({ polygon: polygon })">
+        </google-map-drawing>
+
+        <template repeat.for="area of areas">
+
+            <google-map-area
+                repeat.for="polygon of area.conditions.polygons"
+                area.bind="polygon"
+                z-index.bind="100"
+                stroke-width="3"
+                stroke-color="--palette-color-data-${area.color}"
+                stroke-opacity.bind="area.selected ? 0.9 : 0.2"
+                fill-color="--palette-color-data-${area.color}"
+                fill-opacity.bind="area.selected ? 0.4 : 0.05"
+                click.call="areaClick({ area: area })">
+            </google-map-area>
+
+        </template>
+
+        <div class="google-map-actions">
+
+            <button disabled.bind="areas == null || mapInstance == null" click.trigger="tryFitBounds()">
+                Zoom to fit
+            </button>
+
+            <div if.bind="enableDrawing" class="geographic-areas-map-message">
+
+                <span translate>
+                    Draw an area by clicking points on the map…
+                </span>
+
+                <a click.trigger=drawingCancelled() translate>
+                    Cancel
+                </a>
+
+            </div>
+
+        </div>
+
+    </google-map>
+
+</template>
