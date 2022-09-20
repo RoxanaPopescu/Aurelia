@@ -46,21 +46,26 @@
 
             </text-input>
 
-            <tags-input label="above" new.bind="true" value.bind="model.routeTagsAllRequired" class="margin-large-bottom">
+            <number-input label="above" value.bind="model.priority" class="margin-large-bottom">
 
                 <div slot="heading" translate>
-                    Matches all the route tags
+                    Priority
                 </div>
 
-            </tags-input>
+                <div slot="validation">
 
-            <tags-input label="above" new.bind="true" value.bind="model.routeTagsOneRequired" class="margin-large-bottom">
+                    <required-validator
+                        value.bind="model.priority">
+                    </required-validator>
 
-                <div slot="heading" translate>
-                    Matches some of the route tags
+                    <range-validator
+                        value.bind="model.priority"
+                        min.bind="0">
+                    </range-validator>
+
                 </div>
 
-            </tags-input>
+            </number-input>
 
             <select-input label="above" value.bind="model.fulfillerId" display-value.bind="selectedOrganization.name" class="margin-large-bottom">
 
@@ -84,26 +89,21 @@
 
             </select-input>
 
-            <number-input label="above" value.bind="model.priority">
+            <tags-input label="above" new.bind="true" value.bind="model.routeTagsAllRequired" class="margin-large-bottom">
 
                 <div slot="heading" translate>
-                    Priority
+                    Matches all the route tags
                 </div>
 
-                <div slot="validation">
+            </tags-input>
 
-                    <required-validator
-                        value.bind="model.priority">
-                    </required-validator>
+            <tags-input label="above" new.bind="true" value.bind="model.routeTagsOneRequired">
 
-                    <range-validator
-                        value.bind="model.priority"
-                        min.bind="0">
-                    </range-validator>
-
+                <div slot="heading" translate>
+                    Matches some of the route tags
                 </div>
 
-            </number-input>
+            </tags-input>
 
             <!--
             <color-input label="above" value.bind="model.color">

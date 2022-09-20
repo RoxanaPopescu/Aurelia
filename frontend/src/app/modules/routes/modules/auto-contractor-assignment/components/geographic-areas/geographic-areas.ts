@@ -165,7 +165,7 @@ export class GeographicAreas
             }
             else
             {
-                this.settings.rules.push(this._currentAreaModel!.area);
+                this.settings.rules.unshift(this._currentAreaModel!.area);
             }
 
             this._currentAreaModel = undefined;
