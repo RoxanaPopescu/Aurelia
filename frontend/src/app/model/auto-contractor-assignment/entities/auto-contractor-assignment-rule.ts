@@ -32,7 +32,7 @@ export class AutoContractorAssignmentRule
         }
     }
 
-    private _originaldEntityJson: string | undefined;
+    private readonly _originaldEntityJson: string | undefined;
 
     public readonly id: string;
 

@@ -49,13 +49,13 @@ export class GeographicAreaPanel
     /**
      * The available organizations.
      */
-    protected availableOrganizations: { id: string, name: string }[];
+    protected availableOrganizations: { id: string; name: string }[];
 
     /**
      * The selected organization.
      */
     @computedFrom("availableOrganizations", "model.fulfillerId")
-    protected get selectedOrganization(): { id: string, name: string } | undefined
+    protected get selectedOrganization(): { id: string; name: string } | undefined
     {
         return this.availableOrganizations == null
             ? { id: this.model.fulfillerId, name: "" }
@@ -71,7 +71,7 @@ export class GeographicAreaPanel
      * Called by the framework when the modal is activated.
      * @param model The model for the modal, or undefined if creating a new entity.
      */
-    public async activate(model: { area: AutoContractorAssignmentRule; index?: number; allAreas: AutoContractorAssignmentRule[] }): Promise<void>
+    public activate(model: { area: AutoContractorAssignmentRule; index?: number; allAreas: AutoContractorAssignmentRule[] }): void
     {
         this.isNew = model.index == null;
         this.model = model.area;

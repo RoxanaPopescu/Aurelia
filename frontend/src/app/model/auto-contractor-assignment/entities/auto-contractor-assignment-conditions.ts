@@ -27,7 +27,7 @@ export class AutoContractorAssignmentConditions
     {
         const data = { ...this } as any;
 
-        data.polygons = this.polygons?.map(p => ({ positions: p.coordinates[0].map(c => ({ longitude: c[0], latitude: c[1] }))}))
+        data.polygons = this.polygons?.map(p => ({ positions: p.coordinates[0].map(c => ({ longitude: c[0], latitude: c[1] }))}));
 
         data.polygons.forEach(p => p.positions.push(p.positions[0]));
 
