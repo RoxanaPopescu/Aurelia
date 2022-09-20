@@ -75,6 +75,12 @@ export class GoogleMapAreaCustomElement extends GoogleMapObject<google.maps.Poly
     public strokeOpacity: number;
 
     /**
+     * True if the area should be clickable, otherwise false.
+     */
+    @bindable({ defaultValue: true })
+    public clickable: boolean;
+
+    /**
      * The function to call when a `click` event occurs.
      * @returns False to prevent default, otherwise true or undefined.
      */
@@ -155,7 +161,7 @@ export class GoogleMapAreaCustomElement extends GoogleMapObject<google.maps.Poly
             geodesic: false,
             paths: geoJsonPolygonToLatLngs(this.area),
             zIndex: this.zIndex,
-            clickable: true,
+            clickable: this.clickable,
             fillColor: this._map.getCssValue(this.fillColor),
             fillOpacity: this.fillOpacity,
             strokeColor: this._map.getCssValue(this.strokeColor),
@@ -208,6 +214,14 @@ export class GoogleMapAreaCustomElement extends GoogleMapObject<google.maps.Poly
     protected areaChanged(): void
     {
         this.instance?.setPaths(geoJsonPolygonToLatLngs(this.area));
+    }
+
+    /**
+     * Called by the framework when the `clickable` property changes.
+     */
+    protected clickableChanged(): void
+    {
+        this.instance?.setOptions({ clickable: this.clickable });
     }
 
     /**
