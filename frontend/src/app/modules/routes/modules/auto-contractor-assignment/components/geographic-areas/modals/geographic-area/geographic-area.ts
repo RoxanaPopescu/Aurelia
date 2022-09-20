@@ -1,4 +1,5 @@
 import { autoinject, computedFrom } from "aurelia-framework";
+import { Log } from "shared/infrastructure";
 import { IValidation, Modal } from "shared/framework";
 import { OrganizationService } from "app/model/organization";
 import { AutoContractorAssignmentRule } from "app/model/auto-contractor-assignment";
@@ -15,6 +16,10 @@ export class GeographicAreaPanel
     {
         this._modal = modal;
         this._organizationService = organizationService;
+
+        this._modal.busyDelay = false;
+        this._modal.busyAnimate = false;
+        this._modal.busy = true;
     }
 
     private readonly _modal: Modal;
@@ -52,7 +57,9 @@ export class GeographicAreaPanel
     @computedFrom("availableOrganizations", "model.fulfillerId")
     protected get selectedOrganization(): { id: string, name: string } | undefined
     {
-        return this.availableOrganizations.find(o => o.id === this.model.fulfillerId);
+        return this.availableOrganizations == null
+            ? { id: this.model.fulfillerId, name: "" }
+            : this.availableOrganizations.find(o => o.id === this.model.fulfillerId);
     }
 
     /**
@@ -71,7 +78,13 @@ export class GeographicAreaPanel
         this.areaLabel = model.area.label;
         this.allAreas = model.allAreas;
 
-        this.availableOrganizations = (await this._organizationService.getConnections()).map(c => c.organization);
+        this._organizationService.getConnections()
+            .then(connections =>
+            {
+                this.availableOrganizations = connections.map(c => c.organization);
+                this._modal.busy = false;
+            })
+            .catch(error => Log.error("Could not fetch organization connections.", error));
     }
 
     /**
