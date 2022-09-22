@@ -241,10 +241,10 @@ export class GoogleMapCustomElement implements IGoogleMapObjectOwner
                 this.mapElement[cssColorOrVariable] = getComputedStyle(this.mapElement).getPropertyValue(cssColorOrVariable);
             }
 
-            return this.mapElement[cssColorOrVariable];
+            return this.mapElement[cssColorOrVariable]?.trim();
         }
 
-        return cssColorOrVariable;
+        return cssColorOrVariable.trim();
     }
 
     /**

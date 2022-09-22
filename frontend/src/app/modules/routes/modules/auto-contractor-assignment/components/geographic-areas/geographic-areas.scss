@@ -1,0 +1,55 @@
+page[name="routes"] page[name="auto-contractor-assignment"] geographic-areas
+{
+    .geographic-areas-header
+    {
+        flex-shrink: 0;
+    }
+
+    .geographic-areas-list
+    {
+        border-right: var(--border-width-thin) solid var(--surface-separator-color);
+
+        --toggle-height: 20rem;
+
+        list-layout
+        {
+            --list-layout-row-gap: 8rem;
+        }
+
+        accordion
+        {
+            .accordion-content
+            {
+                padding: 20rem 18rem 18rem 16rem;
+            }
+
+            [slot="header"]
+            {
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+
+    .geographic-areas-list-toggle-all
+    {
+        margin-left: 21rem;
+
+        .toggle-control
+        {
+            transform: none !important;
+        }
+
+        .toggle-label
+        {
+            padding-left: 12rem !important;
+        }
+    }
+
+    .geographic-area-add-button
+    {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+}

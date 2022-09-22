@@ -1,4 +1,16 @@
-import { GeoJsonGeometry, GeoJsonPoint, GeoJsonPolygon } from "shared/types";
+import { GeoJsonPoint, GeoJsonPolygon } from "shared/types";
+
+/**
+ * Converts the specified Google Maps Polygon to its equivalent GeoJson representation.
+ * @param polygon The polygon to convert.
+ * @returns A `GeoJsonPolygon` representing the specified polygon.
+ */
+export function polygonToGeoJsonPolygon(polygon: google.maps.Polygon): GeoJsonPolygon
+{
+    const positions = polygon.getPath().getArray().map(p => [p.lng(), p.lat() ]);
+
+    return new GeoJsonPolygon([positions]);
+}
 
 /**
  * Converts the specified point to its equivalent representation in Google Maps.
@@ -13,7 +25,7 @@ export function geoJsonPointToLatLng(geoJsonPoint: GeoJsonPoint): google.maps.La
 /**
  * Converts the specified point to its equivalent representation in Google Maps.
  * @param geoJsonPoint The point to convert.
- * @returns The `google.maps.LatLng` instance representing the point.
+ * @returns The `google.maps.LatLngLiteral` instance representing the point.
  */
 export function geoJsonPointToLatLngLiteral(geoJsonPoint: GeoJsonPoint): google.maps.LatLngLiteral
 {
@@ -21,12 +33,11 @@ export function geoJsonPointToLatLngLiteral(geoJsonPoint: GeoJsonPoint): google.
 }
 
 /**
- * Converts the specified geometry to its equivalent representation in Google Maps.
- * @param geoJsonPoint The geometry to convert.
- * @returns An array of `google.maps.LatLng` instances representing the geometry,
- * or a single `google.maps.LatLng` instance if the geometry represents a point.
+ * Converts the specified polygon to its equivalent representation in Google Maps.
+ * @param geoJsonPoint The polygon to convert.
+ * @returns The `google.maps.LatLng` instances representing the polygon.
  */
-export function geoJsonGeometryToLatLngs(geoJson: GeoJsonGeometry): (google.maps.LatLng & google.maps.LatLng) | google.maps.LatLng[]
+export function geoJsonPolygonToLatLngs(geoJson: GeoJsonPolygon): google.maps.LatLng[][]
 {
     return geoJsonCoordinatesToLatLngs(geoJson.coordinates);
 }
@@ -34,10 +45,9 @@ export function geoJsonGeometryToLatLngs(geoJson: GeoJsonGeometry): (google.maps
 /**
  * Converts the specified geometry to its equivalent representation in Google Maps.
  * @param geoJsonPoint The geometry to convert.
- * @returns An array of `google.maps.LatLng` instances representing the geometry,
- * or a single `google.maps.LatLng` instance if the geometry represents a point.
+ * @returns The `google.maps.LatLngLiteral` instances representing the polygon.
  */
-export function geoJsonGeometryToLatLngLiterals(geoJson: GeoJsonGeometry): google.maps.LatLngLiteral[]
+export function geoJsonPolygonToLatLngLiterals(geoJson: GeoJsonPolygon): google.maps.LatLngLiteral[][]
 {
     return geoJsonCoordinatesToLatLngLiterals(geoJson.coordinates);
 }
@@ -45,8 +55,7 @@ export function geoJsonGeometryToLatLngLiterals(geoJson: GeoJsonGeometry): googl
 /**
  * Converts the specified coordinates to their equivalent representation in Google Maps.
  * @param geoJsonCoordinates The coordinates to convert.
- * @returns An array of `google.maps.LatLng` instances representing the geometry,
- * or a single `google.maps.LatLng` instance if the geometry represents a point.
+ * @returns The `google.maps.LatLng` instances representing the coordinates.
  */
 function geoJsonCoordinatesToLatLngs(geoJsonCoordinates: any): any
 {
@@ -61,8 +70,7 @@ function geoJsonCoordinatesToLatLngs(geoJsonCoordinates: any): any
 /**
  * Converts the specified coordinates to their equivalent representation in Google Maps.
  * @param geoJsonCoordinates The coordinates to convert.
- * @returns An array of `google.maps.LatLng` instances representing the geometry,
- * or a single `google.maps.LatLng` instance if the geometry represents a point.
+ * @returns The `google.maps.LatLngLiteral` instances representing the coordinates.
  */
 function geoJsonCoordinatesToLatLngLiterals(geoJsonCoordinates: any): any
 {
@@ -72,18 +80,6 @@ function geoJsonCoordinatesToLatLngLiterals(geoJsonCoordinates: any): any
     }
 
     return geoJsonCoordinates.map(c => geoJsonCoordinatesToLatLngLiterals(c));
-}
-
-/**
- * Converts the specified Google Maps Polygon to its equivalent GeoJson representation.
- * @param polygon The polygon to convert.
- * @returns A `GeoJsonPolygon` representing the specified polygon.
- */
-export function polygonToGeoJsonPolygon(polygon: google.maps.Polygon): GeoJsonPolygon
-{
-    const positions = polygon.getPath().getArray().map(p => [p.lng(), p.lat() ]);
-
-    return new GeoJsonPolygon([positions]);
 }
 
 export type GoogleMapsPane =

@@ -2,7 +2,7 @@ import { Container, autoinject, containerless, noView, bindable } from "aurelia-
 import { CallbackWithContext, GeoJsonArea } from "shared/types";
 import { GoogleMapCustomElement } from "./google-map";
 import { GoogleMapObject } from "./google-map-object";
-import { geoJsonGeometryToLatLngLiterals } from "./google-map-utilities";
+import { geoJsonPolygonToLatLngs } from "./google-map-utilities";
 
 // The names of the instance events that should be re-dispatched by the component.
 const eventNames = ["click", "dblclick", "mousedown", "mouseup", "mouseover", "mouseout", "dragstart", "drag", "dragend", "contextmenu"];
@@ -73,6 +73,12 @@ export class GoogleMapAreaCustomElement extends GoogleMapObject<google.maps.Poly
      */
     @bindable({ defaultValue: 1 })
     public strokeOpacity: number;
+
+    /**
+     * True if the area should be clickable, otherwise false.
+     */
+    @bindable({ defaultValue: true })
+    public clickable: boolean;
 
     /**
      * The function to call when a `click` event occurs.
@@ -153,9 +159,9 @@ export class GoogleMapAreaCustomElement extends GoogleMapObject<google.maps.Poly
         {
             map: this._map.instance,
             geodesic: false,
-            paths: geoJsonGeometryToLatLngLiterals(this.area),
+            paths: geoJsonPolygonToLatLngs(this.area),
             zIndex: this.zIndex,
-            clickable: true,
+            clickable: this.clickable,
             fillColor: this._map.getCssValue(this.fillColor),
             fillOpacity: this.fillOpacity,
             strokeColor: this._map.getCssValue(this.strokeColor),
@@ -207,7 +213,15 @@ export class GoogleMapAreaCustomElement extends GoogleMapObject<google.maps.Poly
      */
     protected areaChanged(): void
     {
-        this.instance?.setPaths(geoJsonGeometryToLatLngLiterals(this.area));
+        this.instance?.setPaths(geoJsonPolygonToLatLngs(this.area));
+    }
+
+    /**
+     * Called by the framework when the `clickable` property changes.
+     */
+    protected clickableChanged(): void
+    {
+        this.instance?.setOptions({ clickable: this.clickable });
     }
 
     /**

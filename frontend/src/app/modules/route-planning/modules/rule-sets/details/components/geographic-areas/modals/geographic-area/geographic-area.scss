@@ -1,0 +1,16 @@
+modal-dialog[name="route-planning-rule-set-geographic-area"]
+{
+    .button-container
+    {
+        display: flex;
+        justify-content: flex-end;
+
+        button
+        {
+            &:not(:first-child)
+            {
+                margin-left: 20rem;
+            }
+        }
+    }
+}

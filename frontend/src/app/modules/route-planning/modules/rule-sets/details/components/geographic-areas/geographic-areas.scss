@@ -1,0 +1,93 @@
+page[name="route-planning"] page[name="settings-details"] geographic-areas
+{
+    .geographic-areas-header
+    {
+        flex-shrink: 0;
+    }
+
+    .geographic-areas-list
+    {
+        border-right: var(--border-width-thin) solid var(--surface-separator-color);
+
+        --toggle-height: 20rem;
+
+        list-layout
+        {
+            --list-layout-row-gap: 8rem;
+        }
+
+        accordion
+        {
+            .accordion-content
+            {
+                padding: 20rem 18rem 18rem 16rem;
+            }
+
+            [slot="header"]
+            {
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+
+    .geographic-areas-list-toggle-all
+    {
+        margin-left: 21rem;
+
+        .toggle-control
+        {
+            transform: none !important;
+        }
+
+        .toggle-label
+        {
+            padding-left: 12rem !important;
+        }
+    }
+
+    .geographic-area-scenario
+    {
+        display: flex;
+        align-items: stretch;
+        cursor: pointer;
+
+        &:not(:last-child)
+        {
+            margin-bottom: 20rem;
+            padding-bottom: 20rem;
+            border-bottom: var(--border-width-thin) solid var(--surface-separator-color);
+        }
+    }
+
+    .special-area-scenario-number
+    {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 15rem;
+        height: 15rem;
+        margin-top: 2rem;
+        margin-left: calc((var(--toggle-height) - 15rem) / 2);
+        margin-right: calc((var(--toggle-height) - 15rem) / 2 + var(--size-inline-spacing-large));
+        border-radius: var(--border-radius-small);
+        background-color: var(--palette-color-neutral-light);
+        color: var(--palette-color-neutral-dark);
+        font-size: 0.64286em;
+        line-height: 1;
+        font-weight: 600;
+    }
+
+    .geographic-area-scenario-heading
+    {
+        display: flex;
+        align-items: stretch;
+    }
+
+    .geographic-area-add-button
+    {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+}
