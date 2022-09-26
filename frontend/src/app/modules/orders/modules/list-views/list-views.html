@@ -503,37 +503,49 @@
 
                                 <data-table-cell if.bind="column.slug === 'colli-count'">
                                     <span class="text-truncate" empty-value>
-                                        ${order.actualColliInfo.colliCount}
+                                        <template if.bind="order.actualColliInfo.colliCount > 0">
+                                            ${order.actualColliInfo.colliCount}
+                                        </template>
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'colli-total-weight'">
                                     <span class="text-truncate" empty-value>
-                                        ${order.actualColliInfo.totalWeight | number}kg
+                                        <template if.bind="order.actualColliInfo.totalWeight > 0">
+                                            ${order.actualColliInfo.totalWeight | number} kg
+                                        </template>
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'colli-total-volume'">
                                     <span class="text-truncate" empty-value>
-                                        ${order.actualColliInfo.totalVolume | number}m³
+                                        <template if.bind="order.actualColliInfo.totalVolume > 0">
+                                            ${order.actualColliInfo.totalVolume | number} m³
+                                        </template>
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'estimated-colli-count'">
                                     <span class="text-truncate" empty-value>
-                                        ${order.estimatedColliInfo.colliCount}
+                                        <template if.bind="order.estimatedColliInfo.colliCount > 0">
+                                            ${order.estimatedColliInfo.colliCount}
+                                        </template>
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'estimated-colli-total-weight'">
                                     <span class="text-truncate" empty-value>
-                                        ${order.estimatedColliInfo.totalWeight | number}kg
+                                        <template if.bind="order.estimatedColliInfo.totalWeight > 0">
+                                            ${order.estimatedColliInfo.totalWeight | number} kg
+                                        </template>
                                     </span>
                                 </data-table-cell>
 
                                 <data-table-cell if.bind="column.slug === 'estimated-colli-total-volume'">
                                     <span class="text-truncate" empty-value>
-                                        ${order.estimatedColliInfo.totalVolume | number}m³
+                                        <template if.bind="order.estimatedColliInfo.totalVolume > 0">
+                                            ${order.estimatedColliInfo.totalVolume | number} m³
+                                        </template>
                                     </span>
                                 </data-table-cell>
 

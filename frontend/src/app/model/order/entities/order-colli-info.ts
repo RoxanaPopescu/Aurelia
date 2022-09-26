@@ -8,8 +8,8 @@ export class OrderColliInfo
     public constructor(data: any)
     {
         this.colliCount = data.numberOfColli;
-        this.totalVolume = data.totalVolume;
-        this.totalWeight = data.totalWeight;
+        this.totalVolume = data.volume;
+        this.totalWeight = data.weight;
     }
 
     public readonly colliCount: number;
