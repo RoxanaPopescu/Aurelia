@@ -15,13 +15,13 @@
             </div>
             <div class="text-align-right opacity-faded text-truncate">
                 <template if.bind="model.totalWeight">
-                    ${model.totalWeight | number} kg
+                    ${model.totalWeight | number: 0} kg
                 </template>
             </div>
 
             <div class="text-align-right opacity-faded text-truncate">
                 <template if.bind="model.totalVolume">
-                    ${model.totalVolume | number} m³
+                    ${model.totalVolume | number: 0 : 3} m³
                 </template>
             </div>
 

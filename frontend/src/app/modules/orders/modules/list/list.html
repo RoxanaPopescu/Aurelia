@@ -422,7 +422,7 @@
                                 <data-table-cell if.bind="column.slug === 'colli-total-weight'">
                                     <span class="text-truncate" empty-value>
                                         <template if.bind="result.actualColliInfo.totalWeight > 0">
-                                            ${result.actualColliInfo.totalWeight | number} kg
+                                            ${result.actualColliInfo.totalWeight | number: 0} kg
                                         </template>
                                     </span>
                                 </data-table-cell>
@@ -430,7 +430,7 @@
                                 <data-table-cell if.bind="column.slug === 'colli-total-volume'">
                                     <span class="text-truncate" empty-value>
                                         <template if.bind="result.actualColliInfo.totalVolume > 0">
-                                            ${result.actualColliInfo.totalVolume | number} m³
+                                            ${result.actualColliInfo.totalVolume | number: 3} m³
                                         </template>
                                     </span>
                                 </data-table-cell>
@@ -446,7 +446,7 @@
                                 <data-table-cell if.bind="column.slug === 'estimated-colli-total-weight'">
                                     <span class="text-truncate" empty-value>
                                         <template if.bind="result.estimatedColliInfo.totalWeight > 0">
-                                            ${result.estimatedColliInfo.totalWeight | number} kg
+                                            ${result.estimatedColliInfo.totalWeight | number: 0} kg
                                         </template>
                                     </span>
                                 </data-table-cell>
@@ -454,7 +454,7 @@
                                 <data-table-cell if.bind="column.slug === 'estimated-colli-total-volume'">
                                     <span class="text-truncate" empty-value>
                                         <template if.bind="result.estimatedColliInfo.totalVolume > 0">
-                                            ${result.estimatedColliInfo.totalVolume | number} m³
+                                            ${result.estimatedColliInfo.totalVolume | number: 3} m³
                                         </template>
                                     </span>
                                 </data-table-cell>

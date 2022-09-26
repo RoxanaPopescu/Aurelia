@@ -55,13 +55,13 @@
 
                     <data-table-cell>
                         <span class="text-truncate">
-                            ${collo.weight | number} kg
+                            ${collo.weight | number: 0 : 2} kg
                         </span>
                     </data-table-cell>
 
                     <data-table-cell>
                         <span class="text-truncate">
-                            ${collo.dimensions.height | number} m x ${collo.dimensions.length | number} m x ${collo.dimensions.width | number} m
+                            ${collo.dimensions.height | number: 0 : 2} m x ${collo.dimensions.length | number: 0 : 2} m x ${collo.dimensions.width | number: 0 : 2} m
                         </span>
                     </data-table-cell>
 

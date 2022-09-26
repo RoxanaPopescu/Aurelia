@@ -101,7 +101,7 @@
 
                     <div slot="value" empty-value>
                         <template if.bind="route.totalVolume != null">
-                            ${route.totalVolume | number} m³
+                            ${route.totalVolume | number: 0 : 3} m³
                         </template>
                     </div>
 
@@ -115,7 +115,7 @@
 
                     <div slot="value" empty-value>
                         <template if.bind="route.totalWeight != null">
-                            ${route.totalWeight | number} kg
+                            ${route.totalWeight | number: 0} kg
                         </template>
                     </div>
 
@@ -129,7 +129,7 @@
 
                     <div slot="value" empty-value>
                         <template if.bind="route.totalWeightRange != null">
-                            ${route.totalWeightRange.from | number} - ${route.totalWeightRange.to | number} kg
+                            ${route.totalWeightRange.from | number: 0} - ${route.totalWeightRange.to | number: 0} kg
                         </template>
                     </div>
 

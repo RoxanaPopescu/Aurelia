@@ -70,14 +70,14 @@
 
                     <data-table-cell>
                         <span if.bind="collo.weight" class="text-truncate">
-                            ${collo.weight | number} kg
+                            ${collo.weight | number: 0 : 2} kg
                         </span>
                         <span else empty-value></span>
                     </data-table-cell>
 
                     <data-table-cell>
                         <span if.bind="collo.dimensions" class="text-truncate">
-                            ${collo.dimensions.height | number} m x ${collo.dimensions.length | number} m x ${collo.dimensions.width | number} m
+                            ${collo.dimensions.height | number: 0 : 2} m x ${collo.dimensions.length | number: 0 : 2} m x ${collo.dimensions.width | number: 0 : 2} m
                         </span>
                         <span else empty-value></span>
                     </data-table-cell>
