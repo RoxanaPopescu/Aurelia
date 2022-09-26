@@ -274,6 +274,7 @@
   "Order_TimeFrame_TimeTo": "Aan",
   "Order_Tooltip_PrepareToHelp": "Er is één chauffeur per. voertuig, dus wees voorbereid om mee te helpen wanneer uw goederen groot of zwaar zijn.",
   "Order_VehicleType": "Type voertuig",
+  "Order_VehicleGroup": "Voertuig groep",
   "Order_Vehicle_SelectAprox": "Selecteer (ongeveer)",
   "Order_Vehicle_TotalWeight": "Totale gewicht (ongeveer)",
   "Pagination_NextPage": "Volgende pagina",

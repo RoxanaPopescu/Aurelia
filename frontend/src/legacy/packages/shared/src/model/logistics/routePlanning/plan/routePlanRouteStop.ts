@@ -52,5 +52,5 @@ export class RoutePlanRouteStop extends RoutePlanStopBase {
   /**
    * The type of stop
    */
-   public type: RouteStopType;
+  public type: RouteStopType;
 }

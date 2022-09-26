@@ -275,6 +275,7 @@
   "Order_TimeFrame_TimeTo": "A",
   "Order_Tooltip_PrepareToHelp": "C'è un conducente a veicolo, quindi preparati se le tue merci sono grandi o pesanti.",
   "Order_VehicleType": "Tipo di veicolo",
+  "Order_VehicleGroup": "Gruppo di veicolo",
   "Order_Vehicle_SelectAprox": "Seleziona (appross.)",
   "Order_Vehicle_TotalWeight": "Peso totale (appross.)",
   "Pagination_NextPage": "Pagina successiva",

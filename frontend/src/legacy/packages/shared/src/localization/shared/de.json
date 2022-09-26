@@ -275,6 +275,7 @@
   "Order_TimeFrame_TimeTo": "Bis",
   "Order_Tooltip_PrepareToHelp": "Es gibt einen Fahrer pro Fahrzeug, weshalb Sie sich darauf einstellen sollten, bei großen oder schweren Gütern selbst zu helfen.",
   "Order_VehicleType": "Fahrzeugtyp",
+  "Order_VehicleGroup": "Fahrzeuggruppe",
   "Order_Vehicle_SelectAprox": "Auswählen (ca.)",
   "Order_Vehicle_TotalWeight": "Gesamtgewicht (ca.)",
   "Pagination_NextPage": "Nächste Seite",

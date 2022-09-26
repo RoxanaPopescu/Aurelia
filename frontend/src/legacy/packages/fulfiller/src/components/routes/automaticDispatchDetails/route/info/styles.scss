@@ -58,4 +58,6 @@
   font-weight: 500;
   white-space: nowrap;
   text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 240px;
 }

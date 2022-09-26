@@ -275,6 +275,7 @@
   "Order_TimeFrame_TimeTo": "To",
   "Order_Tooltip_PrepareToHelp": "There is one driver per. vehicle, so be prepared to help yourself if your goods are large or heavy.",
   "Order_VehicleType": "Vehicle type",
+  "Order_VehicleGroup": "Vehicle group",
   "Order_Vehicle_SelectAprox": "Select (approx.)",
   "Order_Vehicle_TotalWeight": "Total weight (approx.)",
   "Pagination_NextPage": "Next page",

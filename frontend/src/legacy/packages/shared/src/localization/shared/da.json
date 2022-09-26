@@ -275,6 +275,7 @@
   "Order_TimeFrame_TimeTo": "Til",
   "Order_Tooltip_PrepareToHelp": "Der er én chauffør pr. vogn, så vær forberedt på selv at hjælpe, hvis dit gods er stort eller tungt.",
   "Order_VehicleType": "Køretøjstype",
+  "Order_VehicleGroup": "Køretøjsgruppe",
   "Order_Vehicle_SelectAprox": "Vælg  (ca.)",
   "Order_Vehicle_TotalWeight": "Samlet vægt (ca.)",
   "Pagination_NextPage": "Næste side",

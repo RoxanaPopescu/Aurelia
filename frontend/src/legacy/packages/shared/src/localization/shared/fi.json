@@ -274,6 +274,7 @@
   "Order_TimeFrame_TimeTo": "Minne",
   "Order_Tooltip_PrepareToHelp": "Jokaisessa kulkuneuvossa on yksi kuljettaja, joten varaudu auttamaan, jos tuotteet ovat painavia.",
   "Order_VehicleType": "Ajoneuvon tyyppi",
+  "Order_VehicleGroup": "Ajoneuvoryhmä",
   "Order_Vehicle_SelectAprox": "Valitse (noin)",
   "Order_Vehicle_TotalWeight": "Yhteispaino (noin)",
   "Pagination_NextPage": "Seuraava sivu",

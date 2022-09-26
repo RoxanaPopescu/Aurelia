@@ -27,14 +27,23 @@ export default class RoutePlanningRouteInfoComponent extends React.Component<
               ? <a href={historyHelper.getRouteUrl(`/routes/details/${this.props.route.slug}`)} target="_blank">{this.props.route.slug}</a>
               : this.props.route.slug || "--"}
           </div>
-          <div className="c-routePlanning-routes-route-infoItem font-small">
-              {this.props.route.vehicleType
-              ? <>
-                  <div className="c-routePlanning-routes-route-infoItem-title font-small">{Localization.sharedValue("Order_VehicleType")}</div>
-                  <div className="c-routePlanning-routes-route-infoItem-description font-small">{this.props.route.vehicleType.name}</div>
-                </>
-              : "--"}
+          {
+            this.props.route.vehicleGroupName ?
+              <div className="c-routePlanning-routes-route-infoItem font-small" title={this.props.route.vehicleGroupName}>
+                <div className="c-routePlanning-routes-route-infoItem-title font-small">{Localization.sharedValue("Order_VehicleGroup")}</div>
+                <div className="c-routePlanning-routes-route-infoItem-description font-small">{this.props.route.vehicleGroupName}</div>
+              </div>
+            :
+            this.props.route.vehicleType ?
+              <div className="c-routePlanning-routes-route-infoItem font-small" title={this.props.route.vehicleType.name}>
+                <div className="c-routePlanning-routes-route-infoItem-title font-small">{Localization.sharedValue("Order_VehicleType")}</div>
+                <div className="c-routePlanning-routes-route-infoItem-description font-small">{this.props.route.vehicleType.name}</div>
+              </div>
+            :
+            <div className="c-routePlanning-routes-route-infoItem font-small">
+              --
             </div>
+          }
         </div>
         <img
           src={require("./assets/zoom-in.svg")}

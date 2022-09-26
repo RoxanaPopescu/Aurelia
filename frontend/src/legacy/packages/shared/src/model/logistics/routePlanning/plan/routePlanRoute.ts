@@ -29,6 +29,7 @@ export class RoutePlanRoute {
 
     this.id = data.id;
     this.slug = data.slug;
+    this.vehicleGroupName = data.vehicleGroupName;
     this.stops = data.stops.map(
       (s, i) => new RoutePlanRouteStop(s, i + 1, consignors, this)
     );
@@ -129,6 +130,11 @@ export class RoutePlanRoute {
    * The vehicle type for this route
    */
   public vehicleType: VehicleType;
+
+  /**
+   * The name of the vehicle group associated with this route
+   */
+  public vehicleGroupName: string;
 
   /**
    * The bounds of the stops in this route

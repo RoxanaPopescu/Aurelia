@@ -275,6 +275,7 @@
   "Order_TimeFrame_TimeTo": "Pour",
   "Order_Tooltip_PrepareToHelp": "Il y a un conducteur par. véhicule, alors soyez prêt à vous aider si vos marchandises sont volumineuses ou lourdes.",
   "Order_VehicleType": "Type de véhicule",
+  "Order_VehicleGroup": "Groupe de véhicule",
   "Order_Vehicle_SelectAprox": "Sélectionner (environ)",
   "Order_Vehicle_TotalWeight": "Poids total (environ)",
   "Pagination_NextPage": "Page suivante",
