@@ -586,6 +586,13 @@ export class RoutePlanningStore {
         value: Localization.formatDistance(stop.estimates.distance)
       });
 
+      if (stop.tags != null && stop.tags.length > 0)
+      {
+        rows.push({
+          headline: Localization.sharedValue("Tags"),
+          value: stop.tags.join(", ")
+        });
+      }
     }
 
     return rows;

@@ -17,6 +17,7 @@ export class RoutePlanStopBase {
     });
     this.weight = data.weight;
     this.volume = data.volume;
+    this.tags = data.tags;
   }
 
   /**
@@ -48,4 +49,9 @@ export class RoutePlanStopBase {
    * The range of which the driver is allowed to arrive.
    */
   public arrivalTimeFrame: DateTimeRange;
+
+  /**
+   * The tags associated with the stop, if any
+   */
+  public tags: string[] | undefined;
 }
