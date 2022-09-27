@@ -195,13 +195,18 @@ export class DetailsPage
      */
     protected onMessagePlaceholderClick(placeholder: string): void
     {
-        setTimeout(() =>
-        {
-            (this.messageInputElement.querySelector(".input-input") as HTMLElement).focus();
+        const inputElement = (this.messageInputElement.querySelector(".input-input") as HTMLInputElement);
 
-            // tslint:disable-next-line:deprecation
-            document.execCommand("insertText", false, placeholder);
-        });
+        const text = inputElement.value;
+
+        if (inputElement.selectionStart != null && inputElement.selectionEnd != null)
+        {
+            inputElement.value = text.substring(0, inputElement.selectionStart) + placeholder + text.substring(inputElement.selectionEnd, text.length);
+        }
+        else
+        {
+            inputElement.value = text + placeholder;
+        }
     }
 
     protected setAvailableOptions(eventType: CommunicationTriggerEvent, recipientType: CommunicationRecipient, messageType: CommunicationMessageType): void

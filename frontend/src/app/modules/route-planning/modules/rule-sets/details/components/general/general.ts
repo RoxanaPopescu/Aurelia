@@ -73,12 +73,17 @@ export class General
      */
     protected onRouteNamePlaceholderClick(placeholder: string): void
     {
-        setTimeout(() =>
-        {
-            (this.routeNameTempleteInputElement.querySelector(".input-input") as HTMLElement).focus();
+        const inputElement = (this.routeNameTempleteInputElement.querySelector(".input-input") as HTMLInputElement);
 
-            // tslint:disable-next-line:deprecation
-            document.execCommand("insertText", false, placeholder);
-        });
+        const text = inputElement.value;
+
+        if (inputElement.selectionStart != null && inputElement.selectionEnd != null)
+        {
+            inputElement.value = text.substring(0, inputElement.selectionStart) + placeholder + text.substring(inputElement.selectionEnd, text.length);
+        }
+        else
+        {
+            inputElement.value = text + placeholder;
+        }
     }
 }
