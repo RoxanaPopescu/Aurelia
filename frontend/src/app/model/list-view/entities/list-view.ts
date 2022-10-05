@@ -19,6 +19,7 @@ export class ListView<TFilter extends ListViewFilter, TItem>
      */
     public constructor(listViewDefinition: ListViewDefinition<TFilter>, paging?: IPaging, onChangeFunc?: AnyPropertyChangedHandler)
     {
+        this._unchangedDefinitionJson = JSON.stringify(listViewDefinition);
         this.definition = listViewDefinition;
         this.hasChanges = false;
 

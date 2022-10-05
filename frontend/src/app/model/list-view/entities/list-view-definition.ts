@@ -78,7 +78,7 @@ export abstract class ListViewDefinition<TFilter extends ListViewFilter>
             type: this.type,
             name: this.name,
             shared: this.shared,
-            filters: this.filter.toJSON(),
+            filter: this.filter.toJSON(),
             columns: this.columns.map(column => column.toJSON()),
             sorting: this.sorting
         };
