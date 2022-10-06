@@ -2,6 +2,7 @@
 
     <require from="app/components/page-tab-nav/page-tab-nav"></require>
     <require from="app/components/page-tab-nav/page-tab"></require>
+    <require from="app/components/name-value-pair/name-value-pair"></require>
     <require from="./start-locations.scss"></require>
 
     <page-section if.bind="hasDeletedVehicleGroups(undefined, bindingUpdateTrigger)">
@@ -52,6 +53,14 @@
     </page-section>
 
     <template if.bind="settings.departureTimes.length > 0">
+
+        <page-section>
+
+            <div class="font-largest" translate>
+                Departure times
+            </div>
+
+        </page-section>
 
         <page-tab-nav appearance="tabs" value.bind="activeDepartureTimeName">
 
@@ -104,13 +113,23 @@
 
             <div class="flex-basis-1-of-2">
 
-                <div class="font-largest departure-time-name">
+                <div class="font-larger">
                     ${activeDepartureTime.name}
                 </div>
 
-                <h4 class="margin-top">
-                    ${activeDepartureTime.startLocation.address.toString()}
-                </h4>
+                <div class="flex-row">
+                    <name-value-pair class="margin-medium-top">
+
+                        <div slot="name" translate>
+                            Address
+                        </div>
+
+                        <div slot="value">
+                            ${activeDepartureTime.startLocation.address.toString()}
+                        </div>
+
+                    </name-value-pair>
+                </div>
 
             </div>
 
@@ -156,9 +175,9 @@
                             Reservation times for gates
                         </div>
 
-                        <h4 class="margin-medium-top" translate>
+                        <div class="margin-medium-top" translate>
                             Here you can specify reservation times for gates.
-                        </h4>
+                        </div>
 
                     </div>
 
