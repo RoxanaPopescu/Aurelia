@@ -31,6 +31,11 @@
         cursor: pointer;
     }
 
+    &.--faded data-table-cell
+    {
+        opacity: var(--opacity-faded);
+    }
+
     .data-table-row-insert
     {
         display: none;

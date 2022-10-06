@@ -91,7 +91,7 @@ export class DataTableRowCustomElement
     /**
      * True if the row is faded, otherwise false.
      */
-    @bindable({ defaultBindingMode: bindingMode.twoWay, defaultValue: false })
+    @bindable({ defaultValue: false })
     public faded: boolean;
 
     /**
