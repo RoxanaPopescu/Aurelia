@@ -4,8 +4,8 @@ page-tab-nav
 {
     /// The color of the surface of the component.
     /// Note: This should be customized for each theme surface.
-    --tab-surface-color: transparent;
-    --tab-surface-color--active: var(--surface-neutral-surface-color);
+    --tab-surface-color: var(--surface-neutral-surface-color);
+    --tab-surface-color--active: transparent;
 
     /// The color of the text on the surface of the component.
     /// Note: This should be customized for each theme surface.
@@ -23,7 +23,6 @@ page-tab-nav
         border-top-left-radius: var(--tab-nav-border-radius);
         border-top-right-radius: var(--tab-nav-border-radius);
         border: var(--tab-nav-border-width) solid var(--tab-nav-border-color);
-        margin-bottom: calc(-1 * var(--tab-nav-border-width));
         background-color: var(--tab-surface-color);
 
         &:not(:first-child)
@@ -35,6 +34,7 @@ page-tab-nav
         {
             background: var(--tab-surface-color--active);
             color: var(--tab-surface-text-color--active);
+            border-bottom-color: var(--surface-color);
             cursor: initial;
         }
 
