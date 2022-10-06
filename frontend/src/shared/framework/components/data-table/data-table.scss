@@ -98,7 +98,8 @@ data-table
     }
 }
 
-data-table[appearance="rows"]
+data-table[appearance="rows"],
+data-table[appearance="cards"] .data-table-append-action
 {
     --data-table-header-padding: 16rem 20rem;
     --data-table-header-background: rgba(255, 255, 255, 0.97);
