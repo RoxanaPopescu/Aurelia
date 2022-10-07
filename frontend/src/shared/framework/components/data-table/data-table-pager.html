@@ -1,4 +1,4 @@
-<template class="${disabled ? '--disabled' : ''}" inert.bind="disabled">
+<template class="${disabled || value == null ? '--disabled' : ''}" inert.bind="disabled || value == null">
 
     <require from="./data-table-pager.scss"></require>
 
@@ -9,7 +9,6 @@
         </div>
 
         <select-input
-            disabled.bind="value == null"
             value.bind="pageSize"
             none.bind="false">
 
@@ -34,7 +33,6 @@
             max.bind="computedPageCount"
             step.bind="1"
             value.bind="pageNumber"
-            disabled.bind="value == null"
             autoselect.bind="true"
             focusout.trigger="onPageInputFocusOut()"
             keydown.trigger="onPageInputKeydown($event)">
@@ -48,13 +46,13 @@
 
     <div class="data-table-pager-buttons">
 
-        <button disabled.bind="value == null || value.page <= 1" appearance="solid" click.delegate="onNavClick(-1)">
+        <button disabled.bind="value.page <= 1" appearance="solid" click.delegate="onNavClick(-1)">
             <icon name="md-chevron-left"></icon>
         </button>
 
-        <div class="${value == null || value.page <= 1 || computedPageCount == 0 ? 'opacity-disabled' : ''}"></div>
+        <div class="${value.page <= 1 || computedPageCount == 0 ? 'opacity-disabled' : ''}"></div>
 
-        <button disabled.bind="value == null || computedPageCount != null && value.page >= computedPageCount" appearance="solid" click.delegate="onNavClick(1)">
+        <button disabled.bind="computedPageCount != null && value.page >= computedPageCount" appearance="solid" click.delegate="onNavClick(1)">
             <icon name="md-chevron-right"></icon>
         </button>
 

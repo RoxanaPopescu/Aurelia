@@ -75,7 +75,10 @@ export class DataTablePagerCustomElement
      */
     protected onPageInputFocusOut(): void
     {
-        this.pageNumber = this.value.page;
+        if (this.value != null)
+        {
+            this.pageNumber = this.value.page;
+        }
     }
 
     /**
@@ -85,7 +88,7 @@ export class DataTablePagerCustomElement
      */
     protected onPageInputKeydown(event: KeyboardEvent): boolean
     {
-        if (event.key === "Enter")
+        if (this.value != null && event.key === "Enter")
         {
             const page = this.pageNumber || this.value.page;
             this.value =
@@ -104,11 +107,14 @@ export class DataTablePagerCustomElement
      */
     protected pageSizeChanged(): void
     {
-        this.value =
+        if (this.value != null)
         {
-            ...this.value,
-            pageSize: this.pageSize
-        };
+            this.value =
+            {
+                ...this.value,
+                pageSize: this.pageSize
+            };
+        }
     }
 
     /**
@@ -117,8 +123,11 @@ export class DataTablePagerCustomElement
      */
     protected valueChanged(): void
     {
-        this.pageNumber = this.value.page;
-        this.pageSize = this.value.pageSize;
+        if (this.value != null)
+        {
+            this.pageNumber = this.value.page;
+            this.pageSize = this.value.pageSize;
+        }
     }
 
     /**
@@ -128,10 +137,13 @@ export class DataTablePagerCustomElement
      */
     protected onNavClick(offset: number): void
     {
-        this.value =
+        if (this.value != null)
         {
-            ...this.value,
-            page: this.value.page + offset
-        };
+            this.value =
+            {
+                ...this.value,
+                page: this.value.page + offset
+            };
+        }
     }
 }
