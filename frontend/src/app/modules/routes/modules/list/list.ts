@@ -601,7 +601,7 @@ export class ListPage
             catch
             {
                 route.teamId = previousValue;
-                Log.error(`Could not assign the team '${team?.name}''`);
+                Log.error(`Could not assign the team '${team?.name}'`);
             }
 
             updating.team = false;
