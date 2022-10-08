@@ -148,5 +148,10 @@ export class ListView<TFilter extends ListViewFilter, TItem>
         {
             this.update(newValue, oldValue, propertyPath);
         }
+
+        if (propertyPath === "definition" || propertyPath.startsWith("definition.filter."))
+        {
+            this.definition.filter.updateCriteria();
+        }
     }
 }

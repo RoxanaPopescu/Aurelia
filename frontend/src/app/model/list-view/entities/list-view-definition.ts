@@ -24,7 +24,7 @@ export abstract class ListViewDefinition<TFilter extends ListViewFilter>
 
     /**
      * Called by the framework when an observable property changes.
-     * Note that this will be assigned by the `ListView` class.
+     * Note that this will be assigned by the `ListView` instance.
      */
     public update: AnyPropertyChangedHandler | undefined;
 

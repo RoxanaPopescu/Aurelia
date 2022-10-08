@@ -1,8 +1,11 @@
 import { DateTime, Duration } from "luxon";
-import { observable } from "aurelia-framework";
+import { Container, observable } from "aurelia-framework";
+import { Operation } from "shared/utilities";
+import { Log, TemplateStringParser } from "shared/infrastructure";
+import { AddressService } from "app/components/address-input/services/address-service/address-service";
 import { Position, Address } from "app/model/shared";
 import { VehicleType } from "app/model/vehicle";
-import { RouteStatusSlug } from "../../../route";
+import { RouteStatus, RouteStatusSlug } from "../../../route";
 import { ListViewFilter } from "../list-view-filter";
 
 /**
@@ -57,13 +60,20 @@ export class RouteListViewFilter extends ListViewFilter
     }
 
     /**
+     * The most recent operation to update the pickup nearby position.
+     */
+    public pickupNearbyOperation: Operation;
+
+    /**
      * The nearby pickup position.
      */
+    @observable({ changeHandler: "update" })
     public pickupNearbyPosition?: Position;
 
     /**
      * The nearby pickup address.
      */
+    @observable({ changeHandler: "pickupNearbyAddressChanged" })
     public pickupNearbyAddress?: Address;
 
     /**
@@ -112,7 +122,7 @@ export class RouteListViewFilter extends ListViewFilter
      * The tags for which routes should be shown.
      */
     @observable({ changeHandler: "update" })
-    public tagsFilter: any[];
+    public tagsFilter: any[] | undefined;
 
     /**
      * The min date for which routes should be shown.
@@ -218,6 +228,247 @@ export class RouteListViewFilter extends ListViewFilter
     }
 
     /**
+     * Called from the `ListView` instance when the criteria should be updated.
+     */
+    public updateCriteria(): void
+    {
+        // tslint:disable: no-invalid-template-strings
+
+        const parser = Container.instance.get(TemplateStringParser);
+
+        const overrideContext =
+        {
+            startTimeFromOffset: this.relativeStartTimeFromFilter?.as(this.relativeStartTimeFromFilterUnit!),
+            absStartTimeFromOffset: this.relativeStartTimeFromFilter != null ? Math.abs(this.relativeStartTimeFromFilter.as(this.relativeStartTimeFromFilterUnit!)) : undefined,
+            startTimeToOffset: this.relativeStartTimeToFilter?.as(this.relativeStartTimeToFilterUnit!),
+            absStartTimeToOffset: this.relativeStartTimeToFilter != null ? Math.abs(this.relativeStartTimeToFilter.as(this.relativeStartTimeToFilterUnit!)) : undefined
+        };
+
+        this.criteria =
+        [
+            // Status filter
+            {
+                slug: "status",
+                name: "Status",
+                description: "When this filter is applied, you will only see routes whose status matches one of the specified values",
+                model:
+                {
+                    statusFilter: this.statusFilter
+                },
+                clear: () =>
+                {
+                    this.statusFilter = undefined;
+                },
+                summary: this.statusFilter?.map(s => RouteStatus.values[s].name)
+            },
+
+            // Start time filter
+            {
+                slug: "start-time",
+                name: "Start time",
+                description: "When this filter is applied, you will only see routes whose start date and time is within the specified range",
+                model:
+                {
+                    startTimeFromFilter: this.startTimeFromFilter,
+                    useRelativeStartTimeFromFilter: this.useRelativeStartTimeFromFilter,
+                    relativeStartTimeFromFilterUnit: this.relativeStartTimeFromFilterUnit,
+                    relativeStartTimeFromFilter: this.relativeStartTimeFromFilter,
+                    startTimeToFilter: this.startTimeToFilter,
+                    useRelativeStartTimeToFilter: this.useRelativeStartTimeToFilter,
+                    relativeStartTimeToFilterUnit: this.relativeStartTimeToFilterUnit,
+                    relativeStartTimeToFilter: this.relativeStartTimeToFilter
+                },
+                clear: () =>
+                {
+                    this.startTimeFromFilter = undefined;
+                    this.useRelativeStartTimeFromFilter = false;
+                    this.relativeStartTimeFromFilterUnit = "hours";
+                    this.relativeStartTimeFromFilter = undefined;
+                    this.startTimeToFilter = undefined;
+                    this.useRelativeStartTimeToFilter = false;
+                    this.relativeStartTimeToFilterUnit = "hours";
+                    this.relativeStartTimeToFilter = undefined;
+                },
+                summary: this.startTimeFromFilter == null && this.startTimeToFilter == null ? undefined :
+                [
+                    this.startTimeFromFilter == null ? undefined :
+                        this.useRelativeStartTimeFromFilter
+                            ? this.relativeStartTimeFromFilterUnit === "days"
+                                ? overrideContext.startTimeFromOffset === 0
+                                    ? "From the beginning of today"
+                                    : overrideContext.startTimeFromOffset! >= 0
+                                        ? parser.parse("From the beginning of the day, \n${absStartTimeFromOffset | number} ${absStartTimeFromOffset | plural: 'day' : 'days'} in the future").evaluate(this, overrideContext)
+                                        : parser.parse("From the beginning of the day, \n${absStartTimeFromOffset | number} ${absStartTimeFromOffset | plural: 'day' : 'days'} in the past").evaluate(this, overrideContext)
+                                : overrideContext.startTimeFromOffset! === 0
+                                    ? "From now"
+                                    : overrideContext.startTimeFromOffset! >= 0
+                                        ? parser.parse("From ${absStartTimeFromOffset | number} ${absStartTimeFromOffset | plural: 'hour' : 'hours'} in the future").evaluate(this, overrideContext)
+                                        : parser.parse("From ${absStartTimeFromOffset | number} ${absStartTimeFromOffset | plural: 'hour' : 'hours'} in the past").evaluate(this, overrideContext)
+                            : parser.parse("From the beginning of the day, \n${startTimeFromFilter | date}").evaluate(this, overrideContext),
+
+                    this.startTimeToFilter == null ? undefined :
+                        this.useRelativeStartTimeToFilter
+                            ? this.relativeStartTimeToFilterUnit === "days"
+                                ? overrideContext.startTimeToOffset === 0
+                                    ? "To the end of today"
+                                    : overrideContext.startTimeToOffset! >= 0
+                                        ? parser.parse("To the end of the day, \n${absStartTimeToOffset | number} ${absStartTimeToOffset | plural: 'day' : 'days'} in the future").evaluate(this, overrideContext)
+                                        : parser.parse("To the end of the day, \n${absStartTimeToOffset | number} ${absStartTimeToOffset | plural: 'day' : 'days'} in the past").evaluate(this, overrideContext)
+                                : overrideContext.startTimeToOffset! === 0
+                                    ? "To now"
+                                    : overrideContext.startTimeToOffset! >= 0
+                                        ? parser.parse("To ${absStartTimeToOffset | number} ${absStartTimeToOffset | plural: 'hour' : 'hours'} in the future").evaluate(this, overrideContext)
+                                        : parser.parse("To ${absStartTimeToOffset | number} ${absStartTimeToOffset | plural: 'hour' : 'hours'} in the past").evaluate(this, overrideContext)
+                            : parser.parse("To the end of the day, \n${startTimeToFilter | date}").evaluate(this, overrideContext)
+                ]
+                .filter(s => s) as string[]
+            },
+
+            // Assignment filter
+            {
+                slug: "assignment",
+                name: "Assignment",
+                description: "When this filter is applied, you will only see routes whose assignment status matches one of the specified values",
+                model:
+                {
+                    assignedDriver: this.assignedDriver,
+                    notAssignedDriver: this.notAssignedDriver,
+                    assignedVehicle: this.assignedVehicle,
+                    notAssignedVehicle: this.notAssignedVehicle
+                },
+                clear: () =>
+                {
+                    this.assignedDriver = false;
+                    this.notAssignedDriver = false;
+                    this.assignedVehicle = false;
+                    this.notAssignedVehicle = false;
+                },
+                summary: !(this.assignedDriver || this.notAssignedDriver || this.assignedVehicle || this.notAssignedVehicle) ? undefined :
+                [
+                    this.assignedDriver ? "Driver assigned" : undefined,
+                    this.notAssignedDriver ? "No driver assigned" : undefined,
+                    this.assignedVehicle ? "No vehicle assigned" : undefined,
+                    this.notAssignedVehicle ? "No vehicle assigned" : undefined
+                ]
+                .filter(s => s) as string[]
+            },
+
+            // Ordered vehicle type filter
+            {
+                slug: "ordered-vehicle-type",
+                name: "Ordered vehicle type",
+                description: "When this filter is applied, you will only see routes ordered vehicle type matches one of the specified values",
+                model:
+                {
+                    orderedVehicleTypesFilter: this.orderedVehicleTypesFilter
+                },
+                clear: () =>
+                {
+                    this.orderedVehicleTypesFilter = undefined;
+                },
+                summary: this.orderedVehicleTypesFilter?.map(ovt => ovt.name)
+            },
+
+            // Teams filter
+            {
+                slug: "teams",
+                name: "Teams",
+                description: "When this filter is applied, you will only see routes ordered vehicle type matches one of the specified values",
+                model:
+                {
+                    teamsFilter: this.teamsFilter
+                },
+                clear: () =>
+                {
+                    this.teamsFilter = undefined;
+                },
+                summary: this.teamsFilter?.map(teamId => teamId) // TODO: How do we get the name here?
+            },
+
+            // Tags filter
+            {
+                slug: "tags",
+                name: "Tags",
+                description: "When this filter is applied, you will only see routes that have all the specified tags",
+                model:
+                {
+                    tagsFilter: this.tagsFilter
+                },
+                clear: () =>
+                {
+                    this.tagsFilter = undefined;
+                },
+                summary: this.tagsFilter
+            },
+
+            // Pickup nearby filter
+            {
+                slug: "pickup-nearby",
+                name: "Pickup nearby",
+                description: "When this filter is applied, you will only see routes whose first pickup is near the specified location",
+                model:
+                {
+                    pickupNearbyAddress: this.pickupNearbyAddress
+                },
+                clear: () =>
+                {
+                    this.pickupNearbyAddress = undefined;
+                },
+                summary: this.pickupNearbyAddress == null ? undefined :
+                [
+                    this.pickupNearbyAddress?.toString()
+                ]
+            },
+
+            // Owner IDs filter
+            {
+                slug: "legacy-owner-ids",
+                name: "Owner IDs",
+                description: "When this filter is applied, you will only see routes owned by one of the specified owner IDs",
+                model:
+                {
+                    legacyOwnerIdsFilter: this.legacyOwnerIdsFilter
+                },
+                clear: () =>
+                {
+                    this.legacyOwnerIdsFilter = undefined;
+                },
+                summary: this.legacyOwnerIdsFilter
+            },
+
+            // Created time filter
+            {
+                slug: "created-time",
+                name: "Created time",
+                description: "When this filter is applied, you will only see routes created within the specified time range",
+                model:
+                {
+                    createdTimeFromFilter: this.createdTimeFromFilter,
+                    createdTimeToFilter: this.createdTimeToFilter
+                },
+                clear: () =>
+                {
+                    this.createdTimeFromFilter = undefined;
+                    this.createdTimeToFilter = undefined;
+                },
+                summary: this.createdTimeFromFilter == null && this.createdTimeToFilter == null ? undefined :
+                [
+                    this.createdTimeFromFilter == null ? undefined :
+                        parser.parse("From the beginning of the day, \n${createdTimeFromFilter | date}").evaluate(this, overrideContext),
+
+                    this.createdTimeToFilter == null ? undefined :
+                        parser.parse("To the end of the day, \n${createdTimeToFilter | date}").evaluate(this, overrideContext)
+                ]
+                .filter(s => s) as string[]
+            }
+        ];
+
+        this.criteria.sort((a, b) => a.name.localeCompare(b.name));
+
+        // tslint:enable
+    }
+
+    /**
      * Updates the state of the relative start time filter.
      */
     protected updateRelativeStartTimeFilter(newValue: any, oldValue: any, propertyName: string): void
@@ -246,6 +497,40 @@ export class RouteListViewFilter extends ListViewFilter
         {
             this.relativeStartTimeToFilter = undefined;
             this.startTimeToFilter = undefined;
+        }
+
+        this.update?.(newValue, oldValue, propertyName);
+    }
+
+    /**
+     * Called when the pickup nearby address has updated
+     */
+    protected pickupNearbyAddressChanged(): void
+    {
+        this.pickupNearbyPosition = undefined;
+
+        if (this.pickupNearbyOperation != null)
+        {
+            this.pickupNearbyOperation.abort();
+        }
+
+        if (this.pickupNearbyAddress != null)
+        {
+            this.pickupNearbyOperation = new Operation(async signal =>
+            {
+                try
+                {
+                    const addressService = Container.instance.get(AddressService);
+
+                    const location = await addressService.getLocation(this.pickupNearbyAddress!);
+
+                    this.pickupNearbyPosition = location.position;
+                }
+                catch (error)
+                {
+                    Log.error("Could not resolve address location.", error);
+                }
+            });
         }
     }
 }

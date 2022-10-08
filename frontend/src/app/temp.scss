@@ -417,30 +417,109 @@ toolbar
         margin-right: var(--size-inline-spacing-large);
     }
 
-    // Use a small default width for search inputs, and expand them when focused.
     search-input
     {
-        // Reduce width when empty and not focused.
-        --input-min-width: 10vw;
-        --input-max-width: 100%;
-        width: 10vw;
+        width: 320rem;
+    }
 
-        // Animate width changes.
-        transition: width 0.3s cubic-bezier(0.15, 1, 0.3, 1) 0s;
-
-        .input-control
+    // EXPERIMENT: Reduce the width of the search input when empty and not focused.
+    &.DISABLED
+    {
+        // Use a small default width for search inputs, and expand them when focused.
+        search-input
         {
-            // Animate color changes.
-            transition:
-                background-color 0.2s ease-in-out 0s,
-                border-color 0.2s ease-in-out 0s !important;
+            // Reduce width when empty and not focused.
+            --input-min-width: 10vw;
+            --input-max-width: 100%;
+            width: 10vw;
+
+            // Animate width changes.
+            transition: width 0.3s cubic-bezier(0.15, 1, 0.3, 1) 0s;
+
+            .input-control
+            {
+                // Animate color changes.
+                transition:
+                    background-color 0.2s ease-in-out 0s,
+                    border-color 0.2s ease-in-out 0s !important;
+            }
+
+            &:focus-within,
+            &:not(.--empty)
+            {
+                // Expand the input when focused or not empty.
+                width: 320rem;
+            }
+
+            &:not(:focus-within)
+            {
+                // Delay the animation of width changes, so a click on the filter futton won't be missed.
+                transition-delay: 0.1s;
+            }
+        }
+    }
+
+    // EXPERIMENT: Hide background and border when no filters are applied.
+    &.DISABLED
+    {
+        .list-view-filters-button:not(.--active)
+        {
+            background: none !important;
+            border-color: transparent !important;
+        }
+    }
+
+    // EXPERIMENT: Highlight find input and filter button with primary color when applied.
+    &.DISABLED
+    {
+        search-input:not(.--empty)
+        {
+            // Highlight the content of the input when not empty.
+            --input-surface-text-color: var(--surface-primary-text-color) !important;
+            --input-surface-text-color--hover: var(--input-surface-text-color) !important;
+            --input-surface-text-color--focus: var(--input-surface-text-color) !important;
+
+            [slot="before"] icon,
+            [slot="after"] icon
+            {
+                // Highlight the icons in the input when not empty.
+                color: var(--surface-primary-icon-color) !important;
+            }
         }
 
-        &:focus-within,
-        &:not(.--empty)
+        .list-view-filters-button.--active
         {
-            // Expand the input when focused or not empty.
-            width: 320rem;
+            > *
+            {
+                color: var(--surface-primary-text-color) !important;
+            }
+        }
+    }
+
+    // EXPERIMENT: Highlight find input and filter button with primary border when applied.
+    &.DISABLED
+    {
+        search-input:not(.--empty)
+        {
+            // Highlight the input when not empty.
+            --input-padding: calc(9rem - (var(--border-width-medium) - var(--border-width-thin))) 12rem;
+            --input-border-width: var(--border-width-medium);
+            --input-border-color: var(--surface-primary-border-color);
+            --input-border-color--hover: var(--surface-primary-border-color);
+            --input-border-color--focus: var(--surface-primary-border-color);
+        }
+
+        .list-view-filters-button.--active
+        {
+            --input-border-width: var(--border-width-medium);
+
+            // Animate color changes.
+            transition:
+                color var(--animation-duration-short) ease,
+                border-color var(--animation-duration-short) ease;
+
+            // Highlight the button when filters are applied.
+            border-color: var(--surface-primary-border-color) !important;
         }
     }
 }

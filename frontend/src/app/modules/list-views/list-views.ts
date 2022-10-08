@@ -125,6 +125,11 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
     protected scroll: IScroll;
 
     /**
+     * The element representing the `page-tab-nav` component.
+     */
+    protected pageTabNavElement: HTMLElement;
+
+    /**
      * The widths of the columns, or undefined if no view is active.
      * Implementations may override this if needed, e.g. to support selection.
      */
@@ -372,6 +377,9 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
 
             this.observeListView(listView);
         }
+
+        // Ensure the view is scrolled into view.
+        setTimeout(() => this.pageTabNavElement.scroll({ left: this.pageTabNavElement.scrollWidth + 10000 }));
     }
 
     /**
