@@ -1,5 +1,6 @@
-import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
+import { Placement } from "popper.js";
 import { Duration, DateTime, Zone } from "luxon";
+import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
 import { TimeValueConverter, TimeFormat } from "shared/localization";
 import { LabelPosition, shouldFocusInput } from "../../control";
 import { AutocompleteHint, EnterKeyHint } from "../input";
@@ -332,6 +333,12 @@ export class TimeInputCustomElement
      */
     @bindable({ defaultValue: false })
     public fixed: boolean;
+
+    /**
+     * The placement of the dropdown, relative to its owner.
+     */
+    @bindable({ defaultValue: "bottom-start" })
+    public placement: Placement;
 
     /**
      * Called by the framework when the component is binding.

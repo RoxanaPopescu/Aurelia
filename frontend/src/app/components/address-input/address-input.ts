@@ -1,3 +1,4 @@
+import { Placement } from "popper.js";
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
 import { LabelPosition, AutocompleteHint, ItemPickerCustomElement } from "shared/framework";
 import { Operation } from "shared/utilities";
@@ -172,6 +173,12 @@ export class AddressInputCustomElement
      */
     @bindable({ defaultValue: false })
     public fixed: boolean;
+
+    /**
+     * The placement of the dropdown, relative to its owner.
+     */
+    @bindable({ defaultValue: "bottom-start" })
+    public placement: Placement;
 
     /**
      * Opens the dropdown and optionally focuses the input element.
