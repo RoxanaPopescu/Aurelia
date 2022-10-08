@@ -37,16 +37,17 @@ export class DataTableCustomElement
     public move: ((context: { source: any; target: any }) => void) | undefined;
 
     /**
-     * Called when the add button below the last row is clicked.
+     * Called when the insert button below the last row is clicked.
      */
     @bindable
-    public append: ((context: { event: MouseEvent }) => void) | undefined;
+    public insert: ((context: { event: MouseEvent }) => void) | undefined;
 
     /**
-     * False to hide the append button below the last row, otherwise false.
+     * The insert mode to use, which controls the presence and appearance
+     * of the insert button below the last row.
      */
-    @bindable({ defaultValue: true })
-    public appendable: boolean;
+    @bindable({ defaultValue: "append" })
+    public insertMode: "append" | "insert" | "none";
 
     /**
      * True if the select all option is checked, otherwise false.

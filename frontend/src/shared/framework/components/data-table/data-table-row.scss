@@ -96,7 +96,7 @@
         }
     }
 
-    &.data-table-append-action .data-table-row-insert
+    &.data-table-insert-action .data-table-row-insert
     {
         .data-table-row-insert-line
         {
@@ -238,7 +238,7 @@ data-table[appearance="cards"]
             }
         }
 
-        &:first-of-type:not(.data-table-append-action)
+        &:first-of-type:not(.data-table-insert-action)
         {
             .data-table-row-insert
             {
@@ -246,7 +246,7 @@ data-table[appearance="cards"]
             }
         }
 
-        &.data-table-append-action
+        &.data-table-insert-action
         {
             data-table-cell
             {

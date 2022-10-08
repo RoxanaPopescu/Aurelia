@@ -256,8 +256,8 @@
                     appearance="rows"
                     sorting.bind="sorting"
                     busy.bind="updateOperation.pending"
-                    append.call="onAddVehicleClick()"
-                    appendable.bind="canCreateVehicle">
+                    insert.call="onAddVehicleClick()"
+                    insert-mode.bind="canCreateVehicle ? 'insert' : 'none'">
 
                     <data-table-headers>
 
@@ -360,7 +360,7 @@
 
                     </template>
 
-                    <template replace-part="append" translate>
+                    <template replace-part="insert" translate>
                         New vehicle
                     </template>
 

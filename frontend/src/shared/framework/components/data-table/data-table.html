@@ -4,18 +4,18 @@
 
     <slot></slot>
 
-    <div if.bind="appendable && append != null" class="data-table-row data-table-append-action" click.trigger="append($event)">
+    <div if.bind="insertMode !== 'none' && insert != null" class="data-table-row data-table-insert-action" click.trigger="insert($event)">
 
-        <div class="data-table-row-insert" surface="base">
+        <div if.bind="insertMode === 'append'" class="data-table-row-insert" surface="base">
             <div class="data-table-row-insert-line"></div>
         </div>
 
-        <data-table-cell accent="primary" class="data-table-add">
+        <data-table-cell accent="primary" class="data-table-insert">
             <icon name="add" class="font-larger line-height-1"></icon>
             &nbsp;
             <div>
-                <template replaceable part="append" translate>
-                    Add row
+                <template replaceable part="insert" translate>
+                    Add
                 </template>
             </div>
         </data-table-cell>
