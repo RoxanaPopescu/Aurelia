@@ -1,0 +1,34 @@
+:root
+{
+    --error-indicator-max-width: 160rem;
+    --error-indicator-max-height: 160rem;
+    --error-indicator-color: currentColor;
+    --error-indicator-opacity: calc(var(--opacity-faded-more) / 4);
+}
+
+error-indicator
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+
+    > div
+    {
+        display: flex;
+        align-items: center;
+
+        > icon
+        {
+            // Set the max-width and max-height.
+            width: var(--error-indicator-max-width);
+            height: var(--error-indicator-max-height);
+
+            // Set the color.
+            color: var(--error-indicator-color);
+
+            // Set the opacity.
+            opacity: var(--error-indicator-opacity);
+        }
+    }
+}
