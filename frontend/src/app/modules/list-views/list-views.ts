@@ -138,7 +138,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
     {
         return this.activeListView?.definition.columns
             .filter(column => column.visibility === "visible")
-            .map(c => c.width);
+            .map(c => c.width!);
     }
 
     /**

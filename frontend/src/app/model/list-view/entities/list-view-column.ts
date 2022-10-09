@@ -38,9 +38,9 @@ export abstract class ListViewColumn<TSlug extends string = string>
     public shortName: string;
 
     /**
-     * The width of the column.
+     * The width of the column, or undefined if the visibility is not `visible`.
      */
-    public width: string;
+    public width: string | undefined;
 
     /**
      * The property to use for sorting.

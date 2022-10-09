@@ -93,7 +93,7 @@ export class OrderListViewColumn extends ListViewColumn<OrderListViewColumnSlug>
         {
             name: listColumn.status,
             shortName: listColumn.status,
-            width: "min-content",
+            width: "40fr",
             property: "status",
             visibility: "visible"
         },
