@@ -23,8 +23,12 @@ page[name="list-views"]
 
     list-view-selector
     {
-        padding-top: 10rem;
-        padding-bottom: 10rem;
+        padding-left: 0 !important;
+
+        > button
+        {
+            padding-left: 16rem;
+        }
 
         dropdown
         {
