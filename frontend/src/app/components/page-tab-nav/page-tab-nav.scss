@@ -35,7 +35,6 @@ page-tab-nav
 
     .page-tab-nav-add-button
     {
-        margin-right: var(--size-inline-spacing-larger);
         margin-bottom: calc(var(--tab-nav-border-width) * -1);
         min-width: max-content;
         height: 40rem;
@@ -43,7 +42,7 @@ page-tab-nav
 
         &:not(:first-child)
         {
-            margin-left: var(--size-inline-spacing-larger);
+            padding-left: 16rem;
         }
 
         dropdown

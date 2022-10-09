@@ -121,7 +121,7 @@
 
             <page-section>
 
-                <toolbar scroll-fade="0.15">
+                <toolbar if.bind="activeListView != null" scroll-fade="0.15">
 
                     <search-input value.bind="activeListView.definition.filter.textFilter & debounce: 200">
 
