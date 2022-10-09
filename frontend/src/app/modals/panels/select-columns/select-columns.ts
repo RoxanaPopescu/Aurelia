@@ -1,3 +1,4 @@
+import clone from "clone";
 import { autoinject, computedFrom } from "aurelia-framework";
 import { Modal } from "shared/framework";
 import { ListViewColumn } from "app/model/list-view";
@@ -71,7 +72,7 @@ export class SelectColumnsPanel
     public activate(model: ISelectColumnsPanelModel): void
     {
         this.availableColumns = model.availableColumns;
-        this.selectedColumns = model.selectedColumns?.slice() ?? [];
+        this.selectedColumns = clone(model.selectedColumns) ?? [];
     }
 
     /**
