@@ -135,7 +135,7 @@ export class OrderListViewFilter extends ListViewFilter
      */
     public updateCriteria(): void
     {
-        throw new Error("Not implemented"); // TODO
+        return;
     }
 
     /**
