@@ -13,6 +13,15 @@ modal-panel[name="select-columns"]
     {
         --surface-input-border-color: var(--panel-surface-color);
         --surface-input-surface-color: var(--panel-surface-color);
+        --surface-input-border-color--hover: var(--panel-surface-color);
+        --surface-input-surface-color--hover: var(--panel-surface-color);
+        --surface-input-border-color--focus: var(--panel-surface-color);
+        --surface-input-surface-color--focus: var(--panel-surface-color);
+
+        .input-placeholder
+        {
+            display: none !important;
+        }
 
         padding-top: 0;
         padding-bottom: 0;
