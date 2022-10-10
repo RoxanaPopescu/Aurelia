@@ -520,7 +520,7 @@
                                 <data-table-cell if.bind="column.slug === 'driver-telephone-number'">
                                     <span class="text-truncate" empty-value>
                                         <a href="${route.driver.phone.nationalNumber | phone: 'rfc3966'}">
-                                            ${route.driver.phone.nationalNumber | phone }
+                                            ${route.driver.phone | phone }
                                         </a>
                                     </span>
                                 </data-table-cell>
