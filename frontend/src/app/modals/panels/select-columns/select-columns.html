@@ -5,7 +5,7 @@
 
     <modal-backdrop close="all"></modal-backdrop>
 
-    <modal-panel name="order-select-columns" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
+    <modal-panel name="select-columns" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
 
         <div slot="actions">
 
@@ -24,11 +24,11 @@
                 Choose list columns
             </h1>
 
-            <div>
+            <div class="font-large">
 
                 <span translate>
                     Here you can choose the columns to show in the list,
-                    their order, and their width relative to each other.
+                    their order, and their width relative to each other
                 </span>
 
                 <info-icon position="left">
@@ -82,12 +82,13 @@
 
                     <data-table-cell class="select-columns-width-cell">
                         <select-input
-                            if.bind="columnInfo.selected"
+                            if.bind="columnInfo.selected && columnInfo.column.visibility === 'visible'"
                             appearance="outline"
                             value.bind="columnInfo.column.width"
                             display-value.bind="columnInfo.column.width.replace('fr', '').replace('-content', '') | case: 'sentence'"
                             none.bind="false"
-                            fixed.bind="true">
+                            fixed.bind="true"
+                            filter="auto">
                             <item model="auto">
                                 Auto
                             </item>
@@ -103,6 +104,14 @@
                                 </item>
                             </div>
                         </select-input>
+                        <text-input
+                            if.bind="columnInfo.selected && columnInfo.column.visibility === 'icon'"
+                            appearance="outline"
+                            value.bind="columnInfo.column.width"
+                            value.translate="Icon"
+                            disabled.bind="true"
+                            inert>
+                        </text-input>
                     </data-table-cell>
 
                 </data-table-row>

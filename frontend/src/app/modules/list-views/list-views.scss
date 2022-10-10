@@ -23,14 +23,40 @@ page[name="list-views"]
 
     list-view-selector
     {
-        padding-top: 10rem;
-        padding-bottom: 10rem;
+        padding-left: 0 !important;
+
+        > button
+        {
+            padding-left: 16rem;
+        }
 
         dropdown
         {
             --dropdown-max-height: calc(100vh - 200rem);
 
             min-width: 160rem !important;
+        }
+    }
+
+    .list-view-filters-button
+    {
+        border: var(--input-border-width) solid !important;
+        border-radius: var(--input-border-radius) !important;
+        border-color: var(--surface-input-border-color) !important;
+        background: var(--surface-input-surface-color) !important;
+        color: var(--surface-input-surface-text-color) !important;
+        font-weight: 400 !important;
+
+        icon
+        {
+            font-size: var(--input-icon-size);
+            color: var(--surface-input-surface-icon-color);
+            opacity: var(--opacity-faded);
+        }
+
+        &:not(.--active) span
+        {
+            opacity: var(--opacity-faded);
         }
     }
 }

@@ -1,3 +1,4 @@
+import { Placement } from "popper.js";
 import { autoinject, bindable, bindingMode, computedFrom } from "aurelia-framework";
 import { LabelPosition, shouldFocusInput } from "../../control";
 import { AutocompleteHint, EnterKeyHint } from "../input";
@@ -152,6 +153,12 @@ export class TagsInputCustomElement
      */
     @bindable({ defaultValue: false })
     public fixed: boolean;
+
+    /**
+     * The placement of the dropdown, relative to its owner.
+     */
+    @bindable({ defaultValue: "bottom-start" })
+    public placement: Placement;
 
     /**
      * Called by an item when it wants to remove itself from the value.

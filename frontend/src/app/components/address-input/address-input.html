@@ -65,7 +65,8 @@
             if.bind="open && inputValue"
             close.call="closeDropdown(escape || !focusout, !escape)"
             mousedown.trigger="onDropdownMouseDown($event)"
-            fixed.bind="fixed">
+            fixed.bind="fixed"
+            placement.bind="placement">
 
             <item-picker
                 view-model.ref="itemPicker"

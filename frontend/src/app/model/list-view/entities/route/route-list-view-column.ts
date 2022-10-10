@@ -166,7 +166,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         {
             name: listColumn.status,
             shortName: listColumn.status,
-            width: "min-content",
+            width: "40fr",
             property: "status",
             visibility: "visible"
         },
@@ -182,7 +182,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         {
             name: listColumn.drivingList,
             shortName: listColumn.drivingList,
-            width: "min-content",
+            width: undefined,
             property: undefined,
             visibility: "icon"
         },
@@ -358,7 +358,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         {
             name: listColumn.unknown,
             shortName: listColumn.unknown,
-            width: "0",
+            width: "min-content",
             property: undefined,
             visibility: "hidden"
         }

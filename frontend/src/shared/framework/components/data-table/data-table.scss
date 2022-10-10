@@ -22,13 +22,13 @@ data-table
 
     &:not(.--move)
     {
-        data-table-cell:last-of-type:not(.data-table-add)
+        data-table-cell:last-of-type:not(.data-table-insert)
         {
             visibility: hidden;
             padding: 0 !important;
         }
 
-        data-table-cell.data-table-add
+        data-table-cell.data-table-insert
         {
             cursor: pointer;
         }
@@ -41,7 +41,7 @@ data-table
             cursor: ns-resize;
         }
 
-        .data-table-append-action data-table-cell:last-of-type
+        .data-table-insert-action data-table-cell:last-of-type
         {
             cursor: pointer;
         }
@@ -77,7 +77,7 @@ data-table
         --data-table-row-border-color: var(--data-table-row-border-color--active);
     }
 
-    .data-table-append-action
+    .data-table-insert-action
     {
         .data-table-row-drag-handle
         {
@@ -98,7 +98,8 @@ data-table
     }
 }
 
-data-table[appearance="rows"]
+data-table[appearance="rows"],
+data-table[appearance="cards"] .data-table-insert-action
 {
     --data-table-header-padding: 16rem 20rem;
     --data-table-header-background: rgba(255, 255, 255, 0.97);

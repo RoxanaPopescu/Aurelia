@@ -21,7 +21,7 @@
         <data-table
             appearance="rows"
             sorting.bind="sorting"
-            append.call="onAddClick()">
+            insert.call="onAddClick()">
 
             <data-table-headers>
 
@@ -121,7 +121,7 @@
 
             </data-table-row>
 
-            <template replace-part="append" translate>
+            <template replace-part="insert" translate>
                 Add schedule
             </template>
 

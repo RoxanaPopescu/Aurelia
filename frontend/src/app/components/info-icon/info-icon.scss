@@ -68,7 +68,7 @@ info-icon
                 &:after
                 {
                     right: calc(100% - 3rem);
-                    top: 14rem;
+                    top: 1.06em;
                     margin-right: -2rem;
                     border-top: 0;
                     border-right: 0;
@@ -86,7 +86,7 @@ info-icon
                 &:after
                 {
                     left: calc(100% - 3rem);
-                    top: 14rem;
+                    top: 1.06em;
                     margin-left: -2rem;
                     border-bottom: 0;
                     border-left: 0;
@@ -99,12 +99,12 @@ info-icon
             .info-icon-popover
             {
                 bottom: calc(100% + 6rem);
-                left: -14rem;
+                left: -1.06em;
 
                 &:after
                 {
                     top: calc(100% - 4rem);
-                    left: 14rem;
+                    left: 1.06em;
                     margin-right: -1rem;
                     border-top: 0;
                     border-left: 0;
@@ -117,12 +117,12 @@ info-icon
             .info-icon-popover
             {
                 top: calc(100% + 6rem);
-                left: -14rem;
+                left: -1.06em;
 
                 &:after
                 {
                     bottom: calc(100% - 4rem);
-                    left: 14rem;
+                    left: 1.06em;
                     margin-right: -1rem;
                     border-bottom: 0;
                     border-right: 0;

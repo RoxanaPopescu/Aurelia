@@ -65,7 +65,7 @@ export class DataTableRowCustomElement
     public click: ((context: { event: MouseEvent }) => void) | undefined;
 
     /**
-     * Called when the insert button above the row is clicked.
+     * Called when the insert button associated with the row is clicked.
      */
     @bindable
     public insert: ((context: { event: MouseEvent }) => void) | undefined;
@@ -91,7 +91,7 @@ export class DataTableRowCustomElement
     /**
      * True if the row is faded, otherwise false.
      */
-    @bindable({ defaultBindingMode: bindingMode.twoWay, defaultValue: false })
+    @bindable({ defaultValue: false })
     public faded: boolean;
 
     /**
@@ -114,10 +114,11 @@ export class DataTableRowCustomElement
     public movable: boolean;
 
     /**
-     * False to hide the insert button above the row, otherwise false.
+     * The insert mode to use, which controls the presence and appearance
+     * of the insert button associated with the row.
      */
-    @bindable({ defaultValue: true })
-    public insertable: boolean;
+    @bindable({ defaultValue: "above" })
+    public insertMode: "above" | "none";
 
     /**
      * Called by the framework when the component is attached.

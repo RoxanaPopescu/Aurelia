@@ -257,6 +257,9 @@ export class ItemPickerCustomElement
      */
     protected filterValueChanged(): void
     {
+        // Scroll to the top of the list.
+        this._element.scroll({ top: 0 });
+
         // Delay updating the empty state, in case some bindings need time to update.
         // This is specifically needed for the case where the content of an item is bound
         // to the filter value, thereby making it represent a `New item`.

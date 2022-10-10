@@ -19,6 +19,7 @@ export class ListView<TFilter extends ListViewFilter, TItem>
      */
     public constructor(listViewDefinition: ListViewDefinition<TFilter>, paging?: IPaging, onChangeFunc?: AnyPropertyChangedHandler)
     {
+        this._unchangedDefinitionJson = JSON.stringify(listViewDefinition);
         this.definition = listViewDefinition;
         this.hasChanges = false;
 
@@ -146,6 +147,11 @@ export class ListView<TFilter extends ListViewFilter, TItem>
         if (shouldTriggerUpdate && this.update != null)
         {
             this.update(newValue, oldValue, propertyPath);
+        }
+
+        if (propertyPath === "definition" || propertyPath.startsWith("definition.filter."))
+        {
+            this.definition.filter.updateCriteria();
         }
     }
 }

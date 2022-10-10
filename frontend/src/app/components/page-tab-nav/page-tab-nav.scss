@@ -15,24 +15,34 @@ page-tab-nav
     display: flex;
 
     // Set the text color and font weight.
-    color: var(--surface-primary-text-color);
+    color: var(--surface-neutral-text-color);
     font-weight: 500;
 
+    position: relative;
     padding: 0 36rem;
-    border-bottom: var(--tab-nav-border-width) solid var(--tab-nav-border-color);
     overflow-y: hidden !important;
     overflow-x: auto !important;
 
+    &::before
+    {
+        content: "";
+        position: absolute;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        border-bottom: var(--tab-nav-border-width) solid var(--tab-nav-border-color);
+    }
+
     .page-tab-nav-add-button
     {
-        margin-right: var(--size-inline-spacing-larger);
         margin-bottom: calc(var(--tab-nav-border-width) * -1);
         min-width: max-content;
         height: 40rem;
+        color: var(--surface-primary-text-color) !important;
 
         &:not(:first-child)
         {
-            margin-left: var(--size-inline-spacing-larger);
+            padding-left: 16rem;
         }
 
         dropdown

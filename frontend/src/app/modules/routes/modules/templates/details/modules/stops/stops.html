@@ -25,7 +25,7 @@
             busy.bind="updateOperation.pending"
             element.ref="dataTableElement"
             move.call="onMoveStop(source, target)"
-            append.call="onAddStopClick()">
+            insert.call="onAddStopClick()">
 
             <data-table-headers>
 
@@ -151,7 +151,7 @@
 
             </data-table-row>
 
-            <template replace-part="append" translate>
+            <template replace-part="insert" translate>
                 Add stop
             </template>
 

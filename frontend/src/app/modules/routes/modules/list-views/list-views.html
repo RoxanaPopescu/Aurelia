@@ -1,6 +1,5 @@
 <template>
 
-    <require from="app/components/address-input/address-input"></require>
     <require from="app/components/page-tab-nav/page-tab-nav"></require>
     <require from="app/components/page-tab-nav/page-tab"></require>
     <require from="app/components/name-value-pair/name-value-pair"></require>
@@ -11,361 +10,6 @@
     <require from="./components/route-list-expanded-view/route-list-expanded-view"></require>
 
     <page name="list-views">
-
-        <page-sidebar name="routes-list-page-sidebar" scroll inert.bind="activeListView == null">
-
-            <page-section>
-
-                <search-input value.bind="activeListView.definition.filter.textFilter & debounce: 200">
-
-                    <span slot="before" class="opacity-faded font-larger line-height-1">
-                        <icon name="md-search"></icon>
-                    </span>
-
-                    <span slot="placeholder" translate>
-                        Filter…
-                    </span>
-
-                </search-input>
-
-            </page-section>
-
-            <page-section toggle.bind="true">
-
-                <div slot="header" translate>
-                    Status
-                </div>
-
-                <toggle-group class="flex-column" value.bind="activeListView.definition.filter.statusFilter">
-
-                    <check-toggle label="after" model="not-started">
-
-                        <div slot="heading" translate>
-                            Not started
-                        </div>
-
-                    </check-toggle>
-
-                    <check-toggle label="after" model="in-progress">
-
-                        <div slot="heading" translate>
-                            In progress
-                        </div>
-
-                    </check-toggle>
-
-                    <check-toggle label="after" model="not-approved">
-
-                        <div slot="heading" translate>
-                            Not approved
-                        </div>
-
-                    </check-toggle>
-
-                    <check-toggle label="after" model="to-be-express-dispatched">
-
-                        <div slot="heading" translate>
-                            To be express dispatched
-                        </div>
-
-                    </check-toggle>
-
-                    <check-toggle label="after" model="cancelled">
-
-                        <div slot="heading" translate>
-                            Cancelled
-                        </div>
-
-                    </check-toggle>
-
-                    <check-toggle label="after" model="completed">
-
-                        <div slot="heading" translate>
-                            Completed
-                        </div>
-
-                    </check-toggle>
-
-                </toggle-group>
-
-            </page-section>
-
-            <page-section toggle.bind="true">
-                <div slot="header" translate>
-                    Assignment
-                </div>
-
-                <check-toggle label="after" value.bind="activeListView.definition.filter.assignedDriver">
-
-                    <div slot="heading" translate>
-                        Assigned driver
-                    </div>
-
-                </check-toggle>
-                <check-toggle label="after" value.bind="activeListView.definition.filter.notAssignedDriver">
-
-                    <div slot="heading" translate>
-                        No driver assigned
-                    </div>
-
-                </check-toggle>
-
-                <check-toggle label="after" value.bind="activeListView.definition.filter.assignedVehicle">
-
-                    <div slot="heading" translate>
-                        Assigned vehicle
-                    </div>
-
-                </check-toggle>
-
-                <check-toggle label="after" value.bind="activeListView.definition.filter.notAssignedVehicle">
-
-                    <div slot="heading" translate>
-                        No vehicle assigned
-                    </div>
-
-                </check-toggle>
-
-            </page-section>
-
-            <page-section toggle.bind="true">
-
-                <div slot="header" translate>
-                    Start date
-                </div>
-
-                <div class="control-row">
-
-                    <div>
-
-                        <date-input if.bind="!activeListView.definition.filter.useRelativeStartTimeFromFilter" label="above" fixed.bind="true" value.bind="activeListView.definition.filter.startTimeFromFilter" class="flex-grow">
-
-                            <div slot="heading" translate>
-                                From
-                            </div>
-
-                        </date-input>
-
-                        <duration-input else label="above" fixed.bind="true" unit.bind="activeListView.definition.filter.relativeStartTimeFromFilterUnit" value.bind="activeListView.definition.filter.relativeStartTimeFromFilter" class="flex-grow">
-
-                            <div slot="heading" translate>
-                                From
-                            </div>
-
-                            <select-input none.bind="false" slot="after" value.bind="activeListView.definition.filter.relativeStartTimeFromFilterUnit"
-                                style="width: 220rem; margin: -1rem -1rem -1rem -10rem;">
-
-                                <item model="hours" translate>
-                                    hours
-                                </item>
-
-                                <item model="days" translate>
-                                    days
-                                </item>
-
-                            </select-input>
-
-                        </duration-input>
-
-                        <check-toggle label="after" value.bind="activeListView.definition.filter.useRelativeStartTimeFromFilter" class="margin-top">
-
-                            <div slot="heading">
-                                <template if.bind="activeListView.definition.filter.useRelativeStartTimeFromFilter && activeListView.definition.filter.relativeStartTimeFromFilterUnit === 'days'" translate>
-                                    Relative to today
-                                </template>
-                                <template if.bind="activeListView.definition.filter.useRelativeStartTimeFromFilter && activeListView.definition.filter.relativeStartTimeFromFilterUnit === 'hours'" translate>
-                                    Relative to now
-                                </template>
-                                <template if.bind="!activeListView.definition.filter.useRelativeStartTimeFromFilter || activeListView.definition.filter.relativeStartTimeFromFilterUnit === null" translate>
-                                    Relative
-                                </template>
-                            </div>
-
-                        </check-toggle>
-
-                    </div>
-
-                    <div>
-
-                        <date-input if.bind="!activeListView.definition.filter.useRelativeStartTimeToFilter" label="above" fixed.bind="true" value.bind="activeListView.definition.filter.startTimeToFilter" class="flex-grow">
-
-                            <div slot="heading" translate>
-                                To
-                            </div>
-
-                        </date-input>
-
-
-                        <duration-input else label="above" fixed.bind="true" unit.bind="activeListView.definition.filter.relativeStartTimeToFilterUnit" value.bind="activeListView.definition.filter.relativeStartTimeToFilter" class="flex-grow">
-
-                            <div slot="heading" translate>
-                                To
-                            </div>
-
-                            <select-input none.bind="false" slot="after" value.bind="activeListView.definition.filter.relativeStartTimeToFilterUnit"
-                                style="width: 220rem; margin: -1rem -1rem -1rem -10rem;">
-
-                                <item model="hours" translate>
-                                    hours
-                                </item>
-
-                                <item model="days" translate>
-                                    days
-                                </item>
-
-                            </select-input>
-
-                        </duration-input>
-
-                        <check-toggle label="after" value.bind="activeListView.definition.filter.useRelativeStartTimeToFilter" class="margin-top">
-
-                            <div slot="heading">
-                                <template if.bind="activeListView.definition.filter.useRelativeStartTimeToFilter && activeListView.definition.filter.relativeStartTimeToFilterUnit === 'days'" translate>
-                                    Relative to today
-                                </template>
-                                <template if.bind="activeListView.definition.filter.useRelativeStartTimeToFilter && activeListView.definition.filter.relativeStartTimeToFilterUnit === 'hours'" translate>
-                                    Relative to now
-                                </template>
-                                <template if.bind="!activeListView.definition.filter.useRelativeStartTimeToFilter || activeListView.definition.filter.relativeStartTimeToFilterUnit === null" translate>
-                                    Relative
-                                </template>
-                            </div>
-
-                        </check-toggle>
-
-                    </div>
-
-                </div>
-
-            </page-section>
-
-            <page-section toggle.bind="true">
-
-                <div slot="header" translate>
-                    Ordered vehicle type
-                </div>
-
-                <toggle-group class="flex-column" value.bind="activeListView.definition.filter.orderedVehicleTypesFilter">
-
-                    <check-toggle repeat.for="vehicleType of availableVehicleTypes" model.bind="vehicleType" label="after">
-
-                        <div slot="heading" translate>
-                            ${vehicleType.name}
-                        </div>
-
-                    </check-toggle>
-
-                </toggle-group>
-
-            </page-section>
-
-            <page-section toggle.bind="true">
-
-                <div slot="header" translate>
-                    Teams
-                </div>
-
-                <tags-input
-                    label="above"
-                    filter="auto"
-                    value.bind="activeListView.definition.filter.teamsFilter"
-                    class="margin-large-bottom">
-
-                    <div slot="value">
-                        <tag repeat.for="team of teamsFilterService.selectedTeams" model.bind="team.id || team">
-                            <template if.bind="team === 'no-team'" translate>
-                                No team
-                            </template>
-                            <template else>
-                                ${team.name}
-                            </template>
-                        </tag>
-                    </div>
-
-                    <item repeat.for="team of teamsFilterService.accessibleTeams" model.bind="team.id || team">
-                        <template if.bind="team === 'no-team'" translate>
-                            No team
-                        </template>
-                        <template else>
-                            ${team.name}
-                        </template>
-                    </item>
-
-                </tags-input>
-
-            </page-section>
-
-            <page-section toggle.bind="true">
-
-                <div slot="header" translate>
-                    Tags
-                </div>
-
-                <tags-input
-                    label="above"
-                    value.bind="activeListView.definition.filter.tagsFilter"
-                    new.bind="true"
-                    class="margin-large-bottom">
-                </tags-input>
-
-            </page-section>
-
-            <page-section toggle.bind="true">
-
-                <div slot="header" translate>
-                    Pickup nearby
-                </div>
-
-                <address-input label="above" value.bind="activeListView.definition.filter.pickupNearbyAddress" class="flex-basis-1-of-1">
-
-                </address-input>
-
-            </page-section>
-
-            <page-section if.bind="showLegacy" toggle.bind="true">
-
-                <div slot="header" translate>
-                    Owner ID's
-                </div>
-
-                <tags-input
-                    label="above"
-                    value.bind="activeListView.definition.filter.legacyOwnerIdsFilter"
-                    new.bind="true"
-                    class="margin-large-bottom">
-                </tags-input>
-
-            </page-section>
-
-            <page-section toggle.bind="true">
-
-                <div slot="header" translate>
-                    Created date
-                </div>
-
-                <div class="control-row">
-
-                    <date-input label="above" fixed.bind="true" value.bind="activeListView.definition.filter.createdTimeFromFilter" class="flex-grow">
-
-                        <div slot="heading" translate>
-                            From
-                        </div>
-
-                    </date-input>
-
-                    <date-input label="above" fixed.bind="true" value.bind="activeListView.definition.filter.createdTimeToFilter" class="flex-grow">
-
-                        <div slot="heading" translate>
-                            To
-                        </div>
-
-                    </date-input>
-
-                </div>
-
-            </page-section>
-
-        </page-sidebar>
 
         <page-content scroll scroll.ref="scroll">
 
@@ -477,28 +121,87 @@
 
             <page-section>
 
-                <name-value-list class="font-small" if.bind="activeListView != null && activeListView.operation.error == null">
+                <toolbar if.bind="activeListView != null" scroll-fade="0.15">
 
-                    <a click.trigger="update(activeListView)" translate>
-                        Update
-                    </a>
+                    <search-input value.bind="activeListView.definition.filter.textFilter & debounce: 200">
 
-                    <name-value-pair class="opacity-faded">
+                        <span slot="before" class="opacity-faded font-larger line-height-1">
+                            <icon name="md-search"></icon>
+                        </span>
 
-                        <div slot="name" translate>
-                            Last updated
-                        </div>
+                        <span slot="placeholder" translate>
+                            Find…
+                        </span>
 
-                        <div slot="value">
-                            <template if.bind="activeListView.fetchedDateTime != null">
-                                ${activeListView.fetchedDateTime | relativeTime}
+                    </search-input>
+
+                    <button appearance="solid" accent="neutral" class="flex-row list-view-filters-button ${activeFilterCount > 0 ? '--active' : ''}" click.trigger="onFiltersClick()">
+
+                        <icon name="md-filter" class="margin-smaller-right" accent="primary"></icon>
+
+                        <span>
+
+                            <template if.bind="activeFilterCount == 0" translate>
+                                Add filter
                             </template>
-                            <span else empty-value></span>
-                        </div>
 
-                    </name-value-pair>
+                            <template else translate>
+                                ${activeFilterCount | number} ${activeFilterCount | plural: "filter" : "filters"} applied
+                            </template>
 
-                </name-value-list>
+                        </span>
+
+                        <icon
+                            if.bind="activeFilterCount > 0"
+                            title.translate="Clear"
+                            name="md-clear"
+                            class="margin-smaller-left"
+                            click.trigger="onResetFiltersClick($event)">
+                        </icon>
+
+                    </button>
+
+                    <name-value-list if.bind="activeListView != null && activeListView.operation.error == null" class="flex-push-right">
+
+                        <template if.bind="activeListView.fetchedDateTime != null">
+
+                            <name-value-pair class="opacity-faded">
+
+                                <div slot="name" translate>
+                                    Last updated
+                                </div>
+
+                                <div slot="value">
+                                    ${activeListView.fetchedDateTime | relativeTime}
+                                </div>
+
+                            </name-value-pair>
+
+                            <a click.trigger="update(activeListView)" translate>
+                                Update
+                            </a>
+
+                        </template>
+
+                        <template else>
+
+                            <name-value-pair class="opacity-faded">
+
+                                <div slot="name" translate>
+                                    Updating…
+                                </div>
+
+                                <div slot="value">
+                                    ${activeListView.fetchedDateTime | relativeTime}
+                                </div>
+
+                            </name-value-pair>
+
+                        </template>
+
+                    </name-value-list>
+
+                </toolbar>
 
                 <data-table
                     if.bind="activeListView != null"
@@ -817,7 +520,7 @@
                                 <data-table-cell if.bind="column.slug === 'driver-telephone-number'">
                                     <span class="text-truncate" empty-value>
                                         <a href="${route.driver.phone.nationalNumber | phone: 'rfc3966'}">
-                                            ${route.driver.phone.nationalNumber | phone }
+                                            ${route.driver.phone | phone }
                                         </a>
                                     </span>
                                 </data-table-cell>
@@ -903,26 +606,27 @@
                     class="margin-largest">
                 </busy-indicator>
 
-                <empty-indicator
+                <no-results-indicator
                     if.bind="activeListView != null && activeListView.operation.error == null && activeListView.items.length == 0"
-                    class="margin-largest">
-                    <div slot="heading" translate>No results</div>
-                </empty-indicator>
+                    class="margin-largest" translate>
+                    No results
+                </no-results-indicator>
 
-                <empty-indicator
+                <error-indicator
                     if.bind="activeListView != null && activeListView.operation.error != null"
-                    class="margin-largest">
-                    <div slot="heading" translate>Could not fetch results</div>
-                </empty-indicator>
+                    class="margin-largest" translate>
+                    Could not fetch results
+                </error-indicator>
 
                 <div
-                    if.bind="activeListView.paging != null && activeListView.operation.error == null && activeListView.items.length > 0"
+                    if.bind="activeListView.paging != null && activeListView.operation.error == null && activeListView.items != null"
                     class="flex-row">
 
                     <data-table-pager
                         class="flex-push-right margin-top"
                         value.bind="activeListView.paging"
-                        list-size.bind="activeListView.itemCount">
+                        list-size.bind="activeListView.itemCount"
+                        page-count.bind="activeListView.items.length == 0 ? activeListView.paging.page : undefined">
                     </data-table-pager>
 
                 </div>

@@ -72,6 +72,7 @@ export function configure(use: FrameworkConfiguration): void
         PLATFORM.moduleName("./components/icons/md-icon/md-icon-stack"),
         PLATFORM.moduleName("./components/indicators/busy-indicator/busy-indicator"),
         PLATFORM.moduleName("./components/indicators/empty-indicator/empty-indicator"),
+        PLATFORM.moduleName("./components/indicators/error-indicator/error-indicator"),
         PLATFORM.moduleName("./components/indicators/no-results-indicator/no-results-indicator"),
         PLATFORM.moduleName("./components/layouts/grid-layout/grid-layout"),
         PLATFORM.moduleName("./components/layouts/list-layout/list-layout"),
@@ -193,6 +194,7 @@ export * from "./components/icons/md-icon/md-icon";
 export * from "./components/icons/md-icon/md-icon-stack";
 export * from "./components/indicators/busy-indicator/busy-indicator";
 export * from "./components/indicators/empty-indicator/empty-indicator";
+export * from "./components/indicators/error-indicator/error-indicator";
 export * from "./components/indicators/no-results-indicator/no-results-indicator";
 export * from "./components/layouts/grid-layout/grid-layout";
 export * from "./components/layouts/list-layout/list-layout";

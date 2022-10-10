@@ -24,7 +24,7 @@ export abstract class ListViewDefinition<TFilter extends ListViewFilter>
 
     /**
      * Called by the framework when an observable property changes.
-     * Note that this will be assigned by the `ListView` class.
+     * Note that this will be assigned by the `ListView` instance.
      */
     public update: AnyPropertyChangedHandler | undefined;
 
@@ -78,7 +78,7 @@ export abstract class ListViewDefinition<TFilter extends ListViewFilter>
             type: this.type,
             name: this.name,
             shared: this.shared,
-            filters: this.filter.toJSON(),
+            filter: this.filter.toJSON(),
             columns: this.columns.map(column => column.toJSON()),
             sorting: this.sorting
         };

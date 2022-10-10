@@ -5,7 +5,7 @@
     <a class="
         data-table-row
         ${selected ? '--selected' : ''}
-        ${faded ? '--opacity-faded' : ''}
+        ${faded ? '--faded' : ''}
         ${clickable !== false && (clickable || href || click) ? '--clickable' : ''}
         ${model != null && movable && dataTable.move != null ? '--movable' : ''}
         ${model != null && dataTable.draggedModel === model ? '--moving' : ''}
@@ -16,7 +16,7 @@
         click.delegate="onClick($event)"
         mouseenter.trigger="onMouseEnter($event)">
 
-        <div if.bind="insertable && insert != null" class="data-table-row-insert" click.trigger="onInsertClick($event)">
+        <div if.bind="insertMode !== 'none' && insert != null" class="data-table-row-insert" click.trigger="onInsertClick($event)">
 
             <div class="data-table-row-insert-line" surface="base"></div>
 

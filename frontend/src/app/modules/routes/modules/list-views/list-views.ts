@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, computedFrom } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { HistoryHelper, Log } from "shared/infrastructure";
 import { ModalService } from "shared/framework";
@@ -6,15 +6,13 @@ import { LocalStateService } from "app/services/local-state";
 import { Fulfiller } from "app/model/outfit";
 import { OrganizationService, OrganizationTeam } from "app/model/organization";
 import { RouteAssignmentService, RouteInfo, RouteService } from "app/model/route";
-import { VehicleType } from "app/model/vehicle";
 import { ListViewService, ListView, RouteListViewFilter, RouteListViewColumn, createListViewDefinition, ListViewDefinition } from "app/model/list-view";
-import { IdentityService, moverOrganizationId } from "app/services/identity";
-import { TeamsFilterService } from "app/services/teams-filter";
 import { IListViewPageItems, IListViewPageParams, ListViewsPage } from "app/modules/list-views/list-views";
 import { AssignDriverPanel } from "../../modals/assign-driver/assign-driver";
 import { AssignTeamPanel } from "../../modals/assign-team/assign-team";
 import { AssignVehiclePanel } from "../../modals/assign-vehicle/assign-vehicle";
 import { AssignOrganizationPanel } from "../../modals/assign-organization/assign-organization";
+import { RouteFiltersPanel } from "./modals/route-filters/route-filters";
 import defaultListViewNames from "./resources/strings/default-list-view-names.json";
 
 /**
@@ -40,9 +38,7 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
      * @param listViewService The `ListViewService` instance.
      * @param routeService The `RouteService` instance.
      * @param routeAssignmentService The `RouteAssignmentService` instance.
-     * @param teamsFilterService The `TeamsFilterService` instance.
      * @param organizationService The `OrganizationService` instance.
-     * @param identityService The `IdentityService` instance.
      */
     public constructor(
         router: Router,
@@ -52,30 +48,18 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
         listViewService: ListViewService,
         routeService: RouteService,
         routeAssignmentService: RouteAssignmentService,
-        teamsFilterService: TeamsFilterService,
-        organizationService: OrganizationService,
-        identityService: IdentityService)
+        organizationService: OrganizationService)
     {
         super(router, historyHelper, modalService, localStateService, listViewService);
 
         this._routeService = routeService;
         this._routeAssignmentService = routeAssignmentService;
         this._organizationService = organizationService;
-        this._identityService = identityService;
-        this.teamsFilterService = teamsFilterService;
-
-        this.availableVehicleTypes = VehicleType.getAll();
     }
 
     private readonly _routeService: RouteService;
     private readonly _routeAssignmentService: RouteAssignmentService;
     private readonly _organizationService: OrganizationService;
-    private readonly _identityService: IdentityService;
-
-    /**
-     * The `TeamsFilterService` instance.
-     */
-    private readonly teamsFilterService: TeamsFilterService;
 
     /**
      * The type of list views presented by the page.
@@ -88,37 +72,18 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
     protected readonly listViewColumnType = RouteListViewColumn;
 
     /**
-     * The element representing the page tab nav component.
-     */
-    protected pageTabNavElement: HTMLElement;
-
-    /**
      * The teams associated with the organization,
      * or undefined if not yet fetched.
      */
     protected teams: OrganizationTeam[] | undefined;
 
     /**
-     * The available vehicle types.
+     * Geta the number of active filter criteria, excluding the text filter.
      */
-    protected availableVehicleTypes: VehicleType[];
-
-    /**
-     * HACK:
-     * Our old system uses another 'user system'.
-     * Mover Transport will need some legacy features in this transition period.
-     */
-    protected get showLegacy(): boolean
+    @computedFrom("activeListView.definition.filter.activeCriteria")
+    protected get activeFilterCount(): number | undefined
     {
-        if (ENVIRONMENT.name !== "production")
-        {
-            return true;
-        }
-
-        const identity = this._identityService.identity!;
-        const legacyOrganizationIds = [moverOrganizationId];
-
-        return legacyOrganizationIds.includes(identity.organization!.id);
+        return this.activeListView?.definition.filter.activeCriteria.length;
     }
 
     /**
@@ -128,9 +93,6 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
      */
     public async activate(params: IRouteListViewPageParams): Promise<void>
     {
-        this.teamsFilterService.fetchAccessibleTeams()
-            .catch(error => Log.error(error));
-
         await super.activate(params);
     }
 
@@ -158,15 +120,31 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
     }
 
     /**
-     * Called when a list view definition was clicked in the list view selector, and should be opened.
-     * @param listViewDefinition The list view definition for which a list view should be opened.
+     * Called when the `Add filter` or `{number} filters applied` button is clicked.
+     * Opens the filters modal.
      */
-    protected onOpenListView(listViewDefinition: ListViewDefinition<RouteListViewFilter>): void
+    protected async onFiltersClick(): Promise<void>
     {
-        super.onOpenListView(listViewDefinition);
+        await this._modalService.open(RouteFiltersPanel,
+        {
+            definition: this.activeListView!.definition
+        })
+        .promise;
+    }
 
-        // Ensure the view is scrolled into view.
-        setTimeout(() => this.pageTabNavElement.scroll({ left: this.pageTabNavElement.scrollWidth + 10000 }));
+    /**
+     * Called when the `Clear` icon is clicked on the `{number} filters applied` button.
+     * Clears all filters, except the text filter.
+     */
+    protected onResetFiltersClick(event: MouseEvent): void
+    {
+        event.preventDefault();
+        event.stopPropagation();
+
+        for (const criterion of this.activeListView!.definition.filter.criteria)
+        {
+            criterion.clear();
+        }
     }
 
     /**
@@ -177,13 +155,7 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
      */
     protected async fetch(listView: ListView<RouteListViewFilter, RouteInfo>, signal: AbortSignal): Promise<IListViewPageItems>
     {
-        const filter = listView.definition.filter;
-
         await this.fetchTeamsIfNeeded(listView, signal);
-
-        // TODO: Is this the right place to do this?
-        // Update the global teams filter.
-        this.teamsFilterService.selectedTeamIds = filter.teamsFilter;
 
         return this.fetchRoutes(listView, signal);
     }
@@ -266,7 +238,7 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
             catch
             {
                 route.teamId = previousValue;
-                Log.error(`Could not assign the team '${team?.name}''`);
+                Log.error(`Could not assign the team '${team?.name}'`);
             }
 
             updating.team = false;
@@ -433,7 +405,7 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
                 assignedDriver: assignedDriver,
                 assignedVehicle: assignedVehicle,
                 pickupNearby: (filter.pickupNearbyPosition != null) ? { position: filter.pickupNearbyPosition, precision: 3 } : undefined,
-                teams: this.teamsFilterService.selectedTeamIds,
+                teams: filter.teamsFilter,
                 orderedVehicleTypes: filter.orderedVehicleTypesFilter?.map(vt => vt.id),
                 legacyOwnerIds: filter.legacyOwnerIdsFilter
             },

@@ -9,12 +9,14 @@
         <modal-header>
 
             <h1 class="font-larger" tabindex="-1" autofocus="visible.bind: false" translate>
-                Some of the orders can't be changed.
-
-                Are you sure you want to only change only <b>${model.ordersCanBeChanged}</b> out of <b>${model.totalOrders} ${model.totalOrders | plural: "order" : "orders"}</b>?
+                Some of the orders can't be changed
             </h1>
 
         </modal-header>
+
+        <modal-section if.bind="model.shared" class="margin-bottom" translate>
+            Are you sure you want to change only ${model.ordersCanBeChanged | number} of the ${model.totalOrders | number} ${model.totalOrders | plural: "order" : "orders"}?
+        </modal-section>
 
         <modal-footer>
 
@@ -25,7 +27,7 @@
                 </button>
 
                 <button appearance="solid" accent="negative" click.delegate="onButtonClick(true)" translate>
-                    Change <b>${model.ordersCanBeChanged}</b> ${model.ordersCanBeChanged | plural: "order" : "orders"}
+                    Continue
                 </button>
 
             </div>

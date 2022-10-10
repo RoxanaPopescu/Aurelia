@@ -75,11 +75,17 @@ a
     {
         color: inherit;
 
-        &:any-link:hover,
-        .focus-visible &:any-link:focus
+        &:any-link,
+        &[click\.trigger],
+        &[click\.delegate],
+        &[click\.capture]
         {
-            // If a neutral accent is applied, highlight when hovered or focused.
-            color: var(--surface-primary-text-color--hover);
+            &:hover,
+            .focus-visible &:focus
+            {
+                // If a neutral accent is applied, highlight when hovered or focused.
+                color: var(--surface-primary-text-color--hover);
+            }
         }
     }
 }

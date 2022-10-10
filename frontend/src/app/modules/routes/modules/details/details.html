@@ -755,8 +755,8 @@
                     move.call="onMoveStop(source, target)"
                     class="${!showMap ? '--reduce-header-whitespace' : ''}"
                     element.ref="dataTableElement"
-                    appendable.bind="route != null && canEditRoute"
-                    append.call="onAddStopClick()">
+                    insert-mode.bind="route != null && canEditRoute ? 'append' : 'none'"
+                    insert.call="onAddStopClick()">
 
                     <data-table-headers>
 
@@ -828,7 +828,7 @@
                             click.call="onStopClick(stop, false)"
                             clickable.bind="!stop.hidden"
                             insert.call="onAddStopClick($index)"
-                            insertable.bind="canEditRoute"
+                            insert-mode.bind="canEditRoute ? 'above' : 'none'"
                             movable.bind="!stop.hidden"
                             class="
                                 ${stop.hidden || stop.status.slug == 'cancelled' ? '--cancelled' : stop.status.accent == 'negative' ? '--failed' : ''}
@@ -929,7 +929,7 @@
 
                     </template>
 
-                    <template replace-part="append" translate>
+                    <template replace-part="insert" translate>
                         Add stop
                     </template>
 

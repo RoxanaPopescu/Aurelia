@@ -131,6 +131,14 @@ export class OrderListViewFilter extends ListViewFilter
     }
 
     /**
+     * Called from the `ListView` instance when criteria should be recomputed.
+     */
+    public updateCriteria(): void
+    {
+        return;
+    }
+
+    /**
      * Updates the state of the relative start time filter.
      */
     protected updateRelativeStartTimeFilter(newValue: any, oldValue: any, propertyName: string): void
