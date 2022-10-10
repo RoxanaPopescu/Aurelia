@@ -182,7 +182,7 @@ export class RouteListViewColumn extends ListViewColumn<RouteListViewColumnSlug>
         {
             name: listColumn.drivingList,
             shortName: listColumn.drivingList,
-            width: undefined,
+            width: "min-content",
             property: undefined,
             visibility: "icon"
         },
