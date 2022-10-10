@@ -152,7 +152,7 @@ export class OrderListViewColumn extends ListViewColumn<OrderListViewColumnSlug>
         {
             name: listColumn.unknown,
             shortName: listColumn.unknown,
-            width: "0",
+            width: "min-content",
             property: undefined,
             visibility: "hidden"
         }

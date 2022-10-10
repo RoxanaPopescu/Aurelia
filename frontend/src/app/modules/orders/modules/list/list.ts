@@ -92,7 +92,7 @@ export class ListPage
     @computedFrom("columns")
     protected get tableStyle(): any
     {
-        return { "grid-template-columns": `60rem ${this.columns.map(c => c.width).join(" ")} min-content` };
+        return { "grid-template-columns": `60rem ${this.columns.map(c => c.width ?? "min-content").join(" ")} min-content` };
     }
 
     /**
