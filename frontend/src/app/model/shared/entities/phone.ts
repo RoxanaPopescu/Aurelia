@@ -1,7 +1,9 @@
+import { IPhoneNumber } from "shared/types";
+
 /**
  * Represents a phone
  */
-export class PhoneNumber
+export class PhoneNumber implements IPhoneNumber
 {
     /**
      * Creates a new instance of the type.
@@ -64,11 +66,21 @@ export class PhoneNumber
     public nationalNumber: string;
 
     /**
-     * Legacy properties. Before these can be removed we need to update
+     * @deprecated
+     * HACK:
+     * Legacy property - before this can be removed, we need to update:
      * Route stop details
      * Driver add / edit
      */
     public countryPrefix?: string;
+
+    /**
+     * @deprecated
+     * HACK:
+     * Legacy property - before this can be removed, we need to update:
+     * Route stop details
+     * Driver add / edit
+     */
     public number: string;
 
     /**
