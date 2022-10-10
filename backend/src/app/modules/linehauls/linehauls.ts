@@ -15,7 +15,7 @@ export class LinehaulsModule extends AppModule
     {
         await context.authorize();
 
-        await this.apiClient.post(`linehaulservice-api/v1/organizations/${context.user?.organizationId}/linehauls`,
+        await this.apiClient.post(`linehaulservice-api/v1/linehauls/create`,
         {
             body:
             {
