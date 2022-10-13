@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, computedFrom } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { HistoryHelper, Log } from "shared/infrastructure";
 import { ModalService, ToastService } from "shared/framework";
@@ -10,6 +10,7 @@ import { ImportOrdersPanel } from "app/modules/orders/modules/list/modals/import
 import { BulkActionPanel } from "app/modules/orders/modules/list/modals/bulk-action/bulk-action";
 import { CreateRoutePanel } from "app/modules/orders/modules/list/modals/create-route/create-route";
 import { ChangePickupAddressPanel } from "app/modules/orders/modules/list/modals/change-pickup-address/change-pickup-address";
+import { OrderFiltersPanel } from "./modals/order-filters/order-filters";
 import createdRouteToast from "app/modules/orders/modules/list/resources/strings/created-route-toast.json";
 import createdCollectionPointToast from "app/modules/orders/modules/list/resources/strings/created-collection-point-toast.json";
 import changedPickupAddressToast from "app/modules/orders/modules/list/resources/strings/changed-pickup-address-toast.json";
@@ -69,9 +70,13 @@ export class OrderListViewsPage extends ListViewsPage<OrderListViewFilter, Order
     protected readonly listViewColumnType = OrderListViewColumn;
 
     /**
-     * The element representing the page tab nav component.
+     * Geta the number of active filter criteria, excluding the text filter.
      */
-    protected pageTabNavElement: HTMLElement;
+    @computedFrom("activeListView.definition.filter.activeCriteria")
+    protected get activeFilterCount(): number | undefined
+    {
+        return this.activeListView?.definition.filter.activeCriteria.length;
+    }
 
     /**
      * Called by the framework when the module is activated.
@@ -107,15 +112,31 @@ export class OrderListViewsPage extends ListViewsPage<OrderListViewFilter, Order
     }
 
     /**
-     * Called when a list view definition was clicked in the list view selector, and should be opened.
-     * @param listViewDefinition The list view definition for which a list view should be opened.
+     * Called when the `Add filter` or `{number} filters applied` button is clicked.
+     * Opens the filters modal.
      */
-    protected onOpenListView(listViewDefinition: ListViewDefinition<OrderListViewFilter>): void
+    protected async onFiltersClick(): Promise<void>
     {
-        super.onOpenListView(listViewDefinition);
+        await this._modalService.open(OrderFiltersPanel,
+        {
+            definition: this.activeListView!.definition
+        })
+        .promise;
+    }
 
-        // Ensure the view is scrolled into view.
-        setTimeout(() => this.pageTabNavElement.scroll({ left: this.pageTabNavElement.scrollWidth + 10000 }));
+    /**
+     * Called when the `Clear` icon is clicked on the `{number} filters applied` button.
+     * Clears all filters, except the text filter.
+     */
+    protected onResetFiltersClick(event: MouseEvent): void
+    {
+        event.preventDefault();
+        event.stopPropagation();
+
+        for (const criterion of this.activeListView!.definition.filter.criteria)
+        {
+            criterion.clear();
+        }
     }
 
     /**

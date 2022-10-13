@@ -1,0 +1,396 @@
+<template>
+
+    <require from="app/components/info-icon/info-icon"></require>
+    <require from="app/components/address-input/address-input"></require>
+
+    <require from="./order-filters.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel name="order-filters" position="right" close-button.bind="true" close-shortcut.bind="true" scroll>
+
+        <div slot="actions">
+
+            <button
+                if.bind="view === 'active-filters' && model.filter.activeCriteria.length > 0"
+                appearance="icon"
+                title.translate="Reset"
+                click.trigger="onResetClick()">
+                <icon name="md-restart"></icon>
+            </button>
+
+        </div>
+
+        <!-- Filters view -->
+        <div class="order-filters-active-filters-view" if="condition.bind: view === 'active-filters'; cache: false">
+
+            <modal-header scroll-fade>
+
+                <h1 class="font-largest margin-bottom">
+
+                    <path-nav>
+
+                        <div translate>
+                            Filters
+                        </div>
+
+                    </path-nav>
+
+                </h1>
+
+                <h2 class="font-large">
+
+                    <template if.bind="model.filter.activeCriteria.length > 0" translate>
+                        The following filters are currently applied
+                    </template>
+
+                    <template else translate>
+                        No filters are currently applied
+                    </template>
+
+                </h2>
+
+            </modal-header>
+
+            <modal-section>
+
+                <data-table
+                    appearance="rows"
+                    insert.call="onAddFilterClick()"
+                    insert-mode="insert">
+
+                    <data-table-row repeat.for="criterion of model.filter.activeCriteria" click.call="onChooseFilter(criterion)">
+
+                        <data-table-cell>
+                            ${criterion.name}
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <tags-input readonly.bind="true" class="--tags-only">
+                                <div slot="value">
+                                    <tag repeat.for="part of criterion.summary">
+                                        ${part}
+                                    </tag>
+                                </div>
+                            </tags-input>
+                        </data-table-cell>
+
+                        <data-table-cell align="right">
+
+                            <div class="icon-row">
+
+                                <button
+                                    title.translate="Remove filter"
+                                    appearance="none"
+                                    accent="primary"
+                                    click.trigger="onRemoveFilterClick(criterion)">
+
+                                    <icon name="delete-small"></icon>
+
+                                </button>
+
+                            </div>
+
+                        </data-table-cell>
+
+                    </data-table-row>
+
+                    <template replace-part="insert" translate>
+                        Add filter
+                    </template>
+
+                </data-table>
+
+            </modal-section>
+
+        </div>
+
+        <!-- Add filter view -->
+        <div class="order-filters-add-filter-view" if="condition.bind: view === 'add-filter'; cache: false">
+
+            <modal-header scroll-fade>
+
+                <h1 class="font-largest margin-bottom">
+
+                    <path-nav>
+
+                        <a accent="inherit" click.trigger="onBackToActiveFiltersClick()" tabindex="0" translate>
+                            Filters
+                        </a>
+
+                        <div translate>
+                            Add
+                        </div>
+
+                    </path-nav>
+
+                </h1>
+
+                <h2 class="font-large margin-larger-bottom" translate>
+                    Choose the filter you want to apply
+                </h2>
+
+                <search-input value.bind="queryText" autofocus>
+
+                    <span slot="before">
+                        <icon name="md-search" class="font-larger opacity-faded"></icon>
+                    </span>
+
+                    <span slot="placeholder" translate>
+                        Find filter…
+                    </span>
+
+                </search-input>
+
+            </modal-header>
+
+            <modal-section>
+
+                <data-table if.bind="filteredCriteria.length > 0" appearance="rows">
+
+                    <data-table-row
+                        repeat.for="criterion of filteredCriteria"
+                        faded.to-view="criterion.summary != null"
+                        click.call="onChooseFilter(criterion)">
+
+                        <data-table-cell>
+                            ${criterion.name}
+                        </data-table-cell>
+
+                        <data-table-cell>
+                            <span if.bind="criterion.summary != null" class="text-truncate" translate>
+                                Applied
+                            </span>
+                        </data-table-cell>
+
+                    </data-table-row>
+
+                </data-table>
+
+                <no-results-indicator else class="margin-larger" translate>
+                    No results
+                </no-results-indicator>
+
+            </modal-section>
+
+        </div>
+
+        <!-- Edit filter view -->
+        <div class="order-filters-edit-filter-view" if="condition.bind: view === 'edit-filter'; cache: false">
+
+            <modal-header scroll-fade>
+
+                <h1 class="font-largest margin-bottom">
+
+                    <path-nav>
+
+                        <a accent="inherit" click.trigger="onBackToActiveFiltersClick()" tabindex="0" translate>
+                            Filters
+                        </a>
+
+                        <a if.bind="previousView === 'add-filter'" accent="inherit" click.trigger="onBackToAddFilterClick()" translate>
+                            Add
+                        </a>
+
+                        <div translate>
+                            ${criterion.name}
+                        </div>
+
+                    </path-nav>
+
+                </h1>
+
+                <h2 class="font-large" translate>
+                    ${criterion.description}
+                </h2>
+
+            </modal-header>
+
+            <modal-section>
+
+                <!-- Status filter -->
+                <template if.bind="criterion.slug === 'status'">
+
+                    <toggle-group class="flex-column" value.bind="criterion.model.statusFilter">
+
+                    <check-toggle label="after" model="placed">
+
+                        <div slot="heading" translate>
+                            Placed
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="ready">
+
+                        <div slot="heading" translate>
+                            Ready
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="delivered">
+
+                        <div slot="heading" translate>
+                            Delivered
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="cancelled">
+
+                        <div slot="heading" translate>
+                            Cancelled
+                        </div>
+
+                    </check-toggle>
+
+                    <check-toggle label="after" model="deleted">
+
+                        <div slot="heading" translate>
+                            Deleted
+                        </div>
+
+                    </check-toggle>
+
+                    </toggle-group>
+
+                </template>
+
+                <!-- Date range filter -->
+                <template if.bind="criterion.slug === 'date-range'">
+
+                    <div class="flex-row margin-larger-bottom">
+
+                        <div class="flex-basis-1-of-2">
+
+                            <date-input if.bind="!criterion.model.useRelativeFromDateFilter" label="above" fixed.bind="true" value.bind="criterion.model.fromDateFilter">
+
+                                <div slot="heading" translate>
+                                    From
+                                </div>
+
+                            </date-input>
+
+                            <duration-input else label="above" fixed.bind="true" unit.bind="criterion.model.relativeFromDateFilterUnit" value.bind="criterion.model.relativeFromDateFilter">
+
+                                <div slot="heading" translate>
+                                    From
+                                </div>
+
+                                <select-input none.bind="false" slot="after" value.bind="criterion.model.relativeFromDateFilterUnit"
+                                    style="width: 160rem; margin: -1rem -1rem -1rem -10rem;">
+
+                                    <item model="hours" translate>
+                                        hours
+                                    </item>
+
+                                    <item model="days" translate>
+                                        days
+                                    </item>
+
+                                </select-input>
+
+                            </duration-input>
+
+                        </div>
+
+                        <div class="flex-basis-1-of-2 margin-large-left" style="align-self: flex-end; margin-bottom: calc((40rem - 28rem) / 2);">
+
+                            <check-toggle label="after" value.bind="criterion.model.useRelativeFromDateFilter">
+
+                                <div slot="heading">
+                                    <template if.bind="criterion.model.useRelativeFromDateFilter && criterion.model.relativeFromDateFilterUnit === 'days'" translate>
+                                        Relative to today
+                                    </template>
+                                    <template if.bind="criterion.model.useRelativeFromDateFilter && criterion.model.relativeFromDateFilterUnit === 'hours'" translate>
+                                        Relative to now
+                                    </template>
+                                    <template if.bind="!criterion.model.useRelativeFromDateFilter || criterion.model.relativeFromDateFilterUnit === null" translate>
+                                        Relative
+                                    </template>
+                                </div>
+
+                            </check-toggle>
+
+                        </div>
+
+                    </div>
+
+                    <div class="flex-row">
+
+                        <div class="flex-basis-1-of-2">
+
+                            <date-input if.bind="!criterion.model.useRelativeToDateFilter" label="above" fixed.bind="true" value.bind="criterion.model.toDateFilter">
+
+                                <div slot="heading" translate>
+                                    To
+                                </div>
+
+                            </date-input>
+
+                            <duration-input else label="above" fixed.bind="true" unit.bind="criterion.model.relativeToDateFilterUnit" value.bind="criterion.model.relativeToDateFilter">
+
+                                <div slot="heading" translate>
+                                    To
+                                </div>
+
+                                <select-input none.bind="false" slot="after" value.bind="criterion.model.relativeToDateFilterUnit"
+                                    style="width: 160rem; margin: -1rem -1rem -1rem -10rem;">
+
+                                    <item model="hours" translate>
+                                        hours
+                                    </item>
+
+                                    <item model="days" translate>
+                                        days
+                                    </item>
+
+                                </select-input>
+
+                            </duration-input>
+
+                        </div>
+
+                        <div class="flex-basis-1-of-2 margin-large-left" style="align-self: flex-end; margin-bottom: calc((40rem - 28rem) / 2);">
+
+                            <check-toggle label="after" value.bind="criterion.model.useRelativeToDateFilter">
+
+                                <div slot="heading">
+                                    <template if.bind="criterion.model.useRelativeToDateFilter && criterion.model.relativeToDateFilterUnit === 'days'" translate>
+                                        Relative to today
+                                    </template>
+                                    <template if.bind="criterion.model.useRelativeToDateFilter && criterion.model.relativeToDateFilterUnit === 'hours'" translate>
+                                        Relative to now
+                                    </template>
+                                    <template if.bind="!criterion.model.useRelativeToDateFilter || criterion.model.relativeToDateFilterUnit === null" translate>
+                                        Relative
+                                    </template>
+                                </div>
+
+                            </check-toggle>
+
+                        </div>
+
+                    </div>
+
+                </template>
+
+                <!-- Tags filter -->
+                <template if.bind="criterion.slug === 'tags'">
+
+                    <tags-input label="above" value.bind="criterion.model.orderTagsFilter" new.bind="true"></tags-input>
+
+                </template>
+
+                <button appearance="solid" accent="primary" class="margin-larger-top" click.trigger="onApplyFilterClick()" translate>
+                    Apply
+                </button>
+
+            </modal-section>
+
+        </div>
+
+    </modal-panel>
+
+</template>

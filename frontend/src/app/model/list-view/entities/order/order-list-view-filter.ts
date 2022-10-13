@@ -1,7 +1,8 @@
 import { DateTime, Duration } from "luxon";
-import { observable } from "aurelia-framework";
-import { OrderStatusSlug } from "../../../order";
+import { Container, observable } from "aurelia-framework";
+import { OrderStatus, OrderStatusSlug } from "../../../order";
 import { ListViewFilter } from "../list-view-filter";
+import { TemplateStringParser } from "shared/infrastructure";
 
 /**
  * Represents a filter for a list view presenting items of type `OrderInfo`.
@@ -58,7 +59,7 @@ export class OrderListViewFilter extends ListViewFilter
      * The order tags for which orders should be shown.
      */
     @observable({ changeHandler: "update" })
-    public orderTagsFilter: any[];
+    public orderTagsFilter: any[] | undefined;
 
     /**
      * The min date for which orders should be shown.
@@ -131,11 +132,122 @@ export class OrderListViewFilter extends ListViewFilter
     }
 
     /**
-     * Called from the `ListView` instance when criteria should be recomputed.
+     * Called from the `ListView` instance when the criteria should be updated.
      */
     public updateCriteria(): void
     {
-        return;
+        // tslint:disable: no-invalid-template-strings
+
+        const parser = Container.instance.get(TemplateStringParser);
+
+        const overrideContext =
+        {
+            fromDateOffset: this.relativeFromDateFilter?.as(this.relativeFromDateFilterUnit!),
+            absFromDateOffset: this.relativeFromDateFilter != null ? Math.abs(this.relativeFromDateFilter.as(this.relativeFromDateFilterUnit!)) : undefined,
+            toDateOffset: this.relativeToDateFilter?.as(this.relativeToDateFilterUnit!),
+            absToDateOffset: this.relativeToDateFilter != null ? Math.abs(this.relativeToDateFilter.as(this.relativeToDateFilterUnit!)) : undefined
+        };
+
+        this.criteria =
+        [
+            // Status filter
+            {
+                slug: "status",
+                name: "Status",
+                description: "When this filter is applied, you will only see orders whose status matches one of the specified values",
+                model:
+                {
+                    statusFilter: this.statusFilter
+                },
+                clear: () =>
+                {
+                    this.statusFilter = undefined;
+                },
+                summary: this.statusFilter?.map(s => OrderStatus.values[s].name)
+            },
+
+            // Tags filter
+            {
+                slug: "tags",
+                name: "Tags",
+                description: "When this filter is applied, you will only see orders that have all the specified tags",
+                model:
+                {
+                    orderTagsFilter: this.orderTagsFilter
+                },
+                clear: () =>
+                {
+                    this.orderTagsFilter = undefined;
+                },
+                summary: this.orderTagsFilter
+            },
+
+            // Date range filter
+            {
+                slug: "date-range",
+                name: "Date range",
+                description: "When this filter is applied, you will only see orders whose pickup date and time is within the specified range",
+                model:
+                {
+                    fromDateFilter: this.fromDateFilter,
+                    useRelativeFromDateFilter: this.useRelativeFromDateFilter,
+                    relativeFromDateFilterUnit: this.relativeFromDateFilterUnit,
+                    relativeFromDateFilter: this.relativeFromDateFilter,
+                    toDateFilter: this.toDateFilter,
+                    useRelativeToDateFilter: this.useRelativeToDateFilter,
+                    relativeToDateFilterUnit: this.relativeToDateFilterUnit,
+                    relativeToDateFilter: this.relativeToDateFilter
+                },
+                clear: () =>
+                {
+                    this.fromDateFilter = undefined;
+                    this.useRelativeFromDateFilter = false;
+                    this.relativeFromDateFilterUnit = "hours";
+                    this.relativeFromDateFilter = undefined;
+                    this.toDateFilter = undefined;
+                    this.useRelativeToDateFilter = false;
+                    this.relativeToDateFilterUnit = "hours";
+                    this.relativeToDateFilter = undefined;
+                },
+                summary: this.fromDateFilter == null && this.toDateFilter == null ? undefined :
+                [
+                    this.fromDateFilter == null ? undefined :
+                        this.useRelativeFromDateFilter
+                            ? this.relativeFromDateFilterUnit === "days"
+                                ? overrideContext.fromDateOffset === 0
+                                    ? "From the beginning of today"
+                                    : overrideContext.fromDateOffset! >= 0
+                                        ? parser.parse("From the beginning of the day, \n${absFromDateOffset | number} ${absFromDateOffset | plural: 'day' : 'days'} in the future").evaluate(this, overrideContext)
+                                        : parser.parse("From the beginning of the day, \n${absFromDateOffset | number} ${absFromDateOffset | plural: 'day' : 'days'} in the past").evaluate(this, overrideContext)
+                                : overrideContext.fromDateOffset! === 0
+                                    ? "From now"
+                                    : overrideContext.fromDateOffset! >= 0
+                                        ? parser.parse("From ${absFromDateOffset | number} ${absFromDateOffset | plural: 'hour' : 'hours'} in the future").evaluate(this, overrideContext)
+                                        : parser.parse("From ${absFromDateOffset | number} ${absFromDateOffset | plural: 'hour' : 'hours'} in the past").evaluate(this, overrideContext)
+                            : parser.parse("From the beginning of the day, \n${fromDateFilter | date}").evaluate(this, overrideContext),
+
+                    this.toDateFilter == null ? undefined :
+                        this.useRelativeToDateFilter
+                            ? this.relativeToDateFilterUnit === "days"
+                                ? overrideContext.toDateOffset === 0
+                                    ? "To the end of today"
+                                    : overrideContext.toDateOffset! >= 0
+                                        ? parser.parse("To the end of the day, \n${absToDateOffset | number} ${absToDateOffset | plural: 'day' : 'days'} in the future").evaluate(this, overrideContext)
+                                        : parser.parse("To the end of the day, \n${absToDateOffset | number} ${absToDateOffset | plural: 'day' : 'days'} in the past").evaluate(this, overrideContext)
+                                : overrideContext.toDateOffset! === 0
+                                    ? "To now"
+                                    : overrideContext.toDateOffset! >= 0
+                                        ? parser.parse("To ${absToDateOffset | number} ${absToDateOffset | plural: 'hour' : 'hours'} in the future").evaluate(this, overrideContext)
+                                        : parser.parse("To ${absToDateOffset | number} ${absToDateOffset | plural: 'hour' : 'hours'} in the past").evaluate(this, overrideContext)
+                            : parser.parse("To the end of the day, \n${toDateFilter | date}").evaluate(this, overrideContext)
+                ]
+                .filter(s => s) as string[]
+            }
+        ];
+
+        this.criteria.sort((a, b) => a.name.localeCompare(b.name));
+
+        // tslint:enable
     }
 
     /**
@@ -168,5 +280,7 @@ export class OrderListViewFilter extends ListViewFilter
             this.relativeToDateFilter = undefined;
             this.toDateFilter = undefined;
         }
+
+        this.update?.(newValue, oldValue, propertyName);
     }
 }
