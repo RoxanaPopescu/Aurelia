@@ -1,0 +1,5 @@
+{
+    "status": "When this filter is applied, you will only see orders whose status matches one of the specified values",
+    "tags": "When this filter is applied, you will only see orders that have all the specified tags",
+    "dateRange": "When this filter is applied, you will only see orders whose pickup date and time is within the specified range"
+}

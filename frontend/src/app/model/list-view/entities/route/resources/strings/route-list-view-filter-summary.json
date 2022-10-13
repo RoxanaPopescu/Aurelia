@@ -1,0 +1,16 @@
+{
+    "fromToday": "From the beginning of today",
+    "fromDayInTheFuture": "From the beginning of the day, \n${absStartTimeFromOffset | number} ${absStartTimeFromOffset | plural: 'day' : 'days'} in the future",
+    "fromDayInThePast": "From the beginning of the day, \n${absStartTimeFromOffset | number} ${absStartTimeFromOffset | plural: 'day' : 'days'} in the past",
+    "fromNow": "From now",
+    "fromHoursInTheFuture": "From ${absStartTimeFromOffset | number} ${absStartTimeFromOffset | plural: 'hour' : 'hours'} in the future",
+    "fromHoursInThePast": "From ${absStartTimeFromOffset | number} ${absStartTimeFromOffset | plural: 'hour' : 'hours'} in the past",
+    "fromDate": "From the beginning of the day, \n${startTimeFromFilter | date}",
+    "toToday": "To the end of today",
+    "toDayInTheFuture": "To the end of the day, \n${absStartTimeToOffset | number} ${absStartTimeToOffset | plural: 'day' : 'days'} in the future",
+    "toDayInThePast": "To the end of the day, \n${absStartTimeToOffset | number} ${absStartTimeToOffset | plural: 'day' : 'days'} in the past",
+    "toNow": "To now",
+    "toHoursInTheFuture": "To ${absStartTimeToOffset | number} ${absStartTimeToOffset | plural: 'hour' : 'hours'} in the future",
+    "toHoursInThePast": "To ${absStartTimeToOffset | number} ${absStartTimeToOffset | plural: 'hour' : 'hours'} in the past",
+    "toDate": "To the end of the day, \n${startTimeToFilter | date}"
+}

@@ -7,6 +7,9 @@ import { Position, Address } from "app/model/shared";
 import { VehicleType } from "app/model/vehicle";
 import { RouteStatus, RouteStatusSlug } from "../../../route";
 import { ListViewFilter } from "../list-view-filter";
+import filterNames from "./resources/strings/route-list-view-filter-names.json";
+import filterDescriptions from "./resources/strings/route-list-view-filter-descriptions.json";
+import filterSummary from "./resources/strings/route-list-view-filter-summary.json";
 
 /**
  * Represents a filter for a list view presenting items of type `RouteInfo`.
@@ -249,8 +252,8 @@ export class RouteListViewFilter extends ListViewFilter
             // Status filter
             {
                 slug: "status",
-                name: "Status",
-                description: "When this filter is applied, you will only see routes whose status matches one of the specified values",
+                name: filterNames.status,
+                description: filterDescriptions.status,
                 model:
                 {
                     statusFilter: this.statusFilter
@@ -265,8 +268,8 @@ export class RouteListViewFilter extends ListViewFilter
             // Start time filter
             {
                 slug: "start-time",
-                name: "Start time",
-                description: "When this filter is applied, you will only see routes whose start date and time is within the specified range",
+                name: filterNames.startTime,
+                description: filterDescriptions.startTime,
                 model:
                 {
                     startTimeFromFilter: this.startTimeFromFilter,
@@ -295,31 +298,31 @@ export class RouteListViewFilter extends ListViewFilter
                         this.useRelativeStartTimeFromFilter
                             ? this.relativeStartTimeFromFilterUnit === "days"
                                 ? overrideContext.startTimeFromOffset === 0
-                                    ? "From the beginning of today"
+                                    ? parser.parse(filterSummary.fromToday).evaluate(this, overrideContext)
                                     : overrideContext.startTimeFromOffset! >= 0
-                                        ? parser.parse("From the beginning of the day, \n${absStartTimeFromOffset | number} ${absStartTimeFromOffset | plural: 'day' : 'days'} in the future").evaluate(this, overrideContext)
-                                        : parser.parse("From the beginning of the day, \n${absStartTimeFromOffset | number} ${absStartTimeFromOffset | plural: 'day' : 'days'} in the past").evaluate(this, overrideContext)
+                                        ? parser.parse(filterSummary.fromDayInTheFuture).evaluate(this, overrideContext)
+                                        : parser.parse(filterSummary.fromDayInThePast).evaluate(this, overrideContext)
                                 : overrideContext.startTimeFromOffset! === 0
-                                    ? "From now"
+                                    ? parser.parse(filterSummary.fromNow).evaluate(this, overrideContext)
                                     : overrideContext.startTimeFromOffset! >= 0
-                                        ? parser.parse("From ${absStartTimeFromOffset | number} ${absStartTimeFromOffset | plural: 'hour' : 'hours'} in the future").evaluate(this, overrideContext)
-                                        : parser.parse("From ${absStartTimeFromOffset | number} ${absStartTimeFromOffset | plural: 'hour' : 'hours'} in the past").evaluate(this, overrideContext)
-                            : parser.parse("From the beginning of the day, \n${startTimeFromFilter | date}").evaluate(this, overrideContext),
+                                        ? parser.parse(filterSummary.fromHoursInTheFuture).evaluate(this, overrideContext)
+                                        : parser.parse(filterSummary.fromHoursInThePast).evaluate(this, overrideContext)
+                            : parser.parse(filterSummary.fromDate).evaluate(this, overrideContext),
 
                     this.startTimeToFilter == null ? undefined :
                         this.useRelativeStartTimeToFilter
                             ? this.relativeStartTimeToFilterUnit === "days"
                                 ? overrideContext.startTimeToOffset === 0
-                                    ? "To the end of today"
+                                    ? parser.parse(filterSummary.toToday).evaluate(this, overrideContext)
                                     : overrideContext.startTimeToOffset! >= 0
-                                        ? parser.parse("To the end of the day, \n${absStartTimeToOffset | number} ${absStartTimeToOffset | plural: 'day' : 'days'} in the future").evaluate(this, overrideContext)
-                                        : parser.parse("To the end of the day, \n${absStartTimeToOffset | number} ${absStartTimeToOffset | plural: 'day' : 'days'} in the past").evaluate(this, overrideContext)
+                                        ? parser.parse(filterSummary.toDayInTheFuture).evaluate(this, overrideContext)
+                                        : parser.parse(filterSummary.toDayInThePast).evaluate(this, overrideContext)
                                 : overrideContext.startTimeToOffset! === 0
-                                    ? "To now"
+                                    ? parser.parse(filterSummary.toNow).evaluate(this, overrideContext)
                                     : overrideContext.startTimeToOffset! >= 0
-                                        ? parser.parse("To ${absStartTimeToOffset | number} ${absStartTimeToOffset | plural: 'hour' : 'hours'} in the future").evaluate(this, overrideContext)
-                                        : parser.parse("To ${absStartTimeToOffset | number} ${absStartTimeToOffset | plural: 'hour' : 'hours'} in the past").evaluate(this, overrideContext)
-                            : parser.parse("To the end of the day, \n${startTimeToFilter | date}").evaluate(this, overrideContext)
+                                        ? parser.parse(filterSummary.toHoursInTheFuture).evaluate(this, overrideContext)
+                                        : parser.parse(filterSummary.toHoursInThePast).evaluate(this, overrideContext)
+                            : parser.parse(filterSummary.toDate).evaluate(this, overrideContext)
                 ]
                 .filter(s => s) as string[]
             },
@@ -327,8 +330,8 @@ export class RouteListViewFilter extends ListViewFilter
             // Assignment filter
             {
                 slug: "assignment",
-                name: "Assignment",
-                description: "When this filter is applied, you will only see routes whose assignment status matches one of the specified values",
+                name: filterNames.assignment,
+                description: filterDescriptions.assignment,
                 model:
                 {
                     assignedDriver: this.assignedDriver,
@@ -356,8 +359,8 @@ export class RouteListViewFilter extends ListViewFilter
             // Ordered vehicle type filter
             {
                 slug: "ordered-vehicle-type",
-                name: "Ordered vehicle type",
-                description: "When this filter is applied, you will only see routes ordered vehicle type matches one of the specified values",
+                name: filterNames.orderedVehicleType,
+                description: filterDescriptions.orderedVehicleType,
                 model:
                 {
                     orderedVehicleTypesFilter: this.orderedVehicleTypesFilter
@@ -372,8 +375,8 @@ export class RouteListViewFilter extends ListViewFilter
             // Teams filter
             {
                 slug: "teams",
-                name: "Teams",
-                description: "When this filter is applied, you will only see routes ordered vehicle type matches one of the specified values",
+                name: filterNames.teams,
+                description: filterDescriptions.teams,
                 model:
                 {
                     teamsFilter: this.teamsFilter
@@ -388,8 +391,8 @@ export class RouteListViewFilter extends ListViewFilter
             // Tags filter
             {
                 slug: "tags",
-                name: "Tags",
-                description: "When this filter is applied, you will only see routes that have all the specified tags",
+                name: filterNames.tags,
+                description: filterDescriptions.tags,
                 model:
                 {
                     tagsFilter: this.tagsFilter
@@ -404,8 +407,8 @@ export class RouteListViewFilter extends ListViewFilter
             // Pickup nearby filter
             {
                 slug: "pickup-nearby",
-                name: "Pickup nearby",
-                description: "When this filter is applied, you will only see routes whose first pickup is near the specified location",
+                name: filterNames.pickupNearby,
+                description: filterDescriptions.pickupNearby,
                 model:
                 {
                     pickupNearbyAddress: this.pickupNearbyAddress
@@ -423,8 +426,8 @@ export class RouteListViewFilter extends ListViewFilter
             // Owner IDs filter
             {
                 slug: "legacy-owner-ids",
-                name: "Owner IDs",
-                description: "When this filter is applied, you will only see routes owned by one of the specified owner IDs",
+                name: filterNames.ownerIds,
+                description: filterDescriptions.ownerIds,
                 model:
                 {
                     legacyOwnerIdsFilter: this.legacyOwnerIdsFilter
@@ -439,8 +442,8 @@ export class RouteListViewFilter extends ListViewFilter
             // Created time filter
             {
                 slug: "created-time",
-                name: "Created time",
-                description: "When this filter is applied, you will only see routes created within the specified time range",
+                name: filterNames.createdTime,
+                description: filterDescriptions.createdTime,
                 model:
                 {
                     createdTimeFromFilter: this.createdTimeFromFilter,

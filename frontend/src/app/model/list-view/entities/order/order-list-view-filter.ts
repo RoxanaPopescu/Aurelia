@@ -3,6 +3,9 @@ import { Container, observable } from "aurelia-framework";
 import { OrderStatus, OrderStatusSlug } from "../../../order";
 import { ListViewFilter } from "../list-view-filter";
 import { TemplateStringParser } from "shared/infrastructure";
+import filterNames from "./resources/strings/order-list-view-filter-names.json";
+import filterDescriptions from "./resources/strings/order-list-view-filter-descriptions.json";
+import filterSummary from "./resources/strings/order-list-view-filter-summary.json";
 
 /**
  * Represents a filter for a list view presenting items of type `OrderInfo`.
@@ -153,8 +156,8 @@ export class OrderListViewFilter extends ListViewFilter
             // Status filter
             {
                 slug: "status",
-                name: "Status",
-                description: "When this filter is applied, you will only see orders whose status matches one of the specified values",
+                name: filterNames.status,
+                description: filterDescriptions.status,
                 model:
                 {
                     statusFilter: this.statusFilter
@@ -169,8 +172,8 @@ export class OrderListViewFilter extends ListViewFilter
             // Tags filter
             {
                 slug: "tags",
-                name: "Tags",
-                description: "When this filter is applied, you will only see orders that have all the specified tags",
+                name: filterNames.tags,
+                description: filterDescriptions.tags,
                 model:
                 {
                     orderTagsFilter: this.orderTagsFilter
@@ -185,8 +188,8 @@ export class OrderListViewFilter extends ListViewFilter
             // Date range filter
             {
                 slug: "date-range",
-                name: "Date range",
-                description: "When this filter is applied, you will only see orders whose pickup date and time is within the specified range",
+                name: filterNames.dateRange,
+                description: filterDescriptions.dateRange,
                 model:
                 {
                     fromDateFilter: this.fromDateFilter,
@@ -215,31 +218,31 @@ export class OrderListViewFilter extends ListViewFilter
                         this.useRelativeFromDateFilter
                             ? this.relativeFromDateFilterUnit === "days"
                                 ? overrideContext.fromDateOffset === 0
-                                    ? "From the beginning of today"
+                                    ? parser.parse(filterSummary.fromToday).evaluate(this, overrideContext)
                                     : overrideContext.fromDateOffset! >= 0
-                                        ? parser.parse("From the beginning of the day, \n${absFromDateOffset | number} ${absFromDateOffset | plural: 'day' : 'days'} in the future").evaluate(this, overrideContext)
-                                        : parser.parse("From the beginning of the day, \n${absFromDateOffset | number} ${absFromDateOffset | plural: 'day' : 'days'} in the past").evaluate(this, overrideContext)
+                                        ? parser.parse(filterSummary.fromDayInTheFuture).evaluate(this, overrideContext)
+                                        : parser.parse(filterSummary.fromDayInThePast).evaluate(this, overrideContext)
                                 : overrideContext.fromDateOffset! === 0
-                                    ? "From now"
+                                    ? parser.parse(filterSummary.fromNow).evaluate(this, overrideContext)
                                     : overrideContext.fromDateOffset! >= 0
-                                        ? parser.parse("From ${absFromDateOffset | number} ${absFromDateOffset | plural: 'hour' : 'hours'} in the future").evaluate(this, overrideContext)
-                                        : parser.parse("From ${absFromDateOffset | number} ${absFromDateOffset | plural: 'hour' : 'hours'} in the past").evaluate(this, overrideContext)
-                            : parser.parse("From the beginning of the day, \n${fromDateFilter | date}").evaluate(this, overrideContext),
+                                        ? parser.parse(filterSummary.fromHoursInTheFuture).evaluate(this, overrideContext)
+                                        : parser.parse(filterSummary.fromHoursInThePast).evaluate(this, overrideContext)
+                            : parser.parse(filterSummary.fromDate).evaluate(this, overrideContext),
 
                     this.toDateFilter == null ? undefined :
                         this.useRelativeToDateFilter
                             ? this.relativeToDateFilterUnit === "days"
                                 ? overrideContext.toDateOffset === 0
-                                    ? "To the end of today"
+                                    ? parser.parse(filterSummary.toToday).evaluate(this, overrideContext)
                                     : overrideContext.toDateOffset! >= 0
-                                        ? parser.parse("To the end of the day, \n${absToDateOffset | number} ${absToDateOffset | plural: 'day' : 'days'} in the future").evaluate(this, overrideContext)
-                                        : parser.parse("To the end of the day, \n${absToDateOffset | number} ${absToDateOffset | plural: 'day' : 'days'} in the past").evaluate(this, overrideContext)
+                                        ? parser.parse(filterSummary.toDayInTheFuture).evaluate(this, overrideContext)
+                                        : parser.parse(filterSummary.toDayInThePast).evaluate(this, overrideContext)
                                 : overrideContext.toDateOffset! === 0
-                                    ? "To now"
+                                    ? parser.parse(filterSummary.toNow).evaluate(this, overrideContext)
                                     : overrideContext.toDateOffset! >= 0
-                                        ? parser.parse("To ${absToDateOffset | number} ${absToDateOffset | plural: 'hour' : 'hours'} in the future").evaluate(this, overrideContext)
-                                        : parser.parse("To ${absToDateOffset | number} ${absToDateOffset | plural: 'hour' : 'hours'} in the past").evaluate(this, overrideContext)
-                            : parser.parse("To the end of the day, \n${toDateFilter | date}").evaluate(this, overrideContext)
+                                        ? parser.parse(filterSummary.toHoursInTheFuture).evaluate(this, overrideContext)
+                                        : parser.parse(filterSummary.toHoursInThePast).evaluate(this, overrideContext)
+                            : parser.parse(filterSummary.toDate).evaluate(this, overrideContext)
                 ]
                 .filter(s => s) as string[]
             }
