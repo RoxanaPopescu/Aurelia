@@ -109,8 +109,10 @@ export class EditDistributionCenterPanel
 
             this._modal.busy = true;
 
-            // HACK: We don't get the ID and provider from the backend, so if they are set, it means the user changed the address.
-            if (this.distributionCenter.location.address.id != null && this.distributionCenter.location.address.provider != null)
+            // Resolve start location, if needed.
+            // HACK: The address will only have an ID if the user changed the address,
+            // so we can use that to determine whether we need to get the location.
+            if (this.distributionCenter.location.address.id != null)
             {
                 this.distributionCenter.location = await this._addressService.getLocation(this.distributionCenter.location.address);
             }

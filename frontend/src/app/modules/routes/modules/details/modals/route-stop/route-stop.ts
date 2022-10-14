@@ -99,6 +99,8 @@ export class RouteStopPanel
             this._modal.busy = true;
 
             // Resolve stop location, if needed.
+            // HACK: The address will only have an ID if the user changed the address,
+            // so we can use that to determine whether we need to get the location.
             if (this.model.routeStop.location.address.id != null)
             {
                 try
@@ -112,9 +114,6 @@ export class RouteStopPanel
                     return;
                 }
             }
-
-            this.model.routeStop.arrivedTime?.setZone("UTC");
-            this.model.routeStop.completedTime?.setZone("UTC");
 
             // Save the route stop.
             if (this.isNew)
