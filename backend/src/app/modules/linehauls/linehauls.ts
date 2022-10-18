@@ -24,7 +24,7 @@ export class LinehaulsModule extends AppModule
             }
         });
 
-        const result = await context.fetch(`POST /v2/linehauls/${id}`);
+        const result = await context.fetch(`GET /v2/linehauls/${id}`);
         context.response.body = result.body;
         context.response.status = 200;
     }
