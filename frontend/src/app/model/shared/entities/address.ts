@@ -11,11 +11,11 @@ export class Address
     {
         if (data != null)
         {
-            this.id = data.id;
-            this.provider = data.provider;
+            this.id = data.id || undefined;
+            this.provider = data.provider || undefined;
             this.primary = this.sanitize(data.primary);
             this.secondary = data.secondary ? this.sanitize(data.secondary) : undefined;
-            this.zipCode = data.zipCode;
+            this.zipCode = data.zipCode || undefined;
         }
     }
 

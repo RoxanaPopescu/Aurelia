@@ -25,12 +25,18 @@ export class Location
             if (data.timeZone != null)
             {
                 this.timeZone = new IANAZone(data.timeZone);
+
+                // FIXME: Remove when the backend stops returning Windows time zone identifiers.
+                if (!this.timeZone.isValid)
+                {
+                    console.warn(`Location created with invalid time zone '${data.timeZone}'.`);
+                }
             }
             else
             {
-                // FIXME: Remove when backend always returns it
+                // FIXME: Remove when the backend always returns a time zone identifier.
+                console.warn("Location created with default time zone 'Europe/Copenhagen'.");
                 this.timeZone = new IANAZone("Europe/Copenhagen");
-                // console.warn("Location created with default time zone; this might be an error.");
             }
         }
         else

@@ -118,6 +118,8 @@ export class TemplateStopDetailsPanel
             this._modal.busy = true;
 
             // Resolve stop location, if needed.
+            // HACK: The address will only have an ID if the user changed the address,
+            // so we can use that to determine whether we need to get the location.
             if (this.model.location.address.id != null)
             {
                 try

@@ -81,6 +81,8 @@ export class StartLocationDialog
             this._modal.busy = true;
 
             // Resolve start location, if needed.
+            // HACK: The address will only have an ID if the user changed the address,
+            // so we can use that to determine whether we need to get the location.
             if (this.model.departureTime.startLocation.address.id != null)
             {
                 try
