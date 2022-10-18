@@ -15,7 +15,7 @@ export class LinehaulsModule extends AppModule
     {
         await context.authorize();
 
-        await this.apiClient.post(`linehaulservice-api/v1/linehauls/create`,
+        await this.apiClient.post("linehaulservice-api/v1/linehauls/create",
         {
             body:
             {
@@ -60,7 +60,7 @@ export class LinehaulsModule extends AppModule
          // TODO: Fetch order data from order domain. by barcode.
 
          const body = context.request.body;
-         body.linehaul.ownerId = context.user?.organizationId
+         body.linehaul.ownerId = context.user?.organizationId;
 
          const routesResult = await this.apiClient.post("linehauls/load-collo",
          {
