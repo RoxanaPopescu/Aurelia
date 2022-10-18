@@ -15,15 +15,18 @@ export class LinehaulsModule extends AppModule
     {
         await context.authorize();
 
+        const id = context.request.body.id ?? uuidV4();
         await this.apiClient.post("linehaulservice-api/v1/linehauls/create",
         {
             body:
             {
-                id: uuidV4()
+                id: id
             }
         });
 
-        context.response.status = 204;
+        const result = await context.fetch(`POST /v2/linehauls/${id}`);
+        context.response.body = result.body;
+        context.response.status = 200;
     }
 
     /**
