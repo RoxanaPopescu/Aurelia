@@ -8,28 +8,6 @@ import { v4 as uuidV4 } from "uuid";
 export class LinehaulsModule extends AppModule
 {
     /**
-     * Creates a linehaul with a auto generated GUID reference
-     * @returns The created linehaul.
-     */
-    public "POST /v2/linehauls" = async (context: AppContext) =>
-    {
-        await context.authorize();
-
-        const id = context.request.body.id ?? uuidV4();
-        await this.apiClient.post("linehaulservice-api/v1/linehauls/create",
-        {
-            body:
-            {
-                id: id
-            }
-        });
-
-        const result = await context.fetch(`GET /v2/linehauls/${id}`);
-        context.response.body = result.body;
-        context.response.status = 200;
-    }
-
-    /**
      * Get a specific linehaul
      * @param context.params.id The ID of the linehaul to get.
      * @returns The linehaul with the specified id.
@@ -53,29 +31,58 @@ export class LinehaulsModule extends AppModule
     }
 
     /**
+     * Creates a linehaul with a auto generated GUID reference
+     * @returns The created linehaul.
+     */
+    public "POST /v2/linehauls" = async (context: AppContext) =>
+    {
+        await context.authorize();
+
+        const id = context.request.body.id ?? uuidV4();
+        await this.apiClient.post("linehaulservice-api/v1/linehauls/create",
+        {
+            body:
+            {
+                id: id
+            }
+        });
+
+        const result = await this.apiClient.get("linehaulservice-api/v1/linehauls/find-by-id",
+        {
+            query:
+            {
+                id: context.params.id,
+                ownerId: context.params.ownerId ?? context.user?.organizationId
+            }
+        });
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
      * Saves the load event
      * @returns 202 OK
      */
-     public "POST /v2/linehauls/load-collo" = async (context: AppContext) =>
-     {
-         await context.authorize();
+    public "POST /v2/linehauls/load-collo" = async (context: AppContext) =>
+    {
+        await context.authorize();
 
-         // TODO: Fetch order data from order domain. by barcode.
+        // TODO: Fetch order data from order domain. by barcode.
 
-         const body = context.request.body;
-         body.linehaul.ownerId = context.user?.organizationId;
+        const body = context.request.body;
+        body.linehaul.ownerId = context.user?.organizationId;
 
-         const routesResult = await this.apiClient.post("linehaulservice-api/v1/linehauls/load-collo",
-         {
-             body:
-             {
-                 ...body
-             }
-         });
+        const routesResult = await this.apiClient.post("linehaulservice-api/v1/linehauls/load-collo",
+        {
+            body:
+            {
+                ...body
+            }
+        });
 
-         context.response.body = routesResult.data;
-         context.response.status = 200;
-     }
+        context.response.body = routesResult.data;
+        context.response.status = 200;
+    }
 
     /**
      * Saves the unload event
