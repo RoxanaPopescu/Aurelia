@@ -36,36 +36,12 @@ export class LinehaulsModule extends AppModule
     {
         await context.authorize();
 
-        const result = await this.apiClient.post("linehauls/details",
+        const result = await this.apiClient.get("linehauls/find-by-id",
         {
-            body:
-            {
-                reference: context.params.id,
-                outfitId: context.user?.organizationId,
-                actionById: context.user?.id
-            }
-        });
-
-        context.response.body = result.data;
-        context.response.status = 200;
-    }
-
-    /**
-     * Finalise the linehaul
-     * @param context.params.id The ID of the linehaul to get.
-     * @returns The linehaul with the specified reference.
-     */
-    public "GET /v2/linehauls/unload-finalize/:id" = async (context: AppContext) =>
-    {
-        await context.authorize();
-
-        const result = await this.apiClient.post("linehauls/unloadFinalize",
-        {
-            body:
+            query:
             {
                 id: context.params.id,
-                outfitId: context.user?.organizationId,
-                actionById: context.user?.id
+                ownerId: context.params.ownerId ?? context.user?.organizationId
             }
         });
 
@@ -75,25 +51,28 @@ export class LinehaulsModule extends AppModule
 
     /**
      * Saves the load event
-     * @returns 202 ok
+     * @returns 202 OK
      */
-    public "POST /v2/linehauls/collo/load" = async (context: AppContext) =>
-    {
-        await context.authorize();
+     public "POST /v2/linehauls/load-collo" = async (context: AppContext) =>
+     {
+         await context.authorize();
 
-        const routesResult = await this.apiClient.post("linehauls/collo/load",
-        {
-            body:
-            {
-                ...context.request.body,
-                outfitId: context.user?.organizationId,
-                actionById: context.user?.id
-            }
-        });
+         // TODO: Fetch order data from order domain. by barcode.
 
-        context.response.body = routesResult.data;
-        context.response.status = 200;
-    }
+         const body = context.request.body;
+         body.linehaul.ownerId = context.user?.organizationId
+
+         const routesResult = await this.apiClient.post("linehauls/load-collo",
+         {
+             body:
+             {
+                 ...body
+             }
+         });
+
+         context.response.body = routesResult.data;
+         context.response.status = 200;
+     }
 
     /**
      * Saves the unload event
