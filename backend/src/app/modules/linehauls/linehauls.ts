@@ -39,7 +39,7 @@ export class LinehaulsModule extends AppModule
     {
         await context.authorize();
 
-        const result = await this.apiClient.get("linehauls/find-by-id",
+        const result = await this.apiClient.get("linehaulservice-api/v1/linehauls/find-by-id",
         {
             query:
             {
@@ -65,7 +65,7 @@ export class LinehaulsModule extends AppModule
          const body = context.request.body;
          body.linehaul.ownerId = context.user?.organizationId;
 
-         const routesResult = await this.apiClient.post("linehauls/load-collo",
+         const routesResult = await this.apiClient.post("linehaulservice-api/v1/linehauls/load-collo",
          {
              body:
              {
