@@ -51,7 +51,7 @@ export class LinehaulsModule extends AppModule
         {
             query:
             {
-                id: context.params.id,
+                id: id,
                 ownerId: context.params.ownerId ?? context.user?.organizationId
             }
         });
