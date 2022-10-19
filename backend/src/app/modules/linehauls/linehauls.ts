@@ -67,17 +67,31 @@ export class LinehaulsModule extends AppModule
     {
         await context.authorize();
 
-        // TODO: Fetch order data from order domain. by barcode.
-
         const body = context.request.body;
-        body.linehaul.ownerId = context.user?.organizationId;
+
+        const orderResult = await context.fetch(
+            "POST /v2/orders/list",
+            { body: { barcodes: [body.collo.barcode] } }
+        );
+
+        if (orderResult.body.orders.lenght <= 0)
+        {
+            context.response.status = 404;
+
+            return;
+        }
+
+        const shipment = orderResult.body.orders[0];
+
+        // FIXME: We can fetch for different orgs. But we assign the current one as owner???
+        body.shipment = {
+            "id": shipment.publicId,
+            "ownerId": context.user?.organizationId
+        };
 
         const routesResult = await this.apiClient.post("linehaulservice-api/v1/linehauls/load-collo",
         {
-            body:
-            {
-                ...body
-            }
+            body: body
         });
 
         context.response.body = routesResult.data;
