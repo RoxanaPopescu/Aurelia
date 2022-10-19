@@ -20,7 +20,7 @@ export interface ISelectColumnsPanelModel
 {
     availableColumns: ListViewColumn[];
     selectedColumns?: ListViewColumn[];
-    listViewType?: ListViewType
+    listViewType?: ListViewType;
 }
 
 /**

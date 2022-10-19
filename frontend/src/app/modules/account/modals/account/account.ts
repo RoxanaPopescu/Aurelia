@@ -173,7 +173,7 @@ export class AccountModalPanel
         // tslint:disable-next-line: no-unused-expression
         new Operation(async () =>
         {
-            this.organizations = (await (await this._organizationService.getAll())).sort((a, b) => a.name.localeCompare(b.name));
+            this.organizations = (await this._organizationService.getAll()).sort((a, b) => a.name.localeCompare(b.name));
             this.organization = this.organizations.find(o => o.id === this._identityService.identity!.organization!.id)!;
         });
     }
