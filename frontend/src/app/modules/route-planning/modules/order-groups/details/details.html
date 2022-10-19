@@ -42,11 +42,11 @@
 
                     <div if-claims="edit-order-groups">
 
-                        <button if.bind="orderGroup.id && !orderGroup.paused && !orderGroup.activeSchedulesCount" appearance="outline" accent="primary" click.trigger="onPauseClick()" translate>
+                        <button if.bind="orderGroup.id && !orderGroup.paused" disabled.bind="orderGroup.locked" appearance="outline" accent="primary" click.trigger="onPauseClick()" translate>
                             Pause
                         </button>
 
-                        <button if.bind="orderGroup.id && orderGroup.paused" appearance="outline" accent="primary" click.trigger="onUnpauseClick()" translate>
+                        <button if.bind="orderGroup.id && orderGroup.paused" disabled.bind="orderGroup.locked" appearance="outline" accent="primary" click.trigger="onUnpauseClick()" translate>
                             Unpause
                         </button>
 
@@ -58,7 +58,7 @@
                             Create order group
                         </button>
 
-                        <button if.bind="orderGroup.id != null && !orderGroup.activeSchedulesCount" appearance="solid" accent="primary" disabled.bind="orderGroup == null || isSavingChanges" click.trigger="onSaveClick()" translate>
+                        <button if.bind="orderGroup.id != null" disabled.bind="orderGroup.locked" appearance="solid" accent="primary" disabled.bind="orderGroup == null || isSavingChanges" click.trigger="onSaveClick()" translate>
                             Save changes
                         </button>
 
@@ -74,17 +74,20 @@
                 </span>
             </status-message>
 
-            <status-message if.bind="orderGroup.activeSchedulesCount">
-                <span translate>
-                    This ordergroup currently has ${orderGroup.activeSchedulesCount} active schedules and cannot be edited before they have completed.
+            <status-message if.bind="orderGroup.locked">
+                <span class="margin-right" translate>
+                    This ordergroup currently has ${orderGroup.activeSchedulesCount} active schedules and is locked to prevent changes until they have completed.
                 </span>
+                <a click.trigger="onUnlockClick()" translate>
+                    Unlock
+                </a>
             </status-message>
 
             <page-section if-claims="edit-order-groups">
 
                 <div class="control-row margin-large-bottom">
 
-                    <text-input label="above" value.bind="orderGroup.name" class="flex-basis-1-of-4" autofocus>
+                    <text-input label="above" value.bind="orderGroup.name" readonly.bind="orderGroup.locked" class="flex-basis-1-of-4" autofocus>
 
                         <div slot="heading" translate>
                             Order group name
@@ -108,6 +111,7 @@
                         label="above"
                         none.bind="true"
                         class="flex-basis-1-of-4"
+                        readonly.bind="orderGroup.locked"
                         value.bind="currentRuleSet"
                         display-value.bind="currentRuleSet.name">
 
@@ -133,6 +137,7 @@
                         label="above"
                         none.bind="true"
                         class="flex-basis-1-of-4"
+                        readonly.bind="orderGroup.locked"
                         value.to-view="orderGroup.timeZone"
                         change.trigger="orderGroup.changeTimeZone($event.detail.value)">
 
@@ -225,11 +230,11 @@
 
                                         <div class="icon-row" if-claims="edit-order-groups">
 
-                                            <button appearance="none" accent="primary" click.trigger="onEditMatchingCriteriaClick($index)">
+                                            <button appearance="none" accent="primary" disabled.bind="orderGroup.locked" click.trigger="onEditMatchingCriteriaClick($index)">
                                                 <icon name="edit-small"></icon>
                                             </button>
 
-                                            <button appearance="none" accent="primary" click.trigger="onRemoveMatchingCriteriaClick($index)">
+                                            <button appearance="none" accent="primary" disabled.bind="orderGroup.locked" click.trigger="onRemoveMatchingCriteriaClick($index)">
                                                 <icon name="delete-small"></icon>
                                             </button>
 
@@ -256,6 +261,7 @@
                                 if.bind="orderGroup != null"
                                 appearance="outline"
                                 accent="primary"
+                                disabled.bind="orderGroup.locked"
                                 click.trigger="onAddMatchingCriteriaClick()">
                                 <icon name="md-add" class="font-larger line-height-1">
                             </button>
@@ -364,11 +370,11 @@
 
                                         <div class="icon-row" if-claims="edit-order-groups">
 
-                                            <button appearance="none" accent="primary" click.trigger="onEditRoutePlanningTimeClick($index)">
+                                            <button appearance="none" accent="primary" disabled.bind="orderGroup.locked" click.trigger="onEditRoutePlanningTimeClick($index)">
                                                 <icon name="edit-small"></icon>
                                             </button>
 
-                                            <button appearance="none" accent="primary" click.trigger="onRemoveRoutePlanningTimeClick($index)">
+                                            <button appearance="none" accent="primary" disabled.bind="orderGroup.locked" click.trigger="onRemoveRoutePlanningTimeClick($index)">
                                                 <icon name="delete-small"></icon>
                                             </button>
 
@@ -395,6 +401,7 @@
                                 if.bind="orderGroup != null"
                                 appearance="outline"
                                 accent="primary"
+                                disabled.bind="orderGroup.locked"
                                 click.trigger="onAddRoutePlanningTimeClick()">
                                 <icon name="md-add" class="font-larger line-height-1">
                             </button>

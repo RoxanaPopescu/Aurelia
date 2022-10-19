@@ -27,12 +27,15 @@ export class OrderGroup
             this.matchingCriteria = data.matchingCriteria.map(d => new MatchingCriteria(d));
             this.routePlanningTimes = data.routePlanningTimes.map(d => new RoutePlanningTime(d));
             this.routeOptimizationSettingsId = data.routeOptimizationSettingsId;
+            this.locked = this.activeSchedulesCount > 0;
         }
         else
         {
+            this.paused = false;
             this.timeZone = new SystemZone();
             this.matchingCriteria = [];
             this.routePlanningTimes = [];
+            this.locked = false;
         }
     }
 
@@ -52,14 +55,19 @@ export class OrderGroup
     public readonly name: string;
 
     /**
-     * The name of the order group.
+     * True if the order group is locked, otherwise false.
      */
-    public routeOptimizationSettingsId?: string;
+    public readonly locked: boolean;
 
     /**
      * True if the order group is paused, otherwise false.
      */
     public paused: boolean;
+
+    /**
+     * The name of the order group.
+     */
+    public routeOptimizationSettingsId?: string;
 
     /**
      * The IANA Time Zone Identifier for the time zone associated with the order group.
