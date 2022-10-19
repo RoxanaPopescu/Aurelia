@@ -12,6 +12,7 @@
             <button
                 appearance="icon"
                 title.translate="Save changes"
+                disabled.bind="!canSaveChanges"
                 click.trigger="onSaveClick()">
                 <icon name="save"></icon>
             </button>
@@ -21,7 +22,7 @@
         <modal-header scroll-fade>
 
             <h1 class="font-largest margin-bottom" translate>
-                Choose list columns
+                Choose list columns}
             </h1>
 
             <div class="font-large">
@@ -40,6 +41,17 @@
                 </info-icon>
 
             </div>
+
+            <button
+                if.bind="listViewType != null"
+                appearance="none"
+                accent="primary"
+                class="margin-top"
+                disabled.bind="!canSetAsDefault"
+                click.trigger="onSetAsDefaultClick()"
+                translate>
+                Set as default for new views
+            </button>
 
         </modal-header>
 
@@ -88,7 +100,8 @@
                             display-value.bind="columnInfo.column.width.replace('fr', '').replace('-content', '') | case: 'sentence'"
                             none.bind="false"
                             fixed.bind="true"
-                            filter="auto">
+                            filter="auto"
+                            change.trigger="onColumnWidthChange()">
                             <item model="auto">
                                 Auto
                             </item>

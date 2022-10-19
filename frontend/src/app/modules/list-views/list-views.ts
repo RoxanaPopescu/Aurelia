@@ -175,6 +175,15 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
     }
 
     /**
+     * The configured default columns for views of this type,
+     * or undefined to use the predefined default columns.
+     */
+    protected get defaultColumns(): ListViewColumn[] | undefined
+    {
+        return this._localStateService.get("local").listView?.[this.listViewType]?.defaultColumns;
+    }
+
+    /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
      * @returns A promise that will be resolved when the operation completes.
@@ -345,6 +354,18 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
             this.listViewDefinitions.personal.find(lvd => lvd.id === listViewId);
 
         return listViewDefinition;
+    }
+
+    /**
+     * Called when a list view definition was created in the list view selector, before it is persisted.
+     * @param listViewDefinition The list view definition that was created.
+     */
+    protected onNewListViewDefinition(listViewDefinition: ListViewDefinition<TListViewFilter>): void
+    {
+        if (this.defaultColumns != null)
+        {
+            listViewDefinition.columns = this.defaultColumns;
+        }
     }
 
     /**
@@ -587,7 +608,8 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
         const model =
         {
             availableColumns: Object.keys(columnType.values).filter(slug => slug !== "unknown").map(slug => new columnType(slug as any)),
-            selectedColumns: listView.definition.columns
+            selectedColumns: listView.definition.columns,
+            listViewType: this.listViewType
         };
 
         const result = await this._modalService.open(SelectColumnsPanel, model).promise;

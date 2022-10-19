@@ -1,7 +1,8 @@
 import clone from "clone";
 import { autoinject, computedFrom } from "aurelia-framework";
 import { Modal } from "shared/framework";
-import { ListViewColumn } from "app/model/list-view";
+import { LocalStateService } from "app/services/local-state";
+import { ListViewColumn, ListViewType } from "app/model/list-view";
 
 /**
  * Represents info about a column.
@@ -19,6 +20,7 @@ export interface ISelectColumnsPanelModel
 {
     availableColumns: ListViewColumn[];
     selectedColumns?: ListViewColumn[];
+    listViewType?: ListViewType
 }
 
 /**
@@ -30,14 +32,33 @@ export class SelectColumnsPanel
     /**
      * Creates a new instance of the class.
      * @param modalService The `ModalService` instance.
+     * @param localStateService The `LocalStateService` instance.
      */
-    public constructor(modal: Modal)
+    public constructor(modal: Modal, localStateService: LocalStateService)
     {
         this._modal = modal;
+        this._localStateService = localStateService;
     }
 
     private readonly _modal: Modal;
+    private readonly _localStateService: LocalStateService;
     private _result: ListViewColumn[] | undefined;
+
+    /**
+     * True if the `Save` button should be enabled, otherwise false.
+     */
+    protected canSaveChanges = false;
+
+    /**
+     * True if the `Set as default` button should be enabled, otherwise false.
+     */
+    protected canSetAsDefault = true;
+
+    /**
+     * The type of the list view for which columns are being selected,
+     * or undefined to not show the `Set as default` button.
+     */
+    protected listViewType: ListViewType | undefined;
 
     /**
      * The list of all available columns.
@@ -71,6 +92,7 @@ export class SelectColumnsPanel
      */
     public activate(model: ISelectColumnsPanelModel): void
     {
+        this.listViewType = model.listViewType;
         this.availableColumns = model.availableColumns;
         this.selectedColumns = clone(model.selectedColumns) ?? [];
     }
@@ -95,6 +117,9 @@ export class SelectColumnsPanel
         const targetIndex = this.selectedColumns.indexOf(target);
 
         this.selectedColumns.splice(targetIndex, 0, ...this.selectedColumns.splice(sourceIndex, 1));
+
+        this.canSaveChanges = true;
+        this.canSetAsDefault = true;
     }
 
     /**
@@ -112,6 +137,9 @@ export class SelectColumnsPanel
         {
             this.selectedColumns.splice(this.selectedColumns.indexOf(column), 1);
         }
+
+        this.canSaveChanges = true;
+        this.canSetAsDefault = true;
     }
 
     /**
@@ -128,14 +156,56 @@ export class SelectColumnsPanel
         {
             this.selectedColumns = [];
         }
+
+        this.canSaveChanges = true;
+        this.canSetAsDefault = true;
     }
 
     /**
-     * Called when a column type is clicked
+     * Called when the width of a column is changed.
+     */
+    protected onColumnWidthChange(): void
+    {
+        this.canSaveChanges = true;
+        this.canSetAsDefault = true;
+    }
+
+    /**
+     * Called when the `Set as default` button is clicked.
+     */
+    protected onSetAsDefaultClick(): void
+    {
+        this._localStateService.mutate(data =>
+        {
+            if (data.listView == null)
+            {
+                data.listView = {} as any;
+            }
+
+            if (data.listView[this.listViewType!] == null)
+            {
+                data.listView[this.listViewType!] = {} as any;
+            }
+
+            // Get the local state for list views of the relevant type.
+            const localListViewState = data.listView[this.listViewType!];
+
+            // Set the default columns.
+            localListViewState.defaultColumns = this.selectedColumns;
+        },
+        "local");
+
+        this.canSetAsDefault = false;
+    }
+
+    /**
+     * Called when the `Save` button is clicked.
      */
     protected async onSaveClick(): Promise<void>
     {
         this._result = this.selectedColumns;
+
+        this.canSaveChanges = false;
 
         await this._modal.close();
     }

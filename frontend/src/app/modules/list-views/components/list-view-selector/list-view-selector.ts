@@ -59,6 +59,19 @@ export class ListViewSelectorCustomElement
     };
 
     /**
+     * The function to call when a list view definition is created,
+     * before it is persisted.
+     */
+    @bindable
+    public newListViewDefinition: CallbackWithContext<
+    {
+        /**
+         * The list view definition that was created.
+         */
+         listViewDefinition: ListViewDefinition<any>;
+    }>;
+
+    /**
      * The function to call when the host should open a list view.
      */
     @bindable
@@ -235,6 +248,8 @@ export class ListViewSelectorCustomElement
         {
             return;
         }
+
+        this.newListViewDefinition?.({ listViewDefinition });
 
         listViewDefinition = await this._listViewService.create(listViewDefinition);
 

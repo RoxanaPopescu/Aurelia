@@ -112,9 +112,14 @@ export class RouteListViewsPage extends ListViewsPage<RouteListViewFilter, Route
      */
     protected async createDefaultListView(): Promise<ListViewDefinition<RouteListViewFilter> | undefined>
     {
-        const listViewDefinition = createListViewDefinition("route");
+        const listViewDefinition = createListViewDefinition(this.listViewType);
         listViewDefinition.name = defaultListViewNames.allRoutes;
         listViewDefinition.shared = false;
+
+        if (this.defaultColumns != null)
+        {
+            listViewDefinition.columns = this.defaultColumns;
+        }
 
         return this._listViewService.create(listViewDefinition);
     }

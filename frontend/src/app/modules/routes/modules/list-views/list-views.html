@@ -103,6 +103,7 @@
                     fixed.bind="true"
                     type="route"
                     list-view-definitions.bind="listViewDefinitions"
+                    new-list-view-definition.call="onNewListViewDefinition(listViewDefinition)"
                     open-list-view.call="onOpenListView(listViewDefinition)"
                     close-list-view.call="onCloseListView(listViewDefinition)">
 

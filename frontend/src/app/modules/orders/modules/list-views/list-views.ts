@@ -104,9 +104,14 @@ export class OrderListViewsPage extends ListViewsPage<OrderListViewFilter, Order
      */
     protected async createDefaultListView(): Promise<ListViewDefinition<OrderListViewFilter> | undefined>
     {
-        const listViewDefinition = createListViewDefinition("order");
+        const listViewDefinition = createListViewDefinition(this.listViewType);
         listViewDefinition.name = defaultListViewNames.allOrders;
         listViewDefinition.shared = false;
+
+        if (this.defaultColumns != null)
+        {
+            listViewDefinition.columns = this.defaultColumns;
+        }
 
         return this._listViewService.create(listViewDefinition);
     }
