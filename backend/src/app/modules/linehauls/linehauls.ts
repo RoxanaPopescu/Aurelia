@@ -84,17 +84,27 @@ export class LinehaulsModule extends AppModule
         const shipment = orderResult.body.orders[0];
 
         // FIXME: We can fetch for different orgs. But we assign the current one as owner???
-        body.shipment = {
+        body.shipment =
+        {
             "id": shipment.publicId,
             "ownerId": context.user?.organizationId
         };
 
-        const routesResult = await this.apiClient.post("linehaulservice-api/v1/linehauls/load-collo",
+        await this.apiClient.post("linehaulservice-api/v1/linehauls/load-collo",
         {
             body: body
         });
 
-        context.response.body = routesResult.data;
+        context.response.body =
+        {
+            "shipment": body.shipment,
+            "barcode": body.collo.barcode,
+            "load": {
+                "handleMethod": body.handleMethod,
+                "location": body.location
+            }
+        };
+
         context.response.status = 200;
     }
 
