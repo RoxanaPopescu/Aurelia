@@ -111,30 +111,45 @@ export class OrderGroupService
     /**
      * Pauses the specified order group.
      * @param orderGroup The order group to pause.
-     * @returns A promise that will be resolved updated entity data, such as the new etag.
+     * @returns A promise that will be resolved updated order group.
      */
-    public async pause(orderGroup: OrderGroup): Promise<{ etag: string }>
+    public async pause(orderGroup: OrderGroup): Promise<OrderGroup>
     {
         const result = await this._apiClient.post("route-planning/order-groups/pause",
         {
             body: { id: orderGroup.id, etag: orderGroup.etag }
         });
 
-        return result.data;
+        return new OrderGroup(result.data);
     }
 
     /**
      * Pauses the specified order group.
      * @param orderGroup The order group to unpause.
-     * @returns A promise that will be resolved updated entity data, such as the new etag.
+     * @returns A promise that will be resolved updated order group.
      */
-    public async unpause(orderGroup: OrderGroup): Promise<{ etag: string }>
+    public async unpause(orderGroup: OrderGroup): Promise<OrderGroup>
     {
         const result = await this._apiClient.post("route-planning/order-groups/unpause",
         {
             body: { id: orderGroup.id, etag: orderGroup.etag }
         });
 
-        return result.data;
+        return new OrderGroup(result.data);
+    }
+
+    /**
+     * Unlocks the specified order group.
+     * @param orderGroup The order group to unlock.
+     * @returns A promise that will be resolved updated order group.
+     */
+    public async unlock(orderGroup: OrderGroup): Promise<OrderGroup>
+    {
+        const result = await this._apiClient.post("route-planning/order-groups/unlock",
+        {
+            body: { id: orderGroup.id, etag: orderGroup.etag }
+        });
+
+        return new OrderGroup(result.data);
     }
 }

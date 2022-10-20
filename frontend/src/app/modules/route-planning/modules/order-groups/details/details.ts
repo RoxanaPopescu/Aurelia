@@ -317,9 +317,9 @@ export class DetailsPage
     {
         try
         {
-            const result = await this._orderGroupsService.pause(this.orderGroup);
+            const orderGroup = await this._orderGroupsService.pause(this.orderGroup);
 
-            this.orderGroup.etag = result.etag;
+            this.orderGroup.etag = orderGroup.etag;
             this.orderGroup.paused = true;
         }
         catch (error)
@@ -336,14 +336,32 @@ export class DetailsPage
     {
         try
         {
-            const result = await this._orderGroupsService.unpause(this.orderGroup);
+            const orderGroup = await this._orderGroupsService.unpause(this.orderGroup);
 
-            this.orderGroup.etag = result.etag;
+            this.orderGroup.etag = orderGroup.etag;
             this.orderGroup.paused = false;
         }
         catch (error)
         {
             Log.error("Could not unpause the order group", error);
+        }
+    }
+
+    /**
+     * Called when the unlock button is clicked.
+     * Unlocks the order group.
+     */
+    protected async onUnlockClick(): Promise<void>
+    {
+        try
+        {
+            const orderGroup = await this._orderGroupsService.unlock(this.orderGroup);
+
+            this.orderGroup = orderGroup;
+        }
+        catch (error)
+        {
+            Log.error("Could not unlock the order group", error);
         }
     }
 }

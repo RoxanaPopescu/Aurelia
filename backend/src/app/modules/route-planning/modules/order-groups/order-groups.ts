@@ -115,6 +115,28 @@ export class RoutePlanningOrderGroupsModule extends AppModule
     }
 
     /**
+     * Unlocks order-group
+     * @returns The order group.
+     */
+    public "POST /v2/route-planning/order-groups/unlock" = async (context: AppContext) =>
+    {
+        await context.authorize("edit-order-groups");
+
+        const body = context.request.body;
+        body.ownerOutfitId = context.user?.organizationId;
+        body.modifiedBy = context.user?.id;
+
+        await this.apiClient.post("logistics/ordergroups/unlock",
+        {
+            body: body
+        });
+
+        context.response.body = await this.fetchDetails(body.id, context);
+
+        context.response.status = 200;
+    }
+
+    /**
      * Creates a order-group
      * @returns The created order group.
      */
