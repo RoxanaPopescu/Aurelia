@@ -39,6 +39,8 @@ export class LinehaulsModule extends AppModule
         await context.authorize();
 
         const id = context.request.body.id ?? uuidV4();
+        const ownerId = context.params.ownerId ?? context.user?.organizationId;
+
         await this.apiClient.post("linehaulservice-api/v1/linehauls/create",
         {
             body:
@@ -47,15 +49,12 @@ export class LinehaulsModule extends AppModule
             }
         });
 
-        const result = await this.apiClient.get("linehaulservice-api/v1/linehauls/find-by-id",
-        {
-            query:
-            {
-                id: id,
-                ownerId: context.params.ownerId ?? context.user?.organizationId
-            }
-        });
-        context.response.body = result.data;
+        context.response.body = {
+            id: id,
+            ownerId: ownerId,
+            colli: []
+        };
+
         context.response.status = 200;
     }
 
@@ -71,7 +70,7 @@ export class LinehaulsModule extends AppModule
 
         const orderResult = await context.fetch(
             "POST /v2/orders/list",
-            { body: { barcodes: [body.collo.barcode] } }
+            { body: { barcodes: [body.collo.barcode], status: [3] } }
         );
 
         if (orderResult.body.orders.lenght <= 0)
