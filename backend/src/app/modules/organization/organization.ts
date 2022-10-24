@@ -53,9 +53,9 @@ export class OrganizationModule extends AppModule
 
         if (membershipIds.length > 0)
         {
-            const organizations = await this.apiClient.get("organization/organizations",
+            const organizations = await this.apiClient.post("organization/organizations/list",
             {
-                query:
+                body:
                 {
                     ids: membershipIds
                 }
@@ -71,7 +71,6 @@ export class OrganizationModule extends AppModule
         context.response.status = 200;
     }
 
-    // TODO:BACKEND: Endpoint missing
     /**
      * Deletes the specified organization.
      * @param context.params.organizationId The ID of the organization.

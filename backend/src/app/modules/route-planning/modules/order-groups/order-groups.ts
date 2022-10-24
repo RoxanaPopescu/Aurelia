@@ -213,9 +213,9 @@ export class RoutePlanningOrderGroupsModule extends AppModule
 
         try
         {
-            const organizationsRequest = this.apiClient.get("organization/organizations",
+            const organizationsRequest = this.apiClient.post("organization/organizations/list",
             {
-                query:
+                body:
                 {
                     ids: ids
                 }
@@ -223,7 +223,8 @@ export class RoutePlanningOrderGroupsModule extends AppModule
 
             const legacyConsignorsRequest = this.apiClient.post("logistics/outfits/consignor/list",
             {
-                body: {
+                body:
+                {
                     ids: ids
                 }
             });

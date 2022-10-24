@@ -147,7 +147,6 @@ export class AccountModule extends AppModule
         context.response.status = 204;
     }
 
-    // TODO:BACKEND: Endpoint missing
     /**
      * Deletes the current user.
      * @returns
