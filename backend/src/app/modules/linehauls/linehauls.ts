@@ -49,7 +49,8 @@ export class LinehaulsModule extends AppModule
             }
         });
 
-        context.response.body = {
+        context.response.body =
+        {
             id: id,
             ownerId: ownerId,
             colli: []
