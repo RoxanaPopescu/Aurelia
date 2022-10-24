@@ -82,11 +82,10 @@ export class LinehaulsModule extends AppModule
 
         const shipment = orderResult.body.orders[0];
 
-        // FIXME: We can fetch for different orgs. But we assign the current one as owner???
         body.shipment =
         {
             "id": shipment.publicId,
-            "ownerId": context.user?.organizationId
+            "ownerId": shipment.consignorId
         };
 
         await this.apiClient.post("linehaulservice-api/v1/linehauls/load-collo",
@@ -111,87 +110,63 @@ export class LinehaulsModule extends AppModule
      * Saves the unload event
      * @returns 202 ok
      */
-    public "POST /v2/linehauls/collo/unload" = async (context: AppContext) =>
+    public "POST /v2/linehauls/unload-collo" = async (context: AppContext) =>
     {
         await context.authorize();
 
-        const routesResult = await this.apiClient.post("linehauls/collo/unload",
+        await this.apiClient.post("linehaulservice-api/v1/linehauls/unload-collo",
         {
-            body:
-            {
-                ...context.request.body,
-                outfitId: context.user?.organizationId,
-                actionById: context.user?.id
-            }
+            body: context.request.body
         });
 
-        context.response.body = routesResult.data;
-        context.response.status = 200;
+        context.response.status = 204;
     }
 
     /**
      * Saves the damaged event
      * @returns 202 ok
      */
-    public "POST /v2/linehauls/collo/damaged" = async (context: AppContext) =>
+    public "POST /v2/linehauls/damaged-collo" = async (context: AppContext) =>
     {
         await context.authorize();
 
-        const routesResult = await this.apiClient.post("linehauls/collo/damaged",
+        await this.apiClient.post("linehaulservice-api/v1/linehauls/damaged-collo",
         {
-            body:
-            {
-                ...context.request.body,
-                outfitId: context.user?.organizationId,
-                actionById: context.user?.id
-            }
+            body: context.request.body
         });
 
-        context.response.body = routesResult.data;
-        context.response.status = 200;
+        context.response.status = 204;
     }
 
     /**
      * Saves the missing event
      * @returns 202 ok
      */
-    public "POST /v2/linehauls/collo/missing" = async (context: AppContext) =>
+    public "POST /v2/linehauls/missing-collo" = async (context: AppContext) =>
     {
         await context.authorize();
 
-        const routesResult = await this.apiClient.post("linehauls/collo/missing",
+        await this.apiClient.post("linehaulservice-api/v1/linehauls/missing-collo",
         {
-            body:
-            {
-                ...context.request.body,
-                outfitId: context.user?.organizationId,
-                actionById: context.user?.id
-            }
+            body: context.request.body
         });
 
-        context.response.body = routesResult.data;
-        context.response.status = 200;
+        context.response.status = 204;
     }
 
     /**
      * Saves the removed event
      * @returns 202 ok
      */
-    public "POST /v2/linehauls/collo/remove" = async (context: AppContext) =>
+    public "POST /v2/linehauls/remove-collo" = async (context: AppContext) =>
     {
         await context.authorize();
 
-        const routesResult = await this.apiClient.post("linehauls/collo/remove",
+        await this.apiClient.post("linehaulservice-api/v1/linehauls/remove-collo",
         {
-            body:
-            {
-                ...context.request.body,
-                outfitId: context.user?.organizationId,
-                actionById: context.user?.id
-            }
+            body: context.request.body
         });
 
-        context.response.body = routesResult.data;
-        context.response.status = 200;
+        context.response.status = 204;
     }
 }
