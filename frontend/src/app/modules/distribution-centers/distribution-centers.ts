@@ -42,19 +42,6 @@ export class DistributionCentersModule
                     ]
                 },
                 title: routeTitles.details
-            },
-            {
-                name: "create",
-                route: "create",
-                moduleId: PLATFORM.moduleName("./modules/create/create"),
-                settings:
-                {
-                    claims:
-                    [
-                        "create-distribution-centers"
-                    ]
-                },
-                title: routeTitles.create
             }
         ]);
     }

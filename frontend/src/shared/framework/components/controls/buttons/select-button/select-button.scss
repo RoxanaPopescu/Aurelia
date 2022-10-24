@@ -42,8 +42,14 @@ select-button
             // Set the size of the icon, in proportion to the text.
             font-size: var(--dropdown-icon-size);
 
-            // Apply opacity to de-emphasize the icon.
-            opacity: var(--opacity-faded);
+            // Disable pointer events, so clicks reach the button.
+            pointer-events: none;
+
+            &:not(:first-child)
+            {
+                // Apply opacity to de-emphasize the icon.
+                opacity: var(--opacity-faded);
+            }
         }
 
         [slot="label"]:not(:empty) + [slot="icon"]:not(:empty),
