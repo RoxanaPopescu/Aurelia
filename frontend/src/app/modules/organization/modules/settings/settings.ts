@@ -2,14 +2,15 @@ import { autoinject } from "aurelia-framework";
 import { AbortError } from "shared/types";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
+import { IValidation } from "shared/framework";
 import { IdentityService } from "app/services/identity";
-import { OrganizationService, OrganizationProfile } from "app/model/organization";
+import { OrganizationService, OrganizationSettings } from "app/model/organization";
 
 /**
  * Represents the page.
  */
 @autoinject
-export class ProfilePage
+export class SettingsPage
 {
     /**
      * Creates a new instance of the class.
@@ -19,7 +20,6 @@ export class ProfilePage
      */
     public constructor(identityService: IdentityService, organizationService: OrganizationService)
     {
-        this.organizationId = identityService.identity!.organization!.id;
         this.readonly = !identityService.identity!.claims.has("edit-organizations");
 
         this._organizationService = organizationService;
@@ -33,17 +33,22 @@ export class ProfilePage
     protected operation: Operation;
 
     /**
-     * The ID of the organization.
+     * The slug identifying the current tab.
      */
-    protected organizationId: string | undefined;
+    protected tab: "profile" | "tracking" = "profile";
 
     /**
-     * The profile for the organization.
+     * The validation for the modal.
      */
-    protected profile: OrganizationProfile | undefined;
+    protected validation: IValidation;
 
     /**
-     * True if the profile is readonly, otherwise false.
+     * The settings for the organization.
+     */
+    protected settings: OrganizationSettings | undefined;
+
+    /**
+     * True if the settings are readonly, otherwise false.
      */
     protected readonly: boolean;
 
@@ -75,49 +80,42 @@ export class ProfilePage
         // Create and execute the new operation.
         this.operation = new Operation(async signal =>
         {
-            this.profile = await this._organizationService.getProfile(signal);
+            this.settings = await this._organizationService.getSettings(signal);
         });
 
         this.operation.promise.catch(error =>
         {
             if (!(error instanceof AbortError))
             {
-                Log.error("Could not get the organization profile", error);
+                Log.error("Could not get the organization settings", error);
             }
         });
     }
 
     /**
      * Called when the `Save changes` button is clicked.
-     * Saves the changes made to the profile.
+     * Saves the changes made to the settings.
      */
-    protected onSaveChangesClick(): void
+    protected async onSaveChangesClick(): Promise<void>
     {
+        // Activate validation so any further changes will be validated immediately.
+        this.validation.active = true;
+
+        // Validate the form.
+        if (!await this.validation.validate())
+        {
+            return;
+        }
+
         // Create and execute the new operation.
         this.operation = new Operation(async signal =>
         {
-            await this._organizationService.saveProfile(this.profile!);
+            await this._organizationService.saveSettings(this.settings!);
         });
 
         this.operation.promise.catch(error =>
         {
-            Log.error("Could not save the organization profile", error);
+            Log.error("Could not save the organization settings", error);
         });
-    }
-
-    /**
-     * Called when the `Copy to clipboard` icon is clicked in the ID input.
-     * Copies the ID to the clipboard.
-     */
-    protected async onCopyIdToClipboard(): Promise<void>
-    {
-        try
-        {
-            await navigator.clipboard.writeText(this.organizationId!);
-        }
-        catch (error)
-        {
-            Log.error("Could not copy the text to clipboard", error);
-        }
     }
 }

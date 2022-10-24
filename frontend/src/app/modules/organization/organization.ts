@@ -20,12 +20,12 @@ export class OrganizationModule
             {
                 name: "default",
                 route: "",
-                redirect: "profile"
+                redirect: "settings"
             },
             {
-                name: "profile",
-                route: "profile",
-                moduleId: PLATFORM.moduleName("./modules/profile/profile"),
+                name: "settings",
+                route: "settings",
+                moduleId: PLATFORM.moduleName("./modules/settings/settings"),
                 settings:
                 {
                     claims:
@@ -33,7 +33,7 @@ export class OrganizationModule
                         "view-organizations"
                     ]
                 },
-                title: routeTitles.profile
+                title: routeTitles.settings
             },
             {
                 name: "users",
