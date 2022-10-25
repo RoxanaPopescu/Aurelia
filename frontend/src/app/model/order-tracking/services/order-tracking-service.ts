@@ -32,7 +32,7 @@ export class OrderTrackingService
     {
         const organizationId = this._identityService.identity!.organization!.id;
 
-        const result = await this._apiClient.get(`order-tracking/settings/${organizationId}`,
+        const result = await this._apiClient.get(`order-tracking/organizations/${organizationId}/settings`,
         {
             signal
         });
@@ -50,7 +50,7 @@ export class OrderTrackingService
     {
         const organizationId = this._identityService.identity!.organization!.id;
 
-        await this._apiClient.post(`order-tracking/settings/${organizationId}/save`,
+        await this._apiClient.post(`order-tracking/organizations/${organizationId}/settings/update`,
         {
             body: settings
         });

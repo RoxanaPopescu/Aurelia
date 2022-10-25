@@ -1,7 +1,7 @@
 // tslint:disable
 export default
 {
-    "GET /api/v2/order-tracking/settings/bf6d4bf2-49a2-44e7-9c49-489405c5776d":
+    "GET /api/v2/order-tracking/organizations/bf6d4bf2-49a2-44e7-9c49-489405c5776d/settings":
     {
         body:
         {
@@ -36,7 +36,7 @@ export default
             }
         }
     },
-    "POST /api/v2/order-tracking/settings/bf6d4bf2-49a2-44e7-9c49-489405c5776d/save":
+    "POST /api/v2/order-tracking/organizations/bf6d4bf2-49a2-44e7-9c49-489405c5776d/settings/update":
     {
         body:
         {
