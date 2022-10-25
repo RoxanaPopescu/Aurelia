@@ -62,4 +62,10 @@ item
         background: var(--item-picker-surface-item-surface-color--active);
         color: var(--item-picker-surface-item-surface-text-color--active);
     }
+
+    &[accent]
+    {
+        // If an accent is applied, allow it to override the text color.
+        color: var(--surface-accent-color) !important;
+    }
 }
