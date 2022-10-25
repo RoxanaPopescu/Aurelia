@@ -214,7 +214,7 @@
                     label="above"
                     readonly.bind="readonly"
                     disabled.bind="!tracking.customizeDelivery"
-                    value.bind="tracking.links.authorityToLeave.standardLocations"
+                    value.bind="tracking.authorityToLeave.standardLocations"
                     filter="auto">
 
                     <div slot="heading" translate>
@@ -226,7 +226,7 @@
                     </div>
 
                     <div slot="value">
-                        <tag repeat.for="location of tracking.links.authorityToLeave.standardLocations" model.bind="location">
+                        <tag repeat.for="location of tracking.authorityToLeave.standardLocations" model.bind="location">
                             ${location.name}
                         </tag>
                     </div>

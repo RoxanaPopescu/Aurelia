@@ -1,5 +1,5 @@
 import { OrganizationProfile } from "./organization-profile";
-import { OrganizationTracking } from "./organization-tracking";
+import { OrderTrackingSettings } from "app/model/order-tracking";
 
 /**
  * Represents the settings for an organization.
@@ -14,7 +14,7 @@ export class OrganizationSettings
     {
         // TODO: FOR TESTING ONLY!
         this.profile = new OrganizationProfile(data);
-        this.tracking = new OrganizationTracking(
+        this.tracking = new OrderTrackingSettings(
         {
             support:
             {
@@ -22,20 +22,29 @@ export class OrganizationSettings
                 email: undefined,
                 note:
                 {
-                    "en-US": "<p>We are ready to answer your call from 09:00 to 20:00 on weekdays and 09:00 to 18:00 on weekends, except on public holidays.</p>"
+                    "en": "We are ready to answer your call from 09:00 to 20:00 on weekdays and 09:00 to 18:00 on weekends, except on public holidays."
                 }
             },
-            customizeDelivery: false,
+            customizeDelivery: true,
             links:
             {
                 orderDetailsUrlPattern: undefined,
-                termsAndConditionsUrl: undefined
+                termsAndConditionsUrl: "https://www.ikea.com/dk/da/customer-service/terms-conditions"
             },
             authorityToLeave:
             {
-                standardLocations: undefined,
-                customLocation: false,
-                customInstruction: false
+                standardLocations:
+                [
+                    "inFrontOfTheFrontDoor",
+                    "atTheBackDoor",
+                    "inTheGarage",
+                    "inTheCarport",
+                    "onTheTerrace",
+                    "inTheGardenShed",
+                    "inTheGreenhouse"
+                ],
+                customLocation: true,
+                customInstruction: true
             }});
     }
 
@@ -47,7 +56,7 @@ export class OrganizationSettings
     /**
      * The tracking settings for the organization.
      */
-    public tracking: OrganizationTracking;
+    public tracking: OrderTrackingSettings;
 
     // TODO: FOR TESTING ONLY!
     public toJSON(): any

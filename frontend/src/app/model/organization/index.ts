@@ -9,6 +9,5 @@ export * from "./entities/organization-user-invite";
 export * from "./entities/organization-user-status";
 export * from "./entities/organization-profile";
 export * from "./entities/organization-settings";
-export * from "./entities/organization-tracking";
 export * from "./entities/organization-permission";
 export * from "./services/organization-service";

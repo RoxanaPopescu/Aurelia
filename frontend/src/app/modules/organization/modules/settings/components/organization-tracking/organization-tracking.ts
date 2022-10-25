@@ -1,5 +1,5 @@
 import { autoinject, bindable } from "aurelia-framework";
-import { OrganizationTracking } from "app/model/organization";
+import { OrderTrackingSettings } from "app/model/order-tracking";
 import { AuthorityToLeaveLocation, SupportNoteLocale } from "app/model/order-tracking";
 
 /**
@@ -27,7 +27,7 @@ export class OrganizationTrackingCustomElement
      * The tracking settings for the organization.
      */
     @bindable
-    public tracking: OrganizationTracking | undefined;
+    public tracking: OrderTrackingSettings | undefined;
 
     /**
      * True if the settings is readonly, otherwise false.

@@ -1,10 +1,10 @@
-import { AuthorityToLeaveLocationSlug } from "app/model/order-tracking";
 import { MapObject } from "shared/types";
+import { AuthorityToLeaveLocation, AuthorityToLeaveLocationSlug } from "./authority-to-leave-location";
 
 /**
  * Represents the tracking settings for an organization.
  */
-export class OrganizationTracking
+export class OrderTrackingSettings
 {
     /**
      * Creates a new instance of the type.
@@ -15,7 +15,12 @@ export class OrganizationTracking
         this.support = data.support;
         this.customizeDelivery = data.customizeDelivery;
         this.links = data.links;
-        this.authorityToLeave = data.authorityToLeave;
+        this.authorityToLeave =
+        {
+            standardLocations: data.authorityToLeave.standardLocations?.map(l => new AuthorityToLeaveLocation(l)),
+            customLocation: data.authorityToLeave.customLocation,
+            customInstruction: data.authorityToLeave.customInstruction
+        };
     }
 
     /**
