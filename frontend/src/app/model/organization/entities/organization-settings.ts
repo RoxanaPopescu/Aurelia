@@ -12,40 +12,7 @@ export class OrganizationSettings
      */
     public constructor(data: any)
     {
-        // TODO: FOR TESTING ONLY!
         this.profile = new OrganizationProfile(data);
-        this.tracking = new OrderTrackingSettings(
-        {
-            support:
-            {
-                phone: "+45 70 15 09 09",
-                email: undefined,
-                note:
-                {
-                    "en": "We are ready to answer your call from 09:00 to 20:00 on weekdays and 09:00 to 18:00 on weekends, except on public holidays."
-                }
-            },
-            customizeDelivery: true,
-            links:
-            {
-                orderDetailsUrlPattern: undefined,
-                termsAndConditionsUrl: "https://www.ikea.com/dk/da/customer-service/terms-conditions"
-            },
-            authorityToLeave:
-            {
-                standardLocations:
-                [
-                    "inFrontOfTheFrontDoor",
-                    "atTheBackDoor",
-                    "inTheGarage",
-                    "inTheCarport",
-                    "onTheTerrace",
-                    "inTheGardenShed",
-                    "inTheGreenhouse"
-                ],
-                customLocation: true,
-                customInstruction: true
-            }});
     }
 
     /**
@@ -58,7 +25,6 @@ export class OrganizationSettings
      */
     public tracking: OrderTrackingSettings;
 
-    // TODO: FOR TESTING ONLY!
     public toJSON(): any
     {
         return this.profile;

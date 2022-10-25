@@ -1,6 +1,6 @@
 @import "resources/index";
 
-organization-tracking
+page[name="order"] page[name="tracking"]
 {
     text-input > .input-control > select-input[slot="before"]
     {

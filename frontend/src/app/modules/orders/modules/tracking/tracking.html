@@ -1,0 +1,294 @@
+<template>
+
+    <require from="./tracking.scss"></require>
+
+    <page name="tracking">
+
+        <page-content scroll scroll.ref="scroll" validation validation.ref="validation">
+
+            <page-header class="flex-row" scroll-fade>
+
+                <h1 class="font-largest">
+                    <path-nav>
+
+                        <a accent="inherit" href="/orders" translate>
+                            Orders
+                        </a>
+
+                        <span>
+                            Track & Trace
+                        </span>
+
+                    </path-nav>
+                </h1>
+
+                <toolbar class="flex-push-right">
+
+                    <button
+                        appearance="solid"
+                        accent="primary"
+                        click.trigger="onSaveChangesClick()"
+                        disabled.bind="operation.pending"
+                        translate>
+                        Save changes
+                    </button>
+
+                </toolbar>
+
+            </page-header>
+
+            <div class="flex-row">
+
+                <page-section class="flex-basis-2-of-4">
+
+                    <div slot="header" translate>
+                        General
+                    </div>
+
+                    <div class="margin-large-bottom">
+                        <div translate>
+                            With Track & Trace, you can configure a communication trigger to send a tracking link to customers,
+                            allowing them to track, and optionally customize, their delivery.
+                        </div>
+                    </div>
+
+                    <div class="margin-large-bottom">
+
+                        <check-toggle label="after" disabled.to-view="true" value.to-view="true">
+
+                            <div slot="heading" translate>
+                                Enable Track & Trace
+                            </div>
+
+                        </check-toggle>
+
+                    </div>
+
+                    <hr class="hr-line margin-large-bottom">
+
+                    <div class="margin-large-bottom">
+
+                        <phone-input label="above" readonly.bind="readonly" value.bind="settings.support.phone">
+
+                            <div slot="heading" translate>
+                                Support phone number
+                            </div>
+
+                            <div slot="description" translate>
+                                This is the phone number customers should contact if they have any questions regarding a delivery.
+                            </div>
+
+                        </phone-input>
+
+                    </div>
+
+                    <div class="margin-large-bottom">
+
+                        <email-input label="above" readonly.bind="readonly" value.bind="settings.support.email">
+
+                            <div slot="heading" translate>
+                                Support email address
+                            </div>
+
+                            <div slot="description" translate>
+                                This is the email address customers should contact if they have any questions regarding a delivery.
+                            </div>
+
+                        </email-input>
+
+                    </div>
+
+                    <div class="margin-large-bottom">
+
+                        <text-input
+                            label="above"
+                            readonly.bind="readonly"
+                            value.bind="settings.support.note[supportNoteLocale.code]"
+                            autosize.bind="true"
+                            lines.bind="2">
+
+                            <div slot="heading" translate>
+                                Support note
+                            </div>
+
+                            <div slot="description" translate>
+                                This is a note shown next to the contact info for support, with information about opening hours, etc.
+                                This can be specified for each supported language, and if not specified, will default to English.
+                            </div>
+
+                            <select-input
+                                slot="before"
+                                appearance="none"
+                                accent="primary"
+                                none.bind="false"
+                                value.bind="supportNoteLocale"
+                                display-value="${supportNoteLocale.name}">
+
+                                <item repeat.for="locale of supportNoteLocales" model.bind="locale">
+                                    ${locale.name}
+                                </item>
+
+                            </select-input>
+
+                        </text-input>
+
+                    </div>
+
+                    <div class="margin-large-bottom">
+
+                        <url-input label="above" readonly.bind="readonly" value.bind="settings.links.termsAndConditionsUrl">
+
+                            <div slot="heading" translate>
+                                URL for terms and conditions
+                            </div>
+
+                            <div slot="description" translate>
+                                This is the link to the terms and conditions the user must accept, when customizing a delivery.
+                            </div>
+
+                            <div slot="validation">
+
+                                <required-validator
+                                    if.bind="settings.customizeDelivery"
+                                    value.bind="settings.links.termsAndConditionsUrl">
+                                </required-validator>
+
+                            </div>
+
+                        </url-input>
+
+                    </div>
+
+                    <div>
+
+                        <url-input label="above" readonly.bind="readonly" value.bind="settings.links.orderDetailsUrlPattern">
+
+                            <div slot="heading" translate>
+                                URL for order details
+                            </div>
+
+                            <div slot="description" translate>
+                                This is the link to the details of the order, where <kbd>{id}</kbd> will be replaced with the order ID.
+                            </div>
+
+                        </url-input>
+
+                    </div>
+
+                </page-section>
+
+                <page-section class="flex-basis-2-of-4">
+
+                    <div slot="header" translate>
+                        Authority to leave
+                    </div>
+
+                    <div class="margin-large-bottom">
+                        <div translate>
+                            Authority to leave is a feature of Track & Trace, which allows a customer to grant the driver permission
+                            to leave the delivery in a specified location, if they are not home.
+                        </div>
+                    </div>
+
+                    <div class="margin-large-bottom">
+
+                        <check-toggle label="after" readonly.bind="readonly" value.bind="settings.customizeDelivery">
+
+                            <div slot="heading" translate>
+                                Allow customers to grant authority to leave
+                            </div>
+
+                        </check-toggle>
+
+                    </div>
+
+                    <hr class="hr-line margin-large-bottom">
+
+                    <div class="margin-large-bottom">
+
+                        <tags-input
+                            label="above"
+                            readonly.bind="readonly"
+                            disabled.bind="!settings.customizeDelivery"
+                            value.bind="settings.authorityToLeave.standardLocations"
+                            filter="auto">
+
+                            <div slot="heading" translate>
+                                Available standard locations
+                            </div>
+
+                            <div slot="description" translate>
+                                This allows the user to choose from the specified list of standard locations.
+                            </div>
+
+                            <div slot="value">
+                                <tag repeat.for="location of settings.authorityToLeave.standardLocations" model.bind="location">
+                                    ${location.name}
+                                </tag>
+                            </div>
+
+                            <item repeat.for="location of authorityToLeaveLocations" model.bind="location">
+                                ${location.name}
+                            </item>
+
+                        </tags-input>
+
+                    </div>
+
+                    <div class="margin-large-bottom">
+
+                        <check-toggle
+                            label="after"
+                            readonly.bind="readonly"
+                            disabled.bind="!settings.customizeDelivery"
+                            value.bind="settings.authorityToLeave.customLocation">
+
+                            <div slot="heading" translate>
+                                Allow customers to specify a custom location
+                            </div>
+
+                            <!--
+                            <div slot="description" translate>
+                                This allows the user to specify a custom location, instead of choosing one of the standard locations.
+                            </div>
+                            -->
+
+                        </check-toggle>
+
+                    </div>
+
+                    <div>
+
+                        <check-toggle
+                            label="after"
+                            readonly.bind="readonly"
+                            disabled.bind="!settings.customizeDelivery"
+                            value.bind="settings.authorityToLeave.customInstruction">
+
+                            <div slot="heading" translate>
+                                Allow customers to specify additional instructions
+                            </div>
+
+                            <!--
+                            <div slot="description" translate>
+                                This allows the user to specify instructions, in addition to the chosen location.
+                            </div>
+                            -->
+
+                        </check-toggle>
+
+                    </div>
+
+                </page-section>
+
+                <div class="flex-basis-1-of-4"></div>
+
+            </div>
+
+            <busy-indicator if.bind="settings == null" class="margin-largest"></busy-indicator>
+
+        </page-content>
+
+    </page>
+
+</template>

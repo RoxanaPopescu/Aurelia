@@ -90,9 +90,9 @@ export class OrganizationService
     }
 
     /**
-     * Gets the profile for the current organization.
+     * Gets the settings for the current organization.
      * @param signal The abort signal to use, or undefined to use no abort signal.
-     * @returns A promise that will be resolved with the profile for the organization.
+     * @returns A promise that will be resolved with the settings for the organization.
      */
     public async getSettings(signal?: AbortSignal): Promise<OrganizationSettings>
     {
