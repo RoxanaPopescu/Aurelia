@@ -116,6 +116,8 @@
                                 This can be specified for each supported language, and if not specified, will default to English.
                             </div>
 
+                            <let max-note-length.bind="400"></let>
+
                             <select-input
                                 slot="before"
                                 appearance="none"
@@ -127,7 +129,7 @@
                                 <item
                                     repeat.for="locale of supportNoteLocales"
                                     model.bind="locale"
-                                    accent.bind="settings.support.note[locale.code].length > 300">
+                                    accent.bind="settings.support.note[locale.code].length > maxNoteLength ? 'negative' : undefined & attr">
                                     ${locale.name}
                                 </item>
 
@@ -138,11 +140,11 @@
                                 <length-validator
                                     repeat.for="locale of supportNoteLocales"
                                     active.bind="true"
-                                    max.bind="300"
+                                    max.bind="maxNoteLength"
                                     value.bind="settings.support.note[locale.code]">
 
                                     <template replace-part="invalid">
-                                        Please provide a value with a length of at most 300, for the language ${locale.name}.
+                                        Please provide a value with a length of at most ${maxNoteLength | number}, for the language ${locale.name}.
                                     </template>
 
                                 </length-validator>
