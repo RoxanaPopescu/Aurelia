@@ -1,6 +1,5 @@
 import { autoinject, bindable } from "aurelia-framework";
-import { OrderTrackingSettings } from "app/model/order-tracking";
-import { AuthorityToLeaveLocation, SupportNoteLocale } from "app/model/order-tracking";
+import { OrderTrackingSettings, AuthorityToLeaveLocation, SupportNoteLocale } from "app/model/order-tracking";
 
 /**
  * Represents the profile view.
