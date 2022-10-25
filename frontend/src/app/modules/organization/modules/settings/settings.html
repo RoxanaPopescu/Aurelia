@@ -28,7 +28,7 @@
                             Profile
                         </tab>
 
-                        <tab if-environment="xdevelopment" name="tracking" invalid.bind="trackingValidation.invalid" translate>
+                        <tab if-environment="development" name="tracking" invalid.bind="trackingValidation.invalid" translate>
                             Track & Trace
                         </tab>
 
@@ -63,7 +63,7 @@
                     validation.ref="profileValidation">
                 </organization-profile>
 
-                <template if-environment="xdevelopment">
+                <template if-environment="development">
                 <organization-tracking
                     show.bind="tab === 'tracking'"
                     tracking.bind="settings.tracking"

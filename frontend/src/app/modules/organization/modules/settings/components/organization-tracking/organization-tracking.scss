@@ -2,4 +2,8 @@
 
 organization-tracking
 {
+    text-input > .input-control > select-input[slot="before"]
+    {
+        --input-min-width: 120rem;
+    }
 }

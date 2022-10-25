@@ -14,7 +14,29 @@ export class OrganizationSettings
     {
         // TODO: FOR TESTING ONLY!
         this.profile = new OrganizationProfile(data);
-        this.tracking = new OrganizationProfile({});
+        this.tracking = new OrganizationTracking(
+        {
+            support:
+            {
+                phone: "+45 70 15 09 09",
+                email: undefined,
+                note:
+                {
+                    "en-US": "<p>We are ready to answer your call from 09:00 to 20:00 on weekdays and 09:00 to 18:00 on weekends, except on public holidays.</p>"
+                }
+            },
+            customizeDelivery: false,
+            links:
+            {
+                orderDetailsUrlPattern: undefined,
+                termsAndConditionsUrl: undefined
+            },
+            authorityToLeave:
+            {
+                standardLocations: undefined,
+                customLocation: false,
+                customInstruction: false
+            }});
     }
 
     /**

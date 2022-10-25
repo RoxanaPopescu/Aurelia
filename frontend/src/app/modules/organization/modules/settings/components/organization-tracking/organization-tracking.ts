@@ -1,5 +1,6 @@
 import { autoinject, bindable } from "aurelia-framework";
 import { OrganizationTracking } from "app/model/organization";
+import { AuthorityToLeaveLocation, SupportNoteLocale } from "app/model/order-tracking";
 
 /**
  * Represents the profile view.
@@ -7,6 +8,21 @@ import { OrganizationTracking } from "app/model/organization";
 @autoinject
 export class OrganizationTrackingCustomElement
 {
+    /**
+     * The standard locations for authority to leave.
+     */
+    protected readonly authorityToLeaveLocations = Object.keys(AuthorityToLeaveLocation.values).map(key => new AuthorityToLeaveLocation(key as any));
+
+    /**
+     * The locales for which a support note may be specified.
+     */
+    protected readonly supportNoteLocales = Object.keys(SupportNoteLocale.values).map(key => new SupportNoteLocale(key as any));
+
+    /**
+     * The selected support note locale.
+     */
+    protected readonly supportNoteLocale: SupportNoteLocale = this.supportNoteLocales.find(l => l.code === "en")!;
+
     /**
      * The tracking settings for the organization.
      */

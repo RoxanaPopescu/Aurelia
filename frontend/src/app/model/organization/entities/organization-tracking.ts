@@ -1,3 +1,6 @@
+import { AuthorityToLeaveLocationSlug } from "app/model/order-tracking";
+import { MapObject } from "shared/types";
+
 /**
  * Represents the tracking settings for an organization.
  */
@@ -9,11 +12,45 @@ export class OrganizationTracking
      */
     public constructor(data: any)
     {
-        this.name = data.name;
+        this.support = data.support;
+        this.customizeDelivery = data.customizeDelivery;
+        this.links = data.links;
+        this.authorityToLeave = data.authorityToLeave;
     }
 
     /**
-     * The name of the organization.
+     * True to allow the user to customize their delivery, otherwise false.
+     * Note: Currently, the only customization option is authority to leave.
      */
-    public name: string;
+    public support:
+    {
+        phone: string | undefined;
+        email: string | undefined;
+        note: MapObject<string>;
+    };
+
+    /**
+     * True to allow the user to customize their delivery, otherwise false.
+     * Note: Currently, the only customization option is authority to leave.
+     */
+    public customizeDelivery: boolean;
+
+    /**
+     * The links to use on the tracking page.
+     */
+    public links:
+    {
+        orderDetailsUrlPattern: string | undefined;
+        termsAndConditionsUrl: string | undefined;
+    };
+
+    /**
+     * The authority to leave settings to use on the tracking page.
+     */
+    public authorityToLeave:
+    {
+        standardLocations: AuthorityToLeaveLocationSlug[] | undefined;
+        customLocation: boolean;
+        customInstruction: boolean;
+    };
 }
