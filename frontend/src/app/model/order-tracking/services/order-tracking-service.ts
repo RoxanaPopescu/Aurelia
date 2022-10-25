@@ -32,44 +32,10 @@ export class OrderTrackingService
     {
         const organizationId = this._identityService.identity!.organization!.id;
 
-        const result = await this._apiClient.get(`organizations/${organizationId}/profile`,
+        const result = await this._apiClient.get(`order-tracking/settings/${organizationId}`,
         {
             signal
         });
-
-        // TODO: Remove test data.
-        result.data =
-        {
-            support:
-            {
-                phone: "+45 70 15 09 09",
-                email: undefined,
-                note:
-                {
-                    "en": "We are ready to answer your call from 09:00 to 20:00 on weekdays and 09:00 to 18:00 on weekends, except on public holidays."
-                }
-            },
-            customizeDelivery: true,
-            links:
-            {
-                orderDetailsUrlPattern: undefined,
-                termsAndConditionsUrl: "https://www.ikea.com/dk/da/customer-service/terms-conditions"
-            },
-            authorityToLeave:
-            {
-                standardLocations:
-                [
-                    "inFrontOfTheFrontDoor",
-                    "atTheBackDoor",
-                    "inTheGarage",
-                    "inTheCarport",
-                    "onTheTerrace",
-                    "inTheGardenShed"
-                ],
-                customLocation: true,
-                customInstruction: true
-            }
-        };
 
         return new OrderTrackingSettings(result.data);
     }
@@ -82,13 +48,11 @@ export class OrderTrackingService
      */
     public async saveSettings(settings: OrderTrackingSettings): Promise<void>
     {
-        // const organizationId = this._identityService.identity!.organization!.id;
+        const organizationId = this._identityService.identity!.organization!.id;
 
-        // await this._apiClient.post(`organizations/${organizationId}/profile/save`,
-        // {
-        //     body: settings
-        // });
-
-        await Promise.resolve();
+        await this._apiClient.post(`order-tracking/settings/${organizationId}/save`,
+        {
+            body: settings
+        });
     }
 }
