@@ -124,11 +124,30 @@
                                 value.bind="supportNoteLocale"
                                 display-value="${supportNoteLocale.name}">
 
-                                <item repeat.for="locale of supportNoteLocales" model.bind="locale">
+                                <item
+                                    repeat.for="locale of supportNoteLocales"
+                                    model.bind="locale"
+                                    accent.bind="settings.support.note[locale.code].length > 300">
                                     ${locale.name}
                                 </item>
 
                             </select-input>
+
+                            <div slot="validation">
+
+                                <length-validator
+                                    repeat.for="locale of supportNoteLocales"
+                                    active.bind="true"
+                                    max.bind="300"
+                                    value.bind="settings.support.note[locale.code]">
+
+                                    <template replace-part="invalid">
+                                        Please provide a value with a length of at most 300, for the language ${locale.name}.
+                                    </template>
+
+                                </length-validator>
+
+                            </div>
 
                         </text-input>
 
