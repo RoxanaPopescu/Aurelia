@@ -54,7 +54,10 @@
 
                     <div class="margin-large-bottom">
 
-                        <check-toggle label="after" disabled.to-view="true" value.to-view="true">
+                        <check-toggle
+                            label="after"
+                            readonly.bind="readonly"
+                            value.bind="settings.enabled">
 
                             <div slot="heading" translate>
                                 Enable Track & Trace
@@ -68,7 +71,11 @@
 
                     <div class="margin-large-bottom">
 
-                        <phone-input label="above" readonly.bind="readonly" value.bind="settings.support.phone">
+                        <phone-input
+                            label="above"
+                            readonly.bind="readonly"
+                            disabled.bind="!settings.enabled"
+                            value.bind="settings.support.phone">
 
                             <div slot="heading" translate>
                                 Support phone number
@@ -84,7 +91,11 @@
 
                     <div class="margin-large-bottom">
 
-                        <email-input label="above" readonly.bind="readonly" value.bind="settings.support.email">
+                        <email-input
+                            label="above"
+                            readonly.bind="readonly"
+                            disabled.bind="!settings.enabled"
+                            value.bind="settings.support.email">
 
                             <div slot="heading" translate>
                                 Support email address
@@ -103,6 +114,7 @@
                         <text-input
                             label="above"
                             readonly.bind="readonly"
+                            disabled.bind="!settings.enabled"
                             value.bind="settings.support.note[supportNoteLocale.code]"
                             autosize.bind="true"
                             lines.bind="2">
@@ -157,7 +169,11 @@
 
                     <div class="margin-large-bottom">
 
-                        <url-input label="above" readonly.bind="readonly" value.bind="settings.links.termsAndConditionsUrl">
+                        <url-input
+                            label="above"
+                            readonly.bind="readonly"
+                            disabled.bind="!settings.enabled"
+                            value.bind="settings.links.termsAndConditionsUrl">
 
                             <div slot="heading" translate>
                                 URL for terms and conditions
@@ -182,7 +198,11 @@
 
                     <div>
 
-                        <url-input label="above" readonly.bind="readonly" value.bind="settings.links.orderDetailsUrlPattern">
+                        <url-input
+                            label="above"
+                            readonly.bind="readonly"
+                            disabled.bind="!settings.enabled"
+                            value.bind="settings.links.orderDetailsUrlPattern">
 
                             <div slot="heading" translate>
                                 URL for order details
@@ -213,7 +233,11 @@
 
                     <div class="margin-large-bottom">
 
-                        <check-toggle label="after" readonly.bind="readonly" value.bind="settings.customizeDelivery">
+                        <check-toggle
+                            label="after"
+                            readonly.bind="readonly"
+                            disabled.bind="!settings.enabled"
+                            value.bind="settings.customizeDelivery">
 
                             <div slot="heading" translate>
                                 Allow customers to grant authority to leave
@@ -230,7 +254,7 @@
                         <tags-input
                             label="above"
                             readonly.bind="readonly"
-                            disabled.bind="!settings.customizeDelivery"
+                            disabled.bind="!settings.enabled || !settings.customizeDelivery"
                             value.bind="settings.authorityToLeave.standardLocations"
                             filter="auto">
 
@@ -261,7 +285,7 @@
                         <check-toggle
                             label="after"
                             readonly.bind="readonly"
-                            disabled.bind="!settings.customizeDelivery"
+                            disabled.bind="!settings.enabled || !settings.customizeDelivery"
                             value.bind="settings.authorityToLeave.customLocation">
 
                             <div slot="heading" translate>
@@ -283,7 +307,7 @@
                         <check-toggle
                             label="after"
                             readonly.bind="readonly"
-                            disabled.bind="!settings.customizeDelivery"
+                            disabled.bind="!settings.enabled || !settings.customizeDelivery"
                             value.bind="settings.authorityToLeave.customInstruction">
 
                             <div slot="heading" translate>

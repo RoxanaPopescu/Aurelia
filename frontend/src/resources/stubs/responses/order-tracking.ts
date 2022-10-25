@@ -5,6 +5,7 @@ export default
     {
         body:
         {
+            enabled: true,
             support:
             {
                 phone: "+45 70 15 09 09",
@@ -40,6 +41,7 @@ export default
     {
         body:
         {
+            enabled: true,
             support:
             {
                 phone: "+45 70 15 09 09",

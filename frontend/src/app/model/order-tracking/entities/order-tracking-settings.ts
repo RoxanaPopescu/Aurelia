@@ -12,6 +12,7 @@ export class OrderTrackingSettings
      */
     public constructor(data: any)
     {
+        this.enabled = data.enabled;
         this.support = data.support;
         this.customizeDelivery = data.customizeDelivery;
         this.links = data.links;
@@ -22,6 +23,11 @@ export class OrderTrackingSettings
             customInstruction: data.authorityToLeave.customInstruction
         };
     }
+
+    /**
+     * True to enable order tracking for the organization, otherwise false.
+     */
+    public enabled: boolean;
 
     /**
      * True to allow the user to customize their delivery, otherwise false.
