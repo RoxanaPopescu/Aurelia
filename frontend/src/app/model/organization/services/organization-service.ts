@@ -3,7 +3,6 @@ import { ApiClient } from "shared/infrastructure";
 import { IdentityService } from "app/services/identity";
 import { OrganizationInfo } from "../entities/organization-info";
 import { IOrganizationInit } from "../entities/organization-init";
-import { OrganizationProfile } from "../entities/organization-profile";
 import { OrganizationUser } from "../entities/organization-user";
 import { OrganizationRole } from "../entities/organization-role";
 import { OrganizationTeam } from "../entities/organization-team";
@@ -11,6 +10,7 @@ import { OrganizationConnection } from "../entities/organization-connection";
 import { IOrganizationUserInviteInit } from "../entities/organization-user-invite-init";
 import { OrganizationUserInvite } from "../entities/organization-user-invite";
 import { OrganizationPermission } from "../entities/organization-permission";
+import { OrganizationSettings } from "../entities/organization-settings";
 
 /**
  * Represents a service for managing organizations.
@@ -90,11 +90,11 @@ export class OrganizationService
     }
 
     /**
-     * Gets the profile for the current organization.
+     * Gets the settings for the current organization.
      * @param signal The abort signal to use, or undefined to use no abort signal.
-     * @returns A promise that will be resolved with the profile for the organization.
+     * @returns A promise that will be resolved with the settings for the organization.
      */
-    public async getProfile(signal?: AbortSignal): Promise<OrganizationProfile>
+    public async getSettings(signal?: AbortSignal): Promise<OrganizationSettings>
     {
         const organizationId = this._identityService.identity!.organization!.id;
 
@@ -103,22 +103,22 @@ export class OrganizationService
             signal
         });
 
-        return new OrganizationProfile(result.data);
+        return new OrganizationSettings(result.data);
     }
 
     /**
-     * Saves the profile for the current organization.
-     * @param profile The profile to save.
+     * Saves the settings for the current organization.
+     * @param settings The settings to save.
      * @param signal The abort signal to use, or undefined to use no abort signal.
      * @returns A promise that will be resolved when the operation succeedes.
      */
-    public async saveProfile(profile: OrganizationProfile): Promise<void>
+    public async saveSettings(settings: OrganizationSettings): Promise<void>
     {
         const organizationId = this._identityService.identity!.organization!.id;
 
         await this._apiClient.post(`organizations/${organizationId}/profile/save`,
         {
-            body: profile
+            body: settings
         });
     }
 

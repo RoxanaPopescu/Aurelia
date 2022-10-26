@@ -57,9 +57,9 @@ export class DistributionCenteRoutesModule extends AppModule
             }
         });
 
-        const organizations = await this.apiClient.get("organization/organizations",
+        const organizations = await this.apiClient.post("organization/organizations/list",
         {
-            query:
+            body:
             {
                 ids: routes.map((r: any) => r.fulfillerId).filter((item: any, i: any, ar: any) => ar.indexOf(item) === i)
             }

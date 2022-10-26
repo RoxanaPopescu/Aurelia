@@ -96,6 +96,21 @@ export class OrdersModule
                 }
             },
             {
+                name: "tracking",
+                route: "tracking",
+                moduleId: PLATFORM.moduleName("./modules/tracking/tracking"),
+                settings:
+                {
+                    claims:
+                    [
+                        "edit-organizations"
+                    ]
+                },
+                title: routeTitles.trackingSettings,
+                nav: ENVIRONMENT.name !== "production",
+                icon: "route-tracking"
+            },
+            {
                 name: "dao-relabel",
                 route: "dao-relabel",
                 moduleId: PLATFORM.moduleName("./modules/dao-relabel/dao-relabel"),

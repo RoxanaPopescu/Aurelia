@@ -29,6 +29,7 @@ import { IResponseStubs } from "shared/infrastructure";
 // import views from "./responses/views";
 // import ordersImport from "./responses/orders-import";
 // import distributionCenters from "./responses/distribution-centers";
+import orderTracking from "./responses/order-tracking";
 
 /**
  * Here you can stub HTTP responses e.g. if the API is not yet available.
@@ -70,4 +71,5 @@ export const stubs: IResponseStubs =
     // ...views
     // ...ordersImport
     // ...distributionCenters
+    ...orderTracking
 };

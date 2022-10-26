@@ -12,6 +12,7 @@
     ]
   },
   "rules": {
+    "deprecation": false,
     "no-inferred-empty-object-type": false,
     "no-null-undefined-union": false,
     "no-unused-variable": false,

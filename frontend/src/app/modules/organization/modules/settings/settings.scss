@@ -1,0 +1,9 @@
+@import "resources/index";
+
+page[name="organization"] page[name="settings"]
+{
+    .organization-settings-view-container
+    {
+        position: relative;
+    }
+}
