@@ -32,6 +32,26 @@ export class RoutesModule extends AppModule
     }
 
     /**
+     * Starts a service
+     * @returns 204 OK if accepted
+     */
+    public "POST /v2/routes/start-service" = async (context: AppContext) =>
+    {
+        await this.validateLogin(context, "edit-routes");
+
+        const result = await this.apiClient.post("task-service/start",
+        {
+            body:
+            {
+                ...context.request.body
+            }
+        });
+
+        context.response.body = result.data;
+        context.response.status = 204;
+    }
+
+    /**
      * Returns drivers near the route
      * @returns The drivers available near the route
      */
@@ -179,5 +199,65 @@ export class RoutesModule extends AppModule
 
         context.response.body = result.data;
         context.response.status = 200;
+    }
+
+    /**
+     * Validates the current driver login with NOI.
+     * @param token The login token of the driver.
+     * @returns A promise that will be resolved with the details about the driver if valid login.
+     */
+    private async validateLogin(context: any, permission: string): Promise<{ outfitId: string; userId: string }>
+    {
+        let outfitId: string;
+        let userId: string;
+
+        // Allow legacy token authorization
+        const noiOrigin = context.request.headers["x-noi-origin"];
+        if (noiOrigin === "true")
+        {
+            const driver = await this.validateDriverLogin(context);
+            outfitId = driver.outfitId;
+            userId = this.stringToGuid(driver.id);
+        }
+        else
+        {
+            await context.authorize(permission);
+            outfitId = context.user.organizationId;
+            userId = context.user.id;
+        }
+
+        return { outfitId: outfitId, userId: userId };
+    }
+
+    /**
+     * Validates the current driver login with NOI.
+     * @param token The login token of the driver.
+     * @returns A promise that will be resolved with the details about the driver if valid login.
+     */
+    private async validateDriverLogin(context: AppContext): Promise<any>
+    {
+        const result = await this.apiClient.get("logistics-platform/drivers/validate-login",
+        {
+            noi: true,
+            query:
+            {
+                "access-token": context.request.headers["token"]
+            }
+        });
+
+        return result.data;
+    }
+
+    /**
+     * Returns the driver id as a guid
+     * @param id the string of the driver
+     * @returns The id of the driver with leading 0's as a GUID
+     */
+    private stringToGuid(id: string): string
+    {
+        const totalLength = 12;
+        const paddingLength = totalLength - id.length;
+
+        return `00000000-0000-0000-0000-${"0".repeat(paddingLength)}${id}`;
     }
 }
