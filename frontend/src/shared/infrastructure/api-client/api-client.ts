@@ -534,7 +534,7 @@ export class ApiClient
             if (hasProblemBody)
             {
                 // Does the error represent a validation error?
-                if (data?.status || response.status === 400 && data?.errors)
+                if ((response.status === 400 || response.status === 422) && data?.errors != null)
                 {
                     return new ApiValidationError(transient, request, response, message, data);
                 }
