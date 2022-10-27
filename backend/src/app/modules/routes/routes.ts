@@ -39,6 +39,7 @@ export class RoutesModule extends AppModule
     {
         await this.validateLogin(context, "edit-routes");
 
+        /*
         const result = await this.apiClient.post("task-service/start",
         {
             body:
@@ -48,6 +49,7 @@ export class RoutesModule extends AppModule
         });
 
         context.response.body = result.data;
+        */
         context.response.status = 204;
     }
 
