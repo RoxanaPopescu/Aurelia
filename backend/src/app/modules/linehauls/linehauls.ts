@@ -124,14 +124,14 @@ export class LinehaulsModule extends AppModule
     }
 
     /**
-     * Saves the damaged event
-     * @returns 202 ok
+     * Saves the damaged event at unload
+     * @returns 204 ok
      */
-    public "POST /v2/linehauls/damaged-collo" = async (context: AppContext) =>
+    public "POST /v2/linehauls/collo-damaged-at-unload" = async (context: AppContext) =>
     {
         await context.authorize();
 
-        await this.apiClient.post("linehaulservice-api/v1/linehauls/damaged-collo",
+        await this.apiClient.post("linehaulservice-api/v1/linehauls/collo-damaged-at-unload",
         {
             body: context.request.body
         });
@@ -140,14 +140,14 @@ export class LinehaulsModule extends AppModule
     }
 
     /**
-     * Saves the missing event
-     * @returns 202 ok
+     * Saves the missing event at unload
+     * @returns 204 ok
      */
-    public "POST /v2/linehauls/missing-collo" = async (context: AppContext) =>
+    public "POST /v2/linehauls/collo-missing-at-unload" = async (context: AppContext) =>
     {
         await context.authorize();
 
-        await this.apiClient.post("linehaulservice-api/v1/linehauls/missing-collo",
+        await this.apiClient.post("linehaulservice-api/v1/linehauls/collo-missing-at-unload",
         {
             body: context.request.body
         });
