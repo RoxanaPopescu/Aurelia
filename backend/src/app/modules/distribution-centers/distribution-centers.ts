@@ -253,6 +253,7 @@ export class DistributionCenterModule extends AppModule
                     barcode: requestBody.barcode,
                     status: status,
                     orderId: order.orderId,
+                    orderCancelled: order.status.id === 5,
                     orderPickupLocationId: pickupLocationId
                 };
             }
