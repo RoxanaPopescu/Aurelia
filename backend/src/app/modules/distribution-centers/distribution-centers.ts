@@ -245,14 +245,14 @@ export class DistributionCenterModule extends AppModule
                 const order = ordersResult.data[0];
 
                 // Find correct status dependent on locationId
-                const pickupLocationId = order.pickupLocation.locationId;
+                const pickupLocationId = order.pickupAddress.locationId;
                 const status = "not-assigned-to-route";
 
                 collo =
                 {
                     barcode: requestBody.barcode,
                     status: status,
-                    orderId: order.orderId,
+                    orderId: order.publicId,
                     orderCancelled: order.status.id === 5,
                     orderPickupLocationId: pickupLocationId
                 };
