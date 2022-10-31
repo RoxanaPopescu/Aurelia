@@ -87,6 +87,14 @@ export class RouteStopDeviation
         {
             name: deviationNames.notPossibleToLeaveColli
         },
+        "missing-equipment-to-perform-service":
+        {
+            name: deviationNames.missingEquipmentToPerformService
+        },
+        "conditions-for-service-not-met":
+        {
+            name: deviationNames.conditionsForServiceNotMet
+        },
         "other-damage":
         {
             name: deviationNames.otherDamage

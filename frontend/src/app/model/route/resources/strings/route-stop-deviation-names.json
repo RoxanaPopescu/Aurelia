@@ -10,5 +10,7 @@
     "missingColli": "Missing colli",
     "noCapacityInVehicle": "No capacity in vehicle",
     "notPossibleToLeaveColli": "Not possible to leave colli",
+    "missingEquipmentToPerformService": "Missing equipment to perform service",
+    "conditionsForServiceNotMet": "Conditions for service not met",
     "otherDamage": "Other damage"
 }
