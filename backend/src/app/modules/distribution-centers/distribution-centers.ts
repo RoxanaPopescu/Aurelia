@@ -224,7 +224,7 @@ export class DistributionCenterModule extends AppModule
                 body: {
                     organizationIdents: [context.user!.organizationId],
                     barcodes: [requestBody.barcode],
-                    status: [1, 2, 3],
+                    status: [1, 2, 3, 5],
                     page: 1,
                     pageSize: 1
                 }
