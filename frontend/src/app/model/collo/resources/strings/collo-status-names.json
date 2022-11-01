@@ -6,5 +6,6 @@
     "refusedByCustomer": "Delivery refused by customer",
     "noAction": "Awaiting pickup",
     "pickedUp": "Picked up",
-    "delivered": "Delivered"
+    "delivered": "Delivered",
+    "cancelled": "Cancelled"
 }

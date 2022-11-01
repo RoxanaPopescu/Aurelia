@@ -78,6 +78,11 @@ export class ColloStatus
         {
             name: statusNames.delivered,
             accent: { pickup: "positive", delivery: "positive" }
+        },
+        "cancelled":
+        {
+            name: statusNames.cancelled,
+            accent: { pickup: "negative", delivery: "negative" }
         }
     };
 }
