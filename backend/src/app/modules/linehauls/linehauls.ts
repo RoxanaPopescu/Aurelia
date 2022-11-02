@@ -31,6 +31,23 @@ export class LinehaulsModule extends AppModule
     }
 
     /**
+     * Finds best-fit linehauls with this current barcode
+     * @returns The linehauls found with this barcode.
+     */
+    public "POST /v2/linehauls/find-by-barcode" = async (context: AppContext) =>
+    {
+        await context.authorize();
+
+        const result = await this.apiClient.post("linehaulservice-api/v1/linehauls/find-by-barcode",
+        {
+            body: context.request.body
+        });
+
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
      * Creates a linehaul with a auto generated GUID reference
      * @returns The created linehaul.
      */
