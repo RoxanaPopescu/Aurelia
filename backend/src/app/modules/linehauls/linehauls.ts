@@ -40,7 +40,7 @@ export class LinehaulsModule extends AppModule
 
         const result = await this.apiClient.get("linehaulservice-api/v1/linehauls/find-by-barcode",
         {
-            query: context.params
+            query: context.query
         });
 
         context.response.body = result.data;
