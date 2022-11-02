@@ -8,6 +8,23 @@ import { v4 as uuidV4 } from "uuid";
 export class LinehaulsModule extends AppModule
 {
     /**
+     * Finds best-fit linehauls with this current barcode
+     * @returns The linehauls found with this barcode.
+     */
+    public "GET /v2/linehauls/find-by-barcode" = async (context: AppContext) =>
+    {
+        await context.authorize();
+
+        const result = await this.apiClient.get("linehaulservice-api/v1/linehauls/find-by-barcode",
+        {
+            query: context.request.query
+        });
+
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
+
+    /**
      * Get a specific linehaul
      * @param context.params.id The ID of the linehaul to get.
      * @returns The linehaul with the specified id.
@@ -23,26 +40,6 @@ export class LinehaulsModule extends AppModule
             {
                 id: context.params.id,
                 ownerId: context.params.ownerId ?? context.user?.organizationId
-            }
-        });
-
-        context.response.body = result.data;
-        context.response.status = 200;
-    }
-
-    /**
-     * Finds best-fit linehauls with this current barcode
-     * @returns The linehauls found with this barcode.
-     */
-    public "GET /v2/linehauls/find-by-barcode" = async (context: AppContext) =>
-    {
-        await context.authorize();
-
-        const result = await this.apiClient.get("linehaulservice-api/v1/linehauls/find-by-barcode",
-        {
-            query:
-            {
-                barcode: context.request.query.barcode
             }
         });
 
