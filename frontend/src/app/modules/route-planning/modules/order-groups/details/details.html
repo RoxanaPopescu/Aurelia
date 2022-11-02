@@ -58,7 +58,7 @@
                             Create order group
                         </button>
 
-                        <button if.bind="orderGroup.id != null" disabled.bind="orderGroup.locked" appearance="solid" accent="primary" disabled.bind="orderGroup == null || isSavingChanges" click.trigger="onSaveClick()" translate>
+                        <button if.bind="orderGroup.id != null" appearance="solid" accent="primary" disabled.bind="orderGroup == null || isSavingChanges || orderGroup.locked" click.trigger="onSaveClick()" translate>
                             Save changes
                         </button>
 
