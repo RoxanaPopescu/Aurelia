@@ -34,13 +34,13 @@ export class LinehaulsModule extends AppModule
      * Finds best-fit linehauls with this current barcode
      * @returns The linehauls found with this barcode.
      */
-    public "POST /v2/linehauls/find-by-barcode" = async (context: AppContext) =>
+    public "GET /v2/linehauls/find-by-barcode" = async (context: AppContext) =>
     {
         await context.authorize();
 
-        const result = await this.apiClient.post("linehaulservice-api/v1/linehauls/find-by-barcode",
+        const result = await this.apiClient.get("linehaulservice-api/v1/linehauls/find-by-barcode",
         {
-            body: context.request.body
+            query: context.params
         });
 
         context.response.body = result.data;
