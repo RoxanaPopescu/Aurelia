@@ -28,6 +28,25 @@ export class RoutesStopsModule extends AppModule
     }
 
     /**
+     * Starts a service
+     * @returns 204 No content
+     */
+    public "POST /v5/routes/stops/start-service" = async (context: AppContext) =>
+    {
+        await context.authorize("edit-routes");
+
+        await this.apiClient.post("logistics-platform/routes/v5/start-service",
+        {
+            noi: true,
+            body: {
+                ...context.request.body
+            }
+        });
+
+        context.response.status = 204;
+    }
+
+    /**
      * Update one stop to the route at a specific route
      * @returns 200 OK if added
      */
