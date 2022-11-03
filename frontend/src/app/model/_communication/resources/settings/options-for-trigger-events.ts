@@ -295,7 +295,8 @@ export default
         ],
         messageTypes:
         [
-            "email"
+            "email",
+            "sms"
         ],
         placeholders: getPlaceholders(
         [

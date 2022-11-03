@@ -128,7 +128,7 @@
                                 This can be specified for each supported language, and if not specified, will default to English.
                             </div>
 
-                            <let max-note-length.bind="400"></let>
+                            <let max-support-note-length.bind="400"></let>
 
                             <select-input
                                 slot="before"
@@ -139,9 +139,9 @@
                                 display-value="${supportNoteLocale.name}">
 
                                 <item
-                                    repeat.for="locale of supportNoteLocales"
+                                    repeat.for="locale of availableLocales"
                                     model.bind="locale"
-                                    accent.bind="settings.support.note[locale.code].length > maxNoteLength ? 'negative' : undefined & attr">
+                                    accent.bind="settings.support.note[locale.code].length > maxSupportNoteLength ? 'negative' : undefined & attr">
                                     ${locale.name}
                                 </item>
 
@@ -150,13 +150,13 @@
                             <div slot="validation">
 
                                 <length-validator
-                                    repeat.for="locale of supportNoteLocales"
+                                    repeat.for="locale of availableLocales"
                                     active.bind="true"
-                                    max.bind="maxNoteLength"
+                                    max.bind="maxSupportNoteLength"
                                     value.bind="settings.support.note[locale.code]">
 
                                     <template replace-part="invalid">
-                                        Please provide a value with a length of at most ${maxNoteLength | number}, for the language ${locale.name}.
+                                        Please provide a value with a length of at most ${maxSupportNoteLength | number}, for the language ${locale.name}.
                                     </template>
 
                                 </length-validator>
@@ -286,6 +286,28 @@
                             label="after"
                             readonly.bind="readonly"
                             disabled.bind="!settings.enabled || !settings.customizeDelivery"
+                            value.bind="settings.authorityToLeave.customInstruction">
+
+                            <div slot="heading" translate>
+                                Allow customers to specify additional instructions
+                            </div>
+
+                            <!--
+                            <div slot="description" translate>
+                                This allows the user to specify instructions, in addition to the chosen location.
+                            </div>
+                            -->
+
+                        </check-toggle>
+
+                    </div>
+
+                    <div class="margin-large-bottom">
+
+                        <check-toggle
+                            label="after"
+                            readonly.bind="readonly"
+                            disabled.bind="!settings.enabled || !settings.customizeDelivery"
                             value.bind="settings.authorityToLeave.customLocation">
 
                             <div slot="heading" translate>
@@ -304,23 +326,59 @@
 
                     <div>
 
-                        <check-toggle
-                            label="after"
+                        <text-input
+                            label="above"
                             readonly.bind="readonly"
-                            disabled.bind="!settings.enabled || !settings.customizeDelivery"
-                            value.bind="settings.authorityToLeave.customInstruction">
+                            disabled.bind="!settings.enabled || !settings.authorityToLeave.customLocation"
+                            value.bind="settings.authorityToLeave.customLocationNote[supportNoteLocale.code]"
+                            autosize.bind="true"
+                            lines.bind="2">
 
                             <div slot="heading" translate>
-                                Allow customers to specify additional instructions
+                                Custom location note
                             </div>
 
-                            <!--
                             <div slot="description" translate>
-                                This allows the user to specify instructions, in addition to the chosen location.
+                                This is a note shown when specifying a custom location, with information about any restrictions, etc.
+                                This can be specified for each supported language, and if not specified, will default to English.
                             </div>
-                            -->
 
-                        </check-toggle>
+                            <let max-custom-location-note-length.bind="120"></let>
+
+                            <select-input
+                                slot="before"
+                                appearance="none"
+                                accent="primary"
+                                none.bind="false"
+                                value.bind="customLocationNoteLocale"
+                                display-value="${customLocationNoteLocale.name}">
+
+                                <item
+                                    repeat.for="locale of availableLocales"
+                                    model.bind="locale"
+                                    accent.bind="settings.authorityToLeave.customLocationNote[locale.code].length > maxCustomLocationNoteLength ? 'negative' : undefined & attr">
+                                    ${locale.name}
+                                </item>
+
+                            </select-input>
+
+                            <div slot="validation">
+
+                                <length-validator
+                                    repeat.for="locale of availableLocales"
+                                    active.bind="true"
+                                    max.bind="maxCustomLocationNoteLength"
+                                    value.bind="settings.authorityToLeave.customLocationNote[locale.code]">
+
+                                    <template replace-part="invalid">
+                                        Please provide a value with a length of at most ${maxCustomLocationNoteLength | number}, for the language ${locale.name}.
+                                    </template>
+
+                                </length-validator>
+
+                            </div>
+
+                        </text-input>
 
                     </div>
 
