@@ -32,8 +32,12 @@ export default
                     "onTheTerrace",
                     "inTheGardenShed"
                 ],
+                customInstruction: true,
                 customLocation: true,
-                customInstruction: true
+                customLocationNote:
+                {
+                    "en": "Max 10 meters from the front door."
+                }
             }
         }
     },
@@ -68,8 +72,12 @@ export default
                     "onTheTerrace",
                     "inTheGardenShed"
                 ],
+                customInstruction: true,
                 customLocation: true,
-                customInstruction: true
+                customLocationNote:
+                {
+                    "en": "Max 10 meters from the front door."
+                }
             }
         }
     }

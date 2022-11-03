@@ -1,20 +1,20 @@
 /**
- * Represents the code identifying a `SupportNoteLocale`.
+ * Represents the code identifying a `OrderTrackingLocale`.
  */
-export type SupportNoteLocaleSlug = keyof typeof SupportNoteLocale.values;
+export type OrderTrackingLocaleSlug = keyof typeof OrderTrackingLocale.values;
 
 /**
- * Represents a locale for which a support note may be specified.
+ * Represents a locale supported by the order tracking page.
  */
-export class SupportNoteLocale
+export class OrderTrackingLocale
 {
-    public constructor(code: SupportNoteLocaleSlug)
+    public constructor(code: OrderTrackingLocaleSlug)
     {
         this.code = code;
-        Object.assign(this, SupportNoteLocale.values[this.code]);
+        Object.assign(this, OrderTrackingLocale.values[this.code]);
     }
 
-    public code: SupportNoteLocaleSlug;
+    public code: OrderTrackingLocaleSlug;
     public name: string;
     public value: number;
 

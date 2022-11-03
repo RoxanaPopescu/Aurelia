@@ -4,7 +4,7 @@ import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { IValidation } from "shared/framework";
 import { IdentityService } from "app/services/identity";
-import { OrderTrackingService, AuthorityToLeaveLocation, OrderTrackingSettings, SupportNoteLocale } from "app/model/order-tracking";
+import { OrderTrackingService, AuthorityToLeaveLocation, OrderTrackingSettings, OrderTrackingLocale } from "app/model/order-tracking";
 
 /**
  * Represents the page.
@@ -32,14 +32,19 @@ export class TrackingPage
     protected readonly authorityToLeaveLocations = Object.keys(AuthorityToLeaveLocation.values).map(key => new AuthorityToLeaveLocation(key as any));
 
     /**
-     * The locales for which a support note may be specified.
+     * The locales supported by the tracking page.
      */
-    protected readonly supportNoteLocales = Object.keys(SupportNoteLocale.values).map(key => new SupportNoteLocale(key as any));
+    protected readonly availableLocales = Object.keys(OrderTrackingLocale.values).map(key => new OrderTrackingLocale(key as any));
 
     /**
-     * The selected support note locale.
+     * The selected locale for the support note input.
      */
-    protected readonly supportNoteLocale: SupportNoteLocale = this.supportNoteLocales.find(l => l.code === "en")!;
+    protected readonly supportNoteLocale: OrderTrackingLocale = this.availableLocales.find(l => l.code === "en")!;
+
+    /**
+     * The selected locale for the custom location note.
+     */
+    protected readonly customLocationNoteLocale: OrderTrackingLocale = this.availableLocales.find(l => l.code === "en")!;
 
     /**
      * The most recent operation.

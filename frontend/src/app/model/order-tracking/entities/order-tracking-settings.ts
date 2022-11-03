@@ -20,7 +20,8 @@ export class OrderTrackingSettings
         {
             standardLocations: data.authorityToLeave.standardLocations?.map(l => new AuthorityToLeaveLocation(l)),
             customLocation: data.authorityToLeave.customLocation,
-            customInstruction: data.authorityToLeave.customInstruction
+            customInstruction: data.authorityToLeave.customInstruction,
+            customLocationNote: data.authorityToLeave.customLocationNote
         };
     }
 
@@ -63,5 +64,6 @@ export class OrderTrackingSettings
         standardLocations: AuthorityToLeaveLocationSlug[] | undefined;
         customLocation: boolean;
         customInstruction: boolean;
+        customLocationNote: MapObject<string>;
     };
 }
