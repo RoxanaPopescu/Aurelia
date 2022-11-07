@@ -66,12 +66,12 @@ export interface IListViewTableDefinition
     /**
      * The columns with visibility `visible`.
      */
-    visibleColumns: (ListViewColumn | { slug: string, width: string })[];
+    visibleColumns: ListViewColumn[];
 
     /**
      * The columns with visibility `icon`, which will be presented as a special icons column.
      */
-    iconColumns: (ListViewColumn | { slug: string, width: string })[];
+    iconColumns: ListViewColumn[];
 
     /**
      * The style, defining the column widths, to apply to the `data-table`.
