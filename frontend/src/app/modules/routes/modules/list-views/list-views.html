@@ -208,25 +208,25 @@
                     if.bind="activeListView != null"
                     appearance="rows"
                     sorting.bind="activeListView.definition.sorting"
-                    style.bind="tableStyle"
+                    style.bind="tableDefinition.style"
                     busy.bind="activeListView.operation.pending || pickupNearbyOperation.pending"
                     class="margin-top">
 
                     <data-table-headers>
 
-                        <template repeat.for="column of activeListView.definition.columns">
+                        <template repeat.for="column of tableDefinition.visibleColumns">
 
-                            <data-table-cell if.bind="column.visibility === 'visible'" name.bind="column.property">
+                            <data-table-cell name.bind="column.property">
                                 <span class="text-truncate">
                                     ${column.shortName}
                                 </span>
                             </data-table-cell>
 
-                        </template>
+                            <data-table-cell if.bind="$last && tableDefinition.iconColumns.length > 0">
+                                <!-- Icons -->
+                            </data-table-cell>
 
-                        <data-table-cell if.bind="showIconsColumn">
-                            <!-- Icons -->
-                        </data-table-cell>
+                        </template>
 
                     </data-table-headers>
 
@@ -234,10 +234,10 @@
 
                         <data-table-row
                             accent.bind="route.criticality.accent"
-                            selected.bind="$parent.activeListView.expandedItemId == route.id"
+                            selected.bind="activeListView.expandedItemId == route.id"
                             click.call="onItemClick(route)">
 
-                            <template repeat.for="column of $parent.activeListView.definition.columns">
+                            <template repeat.for="column of tableDefinition.visibleColumns">
 
                                 <let updating.bind="{ driver: false, vehicle: false, executor: false, team: false }"></let>
 
@@ -555,26 +555,26 @@
                                     </span>
                                 </data-table-cell>
 
+                                <data-table-cell if.bind="$last && tableDefinition.iconColumns.length > 0" align="right">
+
+                                    <div class="icon-row">
+
+                                        <template repeat.for="column of tableDefinition.iconColumns">
+
+                                            <button if.bind="column.slug === 'driving-list'" appearance="none" accent="primary" click.trigger="onShowDrivingListClick(route)">
+                                                <icon name="document"></icon>
+                                            </button>
+
+                                        </template>
+
+                                    </div>
+
+                                </data-table-cell>
+
                             </template>
 
-                            <data-table-cell if.bind="showIconsColumn" align="right">
-
-                                <div class="icon-row">
-
-                                    <template repeat.for="column of $parent.activeListView.definition.columns">
-
-                                        <button if.bind="column.slug === 'driving-list'" appearance="none" accent="primary" click.trigger="onShowDrivingListClick(route)">
-                                            <icon name="document"></icon>
-                                        </button>
-
-                                    </template>
-
-                                </div>
-
-                            </data-table-cell>
-
                             <data-table-details
-                                if.bind="$parent.activeListView.expandedItemId == route.id"
+                                if.bind="activeListView.expandedItemId == route.id"
                                 slot="details"
                                 surface="neutral"
                                 accent.bind="route.criticality.accent">

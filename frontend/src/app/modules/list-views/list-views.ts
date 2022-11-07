@@ -59,6 +59,27 @@ export interface IListViewPageItems
 }
 
 /**
+ * Represents the columns and style for a `data-table`.
+ */
+export interface IListViewTableDefinition
+{
+    /**
+     * The columns with visibility `visible`.
+     */
+    visibleColumns: (ListViewColumn | { slug: string, width: string })[];
+
+    /**
+     * The columns with visibility `icon`, which will be presented as a special icons column.
+     */
+    iconColumns: (ListViewColumn | { slug: string, width: string })[];
+
+    /**
+     * The style, defining the column widths, to apply to the `data-table`.
+     */
+    style: MapObject;
+}
+
+/**
  * Represents the page.
  */
 @autoinject
@@ -130,48 +151,36 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
     protected pageTabNavElement: HTMLElement;
 
     /**
-     * The widths of the columns, or undefined if no view is active.
-     * Implementations may override this if needed, e.g. to support selection.
+     * The columns and style for the `data-table`.
      */
     @computedFrom("activeListView.definition.columns")
-    protected get columnWidths(): string[] | undefined
-    {
-        return this.activeListView?.definition.columns
-            .filter(column => column.visibility === "visible")
-            .map(c => c.width!);
-    }
-
-    /**
-     * True if the icons column should be visible, otherwise false.
-     */
-    @computedFrom("activeListView.definition.columns")
-    protected get showIconsColumn(): boolean
-    {
-        return this.activeListView?.definition.columns
-            .some(column => column.visibility === "icon") ?? false;
-    }
-
-    /**
-     * The style defining the grid template columns for the `data-table`.
-     */
-    @computedFrom("activeListView", "showIconsColumn", "columnWidths")
-    protected get tableStyle(): MapObject
+    protected get tableDefinition(): IListViewTableDefinition | undefined
     {
         if (this.activeListView == null)
         {
-            return {};
+            return undefined;
         }
 
-        // Get the widths of the data columns.
-        const columnWidths = this.columnWidths!;
+        // Get the visible columns in the active list view.
+        const visibleColumns = this.activeListView.definition.columns
+            .filter(column => column.visibility === "visible");
 
-        // Add the width of the `icons` column, if relevant.
-        if (this.showIconsColumn)
+        // Get the icon columns in the active list view.
+        const iconColumns = this.activeListView.definition.columns
+            .filter(column => column.visibility === "icon");
+
+        const columnWidths = visibleColumns.map(c => c.width!);
+
+        // Add the `data-table-icons` column, if needed.
+        if (iconColumns.length > 0)
         {
             columnWidths.push("min-content");
         }
 
-        return { "--data-table-columns": columnWidths.join(" ") };
+        // Create the table style.
+        const style = { "--data-table-columns": columnWidths.join(" ") };
+
+        return { visibleColumns, iconColumns, style };
     }
 
     /**
