@@ -138,7 +138,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
      * The list view that is curently active, if any.
      */
     @observable
-    protected activeListView: ListView<TListViewFilter, TListItem> | undefined;
+    protected activeListView: ListView<TListViewFilter, TListItem> | undefined | null;
 
     /**
      * The scroll manager for the page.
@@ -629,7 +629,7 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
 
             // HACK: Force a re-rendering of the entire view, to prevent a bug in Aurelia's `repeat.for` behavior.
 
-            this.activeListView = undefined;
+            this.activeListView = null;
 
             setTimeout(() =>
             {
