@@ -12,7 +12,7 @@
 
             <page-section class="flex-grow">
 
-                <check-toggle if.bind="settings.rules.length != 0" label="after" class="geographic-areas-list-toggle-all margin-bottom" value.to-view="allAreasSelected" change.trigger="onToggleAllAreas()">
+                <check-toggle if.bind="settings.rules.length > 0" label="after" class="geographic-areas-list-toggle-all margin-bottom" value.to-view="allAreasSelected" change.trigger="onToggleAllAreas()">
 
                     <span slot="heading" translate>
                         Select all
