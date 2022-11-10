@@ -2,7 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { AbortError } from "shared/types";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
-import { IValidation } from "shared/framework";
+import { ChangeDetector, IValidation } from "shared/framework";
 import { IdentityService } from "app/services/identity";
 import { OrderTrackingService, AuthorityToLeaveLocation, OrderTrackingSettings, OrderTrackingLocale } from "app/model/order-tracking";
 
@@ -25,6 +25,7 @@ export class TrackingPage
     }
 
     private readonly _orderTrackingService: OrderTrackingService;
+    private _changeDetector: ChangeDetector;
 
     /**
      * The standard locations for authority to leave.
@@ -75,6 +76,15 @@ export class TrackingPage
     }
 
     /**
+     * Called by the framework before the module is deactivated.
+     * @returns A promise that will be resolved with true if the module should be deactivated, otherwise false.
+     */
+    public async canDeactivate(): Promise<boolean>
+    {
+        return this._changeDetector.allowDiscard();
+    }
+
+    /**
      * Called by the framework when the module is deactivated.
      */
     public deactivate(): void
@@ -95,6 +105,8 @@ export class TrackingPage
         this.operation = new Operation(async signal =>
         {
             this.settings = (await this._orderTrackingService.getSettings(signal));
+
+            this._changeDetector = new ChangeDetector(() => this.settings);
         });
 
         this.operation.promise.catch(error =>
@@ -125,6 +137,8 @@ export class TrackingPage
         this.operation = new Operation(async signal =>
         {
             await this._orderTrackingService.saveSettings(this.settings!);
+
+            this._changeDetector.markAsUnchanged();
         });
 
         this.operation.promise.catch(error =>

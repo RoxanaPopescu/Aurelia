@@ -1,6 +1,6 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
-import { ModalService, IValidation } from "shared/framework";
+import { ModalService, IValidation, ChangeDetector } from "shared/framework";
 import { Consignor } from "app/model/outfit";
 import { OrderGroupService, OrderGroup, MatchingCriteria, RoutePlanningTime } from "app/model/order-group";
 import { MatchingCriteriaDialog } from "./modals/matching-criteria/matching-criteria";
@@ -54,6 +54,7 @@ export class DetailsPage
     private readonly _routePlanningSettingsService: RoutePlanningSettingsService;
     private readonly _availableTags: string[];
     private _availableConsignors: Consignor[];
+    private _changeDetector: ChangeDetector;
 
     /**
      * The original name of the order group.
@@ -107,6 +108,8 @@ export class DetailsPage
             this.orderGroup = await this._orderGroupsService.get(params.id);
             this.orderGroupName = this.orderGroup.name;
 
+            this._changeDetector = new ChangeDetector(() => this.orderGroup);
+
             addToRecentEntities(this.orderGroup.toEntityInfo());
         }
         else
@@ -133,6 +136,15 @@ export class DetailsPage
     }
 
     /**
+     * Called by the framework before the module is deactivated.
+     * @returns A promise that will be resolved with true if the module should be deactivated, otherwise false.
+     */
+    public async canDeactivate(): Promise<boolean>
+    {
+        return this._changeDetector.allowDiscard();
+    }
+
+    /**
      * Called when the `Create order group` button is clicked.
      * Creates the order group.
      */
@@ -150,6 +162,8 @@ export class DetailsPage
             this.isSavingChanges = true;
 
             this.orderGroup = await this._orderGroupsService.create(this.orderGroup);
+
+            this._changeDetector.markAsUnchanged();
         }
         catch (error)
         {
@@ -179,6 +193,8 @@ export class DetailsPage
             this.isSavingChanges = true;
 
             this.orderGroup = await this._orderGroupsService.update(this.orderGroup);
+
+            this._changeDetector.markAsUnchanged();
         }
         catch (error)
         {

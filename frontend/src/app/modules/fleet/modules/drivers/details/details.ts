@@ -1,7 +1,7 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { DriverService, Driver } from "app/model/driver";
 import { VehicleService, Vehicle } from "app/model/vehicle";
-import { ModalService, IValidation, IScroll } from "shared/framework";
+import { ModalService, IValidation, IScroll, ChangeDetector } from "shared/framework";
 import { DeleteVehicleDialog } from "app/modules/fleet/modals/confirm-delete/confirm-delete";
 import { VehiclePanel } from "app/modules/fleet/modals/vehicle/vehicle";
 import { Operation } from "shared/utilities";
@@ -54,6 +54,7 @@ export class DetailsPage
     private readonly _modalService: ModalService;
     private readonly _identityService: IdentityService;
     private readonly _constructed;
+    private _changeDetector: ChangeDetector;
 
     /**
      * The scroll manager for the page.
@@ -131,6 +132,17 @@ export class DetailsPage
             this.vehicles = [];
             this.update();
         }
+
+        this._changeDetector = new ChangeDetector(() => this.driver);
+    }
+
+    /**
+     * Called by the framework before the module is deactivated.
+     * @returns A promise that will be resolved with true if the module should be deactivated, otherwise false.
+     */
+    public async canDeactivate(): Promise<boolean>
+    {
+        return this._changeDetector.allowDiscard();
     }
 
     /**
@@ -277,6 +289,8 @@ export class DetailsPage
             {
                 this.driver = await this._driverService.update(this.driver);
             }
+
+            this._changeDetector.markAsUnchanged();
 
             this.updating = false;
         }

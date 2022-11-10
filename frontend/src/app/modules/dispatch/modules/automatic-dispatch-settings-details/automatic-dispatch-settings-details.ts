@@ -1,6 +1,6 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { ApiError, HistoryHelper, Log } from "shared/infrastructure";
-import { IValidation, ModalService, ToastService } from "shared/framework";
+import { ChangeDetector, IValidation, ModalService, ToastService } from "shared/framework";
 import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 import { IdentityService } from "app/services/identity";
 import { OrganizationConnection, OrganizationService } from "app/model/organization";
@@ -59,6 +59,7 @@ export class AutomaticDispatchSettingsDetailsPage
     private readonly _historyHelper: HistoryHelper;
     private readonly _modalService: ModalService;
     private readonly _toastService: ToastService;
+    private _changeDetector: ChangeDetector;
 
     /**
      * The creators connected to the current organization.
@@ -161,6 +162,17 @@ export class AutomaticDispatchSettingsDetailsPage
 
         this.availableContractors = connections.map(c => new Fulfiller({ id: c.organization.id, companyName: c.organization.name }));
         this.availableContractors.push(this._identityService.identity!.organization!);
+
+        this._changeDetector = new ChangeDetector(() => this.settings);
+    }
+
+    /**
+     * Called by the framework before the module is deactivated.
+     * @returns A promise that will be resolved with true if the module should be deactivated, otherwise false.
+     */
+    public async canDeactivate(): Promise<boolean>
+    {
+        return this._changeDetector.allowDiscard();
     }
 
     /**
@@ -203,6 +215,8 @@ export class AutomaticDispatchSettingsDetailsPage
         this._historyHelper.setTitle(`${this.settings.name}${document.title.substring(this.ruleSetName.length)}`);
         this.ruleSetName = this.settings.name;
         this.isNew = false;
+
+        this._changeDetector.markAsUnchanged();
 
         await this._historyHelper.navigate(state =>
         {

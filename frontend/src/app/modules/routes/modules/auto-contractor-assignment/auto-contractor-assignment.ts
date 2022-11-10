@@ -1,6 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
-import { IValidation } from "shared/framework";
+import { ChangeDetector, IValidation } from "shared/framework";
 import { AutoContractorAssignmentService, AutoContractorAssignmentSettings } from "app/model/auto-contractor-assignment";
 
 /**
@@ -19,6 +19,7 @@ export class AutoContractorAssignmentModule
     }
 
     private readonly _autoContractorAssignmentService: AutoContractorAssignmentService;
+    private _changeDetector: ChangeDetector;
 
     /**
      * The validation for the modal.
@@ -43,6 +44,17 @@ export class AutoContractorAssignmentModule
     public async activate(): Promise<void>
     {
         this.settings = await this._autoContractorAssignmentService.get();
+
+        this._changeDetector = new ChangeDetector(() => this.settings);
+    }
+
+    /**
+     * Called by the framework before the module is deactivated.
+     * @returns A promise that will be resolved with true if the module should be deactivated, otherwise false.
+     */
+    public async canDeactivate(): Promise<boolean>
+    {
+        return this._changeDetector.allowDiscard();
     }
 
     /**
@@ -65,6 +77,8 @@ export class AutoContractorAssignmentModule
         try
         {
             await this._autoContractorAssignmentService.update(this.settings);
+
+            this._changeDetector.markAsUnchanged();
 
             this.updating = false;
         }

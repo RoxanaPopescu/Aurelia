@@ -2,7 +2,7 @@ import { autoinject, observable } from "aurelia-framework";
 import { Operation } from "shared/utilities";
 import { RouteTemplateService, RouteTemplate } from "app/model/route-template";
 import { Log } from "shared/infrastructure";
-import { ModalService, IValidation } from "shared/framework";
+import { ModalService, IValidation, ChangeDetector } from "shared/framework";
 import { CreateRoutePanel } from "./modals/create-route/create-route";
 import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 
@@ -36,6 +36,7 @@ export class DetailsPage
 
     private readonly _routeTemplateService: RouteTemplateService;
     private readonly _modalService: ModalService;
+    private _changeDetector: ChangeDetector;
 
     /**
      * Current tab page the user is routed to.
@@ -90,6 +91,17 @@ export class DetailsPage
         {
             this.template = new RouteTemplate();
         }
+
+        this._changeDetector = new ChangeDetector(() => this.template);
+    }
+
+    /**
+     * Called by the framework before the module is deactivated.
+     * @returns A promise that will be resolved with true if the module should be deactivated, otherwise false.
+     */
+    public async canDeactivate(): Promise<boolean>
+    {
+        return this._changeDetector.allowDiscard();
     }
 
     /**
@@ -140,6 +152,8 @@ export class DetailsPage
             {
                 await this._routeTemplateService.update(this.template);
             }
+
+            this._changeDetector.markAsUnchanged();
 
             this.saving = false;
         }

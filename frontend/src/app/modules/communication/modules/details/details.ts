@@ -1,7 +1,7 @@
 import { autoinject, computedFrom } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { Log } from "shared/infrastructure";
-import { IValidation } from "shared/framework";
+import { ChangeDetector, IValidation } from "shared/framework";
 import { CommunicationService, CommunicationTrigger, CommunicationTriggerEvent, CommunicationRecipient, CommunicationMessageType } from "app/model/_communication";
 import { Outfit } from "app/model/outfit";
 import { IdentityService } from "app/services/identity";
@@ -43,6 +43,8 @@ export class DetailsPage
     private readonly _organizationService: OrganizationService;
     private readonly _identityService: IdentityService;
     private readonly _router: Router;
+    private _changeDetector: ChangeDetector;
+
 
     /**
      * The validation for the modal.
@@ -134,6 +136,17 @@ export class DetailsPage
         const connections = await this._organizationService.getConnections();
         this.availableCustomers.push(...connections.map(c => new Outfit({ id: c.organization.id, companyName: c.organization.name })));
         this.availableCustomers.push(this._identityService.identity!.organization!);
+
+        this._changeDetector = new ChangeDetector(() => this.model);
+    }
+
+    /**
+     * Called by the framework before the module is deactivated.
+     * @returns A promise that will be resolved with true if the module should be deactivated, otherwise false.
+     */
+    public async canDeactivate(): Promise<boolean>
+    {
+        return this._changeDetector.allowDiscard();
     }
 
     /**
@@ -177,6 +190,8 @@ export class DetailsPage
 
                 this.triggerName = this.model.name;
             }
+
+            this._changeDetector.markAsUnchanged();
         }
         catch (error)
         {

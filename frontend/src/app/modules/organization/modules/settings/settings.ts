@@ -2,7 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { AbortError } from "shared/types";
 import { Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
-import { IValidation } from "shared/framework";
+import { ChangeDetector, IValidation } from "shared/framework";
 import { IdentityService } from "app/services/identity";
 import { OrganizationService, OrganizationSettings } from "app/model/organization";
 
@@ -26,6 +26,7 @@ export class SettingsPage
     }
 
     private readonly _organizationService: OrganizationService;
+    private _changeDetector: ChangeDetector;
 
     /**
      * The most recent operation.
@@ -61,6 +62,15 @@ export class SettingsPage
     }
 
     /**
+     * Called by the framework before the module is deactivated.
+     * @returns A promise that will be resolved with true if the module should be deactivated, otherwise false.
+     */
+    public async canDeactivate(): Promise<boolean>
+    {
+        return this._changeDetector.allowDiscard();
+    }
+
+    /**
      * Called by the framework when the module is deactivated.
      */
     public deactivate(): void
@@ -81,6 +91,8 @@ export class SettingsPage
         this.operation = new Operation(async signal =>
         {
             this.settings = await this._organizationService.getSettings(signal);
+
+            this._changeDetector = new ChangeDetector(() => this.settings);
         });
 
         this.operation.promise.catch(error =>
@@ -111,6 +123,8 @@ export class SettingsPage
         this.operation = new Operation(async signal =>
         {
             await this._organizationService.saveSettings(this.settings!);
+
+            this._changeDetector.markAsUnchanged();
         });
 
         this.operation.promise.catch(error =>

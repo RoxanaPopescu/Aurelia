@@ -1,6 +1,6 @@
 import { autoinject, observable } from "aurelia-framework";
 import { DriverService, Driver } from "app/model/driver";
-import { IValidation } from "shared/framework";
+import { ChangeDetector, IValidation } from "shared/framework";
 import { DateTime } from "luxon";
 import { Uuid } from "shared/utilities/id/uuid";
 import { ApiError } from "shared/infrastructure";
@@ -29,6 +29,7 @@ export class CreateMultiplePage
     }
 
     private readonly _driverService: DriverService;
+    private _changeDetector: ChangeDetector;
 
     /**
      * The results of created routes.
@@ -58,7 +59,20 @@ export class CreateMultiplePage
     public activate(): void
     {
         this.driver = new Driver();
+
+        this._changeDetector = new ChangeDetector(() => this.driver);
     }
+
+    /**
+     * Called by the framework before the module is deactivated.
+     * @returns A promise that will be resolved with true if the module should be deactivated, otherwise false.
+     */
+    public async canDeactivate(): Promise<boolean>
+    {
+        return this._changeDetector.allowDiscard();
+    }
+
+
 
     /**
      * Called when the "Transfer driver" is clicked when a creation has failed.
@@ -108,6 +122,8 @@ export class CreateMultiplePage
             {
                 this.results[index].driver = driver;
             }
+
+            this._changeDetector.markAsUnchanged();
         }
         catch (error)
         {

@@ -1,6 +1,6 @@
 import { autoinject, observable } from "aurelia-framework";
 import { Log } from "shared/infrastructure";
-import { IValidation } from "shared/framework";
+import { IValidation, ChangeDetector } from "shared/framework";
 import { RoutePlanningSettingsService, RoutePlanningSettings as RoutePlanningSettings } from "app/model/_route-planning-settings";
 import { addToRecentEntities } from "app/modules/starred/services/recent-item";
 
@@ -31,6 +31,7 @@ export class DetailsPage
     }
 
     private readonly _routePlanningSettingsService: RoutePlanningSettingsService;
+    private _changeDetector: ChangeDetector;
 
     /**
      * Current tab page the user is routed to.
@@ -78,6 +79,17 @@ export class DetailsPage
         {
             this.settings = new RoutePlanningSettings();
         }
+
+        this._changeDetector = new ChangeDetector(() => this.settings);
+    }
+
+    /**
+     * Called by the framework before the module is deactivated.
+     * @returns A promise that will be resolved with true if the module should be deactivated, otherwise false.
+     */
+    public async canDeactivate(): Promise<boolean>
+    {
+        return this._changeDetector.allowDiscard();
     }
 
     /**
@@ -109,6 +121,8 @@ export class DetailsPage
             {
                 await this._routePlanningSettingsService.update(this.settings);
             }
+
+            this._changeDetector.markAsUnchanged();
 
             this.updating = false;
         }
