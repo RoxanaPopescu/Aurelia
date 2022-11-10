@@ -40,10 +40,10 @@ export class DetailsModule
         this._modalService = modalService;
     }
 
-    private readonly _modalService: ModalService;
-    private readonly _router: Router;
-    private _pollTimeout: any;
     protected readonly collectionPointService: CollectionPointService;
+    private readonly _router: Router;
+    private readonly _modalService: ModalService;
+    private _pollTimeout: any;
 
     /**
      * The ID of the collection point.

@@ -52,9 +52,8 @@ export class DetailsPage
     private readonly _organizationService: OrganizationService;
     private readonly _identityService: IdentityService;
     private readonly _routePlanningSettingsService: RoutePlanningSettingsService;
-
-    private availableConsignors: Consignor[];
-    private readonly availableTags: string[];
+    private readonly _availableTags: string[];
+    private _availableConsignors: Consignor[];
 
     /**
      * The original name of the order group.
@@ -82,6 +81,20 @@ export class DetailsPage
     protected isSavingChanges = false;
 
     /**
+     * Called when the linked route plan rulesets is clicked in the select
+     */
+    @computedFrom("ruleSets", "orderGroup.routeOptimizationSettingsId")
+    protected get currentRuleSet(): RoutePlanningSettingsInfo | undefined
+    {
+        return this.ruleSets?.find(ruleSet => ruleSet.id === this.orderGroup.routeOptimizationSettingsId);
+    }
+
+    protected set currentRuleSet(info: RoutePlanningSettingsInfo | undefined)
+    {
+        this.orderGroup.routeOptimizationSettingsId = info?.id;
+    }
+
+    /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
      * @returns A promise that will be resolved when the module is activated.
@@ -107,8 +120,8 @@ export class DetailsPage
         (async () =>
         {
             const connections = await this._organizationService.getConnections();
-            this.availableConsignors = connections.map(c => new Consignor({ id: c.organization.id, companyName: c.organization.name }));
-            this.availableConsignors.push(this._identityService.identity!.organization!);
+            this._availableConsignors = connections.map(c => new Consignor({ id: c.organization.id, companyName: c.organization.name }));
+            this._availableConsignors.push(this._identityService.identity!.organization!);
         })();
 
         // tslint:disable-next-line: no-floating-promises
@@ -117,18 +130,6 @@ export class DetailsPage
             // Fetch available rule-sets.
             this.ruleSets = await this._routePlanningSettingsService.getAll();
         })();
-    }
-
-    /**
-     * Called when the linked route plan rulesets is clicked in the select
-     */
-    @computedFrom("ruleSets", "orderGroup.routeOptimizationSettingsId")
-    protected get currentRuleSet(): RoutePlanningSettingsInfo | undefined {
-        return this.ruleSets?.find(ruleSet => ruleSet.id === this.orderGroup.routeOptimizationSettingsId);
-    }
-
-    protected set currentRuleSet(info: RoutePlanningSettingsInfo | undefined) {
-        this.orderGroup.routeOptimizationSettingsId = info?.id;
     }
 
     /**
@@ -199,8 +200,8 @@ export class DetailsPage
         const result = await this._modalService.open(MatchingCriteriaDialog,
         {
             matchingCriteria,
-            tags: this.availableTags,
-            organizations: this.availableConsignors
+            tags: this._availableTags,
+            organizations: this._availableConsignors
         }).promise;
 
         if (result)
@@ -240,8 +241,8 @@ export class DetailsPage
         const result = await this._modalService.open(MatchingCriteriaDialog,
         {
             matchingCriteria,
-            tags: this.availableTags,
-            organizations: this.availableConsignors
+            tags: this._availableTags,
+            organizations: this._availableConsignors
         }).promise;
 
         if (result)
