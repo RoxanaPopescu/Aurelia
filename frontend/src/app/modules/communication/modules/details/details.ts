@@ -45,7 +45,6 @@ export class DetailsPage
     private readonly _router: Router;
     private _changeDetector: ChangeDetector;
 
-
     /**
      * The validation for the modal.
      */

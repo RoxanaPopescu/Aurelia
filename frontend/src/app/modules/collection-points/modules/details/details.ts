@@ -35,12 +35,12 @@ export class DetailsModule
         router: Router,
         modalService: ModalService)
     {
-        this.collectionPointService = collectionPointService;
+        this._collectionPointService = collectionPointService;
         this._router = router;
         this._modalService = modalService;
     }
 
-    protected readonly collectionPointService: CollectionPointService;
+    private readonly _collectionPointService: CollectionPointService;
     private readonly _router: Router;
     private readonly _modalService: ModalService;
     private _pollTimeout: any;
@@ -112,7 +112,7 @@ export class DetailsModule
         {
             try
             {
-                this.collectionPoint = await this.collectionPointService.get(this.id, signal);
+                this.collectionPoint = await this._collectionPointService.get(this.id, signal);
 
                 // this._router.title = this.route.slug;
                 this._router.updateTitle();

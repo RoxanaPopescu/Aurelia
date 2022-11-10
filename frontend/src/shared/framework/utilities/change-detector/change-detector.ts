@@ -17,7 +17,7 @@ export class ChangeDetector
         this.unchangedHash = this.getHashFunc();
     }
 
-    private getHashFunc: () => string;
+    private readonly getHashFunc: () => string;
     private unchangedHash: string | undefined;
 
     /**
@@ -29,9 +29,9 @@ export class ChangeDetector
     {
         if (this.hasChanges())
         {
-            var modalService = Container.instance.get(ModalService);
+            const modalService = Container.instance.get(ModalService);
 
-            return await modalService.open("confirm-discard").promise;
+            return modalService.open("confirm-discard").promise;
         }
 
         return true;
@@ -43,7 +43,7 @@ export class ChangeDetector
      */
     public hasChanges(): boolean
     {
-        return this.unchangedHash != this.getHashFunc();
+        return this.unchangedHash !== this.getHashFunc();
     }
 
     /**
@@ -72,4 +72,3 @@ export class ChangeDetector
         return JSON.stringify(state, (key, value) => key === "etag" ? undefined : value);
     }
 }
-

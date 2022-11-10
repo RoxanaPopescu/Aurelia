@@ -72,8 +72,6 @@ export class CreateMultiplePage
         return this._changeDetector.allowDiscard();
     }
 
-
-
     /**
      * Called when the "Transfer driver" is clicked when a creation has failed.
      */
