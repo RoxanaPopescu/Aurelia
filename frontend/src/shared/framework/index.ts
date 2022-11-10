@@ -253,3 +253,4 @@ export * from "./services/toast";
 
 // Utilities
 export * from "./utilities/pick-and-upload-file/pick-and-upload-file";
+export * from "./utilities/change-detector/change-detector";
