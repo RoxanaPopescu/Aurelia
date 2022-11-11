@@ -83,7 +83,7 @@ export class RouteStopActions
     public colliCountVerification: boolean;
 
     @computedFrom("photo", "signature", "colliCountVerification", "timeFrameVerification", "scanColli", "handleAllColli", "identity", "instructionsAccept")
-    public get isAnySelected()
+    public get isAnySelected(): boolean
     {
         return this.photo ||
         this.signature ||
