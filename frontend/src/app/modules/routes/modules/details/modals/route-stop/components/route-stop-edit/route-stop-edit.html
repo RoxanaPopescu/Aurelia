@@ -79,7 +79,7 @@
                         valid.bind="model.routeStop.status.slug != 'completed' || !model.routeStop.actions.isAnySelected">
 
                         <template replace-part="invalid" translate>
-                            To complete this stop, please deselect all driver tasks to confirm that they will not be performed.
+                            Please deselect all driver tasks before completing this stop, to confirm that they will not be performed.
                         </template>
 
                     </custom-validator>
