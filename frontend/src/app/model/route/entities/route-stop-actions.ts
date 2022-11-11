@@ -1,3 +1,5 @@
+import { computedFrom } from "aurelia-framework";
+
 /**
  * Represents the actions that are required to complete the stop.
  */
@@ -79,4 +81,17 @@ export class RouteStopActions
      * True if verification colli count is required. This is usually colli verification without barcodes.
      */
     public colliCountVerification: boolean;
+
+    @computedFrom("photo", "signature", "colliCountVerification", "timeFrameVerification", "scanColli", "handleAllColli", "identity", "instructionsAccept")
+    public get isAnySelected()
+    {
+        return this.photo ||
+        this.signature ||
+        this.colliCountVerification ||
+        this.timeFrameVerification ||
+        this.scanColli ||
+        this.handleAllColli ||
+        this.identity ||
+        this.instructionsAccept;
+    }
 }

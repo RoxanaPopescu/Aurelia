@@ -74,6 +74,16 @@
                         value.bind="model.routeStop.status">
                     </required-validator>
 
+                    <custom-validator
+                        view-model.ref="completeWithTasksValidator"
+                        valid.bind="model.routeStop.status.slug != 'completed' || !model.routeStop.actions.isAnySelected">
+
+                        <template replace-part="invalid" translate>
+                            Please consider, and then deselect, the required driver tasks before completing this stop
+                        </template>
+
+                    </custom-validator>
+
                 </div>
 
             </select-input>
@@ -350,6 +360,16 @@
 
                 </div>
 
+                <div slot="validation">
+
+                    <dependent-validator
+                        if.bind="model.routeStop.actions.photo"
+                        set-validity.one-time="true"
+                        validators.bind="completeWithTasksValidator">
+                    </dependent-validator>
+
+                </div>
+
             </check-toggle>
 
             <check-toggle label="after" value.bind="model.routeStop.actions.signature" class="flex-basis-1-of-2">
@@ -371,6 +391,16 @@
                         </span>
 
                     </info-icon>
+
+                </div>
+
+                <div slot="validation">
+
+                    <dependent-validator
+                        if.bind="model.routeStop.actions.signature"
+                        set-validity.one-time="true"
+                        validators.bind="completeWithTasksValidator">
+                    </dependent-validator>
 
                 </div>
 
@@ -402,6 +432,16 @@
 
                 </div>
 
+                <div slot="validation">
+
+                    <dependent-validator
+                        if.bind="model.routeStop.actions.colliCountVerification"
+                        set-validity.one-time="true"
+                        validators.bind="completeWithTasksValidator">
+                    </dependent-validator>
+
+                </div>
+
             </check-toggle>
 
             <check-toggle label="after" value.bind="model.routeStop.actions.timeFrameVerification" class="flex-basis-1-of-2">
@@ -423,6 +463,16 @@
                         </span>
 
                     </info-icon>
+
+                </div>
+
+                <div slot="validation">
+
+                    <dependent-validator
+                        if.bind="model.routeStop.actions.timeFrameVerification"
+                        set-validity.one-time="true"
+                        validators.bind="completeWithTasksValidator">
+                    </dependent-validator>
 
                 </div>
 
@@ -454,6 +504,16 @@
 
                 </div>
 
+                <div slot="validation">
+
+                    <dependent-validator
+                        if.bind="model.routeStop.actions.scanColli"
+                        set-validity.one-time="true"
+                        validators.bind="completeWithTasksValidator">
+                    </dependent-validator>
+
+                </div>
+
             </check-toggle>
 
             <check-toggle label="after" value.bind="model.routeStop.actions.handleAllColli" class="flex-basis-1-of-2">
@@ -475,6 +535,16 @@
                         </span>
 
                     </info-icon>
+
+                </div>
+
+                <div slot="validation">
+
+                    <dependent-validator
+                        if.bind="model.routeStop.actions.handleAllColli"
+                        set-validity.one-time="true"
+                        validators.bind="completeWithTasksValidator">
+                    </dependent-validator>
 
                 </div>
 
@@ -506,6 +576,16 @@
 
                 </div>
 
+                <div slot="validation">
+
+                    <dependent-validator
+                        if.bind="model.routeStop.actions.identity"
+                        set-validity.one-time="true"
+                        validators.bind="completeWithTasksValidator">
+                    </dependent-validator>
+
+                </div>
+
             </check-toggle>
 
             <check-toggle label="after" value.bind="model.routeStop.actions.instructionsAccept" class="flex-basis-1-of-2">
@@ -527,6 +607,16 @@
                         </span>
 
                     </info-icon>
+
+                </div>
+
+                <div slot="validation">
+
+                    <dependent-validator
+                        if.bind="model.routeStop.actions.instructionsAccept"
+                        set-validity.one-time="true"
+                        validators.bind="completeWithTasksValidator">
+                    </dependent-validator>
 
                 </div>
 
