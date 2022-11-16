@@ -7,6 +7,7 @@ data-table-cell
     padding: var(--data-table-cell-padding);
     background: var(--data-table-cell-background);
     overflow: hidden;
+    user-select: text;
 
     &.--sortable
     {
@@ -16,11 +17,6 @@ data-table-cell
         {
             color: var(--surface-primary-text-color--hover);
         }
-    }
-
-    .data-table-row &
-    {
-        user-select: text;
     }
 
     .data-table-row:any-link &
