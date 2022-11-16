@@ -790,7 +790,7 @@ export class OrganizationModule extends AppModule
      */
     public "POST /v2/organizations/:organizationId/connections/:connectionId/delete" = async (context: AppContext) =>
     {
-        await context.authorize("delete-connection", { organization: context.params.organizationId });
+        await context.authorize("delete-connections", { organization: context.params.organizationId });
 
         await this.apiClient.delete(`identity/organizations/${context.params.organizationId}/connections/${context.params.connectionId}`);
 
