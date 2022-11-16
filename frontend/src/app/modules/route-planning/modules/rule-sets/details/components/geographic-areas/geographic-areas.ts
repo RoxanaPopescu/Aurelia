@@ -230,6 +230,8 @@ export class GeographicAreas
                 this.settings.specialAreas.push(this._currentAreaModel!.area);
             }
 
+            this.settings.specialAreas.sort((a, b) => a.name.localeCompare(b.name));
+
             this._currentAreaModel = undefined;
         }
     }

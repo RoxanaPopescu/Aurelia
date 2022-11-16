@@ -12,6 +12,7 @@ export class AutoContractorAssignmentSettings
         this.rules = rules ?? [];
         this.deletedRules = [];
 
+        this.rules.sort((a, b) => a.label.localeCompare(b.label));
         this.rules.forEach((r, i) => r.color = r.color ?? (i % 8) + 1 as DataColorIndex);
     }
 

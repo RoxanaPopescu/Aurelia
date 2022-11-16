@@ -30,7 +30,9 @@ export class RoutePlanningSettings
             this.vehicleGroups = data.vehicleGroups.map(d => new VehicleGroup(d));
             this.departureTimes = data.departureTimes.map(d => new DepartureTime(d));
             this.taskTimes = new TaskTimes(data.taskTimes);
+
             this.specialAreas = data.specialAreas.map(d => new SpecialArea(d));
+            this.specialAreas.sort((a, b) => a.name.localeCompare(b.name));
         }
         else
         {
