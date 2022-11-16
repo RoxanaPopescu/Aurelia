@@ -240,22 +240,8 @@
                         set-state.call="setViewState(state)">
                     </view-preset-selector>
 
-                    <select-button appearance="outline" accent="primary" placement="bottom-end">
-
-                        <div slot="icon">
-                            <icon name="more"></icon>
-                        </div>
-
-                        <item click.trigger="onSelectColumnsClick()" model="choose-list-columns" translate>
-                            Choose list columns
-                        </item>
-
-                    </select-button>
-
-                    <div if.bind="selectedOrders.length > 0" class="opacity-faded">
-
+                    <div if.bind="selectedOrders.length > 0" class="opacity-faded" translate>
                         ${selectedOrders.length} ${selectedOrders.length | plural: "order" : "orders"} selected
-
                     </div>
 
                     <button
@@ -308,6 +294,17 @@
                         Cancel orders
                     </button> -->
 
+                    <select-button appearance="outline" accent="primary" placement="bottom-end">
+
+                        <div slot="icon">
+                            <icon name="more"></icon>
+                        </div>
+
+                        <item click.trigger="onSelectColumnsClick()" model="choose-list-columns" translate>
+                            Choose list columns
+                        </item>
+
+                    </select-button>
 
                 </toolbar>
 
