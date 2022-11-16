@@ -317,6 +317,17 @@ page-sidebar
     }
 }
 
+.input select-input[slot="after"]
+{
+    margin: calc(-1 * var(--input-border-width));
+    border-left: var(--input-border-width) solid var(--surface-color);
+
+    .input-input
+    {
+        text-align: right;
+    }
+}
+
 .control-row
 {
     display: flex;
@@ -324,6 +335,15 @@ page-sidebar
     > :not(:last-child)
     {
         margin-right: var(--size-inline-spacing-larger);
+    }
+
+    > .input-heading-like
+    {
+        border-width: var(--input-border-width) solid transparent;
+        padding: var(--input-padding);
+        padding-left: 0;
+        padding-right: 0;
+        white-space: nowrap;
     }
 }
 
