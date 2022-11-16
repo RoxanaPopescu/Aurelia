@@ -57,7 +57,7 @@ export class _Session {
     let accessToken = result!.response.headers.get("Access-Token");
     let refreshToken = result!.response.headers.get("Refresh-Token");
     if (accessToken && refreshToken) {
-      //Profile.setTokens(accessToken, refreshToken);
+      // Profile.setTokens(accessToken, refreshToken);
     }
 
     this.userInfo = new UserInfo(data.userInfo);
