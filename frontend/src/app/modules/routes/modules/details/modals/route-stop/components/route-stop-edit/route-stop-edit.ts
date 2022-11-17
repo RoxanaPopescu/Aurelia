@@ -85,10 +85,11 @@ export class RouteStopEditCustomElement
         }
         else
         {
-            // New stop, default to last index
-            if (this.model.route.stops[0] instanceof RouteStop)
+            const firstStop = this.model.route.stops.find(s => s instanceof RouteStop && s.status.slug !== "cancelled") as RouteStop;
+
+            if (firstStop != null)
             {
-                this.date = this.model.route.stops[0].arrivalTimeFrame.from?.startOf("day");
+                this.date = firstStop.arrivalTimeFrame.from?.startOf("day");
             }
         }
     }
@@ -122,8 +123,8 @@ export class RouteStopEditCustomElement
             {
                 this.model.routeStop.arrivalTimeFrame = new DateTimeRange(
                 {
-                    from: newValue.setZone("UTC"),
-                    to: newValue.setZone("UTC")
+                    from: newValue,
+                    to: newValue
                 });
             }
             else
