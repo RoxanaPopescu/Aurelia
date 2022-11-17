@@ -291,6 +291,7 @@ export default
     {
         recipientTypes:
         [
+            "custom-phone",
             "custom-email"
         ],
         messageTypes:
