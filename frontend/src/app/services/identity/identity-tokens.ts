@@ -56,6 +56,16 @@ export class IdentityTokens
             permissions.push("assign-vehicle-route");
         }
 
+        // HACK: Disabled because backend does not handle it correctly.
+        // TODO: Note that the permission for this is also filtered out of the list of available permissions, and the endpoint in the BFF is disabled.
+
+        const deleteConenctionIndex = permissions.indexOf("delete-connections");
+
+        if (deleteConenctionIndex > -1)
+        {
+            permissions.splice(deleteConenctionIndex, 1);
+        }
+
         this.claims = new Set<string>(permissions);
     }
 

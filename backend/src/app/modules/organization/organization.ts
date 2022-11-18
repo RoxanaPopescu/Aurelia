@@ -788,14 +788,16 @@ export class OrganizationModule extends AppModule
      * @returns
      * - 204: No content
      */
-    public "POST /v2/organizations/:organizationId/connections/:connectionId/delete" = async (context: AppContext) =>
-    {
-        await context.authorize("delete-connections", { organization: context.params.organizationId });
+    // HACK: Disabled because backend does not handle it correctly.
+    // TODO: Note that the permission for this is also filtered out in the frontend..
+    // public "POST /v2/organizations/:organizationId/connections/:connectionId/delete" = async (context: AppContext) =>
+    // {
+    //     await context.authorize("delete-connections", { organization: context.params.organizationId });
 
-        await this.apiClient.delete(`identity/organizations/${context.params.organizationId}/connections/${context.params.connectionId}`);
+    //     await this.apiClient.delete(`identity/organizations/${context.params.organizationId}/connections/${context.params.connectionId}`);
 
-        context.response.status = 204;
-    }
+    //     context.response.status = 204;
+    // }
 
     /**
      * Maps the connection model to what the frontend expects.
