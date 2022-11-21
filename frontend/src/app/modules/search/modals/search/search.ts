@@ -1,5 +1,5 @@
 import { autoinject, computedFrom, observable } from "aurelia-framework";
-import { Operation } from "shared/utilities";
+import { debounce, Operation } from "shared/utilities";
 import { Log } from "shared/infrastructure";
 import { Modal } from "shared/framework";
 import { SearchService, SearchInfo } from "app/modules/search/services/search";
@@ -7,6 +7,9 @@ import { SavedSearchService } from "app/modules/search/services/saved-search";
 import { RecentSearchService } from "app/modules/search/services/recent-search";
 import { StarredItemService } from "app/modules/starred/services/starred-item";
 import { EntityInfo } from "app/types/entity";
+
+// The time in milliseconds by which search query changes are debounced.
+const queryDebounceTime = 300;
 
 // The delay in milliseconds before a search is logged, after the query changes.
 const logSearchDelay = 3000;
@@ -215,6 +218,7 @@ export class SearchModalPanel
      * Called when the `queryText` property changes.
      * Gets the search results matching the query.
      */
+    @debounce(queryDebounceTime)
     protected queryTextChanged(): void
     {
         // Abort any scheduled logging.
