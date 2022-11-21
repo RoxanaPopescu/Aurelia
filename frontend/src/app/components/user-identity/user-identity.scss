@@ -15,10 +15,17 @@ user-identity
             border-color var(--animation-duration-short),
             filter var(--animation-duration-short);
 
+        &,
+        &:hover
+        {
+            // Inherit color, despite being a link.
+            color: inherit !important;
+        }
+
         &:hover identity-picture
         {
             // Darken when hovered.
-            filter: brightness(98%);
+            filter: brightness(99%);
         }
 
         identity-picture
@@ -29,18 +36,6 @@ user-identity
 
             // Clip as a circle.
             border-radius: 50%;
-
-            // Use surface color suitable for the app-sidebar.
-            background: var(--surface-nav-link-surface-color--active);
-
-            // Apply a border to ensure acceptable contrast.
-            border: var(--border-width-thin) solid transparent;
-
-            .identity-picture-surface
-            {
-                // Remove the filter that normally lightens the background color.
-                filter: none;
-            }
         }
 
         .user-identity-text

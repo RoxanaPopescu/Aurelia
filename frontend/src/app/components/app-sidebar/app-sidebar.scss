@@ -53,6 +53,21 @@ app-sidebar
 
         // Center horizontally.
         align-self: center;
+
+        identity-picture
+        {
+            // Use surface color suitable for the app-sidebar.
+            background: var(--surface-nav-link-surface-color--active);
+
+            // Apply a border to ensure acceptable contrast.
+            border: var(--border-width-thin) solid transparent;
+
+            .identity-picture-surface
+            {
+                // Remove the filter that normally lightens the background color.
+                filter: none;
+            }
+        }
     }
 
     &:not(.--expanded) user-identity .user-identity-text

@@ -5,7 +5,7 @@
 
     <div class="app-container au-animate animation-fade-in-medium">
 
-        <app-sidebar if.bind="identityService.identity" inert.bind="modalService.modals.length > 0"></app-sidebar>
+        <app-sidebar if.bind="identityService.identity.organization != null" inert.bind="modalService.modals.length > 0"></app-sidebar>
 
         <router-view inert.bind="modalService.modals.length > 0"></router-view>
 

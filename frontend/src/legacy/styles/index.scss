@@ -5,7 +5,7 @@ react-module
     // Ensure react modules fill the content area of the viewport.
     // We must use absoliute positioning to do this, due to the legacy styles.
     position: absolute;
-    height: 100vh;
+    height: 100%;
 
     width: calc(100vw - var(--app-sidebar-width-expanded));
 

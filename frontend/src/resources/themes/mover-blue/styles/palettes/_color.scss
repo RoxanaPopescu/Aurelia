@@ -26,9 +26,6 @@ $__summary: comment;
 /// The primary color and its variations.
 :root
 {
-
-    /* BEGIN: USE DARK BLUE COLOR */
-
     --palette-color-primary-lighter: #edf7ff;
     --palette-color-primary-light: #2278bf;
     --palette-color-primary: #0565b3;
@@ -42,24 +39,6 @@ $__summary: comment;
     --palette-color-primary--active: #294970;
     --palette-color-primary--child: #173454;
     --palette-color-primary--child-hover: transparent;
-
-    /* END: USE DARK BLUE COLOR */
-
-    /* BEGIN: USE LINGU BLUE COLOR */
-
-    // --palette-color-primary-lighter: hsl(216, 100%, 97%);
-    // --palette-color-primary-light: hsl(218, 47%, 65%);
-    // --palette-color-primary: hsl(216, 92%, 34%);
-    // --palette-color-primary-dark: hsl(216, 91%, 30%);
-    // --palette-color-primary-darker: hsl(217, 86%, 26%);
-    // --palette-color-primary-darkest: hsl(218, 54%, 20%);
-
-    // --palette-color-primary--hover: #06449a;
-    // --palette-color-primary--active: #084091;
-    // --palette-color-primary--child: #0a3985;
-    // --palette-color-primary--child-hover: #0b3678;
-
-    /* END: USE LINGU BLUE COLOR */
 }
 
 /// The accent color indicating information.
