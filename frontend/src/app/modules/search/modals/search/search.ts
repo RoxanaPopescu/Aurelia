@@ -59,7 +59,7 @@ export class SearchModalPanel
     /**
      * The most recent search operation, if any.
      */
-    protected operation: Operation | undefined;
+    protected operation: Operation | null | undefined;
 
     /**
      * True if the search can be saved, otherwise false.
@@ -216,9 +216,7 @@ export class SearchModalPanel
 
     /**
      * Called when the `queryText` property changes.
-     * Gets the search results matching the query.
      */
-    @debounce(queryDebounceTime)
     protected queryTextChanged(): void
     {
         // Abort any scheduled logging.
@@ -236,6 +234,17 @@ export class SearchModalPanel
         // Abort any pending query operration.
         this.operation?.abort();
 
+        this.operation = null;
+
+        this.fetchResults();
+    }
+
+    /**
+     * Fetches the search results matching the query.
+     */
+    @debounce(queryDebounceTime)
+    protected fetchResults(): void
+    {
         if (this.queryText)
         {
             // Start a new query operation.

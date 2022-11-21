@@ -176,7 +176,7 @@
 
             <div else>
 
-                <div if.bind="searchResults.length == 0 && !operation.pending && !operation.error" class="opacity-faded" translate>
+                <div if.bind="searchResults.length == 0 && operation !== null && !operation.pending && !operation.error" class="opacity-faded" translate>
                     No items match your query
                 </div>
 
@@ -248,7 +248,7 @@
 
             </div>
 
-            <busy-overlay if.bind="operation.pending || operation.error" animate.bind="searchResults != null"></busy-overlay>
+            <busy-overlay if.bind="operation === null || operation.pending || operation.error" animate.bind="searchResults != null"></busy-overlay>
 
         </modal-section>
 
