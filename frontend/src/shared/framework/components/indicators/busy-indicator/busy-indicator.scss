@@ -31,7 +31,9 @@ busy-indicator
 
 .busy-indicator
 {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     // Allow content to be positioned relative to this element.
     position: relative;

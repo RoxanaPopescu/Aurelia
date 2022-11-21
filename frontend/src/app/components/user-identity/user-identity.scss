@@ -46,14 +46,8 @@ user-identity
         .user-identity-text
         {
             position: relative;
-            display: none;
             flex-grow: 1;
-
-            app-sidebar.--expanded &
-            {
-                display: block;
-                padding-left: var(--size-inline-spacing-large);
-            }
+            padding-left: var(--size-inline-spacing-large);
         }
 
         .user-identity-name

@@ -55,6 +55,11 @@ app-sidebar
         align-self: center;
     }
 
+    &:not(.--expanded) user-identity .user-identity-text
+    {
+        display: none;
+    }
+
     header,
     section,
     footer
