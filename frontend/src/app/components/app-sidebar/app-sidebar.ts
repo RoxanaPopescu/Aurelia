@@ -1,5 +1,6 @@
 import { autoinject, bindable, computedFrom } from "aurelia-framework";
 import { AppRouter, NavModel } from "aurelia-router";
+import { ThemeService } from "shared/framework";
 import { IdentityService } from "app/services/identity";
 import { AuthorizationService } from "app/services/authorization";
 
@@ -13,9 +14,10 @@ export class AppSidebarCustomElement
      * Creates a new instance of the type.
      * @param router The `AppRouter` instance.
      * @param identityService The `IdentityService` instance.
+     * @param themeService The `ThemeService` instance.
      * @param authorizationService The `AuthorizationService` instance.
      */
-    public constructor(router: AppRouter, identityService: IdentityService, authorizationService: AuthorizationService)
+    public constructor(router: AppRouter, identityService: IdentityService, authorizationService: AuthorizationService, themeService: ThemeService)
     {
         this._router = router;
         this.identityService = identityService;
@@ -23,10 +25,17 @@ export class AppSidebarCustomElement
 
         this.expanded = localStorage.getItem("app-sidebar-expanded") === "true";
         document.documentElement.classList.toggle("sideMenu--collapsed", !this.expanded);
+
+        this.showPoweredByLink = !/^mover(-|$)/.test(themeService.theme.slug);
     }
 
     private readonly _router: AppRouter;
     private readonly _authorizationService: AuthorizationService;
+
+    /**
+     * True if the "Powered by Mover Systems" link should be shown, otherwise false.
+     */
+    protected readonly showPoweredByLink: boolean;
 
     /**
      * The `IdentityService` instance.
