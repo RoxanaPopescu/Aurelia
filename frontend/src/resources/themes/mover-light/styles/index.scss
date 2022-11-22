@@ -110,23 +110,23 @@ app-sidebar
         display: none;
     }
 
-    user-identity:not(:hover) identity-picture,
-    user-identity:not(:hover) .user-identity-text,
-    .app-sidebar--powered-by:not(:hover)
-    {
-        color: var(--palette-color-neutral-darker) !important;
-    }
-
-    user-identity:hover identity-picture,
-    user-identity:hover .user-identity-text,
-    .app-sidebar--powered-by:hover
+    a:hover icon,
+    .app-sidebar-powered-by:hover
     {
         color: var(--palette-color-primary) !important;
     }
 
-    icon:hover
+    user-identity:hover identity-picture::after
     {
-        color: var(--palette-color-primary) !important;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: var(--border-width-medium) solid var(--palette-color-primary) !important;
+        border-radius: 50%;
+        z-index: 3;
     }
 
     .app-sidebar-shadow div

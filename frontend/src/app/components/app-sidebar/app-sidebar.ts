@@ -79,6 +79,15 @@ export class AppSidebarCustomElement
     }
 
     /**
+     * True if a child nav model is active, otherwise false.
+     */
+    @computedFrom("childNavModels")
+    protected get hasActiveChildNavModel(): boolean
+    {
+        return this.childNavModels?.some(navModel => navModel.isActive) ?? false;
+    }
+
+    /**
      * True if the sidebar is expanded, otherwise false.
      */
     protected expanded = true;

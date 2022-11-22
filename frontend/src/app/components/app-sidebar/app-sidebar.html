@@ -53,7 +53,7 @@
             class="${navModel.isActive ? '--active' : ''}">
 
             <a
-                class="nav-link ${navModel.isActive ? '--active' : ''}"
+                class="nav-link ${navModel.isActive && hasActiveChildNavModel ? '--active-within' : navModel.isActive ? '--active' : ''}"
                 page-href="path.bind: navModel.href">
 
                 <icon title.bind="navModel.config.title" name.bind="navModel.config.icon"></icon>
@@ -131,7 +131,7 @@
 
         </a>
 
-        <a class="app-sidebar--powered-by" href="https://www.mover.dk" target="_blank">
+        <a class="app-sidebar-powered-by" href="https://www.mover.dk" target="_blank">
             <span if.bind="expanded" translate>
                 Powered by Mover Systems
             </span>

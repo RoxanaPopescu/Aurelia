@@ -73,8 +73,8 @@ $__summary: comment;
         // State: active
         --surface-nav-link-border-color--active: var(--palette-color-neutral-lit);
         --surface-nav-link-surface-color--active: var(--palette-color-neutral-lit);
-        --surface-nav-link-surface-text-color--active: var(--palette-color-neutral-darker);
-        --surface-nav-link-surface-icon-color--active: var(--palette-color-neutral-darker);
+        --surface-nav-link-surface-text-color--active: var(--palette-color-primary);
+        --surface-nav-link-surface-icon-color--active: var(--palette-color-primary);
     }
 
     // Navigation child links on the surface.
@@ -97,8 +97,8 @@ $__summary: comment;
         // State: active
         --surface-nav-child-link-border-color--active: var(--palette-color-neutral-light);
         --surface-nav-child-link-surface-color--active: var(--palette-color-neutral-light);
-        --surface-nav-child-link-surface-text-color--active: var(--palette-color-blackpoint);
-        --surface-nav-child-link-surface-icon-color--active: var(--palette-color-blackpoint);
+        --surface-nav-child-link-surface-text-color--active: var(--palette-color-primary);
+        --surface-nav-child-link-surface-icon-color--active: var(--palette-color-primary);
     }
 
     // Neutral elements on the surface.
