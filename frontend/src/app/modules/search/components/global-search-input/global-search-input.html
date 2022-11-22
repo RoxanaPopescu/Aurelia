@@ -5,7 +5,7 @@
     <require from="app/components/info-card/info-card"></require>
     <require from="./global-search-input.scss"></require>
 
-    <search-input value.bind="queryText" autofocus ref="queryInputElement" focusin.trigger="onOpen()">
+    <search-input value.bind="queryText" ref="queryInputElement" focusin.trigger="onOpen()">
 
         <span slot="before">
             <icon name="md-search" class="font-larger opacity-faded"></icon>
