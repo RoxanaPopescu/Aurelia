@@ -74,7 +74,7 @@ export class AccountModalPanel
     /**
      * The position of the panel.
      */
-    protected position = document.documentElement.classList.contains("theme-enable-topbar") ? 'right' : 'left';
+    protected position = document.documentElement.classList.contains("theme-enable-topbar") ? "right" : "left";
 
     /**
      * The name of the selected tab.
