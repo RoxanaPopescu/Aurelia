@@ -26,10 +26,10 @@ $__summary: comment;
     --palette-color-card-surface-active: #252526; // HACK
     --palette-color-card-border-active: #252526; // HACK
 
-    --palette-color-neutral--hover: #272727;
-    --palette-color-neutral--active: #212121;
-    --palette-color-neutral--child: #292929;
-    --palette-color-neutral--child-hover: #212121;
+    --palette-color-neutral--hover: transparent;
+    --palette-color-neutral--active: #292929;
+    --palette-color-neutral--child: #232323;
+    --palette-color-neutral--child-hover: transparent;
 }
 
 /// The primary color and its variations.

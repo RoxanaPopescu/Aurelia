@@ -93,6 +93,15 @@ export class AppSidebarCustomElement
     @computedFrom("childNavModels")
     protected get hasActiveChildNavModel(): boolean
     {
+        const instructions = this._router.currentInstruction.getAllInstructions();
+
+        const lastInstruction = instructions[instructions.length - 1];
+
+        if (lastInstruction.config.nav == null)
+        {
+            return true;
+        }
+
         return this.childNavModels?.some(navModel => navModel.isActive) ?? false;
     }
 

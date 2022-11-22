@@ -28,7 +28,8 @@ export class DistributionCentersModule
                         "view-distribution-centers"
                     ]
                 },
-                title: routeTitles.list
+                title: routeTitles.list,
+                nav: false
             },
             {
                 name: "details",

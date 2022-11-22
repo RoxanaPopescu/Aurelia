@@ -111,6 +111,11 @@ html body page-sidebar page-section:not(.--header-slot-empty) .page-section-head
     color: var(--palette-color-neutral-lightest) !important;
 }
 
+html body page-sidebar page-section:first-of-type:not(.--header-slot-empty) .page-section-header
+{
+    border-top: none;
+}
+
 .route-list-expanded-view-section-title
 {
     color: var(--palette-color-neutral-lightest) !important;

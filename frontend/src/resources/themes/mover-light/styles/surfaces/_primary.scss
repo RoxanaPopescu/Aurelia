@@ -73,8 +73,30 @@ $__summary: comment;
         // State: active
         --surface-nav-link-border-color--active: var(--palette-color-neutral-lit);
         --surface-nav-link-surface-color--active: var(--palette-color-neutral-lit);
-        --surface-nav-link-surface-text-color--active: var(--palette-color-primary);
-        --surface-nav-link-surface-icon-color--active: var(--palette-color-primary);
+        --surface-nav-link-surface-text-color--active: var(--palette-color-neutral-darker);
+        --surface-nav-link-surface-icon-color--active: var(--palette-color-neutral-darker);
+        // --surface-nav-link-surface-text-color--active: var(--palette-color-primary);
+        // --surface-nav-link-surface-icon-color--active: var(--palette-color-primary);
+
+        // Lighter version:
+
+        // // State: normal
+        // --surface-nav-link-border-color: transparent;
+        // --surface-nav-link-surface-color: transparent;
+        // --surface-nav-link-surface-text-color: var(--palette-color-neutral-darker);
+        // --surface-nav-link-surface-icon-color: var(--palette-color-neutral-darker);
+
+        // // State: hover
+        // --surface-nav-link-border-color--hover: var(--palette-color-neutral-lightest);
+        // --surface-nav-link-surface-color--hover: var(--palette-color-neutral-lightest);
+        // --surface-nav-link-surface-text-color--hover: var(--palette-color-neutral-darker);
+        // --surface-nav-link-surface-icon-color--hover: var(--palette-color-neutral-darker);
+
+        // // State: active
+        // --surface-nav-link-border-color--active: var(--palette-color-neutral-light);
+        // --surface-nav-link-surface-color--active: var(--palette-color-neutral-light);
+        // --surface-nav-link-surface-text-color--active: var(--palette-color-neutral-darker);
+        // --surface-nav-link-surface-icon-color--active: var(--palette-color-neutral-darker);
     }
 
     // Navigation child links on the surface.
@@ -97,8 +119,33 @@ $__summary: comment;
         // State: active
         --surface-nav-child-link-border-color--active: var(--palette-color-neutral-light);
         --surface-nav-child-link-surface-color--active: var(--palette-color-neutral-light);
-        --surface-nav-child-link-surface-text-color--active: var(--palette-color-primary);
-        --surface-nav-child-link-surface-icon-color--active: var(--palette-color-primary);
+        --surface-nav-child-link-surface-text-color--active: var(--palette-color-neutral-darker);
+        --surface-nav-child-link-surface-icon-color--active: var(--palette-color-neutral-darker);
+        // --surface-nav-child-link-surface-text-color--active: var(--palette-color-primary);
+        // --surface-nav-child-link-surface-icon-color--active: var(--palette-color-primary);
+
+        // Lighter version:
+
+        // --surface-nav-child-surface-color: var(--palette-color-neutral-lighter);
+
+        // // State: normal
+        // --surface-nav-child-link-border-color: var(--palette-color-neutral-lighter);
+        // --surface-nav-child-link-surface-color: var(--palette-color-neutral-lighter);
+        // --surface-nav-child-link-surface-text-color: var(--palette-color-neutral-darker);
+        // --surface-nav-child-link-surface-icon-color: var(--palette-color-neutral-darker);
+
+        // // State: hover
+        // --surface-nav-child-link-border-color--hover: var(--palette-color-neutral-lightest);
+        // --surface-nav-child-link-surface-color--hover: var(--palette-color-neutral-lightest);
+        // --surface-nav-child-link-surface-text-color--hover: var(--palette-color-neutral-darker);
+        // --surface-nav-child-link-surface-icon-color--hover: var(--palette-color-neutral-darker);
+
+        // // State: active
+        // --surface-nav-child-link-border-color--active: var(--palette-color-neutral-lighter);
+        // --surface-nav-child-link-surface-color--active: var(--palette-color-neutral-lighter);
+        // --surface-nav-child-link-surface-text-color--active: var(--palette-color-neutral-darker);
+        // --surface-nav-child-link-surface-icon-color--active: var(--palette-color-neutral-darker);
+
     }
 
     // Neutral elements on the surface.

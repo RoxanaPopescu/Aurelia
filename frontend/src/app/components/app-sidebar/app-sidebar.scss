@@ -310,6 +310,9 @@ app-sidebar
 {
     padding: 8rem 0;
     background: var(--surface-nav-child-surface-color);
+
+    // Apply bottom border for increased contrast.
+    //border-bottom: var(--border-width-thin) solid var(--surface-nav-link-border-color--active);
 }
 
 .sidebar-child-link

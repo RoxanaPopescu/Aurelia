@@ -142,7 +142,7 @@ export class DetailsPage
      */
     public async canDeactivate(): Promise<boolean>
     {
-        return this._changeDetector.allowDiscard();
+        return this._changeDetector?.allowDiscard();
     }
 
     /**

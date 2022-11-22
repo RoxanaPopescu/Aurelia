@@ -73,8 +73,8 @@ $__summary: comment;
         // State: active
         --surface-nav-link-border-color--active: var(--palette-color-neutral--active);
         --surface-nav-link-surface-color--active: var(--palette-color-neutral--active);
-        --surface-nav-link-surface-text-color--active: var(--palette-color-neutral-lighter);
-        --surface-nav-link-surface-icon-color--active: var(--palette-color-neutral-lighter);
+        --surface-nav-link-surface-text-color--active: var(--palette-color-neutral-lightest);
+        --surface-nav-link-surface-icon-color--active: var(--palette-color-neutral-lightest);
     }
 
     // Navigation child links on the surface.
