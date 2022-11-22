@@ -1,0 +1,57 @@
+html:not(.theme-enable-topbar)
+{
+    app-topbar
+    {
+        display: none;
+    }
+}
+
+html.theme-enable-topbar
+{
+    main
+    {
+        // Use vertical flex layout.
+        flex-direction: column;
+    }
+
+    .app-container
+    {
+        // Fill the available height.
+        height: calc(100% - var(--app-topbar-height));
+    }
+
+    app-sidebar
+    {
+        app-logo,
+        .nav-link[modal-href*="modal: search"],
+        user-identity
+        {
+            display: none;
+        }
+
+        header
+        {
+            position: relative;
+            padding-top: 24rem;
+        }
+
+        .app-sidebar-shadow div
+        {
+            height: calc(100vh - var(--app-topbar-height));
+        }
+
+        .nav-link,
+        .sidebar-child-link
+        {
+            font-weight: 500 !important;
+        }
+    }
+
+    app-topbar
+    {
+        user-identity .user-identity-name
+        {
+            margin-bottom: 0rem;
+        }
+    }
+}

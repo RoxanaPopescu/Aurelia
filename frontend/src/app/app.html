@@ -1,7 +1,10 @@
 <template>
 
+    <require from="app/components/app-topbar/app-topbar"></require>
     <require from="app/components/app-sidebar/app-sidebar"></require>
     <require from="./app.scss"></require>
+
+    <app-topbar if.bind="identityService.identity.organization != null" inert.bind="modalService.modals.length > 0"></app-topbar>
 
     <div class="app-container au-animate animation-fade-in-medium">
 

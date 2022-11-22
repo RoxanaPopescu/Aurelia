@@ -34,6 +34,23 @@ $__summary: comment;
 
 // Override default styles.
 
+html.theme-enable-topbar
+{
+    app-topbar
+    {
+        app-logo
+        {
+            opacity: 0.6;
+        }
+    }
+
+    app-sidebar
+    {
+        --surface-color: inherit !important;
+        border-right: var(--border-width-thin) solid var(--palette-color-neutral-lit);
+    }
+}
+
 :root
 {
     --modal-panel-afterglow: 0 0 20px 0 rgba(30, 30, 30, 0.4) !important;

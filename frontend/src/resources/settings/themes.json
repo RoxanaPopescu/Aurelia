@@ -6,7 +6,11 @@
         {
             "primary": "#ffffff"
         },
-        "hasAccountLogo": true
+        "hasAccountLogo": true,
+        "classes":
+        [
+            "theme-enable-topbar"
+        ]
     },
     {
         "slug": "mover-dark",
@@ -14,7 +18,11 @@
         "preview":
         {
             "primary": "#252526"
-        }
+        },
+        "classes":
+        [
+            "theme-enable-topbar"
+        ]
     },
     {
         "slug": "mover-blue",
@@ -22,7 +30,11 @@
         "preview":
         {
             "primary": "#11253e"
-        }
+        },
+        "classes":
+        [
+            "theme-enable-topbar"
+        ]
     },
     {
         "slug": "ikea-light",

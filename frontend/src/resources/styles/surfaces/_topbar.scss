@@ -1,0 +1,37 @@
+////
+/// @group resources/styles/surfaces/topbar
+////
+
+/// Defines the appearance of the topbar surface.
+$__summary: comment;
+
+
+/* stylelint-disable no-duplicate-selectors, scss/selector-no-redundant-nesting-selector */
+
+[surface$="/topbar"]
+{
+    --surface-color: var(--palette-color-topbar-surface-color);
+    --surface-text-color: var(--palette-color-topbar-surface-text-color);
+
+    // Inputs on the surface.
+    &
+    {
+        // State: normal
+        --surface-input-border-color: var(--palette-color-topbar-input-border-color);
+        --surface-input-surface-color: var(--palette-color-topbar-input-surface-color);
+        --surface-input-surface-text-color: var(--palette-color-topbar-input-surface-text-color);
+        --surface-input-surface-icon-color: var(--palette-color-topbar-input-surface-icon-color);
+
+        // State: hover
+        --surface-input-border-color--hover: var(--palette-color-topbar-input-border-color);
+        --surface-input-surface-color--hover: var(--palette-color-topbar-input-surface-color);
+        --surface-input-surface-text-color--hover: var(--palette-color-topbar-input-surface-text-color);
+        --surface-input-surface-icon-color--hover: var(--palette-color-topbar-input-surface-icon-color);
+
+        // State: focus
+        --surface-input-border-color--focus: var(--palette-color-topbar-input-border-color);
+        --surface-input-surface-color--focus: var(--palette-color-topbar-input-surface-color);
+        --surface-input-surface-text-color--focus: var(--palette-color-topbar-input-surface-text-color);
+        --surface-input-surface-icon-color--focus: var(--palette-color-topbar-input-surface-icon-color);
+    }
+}

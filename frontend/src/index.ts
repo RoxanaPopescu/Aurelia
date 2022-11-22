@@ -91,6 +91,12 @@ export async function configure(aurelia: Aurelia): Promise<void>
         historyHelper.configure(/^\//i);
         historyHelper.setBasePath("/");
 
+        // TODO: Disable the experimental `app-topbar` in production.
+        if (ENVIRONMENT.name === "production")
+        {
+            document.documentElement.classList.remove("theme-enable-topbar");
+        }
+
         const googleMapsService = aurelia.container.get(GoogleMapsService);
         googleMapsService.configure(settings.integrations.googleMaps);
 

@@ -34,6 +34,23 @@ $__summary: comment;
 
 // Override default styles.
 
+html.theme-enable-topbar
+{
+    app-topbar
+    {
+        app-logo
+        {
+            filter: invert(1) brightness(10);
+        }
+    }
+
+    app-sidebar
+    {
+        --surface-color: inherit !important;
+        border-right: var(--border-width-thin) solid var(--palette-color-neutral);
+    }
+}
+
 :root
 {
     // Set the opacity of text skeletons.

@@ -1,0 +1,245 @@
+<template class="${showDropdown ? '--expanded' : ''}">
+
+    <require from="./components/search-item/search-item"></require>
+    <require from="./components/search-result/search-result"></require>
+    <require from="app/components/info-card/info-card"></require>
+    <require from="./global-search-input.scss"></require>
+
+    <search-input value.bind="queryText" autofocus ref="queryInputElement" focusin.trigger="onOpen()">
+
+        <span slot="before">
+            <icon name="md-search" class="font-larger opacity-faded"></icon>
+        </span>
+
+        <div slot="after">
+            <button
+                show.bind="queryText"
+                disabled.bind="!canSave"
+                appearance="none"
+                title.translate="Save search"
+                click.trigger="saveClick()"
+                class="au-animate animation-fade-in-short animation-fade-out-short">
+                <icon name="md-save" class="opacity-faded"></icon>
+            </button>
+        </div>
+
+        <span slot="placeholder" translate>
+            Type to search…
+        </span>
+
+        <dropdown if.bind="showDropdown" close.call="onClose()" class="${operation === null || operation.pending || operation.error ? '--busy' : ''}" surface="base" scroll>
+
+            <modal-section
+                if.bind="!queryText || filteredSavedSearches.length > 0"
+                class="margin-bottom"
+                toggle.bind="true"
+                expanded.from-view="savedSectionExpanded">
+
+                <div slot="header" translate>
+                    Saved searches
+                </div>
+
+                <list-layout if.bind="savedSearches == null">
+
+                    <search-item repeat.for="i of 3"></search-item>
+
+                </list-layout>
+
+                <div else>
+
+                    <info-card
+                        if.bind="savedSearches.length == 0"
+                        heading.translate="You have no saved searches"
+                        translate>
+                        To save a search, type a query and click <icon inline name="md-save" accent="primary"></icon>
+                    </info-card>
+
+                    <div if.bind="savedSearches.length > 0 && filteredSavedSearches.length == 0" class="opacity-faded" translate>
+                        No searches match your filter
+                    </div>
+
+                    <list-layout>
+
+                        <search-item
+                            repeat.for="search of filteredSavedSearches | take: showMoreSavedSearches ? undefined : savedSearchesLimit"
+                            model.bind="search"
+                            click.trigger="searchClick($event, search, true)"
+                            delete-click.call="deleteClick(search)">
+                        </search-item>
+
+                    </list-layout>
+
+                    <div if.bind="filteredSavedSearches.length > savedSearchesLimit" class="margin-top">
+
+                        <a if.bind="!showMoreSavedSearches" click.trigger="showMoreSavedSearches = true" translate>
+                            Show all
+                        </a>
+
+                        <a if.bind="showMoreSavedSearches" click.trigger="showMoreSavedSearches = false" translate>
+                            Show less
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </modal-section>
+
+            <modal-section
+                if.bind="!queryText || filteredRecentSearches.length > 0"
+                class="${queryText ? 'margin-bottom' : ''}"
+                toggle.bind="true"
+                expanded.from-view="recentSectionExpanded">
+
+                <div slot="header" translate>
+                    Recent searches
+                </div>
+
+                <list-layout if.bind="recentSearches == null">
+
+                    <search-item repeat.for="i of 3"></search-item>
+
+                </list-layout>
+
+                <div else>
+
+                    <info-card
+                        if.bind="recentSearches.length == 0"
+                        heading.translate="You have no recent searches"
+                        translate>
+                        Any searches you do will automatically appear here, so they are easy to repeat
+                    </info-card>
+
+                    <div if.bind="recentSearches.length > 0 && filteredRecentSearches.length == 0" class="opacity-faded" translate>
+                        No searches match your filter
+                    </div>
+
+                    <list-layout>
+
+                        <search-item
+                            repeat.for="search of filteredRecentSearches | take: showMoreRecentSearches ? undefined : recentSearchesLimit"
+                            model.bind="search"
+                            click.trigger="searchClick($event, search, false)">
+                        </search-item>
+
+                    </list-layout>
+
+                    <div if.bind="filteredRecentSearches.length > recentSearchesLimit" class="margin-top">
+
+                        <a if.bind="!showMoreRecentSearches" click.trigger="showMoreRecentSearches = true" translate>
+                            Show more
+                        </a>
+
+                        <a if.bind="showMoreRecentSearches" click.trigger="showMoreRecentSearches = false" translate>
+                            Show less
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </modal-section>
+
+            <modal-section
+                if.bind="queryText"
+                toggle.bind="true"
+                expanded.from-view="resultsSectionExpanded"
+                class="flex-grow global-search-input-results">
+
+                <div slot="header" translate>
+                    Search results
+                </div>
+
+                <div class="font-small margin-large-bottom opacity-faded" translate>
+                    Showing up to 10 results of each type.
+                </div>
+
+                <list-layout if.bind="searchResults == null">
+
+                    <search-result repeat.for="i of 3"></search-item>
+
+                </list-layout>
+
+                <div else>
+
+                    <div if.bind="searchResults.length == 0 && operation !== null && !operation.pending && !operation.error" class="opacity-faded" translate>
+                        No items match your query
+                    </div>
+
+                    <div else>
+
+                        <let
+                            group-search-results.bind="true">
+                        </let>
+
+                        <list-layout if.bind="!groupSearchResults">
+
+                            <search-result
+                                repeat.for="result of searchResults"
+                                model.bind="result"
+                                show-type.bind="true"
+                                click.trigger="resultClick($event)"
+                                star-click.call="starClick(result)">
+                            </search-result>
+
+                        </list-layout>
+
+                        <div else>
+
+                            <let
+                                grouped-search-results.bind="searchResults | group: 'type.slug'">
+                            </let>
+
+                            <div repeat.for="[typeSlug, searchResultsInGroup] of groupedSearchResults">
+
+                                <let
+                                    show-more-search-results.bind="false"
+                                    search-results-limit.bind="groupedSearchResults.size > 1 && searchResults.length > 10 ? 5 : searchResults.length"
+                                    visible-search-results-in-group.bind="searchResultsInGroup | take: showMoreSearchResults ? undefined : searchResultsLimit">
+                                </let>
+
+                                <div class="margin-bottom ${$index > 0 ? 'margin-double-top' : ''}">
+                                    <b>${searchResultsInGroup[0].type.group}</b>
+                                </div>
+
+                                <list-layout>
+
+                                    <search-result
+                                        repeat.for="result of visibleSearchResultsInGroup"
+                                        model.bind="result"
+                                        show-type.bind="false"
+                                        click.trigger="resultClick($event)"
+                                        star-click.call="starClick(result)">
+                                    </search-result>
+
+                                </list-layout>
+
+                                <div if.bind="searchResultsInGroup.length > searchResultsLimit" class="margin-top">
+
+                                    <a if.bind="!showMoreSearchResults" click.trigger="showMoreSearchResults = true" translate>
+                                        Show more
+                                    </a>
+
+                                    <a if.bind="showMoreSearchResults" click.trigger="showMoreSearchResults = false" translate>
+                                        Show less
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <busy-overlay if.bind="operation === null || operation.pending || operation.error" animate.bind="searchResults != null"></busy-overlay>
+
+            </modal-section>
+
+        </dropdown>
+
+    </search-input>
+
+</template>

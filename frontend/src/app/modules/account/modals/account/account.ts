@@ -72,6 +72,11 @@ export class AccountModalPanel
     private _result: boolean | undefined;
 
     /**
+     * The position of the panel.
+     */
+    protected position = document.documentElement.classList.contains("theme-enable-topbar") ? 'right' : 'left';
+
+    /**
      * The name of the selected tab.
      */
     protected selectedTab: "profile" | "settings" | "security" = "profile";

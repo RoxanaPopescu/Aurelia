@@ -1,0 +1,15 @@
+<template surface="topbar">
+
+    <require from="app/components/user-identity/user-identity"></require>
+    <require from="app/components/app-logo/app-logo"></require>
+    <require from="app/modules/search/components/global-search-input/global-search-input"></require>
+
+    <require from="./app-topbar.scss"></require>
+
+    <app-logo size="wide" disabled.bind="true" autofocus></app-logo>
+
+    <global-search-input></global-search-input>
+
+    <user-identity></user-identity>
+
+</template>

@@ -1,0 +1,42 @@
+search-result
+{
+    display: block;
+
+    --card-height: auto;
+    --card-padding: 13rem;
+
+    .search-result-icon-column
+    {
+        padding-right: calc(16rem - var(--border-width-thick));
+        line-height: 1;
+        font-size: 20rem;
+        color: var(--surface-primary-icon-color);
+    }
+
+    .search-result-content-column
+    {
+        flex-grow: 1;
+        min-width: 0;
+        margin-right: 28rem;
+    }
+
+    .search-result-type
+    {
+        &:not(:last-child)::after
+        {
+            content: "|";
+            padding: 0 3rem;
+            opacity: var(--opacity-faded-more);
+        }
+    }
+
+    .search-result-path-segment
+    {
+        &:not(:last-child)::after
+        {
+            content: "/";
+            padding: 0 2rem;
+            opacity: var(--opacity-faded-more);
+        }
+    }
+}

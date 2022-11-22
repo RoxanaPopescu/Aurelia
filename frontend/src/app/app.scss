@@ -32,4 +32,7 @@ router-view
 @import "../legacy/styles/index.scss";
 
 // Import experimental styles.
+@import "./topbar";
+
+// Import experimental styles.
 @import "./temp";

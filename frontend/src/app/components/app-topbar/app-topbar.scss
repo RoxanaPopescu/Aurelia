@@ -1,0 +1,88 @@
+@import "resources/index";
+
+app-topbar
+{
+    // Stick to the top of the viewport.
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: var(--z-index-fixed);
+
+    // Use vertical flex layout.
+    display: flex;
+    align-items: center;
+
+    // Set the height of the topbar.
+    height: var(--app-topbar-height);
+
+    // Don't shrink - we collapse it manually in small viewports.
+    flex-shrink: 0;
+
+    // Apply the surface style.
+    background: var(--surface-color);
+    color: var(--surface-text-color);
+
+    app-logo
+    {
+        z-index: 1;
+
+        // Size and position the app logo.
+        margin: 0 16rem 0 16rem;
+        height: 24rem;
+
+        // Center horizontally.
+        align-self: center;
+    }
+
+    global-search-input
+    {
+        width: 560rem;
+        margin-left: auto;
+        margin-right: auto;
+
+        &.--expanded
+        {
+            search-input .input-control,
+            {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+            dropdown
+            {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                top: calc(var(--input-min-height) - var(--input-border-width) - 3rem) !important;
+            }
+        }
+    }
+
+    user-identity
+    {
+        // Size and position the user icon.
+        margin: 0 16rem 0 16rem;
+        width: auto;
+
+        // Center horizontally.
+        align-self: center;
+
+        identity-picture
+        {
+            --identity-picture-border-color: var(--surface-input-border-color);
+
+            // Set the icon size.
+            height: 40rem !important;
+            width: 40rem !important;
+
+            // Use surface color suitable for the app-sidebar.
+            background: var(--surface-input-border-color);
+            color: var(--surface-input-surface-text-color);
+
+            .identity-picture-surface
+            {
+                // Remove the filter that normally lightens the background color.
+                filter: none;
+            }
+        }
+    }
+}

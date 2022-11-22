@@ -1,0 +1,43 @@
+global-search-input
+{
+    display: block;
+
+    dropdown
+    {
+        padding: 20rem 16rem 20rem 16rem;
+        max-height: calc(100vh - 2 * var(--app-topbar-height));
+
+        // HACK:
+        // Override the auto placement, as the transform it applies
+        // causes the busy-overlay to be incorrectly positioned.
+        position: absolute !important;
+        will-change: unset !important;
+        top: calc(var(--input-min-height) - var(--input-border-width)) !important;
+        left: calc(-1 * var(--input-border-width)) !important;
+        transform: none !important;
+
+        &.--busy .global-search-input-results
+        {
+            min-height: 240rem;
+        }
+
+        search-item,
+        search-result
+        {
+            &:nth-of-type(2) card-skeleton
+            {
+                opacity: 0.8;
+            }
+
+            &:nth-of-type(3) card-skeleton
+            {
+                opacity: 0.6;
+            }
+        }
+
+        info-card
+        {
+            width: 100%;
+        }
+    }
+}
