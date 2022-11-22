@@ -43,6 +43,9 @@ dropdown
 
 dropdown
 {
+    --surface-color: var(--dropdown-surface-color);
+    --surface-text-color: var(--dropdown-surface-text-color);
+
     display: block;
 
     // Hide overflow by default.
@@ -64,8 +67,8 @@ dropdown
     // Style to appear as a dropdown.
     border: var(--dropdown-border-width) solid var(--dropdown-border-color);
     border-radius: var(--dropdown-border-radius);
-    background: var(--dropdown-surface-color);
-    color: var(--dropdown-surface-text-color);
+    background: var(--surface-color);
+    color: var(--surface-text-color);
 
     // Use default cursor.
     cursor: default;
