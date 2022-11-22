@@ -42,7 +42,7 @@
 
                 <data-table
                     appearance="rows"
-                    busy.bind="updateOperation.pending">
+                    busy.bind="updateOperation.pending || updateOperation.error != null">
 
                     <data-table-headers>
 

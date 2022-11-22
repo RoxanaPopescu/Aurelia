@@ -209,7 +209,7 @@
                     appearance="rows"
                     sorting.bind="activeListView.definition.sorting"
                     style.bind="tableDefinition.style"
-                    busy.bind="activeListView.operation.pending || pickupNearbyOperation.pending"
+                    busy.bind="activeListView.operation.pending || pickupNearbyOperation.pending || activeListView.operation.error != null"
                     class="margin-top">
 
                     <data-table-headers>

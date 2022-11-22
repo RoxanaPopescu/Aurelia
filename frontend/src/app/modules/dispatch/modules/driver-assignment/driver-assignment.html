@@ -371,7 +371,7 @@
                     appearance="rows"
                     sorting.bind="sorting"
                     style.bind="tableStyleRoutes"
-                    busy.bind="updateOperation.pending || pickupNearbyOperation.pending">
+                    busy.bind="updateOperation.pending || pickupNearbyOperation.pending || updateOperation.error != null">
 
                     <data-table-headers>
 

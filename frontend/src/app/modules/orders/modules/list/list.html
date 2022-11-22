@@ -320,7 +320,7 @@
                     sorting.bind="sorting"
                     selection="multiple"
                     toggle-all.call="onToggleAll(value)"
-                    busy.bind="updateOperation.pending">
+                    busy.bind="updateOperation.pending || failed">
 
                     <data-table-headers>
 

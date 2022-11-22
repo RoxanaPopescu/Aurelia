@@ -112,7 +112,7 @@
                     sorting.bind="sorting"
                     selection.bind="tableSelection"
                     toggle-all.call="onToggleAll(value)"
-                    busy.bind="updateOperation.pending">
+                    busy.bind="updateOperation.pending || updateOperation.error != null">
 
                     <data-table-headers>
 

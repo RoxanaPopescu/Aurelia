@@ -40,7 +40,7 @@
 
         <modal-section if.bind="true" class="margin-bottom">
 
-            <data-table sorting.bind="sorting" busy.bind="updateOperation.pending" appearance="rows">
+            <data-table sorting.bind="sorting" busy.bind="updateOperation.pending || updateOperation.error != null" appearance="rows">
 
                 <data-table-headers>
 

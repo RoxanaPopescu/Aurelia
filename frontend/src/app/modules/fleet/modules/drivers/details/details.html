@@ -255,7 +255,7 @@
                 <data-table
                     appearance="rows"
                     sorting.bind="sorting"
-                    busy.bind="updateOperation.pending"
+                    busy.bind="updateOperation.pending || updateOperation.error != null"
                     insert.call="onAddVehicleClick()"
                     insert-mode.bind="canCreateVehicle ? 'insert' : 'none'">
 

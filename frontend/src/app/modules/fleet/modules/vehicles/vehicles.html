@@ -39,7 +39,7 @@
                 <data-table
                     appearance="rows"
                     sorting.bind="sorting"
-                    busy.bind="updateOperation.pending">
+                    busy.bind="updateOperation.pending || updateOperation.error != null">
 
                     <data-table-headers>
 
