@@ -87,4 +87,22 @@ export class RoutesStopsModule extends AppModule
         context.response.body = result.data;
         context.response.status = 200;
     }
+
+    /**
+     * Switch the order of two stops
+     * @returns 200 OK if service is started
+     */
+    public "POST /v2/routes/stops/start-service" = async (context: AppContext) =>
+    {
+        await context.authorize("edit-routes");
+
+        const result = await this.apiClient.post("logistics-platform/routes/v5/start-service",
+        {
+            noi: true,
+            body: context.request.body
+        });
+
+        context.response.body = result.data;
+        context.response.status = 200;
+    }
 }
