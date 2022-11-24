@@ -1,6 +1,6 @@
-import { autoinject, bindable } from "aurelia-framework";
+import { autoinject, bindable, computedFrom } from "aurelia-framework";
 import { IValidation } from "shared/framework";
-import { RouteStop, Route, RouteStopStatus, RouteStopType } from "app/model/route";
+import { RouteStop, Route, RouteStopStatus, RouteStopType, RouteService } from "app/model/route";
 import { Duration, DateTime } from "luxon";
 import { observable } from "aurelia-binding";
 import { DateTimeRange } from "shared/types";
@@ -10,9 +10,25 @@ import { ColloScanMethod, ColloStatus } from "app/model/collo";
 export class RouteStopEditCustomElement
 {
     /**
+     * Creates a new instance of the class.
+     * @param routeService The `RouteService` instance.
+     */
+     public constructor(routeService: RouteService)
+     {
+         this._routeService = routeService;
+     }
+
+     private readonly _routeService: RouteService;
+
+    /**
      * The validation for the modal.
      */
     protected validation: IValidation;
+
+    /**
+     * If the service on the stop is being started.
+     */
+    protected startingService = false;
 
     /**
      * The available statuses.
@@ -92,6 +108,18 @@ export class RouteStopEditCustomElement
                 this.date = firstStop.arrivalTimeFrame.from?.startOf("day");
             }
         }
+
+
+        console.log(this.model.routeStop.serviceTaskStarted);
+    }
+
+    /**
+     * True if the stop has a service task, otherwise false.
+     */
+    @computedFrom("model.routeStop.tags")
+    protected get hasServiceTask(): boolean
+    {
+        return this.model.routeStop.tags?.some(t => t.toLowerCase() === "service");
     }
 
     /**
@@ -203,6 +231,21 @@ export class RouteStopEditCustomElement
         else if (this.model.routeStop.arrivalTimeFrame.to.minus({ day: 1 }).diff(this.model.routeStop.arrivalTimeFrame.from).as("seconds") > 0)
         {
             this.model.routeStop.arrivalTimeFrame.to = this.model.routeStop.arrivalTimeFrame.to.minus({ day: 1 });
+        }
+    }
+
+    /**
+     * Called when the service should start.
+     */
+    protected async onStartServiceClick(): Promise<void>
+    {
+        this.startingService = true;
+
+        try {
+            await this._routeService.startServiceTask(this.model.routeStop);
+            this.model.routeStop.serviceTaskStarted = DateTime.now();
+        } finally {
+             this.startingService = false;
         }
     }
 

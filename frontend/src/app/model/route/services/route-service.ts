@@ -331,6 +331,19 @@ export class RouteService
     }
 
     /**
+     * Starts the service on the stop.
+     * @param stop The route stop to start the service on.
+     * @returns A promise that will be resolved when the operation succeedes.
+     */
+    public async startServiceTask(stop: RouteStop): Promise<void>
+    {
+        await this._apiClient.post("routes/stops/start-service",
+        {
+            body: { stopId: Number(stop.id) }
+        });
+    }
+
+    /**
      * Adds a support note to the route.
      * @param note The support note for the route.
      * @returns A promise that will be resolved when the operation succeedes.

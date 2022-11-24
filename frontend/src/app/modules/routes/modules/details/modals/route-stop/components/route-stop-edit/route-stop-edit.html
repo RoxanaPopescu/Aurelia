@@ -214,6 +214,33 @@
 
     </modal-section>
 
+    <modal-section class="margin-bottom --line-above" if.bind="hasServiceTask">
+
+        <div slot="header" translate>
+            Service task
+        </div>
+
+        <div class="control-row">
+
+            <button
+                if.bind="!model.routeStop.serviceTaskStarted"
+                disabled.bind="startingService"
+                appearance="solid"
+                accent="primary"
+                click.trigger="onStartServiceClick()"
+            >
+                <span translate if.bind="!startingService">Start service task</span>
+                <span translate if.bind="startingService">Starting...</span>
+            </button>
+
+            <span if.bind="model.routeStop.serviceTaskStarted" translate>
+                Service task was started ${model.routeStop.serviceTaskStarted | dateTime: 'narrow' : false}
+            </span>
+
+        </div>
+
+    </modal-section>
+
     <modal-section class="margin-bottom --line-above">
 
         <div slot="header" translate>
