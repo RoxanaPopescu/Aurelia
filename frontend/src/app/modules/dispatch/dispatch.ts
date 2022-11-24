@@ -58,7 +58,7 @@ export class DispatchModule
                 },
                 title: routeTitles.automaticDispatchSettings,
                 nav: true,
-                icon: "ico-settings"
+                icon: "ico-gear"
             },
             {
                 name: "automatic-dispatch-settings-create",

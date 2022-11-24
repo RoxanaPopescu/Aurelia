@@ -81,19 +81,19 @@ export class TreeNavNodeCustomElement
         if (!this.active)
         {
             // Filled folder icon, when the node is not active.
-            return "ico-folder";
+            return "ico-folder-filled";
         }
 
         if (!this.expandable)
         {
              // Filled folder icon, if the node is not expandable.
-             return "ico-folder";
+             return "ico-folder-filled";
         }
 
         if (this.tree.selectSubtree === true)
         {
             // Filled folder icon, indicating that child nodes are included.
-            return "ico-folder";
+            return "ico-folder-filled";
         }
 
         if (this.tree.selectSubtree === false)
@@ -105,7 +105,7 @@ export class TreeNavNodeCustomElement
         if (this.model.expanded)
         {
             // Filled folder icon, indicating that child nodes are included.
-            return "ico-folder";
+            return "ico-folder-filled";
         }
 
         // Outline folder icon, indicating that child nodes are excluded.

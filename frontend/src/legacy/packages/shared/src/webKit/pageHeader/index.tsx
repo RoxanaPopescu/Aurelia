@@ -74,7 +74,7 @@ export default class PageHeader extends React.Component<
               className="font-large c-pageHeader-linkBack"
               to={this.props.linkBack.url}
             >
-              <Icon name="ico-arrow-backward-ios" />
+              <Icon name="ico-navigate-backward" />
               {this.props.linkBack.title}
             </Link>
           )}
@@ -104,7 +104,7 @@ export default class PageHeader extends React.Component<
               className="font-large c-pageHeader-linkBack"
               to={this.props.linkBack.url}
             >
-              <Icon name="ico-arrow-backward-ios" />
+              <Icon name="ico-navigate-backward" />
               {this.props.linkBack.title}
             </Link>
           )}

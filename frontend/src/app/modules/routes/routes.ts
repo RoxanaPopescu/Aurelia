@@ -139,7 +139,7 @@ export class RoutesModule
                     moduleId: PLATFORM.moduleName("./modules/generate-test-routes/generate-test-routes"),
                     title: routeTitles.test,
                     nav: false,
-                    icon: "ico-settings"
+                    icon: "ico-missing"
                 }
             ] : []
         ]);

@@ -48,7 +48,7 @@ export class OrganizationModule
                 },
                 title: routeTitles.users,
                 nav: true,
-                icon: "ico-users"
+                icon: "ico-people"
             },
             {
                 name: "teams",

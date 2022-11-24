@@ -51,7 +51,7 @@ export class EntityType
         {
             name: entityTypeNames.organization,
             group: entityTypeGroups.organization,
-            icon: "ico-domain"
+            icon: "ico-organization"
         },
         "user":
         {
@@ -117,7 +117,7 @@ export class EntityType
         {
             name: entityTypeNames.routePlanningRuleSet,
             group: entityTypeGroups.routePlanningRuleSet,
-            icon: "ico-settings"
+            icon: "ico-gear"
         },
         "order-group":
         {
@@ -129,7 +129,7 @@ export class EntityType
         {
             name: entityTypeNames.automaticDispatchRuleSet,
             group: entityTypeGroups.automaticDispatchRuleSet,
-            icon: "ico-settings"
+            icon: "ico-gear"
         },
         "distribution-center":
         {

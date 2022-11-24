@@ -299,7 +299,7 @@ export class AppModule
                 title: routeTitles.organization,
                 nav: true,
                 href: "/organization",
-                icon: "ico-settings"
+                icon: "ico-gear"
             },
             {
                 name: "unauthorized",

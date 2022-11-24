@@ -63,7 +63,7 @@ export class RoutePlanningModule
                 },
                 title: routeTitles.rulesList,
                 nav: true,
-                icon: "ico-settings"
+                icon: "ico-gear"
             },
             {
                 name: "rule-sets-details",
