@@ -108,9 +108,6 @@ export class RouteStopEditCustomElement
                 this.date = firstStop.arrivalTimeFrame.from?.startOf("day");
             }
         }
-
-
-        console.log(this.model.routeStop.serviceTaskStarted);
     }
 
     /**
@@ -241,10 +238,13 @@ export class RouteStopEditCustomElement
     {
         this.startingService = true;
 
-        try {
+        try
+        {
             await this._routeService.startServiceTask(this.model.routeStop);
             this.model.routeStop.serviceTaskStarted = DateTime.now();
-        } finally {
+        }
+        finally
+        {
              this.startingService = false;
         }
     }
