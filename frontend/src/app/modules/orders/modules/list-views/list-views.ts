@@ -7,7 +7,6 @@ import { OrderInfo, OrderService } from "app/model/order";
 import { ListViewService, ListView, OrderListViewFilter, OrderListViewColumn, createListViewDefinition, ListViewDefinition } from "app/model/list-view";
 import { IListViewPageItems, IListViewPageParams, ListViewsPage } from "app/modules/list-views/list-views";
 import { ImportOrdersPanel } from "app/modules/orders/modules/list/modals/import-orders/import-orders";
-import { BulkActionPanel } from "app/modules/orders/modules/list/modals/bulk-action/bulk-action";
 import { CreateRoutePanel } from "app/modules/orders/modules/list/modals/create-route/create-route";
 import { ChangePickupAddressPanel } from "app/modules/orders/modules/list/modals/change-pickup-address/change-pickup-address";
 import { OrderFiltersPanel } from "./modals/order-filters/order-filters";
@@ -216,18 +215,6 @@ export class OrderListViewsPage extends ListViewsPage<OrderListViewFilter, Order
     {
         await this._modalService.open(ImportOrdersPanel).promise;
     }
-
-    /**
-     * Called when any bulk action is clicked.
-     * Opens the bulk action panel.
-     * @param orders The selected orders.
-     */
-     protected async onBulkActionClick(orders: OrderInfo[]): Promise<void>
-     {
-         await this._modalService.open(BulkActionPanel, { orders: orders }).promise;
-
-         // TODO TOAST
-     }
 
     /**
      * Called when the `Create route from selected orders` button is clicked.

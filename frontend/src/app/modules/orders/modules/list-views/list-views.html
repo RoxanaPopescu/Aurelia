@@ -47,43 +47,6 @@
                                 Create route
                             </button>
 
-                            <!--
-                            <button
-                                translate
-                                disabled.bind="activeListView.selectedItems.length === 0"
-                                if.bind="activeListView.selectedItems.length > 0"
-                                appearance="outline"
-                                accent="primary"
-                                click.trigger="onBulkActionClick(activeListView.selectedItems)"
-                                model="create-route"
-                                if-environment="development">
-                                Change date
-                            </button>
-
-                            <button
-                                translate
-                                disabled.bind="activeListView.selectedItems.length === 0"
-                                if.bind="activeListView.selectedItems.length > 0"
-                                appearance="outline"
-                                accent="primary"
-                                click.trigger="onBulkActionClick(activeListView.selectedItems)"
-                                model="create-route"
-                                if-environment="development">
-                                Change pickup address
-                            </button>
-
-                            <button
-                                translate
-                                disabled.bind="activeListView.selectedItems.length === 0"
-                                if.bind="activeListView.selectedItems.length > 0"
-                                appearance="outline"
-                                accent="negative"
-                                click.trigger="onBulkActionClick(activeListView.selectedItems)"
-                                model="create-route">
-                                Cancel orders
-                            </button>
-                            -->
-
                         </template>
 
                         <button if.bind="activeListView.selectedItems.length == 0" appearance="outline" accent="primary" class="flex-row" click.trigger="onImportOrdersClick()">
