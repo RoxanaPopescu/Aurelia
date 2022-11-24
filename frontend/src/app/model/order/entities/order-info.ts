@@ -54,8 +54,6 @@ export class OrderInfo
             position: data.deliveryAddress.position,
             timeZone: data.pickupAddress.timeZone
         });
-
-        this.canBeCancelled = Math.random() > 0.5 ? true : false;
     }
 
     public readonly id: string;
@@ -95,7 +93,4 @@ export class OrderInfo
     public readonly actualColliInfo: OrderColliInfo;
 
     public readonly estimatedColliInfo: OrderColliInfo;
-
-    // FIXME: Use correctly
-    public readonly canBeCancelled: boolean;
 }
