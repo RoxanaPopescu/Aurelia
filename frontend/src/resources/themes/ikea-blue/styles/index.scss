@@ -15,6 +15,33 @@ $__summary: comment;
 
 // Override default styles.
 
+html.theme-enable-topbar
+{
+    /// The colors for the `app-topbar`.
+    &
+    {
+        --palette-color-topbar-surface-color: #0058a3;
+        --palette-color-topbar-surface-text-color: hsl(208, 100%, 94%);
+        --palette-color-topbar-input-border-color: hsl(208, 100%, 28%);
+        --palette-color-topbar-input-surface-color: hsl(208, 100%, 28%);
+        --palette-color-topbar-input-surface-text-color: hsl(208, 100%, 94%);
+        --palette-color-topbar-input-surface-icon-color: hsl(208, 100%, 94%);
+    }
+
+    app-topbar
+    {
+        app-logo
+        {
+            filter: none;
+
+            height: 30rem;
+
+            // Set the border radius.
+            border-radius: var(--border-radius-small);
+        }
+    }
+}
+
 app-sidebar
 {
     app-logo
