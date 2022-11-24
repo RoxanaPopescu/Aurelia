@@ -9,7 +9,6 @@
         "hasAccountLogo": true,
         "classes":
         [
-            "theme-enable-topbar"
         ]
     },
     {
@@ -21,7 +20,6 @@
         },
         "classes":
         [
-            "theme-enable-topbar"
         ]
     },
     {
@@ -33,7 +31,6 @@
         },
         "classes":
         [
-            "theme-enable-topbar"
         ]
     },
     {
@@ -45,7 +42,10 @@
         },
         "hasAccountLogo": true,
         "isHostSpecific": true,
-        "environments": ["development", "preview"]
+        "environments": ["development", "preview"],
+        "classes":
+        [
+        ]
     },
     {
         "slug": "ikea-dark",
@@ -56,7 +56,10 @@
         },
         "hasAccountLogo": true,
         "isHostSpecific": true,
-        "environments": ["development", "preview"]
+        "environments": ["development", "preview"],
+        "classes":
+        [
+        ]
     },
     {
         "slug": "ikea-blue",
@@ -67,7 +70,10 @@
         },
         "hasAccountLogo": true,
         "isHostSpecific": true,
-        "environments": ["development", "preview"]
+        "environments": ["development", "preview"],
+        "classes":
+        [
+        ]
     },
     {
         "slug": "ikea",

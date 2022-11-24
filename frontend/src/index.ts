@@ -91,10 +91,10 @@ export async function configure(aurelia: Aurelia): Promise<void>
         historyHelper.configure(/^\//i);
         historyHelper.setBasePath("/");
 
-        // TODO: Disable the experimental `app-topbar` in production.
-        if (ENVIRONMENT.name === "production")
+        // TODO: If the `theme-enable-topbar` query param is specified, enable the experimental `app-topbar`.
+        if (new URL(location.href).searchParams.has("theme-enable-topbar"))
         {
-            document.documentElement.classList.remove("theme-enable-topbar");
+            document.documentElement.classList.add("theme-enable-topbar");
         }
 
         const googleMapsService = aurelia.container.get(GoogleMapsService);
