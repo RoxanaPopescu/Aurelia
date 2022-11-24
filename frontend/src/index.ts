@@ -15,6 +15,20 @@ import { IdentityService, Identity } from "app/services/identity";
 import { TeamsFilterService } from "app/services/teams-filter";
 import settings from "resources/settings";
 
+// TODO: REMOVE WHEN DONE TESTING.
+
+// If the `theme` query param is specified, remove any environment restrictions on the themes.
+if (new URL(location.href).searchParams.has("theme"))
+{
+    settings.app.themes.forEach(theme => delete theme.environments);
+}
+
+// If the `theme-enable-topbar` query param is specified, enable the `app-topbar`.
+if (new URL(location.href).searchParams.has("theme-enable-topbar"))
+{
+    document.documentElement.classList.add("theme-enable-topbar");
+}
+
 /**
  * The entry point of the app, called by the Aurelia bootstrapper.
  * @param aurelia The `Aurelia` instance.
@@ -90,12 +104,6 @@ export async function configure(aurelia: Aurelia): Promise<void>
         const historyHelper = aurelia.container.get(HistoryHelper);
         historyHelper.configure(/^\//i);
         historyHelper.setBasePath("/");
-
-        // TODO: Disable the experimental `app-topbar` in production.
-        if (ENVIRONMENT.name === "production")
-        {
-            document.documentElement.classList.remove("theme-enable-topbar");
-        }
 
         const googleMapsService = aurelia.container.get(GoogleMapsService);
         googleMapsService.configure(settings.integrations.googleMaps);

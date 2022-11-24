@@ -12,6 +12,22 @@ $__summary: comment;
 
 // Override default styles.
 
+html.theme-enable-topbar
+{
+    app-topbar
+    {
+        app-logo
+        {
+            opacity: 0.65;
+
+            height: 40rem;
+
+            // Set the border radius.
+            border-radius: var(--border-radius-small);
+        }
+    }
+}
+
 app-sidebar
 {
     app-logo
