@@ -11,10 +11,10 @@ $__summary: comment;
 /// The colors for the `app-topbar`.
 :root
 {
-    --palette-color-topbar-surface-color: var(--palette-color-neutral);
+    --palette-color-topbar-surface-color: var(--palette-color-neutral-lit);
     --palette-color-topbar-surface-text-color: var(--palette-color-neutral-lightest);
-    --palette-color-topbar-input-border-color: var(--palette-color-neutral-dark);
-    --palette-color-topbar-input-surface-color: var(--palette-color-neutral-dark);
+    --palette-color-topbar-input-border-color: var(--palette-color-neutral);
+    --palette-color-topbar-input-surface-color: var(--palette-color-neutral);
     --palette-color-topbar-input-surface-text-color: var(--palette-color-neutral-lightest);
     --palette-color-topbar-input-surface-icon-color: var(--palette-color-neutral-lightest);
 }
