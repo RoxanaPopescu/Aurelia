@@ -21,6 +21,15 @@ import settings from "resources/settings";
  */
 export async function configure(aurelia: Aurelia): Promise<void>
 {
+    // TODO: REMOVE WHEN DONE TESTING.
+    // If the `theme-enable-topbar` query param is specified, enable the
+    // `app-topbar` and remove environment restrictions on the themes.
+    if (new URL(location.href).searchParams.has("theme-enable-topbar"))
+    {
+        settings.app.themes.forEach(theme => delete theme.environments);
+        document.documentElement.classList.add("theme-enable-topbar");
+    }
+
     console.group("Configuration");
 
     // Configure cookies.
@@ -90,12 +99,6 @@ export async function configure(aurelia: Aurelia): Promise<void>
         const historyHelper = aurelia.container.get(HistoryHelper);
         historyHelper.configure(/^\//i);
         historyHelper.setBasePath("/");
-
-        // TODO: If the `theme-enable-topbar` query param is specified, enable the experimental `app-topbar`.
-        if (new URL(location.href).searchParams.has("theme-enable-topbar"))
-        {
-            document.documentElement.classList.add("theme-enable-topbar");
-        }
 
         const googleMapsService = aurelia.container.get(GoogleMapsService);
         googleMapsService.configure(settings.integrations.googleMaps);
