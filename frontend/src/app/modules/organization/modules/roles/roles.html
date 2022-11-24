@@ -27,7 +27,7 @@
                     <template if-claims="create-roles">
 
                         <button appearance="outline" accent="primary" click.trigger="onNewRoleClick()" class="flex-row">
-                            <icon name="add" class="font-larger margin-right"></icon>
+                            <icon name="ico-add" class="font-larger margin-right"></icon>
                             <span translate>
                                 New role
                             </span>
@@ -46,7 +46,7 @@
                     <search-input value.bind="textFilter & debounce: 200">
 
                         <span slot="before" class="opacity-faded font-larger line-height-1">
-                            <icon name="md-search"></icon>
+                            <icon name="ico-search"></icon>
                         </span>
 
                         <span slot="placeholder" translate>
@@ -141,7 +141,7 @@
                                             appearance="none"
                                             accent="primary"
                                             click.trigger="onRoleClick(role)">
-                                            <icon name="edit-small"></icon>
+                                            <icon name="ico-edit-small"></icon>
                                         </button>
                                     </template>
 
@@ -151,7 +151,7 @@
                                             appearance="none"
                                             accent="primary"
                                             click.trigger="onDuplicateRoleClick(role)">
-                                            <icon name="md-copy"></icon>
+                                            <icon name="ico-copy"></icon>
                                         </button>
                                     </template>
 
@@ -162,7 +162,7 @@
                                             appearance="none"
                                             accent="primary"
                                             click.trigger="onDeleteRoleClick(role)">
-                                            <icon name="delete-small"></icon>
+                                            <icon name="ico-delete-small"></icon>
                                         </button>
                                     </template>
 

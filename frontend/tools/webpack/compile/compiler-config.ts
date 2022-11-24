@@ -275,7 +275,16 @@ export function getCompilerConfig(compilerOptions: ICompilerOptions): Configurat
                     use:
                     {
                         loader: "svg-sprite-loader",
-                        options: { symbolId: "icon-[name]" }
+                        options:
+                        {
+                            symbolId: (filePath: string) =>
+                            {
+                                const iconFolderPath = paths.iconFolders.find(path => filePath.startsWith(path));
+                                const iconSlug = filePath.slice(iconFolderPath!.length, -".svg".length).replace(/\//g, "-");
+
+                                return `icon-${iconSlug}`;
+                            }
+                        }
                     }
                 },
 

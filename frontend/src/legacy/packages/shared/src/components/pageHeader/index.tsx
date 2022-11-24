@@ -111,7 +111,7 @@ export class PageHeaderComponent extends React.Component<Props> {
         <h1 className="pageHeader-path font-larger line-height-1 user-select-text">
           {this.props.path.map((s, i) => (
             <div key={`${i}|${s.title}`} className="pageHeader-path-segment">
-              {i > 0 && <Icon name="arrowRight" />}
+              {i > 0 && <Icon name="ico-arrow-forward-ios" />}
               <div
                 onClick={() => {
                   if (s.onClick && s.onClick() === false) {

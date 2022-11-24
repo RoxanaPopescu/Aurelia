@@ -36,7 +36,7 @@ export class FleetModule
                 title: routeTitles.list,
                 nav: false,
                 href: "/fleet-management/drivers",
-                icon: "fleet"
+                icon: "ico-fleet"
             },
             {
                 name: "details",
@@ -79,7 +79,7 @@ export class FleetModule
                 title: routeTitles.vehicleList,
                 nav: true,
                 href: "/fleet-management/vehicles",
-                icon: "vehicles"
+                icon: "ico-vehicles"
             },
             {
                 name: "dispatch-default",
@@ -100,7 +100,7 @@ export class FleetModule
                 title: routeTitles.createMultipleDrivers,
                 nav: true,
                 href: "/fleet-management/drivers/create-multiple",
-                icon: "fleet"
+                icon: "ico-fleet"
             }
         ]);
     }

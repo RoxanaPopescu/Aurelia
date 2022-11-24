@@ -27,7 +27,7 @@
                     <template if-claims="create-connections">
 
                         <button appearance="outline" accent="primary" click.trigger="onInviteConnectionClick()" class="flex-row">
-                            <icon name="add" class="font-larger margin-right"></icon>
+                            <icon name="ico-add" class="font-larger margin-right"></icon>
                             <span translate>
                                 New connection
                             </span>
@@ -46,7 +46,7 @@
                     <search-input value.bind="textFilter & debounce: 200">
 
                         <span slot="before" class="opacity-faded font-larger line-height-1">
-                            <icon name="md-search"></icon>
+                            <icon name="ico-search"></icon>
                         </span>
 
                         <span slot="placeholder" translate>
@@ -137,7 +137,7 @@
                                             appearance="none"
                                             accent="primary"
                                             click.trigger="onAcceptInviteClick(connection)">
-                                            <icon name="md-check-mark"></icon>
+                                            <icon name="ico-check-mark"></icon>
                                         </button>
                                     </template>
 
@@ -147,7 +147,7 @@
                                             appearance="none"
                                             accent="primary"
                                             click.trigger="onDeleteConnectionClick(connection)">
-                                            <icon name="delete-small"></icon>
+                                            <icon name="ico-delete-small"></icon>
                                         </button>
                                     </template>
 

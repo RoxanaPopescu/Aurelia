@@ -11,7 +11,7 @@
                 <search-input value.bind="textFilter & debounce: 200">
 
                     <span slot="before" class="opacity-faded font-larger line-height-1">
-                        <icon name="md-search"></icon>
+                        <icon name="ico-search"></icon>
                     </span>
 
                     <span slot="placeholder" translate>
@@ -86,7 +86,7 @@
 
                     <button if-claims="invite-drivers" appearance="outline" accent="primary" page-href="path: /fleet-management/drivers/create" class="flex-row">
 
-                        <icon name="add" class="font-larger margin-right"></icon>
+                        <icon name="ico-add" class="font-larger margin-right"></icon>
 
                         <span translate>
                             New driver
@@ -194,11 +194,11 @@
                                 <div class="icon-row">
 
                                     <button appearance="none" accent="primary" click.trigger="onCommunicationDriverClick(driver)">
-                                        <icon name="communication"></icon>
+                                        <icon name="ico-communication"></icon>
                                     </button>
 
                                     <button appearance="none" accent="primary" click.trigger="onRemoveDriverClick(driver)">
-                                        <icon name="delete-small"></icon>
+                                        <icon name="ico-delete-small"></icon>
                                     </button>
 
                                 </div>

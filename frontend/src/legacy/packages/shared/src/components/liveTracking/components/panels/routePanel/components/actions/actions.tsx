@@ -57,7 +57,7 @@ export class Actions extends React.Component<ActionsProps> {
     return (
       <div className="c-liveTracking-routePanel-actions">
         <a onClick={() => this.props.onBackClick()}>
-          <Icon name="arrowLeft" />
+          <Icon name="ico-arrow-backward-ios" />
           {Localization.sharedValue("LiveTracking_Actions_BackToRoutes")}
         </a>
 

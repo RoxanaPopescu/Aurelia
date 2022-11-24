@@ -19,7 +19,7 @@
 
                     <div if.bind="route.status.slug === 'cancelled'" class="route-cancelled-warning" accent="negative">
 
-                        <icon name="warning"></icon>
+                        <icon name="ico-warning"></icon>
 
                         <div class="font-small margin-top" translate>
                             The route is cancelled
@@ -258,7 +258,7 @@
                     <div class="font-largest">
 
                         <template if.bind="route.overallRating != null">
-                            <icon class="card-section-ratingStar" name="star"></icon>${route.overallRating}/5
+                            <icon class="card-section-ratingStar" name="ico-star"></icon>${route.overallRating}/5
                         </template>
 
                         <div if.bind="route.overallRating != null" empty-value></div>

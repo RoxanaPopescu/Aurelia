@@ -11,7 +11,7 @@
                 <a href="/orders/details/${model.orderSlug}" class="text-truncate" click.trigger="onOrderSlugClick(order)">
                     ${model.orderSlug}
                 </a>
-                <icon if.bind="hasProblems" name="warning" accent="negative" class="font-large line-height-1 margin-left"></icon>
+                <icon if.bind="hasProblems" name="ico-warning" accent="negative" class="font-large line-height-1 margin-left"></icon>
             </div>
             <div class="text-align-right opacity-faded text-truncate">
                 <template if.bind="model.totalWeight">
@@ -66,7 +66,7 @@
                 <data-table-row model.bind="collo" clickable.bind="false">
 
                     <data-table-cell>
-                        <icon if.bind="collo.status.accent == 'negative'" name="warning" accent="negative" class="font-large line-height-1 margin-right"></icon>
+                        <icon if.bind="collo.status.accent == 'negative'" name="ico-warning" accent="negative" class="font-large line-height-1 margin-right"></icon>
                         <div>
                             <a
                                 class="text-truncate"
@@ -88,7 +88,7 @@
 
                     <data-table-cell>
                         <a if.bind="collo.scanImageUrl" href.bind="collo.scanImageUrl" target="_blank" class="flex-grow">
-                            <icon name="picture-small" accent="primary" class="font-larger"></icon>
+                            <icon name="ico-picture-small" accent="primary" class="font-larger"></icon>
                         </a>
                     </data-table-cell>
 

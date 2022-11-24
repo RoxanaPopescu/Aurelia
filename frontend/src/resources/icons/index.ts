@@ -1,16 +1,46 @@
-// When imported, this file requires all SVG icons within the folder,
-// thereby establishing them as dependencies, and ensuring that they
-// are bundled by the Webpack plugin `svg-sprite-plugin`.
+import { MapObject } from "shared/types";
 
-function requireAll(r: any): void
+// Import the icons module, which at this point should already be loaded.
+let icons: MapObject<string>;
+import("./icons").then(module => icons = module.default);
+
+/**
+ * The prefix that must be used when specifying icon names.
+ * This enables us to more easily search for icon names in the code.
+ */
+export const iconNamePrefix = "ico-";
+
+/**
+ * Resolves the ID of the specified icon.
+ * @param name The name identifying the icon, which must start with the icon name prefix.
+ * @returns The ID of the specified icon, or the ID of the `missing` icon if not found.
+ */
+export function resolveIconId(name: string): string
 {
-    r.keys().forEach(r);
+    if (icons == null)
+    {
+        throw new Error("The icons must be loaded before calling this method.");
+    }
+
+    let path: string;
+
+    if (name.startsWith(iconNamePrefix))
+    {
+        path = icons[name.substring(iconNamePrefix.length)];
+
+        if (path == null)
+        {
+            console.error(`The icon name '${name}' has not been mapped to any icon.`);
+
+            path = icons["ico-missing"] ?? "missing";
+        }
+    }
+    else
+    {
+        console.error(`The icon name '${name}' must start with the '${iconNamePrefix}' prefix.`);
+
+        path = icons["ico-missing"] ?? "missing";
+    }
+
+    return path.replaceAll("/", "-");
 }
-
-// Note that the arguments here must be literals, as they are parsed during build.
-// While the pattern here matches files within subfolders, thus allowing some organization,
-// note that only the file name itself is used for the icon ID - so avoid collisions.
-
-requireAll((require as any).context("./", true, /\.\/.*\.svg$/));
-
-export default undefined;

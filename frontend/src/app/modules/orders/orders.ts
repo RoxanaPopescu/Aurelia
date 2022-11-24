@@ -81,7 +81,7 @@ export class OrdersModule
                     ]
                 },
                 nav: ENVIRONMENT.name !== "production",
-                icon: "orders"
+                icon: "ico-orders"
             },
             {
                 name: "details",
@@ -108,7 +108,7 @@ export class OrdersModule
                 },
                 title: routeTitles.trackingSettings,
                 nav: ENVIRONMENT.name !== "production",
-                icon: "route-tracking"
+                icon: "ico-route-tracking"
             },
             {
                 name: "dao-relabel",
@@ -123,7 +123,7 @@ export class OrdersModule
                 },
                 title: routeTitles.daoRelabel,
                 nav: false,
-                icon: "orders"
+                icon: "ico-orders"
             }
         ]);
     }

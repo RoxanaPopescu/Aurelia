@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-  <g>
-    <path d="M20,2H17a2,2,0,0,0-2-2H9A2,2,0,0,0,7.75.45a1.72,1.72,0,0,0-.27.27A2,2,0,0,0,7,2H4A2,2,0,0,0,2,4V22a2,2,0,0,0,2,2H20a2,2,0,0,0,2-2V4A2,2,0,0,0,20,2ZM15,2V4H9V2h6Zm5,20H4V4H7A2,2,0,0,0,9,6h6a2,2,0,0,0,2-2h3Z" fill="currentColor"/>
-    <path d="M7,9a1,1,0,0,0,0,2H17a1,1,0,0,0,0-2Z" fill="currentColor"/>
-    <path d="M17,13H7a1,1,0,0,0,0,2H17a1,1,0,0,0,0-2Z" fill="currentColor"/>
-    <path d="M17,17H7a1,1,0,0,0,0,2H17a1,1,0,0,0,0-2Z" fill="currentColor"/>
-  </g>
-</svg>

@@ -50,7 +50,7 @@
                         </template>
 
                         <button if.bind="activeListView.selectedItems.length == 0" appearance="outline" accent="primary" class="flex-row" click.trigger="onImportOrdersClick()">
-                            <icon name="add" class="font-larger margin-right"></icon>
+                            <icon name="ico-add" class="font-larger margin-right"></icon>
                             <span translate>
                                 Import orders
                             </span>
@@ -63,7 +63,7 @@
                             </button>
 
                             <button title.translate="Revert changes" appearance="solid" accent="primary" click.trigger="onRevertListViewChangesClick()" translate>
-                                <icon name="md-undo" class="font-large" inline></icon>
+                                <icon name="ico-undo" class="font-large" inline></icon>
                             </button>
 
                         </div>
@@ -73,7 +73,7 @@
                             <select-button if.bind="activeListView.definition.id != null" title.translate="More options" appearance="outline" accent="primary" placement="bottom-end" fixed.bind="true">
 
                                 <div slot="icon">
-                                    <icon name="more"></icon>
+                                    <icon name="ico-more"></icon>
                                 </div>
 
                                 <item click.trigger="onEditListViewColumnsClick()" model="edit-view-columns" translate>
@@ -115,7 +115,7 @@
                             accent="primary"
                             title.translate="Close view"
                             click.delegate="onCloseListView(listView.definition)">
-                            <icon name="close" inline></icon>
+                            <icon name="ico-close" inline></icon>
                         </button>
 
                     </div>
@@ -135,7 +135,7 @@
                     close-list-view.call="onCloseListView(listViewDefinition)">
 
                     <span slot="label" title.translate="Add view">
-                        <icon name="add" class="margin-right font-larger"></icon>
+                        <icon name="ico-add" class="margin-right font-larger"></icon>
                         <span if.bind="activeListView == null" translate>
                             Add view
                         </span>
@@ -154,7 +154,7 @@
                     <search-input value.bind="activeListView.definition.filter.textFilter & debounce: 200">
 
                         <span slot="before" class="opacity-faded font-larger line-height-1">
-                            <icon name="md-search"></icon>
+                            <icon name="ico-search"></icon>
                         </span>
 
                         <span slot="placeholder" translate>
@@ -165,7 +165,7 @@
 
                     <button appearance="solid" accent="neutral" class="flex-row list-view-filters-button ${activeFilterCount > 0 ? '--active' : ''}" click.trigger="onFiltersClick()">
 
-                        <icon name="md-filter" class="margin-smaller-right" accent="primary"></icon>
+                        <icon name="ico-filter" class="margin-smaller-right" accent="primary"></icon>
 
                         <span>
 
@@ -182,7 +182,7 @@
                         <icon
                             if.bind="activeFilterCount > 0"
                             title.translate="Clear"
-                            name="md-clear"
+                            name="ico-clear"
                             class="margin-smaller-left"
                             click.trigger="onResetFiltersClick($event)">
                         </icon>
@@ -402,7 +402,7 @@
                         orders to show, and what information to show about each order
                     </p>
                     <p>
-                        To see your orders, create or open a view, by clicking <span class="info-card-action"><icon inline name="add"></icon> Add view</span> above
+                        To see your orders, create or open a view, by clicking <span class="info-card-action"><icon inline name="ico-add"></icon> Add view</span> above
                     </p>
                 </info-card>
 

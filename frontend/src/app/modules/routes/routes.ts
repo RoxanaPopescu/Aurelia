@@ -30,7 +30,7 @@ export class RoutesModule
                 },
                 title: routeTitles.list,
                 nav: false,
-                icon: "routes"
+                icon: "ico-routes"
             },
             {
                 name: "list-views",
@@ -44,7 +44,7 @@ export class RoutesModule
                     ]
                 },
                 nav: ENVIRONMENT.name !== "production",
-                icon: "routes"
+                icon: "ico-routes"
             },
             {
                 name: "details",
@@ -72,7 +72,7 @@ export class RoutesModule
                 },
                 title: routeTitles.liveTracking,
                 nav: true,
-                icon: "route-tracking"
+                icon: "ico-route-tracking"
             },
             {
                 name: "auto-contractor-assignment",
@@ -87,7 +87,7 @@ export class RoutesModule
                 },
                 title: routeTitles.autoContractorAssignment,
                 nav: true,
-                icon: "auto-dispatch"
+                icon: "ico-auto-dispatch"
             },
             ...
             ENVIRONMENT.name !== "production" ?
@@ -105,7 +105,7 @@ export class RoutesModule
                     },
                     title: routeTitles.templates,
                     nav: true,
-                    icon: "templates"
+                    icon: "ico-templates"
                 },
                 {
                     name: "templates-details",
@@ -139,7 +139,7 @@ export class RoutesModule
                     moduleId: PLATFORM.moduleName("./modules/generate-test-routes/generate-test-routes"),
                     title: routeTitles.test,
                     nav: false,
-                    icon: "settings"
+                    icon: "ico-settings"
                 }
             ] : []
         ]);

@@ -103,16 +103,16 @@
                     <div class="icon-row">
 
                         <button appearance="none" accent="primary" click.trigger="onPauseClick(schedule)">
-                            <icon if.bind="schedule.paused" name="play"></icon>
-                            <icon if.bind="!schedule.paused" name="pause"></icon>
+                            <icon if.bind="schedule.paused" name="ico-play"></icon>
+                            <icon if.bind="!schedule.paused" name="ico-pause"></icon>
                         </button>
 
                         <button appearance="none" accent="primary" click.trigger="onEditClick(schedule)">
-                            <icon name="edit-small"></icon>
+                            <icon name="ico-edit-small"></icon>
                         </button>
 
                         <button appearance="none" accent="primary" click.trigger="onRemoveClick($index)">
-                            <icon name="delete-small"></icon>
+                            <icon name="ico-delete-small"></icon>
                         </button>
 
                     </div>

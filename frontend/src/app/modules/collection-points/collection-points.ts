@@ -30,7 +30,7 @@ export class CollectionPointModule
                 },
                 title: routeTitles.list,
                 nav: false,
-                icon: "routes"
+                icon: "ico-routes"
             },
             {
                 name: "details",

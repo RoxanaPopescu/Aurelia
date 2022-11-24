@@ -22,7 +22,7 @@
 
             <div class="data-table-row-insert-action">
                 <button appearance="icon" accent="primary">
-                    <icon name="plus-small"></icon>
+                    <icon name="ico-plus-small"></icon>
                 </button>
             </div>
 
@@ -39,7 +39,7 @@
         <slot></slot>
 
         <data-table-cell class="data-table-row-drag-handle" mousedown.trigger="onMouseDown($event)" click.trigger="onDragHandleClick($event)">
-            <icon if.bind="movable && dataTable.move != null && model != null" name="drag-handle" class="opacity-faded">
+            <icon if.bind="movable && dataTable.move != null && model != null" name="ico-drag-handle" class="opacity-faded">
         </data-table-cell>
 
         <slot name="details"></slot>

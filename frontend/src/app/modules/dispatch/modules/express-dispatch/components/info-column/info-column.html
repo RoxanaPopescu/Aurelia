@@ -89,14 +89,14 @@
                     <data-table-row accent.bind="item.criticality.accent">
 
                         <data-table-cell title.bind="item.status.name" accent.bind="item.status.accent & attr">
-                            <icon name="md-warning" if.bind="item.status.accent == 'attention' || item.status.accent == 'negative'"></icon>
+                            <icon name="ico-warning" if.bind="item.status.accent == 'attention' || item.status.accent == 'negative'"></icon>
                             <span class="text-truncate">
                                 ${item.status.name}
                             </span>
                         </data-table-cell>
 
                         <data-table-cell title.bind="item.slug" accent.bind="!item.driverOnline ? 'negative' : 'neutral' & attr">
-                            <icon name="md-warning" if.bind="!item.driverOnline"></icon>
+                            <icon name="ico-warning" if.bind="!item.driverOnline"></icon>
                             <span class="text-truncate">
                                 <template if.bind="item.driverOnline" translate>
                                     Online
@@ -231,7 +231,7 @@
                     <data-table-row accent.bind="item.selected ? item.colorIndex : undefined">
 
                         <data-table-cell title.bind="item.timeToDeadline | duration" accent.bind="item.criticality.accent & attr">
-                            <icon name="md-warning" if.bind="item.criticality.accent == 'attention' || item.criticality.accent == 'negative'"></icon>
+                            <icon name="ico-warning" if.bind="item.criticality.accent == 'attention' || item.criticality.accent == 'negative'"></icon>
                             <span class="text-truncate">
                                 ${item.timeToDeadline | duration }
                             </span>
@@ -302,7 +302,7 @@
                             <div class="icon-row">
 
                                 <button appearance="none" accent="primary" click.trigger="onRemoveRouteClick(item)">
-                                    <icon name="delete-small"></icon>
+                                    <icon name="ico-delete-small"></icon>
                                 </button>
 
                             </div>

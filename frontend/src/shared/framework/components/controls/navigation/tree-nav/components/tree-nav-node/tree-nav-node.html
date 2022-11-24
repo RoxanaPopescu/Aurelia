@@ -19,7 +19,7 @@
         drop.trigger="onDrop($event, model)">
 
         <icon class="tree-nav-node-icon">
-            <icon name.bind="folderLike ? 'md-folder' : 'md-file'" click.trigger="onClick(true, $event)"></icon>
+            <icon name.bind="folderLike ? 'ico-folder' : 'ico-file'" click.trigger="onClick(true, $event)"></icon>
             <icon name.bind="iconName" click.trigger="onClick(true, $event)"></icon>
         </icon>
 
@@ -43,7 +43,7 @@
 
             <icon
                 title.bind="tree.settingsIconTitle"
-                name.bind="tree.settingsIcon || 'md-settings'"
+                name.bind="tree.settingsIcon || 'ico-settings'"
                 tabindex.bind="tree.editable ? -1 : 0"
                 click.trigger="onSettingsClick($event)">
             </icon>
@@ -53,7 +53,7 @@
                 <icon
                     if.bind="folderLike && tree.createNode != null"
                     title.translate="New folder"
-                    name="md-new-folder"
+                    name="ico-new-folder"
                     tabindex="0"
                     click.trigger="onNewFolderClick($event)"
                     class="preserve-selection">
@@ -62,7 +62,7 @@
                 <icon
                     if.bind="model.parent != null"
                     title.translate="Delete"
-                    name="md-delete"
+                    name="ico-delete"
                     tabindex="0"
                     click.trigger="onDeleteClick($event)">
                 </icon>
@@ -70,7 +70,7 @@
                 <icon
                     if.bind="model.parent != null"
                     title.translate="Rename"
-                    name="md-edit"
+                    name="ico-edit"
                     tabindex="0"
                     click.trigger="onRenameClick($event)"
                     class="preserve-selection">

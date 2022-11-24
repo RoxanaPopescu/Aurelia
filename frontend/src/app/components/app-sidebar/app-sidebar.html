@@ -14,14 +14,14 @@
         <template if.bind="identityService.identity.organization != null">
 
             <a class="nav-link" modal-href="modal: starred">
-                <icon title.translate="Starred and recent" name="starred"></icon>
+                <icon title.translate="Starred and recent" name="ico-starred"></icon>
                 <span translate>
                     Starred and recent
                 </span>
             </a>
 
             <a class="nav-link" modal-href="modal: search">
-                <icon title.translate="Search" name="search"></icon>
+                <icon title.translate="Search" name="ico-search"></icon>
                 <span translate>
                     Search
                 </span>
@@ -31,7 +31,7 @@
             <template if.bind="environment == 'development'">
 
                 <a class="nav-link" modal-href="modal: add">
-                    <icon title.translate="Add" name="add"></icon>
+                    <icon title.translate="Add" name="ico-add"></icon>
                     <span translate>
                         Add
                     </span>
@@ -91,7 +91,7 @@
 
             <!--
             <a class="nav-link" modal-href="modal: notifications">
-                <icon title.translate="Notifications" name="notifications">
+                <icon title.translate="Notifications" name="ico-notifications">
                     <badge>5</badge>
                 </icon>
                 <span translate>
@@ -102,14 +102,14 @@
 
             <!--
             <a class="nav-link" page-href="path: help">
-                <icon title.translate="Help and support" name="help"></icon>
+                <icon title.translate="Help and support" name="ico-help"></icon>
                 <span translate>
                     Help and support
                 </span>
             </a>
 
             <a class="nav-link" page-href="path: design">
-                <icon title.translate="Design" name="md-style"></icon>
+                <icon title.translate="Design" name="ico-style"></icon>
                 <span translate>
                     Design
                 </span>
@@ -122,12 +122,12 @@
 
         <a class="nav-link app-sidebar-toggle" click.trigger="toggleWidth()">
 
-            <icon if.bind="expanded" title.translate="Collapse menu" name="sidebar-collapse"></icon>
+            <icon if.bind="expanded" title.translate="Collapse menu" name="ico-sidebar-collapse"></icon>
             <span if.bind="expanded" translate>
                 Collapse menu
             </span>
 
-            <icon if.bind="!expanded" title.translate="Expand menu" name="sidebar-expand"></icon>
+            <icon if.bind="!expanded" title.translate="Expand menu" name="ico-sidebar-expand"></icon>
 
         </a>
 
