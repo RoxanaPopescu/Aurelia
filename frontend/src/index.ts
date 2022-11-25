@@ -13,6 +13,7 @@ import { GoogleMapsService } from "shared/google-maps";
 import { Visitor } from "app/types/visitor";
 import { IdentityService, Identity } from "app/services/identity";
 import { TeamsFilterService } from "app/services/teams-filter";
+import { NotificationService } from "app/modules/notification/services/notification";
 import settings from "resources/settings";
 
 // TODO: REMOVE WHEN DONE TESTING.
@@ -335,23 +336,31 @@ async function setTheme(newTheme: ITheme, oldTheme: ITheme | undefined, finish: 
  */
 async function setIdentity(newIdentity: Identity | undefined, oldIdentity: Identity | undefined, finish: () => void): Promise<void>
 {
-    if (newIdentity?.id !== oldIdentity?.id)
+    // Set the identity associated with log entries.
+    Log.setUser(newIdentity);
+
+    if (newIdentity?.id !== oldIdentity?.id || newIdentity?.organization?.id !== oldIdentity?.organization?.id)
     {
         // Reset the selected teams.
         const teamsFilterService = Container.instance.get(TeamsFilterService);
         teamsFilterService.reset();
     }
 
-    if (newIdentity != null)
+    const notificationService = Container.instance.get(NotificationService);
+
+    if (newIdentity?.organization != null)
     {
-        // Set the identity associated with log entries.
-        Log.setUser(newIdentity);
+        // Start the notification service.
+        notificationService.start();
     }
     else
     {
-        // Reset the identity associated with log entries.
-        Log.setUser(undefined);
+        // Stop the notification service.
+        notificationService.stop();
+    }
 
+    if (newIdentity == null)
+    {
         // Navigate to the sign-in page.
         const historyHelper = Container.instance.get(HistoryHelper);
         await historyHelper.navigate("/account/sign-in");

@@ -93,12 +93,8 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("app/modules/search/modals/search/search", "search")
             },
             {
-                name: "add",
-                moduleId: PLATFORM.moduleName("app/modals/panels/add/add")
-            },
-            {
                 name: "notifications",
-                moduleId: PLATFORM.moduleName("app/modals/panels/notifications/notifications")
+                moduleId: PLATFORM.moduleName("app/modules/notification/modals/notifications/notifications")
             },
             {
                 name: "confirm-discard",

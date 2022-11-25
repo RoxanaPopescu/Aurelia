@@ -1,0 +1,33 @@
+<template>
+
+    <require from="./notification.scss"></require>
+
+    <toast name="notification" accent="primary" scroll mousedown.capture="cancelScheduledClose()" click.trigger="onClick($event)" close-timeout.bind="closeTimeout" class="${model.url ? '--clickable' : ''}">
+
+        <toast-header>
+
+            <h1 class="font-large ${model.body ? 'margin-bottom' : ''}">
+                ${model.heading}
+            </h1>
+
+            <div if.bind="model.body">
+                ${model.body}
+            </div>
+
+        </toast-header>
+
+        <toast-section if.bind="model.details" toggle.bind="true" expanded.one-time="false" class="margin-bottom">
+
+            <div slot="header" translate>
+                Details
+            </div>
+
+            <div class="font-small margin">
+                ${model.details}
+            </div>
+
+        </toast-section>
+
+    </toast>
+
+</template>

@@ -23,6 +23,8 @@ const icons =
     "clear": "material/outline/clear",
     "create-folder": "material/outline/create-new-folder",
     "delete": "material/outline/delete",
+    "done-all": "material/outline/done-all",
+    "done": "material/outline/done",
     "organization": "material/outline/domain",
     "edit": "material/outline/edit",
     "error-circle": "material/outline/error-outline",

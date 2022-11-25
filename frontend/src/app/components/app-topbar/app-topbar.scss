@@ -60,7 +60,7 @@ app-topbar
     user-identity
     {
         // Size and position the user icon.
-        margin: 0 16rem 0 16rem;
+        margin: 0 16rem;
         width: auto;
 
         // Center horizontally.
@@ -88,6 +88,38 @@ app-topbar
         .user-identity-name
         {
             margin-bottom: 0rem;
+        }
+    }
+
+    .app-topbar-action
+    {
+        display: flex;
+        align-items: center;
+        align-self: stretch;
+
+        // Position above the gradient background.
+        z-index: 1;
+
+        // Size and space other icons.
+        margin: calc((var(--app-topbar-height) - 40rem) / 2) 8rem;
+        padding: 0 calc((var(--app-topbar-height) - 40rem) / 2);
+
+        // Apply theme colors.
+
+        color: var(--surface-nav-link-surface-text-color);
+        background-color: var(--surface-nav-link-surface-color);
+        border-color: var(--surface-nav-link-border-color);
+
+        > icon
+        {
+            font-size: 24rem;
+            color: var(--surface-nav-link-surface-icon-color);
+        }
+
+        > span
+        {
+            display: none;
+            transition: opacity var(--animation-duration-short);
         }
     }
 }

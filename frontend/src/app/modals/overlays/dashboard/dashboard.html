@@ -1,34 +1,41 @@
 <template>
 
     <require from="app/components/app-sidebar/app-sidebar"></require>
+    <require from="app/components/info-card/info-card"></require>
 
     <require from="./dashboard.scss"></require>
 
-    <app-sidebar class="dashboard-sidebar" disable-dashboard.bind="!allowClose">
+    <style if.bind="modal == null || !modal._closed">
 
-    </app-sidebar>
+        body
+        {
+            /* HACK: Change the color of the toast `Clear all` button. */
+            --toast-clear-all-color: var(--surface-primary-surface-text-color);
+        }
+
+    </style>
+
+    <app-sidebar disable-dashboard-toggle.bind="!allowClose"></app-sidebar>
 
     <modal-overlay name="dashboard" close-button.bind="false" close-shortcut.bind="allowClose" surface="primary" scroll>
 
-        <modal-header>
+        <modal-header scroll-fade>
 
-            <h1 class="font-largest focus-hidden" tabindex="-1" autofocus translate>
-                Dashboard
-            </h1>
+            <div class="dashboard-title font-title margin">
+
+                <h1 tabindex="-1" autofocus="visible.bind: false">
+                    Dashboard
+                </h1>
+
+            </div>
 
         </modal-header>
 
-        <modal-section>
-
-            SECTION
-
-        </modal-section>
-
-        <modal-footer>
-
-            FOOTER
-
-        </modal-footer>
+        <info-card heading="Demo">
+            This is a demo of how a dashboard could be implemented as an <kbd>modal-overlay</kbd>,<br>
+            which can be opened and closed by clicking the <kbd>app-logo</kbd> in the <kbd>app-sidebar</kbd>,<br>
+            or alternatively used as a component on a landing page.
+        </info-card>
 
     </modal-overlay>
 

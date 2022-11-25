@@ -45,6 +45,27 @@ export default
         defaultToastTimeout: 10000,
 
         /**
+         * Settings for the notifications module.
+         */
+        notifications:
+        {
+            /**
+             * The interval in milliseconds between requests for new notifications.
+             */
+            refreshInterval: 30000,
+
+            /**
+             * The max number of notifications to fetch in each request.
+             */
+            pageSize: 300,
+
+            /**
+             * The time in milliseconds before a toast notification disappears.
+             */
+            toastTimeout: 10000
+        },
+
+        /**
          * The base URL to use when fetching public images based on their ID,
          * including a trailing `/`.
          */

@@ -1,0 +1,84 @@
+<template>
+
+    <require from="app/components/info-card/info-card"></require>
+    <require from="./components/notification-item/notification-item"></require>
+
+    <require from="./notifications.scss"></require>
+
+    <modal-backdrop close="all"></modal-backdrop>
+
+    <modal-panel
+        name="notifications"
+        position.bind="position"
+        close-button.bind="true"
+        close-shortcut.bind="true"
+        scroll>
+
+        <div slot="actions">
+            <button appearance="icon" title.translate="Dismiss all" disabled.bind="!(notificationService.unseenCount > 0)" click.trigger="onDismissAllClick()">
+                <icon name="ico-done-all"></icon>
+            </button>
+        </div>
+
+        <modal-header scroll-fade>
+
+            <h1 class="font-largest" tabindex="-1" autofocus="visible.bind: false" translate>
+                Notifications
+            </h1>
+
+        </modal-header>
+
+        <modal-section if.bind="groupedNotifications == null" class="margin-bottom">
+
+            <div slot="header" class="text-skeleton" style="width: 160rem;"></div>
+
+            <list-layout>
+
+                <notification-item repeat.for="i of 6"></notification-item>
+
+            </list-layout>
+
+        </modal-section>
+
+        <modal-section if.bind="groupedNotifications.size == 0" class="margin-bottom">
+
+            <info-card
+                heading.translate="You have no notifications yet"
+                translate>
+                This is where your notifications will appear, informing you of activity
+                relevant to you.
+            </info-card>
+
+        </modal-section>
+
+        <modal-section repeat.for="[relativeCalendarDate, notifications] of groupedNotifications" class="margin-bottom">
+
+            <div slot="header">
+                ${relativeCalendarDate | case: 'sentence'}
+            </div>
+
+            <list-layout>
+
+                <notification-item
+                    repeat.for="notification of notifications"
+                    model.bind="notification"
+                    mousedown.trigger="onNotificationMouseDown(notification)">
+                </notification-item>
+
+            </list-layout>
+
+        </modal-section>
+
+        <scroll-sentinel if.bind="groupedNotifications != null" intersect.call="onScrollSentinelIntersect()" class="margin-bottom">
+
+            <modal-section class="margin-bottom">
+
+                <div slot="header" class="text-skeleton" style="width: 160rem;"></div>
+
+            </modal-section>
+
+        </scroll-sentinel>
+
+    </modal-panel>
+
+</template>

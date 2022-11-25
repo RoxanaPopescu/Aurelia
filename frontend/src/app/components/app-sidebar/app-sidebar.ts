@@ -3,6 +3,7 @@ import { AppRouter, NavModel } from "aurelia-router";
 import { ThemeService } from "shared/framework";
 import { IdentityService } from "app/services/identity";
 import { AuthorizationService } from "app/services/authorization";
+import { NotificationService } from "app/modules/notification/services/notification";
 
 /**
  * Represents the sidebar of the app, which acts as the global navigation hub for authenticated users.
@@ -14,14 +15,21 @@ export class AppSidebarCustomElement
      * Creates a new instance of the type.
      * @param router The `AppRouter` instance.
      * @param identityService The `IdentityService` instance.
-     * @param themeService The `ThemeService` instance.
      * @param authorizationService The `AuthorizationService` instance.
+     * @param notificationService The `NotificationService` instance.
+     * @param themeService The `ThemeService` instance.
      */
-    public constructor(router: AppRouter, identityService: IdentityService, authorizationService: AuthorizationService, themeService: ThemeService)
+    public constructor(
+        router: AppRouter,
+        identityService: IdentityService,
+        authorizationService: AuthorizationService,
+        notificationService: NotificationService,
+        themeService: ThemeService)
     {
         this._router = router;
         this.identityService = identityService;
         this._authorizationService = authorizationService;
+        this.notificationService = notificationService;
 
         this.expanded = localStorage.getItem("app-sidebar-expanded") === "true";
         document.documentElement.classList.toggle("sideMenu--collapsed", !this.expanded);
@@ -42,10 +50,11 @@ export class AppSidebarCustomElement
      */
     protected readonly identityService: IdentityService;
 
+
     /**
-     * The name identifying the environment.
+     * The `NotificationService` instance.
      */
-    protected readonly environment = ENVIRONMENT.name;
+    protected readonly notificationService: NotificationService;
 
     /**
      * The navigation models for the top-level routes.
@@ -114,7 +123,7 @@ export class AppSidebarCustomElement
      * True to disable toggling of the dashboard, otherwise false.
      * This should only be false when presented as the landing page after sign in.
      */
-    @bindable({ defaultValue: true })
+    @bindable({ defaultValue: ENVIRONMENT.name !== "development" })
     public disableDashboard: boolean;
 
     protected toggleWidth(): void

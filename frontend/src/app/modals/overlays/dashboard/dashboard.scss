@@ -1,21 +1,64 @@
 modal-overlay[name="dashboard"]
 {
-}
+    modal-header .font-title
+    {
+        /// The margin above the title text.
+        --font-title-margin-top: 27rem;
 
-.dashboard-sidebar app-logo a:hover
-{
-    transition: none;
-}
+        /// The margin below the title text.
+        --font-title-margin-bottom: 23rem;
 
-dashboard-modal
-{
-    // Fill the viewport.
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+        // Ensure the beginning of the text exactly aligns with the left edge.
+        // TODO:2: This varies depending on the font and first letter of the text,
+        // so it may need to be changed to match the current font and language.
+        margin-left: -3rem;
+    }
 
-    // Use horizontal flex layout.
-    display: flex;
+    &::after
+    {
+        content: "";
+        position: fixed;
+        top: 42rem;
+        left: calc(var(--app-sidebar-width) - 7rem);
+        width: 14rem;
+        height: 14rem;
+        background: var(--surface-color);
+        border: var(--border-width-thin) solid rgba(0, 0, 0, 0.15);
+        clip-path: polygon(-6rem -6rem, 20rem 20rem, -6rem 20rem);
+        transform: rotate(45deg);
+        transition: transform var(--animation-duration-medium);
+        box-shadow: 0 0 6rem 0 rgba(0, 0, 0, 0.05);
+        z-index: 1;
+    }
+
+    modal-view compose.au-enter &::after
+    {
+        transform: rotate(45deg) scale(0);
+    }
+
+    modal-view compose.au-enter-active &::after
+    {
+        transform: rotate(45deg) scale(1);
+    }
+
+    modal-view compose.au-leave-active &::after
+    {
+        transform: rotate(45deg) scale(0);
+    }
+
+    modal-section
+    {
+        margin-bottom: 70rem;
+    }
+
+    .dashboard-title
+    {
+        display: flex;
+        align-items: baseline;
+
+        > :not(:last-child)
+        {
+            margin-right: 83rem;
+        }
+    }
 }
