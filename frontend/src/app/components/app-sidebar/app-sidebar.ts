@@ -123,7 +123,7 @@ export class AppSidebarCustomElement
      * True to disable toggling of the dashboard, otherwise false.
      * This should only be false when presented as the landing page after sign in.
      */
-    @bindable({ defaultValue: ENVIRONMENT.name !== "development" })
+    @bindable({ defaultValue: ENVIRONMENT.name === "production" })
     public disableDashboard: boolean;
 
     protected toggleWidth(): void

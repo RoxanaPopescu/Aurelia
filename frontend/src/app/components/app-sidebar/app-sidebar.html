@@ -74,7 +74,7 @@
 
         <slot name="footer"></slot>
 
-        <template if-environment="development">
+        <template if-environment="development, preview">
 
             <a class="nav-link --hide-if-app-topbar-enabled" modal-href="modal: notifications">
                 <icon title.translate="Notifications" name="ico-bell">

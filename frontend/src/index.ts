@@ -348,15 +348,18 @@ async function setIdentity(newIdentity: Identity | undefined, oldIdentity: Ident
 
     const notificationService = Container.instance.get(NotificationService);
 
-    if (newIdentity?.organization != null)
+    if (ENVIRONMENT.name !== "production")
     {
-        // Start the notification service.
-        notificationService.start();
-    }
-    else
-    {
-        // Stop the notification service.
-        notificationService.stop();
+        if (newIdentity?.organization != null)
+        {
+            // Start the notification service.
+            notificationService.start();
+        }
+        else
+        {
+            // Stop the notification service.
+            notificationService.stop();
+        }
     }
 
     if (newIdentity == null)
