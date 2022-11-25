@@ -7,5 +7,8 @@
  * // The user is attempting to close all toasts.
  * "close-all"
  *
+ * // The toast is attempting to close automatically after the specified timeout.
+ * "close-timeout"
+ *
  */
-export type ToastCloseReason = "close-all" | any;
+export type ToastCloseReason = "close-all" | "close-timeout" | any;

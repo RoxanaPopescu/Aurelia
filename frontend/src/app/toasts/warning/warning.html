@@ -2,7 +2,7 @@
 
     <require from="./warning.scss"></require>
 
-    <toast name="warning" accent="attention" scroll mousedown.capture="cancelScheduledClose()" click.trigger="onClick($event)" class="${model.url ? '--clickable' : ''}">
+    <toast name="warning" accent="attention" scroll mousedown.capture="cancelScheduledClose()" click.trigger="onClick($event)" close-timeout.bind="closeTimeout" class="${model.url ? '--clickable' : ''}">
 
         <toast-header>
 

@@ -36,7 +36,7 @@ export class NotificationToast
      * only undefined may be assigned thereafter, to cancel the timeout.
      * Note that if closed automatically, the close reason is `close-timeout`.
      */
-    protected closeTimeout = settings.app.notifications.toastTimeout;
+    protected closeTimeout: number | undefined;
 
     /**
      * Called by the framework when the toast is activated.
@@ -46,6 +46,9 @@ export class NotificationToast
     {
         // Sets the model for the toast.
         this.model = model;
+
+        // Set the close timeout.
+        this.closeTimeout = settings.app.notifications.toastTimeout;
     }
 
     /**
@@ -70,6 +73,9 @@ export class NotificationToast
      */
     protected cancelScheduledClose(): boolean
     {
+        // Prevent the toast from closing automatically.
+        this.closeTimeout = undefined;
+
         return true;
     }
 
@@ -87,7 +93,7 @@ export class NotificationToast
 
         // Closes the toast immediately.
         // tslint:disable-next-line: no-floating-promises
-        this._toast.close();
+        this._toast.close("click");
 
         // Navigate to the URL associated with the notification, if specified.
         if (this.model.url)

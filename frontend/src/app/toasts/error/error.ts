@@ -1,8 +1,7 @@
 import { autoinject } from "aurelia-framework";
-import { ApiOriginError, IApiProblem } from "shared/infrastructure";
 import { MapObject } from "shared/types";
-import { Toast } from "shared/framework";
 import settings from "resources/settings";
+import { ApiOriginError, IApiProblem } from "shared/infrastructure";
 
 /**
  * Represents the model for a toast that notifies the user that an error has occurred.
@@ -33,7 +32,7 @@ export interface IErrorToastModel
     /**
      * A promise that will be resolved with the log entry info, if available.
      */
-    entry: Promise<
+    entry?: Promise<
     {
         /**
          * The ID of the log entry.
@@ -53,18 +52,6 @@ export interface IErrorToastModel
 @autoinject
 export class ErrorToast
 {
-    /**
-     * Creates a new instance of the type.
-     * @param toast The `Toast` instance representing the toast.
-     */
-    public constructor(toast: Toast)
-    {
-        this._toast = toast;
-    }
-
-    private readonly _toast: Toast;
-    private _closeTimeouthandle: any;
-
     /**
      * The model to for the toast.
      */
@@ -91,9 +78,10 @@ export class ErrorToast
     protected errorProblem: IApiProblem;
 
     /**
-     * The log entry info, if available.
+     * The log entry info, once successfully logged, null if logging failed,
+     * or undefined if logging is pending or was not attempted.
      */
-    protected entry: undefined |
+    protected entry: undefined | null |
     {
         /**
          * The ID of the log entry.
@@ -112,6 +100,15 @@ export class ErrorToast
     protected url: string | undefined;
 
     /**
+     * The time in milliseconds before the toast will automatically close,
+     * or undefined to not close automatically.
+     * Note that this must be set at the time the toast is attached, and that
+     * only undefined may be assigned thereafter, to cancel the timeout.
+     * Note that if closed automatically, the close reason is `close-timeout`.
+     */
+    protected closeTimeout: number | undefined;
+
+    /**
      * Called by the framework when the toast is activated.
      * @param model The model to use for the toast.
      */
@@ -121,7 +118,7 @@ export class ErrorToast
         this.model = model;
 
         // tslint:disable-next-line: no-floating-promises
-        Promise.resolve(this.model.entry).then(entry => this.entry = entry);
+        this.model.entry?.then(entry => this.entry = entry).catch(error => this.entry = null);
 
         if (this.model.error instanceof Error)
         {
@@ -157,11 +154,8 @@ export class ErrorToast
             this.errorProblem = this.model.error.data;
         }
 
-        // Schedule the toast to close automatically.
-        if (this.model.timeout !== null)
-        {
-            this._closeTimeouthandle = setTimeout(() => this._toast.close(), this.model.timeout ?? settings.app.defaultToastTimeout);
-        }
+        // Set the close timeout.
+        this.closeTimeout = this.model.timeout ?? this.model.timeout !== null ? settings.app.defaultToastTimeout : undefined;
     }
 
     /**
@@ -169,8 +163,8 @@ export class ErrorToast
      */
     protected cancelScheduledClose(): boolean
     {
-        // Prevents the toast from closing automatically.
-        clearTimeout(this._closeTimeouthandle);
+        // Prevent the toast from closing automatically.
+        this.closeTimeout = undefined;
 
         return true;
     }

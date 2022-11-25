@@ -34,9 +34,6 @@ toast-view
         font-size: var(--font-large-font-size);
         line-height: 1;
 
-        // Apply half the padding applied to the toasts.
-        padding: 14rem 14rem 14rem 16rem;
-
         // Align the clear icon with the close icons of the toasts.
         margin-top: var(--toast-margin-top);
         margin-right: var(--toast-margin-right);
@@ -65,8 +62,8 @@ toast-view
             // Apply the z-index for toasts.
             z-index: var(--z-index-toast);
 
-            // Align with the close icons on the toasts.
-            padding: 0 14rem;
+            // Apply padding.
+            padding: 14rem 28rem 14rem 28rem;
 
             // Allow clicks on the button.
             pointer-events: initial;
