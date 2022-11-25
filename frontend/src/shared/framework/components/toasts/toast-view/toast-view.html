@@ -6,8 +6,8 @@
         if.bind="toastService.toasts.length > 1"
         class="toast-view-clear-all au-animate animation-fade-in-long animation-fade-out-medium"
         scroll-fade="1.2"
-        mouseenter.trigger="onMouseEnter($event)"
-        mouseleave.trigger="onMouseLeave($event)">
+        mouseenter.trigger="onMouseEnter()"
+        mouseleave.trigger="onMouseLeave()">
 
         <button appearance="none" click.delegate="toastService.closeAll('close-all')">
             <span translate>
@@ -25,8 +25,8 @@
         ref="$composeElement"
         model.one-time="getModel(toast, $compose, composeElement)"
         class="au-animate"
-        mouseenter.trigger="onMouseEnter($event)"
-        mouseleave.trigger="onMouseLeave($event)">
+        mouseenter.trigger="onMouseEnter()"
+        mouseleave.trigger="onMouseLeave()">
     </compose>
 
 </template>

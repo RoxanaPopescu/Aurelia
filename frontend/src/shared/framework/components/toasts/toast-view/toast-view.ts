@@ -58,7 +58,7 @@ export class ToastViewCustomElement
      * and, if pointer events were always enabled, block pointer interaction with
      * the content on the page.
      */
-    protected onMouseEnter()
+    protected onMouseEnter(): void
     {
         clearTimeout(this.hoverTimeoutHandle);
 
@@ -70,7 +70,7 @@ export class ToastViewCustomElement
      * Schedules pointer events for the `toast-view` element to be disabled,
      * to disable scrolling when no compose element is hovered.
      */
-    protected onMouseLeave()
+    protected onMouseLeave(): void
     {
         this.hoverTimeoutHandle = setTimeout(() => this.enablePointerEvents = false);
     }
