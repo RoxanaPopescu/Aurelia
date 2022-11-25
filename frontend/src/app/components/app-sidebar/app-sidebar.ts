@@ -50,7 +50,6 @@ export class AppSidebarCustomElement
      */
     protected readonly identityService: IdentityService;
 
-
     /**
      * The `NotificationService` instance.
      */

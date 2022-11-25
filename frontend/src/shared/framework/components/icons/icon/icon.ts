@@ -8,15 +8,15 @@ import { resolveIconId } from "resources/icons";
 export class IconCustomElement
 {
     /**
+     * The ID of the icon to render, or undefined to render no icon.
+     */
+    protected id: string | undefined;
+
+    /**
      * The name identifying the icon to render, or undefined to render no icon.
      */
     @bindable
     public name: string | undefined;
-
-    /**
-     * The ID of the icon to render, or undefined to render no icon.
-     */
-    protected id: string | undefined;
 
     /**
      * Called by the framework when the `name` property changes.

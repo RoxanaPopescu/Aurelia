@@ -1,8 +1,11 @@
 import { MapObject } from "shared/types";
+import { Log } from "shared/infrastructure";
 
 // Import the icons module, which at this point should already be loaded.
 let icons: MapObject<string>;
-import("./icons").then(module => icons = module.default);
+import("./icons")
+    .then(module => icons = module.default)
+    .catch(error => Log.error("Failed to load icons.", error));
 
 /**
  * The prefix that must be used when specifying icon names.
