@@ -262,12 +262,6 @@ toast
         animation-duration: var(--animation-duration-long);
     }
 
-    toast-view compose.au-leave &
-    {
-        // Replace the shadow with an afterglow to smoothe the edge and reduce ghosting.
-        box-shadow: var(--toast-afterglow);
-    }
-
     toast-view compose.au-leave-active &
     {
         animation: toast-leave cubic-bezier(0.2, 0, 0.2, 0.5);
