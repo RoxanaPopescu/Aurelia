@@ -4,6 +4,9 @@ import "shared/patches";
 // Load and apply polyfills.
 import "inert-polyfill";
 
+// TODO: REMOVE WHEN DONE TESTING.
+import "demo";
+
 import { PLATFORM, Aurelia, Container, LogManager } from "aurelia-framework";
 import { DateTime, Settings as LuxonSettings } from "luxon";
 import { Log, LogAppender, Cookies, ApiClient, ResponseStubInterceptor, HistoryHelper } from "shared/infrastructure";
@@ -15,20 +18,6 @@ import { IdentityService, Identity } from "app/services/identity";
 import { TeamsFilterService } from "app/services/teams-filter";
 import { NotificationService } from "app/modules/notification/services/notification";
 import settings from "resources/settings";
-
-// TODO: REMOVE WHEN DONE TESTING.
-
-// If the `theme` query param is specified, remove any environment restrictions on the themes.
-if (new URL(location.href).searchParams.has("theme"))
-{
-    settings.app.themes.forEach(theme => delete theme.environments);
-}
-
-// If the `theme-enable-topbar` query param is specified, enable the `app-topbar`.
-if (new URL(location.href).searchParams.has("theme-enable-topbar"))
-{
-    document.documentElement.classList.add("theme-enable-topbar");
-}
 
 /**
  * The entry point of the app, called by the Aurelia bootstrapper.

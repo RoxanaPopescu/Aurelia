@@ -1,6 +1,7 @@
 import { autoinject, PLATFORM } from "aurelia-framework";
 import { RouterConfiguration, Router } from "aurelia-router";
 import routeTitles from "./resources/strings/route-titles.json";
+import { isNewIkeaThemeSpecified } from "demo";
 
 /**
  * Represents the module.
@@ -19,7 +20,7 @@ export class RoutesModule
         [
             {
                 name: "list",
-                route: "",
+                route: isNewIkeaThemeSpecified ? "list" : "",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
                 settings:
                 {
@@ -34,7 +35,7 @@ export class RoutesModule
             },
             {
                 name: "list-views",
-                route: "list-views",
+                route: isNewIkeaThemeSpecified ? "" : "list-views",
                 moduleId: PLATFORM.moduleName("./modules/list-views/list-views"),
                 settings:
                 {
@@ -43,7 +44,7 @@ export class RoutesModule
                         "view-routes"
                     ]
                 },
-                nav: ENVIRONMENT.name !== "production",
+                nav: ENVIRONMENT.name !== "production" && !isNewIkeaThemeSpecified,
                 icon: "ico-routes"
             },
             {
