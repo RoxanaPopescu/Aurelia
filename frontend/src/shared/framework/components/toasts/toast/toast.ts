@@ -23,6 +23,8 @@ export class ToastCustomElement
         this.toast = toast;
     }
 
+    private _closeTimeoutHandle: any;
+
     /**
      * The element representing the component.
      */
@@ -47,6 +49,16 @@ export class ToastCustomElement
     public closeButton: boolean;
 
     /**
+     * The time in milliseconds before the toast will automatically close,
+     * or undefined to not close automatically.
+     * Note that this must be set at the time the toast is attached, and that
+     * only undefined may be assigned thereafter, to cancel the timeout.
+     * Note that if closed automatically, the close reason is `close-timeout`.
+     */
+    @bindable
+    public closeTimeout: number | undefined;
+
+    /**
      * True to close when the `Escape` key is pressed, otherwise false.
      */
     @bindable({ defaultValue: true })
@@ -58,6 +70,19 @@ export class ToastCustomElement
      */
     @bindable
     public accent?: AccentColor;
+
+    /**
+     * Called by the framework when the toast is activated.
+     * @param model The model to use for the toast.
+     */
+    public attached(): void
+    {
+        if (this.closeTimeout != null)
+        {
+            // Schedule the toast to close.
+            this._closeTimeoutHandle = setTimeout(() => this.toast?.close("close-timeout"), this.closeTimeout);
+        }
+    }
 
     /**
      * Called when the close button is clicked.
@@ -85,5 +110,17 @@ export class ToastCustomElement
         }
 
         return true;
+    }
+
+    /**
+     * Called by the framework when the `closeTimeout` property changes.
+     */
+    protected closeTimeoutChanged(): void
+    {
+        if (this.closeTimeout == null)
+        {
+            // Cancel any scheduled closing.
+            clearTimeout(this._closeTimeoutHandle);
+        }
     }
 }

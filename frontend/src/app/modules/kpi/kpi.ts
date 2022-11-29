@@ -27,7 +27,7 @@ export class KpiModule
                         "view-kpis"
                     ]
                 },
-                icon: "kpi",
+                icon: "ico-kpi",
                 nav: false
             }
         ]);

@@ -1,10 +1,14 @@
 <template>
 
-    <toast name="error" accent="negative" scroll mousedown.capture="cancelScheduledClose()">
+    <toast name="error" accent="negative" close-timeout.bind="closeTimeout" scroll mousedown.capture="cancelScheduledClose()">
 
         <toast-header>
 
-            <h1 class="font-large ${!model.message || model.error ? 'margin-bottom' : ''}">
+            <let
+                show-default-message.bind="model.entry != null && (!model.message || model.error)">
+            </let>
+
+            <h1 class="font-large ${showDefaultMessage ? 'margin-bottom' : ''}">
 
                 <span if.bind="!model.message" translate>
                     Oops! Something went wrong
@@ -16,9 +20,16 @@
 
             </h1>
 
-            <div if.bind="!model.message || model.error" translate>
-                The error has been logged, and will<br>
-                be investigated
+            <div if.bind="showDefaultMessage && entry === undefined" translate>
+                The error is being logged, and will be investigated.
+            </div>
+
+            <div if.bind="showDefaultMessage && entry != null" translate>
+                The error has been logged, and will be investigated.
+            </div>
+
+            <div if.bind="showDefaultMessage && entry === null" translate>
+                The error could not be logged.
             </div>
 
         </toast-header>
@@ -31,7 +42,7 @@
 
             <div class="font-small">
 
-                <div if.bind="entry" class="margin-bottom">
+                <div if.bind="entry != null" class="margin-bottom">
                     <span translate>
                         Log entry:
                     </span>

@@ -30,7 +30,7 @@ export class DispatchModule
                 },
                 title: routeTitles.automaticDispatch,
                 nav: false,
-                icon: "auto-dispatch"
+                icon: "ico-auto-dispatch"
             },
             {
                 name: "automatic-dispatch-details",
@@ -58,7 +58,7 @@ export class DispatchModule
                 },
                 title: routeTitles.automaticDispatchSettings,
                 nav: true,
-                icon: "settings"
+                icon: "ico-gear"
             },
             {
                 name: "automatic-dispatch-settings-create",
@@ -99,7 +99,7 @@ export class DispatchModule
                 },
                 title: routeTitles.expressDispatch,
                 nav: true,
-                icon: "express-dispatch"
+                icon: "ico-express-dispatch"
             },
             {
                 name: "driver-assignment",
@@ -114,7 +114,7 @@ export class DispatchModule
                 },
                 title: routeTitles.driverAssignment,
                 nav: true,
-                icon: "fleet"
+                icon: "ico-fleet"
             }
         ]);
     }

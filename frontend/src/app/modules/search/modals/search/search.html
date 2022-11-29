@@ -18,7 +18,7 @@
                 title.translate="Save search"
                 click.trigger="saveClick()"
                 class="au-animate animation-fade-in-short animation-fade-out-short">
-                <icon name="md-save"></icon>
+                <icon name="ico-save"></icon>
             </button>
 
         </div>
@@ -32,7 +32,7 @@
             <search-input value.bind="queryText" autofocus ref="queryInputElement">
 
                 <span slot="before">
-                    <icon name="md-search" class="font-larger opacity-faded"></icon>
+                    <icon name="ico-search" class="font-larger opacity-faded"></icon>
                 </span>
 
                 <span slot="placeholder" translate>
@@ -65,7 +65,7 @@
                     if.bind="savedSearches.length == 0"
                     heading.translate="You have no saved searches"
                     translate>
-                    To save a search, type a query and click <icon inline name="md-save" accent="primary"></icon>
+                    To save a search, type a query and click <icon inline name="ico-save" accent="primary"></icon>
                 </info-card>
 
                 <div if.bind="savedSearches.length > 0 && filteredSavedSearches.length == 0" class="opacity-faded" translate>

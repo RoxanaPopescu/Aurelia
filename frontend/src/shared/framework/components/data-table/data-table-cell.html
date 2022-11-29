@@ -7,8 +7,8 @@
         <slot></slot>
 
         <div if.bind="name" class="data-table-cell-sorting user-select-none">
-            <icon if.bind="dataTable.sorting.property === name && dataTable.sorting.direction === 'ascending'" name="md-sort-ascending"></icon>
-            <icon if.bind="dataTable.sorting.property === name && dataTable.sorting.direction === 'descending'" name="md-sort-descending"></icon>
+            <icon if.bind="dataTable.sorting.property === name && dataTable.sorting.direction === 'ascending'" name="ico-sort-ascending"></icon>
+            <icon if.bind="dataTable.sorting.property === name && dataTable.sorting.direction === 'descending'" name="ico-sort-descending"></icon>
             <icon if.bind="dataTable.sorting.property !== name || dataTable.sorting.direction === null">
                 <div class="margin-auto opacity-faded-more">–</div>
             </icon>

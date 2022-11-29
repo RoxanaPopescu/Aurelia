@@ -2,8 +2,10 @@
 
 icon
 {
-    display: inline-flex;
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 1em;
     height: 1em;
     line-height: 1;
@@ -36,7 +38,6 @@ icon
 
     svg
     {
-        position: absolute;
         width: 100%;
         height: 100%;
     }
@@ -49,7 +50,7 @@ icon
         {
             // HACK: Needed to ensure correct vertical alignment.
             // We should maybe consider making this a font variable.
-            bottom: -0.125em;
+            transform: translateY(0.125em);
         }
     }
 
@@ -61,32 +62,4 @@ icon
             color: var(--surface-#{$accent}-icon-color);
         }
     }
-}
-
-// Apply colors to Material Design icons.
-icon[class*="md-"]
-{
-    // Use the current foreground color for both stroke and fill.
-    // This means that the markup for each icon must specify the
-    // attributes `fill="none"` and `stroke="none"` as needed.
-
-    // Note: `color` is not used.
-
-    // Used as the primary icon color.
-    fill: currentColor;
-
-    // Not supported.
-    stroke: none;
-}
-
-// Apply colors to Atlassian icons.
-icon:not([class*="md-"])
-{
-    // Note: `color` is used as the primary icon color.
-
-    // Not supported.
-    stroke: none;
-
-    // Used for elements inside a filled icon to give the impression of transparency.
-    fill: var(--surface-color);
 }

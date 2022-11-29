@@ -48,7 +48,7 @@ export class OrganizationModule
                 },
                 title: routeTitles.users,
                 nav: true,
-                icon: "users"
+                icon: "ico-people"
             },
             {
                 name: "teams",
@@ -63,7 +63,7 @@ export class OrganizationModule
                 },
                 title: routeTitles.teams,
                 nav: true,
-                icon: "departments"
+                icon: "ico-departments"
             },
             {
                 name: "team-details",
@@ -91,7 +91,7 @@ export class OrganizationModule
                 },
                 title: routeTitles.roles,
                 nav: true,
-                icon: "md-rules"
+                icon: "ico-rules"
             },
             {
                 name: "connections",
@@ -106,7 +106,7 @@ export class OrganizationModule
                 },
                 title: routeTitles.connections,
                 nav: true,
-                icon: "md-hub"
+                icon: "ico-hub"
             }
         ]);
     }

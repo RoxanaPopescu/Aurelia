@@ -14,14 +14,14 @@
             </h1>
 
             <h2 class="font-large margin-larger-bottom" translate>
-                Find the user you want to add to the team, then click <icon name="plus-small" accent="primary" inline></icon>.<br>
-                To remove a user from the team, click <icon name="delete-small" accent="primary" inline></icon>
+                Find the user you want to add to the team, then click <icon name="ico-plus-small" accent="primary" inline></icon>.<br>
+                To remove a user from the team, click <icon name="ico-delete-small" accent="primary" inline></icon>
             </h2>
 
             <search-input value.bind="textFilter" autofocus>
 
                 <span slot="before" class="opacity-faded">
-                    <icon name="md-search" class="font-larger"></icon>
+                    <icon name="ico-search" class="font-larger"></icon>
                 </span>
 
                 <span slot="placeholder" translate>
@@ -111,7 +111,7 @@
                                     appearance="none"
                                     accent="primary"
                                     click.trigger="onAddUserClick(user)">
-                                    <icon name="plus-small"></icon>
+                                    <icon name="ico-plus-small"></icon>
                                 </button>
 
                                 <button
@@ -120,7 +120,7 @@
                                     appearance="none"
                                     accent="primary"
                                     click.trigger="onRemoveUserClick(user)">
-                                    <icon name="delete-small"></icon>
+                                    <icon name="ico-delete-small"></icon>
                                 </button>
 
                             </div>

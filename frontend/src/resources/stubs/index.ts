@@ -17,6 +17,7 @@ import { IResponseStubs } from "shared/infrastructure";
 
 // Maintained:
 
+import notifications from "./responses/notifications";
 // import identity from "./responses/identity";
 // import organizations from "./responses/organizations";
 // import account from "./responses/account";
@@ -59,6 +60,7 @@ export const stubs: IResponseStubs =
 
     // Maintained:
 
+    ...notifications,
     // ...identity,
     // ...organizations,
     // ...account

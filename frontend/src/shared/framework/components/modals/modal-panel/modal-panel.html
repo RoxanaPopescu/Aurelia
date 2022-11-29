@@ -30,7 +30,7 @@
             appearance="icon"
             accent.bind="shouldDiscardChanges ? 'negative' : 'neutral' & attr"
             click.trigger="onCloseClick()">
-            <icon name.bind="position === 'left' ? 'back' : 'close'"></icon>
+            <icon name.bind="position === 'left' ? 'ico-arrow-backward' : 'ico-close'"></icon>
         </button>
 
         <slot name="actions"></slot>

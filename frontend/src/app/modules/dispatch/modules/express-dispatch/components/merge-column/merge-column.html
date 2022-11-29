@@ -82,14 +82,14 @@
                                         </div>
                                         <div class="margin-smallest-top flex-row" accent.bind="stop.route.criticality.accent & attr">
                                             <div class="flex-row flex-push-right">
-                                                <icon name="md-warning" if.bind="stop.route.criticality.accent == 'attention' || stop.route.criticality.accent == 'negative'"></icon>
+                                                <icon name="ico-warning" if.bind="stop.route.criticality.accent == 'attention' || stop.route.criticality.accent == 'negative'"></icon>
                                                 <div>
                                                     &nbsp;${stop.stop.arrivalTimeFrame | timeRange: false}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <icon name="drag-handle" class="opacity-faded"></icon>
+                                    <icon name="ico-drag-handle" class="opacity-faded"></icon>
                                 </div>
 
                             </card>
@@ -148,7 +148,7 @@
                                         </div>
                                         <div class="margin-smallest-top flex-row" accent.bind="stop.stop.isDelayed ? 'negative' : undefined & attr">
                                             <div class="flex-row flex-push-right">
-                                                <icon name="md-warning" class="flex-push-right" if.bind="stop.stop.isDelayed"></icon>
+                                                <icon name="ico-warning" class="flex-push-right" if.bind="stop.stop.isDelayed"></icon>
                                                 <div>
                                                     &nbsp;${stop.stop.arrivalTimeFrame | timeRange: false}
                                                 </div>
@@ -161,7 +161,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <icon name="drag-handle" class="opacity-faded"></icon>
+                                    <icon name="ico-drag-handle" class="opacity-faded"></icon>
                                 </div>
 
                             </card>

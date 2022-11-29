@@ -93,12 +93,8 @@ export class AppModule
                 moduleId: PLATFORM.moduleName("app/modules/search/modals/search/search", "search")
             },
             {
-                name: "add",
-                moduleId: PLATFORM.moduleName("app/modals/panels/add/add")
-            },
-            {
                 name: "notifications",
-                moduleId: PLATFORM.moduleName("app/modals/panels/notifications/notifications")
+                moduleId: PLATFORM.moduleName("app/modules/notification/modals/notifications/notifications")
             },
             {
                 name: "confirm-discard",
@@ -155,7 +151,7 @@ export class AppModule
                 title: routeTitles.kpi,
                 nav: true,
                 href: "/kpi",
-                icon: "kpi"
+                icon: "ico-kpi"
             },
             {
                 name: "orders",
@@ -171,7 +167,7 @@ export class AppModule
                 title: routeTitles.orders,
                 nav: true,
                 href: "/orders",
-                icon: "orders"
+                icon: "ico-orders"
             },
             {
                 name: "routes",
@@ -187,7 +183,7 @@ export class AppModule
                 title: routeTitles.routes,
                 nav: true,
                 href: "/routes",
-                icon: "routes"
+                icon: "ico-routes"
             },
             {
                 name: "dispatch",
@@ -203,7 +199,7 @@ export class AppModule
                 title: routeTitles.dispatch,
                 nav: true,
                 href: "/dispatch",
-                icon: "dispatch"
+                icon: "ico-dispatch"
             },
             {
                 name: "collection-points",
@@ -234,7 +230,7 @@ export class AppModule
                 title: routeTitles.routePlanning,
                 nav: true,
                 href: "/route-planning",
-                icon: "route-planning"
+                icon: "ico-route-planning"
             },
             {
                 name: "distribution-centers",
@@ -250,7 +246,7 @@ export class AppModule
                 title: routeTitles.distributionCenters,
                 nav: true,
                 href: "/distribution-centers",
-                icon: "depots"
+                icon: "ico-depots"
             },
             {
                 name: "fleet",
@@ -267,7 +263,7 @@ export class AppModule
                 title: routeTitles.fleet,
                 nav: true,
                 href: "/fleet-management",
-                icon: "fleet"
+                icon: "ico-fleet"
             },
             {
                 name: "communication",
@@ -283,7 +279,7 @@ export class AppModule
                 title: routeTitles.communication,
                 nav: true,
                 href: "/communication",
-                icon: "communication"
+                icon: "ico-communication"
             },
             {
                 name: "organization",
@@ -299,7 +295,7 @@ export class AppModule
                 title: routeTitles.organization,
                 nav: true,
                 href: "/organization",
-                icon: "settings"
+                icon: "ico-gear"
             },
             {
                 name: "unauthorized",

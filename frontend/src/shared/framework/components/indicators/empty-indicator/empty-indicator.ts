@@ -15,6 +15,6 @@ export class EmptyIndicatorCustomElement
     /**
      * The name of the icon, or undefined to show no icon.
      */
-    @bindable({ defaultValue: "empty-box" })
+    @bindable({ defaultValue: "ico-empty-box" })
     public icon: string | undefined;
 }

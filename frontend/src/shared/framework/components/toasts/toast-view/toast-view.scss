@@ -22,35 +22,14 @@ toast-view
     flex-direction: column;
     align-items: flex-end;
 
-    // Disable pointer events so the container does not block clicks.
-    pointer-events: none;
-
     .toast-view-clear-all
     {
         // Allow content to be positioned relative to this element.
         position: relative;
 
-        // Use same font size as the heading of the toasts.
-        font-size: var(--font-large-font-size);
-        line-height: 1;
-
-        // Apply half the padding applied to the toasts.
-        padding: 14rem 14rem 14rem 16rem;
-
         // Align the clear icon with the close icons of the toasts.
-        margin-top: var(--toast-margin-top);
-        margin-right: var(--toast-margin-right);
-
-        // Apply a border to the toast.
-        border: 0 solid var(--border-color);
-        border-radius: var(--border-radius-medium);
-
-        // Apply a shadow to the toast.
-        box-shadow: var(--shadow-toast);
-
-        // Apply surface style.
-        background: var(--surface-color);
-        color: var(--surface-text-color);
+        padding-top: var(--toast-margin-top);
+        padding-right: var(--toast-margin-right);
 
         // Apply the z-index for toasts.
         z-index: var(--z-index-toast);
@@ -65,11 +44,26 @@ toast-view
             // Apply the z-index for toasts.
             z-index: var(--z-index-toast);
 
-            // Align with the close icons on the toasts.
-            padding: 0 14rem;
+            // Apply padding.
+            padding: 14rem 28rem 14rem 28rem;
 
             // Allow clicks on the button.
             pointer-events: initial;
+
+            // Use same font size as the heading of the toasts.
+            font-size: var(--font-large-font-size);
+            line-height: 1;
+
+            // Apply a border to the toast.
+            border: 0 solid var(--border-color);
+            border-radius: var(--border-radius-medium);
+
+            // Apply a shadow to the toast.
+            box-shadow: var(--shadow-toast);
+
+            // Apply surface style.
+            background: var(--surface-color);
+            color: var(--surface-text-color);
         }
 
         span
@@ -86,9 +80,6 @@ toast-view
 
         // Use horizontal flex layout.
         display: flex;
-
-        // Allow clicks to pass through, as the `compose` element is just the presenter.
-        pointer-events: none;
 
         &:not(.--disabled) > *
         {

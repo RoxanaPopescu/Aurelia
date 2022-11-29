@@ -75,41 +75,41 @@ export class TreeNavNodeCustomElement
         if (!this.folderLike)
         {
             // File icon, if the node is not folder-like.
-            return "md-file";
+            return "ico-file";
         }
 
         if (!this.active)
         {
             // Filled folder icon, when the node is not active.
-            return "md-folder";
+            return "ico-folder-filled";
         }
 
         if (!this.expandable)
         {
              // Filled folder icon, if the node is not expandable.
-             return "md-folder";
+             return "ico-folder-filled";
         }
 
         if (this.tree.selectSubtree === true)
         {
             // Filled folder icon, indicating that child nodes are included.
-            return "md-folder";
+            return "ico-folder-filled";
         }
 
         if (this.tree.selectSubtree === false)
         {
             // Outline folder icon, indicating that child nodes are excluded.
-            return "md-folder-outline";
+            return "ico-folder-outline";
         }
 
         if (this.model.expanded)
         {
             // Filled folder icon, indicating that child nodes are included.
-            return "md-folder";
+            return "ico-folder-filled";
         }
 
         // Outline folder icon, indicating that child nodes are excluded.
-        return "md-folder-outline";
+        return "ico-folder-outline";
     }
 
     /**

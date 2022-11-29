@@ -36,7 +36,7 @@
                     accent="primary"
                     click.delegate="onAddDepartureTimeClick()">
 
-                    <icon name="plus-small" class="margin-right"></icon>
+                    <icon name="ico-plus-small" class="margin-right"></icon>
 
                     <span translate>
                         New start location
@@ -78,7 +78,7 @@
                         disabled.bind="departureTime.name !== activeDepartureTimeName"
                         title.translate="Edit start location"
                         click.delegate="onEditDepartureTimeClick(departureTime)">
-                        <icon name="edit-small" inline></icon>
+                        <icon name="ico-edit-small" inline></icon>
                     </button>
 
                     <button
@@ -87,7 +87,7 @@
                         disabled.bind="departureTime.name !== activeDepartureTimeName"
                         title.translate="Delete start location"
                         click.delegate="onDeleteDepartureTimeClick(departureTime)">
-                        <icon name="delete-small" inline></icon>
+                        <icon name="ico-delete-small" inline></icon>
                     </button>
 
                 </div>
@@ -99,7 +99,7 @@
                 class="page-tab-nav-add-button"
                 click.delegate="onAddDepartureTimeClick()">
 
-                <icon name="plus-small" inline class="margin-right"></icon>
+                <icon name="ico-plus-small" inline class="margin-right"></icon>
 
                 <span translate>
                     New start location
@@ -150,7 +150,7 @@
                         accent="primary"
                         click.delegate="onAddScenarioClick()">
 
-                        <icon name="plus-small" inline class="margin-right"></icon>
+                        <icon name="ico-plus-small" inline class="margin-right"></icon>
 
                         <span translate>
                             New reservation
@@ -189,7 +189,7 @@
                             accent="primary"
                             click.delegate="onAddScenarioClick()">
 
-                            <icon name="plus-small" inline class="margin-right"></icon>
+                            <icon name="ico-plus-small" inline class="margin-right"></icon>
 
                             <span translate>
                                 New reservation
@@ -385,7 +385,7 @@
                                 <div class="icon-row">
 
                                     <button if-claims="edit-routeplan-settings" appearance="none" accent="primary" click.trigger="onDeleteScenarioClick(scenario)">
-                                        <icon name="delete-small"></icon>
+                                        <icon name="ico-delete-small"></icon>
                                     </button>
 
                                 </div>

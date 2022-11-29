@@ -9,36 +9,23 @@
 
     <header>
 
-        <app-logo size.bind="expanded ? 'wide' : 'icon'" disabled.bind="disableDashboard"></app-logo>
+        <app-logo size.bind="expanded ? 'wide' : 'icon'" disabled.bind="disableDashboard" class="--hide-if-app-topbar-enabled"></app-logo>
 
         <template if.bind="identityService.identity.organization != null">
 
             <a class="nav-link" modal-href="modal: starred">
-                <icon title.translate="Starred and recent" name="starred"></icon>
+                <icon title.translate="Starred and recent" name="ico-star-outline"></icon>
                 <span translate>
                     Starred and recent
                 </span>
             </a>
 
-            <a class="nav-link" modal-href="modal: search">
-                <icon title.translate="Search" name="search"></icon>
+            <a class="nav-link --hide-if-app-topbar-enabled" modal-href="modal: search">
+                <icon title.translate="Search" name="ico-search"></icon>
                 <span translate>
                     Search
                 </span>
             </a>
-
-            <!--
-            <template if.bind="environment == 'development'">
-
-                <a class="nav-link" modal-href="modal: add">
-                    <icon title.translate="Add" name="add"></icon>
-                    <span translate>
-                        Add
-                    </span>
-                </a>
-
-            </template>
-            -->
 
         </template>
 
@@ -87,29 +74,29 @@
 
         <slot name="footer"></slot>
 
-        <template if.bind="environment == 'development'">
+        <template if-environment="development, preview">
 
-            <!--
-            <a class="nav-link" modal-href="modal: notifications">
-                <icon title.translate="Notifications" name="notifications">
-                    <badge>5</badge>
+            <a class="nav-link --hide-if-app-topbar-enabled" modal-href="modal: notifications">
+                <icon title.translate="Notifications" name="ico-bell">
+                    <badge if.bind="notificationService.unseenCount > 0">
+                        ${notificationService.unseenCount}
+                    </badge>
                 </icon>
                 <span translate>
                     Notifications
                 </span>
             </a>
-            -->
 
-            <!--
-            <a class="nav-link" page-href="path: help">
-                <icon title.translate="Help and support" name="help"></icon>
+            <a class="nav-link --hide-if-app-topbar-enabled" page-href="path: /help">
+                <icon title.translate="Help and support" name="ico-question"></icon>
                 <span translate>
                     Help and support
                 </span>
             </a>
 
-            <a class="nav-link" page-href="path: design">
-                <icon title.translate="Design" name="md-style"></icon>
+            <!--
+            <a class="nav-link --hide-if-app-topbar-enabled" page-href="path: /design">
+                <icon title.translate="Design" name="ico-style"></icon>
                 <span translate>
                     Design
                 </span>
@@ -118,16 +105,16 @@
 
         </template>
 
-        <user-identity size="icon"></user-identity>
+        <user-identity size="icon" class="--hide-if-app-topbar-enabled"></user-identity>
 
         <a class="nav-link app-sidebar-toggle" click.trigger="toggleWidth()">
 
-            <icon if.bind="expanded" title.translate="Collapse menu" name="sidebar-collapse"></icon>
+            <icon if.bind="expanded" title.translate="Collapse menu" name="ico-sidebar-collapse"></icon>
             <span if.bind="expanded" translate>
                 Collapse menu
             </span>
 
-            <icon if.bind="!expanded" title.translate="Expand menu" name="sidebar-expand"></icon>
+            <icon if.bind="!expanded" title.translate="Expand menu" name="ico-sidebar-expand"></icon>
 
         </a>
 

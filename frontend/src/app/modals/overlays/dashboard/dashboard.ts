@@ -1,19 +1,23 @@
-import { autoinject, bindable } from "aurelia-framework";
-import { Modal } from "shared/framework/services/modal";
+import { inject, bindable, Optional } from "aurelia-framework";
+import { Modal, ModalCloseReason } from "shared/framework/services/modal";
 
-@autoinject
-export class DashboardModalCustomElement
+/**
+ * Represents the `dashboard` modal overlay.
+ * This acts as the central navigation hub for the app.
+ */
+@inject(Optional.of(Modal, true))
+export class DashboardModal
 {
     /**
      * Creates a new instance of the type.
-     * @param modal The `Modal` instance representing the modal.
+     * @param modal The `Modal` instance representing the modal, or undefined if not presented as a modal.
      */
-    public constructor(modal: Modal)
+    public constructor(modal: Modal | undefined)
     {
         this._modal = modal;
     }
 
-    private readonly _modal: Modal;
+    private readonly _modal: Modal | undefined;
 
     /**
      * True if the modal can be closed by the user, otherwise false.
@@ -27,23 +31,27 @@ export class DashboardModalCustomElement
      */
     public activate(): void
     {
-        console.log("activate");
+        // TODO
     }
 
     /**
-     * Called by the framework when the modal is deactivated.
-     * @returns The result of the modal.
+     * Called by the framework when the modal is deactivating.
+     * @param reason The reason for closing the modal.
      */
-    public deactivate(): void
+    public deactivate(reason?: ModalCloseReason): void
     {
-        console.log("deactivate");
+        if (reason !== undefined && reason !== "navigation")
+        {
+            // tslint:disable-next-line: no-string-throw
+            throw "This overlay should only close when requested by the user, or when navigating.";
+        }
     }
 
     /**
-     * Called when one of the buttons are clicked.
+     * Closes the modal, if presented as a modal.
      */
-    protected async onButtonClick(): Promise<void>
+    protected async close(): Promise<void>
     {
-        await this._modal.close();
+        await this._modal?.close();
     }
 }

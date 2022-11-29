@@ -1,0 +1,26 @@
+icon[class*="icon-octicons-"]
+{
+    // Note: `color` is not used.
+
+    &[class*="-24"]
+    {
+        // Not officially supported.
+        stroke: currentColor;
+        stroke-width: 0.02em;
+    }
+
+    &[class*="-16"]
+    {
+        // Not officially supported.
+        stroke: none;
+    }
+
+    svg
+    {
+        width: calc(20 / 24 * 100%);
+        height: calc(20 / 24 * 100%);
+    }
+
+    // Used as the primary icon color.
+    fill: currentColor;
+}

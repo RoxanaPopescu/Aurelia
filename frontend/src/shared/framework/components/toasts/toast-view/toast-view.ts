@@ -21,10 +21,14 @@ export class ToastViewCustomElement
         this.toastService = toastService;
     }
 
+    private hoverTimeoutHandle: any;
+
     /**
      * The toast service, managing the stack of toasts currently being presented.
      */
     protected toastService: ToastService;
+
+    protected enablePointerEvents = false;
 
     /**
      * Called for each toast, to get the model to pass to the `activate` method of the toast component,
@@ -45,5 +49,29 @@ export class ToastViewCustomElement
         (compose as any).container.registerInstance(Toast, toast);
 
         return toast.model;
+    }
+
+    /**
+     * Called when the mouse enters an element within the scroll view.
+     * Enables pointer events for the `toast-view` element, to enable scrolling.
+     * This is needed because a wide toast causes the scroll container to expand
+     * and, if pointer events were always enabled, block pointer interaction with
+     * the content on the page.
+     */
+    protected onMouseEnter(): void
+    {
+        clearTimeout(this.hoverTimeoutHandle);
+
+        this.enablePointerEvents = true;
+    }
+
+    /**
+     * Called when the mouse leaves an element within the scroll view.
+     * Schedules pointer events for the `toast-view` element to be disabled,
+     * to disable scrolling when no compose element is hovered.
+     */
+    protected onMouseLeave(): void
+    {
+        this.hoverTimeoutHandle = setTimeout(() => this.enablePointerEvents = false);
     }
 }

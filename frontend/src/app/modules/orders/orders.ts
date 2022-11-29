@@ -2,6 +2,7 @@ import { IdentityService } from "app/services/identity";
 import { autoinject, PLATFORM } from "aurelia-framework";
 import { RouterConfiguration, Router } from "aurelia-router";
 import routeTitles from "./resources/strings/route-titles.json";
+import { isNewIkeaThemeSpecified } from "demo";
 
 const coopOutfitId = "573f5f57-a580-4c40-99b0-8fbeb396ebe9";
 
@@ -56,7 +57,7 @@ export class OrdersModule
         [
             {
                 name: "list",
-                route: "",
+                route: isNewIkeaThemeSpecified ? "list" : "",
                 moduleId: PLATFORM.moduleName("./modules/list/list"),
                 settings:
                 {
@@ -71,7 +72,7 @@ export class OrdersModule
             },
             {
                 name: "list-views",
-                route: "list-views",
+                route: isNewIkeaThemeSpecified ? "" : "list-views",
                 moduleId: PLATFORM.moduleName("./modules/list-views/list-views"),
                 settings:
                 {
@@ -80,8 +81,8 @@ export class OrdersModule
                         "view-orders"
                     ]
                 },
-                nav: ENVIRONMENT.name !== "production",
-                icon: "orders"
+                nav: ENVIRONMENT.name !== "production" && !isNewIkeaThemeSpecified,
+                icon: "ico-orders"
             },
             {
                 name: "details",
@@ -108,7 +109,7 @@ export class OrdersModule
                 },
                 title: routeTitles.trackingSettings,
                 nav: ENVIRONMENT.name !== "production",
-                icon: "route-tracking"
+                icon: "ico-route-tracking"
             },
             {
                 name: "dao-relabel",
@@ -123,7 +124,7 @@ export class OrdersModule
                 },
                 title: routeTitles.daoRelabel,
                 nav: false,
-                icon: "orders"
+                icon: "ico-orders"
             }
         ]);
     }

@@ -12,9 +12,22 @@
 
         <slot name="actions"></slot>
 
-        <button if.bind="closeButton && toast != null" title.translate="Dismiss" appearance="icon" click.trigger="onCloseClick()">
-            <icon name="close"></icon>
-        </button>
+        <div class="toast-close-action">
+
+            <svg
+                if.bind="closeTimeout != null"
+                class="toast-close-action-timeout"
+                viewBox="0 0 100 100"
+                xmlns="http://www.w3.org/2000/svg"
+                style.bind="{ '--toast-close-action-timeout': closeTimeout }">
+                <circle cx="50" cy="50" r="45"/>
+            </svg>
+
+            <button if.bind="closeButton && toast != null" title.translate="Dismiss" appearance="icon" click.trigger="onCloseClick()">
+                <icon name="ico-close"></icon>
+            </button>
+
+        </div>
 
     </div>
 

@@ -27,7 +27,7 @@
 
                     <template if-claims="edit-users">
                         <button appearance="outline" accent="primary" click.trigger="onInviteUserClick()" class="flex-row">
-                            <icon name="add" class="font-larger margin-right"></icon>
+                            <icon name="ico-add" class="font-larger margin-right"></icon>
                             <span translate>
                                 Invite user
                             </span>
@@ -45,7 +45,7 @@
                     <search-input value.bind="textFilter & debounce: 200">
 
                         <span slot="before" class="opacity-faded font-larger line-height-1">
-                            <icon name="md-search"></icon>
+                            <icon name="ico-search"></icon>
                         </span>
 
                         <span slot="placeholder" translate>
@@ -183,7 +183,7 @@
                                             appearance="none"
                                             accent="primary"
                                             click.trigger="onResendInviteClick(user)">
-                                            <icon name="md-replay"></icon>
+                                            <icon name="ico-replay"></icon>
                                         </button>
 
                                         <button
@@ -192,7 +192,7 @@
                                             appearance="none"
                                             accent="primary"
                                             click.trigger="onUserClick(user)">
-                                            <icon name="edit-small"></icon>
+                                            <icon name="ico-edit-small"></icon>
                                         </button>
 
                                         <button
@@ -200,7 +200,7 @@
                                             appearance="none"
                                             accent="primary"
                                             click.trigger="onRemoveUserClick(user)">
-                                            <icon name="delete-small"></icon>
+                                            <icon name="ico-delete-small"></icon>
                                         </button>
 
                                     </template>

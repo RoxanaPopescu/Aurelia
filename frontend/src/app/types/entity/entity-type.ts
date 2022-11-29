@@ -51,97 +51,97 @@ export class EntityType
         {
             name: entityTypeNames.organization,
             group: entityTypeGroups.organization,
-            icon: "md-domain"
+            icon: "ico-organization"
         },
         "user":
         {
             name: entityTypeNames.user,
             group: entityTypeGroups.user,
-            icon: "md-person"
+            icon: "ico-person"
         },
         "team":
         {
             name: entityTypeNames.team,
             group: entityTypeGroups.team,
-            icon: "departments"
+            icon: "ico-departments"
         },
         "role":
         {
             name: entityTypeNames.role,
             group: entityTypeGroups.role,
-            icon: "md-rules"
+            icon: "ico-rules"
         },
         "connection":
         {
             name: entityTypeNames.connection,
             group: entityTypeGroups.connection,
-            icon: "md-hub"
+            icon: "ico-hub"
         },
         "driver":
         {
             name: entityTypeNames.driver,
             group: entityTypeGroups.driver,
-            icon: "fleet"
+            icon: "ico-fleet"
         },
         "vehicle":
         {
             name: entityTypeNames.vehicle,
             group: entityTypeGroups.vehicle,
-            icon: "vehicles"
+            icon: "ico-vehicles"
         },
         "order":
         {
             name: entityTypeNames.order,
             group: entityTypeGroups.order,
-            icon: "orders"
+            icon: "ico-orders"
         },
         "route":
         {
             name: entityTypeNames.route,
             group: entityTypeGroups.route,
-            icon: "routes"
+            icon: "ico-routes"
         },
         "route-template":
         {
             name: entityTypeNames.routeTemplate,
             group: entityTypeGroups.routeTemplate,
-            icon: "templates"
+            icon: "ico-templates"
         },
         "route-plan":
         {
             name: entityTypeNames.routePlan,
             group: entityTypeGroups.routePlan,
-            icon: "route-planning"
+            icon: "ico-route-planning"
         },
         "route-planning-rule-set":
         {
             name: entityTypeNames.routePlanningRuleSet,
             group: entityTypeGroups.routePlanningRuleSet,
-            icon: "settings"
+            icon: "ico-gear"
         },
         "order-group":
         {
             name: entityTypeNames.orderGroup,
             group: entityTypeGroups.orderGroup,
-            icon: "order-groups"
+            icon: "ico-order-groups"
         },
         "automatic-dispatch-rule-set":
         {
             name: entityTypeNames.automaticDispatchRuleSet,
             group: entityTypeGroups.automaticDispatchRuleSet,
-            icon: "settings"
+            icon: "ico-gear"
         },
         "distribution-center":
         {
             name: entityTypeNames.distributionCenter,
             group: entityTypeGroups.distributionCenter,
-            icon: "depots"
+            icon: "ico-depots"
         },
         "communication-trigger":
         {
             name: entityTypeNames.communicationTrigger,
             group: entityTypeGroups.communicationTrigger,
-            icon: "communication"
+            icon: "ico-communication"
         }
     };
 }

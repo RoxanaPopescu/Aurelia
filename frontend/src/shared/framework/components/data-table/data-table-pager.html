@@ -47,13 +47,13 @@
     <div class="data-table-pager-buttons">
 
         <button disabled.bind="value.page <= 1" appearance="solid" click.delegate="onNavClick(-1)">
-            <icon name="md-chevron-left"></icon>
+            <icon name="ico-chevron-left"></icon>
         </button>
 
         <div class="${value.page <= 1 || computedPageCount == 0 ? 'opacity-disabled' : ''}"></div>
 
         <button disabled.bind="computedPageCount != null && value.page >= computedPageCount" appearance="solid" click.delegate="onNavClick(1)">
-            <icon name="md-chevron-right"></icon>
+            <icon name="ico-chevron-right"></icon>
         </button>
 
     </div>

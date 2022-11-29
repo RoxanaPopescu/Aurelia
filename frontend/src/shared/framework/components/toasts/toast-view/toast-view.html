@@ -1,17 +1,19 @@
-<template scroll>
+<template class="${!enablePointerEvents ? 'pointer-events-none' : ''}" scroll>
 
     <require from="./toast-view.scss"></require>
 
     <div
         if.bind="toastService.toasts.length > 1"
         class="toast-view-clear-all au-animate animation-fade-in-long animation-fade-out-medium"
-        scroll-fade="1.2">
+        scroll-fade="1.2"
+        mouseenter.trigger="onMouseEnter()"
+        mouseleave.trigger="onMouseLeave()">
 
         <button appearance="none" click.delegate="toastService.closeAll('close-all')">
             <span translate>
                 Dismiss all <b>${toastService.toasts.length | number & debounce}</b> notifications
             </span>
-            <icon name="close"></icon>
+            <icon name="ico-close"></icon>
         </button>
 
     </div>
@@ -20,8 +22,11 @@
         repeat.for="toast of toastService.toasts"
         view-model.one-time="toast.viewModel"
         view-model.ref="$compose"
-        model.one-time="getModel(toast, $compose)"
-        class="au-animate">
+        ref="$composeElement"
+        model.one-time="getModel(toast, $compose, composeElement)"
+        class="au-animate"
+        mouseenter.trigger="onMouseEnter()"
+        mouseleave.trigger="onMouseLeave()">
     </compose>
 
 </template>

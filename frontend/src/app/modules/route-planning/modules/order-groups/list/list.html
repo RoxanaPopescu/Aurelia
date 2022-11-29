@@ -13,7 +13,7 @@
                 <search-input value.bind="textFilter & debounce: 200">
 
                     <span slot="before" class="opacity-faded font-larger line-height-1">
-                        <icon name="md-search"></icon>
+                        <icon name="ico-search"></icon>
                     </span>
 
                     <span slot="placeholder" translate>
@@ -89,7 +89,7 @@
                 <toolbar class="flex-push-right">
                     <button if-claims="create-order-groups" appearance="outline" accent="primary" page-href="path: /route-planning/order-groups/create" clsss="flex-row">
 
-                        <icon name="add" class="font-larger margin-right"></icon>
+                        <icon name="ico-add" class="font-larger margin-right"></icon>
 
                         <span translate>
                             New order group
@@ -190,7 +190,7 @@
                                 <div class="icon-row">
 
                                     <button if-claims="edit-order-groups" appearance="none" accent="primary" click.trigger="onDeleteClick(orderGroup)">
-                                        <icon name="delete-small"></icon>
+                                        <icon name="ico-delete-small"></icon>
                                     </button>
 
                                 </div>

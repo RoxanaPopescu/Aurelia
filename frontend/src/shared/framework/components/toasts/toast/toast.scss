@@ -164,6 +164,57 @@ toast
         }
     }
 
+    .toast-close-action
+    {
+        --toast-close-action-timeout: 0;
+
+        position: relative;
+        margin: -2px;
+        padding: 2px;
+
+        .toast-close-action-timeout
+        {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            circle
+            {
+                // Remove the fill collor.
+                fill: transparent;
+
+                // Apply the stroke style.
+                stroke: var(--surface-neutral-surface-color);
+                stroke-linecap: round;
+                stroke-width: 6rem;
+                stroke-dasharray: 280;
+                stroke-dashoffset: 280;
+
+                animation: toast-close-action-timeout-animation linear both;
+                animation-duration: calc(var(--toast-close-action-timeout) * 1ms);
+
+                // Transform the element so it can be rotated around its center.
+                transform-origin: 50% 50%;
+                transform: rotate(-90deg);
+
+                @keyframes toast-close-action-timeout-animation
+                {
+                    0%
+                    {
+                        stroke-dashoffset: 280;
+                    }
+
+                    100%
+                    {
+                        stroke-dashoffset: 0;
+                    }
+                }
+            }
+        }
+    }
+
     &[accent]
     {
         // Apply an edge to the toast.
@@ -209,12 +260,6 @@ toast
     {
         animation: toast-enter cubic-bezier(0.2, 0, 0.1, 1);
         animation-duration: var(--animation-duration-long);
-    }
-
-    toast-view compose.au-leave &
-    {
-        // Replace the shadow with an afterglow to smoothe the edge and reduce ghosting.
-        box-shadow: var(--toast-afterglow);
     }
 
     toast-view compose.au-leave-active &

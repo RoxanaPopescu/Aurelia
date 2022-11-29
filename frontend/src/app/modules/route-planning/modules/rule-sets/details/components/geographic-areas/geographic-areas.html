@@ -55,7 +55,7 @@
                                     disabled.bind="enableDrawing"
                                     click.trigger="onEditAreaClick($index)">
 
-                                    <icon name="edit-small"></icon>
+                                    <icon name="ico-edit-small"></icon>
 
                                 </button>
 
@@ -66,7 +66,7 @@
                                     disabled.bind="enableDrawing"
                                     click.trigger="onDeleteAreaClick($index)">
 
-                                    <icon name="delete-small"></icon>
+                                    <icon name="ico-delete-small"></icon>
 
                                 </button>
 
@@ -102,7 +102,7 @@
                                                 accent="primary"
                                                 disabled.bind="enableDrawing">
 
-                                                <icon name="edit-small"></icon>
+                                                <icon name="ico-edit-small"></icon>
 
                                             </button>
 
@@ -113,7 +113,7 @@
                                                 disabled.bind="enableDrawing"
                                                 click.trigger="onDeleteScenarioClick(specialArea, $index)">
 
-                                                <icon name="delete-small"></icon>
+                                                <icon name="ico-delete-small"></icon>
 
                                             </button>
 
@@ -213,7 +213,7 @@
                             disabled.bind="enableDrawing"
                             click.trigger="onAddScenarioClick(specialArea)">
 
-                            <icon name="plus-small" class="margin-right"></icon>
+                            <icon name="ico-plus-small" class="margin-right"></icon>
 
                             <span translate>
                                 New area rule
@@ -225,7 +225,7 @@
 
                 </list-layout>
 
-                <empty-indicator if.bind="settings.specialAreas.length == 0" size="medium" icon="empty-map-drawing" class="margin-large-bottom">
+                <empty-indicator if.bind="settings.specialAreas.length == 0" size="medium" icon="ico-empty-map-drawing" class="margin-large-bottom">
                     <div slot="heading" translate>
                         No areas specified
                     </div>
@@ -238,7 +238,7 @@
                     disabled.bind="enableDrawing"
                     click.trigger="onAddAreaClick()">
 
-                    <icon name="plus-small" class="margin-right"></icon>
+                    <icon name="ico-plus-small" class="margin-right"></icon>
 
                     <span translate>
                         New area

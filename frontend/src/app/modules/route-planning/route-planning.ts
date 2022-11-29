@@ -35,7 +35,7 @@ export class RoutePlanningModule
                 },
                 title: routeTitles.routePlans,
                 nav: false,
-                icon: "route-planning"
+                icon: "ico-route-planning"
             },
             {
                 name: "details",
@@ -63,7 +63,7 @@ export class RoutePlanningModule
                 },
                 title: routeTitles.rulesList,
                 nav: true,
-                icon: "settings"
+                icon: "ico-gear"
             },
             {
                 name: "rule-sets-details",
@@ -91,7 +91,7 @@ export class RoutePlanningModule
                 },
                 title: routeTitles.orderGroupsList,
                 nav: true,
-                icon: "order-groups"
+                icon: "ico-order-groups"
             },
             {
                 name: "order-groups-details",

@@ -1,0 +1,14 @@
+icon[class*="icon-material-"]
+{
+    // Uses the current foreground color for both stroke and fill.
+    // This means that the markup for each icon must specify the
+    // attributes `fill="none"` and `stroke="none"` as needed.
+
+    // Note: `color` is not used.
+
+    // Not supported.
+    stroke: none;
+
+    // Used as the primary icon color.
+    fill: currentColor;
+}

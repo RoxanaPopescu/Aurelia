@@ -1,5 +1,5 @@
 import { autoinject } from "aurelia-framework";
-import { AppRouter } from "aurelia-router";
+import { HistoryHelper } from "shared/infrastructure";
 import { Toast, ToastCloseReason } from "shared/framework";
 import settings from "resources/settings";
 
@@ -44,22 +44,30 @@ export class WarningToast
     /**
      * Creates a new instance of the type.
      * @param toast The `Toast` instance representing the toast.
-     * @param router The `AppRouter` instance
+     * @param historyHelper The `HistoryHelper` instance.
      */
-    public constructor(toast: Toast, router: AppRouter)
+    public constructor(toast: Toast, historyHelper: HistoryHelper)
     {
         this._toast = toast;
-        this._router = router;
+        this._historyHelper = historyHelper;
     }
 
     private readonly _toast: Toast;
-    private readonly _router: AppRouter;
-    private _closeTimeouthandle: any;
+    private readonly _historyHelper: HistoryHelper;
 
     /**
      * The model to for the toast.
      */
     protected model: IWarningToastModel;
+
+    /**
+     * The time in milliseconds before the toast will automatically close,
+     * or undefined to not close automatically.
+     * Note that this must be set at the time the toast is attached, and that
+     * only undefined may be assigned thereafter, to cancel the timeout.
+     * Note that if closed automatically, the close reason is `close-timeout`.
+     */
+    protected closeTimeout: number | undefined;
 
     /**
      * Called by the framework when the toast is activated.
@@ -70,11 +78,8 @@ export class WarningToast
         // Sets the model for the toast.
         this.model = model;
 
-        // Schedule the toast to close automatically.
-        if (this.model.timeout !== null)
-        {
-            this._closeTimeouthandle = setTimeout(() => this._toast.close(), this.model.timeout ?? settings.app.defaultToastTimeout);
-        }
+        // Set the close timeout.
+        this.closeTimeout = this.model.timeout ?? this.model.timeout !== null ? settings.app.defaultToastTimeout : undefined;
     }
 
     /**
@@ -97,8 +102,8 @@ export class WarningToast
      */
     protected cancelScheduledClose(): boolean
     {
-        // Prevents the toast from closing automatically.
-        clearTimeout(this._closeTimeouthandle);
+        // Prevent the toast from closing automatically.
+        this.closeTimeout = undefined;
 
         return true;
     }
@@ -108,7 +113,7 @@ export class WarningToast
      * Closes the toast, and navigates to the URL associated with the notification, if specified.
      * @param event The mouse event.
      */
-    protected onClick(event: MouseEvent): void
+    protected async onClick(event: MouseEvent): Promise<void>
     {
         if (event.defaultPrevented)
         {
@@ -122,7 +127,7 @@ export class WarningToast
         // Navigate to the URL associated with the notification, if specified.
         if (this.model.url)
         {
-            this._router.navigate(this.model.url);
+            await this._historyHelper.navigate(this.model.url);
         }
     }
 }

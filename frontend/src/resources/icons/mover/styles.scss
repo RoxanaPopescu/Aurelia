@@ -1,0 +1,10 @@
+icon[class*="icon-mover-"]
+{
+    // Note: `color` is used as the primary icon color.
+
+    // Not supported.
+    stroke: none;
+
+    // Used for elements inside a filled icon to give the impression of transparency.
+    fill: var(--surface-color);
+}

@@ -22,9 +22,7 @@ html.theme-enable-topbar
 
     app-sidebar
     {
-        app-logo,
-        .nav-link[modal-href*="modal: search"],
-        user-identity
+        .--hide-if-app-topbar-enabled
         {
             display: none;
         }
