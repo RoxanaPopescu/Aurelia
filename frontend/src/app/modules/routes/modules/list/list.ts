@@ -193,11 +193,6 @@ export class ListPage
     };
 
     /**
-     * True if initial loading failed
-     */
-    protected failed: boolean = false;
-
-    /**
      * The nearby pickup address
      */
     @observable
@@ -679,8 +674,6 @@ export class ListPage
         // Create and execute the new operation.
         this.updateOperation = new Operation(async signal =>
         {
-            this.failed = false;
-
             try
             {
                 let assignedDriver: boolean | undefined;
@@ -776,7 +769,6 @@ export class ListPage
             }
             catch (error)
             {
-                this.failed = true;
                 Log.error("An error occurred while loading the list.", error);
             }
         });
