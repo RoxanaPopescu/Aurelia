@@ -81,11 +81,6 @@ export class AutomaticDispatchListPage
     };
 
     /**
-     * True if initial loading failed
-     */
-    protected failed: boolean = false;
-
-    /**
      * The items to present in the table.
      */
     protected results: AutomaticDispatchRoutePlanInfo[];
@@ -189,8 +184,6 @@ export class AutomaticDispatchListPage
         {
             try
             {
-                this.failed = false;
-
                 // Fetch the data.
                 const result = await this._automaticDispatchService.getAll(
                     {
@@ -223,7 +216,6 @@ export class AutomaticDispatchListPage
             }
             catch (error)
             {
-                this.failed = true;
                 Log.error("An error occurred while loading the list.\n", error);
             }
         });

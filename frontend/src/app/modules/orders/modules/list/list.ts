@@ -203,11 +203,6 @@ export class ListPage
     protected relativeToDateFilterUnit: "days" | "hours" | undefined;
 
     /**
-     * If it failed loading.
-     */
-    protected failed: boolean = false;
-
-    /**
      * The total number of items matching the query, or undefined if unknown.
      */
     protected orderCount: number | undefined;
@@ -436,8 +431,6 @@ export class ListPage
         {
             try
             {
-                this.failed = false;
-
                 // tslint:disable-next-line: no-floating-promises
                 this._historyHelper.navigate((state: IHistoryState) =>
                 {
@@ -483,7 +476,6 @@ export class ListPage
             }
             catch (error)
             {
-                this.failed = true;
                 Log.error("An error occurred while loading the list.", error);
             }
         });

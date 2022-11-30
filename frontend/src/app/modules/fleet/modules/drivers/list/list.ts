@@ -94,11 +94,6 @@ export class ListPage
     protected results: Driver[];
 
     /**
-     * True if initial loading failed
-     */
-    protected failed: boolean = false;
-
-    /**
      * Called by the framework when the module is activated.
      * @param params The route parameters from the URL.
      */
@@ -185,8 +180,6 @@ export class ListPage
         {
             try
             {
-                this.failed = false;
-
                 // Fetch the data.
                 const data = await this._driverService.getAll(
                     this.sorting,
@@ -223,7 +216,6 @@ export class ListPage
             }
             catch (error)
             {
-                this.failed = true;
                 Log.error("An error occurred while loading the list.", error);
             }
         });

@@ -98,11 +98,6 @@ export class ListPage
     };
 
     /**
-     * True if initial loading failed
-     */
-    protected failed: boolean = false;
-
-    /**
      * The items to present in the table.
      */
     protected results: RoutePlanInfo[];
@@ -199,8 +194,6 @@ export class ListPage
         {
             try
             {
-                this.failed = false;
-
                 // Fetch the data.
                 const result = await this._routePlanService.getAll(
                     {
@@ -240,7 +233,6 @@ export class ListPage
             }
             catch (error)
             {
-                this.failed = true;
                 Log.error("An error occurred while loading the list.", error);
             }
         });

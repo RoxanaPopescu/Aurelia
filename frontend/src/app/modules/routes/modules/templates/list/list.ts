@@ -31,11 +31,6 @@ export class ListPage
     protected scroll: IScroll;
 
     /**
-     * True if initial loading failed
-     */
-    protected failed: boolean = false;
-
-    /**
      * The most recent update operation.
      */
     protected fetchOperation: Operation;
@@ -58,8 +53,6 @@ export class ListPage
         // Create and execute the new operation.
         this.fetchOperation = new Operation(async signal =>
         {
-            this.failed = false;
-
             try
             {
                 const result = await this._routeTemplateService.getAll(signal);
@@ -67,7 +60,6 @@ export class ListPage
             }
             catch (error)
             {
-                this.failed = true;
                 Log.error("An error occurred while loading the list.", error);
             }
         });

@@ -283,7 +283,7 @@
                     sorting.bind="sorting"
                     selection="multiple"
                     toggle-all.call="onToggleAll(value)"
-                    busy.bind="updateOperation.pending || failed">
+                    busy.bind="updateOperation.pending || updateOperation.error != null">
 
                     <data-table-headers>
 
@@ -429,7 +429,7 @@
 
                 </data-table>
 
-                <busy-indicator if.bind="results == null && !failed" class="margin-largest"></busy-indicator>
+                <busy-indicator if.bind="results == null && updateOperation.error == null" class="margin-largest"></busy-indicator>
 
                 <empty-indicator if.bind="results.length == 0" class="margin-largest">
                     <div slot="heading" translate>No results</div>
