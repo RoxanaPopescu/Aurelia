@@ -56,12 +56,17 @@ export class RoutesColumnCustomElement
     protected textFilter: string | undefined;
 
     /**
+     * The text in the zip filter text input.
+     */
+    protected zipFilter: string | undefined;
+
+    /**
      * The workspace.
      */
     @bindable
     public workspace: Workspace;
 
-    @computedFrom("workspace.expressRoutes", "textFilter", "sorting")
+    @computedFrom("workspace.expressRoutes", "textFilter", "zipFilter", "sorting")
     protected get orderedAndFilteredItems(): ExpressRoute[]
     {
         if (this.workspace == null || this.workspace.expressRoutes == null)
@@ -73,6 +78,7 @@ export class RoutesColumnCustomElement
 
         return this.workspace.expressRoutes
             .filter(r => !this.textFilter || r.searchModel.contains(this.textFilter))
+            .filter(r => !this.zipFilter || r.stops.some(s => s.location.address.zipCode?.startsWith(this.zipFilter!)))
             .sort((a, b) =>
             {
                 // Sort by selected selection state.
@@ -92,6 +98,11 @@ export class RoutesColumnCustomElement
                 {
                     aPropertyValue = a.pickupLocation.address;
                     bPropertyValue = b.pickupLocation.address;
+                }
+                else if (this.sorting.property === "pickupLocation.address.zipCode")
+                {
+                    aPropertyValue = a.pickupLocation.address.zipCode;
+                    bPropertyValue = b.pickupLocation.address.zipCode;
                 }
                 else if (this.sorting.property === "consignor.primaryName")
                 {

@@ -49,6 +49,14 @@
 
                 </search-input>
 
+                <search-input value.bind="zipFilter & debounce: 200">
+
+                    <div slot="placeholder">
+                        Zip filter...
+                    </div>
+
+                </search-input>
+
             </toolbar>
 
             <data-table
