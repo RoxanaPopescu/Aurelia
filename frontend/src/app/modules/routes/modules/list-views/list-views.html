@@ -230,6 +230,8 @@
 
                     </data-table-headers>
 
+                    <!-- Comment needed to prevent a repeat.for bug -->
+
                     <template repeat.for="route of activeListView.items">
 
                         <data-table-row
@@ -237,9 +239,9 @@
                             selected.bind="activeListView.expandedItemId == route.id"
                             click.call="onItemClick(route)">
 
-                            <template repeat.for="column of tableDefinition.visibleColumns">
+                            <let updating.bind="{ driver: false, vehicle: false, executor: false, team: false }"></let>
 
-                                <let updating.bind="{ driver: false, vehicle: false, executor: false, team: false }"></let>
+                            <template repeat.for="column of tableDefinition.visibleColumns">
 
                                 <data-table-cell if.bind="column.slug === 'slug'">
                                     <a href="/routes/details/${route.slug}" class="text-truncate">
@@ -572,6 +574,8 @@
                                 </data-table-cell>
 
                             </template>
+
+                            <!-- Comment needed to prevent a repeat.for bug -->
 
                             <data-table-details
                                 if.bind="activeListView.expandedItemId == route.id"
