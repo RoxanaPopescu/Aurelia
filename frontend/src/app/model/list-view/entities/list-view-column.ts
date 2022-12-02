@@ -23,7 +23,7 @@ export abstract class ListViewColumn<TSlug extends string = string>
 
         if (this.visibility === "icon")
         {
-            width = undefined;
+            this.width = undefined;
             this.property = undefined;
         }
     }
