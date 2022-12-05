@@ -49,7 +49,7 @@ export class RouteComponent extends React.Component<RoutesLayerProps, { supportN
                 ${isFlagged ? "c-liveTracking-routesPanel-route-flag--active" : ""}`}
               onClick={event => this.onFlagClick(event)}
             >
-              <Icon name="eye"/>
+              <Icon name="ico-eye"/>
             </div>
             <div className="c-liveTracking-routesPanel-route-title-container">
 
