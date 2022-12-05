@@ -47,7 +47,8 @@ if (ENVIRONMENT.integrations.sentry != null)
             "Cannot read property 'j' of undefined",
             "undefined is not an object (evaluating 'h.j')",
             "InvalidValueError: at index 0: not a LatLng or LatLngLiteral",
-            "InvalidValueError: setPosition: not a LatLng or LatLngLiteral: in property lat: not a number"
+            "InvalidValueError: setPosition: not a LatLng or LatLngLiteral: in property lat: not a number",
+            "INVALID_COUNTRY"
         ],
 
         // Process the entry before it is sent.
