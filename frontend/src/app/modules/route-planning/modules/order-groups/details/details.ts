@@ -108,14 +108,14 @@ export class DetailsPage
             this.orderGroup = await this._orderGroupsService.get(params.id);
             this.orderGroupName = this.orderGroup.name;
 
-            this._changeDetector = new ChangeDetector(() => this.orderGroup);
-
             addToRecentEntities(this.orderGroup.toEntityInfo());
         }
         else
         {
             this.orderGroup = new OrderGroup();
         }
+
+        this._changeDetector = new ChangeDetector(() => this.orderGroup);
 
         // Execute tasks that should not block rendering.
 
