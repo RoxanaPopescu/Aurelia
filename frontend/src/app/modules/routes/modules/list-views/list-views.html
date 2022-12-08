@@ -214,11 +214,7 @@
 
                     <data-table-headers>
 
-                        <!-- Comment needed to prevent a repeat.for bug -->
-
                         <template repeat.for="column of tableDefinition.visibleColumns">
-
-                            <!-- Comment needed to prevent a repeat.for bug -->
 
                             <data-table-cell name.bind="column.property">
                                 <span class="text-truncate">
@@ -226,21 +222,13 @@
                                 </span>
                             </data-table-cell>
 
-                            <!-- Comment needed to prevent a repeat.for bug -->
-
                             <data-table-cell if.bind="$last && tableDefinition.iconColumns.length > 0">
                                 <!-- Icons -->
                             </data-table-cell>
 
-                            <!-- Comment needed to prevent a repeat.for bug -->
-
                         </template>
 
-                        <!-- Comment needed to prevent a repeat.for bug -->
-
                     </data-table-headers>
-
-                    <!-- Comment needed to prevent a repeat.for bug -->
 
                     <template repeat.for="route of activeListView.items">
 
@@ -250,8 +238,6 @@
                             click.call="onItemClick(route)">
 
                             <let updating.bind="{ driver: false, vehicle: false, executor: false, team: false }"></let>
-
-                            <!-- Comment needed to prevent a repeat.for bug -->
 
                             <template repeat.for="column of tableDefinition.visibleColumns">
 
@@ -587,8 +573,6 @@
 
                             </template>
 
-                            <!-- Comment needed to prevent a repeat.for bug -->
-
                             <data-table-details
                                 if.bind="activeListView.expandedItemId == route.id"
                                 slot="details"
@@ -599,13 +583,9 @@
 
                             </data-table-details>
 
-                            <!-- Comment needed to prevent a repeat.for bug -->
-
                         </data-table-row>
 
                     </template>
-
-                    <!-- Comment needed to prevent a repeat.for bug -->
 
                 </data-table>
 
