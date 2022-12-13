@@ -183,7 +183,6 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
 
         const columnWidths = visibleColumns.map(c => c.width!);
 
-
         // Create the table style.
         const style = { "--data-table-columns": columnWidths.join(" ") };
 
