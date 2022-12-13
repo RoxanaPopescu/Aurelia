@@ -169,13 +169,20 @@ export abstract class ListViewsPage<TListViewFilter extends ListViewFilter, TLis
         const iconColumns = this.activeListView.definition.columns
             .filter(column => column.visibility === "icon");
 
-        const columnWidths = visibleColumns.map(c => c.width!);
-
-        // Add the `data-table-icons` column, if needed.
+        // Add the `list-view-icons` column, if needed.
         if (iconColumns.length > 0)
         {
-            columnWidths.push("min-content");
+            // HACK: We don't know the concrete type of the columns, so we just add an object with the data we need.
+            visibleColumns.push(
+            {
+                slug: "list-view-icons",
+                width: "min-content",
+                visibility: "visible"
+            } as any);
         }
+
+        const columnWidths = visibleColumns.map(c => c.width!);
+
 
         // Create the table style.
         const style = { "--data-table-columns": columnWidths.join(" ") };

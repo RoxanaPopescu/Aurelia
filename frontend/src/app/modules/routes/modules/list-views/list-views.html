@@ -222,10 +222,6 @@
                                 </span>
                             </data-table-cell>
 
-                            <data-table-cell if.bind="$last && tableDefinition.iconColumns.length > 0">
-                                <!-- Icons -->
-                            </data-table-cell>
-
                         </template>
 
                     </data-table-headers>
@@ -555,13 +551,13 @@
                                     </span>
                                 </data-table-cell>
 
-                                <data-table-cell if.bind="$last && tableDefinition.iconColumns.length > 0" align="right">
+                                <data-table-cell if.bind="column.slug === 'list-view-icons'" align="right">
 
                                     <div class="icon-row">
 
-                                        <template repeat.for="column of tableDefinition.iconColumns">
+                                        <template repeat.for="iconColumn of tableDefinition.iconColumns">
 
-                                            <button if.bind="column.slug === 'driving-list'" appearance="none" accent="primary" click.trigger="onShowDrivingListClick(route)">
+                                            <button if.bind="iconColumn.slug === 'driving-list'" appearance="none" accent="primary" click.trigger="onShowDrivingListClick(route)">
                                                 <icon name="ico-document"></icon>
                                             </button>
 

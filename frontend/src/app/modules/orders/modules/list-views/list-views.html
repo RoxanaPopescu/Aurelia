@@ -251,10 +251,6 @@
                                 </span>
                             </data-table-cell>
 
-                            <data-table-cell if.bind="$last && tableDefinition.iconColumns.length > 0">
-                                <!-- Icons -->
-                            </data-table-cell>
-
                         </template>
 
                     </data-table-headers>
@@ -377,10 +373,16 @@
                                     </span>
                                 </data-table-cell>
 
-                                <data-table-cell if.bind="$last && tableDefinition.iconColumns.length > 0" align="right">
+                                <data-table-cell if.bind="column.slug === 'list-view-icons'" align="right">
 
                                     <div class="icon-row">
-                                        <!-- Currently no icons here -->
+
+                                        <template repeat.for="iconColumn of tableDefinition.iconColumns">
+
+                                            <!-- Currently no icons here -->
+
+                                        </template>
+
                                     </div>
 
                                 </data-table-cell>
