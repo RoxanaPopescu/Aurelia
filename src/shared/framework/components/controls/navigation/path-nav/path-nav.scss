@@ -1,0 +1,45 @@
+@import "resources/index";
+
+path-nav
+{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    > *,
+    > a[accent="inherit"]
+    {
+        display: block;
+        white-space: nowrap;
+
+        &:not(:last-child)
+        {
+            position: relative;
+            padding-right: 2.5em;
+
+            &::after
+            {
+                content: "-";
+
+                position: absolute;
+                right: 0;
+                width: 2.5em;
+                opacity: 0.3;
+                background: var(--surface-neutral-icon-color);
+                color: transparent;
+                mask-size: 0.75em;
+                mask-position: center 57%;
+                mask-repeat: no-repeat;
+
+                /* stylelint-disable indentation */
+                mask-image: url(
+                    "data:image/svg+xml;utf8," +
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>" +
+                        "<path d='M11.67 3.87L9.9 2.1 0 12l9.9 9.9 1.77-1.77L3.54 12z' transform='rotate(180 12 12) translate(5)'/>" +
+                    "</svg>"
+                );
+                /* stylelint-enable */
+            }
+        }
+    }
+}

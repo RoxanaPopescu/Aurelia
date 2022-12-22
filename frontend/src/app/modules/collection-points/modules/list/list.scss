@@ -1,9 +1,0 @@
-@import "resources/index";
-
-page[name="collection-point"] page[name="list"]
-{
-    data-table
-    {
-        --data-table-columns: 1fr 1fr 1fr;
-    }
-}

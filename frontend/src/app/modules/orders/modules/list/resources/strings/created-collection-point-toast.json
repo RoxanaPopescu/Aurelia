@@ -1,5 +1,0 @@
-{
-    "heading": "Success",
-    "body": "The route '{routeSlug}' has been created with {collectionPointCount} collection points",
-    "url": "/routes/details/{routeSlug}"
-}

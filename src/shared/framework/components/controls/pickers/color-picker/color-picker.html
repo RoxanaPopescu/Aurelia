@@ -1,0 +1,17 @@
+<template tabindex="0" keydown.trigger="onKeyDown($event)">
+
+    <require from="./color-picker.scss"></require>
+
+    <div
+        repeat.for="index of 8"
+        class="color-picker-item ${index + 1 == value ? '--selected' : ''}"
+        css="background: var(--palette-color-data-${index + 1})"
+        click.trigger="onItemClick(index + 1)">
+
+        <div>
+            <icon if.bind="index + 1 == value" name="ico-check-mark" class="font-larger"></icon>
+        </div>
+
+    </div>
+
+</template>

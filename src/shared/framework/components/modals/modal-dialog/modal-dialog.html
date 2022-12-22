@@ -1,0 +1,40 @@
+<template
+    class="focus-hidden --accent-${accent || 'default'}"
+    inert.bind="modal != null && modal.busy !== false"
+    keydown.trigger="onKeyDown($event)"
+    tabindex="-1"
+    trap-focus="fallback-focus.bind: element; escape-deactivates.bind: false;"
+    validation
+    validation.ref="validation">
+
+    <require from="./modal-dialog.scss"></require>
+
+    <busy-overlay
+        if.bind="modal != null && modal.busy !== false"
+        opaque.bind="modal.busyOpaque"
+        animate.bind="modal.busyAnimate"
+        delay.bind="modal.busyDelay">
+    </busy-overlay>
+
+    <div class="modal-dialog-actions">
+
+        <slot name="actions"></slot>
+
+        <button
+            if.bind="closeButton && modal != null"
+            title.translate="${shouldDiscardChanges ? 'Please correct the errors before closing, or click again to discard the changes' : 'Close'}"
+            appearance="icon"
+            accent.bind="shouldDiscardChanges ? 'negative' : 'neutral' & attr"
+            click.trigger="onCloseClick()">
+            <icon name="ico-close"></icon>
+        </button>
+
+    </div>
+
+    <div class="modal-dialog-content">
+
+        <slot></slot>
+
+    </div>
+
+</template>

@@ -1,0 +1,15 @@
+<template>
+
+    <require from="./app.scss"></require>
+
+    <div class="app-container au-animate animation-fade-in-medium">
+
+        <router-view inert.bind="modalService.modals.length > 0"></router-view>
+
+        <modal-view></modal-view>
+
+        <toast-view></toast-view>
+
+    </div>
+
+</template>

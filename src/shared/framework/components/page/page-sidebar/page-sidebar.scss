@@ -1,0 +1,154 @@
+@import "resources/index";
+
+page-sidebar
+{
+    // Allow content to be positioned relative to this element.
+    position: relative;
+
+    // Prevent shrinking, as that will be handled explicitly when needed.
+    flex-shrink: 0;
+
+    // Apply a border to the right edge.
+    border-right: var(--border-width-thin) solid;
+
+    // Apply surface style.
+    background: var(--surface-color);
+    border-color: var(--border-color);
+
+    page-header,
+    page-section,
+    page-footer
+    {
+        // Apply margin to content.
+        margin: 28rem 36rem;
+    }
+
+    .page-sidebar-edge-icon
+    {
+        // Position near the top.
+        position: absolute;
+        top: 32rem;
+
+        icon
+        {
+            // Set the icon size.
+            font-size: calc(var(--font-largest-font-size) * 0.75);
+
+            // Apply the primary icon color.
+            color: var(--surface-primary-icon-color);
+
+            // Animate color transitions.
+            transition: color var(--animation-duration-medium);
+        }
+    }
+
+    &:hover .page-sidebar-edge-icon
+    {
+        icon
+        {
+            // Apply the primary icon color.
+            color: var(--surface-primary-icon-color);
+        }
+    }
+
+    .page-sidebar-edge
+    {
+        // Position the shadow container so it sticks along the top edge.
+        position: sticky;
+        top: 0;
+        width: 100%;
+
+        div
+        {
+            // Position the shadow along the right edge.
+            position: absolute;
+            right: 0;
+
+            // Set the size of the shadow.
+            width: 16rem;
+            height: 100vh;
+
+            // Use a gradient to simulate a subtle shadow.
+            background: linear-gradient(
+                to left,
+                rgba(0, 0, 0, 0.15) 0,
+                rgba(0, 0, 0, 0.15) 1rem,
+                rgba(0, 0, 0, 0.1) 1rem,
+                rgba(0, 0, 0, 0.004) 10rem,
+                rgba(0, 0, 0, 0) 4rem
+            );
+
+            // Reduce opacity when not hovered.
+            opacity: 0.05;
+
+            // Animate hover effect quickly when hover ends.
+            transition: opacity var(--animation-duration-medium);
+        }
+    }
+
+    .page-sidebar-edge div:hover,
+    &:not(.--expanded):hover .page-sidebar-edge div
+    {
+        // Animate hover effect slowly when hover begins.
+        transition: opacity var(--animation-duration-long);
+
+        // Prevent hover effect when the cursor moves across the edge.
+        transition-delay: var(--animation-delay-hover);
+
+        // Highlight while hovered.
+        opacity: 0.15;
+    }
+
+    &:not(.--expanded)
+    {
+        // Use flex layout so we can center the expand icon.
+        display: flex;
+        justify-content: center;
+
+        // Collapse the sidebar.
+        width: var(--page-sidebar-collapsed-width);
+
+        // Use cursor to indicate a click on the surface expands the sidebar.
+        cursor: e-resize;
+
+        > :not(.page-sidebar-edge):not(.page-sidebar-edge-icon)
+        {
+            // Hide content when the sidebar is collapsed.
+            display: none;
+        }
+
+        .page-sidebar-edge-icon
+        {
+            // Disable pointer events, as the entire sidebar is clickable.
+            pointer-events: none;
+        }
+    }
+
+    &.--expanded
+    {
+        // Set min and max size of the expanded sidebar.
+        min-width: var(--page-sidebar-min-width);
+        max-width: var(--page-sidebar-max-width);
+
+        .page-sidebar-edge div
+        {
+            // Use cursor to indicate the edge collapses the sidebar.
+            cursor: w-resize;
+        }
+
+        .page-sidebar-edge-icon
+        {
+            // Position near the edge of the sidebar.
+            right: 10rem;
+        }
+
+        @media ($media-smaller-min)
+        {
+            .page-sidebar-edge-icon
+            {
+                // Only show the collapse icon in the smallest viewports.
+                display: none;
+            }
+        }
+    }
+}

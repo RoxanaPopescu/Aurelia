@@ -1,0 +1,16 @@
+@import "resources/index";
+
+page
+{
+    // Allow content to be positioned relative to this element.
+    position: relative;
+
+    // Use horizontal flex layout.
+    display: flex;
+
+    // Fill the available space.
+    flex-grow: 1;
+
+    // Allow the element to shrink.
+    min-width: 0;
+}

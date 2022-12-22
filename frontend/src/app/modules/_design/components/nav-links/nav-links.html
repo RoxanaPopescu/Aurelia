@@ -1,9 +1,0 @@
-<template>
-
-    <require from="./nav-links.scss"></require>
-
-    <a repeat.for="navModel of router.navigation" class="${navModel.isActive ? '--active' : ''} ${navModel.config.navBackOnly ? '--nav-back-only' : ''} ${navModel.config.navDefault ? '--nav-default' : ''}" href.bind="navModel.href">
-        <icon if.bind="navModel.config.icon" name.bind="navModel.config.icon"></icon>${navModel.title}
-    </a>
-
-</template>

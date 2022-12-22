@@ -1,0 +1,218 @@
+@import "resources/index";
+
+modal-overlay
+{
+    // Allow content to be positioned relative to this element.
+    position: relative;
+
+    // Fill the available space.
+    flex-grow: 1;
+
+    // Apply the z-index for modals.
+    z-index: var(--z-index-modal);
+
+    // Hide overflow by default.
+    overflow: hidden;
+
+    // Apply surface style.
+    border-color: var(--border-color);
+    background: var(--surface-color);
+    color: var(--surface-text-color);
+
+    .modal-overlay-content
+    {
+        // Position at the top-right and allow content to
+        // be positioned relative to this element.
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        // Set the size of the content area.
+        width: calc(100% - var(--modal-overlay-actions-width));
+        min-height: 100%;
+
+        // Use vertical flex layout.
+        display: flex;
+        flex-direction: column;
+
+        // Apply horizontal padding.
+        padding-right: 36rem;
+
+        // Ensure content is always above the modal actions.
+        z-index: 1;
+
+        // Provide defaults for sectioning elements.
+
+        modal-header,
+        modal-section,
+        modal-footer
+        {
+            // Prevent shrinking by default.
+            flex-shrink: 0;
+        }
+
+        modal-header
+        {
+            // Apply padding.
+            // Note that we use padding instead of margin, to enable sticky positioning.
+            padding-top: 44rem;
+            padding-bottom: 36rem;
+        }
+
+        modal-footer
+        {
+            // Push the footer to the bottom by default.
+            margin-top: auto;
+
+            // Apply padding.
+            // Note that we use padding instead of margin, to enable sticky positioning.
+            padding-top: 36rem;
+            padding-bottom: 44rem;
+        }
+    }
+
+    .modal-overlay-actions
+    {
+        // Keep the actions in place when overlay is scrolled.
+        position: sticky;
+        top: 0;
+
+        // Set the size of the action area.
+        width: var(--modal-overlay-actions-width);
+        min-height: 100%;
+
+        // Use vertical flex layout.
+        display: flex;
+        flex-direction: column;
+
+        // Center items horizontally.
+        align-items: center;
+
+        // Apply padding.
+        padding: 35rem 20rem;
+
+        // Prevent selection.
+        user-select: none;
+
+        > *
+        {
+            // Provide default item spacing.
+            margin-bottom: 12rem;
+        }
+
+        button[appearance="icon"]
+        {
+            // Provide default icon size.
+            font-size: 24rem;
+        }
+    }
+}
+
+// Animate the overlay and app-sidebar.
+
+modal-overlay,
+app-sidebar
+{
+    modal-view &
+    {
+        // Hint that animation will be applied.
+        will-change: opacity;
+
+        // Prevent glitches at the ends of the animation.
+        animation-fill-mode: both !important;
+    }
+
+    modal-view compose.au-enter &
+    {
+        opacity: 0;
+        overflow: hidden;
+    }
+
+    modal-view compose.au-enter-active &
+    {
+        animation: modal-overlay-enter cubic-bezier(0.2, 0, 0, 1);
+        animation-duration: var(--animation-duration-medium);
+    }
+
+    modal-view compose.au-leave &
+    {
+        // Replace the shadow with an afterglow to smoothe the edge and reduce ghosting.
+        box-shadow: var(--modal-overlay-afterglow);
+    }
+
+    modal-view compose.au-leave-active &
+    {
+        animation: modal-overlay-leave cubic-bezier(0.2, 0, 0, 1);
+        animation-duration: var(--animation-duration-medium);
+    }
+}
+
+@keyframes modal-overlay-enter
+{
+    50%
+    {
+        opacity: 1;
+    }
+
+    100%
+    {
+        opacity: 1;
+    }
+}
+
+@keyframes modal-overlay-leave
+{
+    100%
+    {
+        opacity: 0;
+    }
+}
+
+// Animate the content of the overlay.
+
+modal-overlay > :not(busy-overlay)
+{
+    // Hint that animation will be applied.
+    will-change: opacity;
+
+    // Prevent glitches at the ends of the animation.
+    animation-fill-mode: both !important;
+
+    modal-view compose.au-enter &
+    {
+        opacity: 0;
+    }
+
+    modal-view compose.au-enter-active &
+    {
+        animation: modal-overlay-content-enter cubic-bezier(0.2, 0, 0, 1);
+        animation-duration: var(--animation-duration-medium);
+    }
+
+    modal-view compose.au-leave-active &
+    {
+        animation: modal-overlay-content-leave cubic-bezier(0.2, 0, 0, 1);
+        animation-duration: var(--animation-duration-medium);
+    }
+}
+
+@keyframes modal-overlay-content-enter
+{
+    100%
+    {
+        opacity: 1;
+    }
+}
+
+@keyframes modal-overlay-content-leave
+{
+    25%
+    {
+        opacity: 0;
+    }
+
+    100%
+    {
+        opacity: 0;
+    }
+}

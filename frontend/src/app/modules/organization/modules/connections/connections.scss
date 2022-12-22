@@ -1,9 +1,0 @@
-@import "resources/index";
-
-page[name="organization"] page[name="connections"]
-{
-    data-table
-    {
-        --data-table-columns: 1fr 0.5fr 0.5fr 0.5fr 100rem;
-    }
-}

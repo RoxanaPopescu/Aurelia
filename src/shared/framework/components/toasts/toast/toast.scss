@@ -1,0 +1,322 @@
+@import "resources/index";
+
+toast
+{
+    // Allow content to be positioned relative to this element.
+    position: relative;
+
+    // Limit the size of the toast.
+    min-height: var(--toast-min-height);
+    max-height: var(--toast-max-height);
+    min-width: var(--toast-min-width);
+    max-width: var(--toast-max-width);
+
+    // Add spacing between toasts.
+    margin-top: var(--toast-margin-top);
+    margin-right: var(--toast-margin-right);
+
+    // Apply a border to the toast.
+    border: 0 solid var(--border-color);
+    border-radius: var(--border-radius-medium);
+
+    // Hide overflow by default, so we get rounded borders.
+    overflow: hidden;
+
+    // Apply a shadow to the toast.
+    box-shadow: var(--shadow-toast);
+
+    // Apply surface style.
+    background: var(--surface-color);
+    color: var(--surface-text-color);
+
+    .toast-content
+    {
+        position: relative;
+
+        // Set the size of the content area.
+        width: 100%;
+        min-height: 100%;
+
+        // Provide defaults for sectioning elements.
+
+        toast-header,
+        toast-footer
+        {
+            // Apply padding to header and footer.
+            // Note that we use padding instead of margin,
+            // to enable sticky positioning.
+            padding: 28rem 28rem 28rem 32rem;
+
+            &[empty="true"]
+            {
+                // If empty, set the height to match the padding.
+                padding: 0;
+                height: 28rem;
+            }
+
+            button[appearance="icon"]
+            {
+                // Provide default icon size.
+                font-size: 24rem;
+            }
+        }
+
+        toast-header
+        {
+            // Stick to the top.
+            position: sticky;
+            top: 0;
+            z-index: 1;
+
+            &::before
+            {
+                content: "";
+
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 200%;
+                height: 100%;
+                z-index: -1;
+
+                // Apply the surface color to the header and footer,
+                // so they cover any content scrolling under them.
+                background-color: var(--surface-color);
+
+                // Apply a mask to fade out the background.
+                mask-image: linear-gradient(
+                    to top,
+                    rgba(255, 255, 255, 0.25) 0,
+                    rgba(255, 255, 255, 0.98) 3rem,
+                    rgba(255, 255, 255, 1) 100%
+                );
+            }
+
+            + toast-footer[empty="true"]
+            {
+                // If the footer is empty, and directly follows the header, don't show it.
+                height: 0;
+            }
+        }
+
+        toast-section
+        {
+            // Ensure the element clears the actions at the top of the toast.
+            clear: both;
+
+            // Apply horizontal padding to sections.
+            padding: 0 28rem 0 32rem;
+        }
+
+        toast-footer
+        {
+            // Ensure the element clears the actions at the top of the toast.
+            clear: both;
+
+            // Stick to the bottom.
+            position: sticky;
+            bottom: 0;
+
+            // Apply the surface color to the header and footer,
+            // so they cover any content scrolling under them.
+            background-color: var(--surface-color);
+
+            // Apply a mask to fade out the background.
+            mask-image: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0.25) 0,
+                rgba(255, 255, 255, 0.98) 3rem,
+                rgba(255, 255, 255, 1) 100%
+            );
+        }
+    }
+
+    .toast-actions
+    {
+        // Position at the top-right corner of the toast.
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        float: right;
+
+        // Use horizontal flex layout.
+        display: flex;
+
+        // Center items vertically.
+        align-items: center;
+
+        // Apply padding.
+        padding: 22rem;
+
+        // Prevent selection.
+        user-select: none;
+
+        button:not(:first-of-type)
+        {
+            // Provide default item spacing.
+            margin-left: 12rem;
+        }
+
+        button[appearance="icon"]
+        {
+            // Provide default icon size.
+            font-size: 16rem;
+        }
+    }
+
+    .toast-close-action
+    {
+        --toast-close-action-timeout: 0;
+
+        position: relative;
+        margin: -2px;
+        padding: 2px;
+
+        .toast-close-action-timeout
+        {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            circle
+            {
+                // Remove the fill collor.
+                fill: transparent;
+
+                // Apply the stroke style.
+                stroke: var(--surface-neutral-surface-color);
+                stroke-linecap: round;
+                stroke-width: 6rem;
+                stroke-dasharray: 280;
+                stroke-dashoffset: 280;
+
+                animation: toast-close-action-timeout-animation linear both;
+                animation-duration: calc(var(--toast-close-action-timeout) * 1ms);
+
+                // Transform the element so it can be rotated around its center.
+                transform-origin: 50% 50%;
+                transform: rotate(-90deg);
+
+                @keyframes toast-close-action-timeout-animation
+                {
+                    0%
+                    {
+                        stroke-dashoffset: 280;
+                    }
+
+                    100%
+                    {
+                        stroke-dashoffset: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    &[accent]
+    {
+        // Apply an edge to the toast.
+        border-left-width: var(--border-width-thicker);
+
+        // Ensure the accent only affects the edge, and not the content.
+        color: inherit;
+    }
+
+    // Add accent color support for the edge.
+
+    @each $accent in $accents
+    {
+        &[accent="#{$accent}"]
+        {
+            border-color: var(--surface-#{$accent}-border-color);
+        }
+    }
+}
+
+// Animate the toast.
+
+toast
+{
+    toast-view &
+    {
+        // Hint that animation will be applied.
+        will-change: opacity, transform, margin-top;
+
+        // Prevent glitches at the ends of the animation.
+        animation-fill-mode: both !important;
+    }
+
+    toast-view compose.au-enter &
+    {
+        opacity: 0;
+        margin-top: calc(-1 * var(--toast-max-height));
+        transform: translateX(var(--toast-max-width));
+        overflow: hidden;
+    }
+
+    toast-view compose.au-enter-active &
+    {
+        animation: toast-enter cubic-bezier(0.2, 0, 0.1, 1);
+        animation-duration: var(--animation-duration-long);
+    }
+
+    toast-view compose.au-leave-active &
+    {
+        animation: toast-leave cubic-bezier(0.2, 0, 0.2, 0.5);
+        animation-duration: var(--animation-duration-long);
+    }
+}
+
+@keyframes toast-enter
+{
+    0%
+    {
+        margin-top: calc(-1 * var(--toast-max-height));
+    }
+
+    15%
+    {
+        opacity: 0;
+        margin-top: var(--toast-margin-top);
+    }
+
+    40%
+    {
+        opacity: 1;
+    }
+
+    60%, to
+    {
+        margin-top: var(--toast-margin-top);
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes toast-leave
+{
+    20%
+    {
+        opacity: 1;
+    }
+
+    40%
+    {
+        margin-top: var(--toast-margin-top);
+    }
+
+    50%
+    {
+        opacity: 0;
+        transform: translateX(var(--toast-max-width));
+    }
+
+    55%, to
+    {
+        margin-top: calc(-1 * var(--toast-max-height));
+        opacity: 0;
+        transform: translateX(var(--toast-max-width));
+    }
+}

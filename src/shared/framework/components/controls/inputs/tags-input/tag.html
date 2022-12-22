@@ -1,0 +1,11 @@
+<template>
+
+    <require from="./tag.scss"></require>
+
+    <slot></slot>
+
+    <div if.bind="remove || tagsInput" class="tag-remove">
+        <icon name="ico-clear" click.trigger="onRemoveMouseDown()"></icon>
+    </div>
+
+</template>

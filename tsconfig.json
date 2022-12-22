@@ -1,5 +1,25 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable"
+    ],
+    "module": "es2020",
+    "target": "es2018",
+
+    "jsx": "react",
+    "noImplicitAny": false,
+    "paths": {
+      "shared/*": ["shared/*", "legacy/packages/shared/*"],
+      "fulfiller/*": ["legacy/packages/fulfiller/*"]
+    },
+    "typeRoots": [
+      "node_modules/@types",
+      "src/legacy/node_modules/@types",
+    ],
+    
     "allowJs": false,
     "declaration": false,
     "declarationMap": false,
@@ -36,5 +56,8 @@
   },
   "exclude": [
     "**/~*"
+  ],
+  "include": [
+    "src"
   ]
 }

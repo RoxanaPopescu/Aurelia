@@ -1,9 +1,0 @@
-@import "resources/index";
-
-page[name="dispatch"] page[name="automatic-dispatch-settings-list"]
-{
-    data-table
-    {
-        --data-table-columns: 1fr 1fr 1fr min-content;
-    }
-}

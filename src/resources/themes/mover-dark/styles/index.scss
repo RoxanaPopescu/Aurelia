@@ -1,0 +1,212 @@
+////
+/// @group resources/themes/mover-dark
+////
+
+/// Public interface for the theme.
+$__summary: comment;
+
+
+:root
+{
+    // Indicate to the browser that this is a dark theme.
+    color-scheme: dark;
+}
+
+// Export the palettes.
+// Palettes define the standard values used within the theme.
+@import "./palettes/color";
+
+// Export the settings.
+// Settings define theme specific overrides to the base settings.
+@import "./settings/font";
+@import "./settings/font-family";
+
+// Export the themes.
+// Themes define the values to use within different areas of the app.
+@import "./surfaces/base";
+@import "./surfaces/card";
+@import "./surfaces/neutral";
+@import "./surfaces/primary";
+
+
+// Override default styles.
+
+html.theme-enable-topbar
+{
+    app-topbar
+    {
+        app-logo
+        {
+            opacity: 0.6;
+        }
+    }
+
+    app-sidebar
+    {
+        --surface-color: inherit !important;
+        border-right: var(--border-width-thin) solid var(--palette-color-neutral-lit);
+    }
+}
+
+:root
+{
+    --modal-panel-afterglow: 0 0 20px 0 rgba(30, 30, 30, 0.4) !important;
+
+    --legacy-card-border-color: var(--palette-color-neutral-light);
+    --legacy-card-edge-color: var(--palette-color-neutral-light);
+    --legacy-card-surface-color: var(--palette-color-neutral);
+    --legacy-card-surface-color--hover: var(--palette-color-neutral);
+    --legacy-card-surface-box-surface-color: var(--palette-color-neutral-darker);
+
+    .c-liveTracking-routePanel-routeInfo
+    {
+        --legacy-card-surface-box-surface-color: var(--palette-color-neutral);
+    }
+}
+
+// Force buttons with outline appearance to use neutral border color.
+button,
+a[appearance]
+{
+    &[appearance="outline"][accent]
+    {
+        //border-color: var(--surface-neutral-border-color);
+    }
+}
+
+page[name="account"]
+{
+    color: var(--palette-color-neutral-lightest) !important;
+    background: var(--palette-color-neutral-darkest) !important;
+}
+
+.card-edge
+{
+    --palette-color-neutral: var(--palette-color-neutral-lit);
+}
+
+app-sidebar
+{
+    --surface-color: var(--palette-color-neutral-lit) !important;
+
+    app-logo
+    {
+        opacity: 0.6;
+    }
+}
+
+button[appearance="outline"]
+{
+    // border-color: var(--palette-color-neutral) !important;
+}
+
+:root
+{
+    --modal-backdrop-color: rgba(0, 0, 0, 0.54);
+}
+
+data-table[appearance="rows"]
+{
+    --data-table-header-background: rgba(30, 30, 30, 0.97);
+}
+
+data-table[appearance="cards"]
+{
+    --data-table-header-background: rgba(30, 30, 30, 0.97);
+    --data-table-header-border-color: rgba(30, 30, 30, 0.95);
+}
+
+html body page-sidebar page-section:not(.--header-slot-empty) .page-section-header
+{
+    padding-top: 16rem;
+    border-top: var(--border-width-thin) solid var(--palette-color-neutral-light);
+    border-bottom: none !important;
+    background: transparent !important;
+    color: var(--palette-color-neutral-lightest) !important;
+}
+
+html body page-sidebar page-section:first-of-type:not(.--header-slot-empty) .page-section-header
+{
+    border-top: none;
+}
+
+.route-list-expanded-view-section-title
+{
+    color: var(--palette-color-neutral-lightest) !important;
+}
+
+page-content page-header
+{
+    border-bottom-color: var(--palette-color-neutral-lit);
+}
+
+[surface="base"],
+[surface$="/base"]
+{
+    --surface-separator-color: var(--palette-color-neutral-lit);
+}
+
+[surface$="/card"]
+{
+    --border-color: var(--palette-color-neutral-lit);
+    --border-color--hover: var(--palette-color-neutral-lit);
+    --border-color--focus: var(--palette-color-neutral-lit);
+    --border-color--active: var(--palette-color-neutral-lit);
+    --data-table-row-border-color--active: var(--palette-color-neutral-lit) !important;
+}
+
+.data-table-row[accent="neutral"],
+data-table-details[accent="neutral"]
+{
+    --data-table-row-edge-color: var(--palette-color-neutral-light);
+}
+
+google-map,
+.react-component
+{
+    --google-map-surface-color: #222222 !important;
+    --google-map-control-shadow: none !important;
+    --google-map-control-surface-text-color: #666666 !important;
+    --google-map-control-surface-text-color--active: #000000 !important;
+    --google-map-popover-close-filter: invert(1) !important;
+
+    &:not(.--type-street)
+    {
+        --google-map-control-filter: saturate(0) brightness(0.92) invert(1);
+    }
+
+    .c-worldMap
+    {
+        background: var(--surface-color);
+    }
+}
+
+info-icon .info-icon-container:not(:hover) icon
+{
+    opacity: var(--opacity-faded) !important;
+}
+
+// Override legacy styles.
+
+.c-routePlanning-routes-action img
+{
+    filter: invert(1);
+}
+
+.pageHeader
+{
+    border-bottom-color: var(--palette-color-neutral-lit) !important;
+}
+
+.order-events-timeline-marker,
+.order-events-timeline-before,
+.order-events-timeline-after,
+.route-details-stop-number-marker,
+.route-details-stop-number-before,
+.route-details-stop-number-after
+{
+    &.accent-neutral
+    {
+        --surface-accent-surface-color: var(--surface-neutral-surface-color) !important;
+    }
+}

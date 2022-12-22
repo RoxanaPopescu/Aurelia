@@ -1,0 +1,10 @@
+<template
+    show.bind="visible"
+    class="${disabled ? '--disabled' : ''} ${active ? '--active' : ''}"
+    click.trigger="onClick()">
+
+    <require from="./item.scss"></require>
+
+    <slot></slot>
+
+</template>

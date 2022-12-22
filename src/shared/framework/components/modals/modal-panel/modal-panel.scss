@@ -1,0 +1,304 @@
+@import "resources/index";
+
+modal-panel
+{
+    // Position the panel, and allow content to be positioned relative to this element.
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    &::before
+    {
+        // HACK: The panel has margin, and a click within that margin will close the panel.
+        // This is an unexpected behavior, so to mitigate it, we add a transparent overlay,
+        // which prevents the click from reaching the backdrop. This is not a perfect fix,
+        // as it only covers the min-width of the panel, but it's much better than nothing.
+
+        content: "";
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: var(--modal-panel-min-width);
+        z-index: calc(-1);
+        background: transparent;
+    }
+
+    &.--left,
+    &.--left::before
+    {
+        // Position on the right side of the viewport.
+        left: 0;
+    }
+
+    &.--right,
+    &.--right::before
+    {
+        // Position on the right side of the viewport.
+        right: 0;
+    }
+
+    // Apply the z-index for modals.
+    z-index: var(--z-index-modal);
+
+    // Limit the size of the panel.
+    min-width: var(--modal-panel-min-width);
+    max-width: var(--modal-panel-max-width);
+
+    // Apply a border to the panel.
+    border-radius: var(--border-radius-large);
+    margin: var(--modal-panel-margin);
+
+    // Hide overflow by default, so we get rounded borders.
+    overflow: hidden;
+
+    // Apply surface style.
+    background: var(--surface-color);
+    color: var(--surface-text-color);
+
+    // Apply a shadow to the panel.
+    box-shadow: var(--shadow-modal);
+
+    .modal-panel-content
+    {
+        // Position at the top and allow content to
+        // be positioned relative to this element.
+        position: absolute;
+        top: 0;
+
+        // Set the size of the content area.
+        width: calc(100% - var(--modal-panel-actions-width));
+        min-height: 100%;
+
+        // Use vertical flex layout.
+        display: flex;
+        flex-direction: column;
+
+        // Ensure content is always above the modal actions.
+        z-index: 1;
+
+        // Provide defaults for sectioning elements.
+
+        modal-header,
+        modal-section,
+        modal-footer
+        {
+            // Prevent shrinking by default.
+            flex-shrink: 0;
+        }
+
+        modal-header
+        {
+            // Apply default margin.
+            margin-bottom: 36rem;
+        }
+
+        modal-footer
+        {
+            // Push the footer to the bottom by default.
+            margin-top: auto;
+        }
+    }
+
+    &.--left .modal-panel-content
+    {
+        // Apply padding, making room for the actions.
+        padding: 36rem 48rem 36rem 0;
+
+        // Position the content to the right.
+        right: 0;
+    }
+
+    &.--right .modal-panel-content
+    {
+        // Apply padding, making room for the actions.
+        padding: 36rem 0 36rem 48rem;
+
+        // Position the content to the left.
+        left: 0;
+    }
+
+    .modal-panel-actions
+    {
+        // Keep the actions in place when panel is scrolled.
+        position: sticky;
+        top: 0;
+
+        // Set the size of the action area.
+        width: var(--modal-panel-actions-width);
+        min-height: 100%;
+
+        // Use vertical flex layout.
+        display: flex;
+        flex-direction: column;
+
+        // Center items horizontally.
+        align-items: center;
+
+        // Apply padding.
+        padding: 30rem 20rem;
+
+        // Prevent selection.
+        user-select: none;
+
+        > *,
+        > [slot="actions"] > *
+        {
+            // Provide default item spacing.
+            margin-bottom: 18rem;
+        }
+
+        button[appearance="icon"]
+        {
+            // Provide default icon size.
+            font-size: 24rem;
+        }
+    }
+
+    &.--left .modal-panel-actions
+    {
+        // Position on the right side of the panel.
+        float: left;
+    }
+
+    &.--right .modal-panel-actions
+    {
+        // Position on the right side of the panel.
+        float: right;
+    }
+}
+
+// Animate the panel.
+
+modal-panel
+{
+    &.--left
+    {
+        // The transform to apply to the panel before it enters and after it leaves.
+        --modal-panel-origin-transform: translateX(calc(-100% + var(--app-sidebar-width) * 0.5));
+    }
+
+    &.--right
+    {
+        // The transform to apply to the panel before it enters and after it leaves.
+        --modal-panel-origin-transform: translateX(calc(+100% + var(--app-sidebar-width) * 0.5));
+    }
+
+    modal-view compose.au-enter &
+    {
+        transform: var(--modal-panel-origin-transform);
+        opacity: 0;
+        overflow: hidden;
+
+        // Hint that animation will be applied.
+        will-change: opacity, transform, filter;
+    }
+
+    modal-view compose.au-enter-active &
+    {
+        animation: modal-panel-enter cubic-bezier(0.2, 0, 0.1, 1);
+        animation-duration: var(--animation-duration-medium);
+
+        // HACK: This is needed to avoid a bug in Safari, which apparently causes the animation to start before
+        // the width of the element has been calculated, thus causing an incorrect transform to be applied.
+        // We work around this by delaying the animation, so it starts after the width has been calculated.
+        animation-delay: 10ms;
+
+        // Prevent glitches at the ends of the animation.
+        animation-fill-mode: both;
+    }
+
+    modal-view compose.au-leave &
+    {
+        // Replace the shadow with an afterglow to smoothe the edge and reduce ghosting.
+        box-shadow: var(--modal-panel-afterglow);
+
+        // Hint that animation will be applied.
+        will-change: opacity, transform, filter;
+    }
+
+    modal-view compose.au-leave-active &
+    {
+        animation: modal-panel-leave cubic-bezier(0.2, 0, 0.2, 0.5);
+        animation-duration: var(--animation-duration-medium);
+
+        // Prevent glitches at the ends of the animation.
+        animation-fill-mode: both;
+    }
+}
+
+@keyframes modal-panel-enter
+{
+    30%
+    {
+        opacity: 1;
+    }
+
+    50%, to
+    {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes modal-panel-leave
+{
+    40%
+    {
+        opacity: 1;
+    }
+
+    100%
+    {
+        transform: var(--modal-panel-origin-transform);
+        opacity: 0;
+    }
+}
+
+// Animate the content of the panel.
+
+modal-panel > :not(busy-overlay)
+{
+    // Hint that animation will be applied.
+    will-change: opacity;
+
+    // Prevent glitches at the ends of the animation.
+    animation-fill-mode: both !important;
+
+    modal-view compose.au-enter &
+    {
+        opacity: 0;
+    }
+
+    modal-view compose.au-enter-active &
+    {
+        animation: modal-panel-content-enter cubic-bezier(0.2, 0, 0, 1);
+        animation-duration: var(--animation-duration-medium);
+    }
+
+    modal-view compose.au-leave-active &
+    {
+        animation: modal-panel-content-leave cubic-bezier(0.2, 0, 0, 1);
+        animation-duration: var(--animation-duration-medium);
+    }
+}
+
+@keyframes modal-panel-content-enter
+{
+    100%
+    {
+        opacity: 1;
+    }
+}
+
+@keyframes modal-panel-content-leave
+{
+    50%
+    {
+        opacity: 0.1;
+    }
+
+    100%
+    {
+        opacity: 0;
+    }
+}

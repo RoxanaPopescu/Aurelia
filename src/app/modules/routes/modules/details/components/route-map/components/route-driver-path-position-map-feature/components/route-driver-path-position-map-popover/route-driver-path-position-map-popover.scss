@@ -1,0 +1,29 @@
+.driver-card {
+  margin-top: 8px;
+}
+
+.driver-time {
+  display: flex;
+  align-items: start;
+
+  .time-icon {
+    width: 32px;
+    height: 32px;
+    background-image: url('../../resources/icons/clock-icon.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .date-time-info {
+    margin-left: 8px;
+  }
+}
+
+.driver-location {
+  margin-top: 8px;
+}
+
+.delay {
+  color: var(--palette-color-negative);
+  font-weight: 600;
+}

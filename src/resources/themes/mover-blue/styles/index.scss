@@ -1,0 +1,193 @@
+////
+/// @group resources/themes/mover-blue
+////
+
+/// Public interface for the theme.
+$__summary: comment;
+
+
+:root
+{
+    // Indicate to the browser that this is a light theme.
+    color-scheme: light;
+}
+
+// Export the palettes.
+// Palettes define the standard values used within the theme.
+@import "./palettes/color";
+
+// Export the settings.
+// Settings define theme specific overrides to the base settings.
+@import "./settings/font-face";
+@import "./settings/font";
+
+
+// Override default styles.
+
+html.theme-enable-topbar
+{
+    app-topbar
+    {
+        app-logo
+        {
+            opacity: 0.9;
+        }
+    }
+
+    app-sidebar
+    {
+        --surface-color: inherit !important;
+        border-right: var(--border-width-thin) solid var(--palette-color-neutral);
+
+        .app-sidebar-shadow
+        {
+            display: none;
+        }
+    }
+
+    [surface$="/primary"]
+    {
+        // Navigation links on the surface.
+        &
+        {
+            // State: normal
+            --surface-nav-link-border-color: transparent;
+            --surface-nav-link-surface-color: transparent;
+            --surface-nav-link-surface-text-color: var(--palette-color-neutral-darker);
+            --surface-nav-link-surface-icon-color: var(--palette-color-neutral-darker);
+
+            // State: hover
+            --surface-nav-link-border-color--hover: var(--palette-color-neutral-lighter);
+            --surface-nav-link-surface-color--hover: var(--palette-color-neutral-lighter);
+            --surface-nav-link-surface-text-color--hover: var(--palette-color-neutral-darker);
+            --surface-nav-link-surface-icon-color--hover: var(--palette-color-neutral-darker);
+
+            // State: active
+            --surface-nav-link-border-color--active: var(--palette-color-neutral-lit);
+            --surface-nav-link-surface-color--active: var(--palette-color-neutral-lit);
+            --surface-nav-link-surface-text-color--active: var(--palette-color-neutral-darker);
+            --surface-nav-link-surface-icon-color--active: var(--palette-color-neutral-darker);
+        }
+
+        // Navigation child links on the surface.
+        &
+        {
+            --surface-nav-child-surface-color: var(--palette-color-neutral-light);
+
+            // State: normal
+            --surface-nav-child-link-border-color: var(--palette-color-neutral-light);
+            --surface-nav-child-link-surface-color: var(--palette-color-neutral-light);
+            --surface-nav-child-link-surface-text-color: var(--palette-color-neutral-darker);
+            --surface-nav-child-link-surface-icon-color: var(--palette-color-neutral-darker);
+
+            // State: hover
+            --surface-nav-child-link-border-color--hover: var(--palette-color-neutral-light);
+            --surface-nav-child-link-surface-color--hover: var(--palette-color-neutral-light);
+            --surface-nav-child-link-surface-text-color--hover: var(--palette-color-neutral-darker);
+            --surface-nav-child-link-surface-icon-color--hover: var(--palette-color-neutral-darker);
+
+            // State: active
+            --surface-nav-child-link-border-color--active: var(--palette-color-neutral-light);
+            --surface-nav-child-link-surface-color--active: var(--palette-color-neutral-light);
+            --surface-nav-child-link-surface-text-color--active: var(--palette-color-blackpoint);
+            --surface-nav-child-link-surface-icon-color--active: var(--palette-color-blackpoint);
+        }
+    }
+}
+
+[surface="base"],
+[surface$="/base"],
+[surface$="/neutral"],
+{
+    --surface-separator-color: var(--palette-color-neutral);
+}
+
+page[name="account"]
+{
+    background: hsl(213, 90%, 12%) !important;
+}
+
+permissions
+{
+    &,
+    & .permissions-group
+    {
+        --surface-separator-color: var(--palette-color-neutral-light);
+
+        &[surface$="/neutral"]
+        {
+            // --surface-color: var(--palette-color-neutral-lighter);
+        }
+    }
+}
+
+:root
+{
+    /**
+     * The label color, set in temp.scss.
+     */
+    --temp-label-color: #555555;
+
+    --legacy-card-border-color: var(--palette-color-neutral-light);
+    --legacy-card-edge-color: var(--palette-color-neutral);
+    --legacy-card-surface-color: var(--palette-color-neutral-lightest);
+    --legacy-card-surface-color--hover: var(--palette-color-neutral-lighter);
+    --legacy-card-surface-box-surface-color: var(--palette-color-neutral-light);
+}
+
+// Force buttons with outline appearance to use neutral border color.
+button,
+a[appearance]
+{
+    &[appearance="outline"][accent]
+    {
+        border-color: var(--surface-neutral-border-color);
+    }
+}
+
+body page-sidebar page-section:not(.--header-slot-empty) .page-section-header
+{
+    padding-top: 16rem;
+    border-top: var(--border-width-thin) solid var(--surface-separator-color) !important;
+    border-bottom: none !important;
+    background-color: transparent !important;
+    color: var(--surface-subtle-color) !important;
+}
+
+html body page-sidebar page-section:first-of-type:not(.--header-slot-empty) .page-section-header
+{
+    border-top: none;
+}
+
+.route-list-expanded-view-section-title
+{
+    color: var(--surface-subtle-color) !important;
+}
+
+button[appearance="outline"]
+{
+    // border-color: var(--palette-color-neutral-light) !important;
+}
+
+html body page-sidebar page-section:not(.--header-slot-empty) .page-section-header
+{
+    background: transparent !important;
+    border-bottom: var(--border-width-medium) solid var(--palette-color-neutral-light);
+}
+
+/* BEGIN: USE DARK BLUE COLOR */
+
+app-sidebar[surface$="/primary"]
+{
+    --surface-color: var(--palette-color-primary-darkest);
+    --surface-nav-link-surface-icon-color: #88929e;
+    --surface-nav-child-link-surface-icon-color: hsl(213, 10%, 70%);
+
+    user-identity a identity-picture
+    {
+        // background: var(--surface-nav-link-surface-color--active);
+        background: var(--surface-nav-child-surface-color);
+    }
+}
+
+/* END: USE DARK BLUE COLOR */

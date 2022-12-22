@@ -1,0 +1,44 @@
+<template ref="element">
+  <require
+    from="./components/route-driver-path-position-map-popover/route-driver-path-position-map-popover"
+  ></require>
+
+  <require
+    from="./route-driver-path-position-map-feature.scss"
+    as="scoped"
+  ></require>
+
+  <google-map-html-marker
+    if.bind="!isstartmarker && !isendmarker"
+    warning.bind="position.delayFromPrevious.markWarning"
+    content.bind="element"
+    point.bind="point"
+    z-index.bind="500"
+    click.call="onClick != null ? onClick() : undefined"
+    dblclick.call="onDblClick != null ? onDblClick() : undefined"
+  >
+    <route-driver-path-position-map-popover
+      position.bind="position"
+      driver.bind="driver"
+    >
+    </route-driver-path-position-map-popover>
+  </google-map-html-marker>
+
+  <google-map-marker
+    if.bind="isstartmarker || isendmarker"
+    label.bind="isstartmarker ? 'Start' : 'End'"
+    content.bind="element"
+    point.bind="point"
+    z-index.bind="500"
+    click.call="onClick != null ? onClick() : undefined"
+    dblclick.call="onDblClick != null ? onDblClick() : undefined"
+  >
+    <route-driver-path-position-map-popover
+      position.bind="position"
+      driver.bind="driver"
+    >
+    </route-driver-path-position-map-popover>
+  </google-map-html-marker>
+
+
+</template>

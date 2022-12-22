@@ -1,0 +1,65 @@
+<template ref="element">
+  <require
+    from="shared/google-maps/components/google-map/google-map-popover.scss"
+    as="scoped"
+  ></require>
+
+  <require from="app/components/name-value-pair/name-value-pair"></require>
+  <require
+    from="app/components/name-value-pair/name-value-pair.scss"
+    as="scoped"
+  ></require>
+
+  <require
+    from="./route-driver-path-position-map-popover.scss"
+    as="scoped"
+  ></require>
+
+  <!-- HACK: The `if.bind="true"`here is required to prevent a templating bug. -->
+  <google-map-popover if.bind="true" content.bind="element" offset-y.bind="-4">
+    <div class="driver-time">
+      <div class="time-icon"></div>
+      <div class="date-time-info">
+        <div>
+          ${position.timestamp.time}<span
+            if.bind="position.delayFromPrevious.markWarning"
+            class="delay"
+          >
+            (+${position.delayFromPrevious.delayInMinutes} min.)
+          </span>
+        </div>
+        <!-- <div if.bind="position.delayFromPrevious.markWarning" class="delay">
+          Delay: +${position.delayFromPrevious.delayInMinutes} minutes
+        </div> -->
+        <div>Date: ${position.timestamp.date}</div>
+      </div>
+    </div>
+
+    <div class="driver-location">
+      <h2>Location:</h2>
+      <name-value-pair>
+        <div slot="name" translate>Latitude</div>
+
+        <div slot="value">${position.latitude}</div>
+      </name-value-pair>
+
+      <name-value-pair>
+        <div slot="name" translate>Longitude</div>
+
+        <div slot="value">${position.longitude}</div>
+      </name-value-pair>
+    </div>
+
+    <div class="driver-card">
+      <h2>Contact driver:</h2>
+      <div class="driver-info">
+        <div>${driver.name}</div>
+        <div>
+          +${driver.phone.countryCallingCode} ${driver.phone.nationalNumber}
+        </div>
+      </div>
+    </div>
+
+    <div></div>
+  </google-map-popover>
+</template>

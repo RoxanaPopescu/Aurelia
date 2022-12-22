@@ -1,0 +1,55 @@
+<template>
+  <require from="./route-map.scss"></require>
+
+  <require
+    from="./components/route-driver-path-position-map-feature/route-driver-path-position-map-feature"
+  ></require>
+
+  <google-map
+    class="au-animate animation-fade-in-medium"
+    touched.bind="mapTouched"
+    type.bind="mapType"
+    view-model.ref="mapViewModel"
+    markers.bind="data.positions"
+    auto-update-bounds="true"
+  >
+    <!-- <template if.bind="data != null">
+
+            <route-driver-path-position-map-feature
+                position.bind="data.positions[0]">
+            </route-driver-path-position-map-feature>
+
+        </template> -->
+
+    <template repeat.for="position of data.positions">
+      <route-driver-path-position-map-feature
+        position.bind="position"
+        driver.bind="data.driver"
+        isstartmarker.bind="$first"
+        isendmarker.bind="$last"
+      >
+      </route-driver-path-position-map-feature>
+    </template>
+
+    <template if.bind="data != null">
+      <google-map-line points.bind="data.points"></google-map-line>
+    </template>
+
+    <!-- <template>
+      <google-map-line
+        if.bind="true"
+        points.bind="data.points"
+      ></google-map-line>
+    </template> -->
+
+    <div class="google-map-actions">
+      <button
+        disabled.bind="mapInstance == null"
+        click.trigger="tryFitBounds()"
+        translate
+      >
+        Zoom to fit
+      </button>
+    </div>
+  </google-map>
+</template>

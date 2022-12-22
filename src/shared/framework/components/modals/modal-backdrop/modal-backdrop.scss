@@ -1,0 +1,72 @@
+@import "resources/index";
+
+modal-backdrop
+{
+    // Fill the viewport.
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    // Apply the z-index for backdrops.
+    z-index: var(--z-index-backdrop);
+
+    // Apply the background for backdrops.
+    background: var(--modal-backdrop-color);
+
+    // Apply the filter for backdrops.
+    backdrop-filter: var(--modal-backdrop-filter, none);
+
+    // Prevent clicks from passing through.
+    pointer-events: initial;
+}
+
+// Animate the backdrop.
+
+modal-backdrop
+{
+    // Hint that animation will be applied.
+    will-change: opacity;
+
+    // Prevent glitches at the ends of the animation.
+    animation-fill-mode: both !important;
+
+    // Prevent selection.
+    user-select: none;
+
+    compose.au-enter &
+    {
+        opacity: 0;
+    }
+
+    compose.au-enter-active &
+    {
+        animation: modal-backdrop-enter cubic-bezier(0.3, 0, 0.2, 1);
+        animation-duration: var(--animation-duration-medium);
+    }
+
+    compose.au-leave-active &
+    {
+        animation: modal-backdrop-leave cubic-bezier(0, 0, 0, 1);
+        animation-duration: var(--animation-duration-medium);
+    }
+}
+
+@keyframes modal-backdrop-enter
+{
+    100%
+    {
+        opacity: 1;
+        backdrop-filter: var(--modal-backdrop-filter, none);
+    }
+}
+
+@keyframes modal-backdrop-leave
+{
+    100%
+    {
+        opacity: 0;
+        backdrop-filter: none;
+    }
+}

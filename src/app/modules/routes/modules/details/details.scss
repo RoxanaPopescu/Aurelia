@@ -1,0 +1,11 @@
+@import "resources/index";
+
+page[name="routes"] page[name="details"]
+{
+    --base-surface-color: var(--surface-color);
+
+    route-map
+    {
+        height: 100vh;
+    }
+}

@@ -1,0 +1,32 @@
+@import "resources/index";
+
+main,
+.app-container,
+router-view
+{
+    // Use horizontal flex layout.
+    display: flex;
+
+    // Fill the available space.
+    flex-grow: 1;
+
+    // Allow the element to shrink.
+    min-width: 0;
+
+    // Fill the available height.
+    height: 100%;
+}
+
+.input
+{
+    // The opacity of the required indicator.
+    --input-required-indicator-opacity: var(--opacity-faded) !important;
+    --input-required-indicator-opacity--invalid: var(--opacity-faded) !important;
+
+    // The color of the required indicator.
+    --input-required-indicator-color: inherit !important;
+    --input-required-indicator-color--invalid: var(--surface-negative-text-color) !important;
+}
+
+// Import experimental styles.
+@import "./temp";
